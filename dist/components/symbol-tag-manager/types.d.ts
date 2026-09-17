@@ -29,6 +29,7 @@ export interface SymbolTagFormValue {
     tag_name: string;
     tag_name_en: string;
     tag_name_zh: string;
+    translations?: Record<string, string>;
 }
 export interface SymbolTagActions {
     create: (value: SymbolTagFormValue) => Promise<unknown>;
@@ -65,6 +66,33 @@ export interface TranslationConfigActions {
     save: (value: TranslationConfigFormValue) => Promise<TranslationConfig>;
     test: (apiKey?: string) => Promise<TranslationConfigTestResult>;
 }
+export interface SymbolTagTranslationLanguage {
+    label: string;
+    label_en: string;
+    locale: string;
+    value: string;
+}
+export interface SymbolTagTranslationDetail {
+    configured_count: number;
+    languages: SymbolTagTranslationLanguage[];
+    tag_id: number;
+    tag_name: string;
+    total: number;
+}
+export interface SymbolTagTranslationRequest {
+    source_locale: string;
+    source_text: string;
+    target_locales: string[];
+}
+export interface SymbolTagTranslationResult {
+    failures: Record<string, string>;
+    translations: Record<string, string>;
+}
+export interface SymbolTagTranslationActions {
+    load: (tagId: number) => Promise<SymbolTagTranslationDetail>;
+    save: (tagId: number, translations: Record<string, string>) => Promise<SymbolTagTranslationDetail>;
+    translate: (tagId: number, value: SymbolTagTranslationRequest) => Promise<SymbolTagTranslationResult>;
+}
 export interface SymbolTagManagerLabels {
     actions: string;
     add: string;
@@ -76,6 +104,7 @@ export interface SymbolTagManagerLabels {
     close: string;
     code: string;
     codeHint: string;
+    codePlaceholder: string;
     collapseAll: string;
     collapseTag: string;
     confirm: string;
@@ -92,18 +121,21 @@ export interface SymbolTagManagerLabels {
     display: string;
     displayHint: string;
     edit: string;
+    editTranslation: string;
     enabled: string;
     enName: string;
     expandAll: string;
     expandTag: string;
     filterSubtitle: string;
     filterTitle: string;
+    frontendDisplay: string;
     hideTag: string;
     invalidCode: string;
     loadingDescription: string;
     loadingTitle: string;
     name: string;
     nameHint: string;
+    namePlaceholder: string;
     noData: string;
     notice: string;
     pairCount: string;
@@ -142,5 +174,6 @@ export interface SymbolTagManagerProps {
     labels?: Partial<SymbolTagManagerLabels>;
     locale?: "en-US" | "zh-CN" | string;
     translationConfigActions?: TranslationConfigActions;
+    translationActions?: SymbolTagTranslationActions;
 }
-export type SymbolTagActionName = "create" | "delete" | "list" | "translation-config" | "update";
+export type SymbolTagActionName = "create" | "delete" | "list" | "translation-config" | "translations" | "update";

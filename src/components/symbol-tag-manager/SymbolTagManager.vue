@@ -105,6 +105,9 @@
             <button v-if="canUpdate" type="button" @click="runDetailAction('edit')">
               <MmIcon name="square-pen" :size="15" /><span>{{ copy.edit }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
+            <button v-if="canUpdate && translationActions" type="button" @click="runDetailAction('translations')">
+              <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Languages' : '多语言' }}</span><MmIcon name="chevron-right" :size="15" />
+            </button>
             <button v-if="translationConfigActions" type="button" @click="runDetailAction('translation-config')">
               <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Google Translate Configuration' : 'Google 翻译配置' }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
@@ -120,21 +123,38 @@
     <MmDialog
       v-model="dialog.visible"
       :close-on-click-modal="false"
+      panel-class="mm-symbol-tag-manager__create-dialog"
       :show-close="!dialog.saving"
       :title="dialog.editingId ? copy.dialogEdit : copy.dialogCreate"
-      width="600px"
+      width="min(700px, calc(100vw - 32px))"
       @close="resetForm"
     >
+      <template #header>
+        <div class="mm-symbol-tag-manager__create-heading">
+          <strong>{{ dialog.editingId ? copy.dialogEdit : copy.dialogCreate }}</strong>
+          <span>{{ dialog.editingId ? copy.dialogSubtitleEdit : copy.dialogSubtitleCreate }}</span>
+        </div>
+      </template>
       <MmAlert v-if="formError" closable :title="formError" type="error" @close="formError = ''" />
-      <MmForm ref="formRef" :model="form" :rules="formRules" label-width="100px" @submit.prevent="save">
-        <MmFormItem :label="copy.parent" prop="parent_id">
+      <MmForm
+        ref="formRef"
+        class="mm-symbol-tag-manager__create-form"
+        label-position="top"
+        :model="form"
+        :rules="formRules"
+        @submit.prevent="save"
+      >
+        <MmFormItem class="is-full" :label="copy.parent" prop="parent_id">
           <MmSelect v-model="form.parent_id" :disabled="dialog.saving" :options="parentDialogOptions" :placeholder="copy.parent" />
+          <small>{{ copy.parentHint }}</small>
         </MmFormItem>
         <MmFormItem :label="copy.name" prop="tag_name" required>
-          <MmInput v-model="form.tag_name" :disabled="dialog.saving" :maxlength="255" :placeholder="copy.name" />
+          <MmInput v-model="form.tag_name" :disabled="dialog.saving" :maxlength="255" :placeholder="copy.namePlaceholder" />
+          <small>{{ copy.nameHint }}</small>
         </MmFormItem>
         <MmFormItem :label="copy.code" prop="tag_code" required>
-          <MmInput v-model="form.tag_code" :disabled="dialog.saving" :maxlength="64" :placeholder="copy.code" @update:model-value="normalizeCode" />
+          <MmInput v-model="form.tag_code" :disabled="dialog.saving" :maxlength="64" :placeholder="copy.codePlaceholder" @update:model-value="normalizeCode" />
+          <small>{{ copy.codeHint }}</small>
         </MmFormItem>
         <MmFormItem :label="copy.zhName" prop="tag_name_zh" required>
           <MmInput v-model="form.tag_name_zh" :disabled="dialog.saving" :maxlength="255" :placeholder="copy.zhName" />
@@ -144,18 +164,48 @@
         </MmFormItem>
         <MmFormItem :label="copy.sort" prop="sort" required>
           <MmInputNumber v-model="form.sort" :disabled="dialog.saving" :max="999999" :min="0" />
+          <small>{{ copy.sortHint }}</small>
         </MmFormItem>
-        <MmFormItem :label="copy.status" prop="is_enable" required>
-          <MmRadioGroup v-model="form.is_enable">
-            <MmRadio :value="1">{{ copy.enabled }}</MmRadio>
-            <MmRadio :value="0">{{ copy.disabled }}</MmRadio>
-          </MmRadioGroup>
-        </MmFormItem>
+
+        <section class="mm-symbol-tag-manager__translation-card is-full" :aria-label="copy.translation">
+          <div>
+            <strong>{{ copy.translation }}</strong>
+            <span>{{ translationConfiguredCount }}/20</span>
+          </div>
+          <MmButton size="sm" :disabled="!translationActions || translationDraftLoading" @click="openCreateTranslations">
+            <template #icon><MmIcon name="globe" :size="14" /></template>{{ copy.editTranslation }}
+          </MmButton>
+        </section>
+
+        <section class="mm-symbol-tag-manager__display is-full">
+          <div>
+            <strong>{{ copy.frontendDisplay }}</strong>
+            <small>{{ copy.displayHint }}</small>
+          </div>
+          <div class="mm-symbol-tag-manager__display-control">
+            <button
+              type="button"
+              class="mm-symbol-tag-manager__switch"
+              :class="{ 'is-checked': Number(form.is_enable) === 1 }"
+              role="switch"
+              :aria-checked="Number(form.is_enable) === 1"
+              :aria-label="copy.frontendDisplay"
+              :disabled="dialog.saving"
+              @click="form.is_enable = Number(form.is_enable) === 1 ? 0 : 1"
+            ><i aria-hidden="true"></i></button>
+            <span>{{ Number(form.is_enable) === 1 ? copy.enabled : copy.disabled }}</span>
+          </div>
+        </section>
+
+        <div class="mm-symbol-tag-manager__notice is-full">
+          <MmIcon name="circle-help" :size="15" />
+          <span>{{ copy.notice }}</span>
+        </div>
       </MmForm>
       <template #footer>
         <div class="mm-symbol-tag-manager__dialog-footer">
           <MmButton size="sm" :disabled="dialog.saving" @click="dialog.visible = false">{{ copy.cancel }}</MmButton>
-          <MmButton size="sm" :loading="dialog.saving" variant="primary" @click="save">{{ copy.confirm }}</MmButton>
+          <MmButton size="sm" :disabled="translationDraftLoading" :loading="dialog.saving" variant="primary" @click="save">{{ copy.save }}</MmButton>
         </div>
       </template>
     </MmDialog>
@@ -165,6 +215,20 @@
       v-model="translationConfigVisible"
       :actions="translationConfigActions"
       :locale="locale"
+    />
+
+    <TagTranslationDialog
+      v-if="translationActions"
+      v-model="translationVisible"
+      :actions="translationActions"
+      :draft-mode="translationDraftActive"
+      :initial-values="translationDraft"
+      :locale="locale"
+      :show-google-settings="Boolean(translationConfigActions)"
+      :tag-id="translationRow?.id"
+      @apply="handleTranslationDraftApplied"
+      @open-settings="openTranslationSettings"
+      @saved="handleTranslationsSaved"
     />
 
     <MmMessageBox
@@ -198,8 +262,6 @@ import type { MessageBoxAction } from "../message-box";
 import MmProTable from "../pro-table/ProTable.vue";
 import type { ProTableColumn } from "../pro-table";
 import type { QueryBarField, QueryBarValue } from "../query-bar";
-import MmRadio from "../radio/Radio.vue";
-import MmRadioGroup from "../radio/RadioGroup.vue";
 import MmSelect from "../select/Select.vue";
 import type { SelectOption } from "../select";
 import type { TableKey, TableRow } from "../table";
@@ -207,6 +269,7 @@ import MmTag from "../tag/Tag.vue";
 import type { FormRules } from "../../shared/form";
 import type { SymbolTagActionName, SymbolTagFormValue, SymbolTagManagerLabels, SymbolTagManagerProps, SymbolTagRow } from "./types";
 import TranslationConfigDialog from "./TranslationConfigDialog.vue";
+import TagTranslationDialog from "./TagTranslationDialog.vue";
 
 defineOptions({ name: "MmSymbolTagManager" });
 
@@ -226,31 +289,31 @@ const zh: SymbolTagManagerLabels = {
   actions: "操作", add: "新增", addChild: "新增子标签", all: "全部", availableActions: "可用操作", cancel: "取消", childTag: "子标签", close: "关闭",
   code: "标签编码", codeHint: "仅支持小写字母、数字和下划线", collapseAll: "全部折叠", collapseTag: "折叠标签", confirm: "确定", delete: "删除标签",
   deleteConfirm: "确认删除标签“{name}”？", deleteDescription: "删除后，当前标签及其关联关系将立即失效，此操作不可撤销。", deleteTitle: "删除标签",
-  detail: "查看标签详情", dialogCreate: "添加标签", dialogEdit: "修改标签", dialogSubtitleCreate: "", dialogSubtitleEdit: "", disabled: "隐藏", display: "显示状态",
-  displayHint: "", edit: "编辑标签", enabled: "显示", enName: "英文名称", expandAll: "全部展开", expandTag: "展开标签", filterSubtitle: "可按标签名称、父级标签和状态组合筛选",
+  detail: "查看标签详情", dialogCreate: "新增标签", dialogEdit: "修改标签", dialogSubtitleCreate: "新增父标签或独立标签", dialogSubtitleEdit: "修改标签信息与前端多语言", disabled: "隐藏", display: "显示状态",
+  displayHint: "隐藏后不会在前台标签列表中展示", edit: "编辑标签", editTranslation: "编辑译文", enabled: "显示", enName: "英文名称", expandAll: "全部展开", expandTag: "展开标签", filterSubtitle: "可按标签名称、父级标签和状态组合筛选", frontendDisplay: "前台显示",
   filterTitle: "筛选交易对标签", hideTag: "隐藏标签", invalidCode: "仅支持小写字母、数字、下划线", loadingDescription: "正在准备当前查询的数据，请稍候。",
-  loadingTitle: "正在加载数据", name: "标签名称", nameHint: "", noData: "暂无交易对标签", notice: "", pairCount: "交易对数量", pairHint: "", parent: "父级标签",
-  parentFilter: "父级标签", parentHint: "", query: "查询", refresh: "刷新", required: "请完整填写必填项", reset: "重置", rootOnly: "根标签", rootOption: "根标签",
-  rootTag: "根标签", save: "保存", searchPlaceholder: "名称 / 编码", showTag: "显示标签", sort: "排序", sortHint: "", status: "状态", statusFilter: "状态",
-  tableAria: "交易对标签", tagId: "标签 ID", tagInfo: "标签信息", total: "", translation: "", translationCount: "", updatedAt: "更新时间", zhName: "中文名称",
+  loadingTitle: "正在加载数据", name: "标签名称", nameHint: "后台显示名称；未配置翻译的语种也使用此名称。", namePlaceholder: "例如：加密货币", noData: "暂无交易对标签", notice: "标签只负责分类和前台展示；热门、新币等交易对属性应在交易对配置中维护。", pairCount: "交易对数量", pairHint: "", parent: "父级标签",
+  parentFilter: "父级标签", parentHint: "选择“根标签”时，该标签将作为一级分类展示", query: "查询", refresh: "刷新", required: "请完整填写必填项", reset: "重置", rootOnly: "根标签", rootOption: "根标签",
+  rootTag: "根标签", save: "保存标签", searchPlaceholder: "名称 / 编码", showTag: "显示标签", sort: "排序", sortHint: "数值越大，前台排序越靠前", status: "状态", statusFilter: "状态",
+  tableAria: "交易对标签", tagId: "标签 ID", tagInfo: "标签信息", total: "", translation: "前端多语言", translationCount: "0/20", updatedAt: "更新时间", zhName: "中文名称", codePlaceholder: "例如：crypto",
 };
 const en: SymbolTagManagerLabels = {
   actions: "Actions", add: "Add", addChild: "Add Child Tag", all: "All", availableActions: "Available Actions", cancel: "Cancel", childTag: "Child Tag", close: "Close",
   code: "Tag Code", codeHint: "Lowercase letters, numbers, and underscores only", collapseAll: "Collapse All", collapseTag: "Collapse Tag", confirm: "Confirm", delete: "Delete Tag",
   deleteConfirm: "Delete tag “{name}”?", deleteDescription: "The tag and its associations will be removed immediately. This action cannot be undone.", deleteTitle: "Delete Tag",
-  detail: "View Tag Details", dialogCreate: "Add Tag", dialogEdit: "Edit Tag", dialogSubtitleCreate: "", dialogSubtitleEdit: "", disabled: "Hidden", display: "Status",
-  displayHint: "", edit: "Edit Tag", enabled: "Visible", enName: "English Name", expandAll: "Expand All", expandTag: "Expand Tag", filterSubtitle: "Filter by tag name, parent, and status",
+  detail: "View Tag Details", dialogCreate: "Add Tag", dialogEdit: "Edit Tag", dialogSubtitleCreate: "Add a parent or standalone tag", dialogSubtitleEdit: "Update tag details and frontend languages", disabled: "Hidden", display: "Status",
+  displayHint: "Hidden tags are not shown in the frontend tag list", edit: "Edit Tag", editTranslation: "Edit translations", enabled: "Visible", enName: "English Name", expandAll: "Expand All", expandTag: "Expand Tag", filterSubtitle: "Filter by tag name, parent, and status", frontendDisplay: "Frontend visibility",
   filterTitle: "Filter Trading Pair Tags", hideTag: "Hide Tag", invalidCode: "Lowercase letters, numbers, and underscores only", loadingDescription: "Preparing data for the current query.",
-  loadingTitle: "Loading Data", name: "Tag Name", nameHint: "", noData: "No trading pair tags", notice: "", pairCount: "Trading Pairs", pairHint: "", parent: "Parent Tag",
-  parentFilter: "Parent Tag", parentHint: "", query: "Search", refresh: "Refresh", required: "Complete all required fields", reset: "Reset", rootOnly: "Root Tag", rootOption: "Root Tag",
-  rootTag: "Root Tag", save: "Save", searchPlaceholder: "Name / Code", showTag: "Show Tag", sort: "Sort", sortHint: "", status: "Status", statusFilter: "Status",
-  tableAria: "Trading Pair Tags", tagId: "Tag ID", tagInfo: "Tag Information", total: "", translation: "", translationCount: "", updatedAt: "Updated At", zhName: "Chinese Name",
+  loadingTitle: "Loading Data", name: "Tag Name", nameHint: "Admin display name and fallback for languages without a translation.", namePlaceholder: "e.g. Crypto", noData: "No trading pair tags", notice: "Tags are only used for categorization and frontend display. Trading-pair attributes such as Hot and New should be maintained in trading-pair settings.", pairCount: "Trading Pairs", pairHint: "", parent: "Parent Tag",
+  parentFilter: "Parent Tag", parentHint: "Selecting Root Tag displays this tag as a top-level category", query: "Search", refresh: "Refresh", required: "Complete all required fields", reset: "Reset", rootOnly: "Root Tag", rootOption: "Root Tag",
+  rootTag: "Root Tag", save: "Save Tag", searchPlaceholder: "Name / Code", showTag: "Show Tag", sort: "Sort", sortHint: "Larger values appear earlier on the frontend", status: "Status", statusFilter: "Status",
+  tableAria: "Trading Pair Tags", tagId: "Tag ID", tagInfo: "Tag Information", total: "", translation: "Frontend languages", translationCount: "0/20", updatedAt: "Updated At", zhName: "Chinese Name", codePlaceholder: "e.g. crypto",
 };
 
 const copy = computed(() => ({ ...(props.locale.toLowerCase().startsWith("en") ? en : zh), ...props.labels }));
 type TagRow = SymbolTagRow & TableRow & { children?: TagRow[] };
 type VisibleTagRow = TagRow & { _expanded: boolean; _hasChildren: boolean; _level: number };
-type DetailAction = "add-child" | "delete" | "edit" | "toggle-status" | "translation-config";
+type DetailAction = "add-child" | "delete" | "edit" | "toggle-status" | "translation-config" | "translations";
 
 const rows = ref<TagRow[]>([]);
 const filters = ref<QueryBarValue>(defaultFilters());
@@ -259,6 +322,12 @@ const pageError = ref("");
 const expandedKeys = ref<Set<TableKey>>(new Set());
 const detailVisible = ref(false);
 const translationConfigVisible = ref(false);
+const translationVisible = ref(false);
+const translationDraftActive = ref(false);
+const translationDraftReady = ref(false);
+const translationDraftLoading = ref(false);
+const translationDraft = reactive<Record<string, string>>({});
+const translationRow = shallowRef<VisibleTagRow | null>(null);
 const detailRow = shallowRef<VisibleTagRow | null>(null);
 const deleteVisible = ref(false);
 const deleteTarget = shallowRef<TagRow>();
@@ -324,6 +393,10 @@ const detailParentName = computed(() => {
 const deleteMessage = computed(() => deleteTarget.value
   ? `${format(copy.value.deleteConfirm, { name: deleteTarget.value.tag_name_zh || deleteTarget.value.tag_name || deleteTarget.value.tag_code })} ${copy.value.deleteDescription}`
   : "");
+const translationConfiguredCount = computed(() => {
+  const values = { ...translationDraft, "zh-CN": form.tag_name_zh, en: form.tag_name_en };
+  return Object.values(values).filter((value) => String(value || "").trim() !== "").length;
+});
 const formRules = computed<FormRules>(() => ({
   tag_name: [{ required: true, message: `${copy.value.required}: ${copy.value.name}`, trigger: "blur" }],
   tag_code: [
@@ -407,20 +480,61 @@ async function load() {
   } finally { loading.value = false; }
 }
 function openDetail(row: VisibleTagRow) { detailRow.value = row; detailVisible.value = true; }
-function resetForm() { Object.assign(form, newForm()); formError.value = ""; formRef.value?.clearValidate(); }
-function openCreate(parentId: number) { dialog.editingId = 0; resetForm(); form.parent_id = parentId; dialog.visible = true; }
-function openEdit(row: TagRow) {
+function resetForm() {
+  Object.assign(form, newForm());
+  Object.keys(translationDraft).forEach((key) => delete translationDraft[key]);
+  translationDraftActive.value = false;
+  translationDraftReady.value = false;
+  translationDraftLoading.value = false;
+  formError.value = "";
+  formRef.value?.clearValidate();
+}
+function openCreate(parentId: number) { dialog.editingId = 0; resetForm(); form.parent_id = parentId; translationDraftReady.value = true; dialog.visible = true; }
+async function openEdit(row: TagRow) {
+  Object.keys(translationDraft).forEach((key) => delete translationDraft[key]);
   dialog.editingId = row.id;
   Object.assign(form, { parent_id: row.parent_id, sort: row.sort, tag_name: row.tag_name, tag_code: row.tag_code, tag_name_zh: row.tag_name_zh, tag_name_en: row.tag_name_en, is_enable: row.is_enable });
+  translationDraft["zh-CN"] = String(row.tag_name_zh || "");
+  translationDraft.en = String(row.tag_name_en || "");
+  translationDraftActive.value = true;
+  translationDraftReady.value = !props.translationActions;
+  translationRow.value = row as VisibleTagRow;
   formError.value = "";
   dialog.visible = true;
+  if (!props.translationActions) return;
+  translationDraftLoading.value = true;
+  try {
+    const detail = await props.translationActions.load(Number(row.id));
+    detail.languages.forEach((item) => { translationDraft[item.locale] = item.value; });
+    translationDraftReady.value = true;
+  } catch (error) {
+    formError.value = errorMessage(error);
+    emit("action-error", "translations", error);
+  } finally {
+    translationDraftLoading.value = false;
+  }
 }
 function normalizeCode(value: unknown) { form.tag_code = String(value || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""); }
 async function save() {
   if (dialog.saving || !(await formRef.value?.validate())) return;
   dialog.saving = true;
   formError.value = "";
-  const payload: SymbolTagFormValue = { ...form, parent_id: Number(form.parent_id || 0), sort: Number(form.sort), tag_name: form.tag_name.trim(), tag_code: form.tag_code.trim(), tag_name_zh: form.tag_name_zh.trim(), tag_name_en: form.tag_name_en.trim(), is_enable: Number(form.is_enable) };
+  const tagName = form.tag_name.trim();
+  const payload: SymbolTagFormValue = {
+    ...form,
+    parent_id: Number(form.parent_id || 0),
+    sort: Number(form.sort),
+    tag_name: tagName,
+    tag_code: form.tag_code.trim(),
+    tag_name_zh: form.tag_name_zh.trim() || (props.locale.toLowerCase().startsWith("en") ? "" : tagName),
+    tag_name_en: form.tag_name_en.trim() || (props.locale.toLowerCase().startsWith("en") ? tagName : ""),
+    is_enable: Number(form.is_enable),
+    translations: translationDraftReady.value ? {
+      ...translationDraft,
+      "zh-CN": form.tag_name_zh.trim(),
+      en: form.tag_name_en.trim(),
+    } : undefined,
+  };
   try {
     if (dialog.editingId) { await props.actions.update(dialog.editingId, payload); emit("action-success", "update"); }
     else { await props.actions.create(payload); emit("action-success", "create"); }
@@ -453,7 +567,38 @@ function runDetailAction(action: DetailAction) {
   else if (action === "toggle-status") void toggleStatus(row);
   else if (action === "delete") requestDelete(row);
   else if (action === "translation-config") translationConfigVisible.value = true;
+  else if (action === "translations") {
+    translationDraftActive.value = false;
+    translationRow.value = row;
+    translationVisible.value = true;
+  }
   else openEdit(row);
+}
+
+function openCreateTranslations() {
+  if (!props.translationActions || translationDraftLoading.value) return;
+  translationDraft["zh-CN"] = form.tag_name_zh.trim();
+  translationDraft.en = form.tag_name_en.trim();
+  translationDraftActive.value = true;
+  if (!dialog.editingId) translationRow.value = null;
+  translationVisible.value = true;
+}
+
+function handleTranslationDraftApplied(translations: Record<string, string>) {
+  Object.keys(translationDraft).forEach((key) => delete translationDraft[key]);
+  Object.assign(translationDraft, translations);
+  form.tag_name_zh = String(translations["zh-CN"] || form.tag_name_zh);
+  form.tag_name_en = String(translations.en || form.tag_name_en);
+}
+
+function openTranslationSettings() {
+  translationVisible.value = false;
+  translationConfigVisible.value = true;
+}
+
+async function handleTranslationsSaved() {
+  emit("action-success", "translations", translationRow.value || undefined);
+  await load();
 }
 
 onMounted(load);
@@ -472,4 +617,12 @@ defineExpose({ reload: load });
 .mm-symbol-tag-manager__drawer-actions button{display:grid;width:100%;min-height:38px;align-items:center;gap:10px;padding:0 12px;border:1px solid var(--mm-color-line);border-radius:var(--mm-radius-md);color:var(--mm-color-text);background:var(--mm-color-panel);cursor:pointer;font:inherit;font-size:12px;grid-template-columns:16px minmax(0,1fr) 16px;text-align:left;transition:border-color var(--mm-duration-fast) var(--mm-ease-standard),background var(--mm-duration-fast) var(--mm-ease-standard),color var(--mm-duration-fast) var(--mm-ease-standard)}
 .mm-symbol-tag-manager__drawer-actions button:hover{border-color:var(--mm-color-primary);color:var(--mm-color-primary);background:var(--mm-color-primary-soft)}.mm-symbol-tag-manager__drawer-actions button.is-danger{color:var(--mm-color-danger)}.mm-symbol-tag-manager__drawer-actions button.is-danger:hover{border-color:var(--mm-color-danger);background:var(--mm-color-danger-soft)}
 .mm-symbol-tag-manager__dialog-footer{display:flex;justify-content:flex-end;gap:8px}
+.mm-symbol-tag-manager__create-dialog .mm-dialog__header{align-items:flex-start;padding:16px 18px 13px}.mm-symbol-tag-manager__create-dialog .mm-dialog__body{padding:18px}.mm-symbol-tag-manager__create-dialog .mm-dialog__footer{padding:10px 16px}
+.mm-symbol-tag-manager__create-heading{display:flex;flex-direction:column;gap:4px}.mm-symbol-tag-manager__create-heading strong{color:var(--mm-color-text);font-size:16px;font-weight:var(--mm-font-weight-bold);line-height:1.25}.mm-symbol-tag-manager__create-heading span{color:var(--mm-color-text-muted);font-size:12px;font-weight:var(--mm-font-weight-regular)}
+.mm-symbol-tag-manager__create-form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:14px;row-gap:15px}.mm-symbol-tag-manager__create-form>.is-full{grid-column:1/-1}.mm-symbol-tag-manager__create-form .mm-form-item{margin:0}.mm-symbol-tag-manager__create-form .mm-form-item__control{align-items:stretch;flex-direction:column;gap:6px}.mm-symbol-tag-manager__create-form .mm-form-item__control>small{min-height:14px;color:var(--mm-color-text-muted);font-size:10px;line-height:1.4}.mm-symbol-tag-manager__create-form .mm-input-number{width:100%}
+.mm-symbol-tag-manager__translation-card{display:flex;min-height:44px;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;margin-top:1px;padding:8px 10px;border:1px solid color-mix(in srgb,var(--mm-color-primary) 38%,var(--mm-color-line));border-radius:var(--mm-radius-md);background:color-mix(in srgb,var(--mm-color-primary-soft) 44%,var(--mm-color-panel))}.mm-symbol-tag-manager__translation-card>div{display:flex;align-items:center;gap:8px}.mm-symbol-tag-manager__translation-card strong{font-size:12px}.mm-symbol-tag-manager__translation-card>div span{padding:2px 6px;border-radius:var(--mm-radius-sm);color:var(--mm-color-primary);background:var(--mm-color-primary-soft);font-size:10px}.mm-symbol-tag-manager__translation-card>small{width:100%;color:var(--mm-color-text-muted);font-size:10px}
+.mm-symbol-tag-manager__display{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px dashed var(--mm-color-line);border-bottom:1px dashed var(--mm-color-line)}.mm-symbol-tag-manager__display>div:first-child{display:grid;gap:4px}.mm-symbol-tag-manager__display strong{font-size:12px}.mm-symbol-tag-manager__display small{color:var(--mm-color-text-muted);font-size:10px}.mm-symbol-tag-manager__display-control{display:flex;align-items:center;gap:7px;color:var(--mm-color-primary);font-size:10px}
+.mm-symbol-tag-manager__switch{position:relative;width:29px;height:17px;flex:none;padding:0;border:0;border-radius:999px;background:var(--mm-color-line-strong);cursor:pointer;transition:background var(--mm-duration-fast)}.mm-symbol-tag-manager__switch i{position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgb(15 23 42 / 18%);transition:transform var(--mm-duration-fast)}.mm-symbol-tag-manager__switch.is-checked{background:var(--mm-color-primary)}.mm-symbol-tag-manager__switch.is-checked i{transform:translateX(12px)}.mm-symbol-tag-manager__switch:focus-visible{outline:0;box-shadow:var(--mm-focus-ring)}.mm-symbol-tag-manager__switch:disabled{cursor:not-allowed;opacity:.55}
+.mm-symbol-tag-manager__notice{display:flex;min-height:38px;align-items:center;gap:8px;padding:8px 11px;border:1px solid color-mix(in srgb,var(--mm-color-primary) 35%,var(--mm-color-line));border-radius:var(--mm-radius-md);color:var(--mm-color-text-muted);background:color-mix(in srgb,var(--mm-color-primary-soft) 32%,var(--mm-color-panel));font-size:10px}.mm-symbol-tag-manager__notice .mm-icon{flex:none;color:var(--mm-color-primary)}
+@media(max-width:640px){.mm-symbol-tag-manager__create-form{grid-template-columns:1fr}.mm-symbol-tag-manager__create-form>.is-full{grid-column:auto}.mm-symbol-tag-manager__translation-card,.mm-symbol-tag-manager__display{align-items:flex-start;flex-direction:column}.mm-symbol-tag-manager__display-control{align-self:flex-end}}
 </style>

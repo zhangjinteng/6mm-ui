@@ -13,7 +13,7 @@
 ## 安装
 
 ```bash
-npm install '@work-gpt/6mm-ui@git+https://github.com/zhangjinteng/6mm-ui.git#v1.0.23' --save-exact
+npm install '@work-gpt/6mm-ui@https://github.com/zhangjinteng/6mm-ui/archive/refs/tags/v1.0.23.tar.gz' --save-exact
 ```
 
 生产项目应固定到明确的 `vX.Y.Z` 标签，避免跟随 `main` 产生不可重复安装。

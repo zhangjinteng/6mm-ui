@@ -1,0 +1,24 @@
+.mm-scrollbar {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.mm-scrollbar__wrap {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.mm-scrollbar__wrap:focus-visible {
+  outline: none;
+  box-shadow: inset var(--mm-focus-ring);
+}
+
+.mm-scrollbar:not(.is-always) .mm-scrollbar__wrap::-webkit-scrollbar-thumb { background-color: transparent; }
+.mm-scrollbar:hover .mm-scrollbar__wrap::-webkit-scrollbar-thumb,
+.mm-scrollbar__wrap:focus-visible::-webkit-scrollbar-thumb { background-color: color-mix(in srgb, var(--mm-color-text-muted) 30%, transparent); }
+.mm-scrollbar__wrap::-webkit-scrollbar-thumb:hover { background-color: color-mix(in srgb, var(--mm-color-text-muted) 52%, transparent); }
+.mm-scrollbar__view { min-width: 100%; }

@@ -1,0 +1,13 @@
+import { PositionRow } from './types';
+export declare function toPositionNumber(value: unknown): number;
+export declare function resolvePositionMarkPrice(row: PositionRow, marketPrices?: Readonly<Record<string, number | string | null | undefined>>): number;
+export declare function calculatePositionValue(row: PositionRow, marketPrices?: Readonly<Record<string, number | string | null | undefined>>): number;
+export declare function calculatePositionPnl(row: PositionRow, marketPrices?: Readonly<Record<string, number | string | null | undefined>>): number;
+export declare function calculatePositionMargin(row: PositionRow, marketPrices?: Readonly<Record<string, number | string | null | undefined>>): number;
+export declare function calculatePositionRoe(row: PositionRow, marketPrices?: Readonly<Record<string, number | string | null | undefined>>): number;
+export declare function formatPositionAmount(value: unknown): string;
+export declare function formatPositionPrice(value: unknown): string;
+export declare function formatPositionOptionalPrice(value: unknown): string;
+export declare function formatPositionQuantity(value: unknown): string;
+export declare function formatSignedPositionAmount(value: unknown): string;
+export declare function formatSignedPositionPercent(value: unknown): string;

@@ -1,0 +1,65 @@
+.mm-user-detail-dialog__overlay { padding: 2px; }
+.mm-user-detail-dialog__panel { max-width: calc(100vw - 4px); max-height: calc(100vh - 4px); }
+.mm-user-detail-dialog__panel .mm-dialog__header { min-height: 64px; padding-inline: 16px 14px; }
+.mm-user-detail-dialog__panel .mm-dialog__body { padding: 12px 14px; background: color-mix(in srgb, var(--mm-color-soft) 76%, var(--mm-color-panel)); }
+.mm-user-detail-dialog__panel .mm-dialog__footer { justify-content: flex-start; min-height: 42px; padding: 8px 16px; }
+.mm-user-detail-dialog__title { display: grid; min-width: 0; gap: 2px; }
+.mm-user-detail-dialog__title strong { color: var(--mm-color-text); font-size: 16px; line-height: 1.25; }
+.mm-user-detail-dialog__title span { overflow: hidden; color: var(--mm-color-text-muted); font-size: 11px; font-weight: var(--mm-font-weight-regular); text-overflow: ellipsis; white-space: nowrap; }
+.mm-user-detail-dialog__state { display: grid; place-items: center; min-height: 300px; color: var(--mm-color-text-muted); gap: 10px; text-align: center; }
+.mm-user-detail-dialog__state strong { color: var(--mm-color-text); font-size: 14px; }
+.mm-user-detail-dialog__state span { font-size: 11px; }
+.mm-user-detail-dialog__state.is-error { color: var(--mm-color-danger); }
+.mm-user-detail-dialog__state .is-loading { animation: mm-user-detail-spin .9s linear infinite; }
+@keyframes mm-user-detail-spin { to { transform: rotate(360deg); } }
+.mm-user-detail-dialog__content { display: grid; min-width: 0; gap: 10px; }
+.mm-user-detail-profile, .mm-user-detail-login, .mm-user-detail-business { overflow: hidden; }
+.mm-user-detail-profile > .mm-card__body, .mm-user-detail-login > .mm-card__body, .mm-user-detail-business > .mm-card__body { padding: 0; }
+.mm-user-detail-profile__identity { display: flex; min-width: 0; padding: 12px; gap: 10px; align-items: center; }
+.mm-user-detail-profile__name { display: grid; min-width: 0; flex: 1; gap: 1px; }
+.mm-user-detail-profile__name strong, .mm-user-detail-profile__name span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mm-user-detail-profile__name strong { color: var(--mm-color-text); font-size: 14px; }
+.mm-user-detail-profile__name span { font-size: 11px; }
+.mm-user-detail-profile__badges, .mm-user-detail-heading { display: flex; align-items: center; gap: 8px; }
+.mm-user-detail-profile__summary { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--mm-color-line); }
+.mm-user-detail-field { display: grid; min-width: 0; min-height: 58px; padding: 9px 12px; align-content: center; gap: 3px; border-right: 1px solid var(--mm-color-line); }
+.mm-user-detail-field:last-child { border-right: 0; }
+.mm-user-detail-field__label, .mm-user-detail-login-field__label { color: var(--mm-color-text-muted); font-size: 11px; }
+.mm-user-detail-field__value, .mm-user-detail-login-field__value { overflow: hidden; color: var(--mm-color-text); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.mm-user-detail-login .mm-card__header, .mm-user-detail-business .mm-card__header { min-height: 40px; padding: 8px 12px; }
+.mm-user-detail-heading strong { color: var(--mm-color-text); }
+.mm-user-detail-presence-dot { display: inline-block; width: 5px; height: 5px; margin-right: 4px; background: currentcolor; border-radius: 999px; }
+.mm-user-detail-caption { margin-left: auto; color: var(--mm-color-text-muted); font-size: 11px; }
+.mm-user-detail-login__summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.mm-user-detail-login__summary.is-online { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mm-user-detail-login-field { display: grid; min-width: 0; min-height: 68px; padding: 10px 12px; align-content: center; gap: 4px; border-right: 1px solid var(--mm-color-line); }
+.mm-user-detail-login-field:last-child { border-right: 0; }
+.mm-user-detail-login-field.is-location { align-content: center; }
+.mm-user-detail-tabs .mm-tabs__list { padding-inline: 10px; }
+.mm-user-detail-business { border-top: 2px solid var(--mm-color-primary); }
+.mm-user-detail-business__metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mm-user-detail-metric { position: relative; display: grid; min-width: 0; min-height: 64px; padding: 9px 12px 20px; align-content: start; gap: 3px; border-right: 1px solid var(--mm-color-line); border-bottom: 1px solid var(--mm-color-line); }
+.mm-user-detail-metric:nth-child(4n) { border-right: 0; }
+.mm-user-detail-metric:nth-last-child(-n + 4) { border-bottom: 0; }
+.mm-user-detail-metric > span { color: var(--mm-color-text-muted); font-size: 11px; }
+.mm-user-detail-metric > strong { overflow: hidden; color: var(--mm-color-text); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.mm-user-detail-metric > strong.is-positive { color: var(--mm-color-success); }
+.mm-user-detail-metric > strong.is-negative { color: var(--mm-color-danger); }
+.mm-user-detail-metric__link { position: absolute; right: 4px; bottom: 1px; min-height: 20px !important; padding-inline: 4px !important; font-size: 10px !important; }
+.mm-user-detail-dialog__updated-at { color: var(--mm-color-text-muted); font-size: 11px; }
+@media (max-height: 700px) { .mm-user-detail-dialog__panel { height: calc(100vh - 4px); } }
+@media (max-width: 900px) {
+  .mm-user-detail-profile__summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mm-user-detail-field { border-bottom: 1px solid var(--mm-color-line); }
+  .mm-user-detail-login__summary, .mm-user-detail-login__summary.is-online { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mm-user-detail-business__metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mm-user-detail-metric:nth-child(2n) { border-right: 0; }
+  .mm-user-detail-metric:nth-last-child(-n + 4) { border-bottom: 1px solid var(--mm-color-line); }
+  .mm-user-detail-metric:nth-last-child(-n + 2) { border-bottom: 0; }
+}
+@media (max-width: 560px) {
+  .mm-user-detail-profile__identity { align-items: flex-start; flex-wrap: wrap; }
+  .mm-user-detail-profile__badges { width: 100%; padding-left: 48px; }
+  .mm-user-detail-profile__summary, .mm-user-detail-login__summary, .mm-user-detail-login__summary.is-online, .mm-user-detail-business__metrics { grid-template-columns: 1fr; }
+  .mm-user-detail-field, .mm-user-detail-login-field, .mm-user-detail-metric { border-right: 0; border-bottom: 1px solid var(--mm-color-line); }
+}

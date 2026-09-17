@@ -1,0 +1,4 @@
+.mm-message-box .mm-dialog__body { padding-bottom: 14px; }
+.mm-message-box__message { margin: 0; color: var(--mm-color-text-muted); font-size: var(--mm-font-size-sm); line-height: 1.65; }
+.mm-message-box__prompt { margin-top: var(--mm-space-4); }
+.mm-message-box__error { margin: 6px 0 0; color: var(--mm-color-danger); font-size: var(--mm-font-size-xs); line-height: 1.45; }

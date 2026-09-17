@@ -1,0 +1,43 @@
+.mm-history-position-table.is-fill-height {
+  height: 100%;
+  min-height: 480px;
+}
+
+.mm-history-position-table__id {
+  color: var(--mm-color-text);
+  font-weight: 500;
+}
+
+.mm-history-position-table__change {
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-history-position-table__change.is-profit {
+  color: var(--mm-color-success);
+}
+
+.mm-history-position-table__change.is-loss {
+  color: var(--mm-color-danger);
+}
+
+.mm-history-position-table__change.is-neutral {
+  color: var(--mm-color-text);
+}
+
+.mm-history-position-table :where(.mm-table th, .mm-table td) {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-history-position-table .mm-table th {
+  padding: 6px 8px;
+  line-height: 18px;
+}
+
+.mm-history-position-table .mm-table__sort {
+  gap: 4px;
+}
+
+.mm-history-position-table .mm-pro-table__auto-refresh {
+  display: none;
+}

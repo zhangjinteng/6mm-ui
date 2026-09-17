@@ -1,0 +1,20 @@
+{
+  "name": "@work-gpt/6mm-ui-consumer-test",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "build": "npm run typecheck && vite build"
+  },
+  "dependencies": {
+    "@work-gpt/6mm-ui": "file:../../work-gpt-6mm-ui-0.1.0.tgz",
+    "vue": "^3.5.40"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.8",
+    "typescript": "6.0.3",
+    "vite": "^8.1.5",
+    "vue-tsc": "^3.3.7"
+  }
+}

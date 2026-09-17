@@ -1,0 +1,37 @@
+.mm-history-order-table {
+  min-width: 0;
+  min-height: 0;
+}
+
+.mm-history-order-table.is-fill-height {
+  height: 100%;
+}
+
+.mm-history-order-table__id {
+  color: var(--mm-color-text);
+  font-weight: var(--mm-font-weight-medium);
+}
+
+.mm-history-order-table__number {
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-history-order-table .mm-table th,
+.mm-history-order-table .mm-table td {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-history-order-table .mm-pro-table__auto-refresh {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mm-history-order-table .mm-query-bar {
+    padding-inline: 6px;
+  }
+
+  .mm-history-order-table .mm-pro-table__pagination-summary {
+    display: none;
+  }
+}

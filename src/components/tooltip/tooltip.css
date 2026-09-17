@@ -1,0 +1,14 @@
+.mm-popover__floating[role='tooltip'] {
+  max-width: min(260px, calc(100vw - 24px));
+  padding: 7px 9px;
+  color: var(--mm-color-panel);
+  background: var(--mm-color-text);
+  border-color: transparent;
+  border-radius: var(--mm-radius-sm);
+  box-shadow: var(--mm-shadow-md);
+  pointer-events: auto;
+  user-select: text;
+}
+
+.mm-popover__floating[role='tooltip'] .mm-popover__arrow { background: var(--mm-color-text); border-color: transparent; }
+.mm-tooltip__content { display: block; font-size: var(--mm-font-size-xs); font-weight: var(--mm-font-weight-medium); line-height: 1.45; }

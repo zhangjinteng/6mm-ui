@@ -1,0 +1,36 @@
+.mm-text {
+  min-width: 0;
+  margin: 0;
+  color: var(--mm-color-text);
+  font: inherit;
+}
+
+.mm-text--xs { font-size: var(--mm-font-size-xs); }
+.mm-text--sm { font-size: var(--mm-font-size-sm); }
+.mm-text--md { font-size: var(--mm-font-size-md); }
+.mm-text--lg { font-size: var(--mm-font-size-lg); }
+.mm-text--xl { font-size: var(--mm-font-size-xl); }
+.mm-text--muted { color: var(--mm-color-text-muted); }
+.mm-text--subtle { color: var(--mm-color-text-subtle); }
+.mm-text--primary { color: var(--mm-color-primary); }
+.mm-text--success { color: var(--mm-color-success); }
+.mm-text--warning { color: var(--mm-color-warning); }
+.mm-text--danger { color: var(--mm-color-danger); }
+.mm-text.is-regular { font-weight: var(--mm-font-weight-regular); }
+.mm-text.is-medium { font-weight: var(--mm-font-weight-medium); }
+.mm-text.is-semibold { font-weight: var(--mm-font-weight-semibold); }
+.mm-text.is-bold { font-weight: var(--mm-font-weight-bold); }
+
+.mm-text.is-truncated {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-text.is-clamped {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--mm-text-lines);
+}

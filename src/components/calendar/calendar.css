@@ -1,0 +1,4 @@
+.mm-calendar { overflow: hidden; color: var(--mm-color-text); background: var(--mm-color-panel); border: 1px solid var(--mm-color-line); border-radius: var(--mm-radius-lg); }
+.mm-calendar .mm-date-panel { width: 100%; padding: var(--mm-space-4); }
+.mm-calendar .mm-date-panel__day { min-height: 38px; aspect-ratio: auto; }
+@media (max-width: 640px) { .mm-calendar .mm-date-panel { padding: var(--mm-space-2); } .mm-calendar .mm-date-panel__day { min-height: 34px; } }

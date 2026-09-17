@@ -1,0 +1,68 @@
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+) {
+  scrollbar-color: color-mix(in srgb, var(--mm-color-text-muted) 38%, transparent) transparent;
+  scrollbar-gutter: auto;
+  scrollbar-width: thin;
+}
+
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+)::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+)::-webkit-scrollbar-track,
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+)::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+)::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: var(--mm-radius-round);
+  background: color-mix(in srgb, var(--mm-color-text-muted) 30%, transparent);
+  background-clip: padding-box;
+}
+
+:where(
+  .mm-ui,
+  .mm-ui *,
+  [data-mm-component],
+  [data-mm-component] *,
+  [class^='mm-'],
+  [class*=' mm-']
+)::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--mm-color-text-muted) 52%, transparent);
+}

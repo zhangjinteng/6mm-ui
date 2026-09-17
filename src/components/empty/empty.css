@@ -1,0 +1,7 @@
+.mm-empty { display: grid; justify-items: center; gap: var(--mm-space-3); padding: var(--mm-space-8) var(--mm-space-4); color: var(--mm-color-text-muted); text-align: center; }
+.mm-empty__image { width: var(--mm-empty-image-size); height: var(--mm-empty-image-size); display: grid; place-items: center; color: var(--mm-color-line-strong); }
+.mm-empty__image img, .mm-empty__image svg { width: 100%; max-height: 100%; object-fit: contain; }
+.mm-empty__image svg path { stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.mm-empty__image svg path:nth-child(2) { fill: var(--mm-color-soft); }
+.mm-empty__description { margin: 0; font: var(--mm-font-size-sm)/var(--mm-line-height-normal) var(--mm-font-family); }
+.mm-empty__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--mm-space-2); }

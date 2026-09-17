@@ -1,0 +1,83 @@
+.mm-ip-location {
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.mm-ip-location__ip {
+  overflow: hidden;
+  color: var(--mm-color-text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-ip-location__meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin-top: 3px;
+  color: var(--mm-color-text-muted);
+  font-size: 12px;
+}
+
+.mm-ip-location__flag {
+  flex: none;
+  width: 20px;
+  font-size: 16px;
+  line-height: 1;
+  text-align: center;
+}
+
+.mm-ip-location__icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 18px;
+  border: 1px solid var(--mm-color-line);
+  border-radius: var(--mm-radius-xs);
+  background: var(--mm-color-soft);
+  color: var(--mm-color-text-muted);
+}
+
+.mm-ip-location__address {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mm-ip-location--address-only .mm-ip-location__meta {
+  margin-top: 0;
+}
+
+.mm-ip-location--address-only .mm-ip-location__address {
+  white-space: normal;
+}
+
+.mm-ip-location--location-first {
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-ip-location--location-first .mm-ip-location__meta {
+  order: 1;
+  margin-top: 0;
+  color: var(--mm-color-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mm-ip-location--location-first .mm-ip-location__ip {
+  order: 2;
+  margin-top: 2px;
+  color: var(--mm-color-text-muted);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.mm-ip-location__empty {
+  color: var(--mm-color-text-muted);
+}

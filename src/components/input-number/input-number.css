@@ -1,0 +1,53 @@
+.mm-input-number {
+  width: 100%;
+  min-width: 0;
+  position: relative;
+  display: inline-flex;
+}
+.mm-input-number > .mm-input {
+  width: 100%;
+}
+.mm-input-number.is-with-controls :where(.mm-input__native) {
+  padding-right: 36px;
+}
+.mm-input-number.is-with-controls :where(.mm-input__suffix) {
+  margin-right: 28px;
+}
+.mm-input-number__controls {
+  width: 28px;
+  position: absolute;
+  inset: 1px 1px 1px auto;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  overflow: hidden;
+  border-left: 1px solid var(--mm-color-line);
+  border-radius: 0 calc(var(--mm-radius-sm) - 1px)
+    calc(var(--mm-radius-sm) - 1px) 0;
+}
+.mm-input-number__control {
+  min-height: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+  color: var(--mm-color-text-muted);
+  background: var(--mm-color-soft);
+  cursor: pointer;
+  font: 600 11px/1 var(--mm-font-family-mono);
+}
+.mm-input-number__control + .mm-input-number__control {
+  border-top: 1px solid var(--mm-color-line);
+}
+.mm-input-number__control:hover:not(:disabled) {
+  color: var(--mm-color-primary);
+  background: var(--mm-color-primary-soft);
+}
+.mm-input-number__control:disabled {
+  color: var(--mm-color-text-subtle);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.mm-input-number :where(input[type="number"]) {
+  appearance: textfield;
+}

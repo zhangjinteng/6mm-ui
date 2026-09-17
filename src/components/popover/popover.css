@@ -1,0 +1,42 @@
+.mm-popover__trigger { min-width: 0; max-width: 100%; display: inline-flex; vertical-align: middle; }
+.mm-popover__trigger.is-disabled { cursor: not-allowed; }
+.mm-popover__floating {
+  box-sizing: border-box;
+  z-index: var(--mm-z-popover);
+  max-width: min(360px, calc(100vw - 16px));
+  isolation: isolate;
+  border: 1px solid color-mix(in srgb, var(--mm-color-line-strong) 86%, var(--mm-color-text));
+  border-radius: var(--mm-radius-lg);
+  color: var(--mm-color-text);
+  background: color-mix(in srgb, var(--mm-color-panel) 96%, var(--mm-color-soft));
+  box-shadow: 0 1px 2px rgb(15 23 42 / 7%), 0 14px 38px rgb(15 23 42 / 15%);
+  animation: mm-popover-enter var(--mm-duration-normal) var(--mm-ease-standard);
+}
+.mm-popover__content { position: relative; z-index: 1; padding: 14px 16px; line-height: var(--mm-line-height-normal); }
+.mm-popover__floating:is([role='menu'], [role='presentation'], [role='tooltip']) .mm-popover__content { padding: 0; }
+.mm-popover__arrow { width: 10px; height: 10px; position: absolute; border: 1px solid color-mix(in srgb, var(--mm-color-line-strong) 86%, var(--mm-color-text)); background: color-mix(in srgb, var(--mm-color-panel) 96%, var(--mm-color-soft)); transform: rotate(45deg); }
+.mm-popover--bottom > .mm-popover__arrow,
+.mm-popover--bottom-start > .mm-popover__arrow,
+.mm-popover--bottom-end > .mm-popover__arrow { top: -5px; left: calc(50% - 5px); border-right: 0; border-bottom: 0; }
+.mm-popover--top > .mm-popover__arrow,
+.mm-popover--top-start > .mm-popover__arrow,
+.mm-popover--top-end > .mm-popover__arrow { bottom: -5px; left: calc(50% - 5px); border-top: 0; border-left: 0; }
+.mm-popover--left > .mm-popover__arrow,
+.mm-popover--left-start > .mm-popover__arrow,
+.mm-popover--left-end > .mm-popover__arrow { top: calc(50% - 5px); right: -5px; border-left: 0; border-bottom: 0; }
+.mm-popover--right > .mm-popover__arrow,
+.mm-popover--right-start > .mm-popover__arrow,
+.mm-popover--right-end > .mm-popover__arrow { top: calc(50% - 5px); left: -5px; border-right: 0; border-top: 0; }
+.mm-popover--bottom-start > .mm-popover__arrow,
+.mm-popover--top-start > .mm-popover__arrow { left: 18px; }
+.mm-popover--bottom-end > .mm-popover__arrow,
+.mm-popover--top-end > .mm-popover__arrow { right: 18px; left: auto; }
+
+@keyframes mm-popover-enter {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-popover__floating { animation: none; }
+}

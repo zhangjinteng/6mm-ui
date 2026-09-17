@@ -1,0 +1,164 @@
+.mm-info-grid {
+  display: grid;
+  overflow: hidden;
+  margin: 0;
+  color: var(--mm-color-text);
+  background: var(--mm-color-line);
+  border: 1px solid var(--mm-color-line);
+  border-radius: var(--mm-radius-md);
+  font-family: var(--mm-font-family);
+  gap: 1px;
+  grid-template-columns: repeat(var(--mm-info-grid-columns), minmax(0, 1fr));
+}
+
+.mm-info-grid-item,
+.mm-info-grid > .mm-info-grid__item,
+.mm-info-grid > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--mm-color-panel);
+  grid-column: span var(--mm-info-grid-span, 1);
+}
+
+.mm-info-grid-item.is-full,
+.mm-info-grid > .mm-info-grid__item.is-full,
+.mm-info-grid > div.is-full {
+  grid-column: 1 / -1;
+}
+
+.mm-info-grid-item__label,
+.mm-info-grid-item__value,
+.mm-info-grid > div > dt,
+.mm-info-grid > div > dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.mm-info-grid-item__label,
+.mm-info-grid > div > dt {
+  color: var(--mm-color-text-subtle);
+  font-weight: var(--mm-font-weight-medium);
+}
+
+.mm-info-grid-item__value,
+.mm-info-grid > div > dd {
+  color: var(--mm-color-text);
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--mm-font-weight-semibold);
+}
+
+.mm-info-grid--sm .mm-info-grid-item,
+.mm-info-grid--sm > .mm-info-grid__item,
+.mm-info-grid--sm > div {
+  min-height: 46px;
+  gap: 2px;
+  padding: 6px 10px;
+}
+
+.mm-info-grid--sm .mm-info-grid-item__label,
+.mm-info-grid--sm > div > dt {
+  font-size: 10px;
+  line-height: 14px;
+}
+
+.mm-info-grid--sm .mm-info-grid-item__value,
+.mm-info-grid--sm > div > dd {
+  font-size: var(--mm-font-size-xs);
+  line-height: 17px;
+}
+
+.mm-info-grid--md .mm-info-grid-item,
+.mm-info-grid--md > .mm-info-grid__item,
+.mm-info-grid--md > div {
+  min-height: 58px;
+  gap: var(--mm-space-1);
+  padding: var(--mm-space-2) var(--mm-space-3);
+}
+
+.mm-info-grid--md .mm-info-grid-item__label,
+.mm-info-grid--md > div > dt {
+  font-size: var(--mm-font-size-xs);
+  line-height: var(--mm-line-height-tight);
+}
+
+.mm-info-grid--md .mm-info-grid-item__value,
+.mm-info-grid--md > div > dd {
+  font-size: var(--mm-font-size-sm);
+  line-height: var(--mm-line-height-normal);
+}
+
+.mm-info-grid--lg .mm-info-grid-item,
+.mm-info-grid--lg > .mm-info-grid__item,
+.mm-info-grid--lg > div {
+  min-height: 70px;
+  gap: 6px;
+  padding: var(--mm-space-3) var(--mm-space-4);
+}
+
+.mm-info-grid--lg .mm-info-grid-item__label,
+.mm-info-grid--lg > div > dt {
+  font-size: var(--mm-font-size-sm);
+  line-height: var(--mm-line-height-tight);
+}
+
+.mm-info-grid--lg .mm-info-grid-item__value,
+.mm-info-grid--lg > div > dd {
+  font-size: var(--mm-font-size-md);
+  line-height: var(--mm-line-height-normal);
+}
+
+@media (max-width: 1400px) {
+  .mm-info-grid--columns-4,
+  .mm-info-grid--columns-5,
+  .mm-info-grid--columns-6 {
+    --mm-info-grid-columns: 3 !important;
+  }
+
+  .mm-info-grid--columns-4 .mm-info-grid-item,
+  .mm-info-grid--columns-5 .mm-info-grid-item,
+  .mm-info-grid--columns-6 .mm-info-grid-item {
+    grid-column: auto;
+  }
+
+  .mm-info-grid--columns-4 .mm-info-grid-item.is-full,
+  .mm-info-grid--columns-5 .mm-info-grid-item.is-full,
+  .mm-info-grid--columns-6 .mm-info-grid-item.is-full {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 900px) {
+  .mm-info-grid--columns-3,
+  .mm-info-grid--columns-4,
+  .mm-info-grid--columns-5,
+  .mm-info-grid--columns-6 {
+    --mm-info-grid-columns: 2 !important;
+  }
+
+  .mm-info-grid--columns-3 .mm-info-grid-item,
+  .mm-info-grid--columns-4 .mm-info-grid-item,
+  .mm-info-grid--columns-5 .mm-info-grid-item,
+  .mm-info-grid--columns-6 .mm-info-grid-item {
+    grid-column: auto;
+  }
+
+  .mm-info-grid--columns-3 .mm-info-grid-item.is-full,
+  .mm-info-grid--columns-4 .mm-info-grid-item.is-full,
+  .mm-info-grid--columns-5 .mm-info-grid-item.is-full,
+  .mm-info-grid--columns-6 .mm-info-grid-item.is-full {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 640px) {
+  .mm-info-grid {
+    --mm-info-grid-columns: 1 !important;
+  }
+
+  .mm-info-grid-item,
+  .mm-info-grid-item.is-full {
+    grid-column: 1 / -1;
+  }
+}

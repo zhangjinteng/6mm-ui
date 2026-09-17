@@ -1,0 +1,16 @@
+.mm-icon {
+  display: inline-block;
+  flex: 0 0 auto;
+  overflow: visible;
+  vertical-align: -0.125em;
+}
+
+.mm-icon.is-spinning {
+  animation: mm-icon-spin 700ms linear infinite;
+}
+
+@keyframes mm-icon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,9 @@
+import { HistoryPositionRow } from './types';
+export declare function historyPositionNumber(value: unknown): number;
+export declare function formatHistoryPositionAmount(value: unknown): string;
+export declare function formatHistoryPositionPrice(value: unknown): string;
+export declare function formatHistoryPositionQuantity(value: unknown): string;
+export declare function formatSignedHistoryPositionAmount(value: unknown): string;
+export declare function historyPositionOpenQuantity(row: HistoryPositionRow): number;
+export declare function historyPositionMaxQuantity(row: HistoryPositionRow): unknown;
+export declare function historyPositionEntryCost(row: HistoryPositionRow): number;

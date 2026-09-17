@@ -1,0 +1,38 @@
+.mm-date-range-picker { width: 100%; min-width: 0; }
+.mm-date-range-picker > .mm-date-picker { width: 100%; }
+.mm-date-range-picker__floating { max-height: min(480px, calc(100vh - 80px)); overflow: auto; border-radius: 7px; box-shadow: 0 14px 35px rgb(15 23 42 / 16%); }
+.mm-date-range-picker__panel { width: 100%; padding: 10px; color: var(--mm-color-text); background: var(--mm-color-panel); }
+.mm-date-range-picker__panel,
+.mm-date-range-picker__panel * { box-sizing: border-box; }
+.mm-date-range-picker__shortcuts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; }
+.mm-date-range-picker__shortcut { width: 100%; height: 28px; min-height: 28px; border-color: transparent; border-radius: 5px; padding-inline: 5px; color: var(--mm-color-text-muted); background: var(--mm-color-soft); box-shadow: none; font-size: 11px; font-weight: var(--mm-font-weight-regular); }
+.mm-date-range-picker__shortcut:hover:not(:disabled) { border-color: color-mix(in srgb, var(--mm-color-primary) 40%, var(--mm-color-line)); color: var(--mm-color-primary); background: var(--mm-color-primary-soft); }
+.mm-date-range-picker__shortcut.is-active { border-color: color-mix(in srgb, var(--mm-color-primary) 48%, var(--mm-color-line)); color: var(--mm-color-primary); background: var(--mm-color-primary-soft); }
+.mm-date-range-picker__selection { margin: 9px 0 7px; border-radius: 5px; padding: 7px 8px; color: var(--mm-color-text-muted); background: var(--mm-color-soft); font-size: 11px; line-height: 1.4; text-align: center; }
+.mm-date-range-picker__panel .mm-date-panel { width: 100%; padding: 0; background: transparent; }
+.mm-date-range-picker__panel .mm-date-panel__header { min-height: 28px; grid-template-columns: 30px minmax(0, 1fr) 30px; gap: 0; border-bottom: 0; margin-bottom: 5px; padding: 0; }
+.mm-date-range-picker__panel .mm-date-panel__header strong { font-size: 12px; }
+.mm-date-range-picker__panel .mm-date-panel__nav-group { display: block; }
+.mm-date-range-picker__panel .mm-date-panel__nav-group:last-child { justify-self: end; }
+.mm-date-range-picker__panel .mm-date-panel__nav-group button { width: 28px; height: 28px; border: 1px solid transparent; border-radius: 5px; font: inherit; }
+.mm-date-range-picker__panel .mm-date-panel__weekdays,
+.mm-date-range-picker__panel .mm-date-panel__week { gap: 0; }
+.mm-date-range-picker__panel .mm-date-panel__weekdays { padding: 0; color: var(--mm-color-text-muted); font: 10px/1.5 var(--mm-font-family); }
+.mm-date-range-picker__panel .mm-date-panel__weekdays span { padding: 4px 0; }
+.mm-date-range-picker__panel .mm-date-panel__grid { gap: 0; }
+.mm-date-range-picker__panel .mm-date-panel__day { height: 30px; aspect-ratio: auto; border: 1px solid transparent; border-radius: 4px; font: 11px/1 var(--mm-font-family); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-adjacent { color: color-mix(in srgb, var(--mm-color-text-muted) 48%, transparent); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-weekend:not(.is-selected) { color: var(--mm-color-text); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-weekend.is-adjacent:not(.is-selected) { color: color-mix(in srgb, var(--mm-color-text-muted) 48%, transparent); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-in-range { border-radius: 0; color: var(--mm-color-primary); background: var(--mm-color-primary-soft); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-today { border-color: color-mix(in srgb, var(--mm-color-primary) 48%, transparent); box-shadow: none; color: var(--mm-color-primary); }
+.mm-date-range-picker__panel .mm-date-panel__day.is-selected { border-radius: 4px; color: var(--mm-color-on-primary); background: var(--mm-color-primary); font-weight: var(--mm-font-weight-bold); }
+.mm-date-range-picker__footer { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; border-top: 1px solid var(--mm-color-line); margin-top: 8px; padding-top: 8px; }
+.mm-date-range-picker__footer > :first-child { justify-self: start; }
+.mm-date-range-picker__footer .mm-button { height: 29px; border-radius: 5px; padding-inline: 10px; font-size: 12px; font-weight: var(--mm-font-weight-regular); }
+
+[data-mm-theme='dark'] .mm-date-range-picker__floating { box-shadow: 0 18px 40px rgb(0 0 0 / 38%); }
+
+@media (max-width: 360px) {
+  .mm-date-range-picker__shortcuts { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

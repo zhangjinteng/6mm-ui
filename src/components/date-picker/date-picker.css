@@ -1,0 +1,16 @@
+.mm-date-picker { width: 100%; min-width: 0; }
+.mm-date-picker > .mm-popover__trigger { width: 100%; }
+.mm-date-picker__floating { overflow: hidden; }
+.mm-date-picker__icon { color: var(--mm-color-primary); font: 700 14px/1 var(--mm-font-family-mono); }
+.mm-date-picker--filter .mm-input { color: var(--mm-color-text-muted); font-size: 12px; }
+.mm-date-picker--filter .mm-input__control { border-radius: 5px; }
+.mm-date-picker--filter .mm-input__control:hover { border-color: color-mix(in srgb, var(--mm-color-primary) 48%, var(--mm-color-line-strong)); }
+.mm-date-picker--filter.is-open .mm-input__control,
+.mm-date-picker--filter .mm-input__control:focus-within { border-color: color-mix(in srgb, var(--mm-color-primary) 66%, var(--mm-color-line-strong)); box-shadow: 0 0 0 2px rgb(20 184 166 / 8%); }
+.mm-date-picker--filter .mm-input.is-readonly .mm-input__control { background: var(--mm-color-panel); }
+.mm-date-picker--filter .mm-input__native { height: 30px; padding-inline: 5px; }
+.mm-date-picker--filter .mm-input--sm .mm-input__native { height: 100%; }
+.mm-date-picker--filter .mm-input__prefix { padding-left: 9px; }
+.mm-date-picker--filter .mm-input__suffix { padding-right: 9px; }
+.mm-date-picker--filter .mm-date-picker__calendar-icon,
+.mm-date-picker--filter .mm-date-picker__toggle-icon { color: var(--mm-color-text-muted); }

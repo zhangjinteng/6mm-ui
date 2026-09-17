@@ -1,0 +1,22 @@
+.mm-user-table__emphasis {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mm-user-table .mm-table td {
+  padding-block: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-user-table__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+@media (max-width: 767px) {
+  .mm-user-table .mm-query-bar {
+    padding-inline: 6px;
+  }
+}

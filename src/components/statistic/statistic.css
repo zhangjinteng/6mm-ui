@@ -1,0 +1,8 @@
+.mm-statistic { display: grid; gap: var(--mm-space-2); min-width: 0; color: var(--mm-color-text); }
+.mm-statistic__title { color: var(--mm-color-text-muted); font: var(--mm-font-weight-medium) var(--mm-font-size-xs)/var(--mm-line-height-normal) var(--mm-font-family); letter-spacing: .04em; }
+.mm-statistic__value { display: flex; align-items: baseline; gap: 4px; min-width: 0; overflow: hidden; font-family: var(--mm-font-family); font-variant-numeric: tabular-nums; }
+.mm-statistic__number { flex: 1 1 auto; min-width: 0; max-width: 100%; overflow: hidden; font-size: var(--mm-font-size-2xl); font-weight: var(--mm-font-weight-semibold); line-height: var(--mm-line-height-tight); letter-spacing: -.025em; text-overflow: ellipsis; white-space: nowrap; }
+.mm-statistic__prefix, .mm-statistic__suffix { color: var(--mm-color-text-muted); font-size: var(--mm-font-size-sm); }
+.mm-statistic__trend { color: var(--mm-color-text-muted); font-size: var(--mm-font-size-md); }
+.mm-statistic.is-trend-up .mm-statistic__trend { color: var(--mm-color-success); }
+.mm-statistic.is-trend-down .mm-statistic__trend { color: var(--mm-color-danger); }

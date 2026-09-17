@@ -1,0 +1,36 @@
+.mm-ui,
+.mm-ui *,
+.mm-ui *::before,
+.mm-ui *::after,
+[data-mm-component],
+[data-mm-component]::before,
+[data-mm-component]::after {
+  box-sizing: border-box;
+}
+
+.mm-ui,
+[data-mm-component] {
+  color: var(--mm-color-text);
+  font-family: var(--mm-font-family);
+  font-size: var(--mm-font-size-md);
+  line-height: var(--mm-line-height-normal);
+}
+
+.mm-focus-ring:focus-visible,
+[data-mm-component]:focus-visible {
+  outline: none;
+  box-shadow: var(--mm-focus-ring);
+}
+
+.mm-sr-only {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+}

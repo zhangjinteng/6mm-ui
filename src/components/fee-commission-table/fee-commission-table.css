@@ -1,0 +1,50 @@
+.mm-fee-commission-table {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-fee-commission-table.is-fill-height {
+  height: 100%;
+}
+
+.mm-fee-commission-table > .mm-pro-table {
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.mm-fee-commission-table__order-id,
+.mm-fee-commission-table__number,
+.mm-fee-commission-table__commission,
+.mm-fee-commission-table__time {
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-fee-commission-table__order-id {
+  font-family: var(--mm-font-family-mono);
+  font-weight: var(--mm-font-weight-medium);
+}
+
+.mm-fee-commission-table__number.is-buy {
+  color: var(--mm-color-success);
+}
+
+.mm-fee-commission-table__number.is-sell {
+  color: var(--mm-color-danger);
+}
+
+.mm-fee-commission-table__commission {
+  color: var(--mm-color-success);
+  font-weight: var(--mm-font-weight-semibold);
+}
+
+.mm-fee-commission-table .mm-pro-table__auto-refresh {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mm-fee-commission-table .mm-query-bar {
+    padding-inline: 6px;
+  }
+}

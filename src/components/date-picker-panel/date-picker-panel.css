@@ -1,0 +1,22 @@
+.mm-date-panel { width: 292px; padding: 10px; color: var(--mm-color-text); background: var(--mm-color-panel); user-select: none; }
+.mm-date-panel__header { min-height: 34px; display: grid; grid-template-columns: 62px minmax(0, 1fr) 62px; align-items: center; gap: 6px; border-bottom: 1px solid var(--mm-color-line); padding-bottom: 8px; }
+.mm-date-panel__header strong { text-align: center; font-size: var(--mm-font-size-sm); }
+.mm-date-panel__nav-group { display: flex; }
+.mm-date-panel__nav-group:last-child { justify-content: flex-end; }
+.mm-date-panel__nav-group button { width: 28px; height: 28px; display: grid; place-items: center; border: 0; border-radius: var(--mm-radius-xs); padding: 0; color: var(--mm-color-text-muted); background: transparent; cursor: pointer; font: 700 15px/1 var(--mm-font-family-mono); }
+.mm-date-panel__nav-group button:hover { color: var(--mm-color-primary); background: var(--mm-color-primary-soft); }
+.mm-date-panel__nav-group button:focus-visible { outline: 0; box-shadow: var(--mm-focus-ring); }
+.mm-date-panel__weekdays,
+.mm-date-panel__week { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.mm-date-panel__weekdays { padding: 8px 0 4px; color: var(--mm-color-text-subtle); text-align: center; font: 700 9px/24px var(--mm-font-family-mono); }
+.mm-date-panel__grid { display: grid; gap: 2px; }
+.mm-date-panel__day { aspect-ratio: 1; min-width: 0; display: grid; place-items: center; border: 0; border-radius: var(--mm-radius-sm); padding: 0; color: var(--mm-color-text); background: transparent; cursor: pointer; font: var(--mm-font-size-xs)/1 var(--mm-font-family-mono); }
+.mm-date-panel__day:hover:not(:disabled),
+.mm-date-panel__day:focus-visible { outline: 0; color: var(--mm-color-primary); background: var(--mm-color-primary-soft); }
+.mm-date-panel__day:focus-visible { box-shadow: var(--mm-focus-ring); }
+.mm-date-panel__day.is-adjacent { color: var(--mm-color-text-subtle); }
+.mm-date-panel__day.is-weekend:not(.is-selected) { color: var(--mm-color-warning); }
+.mm-date-panel__day.is-in-range { border-radius: 0; background: color-mix(in srgb, var(--mm-color-primary-soft) 72%, transparent); }
+.mm-date-panel__day.is-today { box-shadow: inset 0 0 0 1px var(--mm-color-primary); }
+.mm-date-panel__day.is-selected { color: var(--mm-color-on-primary); background: var(--mm-color-primary); font-weight: var(--mm-font-weight-bold); opacity: 1; }
+.mm-date-panel__day:disabled { color: var(--mm-color-text-subtle); cursor: not-allowed; opacity: .3; text-decoration: line-through; }

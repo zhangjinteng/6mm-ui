@@ -1,0 +1,26 @@
+.mm-user-asset-table__amount,
+.mm-user-asset-table__pnl {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.mm-user-asset-table__pnl.is-profit {
+  color: var(--mm-color-success);
+}
+
+.mm-user-asset-table__pnl.is-loss {
+  color: var(--mm-color-danger);
+}
+
+.mm-user-asset-table__actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+@media (max-width: 767px) {
+  .mm-user-asset-table .mm-query-bar {
+    padding-inline: 6px;
+  }
+}

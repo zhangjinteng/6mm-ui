@@ -1,0 +1,13 @@
+.mm-divider {
+  color: var(--mm-color-text-muted);
+  font-size: var(--mm-font-size-xs);
+}
+
+.mm-divider--horizontal { width: 100%; display: flex; align-items: center; gap: var(--mm-space-3); margin-block: var(--mm-divider-margin); }
+.mm-divider--vertical { width: 1px; height: 1em; display: inline-block; border-left: 1px solid var(--mm-divider-color); margin-inline: var(--mm-divider-margin); vertical-align: middle; }
+.mm-divider--vertical.is-dashed { border-left-style: dashed; }
+.mm-divider__line { height: 1px; flex: 1 1 auto; border-top: 1px solid var(--mm-divider-color); }
+.mm-divider.is-dashed .mm-divider__line { border-top-style: dashed; }
+.mm-divider__label { flex: 0 0 auto; font-weight: var(--mm-font-weight-medium); white-space: nowrap; }
+.mm-divider.is-align-start .mm-divider__line:first-child { flex-grow: 0; flex-basis: var(--mm-space-6); }
+.mm-divider.is-align-end .mm-divider__line:last-child { flex-grow: 0; flex-basis: var(--mm-space-6); }

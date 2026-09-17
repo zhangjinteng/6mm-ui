@@ -1,0 +1,146 @@
+.mm-handling-fee-config {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mm-handling-fee-config.is-fill-height {
+  height: 100%;
+}
+
+.mm-handling-fee-config > .mm-pro-table {
+  min-height: 0;
+  flex: 1 1 auto;
+}
+
+.mm-handling-fee-config .mm-table th:not(.is-fixed-right),
+.mm-handling-fee-config .mm-table td:not(.is-fixed-right) {
+  border-right: 0;
+}
+
+.mm-handling-fee-config .mm-pro-table__auto-refresh {
+  display: none;
+}
+
+.mm-handling-fee-config__number {
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-handling-fee-config__actions,
+.mm-handling-fee-config__footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mm-handling-fee-config__footer {
+  justify-content: flex-end;
+}
+
+.mm-handling-fee-config__delete-button .mm-icon {
+  color: var(--mm-color-danger);
+}
+
+.mm-handling-fee-config__locked {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--mm-color-text-secondary);
+  font-size: 13px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.mm-handling-fee-config__form {
+  display: grid;
+  gap: 16px;
+}
+
+.mm-handling-fee-config__summary,
+.mm-handling-fee-config__rates {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.mm-handling-fee-config__summary {
+  padding: 14px;
+  border: 1px solid var(--mm-color-line);
+  border-radius: var(--mm-radius-md);
+  background: var(--mm-color-soft);
+}
+
+.mm-handling-fee-config__summary .mm-form-item,
+.mm-handling-fee-config__rates .mm-form-item {
+  margin-bottom: 0;
+}
+
+.mm-handling-fee-config__form .mm-form-item__label {
+  color: var(--mm-color-text);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mm-handling-fee-config__form .mm-input__suffix {
+  color: var(--mm-color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-handling-fee-config__note {
+  padding: 10px 12px;
+  border: 1px solid var(--mm-color-line);
+  border-radius: var(--mm-radius-sm);
+  color: var(--mm-color-text-muted);
+  background: var(--mm-color-soft);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.mm-handling-fee-config__delete-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 8px 0 4px;
+}
+
+.mm-handling-fee-config__delete-icon {
+  display: inline-flex;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  color: var(--mm-color-danger);
+  background: var(--mm-color-danger-soft);
+  border-radius: 8px;
+}
+
+.mm-handling-fee-config__delete-body {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.mm-handling-fee-config__delete-title {
+  color: var(--mm-color-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.mm-handling-fee-config__delete-description {
+  margin-top: 6px;
+  color: var(--mm-color-text-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .mm-handling-fee-config__summary,
+  .mm-handling-fee-config__rates {
+    grid-template-columns: 1fr;
+  }
+}

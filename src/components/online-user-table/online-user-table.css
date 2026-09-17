@@ -1,0 +1,9 @@
+.mm-online-user-table__emphasis {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.mm-online-user-table .mm-table td {
+  padding-block: 5px;
+  font-variant-numeric: tabular-nums;
+}

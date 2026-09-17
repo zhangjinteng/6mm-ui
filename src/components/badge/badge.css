@@ -1,0 +1,8 @@
+.mm-badge { position: relative; display: inline-flex; vertical-align: middle; }
+.mm-badge__content { position: absolute; z-index: 1; inset: 0 0 auto auto; min-width: 18px; height: 18px; display: inline-flex; align-items: center; justify-content: center; padding: 0 5px; color: #fff; background: var(--mm-badge-color); border: 2px solid var(--mm-color-panel); border-radius: var(--mm-radius-round); font: var(--mm-font-weight-semibold) var(--mm-font-size-xs)/1 var(--mm-font-family); transform: translate(55%, -45%); white-space: nowrap; }
+.mm-badge__content.is-dot { min-width: 9px; width: 9px; height: 9px; padding: 0; }
+.mm-badge--danger { --mm-badge-color: var(--mm-color-danger); }
+.mm-badge--info { --mm-badge-color: var(--mm-color-info); }
+.mm-badge--primary { --mm-badge-color: var(--mm-color-primary); }
+.mm-badge--success { --mm-badge-color: var(--mm-color-success); }
+.mm-badge--warning { --mm-badge-color: var(--mm-color-warning); }

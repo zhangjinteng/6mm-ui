@@ -1,0 +1,13 @@
+.mm-container {
+  width: 100%;
+  min-width: 0;
+}
+
+.mm-container--sm { max-width: 640px; }
+.mm-container--md { max-width: 768px; }
+.mm-container--lg { max-width: 1024px; }
+.mm-container--xl { max-width: 100%; }
+.mm-container--full,
+.mm-container.is-fluid { max-width: none; }
+.mm-container.is-centered { margin-inline: auto; }
+.mm-container.is-padded { padding-inline: var(--mm-container-gutter); }

@@ -1,0 +1,59 @@
+.mm-trade-fill-table {
+  min-width: 0;
+}
+
+.mm-trade-fill-table.is-fill-height {
+  height: 100%;
+}
+
+.mm-trade-fill-table__id,
+.mm-trade-fill-table__number {
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-trade-fill-table__id {
+  font-family: var(--mm-font-family-mono);
+}
+
+.mm-trade-fill-table__number.is-buy,
+.mm-trade-fill-table__number.is-profit {
+  color: var(--mm-color-success);
+}
+
+.mm-trade-fill-table__number.is-sell,
+.mm-trade-fill-table__number.is-loss {
+  color: var(--mm-color-danger);
+}
+
+.mm-trade-fill-table__number.is-neutral {
+  color: var(--mm-color-text-muted);
+}
+
+.mm-trade-fill-table__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.mm-trade-fill-table .mm-table td {
+  font-variant-numeric: tabular-nums;
+}
+
+.mm-trade-fill-table .mm-pro-table__auto-refresh {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mm-trade-fill-table .mm-query-bar__field:not([data-query-field='keyword']) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .mm-trade-fill-table .mm-query-bar__field[data-query-field='keyword'] {
+    display: none;
+  }
+
+  .mm-trade-fill-table .mm-pro-table__pagination-summary {
+    display: none;
+  }
+}

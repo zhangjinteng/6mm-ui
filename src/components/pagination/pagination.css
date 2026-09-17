@@ -1,0 +1,19 @@
+.mm-pagination { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: var(--mm-space-2); color: var(--mm-color-text-muted); font: var(--mm-font-size-sm)/1 var(--mm-font-family); }
+.mm-pagination__total { margin-inline-end: auto; }
+.mm-pagination__size { width: 132px; }
+.mm-pagination__pages { display: flex; align-items: center; gap: 4px; }
+.mm-pagination button, .mm-pagination__ellipsis { min-width: 30px; height: 30px; display: inline-grid; place-items: center; flex: 0 0 auto; border-radius: var(--mm-radius-sm); }
+.mm-pagination button { padding: 0; color: var(--mm-color-text-muted); background: var(--mm-color-panel); border: 1px solid var(--mm-color-line); cursor: pointer; font: inherit; }
+.mm-pagination button:hover:not(:disabled):not(.is-current) { color: var(--mm-color-primary); border-color: var(--mm-color-primary); }
+.mm-pagination button:focus-visible { outline: 0; box-shadow: var(--mm-focus-ring); }
+.mm-pagination button.is-current { color: var(--mm-color-on-primary); background: var(--mm-color-primary); border-color: var(--mm-color-primary); font-weight: var(--mm-font-weight-semibold); }
+.mm-pagination button:disabled { color: var(--mm-color-text-subtle); background: var(--mm-color-soft); cursor: not-allowed; opacity: .6; }
+.mm-pagination__ellipsis { color: var(--mm-color-text-subtle); }
+.mm-pagination__jumper { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.mm-pagination__jumper input { width: 48px; height: 30px; border: 1px solid var(--mm-color-line); border-radius: var(--mm-radius-sm); padding: 0 6px; color: var(--mm-color-text); background: var(--mm-color-panel); text-align: center; font: inherit; }
+.mm-pagination__jumper input:focus-visible { outline: 0; border-color: var(--mm-color-primary); box-shadow: var(--mm-focus-ring); }
+.mm-pagination--sm button, .mm-pagination--sm .mm-pagination__ellipsis { min-width: 26px; height: 26px; font-size: var(--mm-font-size-xs); }
+.mm-pagination--sm .mm-pagination__jumper input { width: 26px; height: 26px; font-size: var(--mm-font-size-xs); }
+.mm-pagination--lg button, .mm-pagination--lg .mm-pagination__ellipsis { min-width: 36px; height: 36px; }
+.mm-pagination--lg .mm-pagination__jumper input { width: 36px; height: 36px; }
+@media (max-width: 640px) { .mm-pagination { justify-content: flex-start; } .mm-pagination__total { width: 100%; margin-inline-end: 0; } .mm-pagination__pages { max-width: 100%; overflow-x: auto; padding-bottom: 2px; } }

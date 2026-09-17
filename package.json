@@ -1,0 +1,58 @@
+{
+  "name": "@work-gpt/6mm-ui",
+  "version": "1.0.23",
+  "description": "Vue 3 component library for 6MM products",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/style.css",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/style.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "docs"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangjinteng/6mm-ui.git"
+  },
+  "scripts": {
+    "dev": "vite playground --config vite.config.ts",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "test": "vitest",
+    "test:a11y": "playwright test --grep @a11y",
+    "test:e2e": "playwright test",
+    "build": "vite build",
+    "check": "npm run typecheck && npm test -- --run && npm run build"
+  },
+  "peerDependencies": {
+    "vue": ">=3.4.0 <4"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.1.1",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/test-utils": "^2.4.11",
+    "axe-core": "^4.12.1",
+    "jsdom": "^29.1.1",
+    "typescript": "6.0.3",
+    "vite": "^8.1.5",
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.40",
+    "vue-tsc": "^3.3.7"
+  }
+}

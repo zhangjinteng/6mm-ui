@@ -1,0 +1,19 @@
+.mm-typography {
+  min-width: 0;
+  display: grid;
+  gap: var(--mm-space-3);
+  color: var(--mm-color-text);
+}
+
+.mm-typography--compact { gap: var(--mm-space-2); }
+.mm-typography--relaxed { gap: var(--mm-space-4); }
+.mm-typography.is-align-center { text-align: center; }
+.mm-typography.is-align-right { text-align: right; }
+.mm-typography__header { min-width: 0; display: flex; align-items: flex-start; justify-content: space-between; gap: var(--mm-space-3); }
+.mm-typography__title { line-height: var(--mm-line-height-tight); }
+.mm-typography__body { min-width: 0; color: var(--mm-color-text-muted); font-size: var(--mm-font-size-md); line-height: var(--mm-line-height-relaxed); }
+.mm-typography__body.is-collapsed { display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: var(--mm-typography-lines); }
+.mm-typography__actions { flex: 0 0 auto; display: inline-flex; align-items: center; gap: var(--mm-space-1); }
+.mm-typography__actions button { height: 26px; border: 0; border-radius: var(--mm-radius-xs); padding: 0 var(--mm-space-2); color: var(--mm-color-primary); background: transparent; cursor: pointer; font: inherit; font-size: var(--mm-font-size-xs); font-weight: var(--mm-font-weight-semibold); }
+.mm-typography__actions button:hover { background: var(--mm-color-primary-soft); }
+.mm-typography__actions button:focus-visible { outline: none; box-shadow: var(--mm-focus-ring); }

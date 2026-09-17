@@ -1,0 +1,20 @@
+.mm-checkbox-group { display: flex; align-items: flex-start; gap: 12px 18px; }
+.mm-checkbox-group--horizontal { flex-flow: row wrap; }
+.mm-checkbox-group--vertical { flex-direction: column; }
+.mm-checkbox { width: fit-content; min-width: 0; display: inline-flex; align-items: center; gap: 8px; color: var(--mm-color-text); cursor: pointer; font-size: var(--mm-font-size-md); line-height: 1.35; }
+.mm-checkbox__native { width: 1px; height: 1px; position: absolute; overflow: hidden; opacity: 0; }
+.mm-checkbox__box { width: 16px; height: 16px; flex: 0 0 auto; display: grid; place-items: center; border: 1px solid var(--mm-color-line-strong); border-radius: var(--mm-radius-xs); color: transparent; background: var(--mm-color-panel); transition: border-color var(--mm-duration-fast), background var(--mm-duration-fast), box-shadow var(--mm-duration-fast); }
+.mm-checkbox__box span { transform: scale(.75); font: 700 12px/1 var(--mm-font-family); }
+.mm-checkbox:hover:not(.is-disabled) .mm-checkbox__box { border-color: var(--mm-color-primary); }
+.mm-checkbox__native:focus-visible + .mm-checkbox__box { border-color: var(--mm-color-primary); box-shadow: var(--mm-focus-ring); }
+.mm-checkbox.is-checked .mm-checkbox__box,
+.mm-checkbox.is-indeterminate .mm-checkbox__box { border-color: var(--mm-color-primary); color: var(--mm-color-on-primary); background: var(--mm-color-primary); }
+.mm-checkbox.is-disabled { color: var(--mm-color-text-subtle); cursor: not-allowed; }
+.mm-checkbox.is-disabled .mm-checkbox__box { border-color: var(--mm-color-line); background: var(--mm-color-soft); opacity: .75; }
+.mm-checkbox.is-readonly { cursor: default; }
+.mm-checkbox.is-error .mm-checkbox__box,
+.mm-checkbox-group.is-error .mm-checkbox__box { border-color: var(--mm-color-danger); }
+.mm-checkbox--sm { font-size: var(--mm-font-size-sm); }
+.mm-checkbox--sm .mm-checkbox__box { width: 14px; height: 14px; }
+.mm-checkbox--lg { font-size: var(--mm-font-size-lg); }
+.mm-checkbox--lg .mm-checkbox__box { width: 18px; height: 18px; }

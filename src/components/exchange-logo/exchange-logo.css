@@ -1,0 +1,68 @@
+.mm-exchange-logo {
+  --mm-exchange-logo-size: 18px;
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: var(--mm-exchange-logo-size);
+  height: var(--mm-exchange-logo-size);
+  overflow: hidden;
+  border-radius: 5px;
+  color: var(--mm-color-text);
+  background: var(--mm-color-fill-light, #f4f6f8);
+  vertical-align: middle;
+}
+
+.mm-exchange-logo--sm { --mm-exchange-logo-size: 18px; }
+.mm-exchange-logo--md { --mm-exchange-logo-size: 22px; }
+.mm-exchange-logo--lg { --mm-exchange-logo-size: 28px; }
+
+.mm-exchange-logo__svg,
+.mm-exchange-logo__image {
+  display: block;
+  width: calc(var(--mm-exchange-logo-size) * .78);
+  height: calc(var(--mm-exchange-logo-size) * .78);
+}
+
+.mm-exchange-logo__svg { fill: currentColor; }
+
+.mm-exchange-logo.is-6mm { background: transparent; }
+.mm-exchange-logo.is-6mm .mm-exchange-logo__image { width: 100%; height: 100%; }
+
+.mm-exchange-logo.is-binance {
+  color: #f0b90b;
+  background: color-mix(in srgb, #f0b90b 12%, var(--mm-color-panel, #fff));
+}
+
+.mm-exchange-logo.is-bybit {
+  background: color-mix(in srgb, #f6a500 9%, var(--mm-color-panel, #fff));
+}
+
+.mm-exchange-logo.is-bybit .bybit-accent { fill: #f6a500; }
+
+.mm-exchange-logo.is-bitget {
+  color: #00aeb8;
+  background: color-mix(in srgb, #00c8d2 10%, var(--mm-color-panel, #fff));
+}
+
+.mm-exchange-logo.is-gate {
+  background: color-mix(in srgb, #2354e6 8%, var(--mm-color-panel, #fff));
+}
+
+.mm-exchange-logo.is-gate .gate-ring { fill: #2354e6; }
+.mm-exchange-logo.is-gate .gate-mark { fill: #11b886; }
+
+.mm-exchange-logo.is-fallback > .mm-exchange-logo__fallback {
+  font-size: calc(var(--mm-exchange-logo-size) * .55);
+  font-weight: 700;
+}
+
+.mm-exchange-logo__fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  line-height: 1;
+  text-transform: uppercase;
+}

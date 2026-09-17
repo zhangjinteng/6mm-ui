@@ -1,0 +1,17 @@
+.mm-descriptions { color: var(--mm-color-text); font-family: var(--mm-font-family); }
+.mm-descriptions__header { display: flex; align-items: center; justify-content: space-between; gap: var(--mm-space-3); margin-bottom: var(--mm-space-3); }
+.mm-descriptions__title { margin: 0; font: var(--mm-font-weight-semibold) var(--mm-font-size-md)/var(--mm-line-height-tight) var(--mm-font-family); }
+.mm-descriptions__grid { display: grid; grid-template-columns: repeat(var(--mm-descriptions-columns), minmax(0, 1fr)); }
+.mm-descriptions.is-bordered .mm-descriptions__grid { overflow: hidden; border: 1px solid var(--mm-color-line); border-radius: var(--mm-radius-md); }
+.mm-descriptions-item { grid-column: span var(--mm-descriptions-span); min-width: 0; display: grid; }
+.mm-descriptions-item--horizontal { grid-template-columns: minmax(78px, auto) minmax(0, 1fr); }
+.mm-descriptions-item--vertical { grid-template-rows: auto 1fr; }
+.mm-descriptions-item__label, .mm-descriptions-item__content { min-width: 0; padding: 8px 10px; overflow-wrap: anywhere; }
+.mm-descriptions--sm .mm-descriptions-item__label, .mm-descriptions--sm .mm-descriptions-item__content { padding: 6px 8px; font-size: var(--mm-font-size-xs); }
+.mm-descriptions--lg .mm-descriptions-item__label, .mm-descriptions--lg .mm-descriptions-item__content { padding: 11px 13px; }
+.mm-descriptions-item__label { color: var(--mm-color-text-muted); background: var(--mm-color-soft); font-size: var(--mm-font-size-xs); font-weight: var(--mm-font-weight-medium); }
+.mm-descriptions-item__content { font-size: var(--mm-font-size-sm); }
+.mm-descriptions-item.is-bordered { margin: -1px 0 0 -1px; border: solid var(--mm-color-line); border-width: 1px 0 0 1px; }
+.mm-descriptions-item.is-bordered .mm-descriptions-item__label { border-inline-end: 1px solid var(--mm-color-line); }
+.mm-descriptions-item--vertical.is-bordered .mm-descriptions-item__label { border-inline-end: 0; border-bottom: 1px solid var(--mm-color-line); }
+@media (max-width: 640px) { .mm-descriptions__grid { grid-template-columns: 1fr; } .mm-descriptions-item { grid-column: 1 / -1; } }

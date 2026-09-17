@@ -1,0 +1,19 @@
+.mm-border {
+  min-width: 0;
+  border-color: var(--mm-border-color);
+  border-radius: var(--mm-border-radius);
+  border-style: var(--mm-border-style);
+  border-width: var(--mm-border-width);
+  padding: var(--mm-border-padding);
+  background: var(--mm-border-background);
+}
+
+.mm-border.is-interactive {
+  transition: border-color var(--mm-duration-fast) var(--mm-ease-standard),
+    box-shadow var(--mm-duration-fast) var(--mm-ease-standard);
+}
+
+.mm-border.is-interactive:hover {
+  border-color: var(--mm-color-primary);
+  box-shadow: var(--mm-shadow-sm);
+}

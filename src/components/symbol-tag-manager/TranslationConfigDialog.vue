@@ -8,14 +8,6 @@
     @update:model-value="emit('update:modelValue', $event)"
   >
     <div class="mm-translation-config">
-      <MmAlert
-        v-if="message.text"
-        :description="message.description"
-        show-icon
-        :title="message.text"
-        :type="message.type"
-      />
-
       <div class="mm-translation-config__field">
         <label>{{ copy.apiVersion }}</label>
         <MmSelect
@@ -47,13 +39,13 @@
         />
       </div>
 
-      <div class="mm-translation-config__enabled">
-        <div>
-          <strong>{{ copy.enableTitle }}</strong>
-          <span>{{ copy.enableHint }}</span>
-        </div>
-        <MmCheckbox v-model="form.is_enabled" :disabled="busy">{{ form.is_enabled ? copy.enabled : copy.disabled }}</MmCheckbox>
-      </div>
+      <MmAlert
+        v-if="message.text"
+        :description="message.description"
+        show-icon
+        :title="message.text"
+        :type="message.type"
+      />
     </div>
 
     <template #footer>
@@ -72,7 +64,6 @@
 import { computed, reactive, ref, watch } from "vue";
 import MmAlert from "../alert/Alert.vue";
 import MmButton from "../button/Button.vue";
-import MmCheckbox from "../checkbox/Checkbox.vue";
 import MmDialog from "../dialog/Dialog.vue";
 import MmInput from "../input/Input.vue";
 import MmSelect from "../select/Select.vue";
@@ -89,15 +80,13 @@ const emit = defineEmits<{ "update:modelValue": [value: boolean] }>();
 
 const zh = {
   apiKey: "Google API Key", apiKeyHint: "API Key 将加密保存，页面不会返回完整密钥。", apiKeyPlaceholder: "请输入 Google API Key",
-  cancel: "取消", concurrency: "并发任务数", disabled: "已停用", enableHint: "关闭后系统不会发起自动翻译任务。", enabled: "已启用",
-  enableTitle: "启用 Google 翻译", invalid: "验证失败", loadFailed: "翻译配置加载失败", notConfigured: "尚未配置 Google API Key",
+  cancel: "取消", concurrency: "并发任务数", invalid: "验证失败", loadFailed: "翻译配置加载失败", notConfigured: "尚未配置 Google API Key",
   pending: "待验证", save: "保存配置", saveFailed: "翻译配置保存失败", saved: "配置已保存", test: "测试连接",
   testFailed: "连接测试失败", testSuccess: "连接测试成功", title: "Google 翻译配置", valid: "验证通过", apiVersion: "接口版本",
 };
 const en = {
   apiKey: "Google API Key", apiKeyHint: "The API Key is encrypted at rest and is never returned in full.", apiKeyPlaceholder: "Enter Google API Key",
-  cancel: "Cancel", concurrency: "Concurrent Tasks", disabled: "Disabled", enableHint: "Automatic translation jobs stop when disabled.", enabled: "Enabled",
-  enableTitle: "Enable Google Translate", invalid: "Verification failed", loadFailed: "Failed to load translation configuration", notConfigured: "Google API Key is not configured",
+  cancel: "Cancel", concurrency: "Concurrent Tasks", invalid: "Verification failed", loadFailed: "Failed to load translation configuration", notConfigured: "Google API Key is not configured",
   pending: "Pending verification", save: "Save Configuration", saveFailed: "Failed to save translation configuration", saved: "Configuration saved", test: "Test Connection",
   testFailed: "Connection test failed", testSuccess: "Connection test succeeded", title: "Google Translate Configuration", valid: "Verified", apiVersion: "API Version",
 };
@@ -179,5 +168,5 @@ async function saveConfig() {
 </script>
 
 <style>
-.mm-translation-config{display:grid;gap:16px}.mm-translation-config__field{display:grid;gap:7px}.mm-translation-config__field>label{color:var(--mm-color-text);font-size:13px;font-weight:var(--mm-font-weight-medium)}.mm-translation-config__field>small{color:var(--mm-color-text-muted);font-size:11px;line-height:1.5}.mm-translation-config__enabled{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px;border:1px solid var(--mm-color-line);border-radius:var(--mm-radius-md);background:var(--mm-color-fill-subtle)}.mm-translation-config__enabled>div{display:grid;gap:3px}.mm-translation-config__enabled strong{font-size:13px}.mm-translation-config__enabled span{color:var(--mm-color-text-muted);font-size:11px}.mm-translation-config__footer{display:flex;align-items:center;justify-content:space-between;gap:12px}.mm-translation-config__footer>div{display:flex;gap:8px}
+.mm-translation-config{display:grid;gap:16px}.mm-translation-config__field{display:grid;gap:7px}.mm-translation-config__field>label{color:var(--mm-color-text);font-size:13px;font-weight:var(--mm-font-weight-medium)}.mm-translation-config__field>small{color:var(--mm-color-text-muted);font-size:11px;line-height:1.5}.mm-translation-config__footer{display:flex;align-items:center;justify-content:space-between;gap:12px}.mm-translation-config__footer>div{display:flex;gap:8px}
 </style>

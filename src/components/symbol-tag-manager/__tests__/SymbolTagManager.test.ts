@@ -92,5 +92,7 @@ describe("MmSymbolTagManager", () => {
     expect(translationConfigActions.load).toHaveBeenCalledOnce();
     expect(wrapper.text()).toContain("Cloud Translation Basic v2");
     expect(wrapper.text()).toContain("并发任务数");
+    expect(wrapper.text()).not.toContain("启用 Google 翻译");
+    expect(wrapper.text().indexOf("待验证")).toBeGreaterThan(wrapper.text().indexOf("并发任务数"));
   });
 });

@@ -1,6 +1,6 @@
 {
   "name": "@work-gpt/6mm-ui",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "Vue 3 component library for 6MM products",
   "type": "module",
   "main": "./dist/index.js",

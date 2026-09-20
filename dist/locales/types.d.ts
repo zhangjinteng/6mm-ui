@@ -192,6 +192,8 @@ export interface MmUILocaleMessages {
         username: string;
     };
     fundingChangeLogs: {
+        agentTransferIn: string;
+        agentTransferOut: string;
         agent: string;
         allAgents: string;
         allGames: string;
@@ -216,6 +218,10 @@ export interface MmUILocaleMessages {
         typePayout: string;
         typeRefund: string;
         typeStake: string;
+        transferHoldCreated: string;
+        transferHoldReleased: string;
+        transferIn: string;
+        transferOut: string;
         user: string;
         userUid: string;
         username: string;

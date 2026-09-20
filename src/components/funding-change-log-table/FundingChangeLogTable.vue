@@ -9,7 +9,7 @@ import type { QueryBarField, QueryBarValue } from '../query-bar'
 import { MmTag } from '../tag'
 import type { TagType } from '../tag'
 import type { TableSortState } from '../table'
-import { formatFundingAmount, fundingBalanceChangeClass } from './formatters'
+import { formatFundingAmount, fundingBalanceChangeClass, fundingChangeTypeKey } from './formatters'
 import type { FundingChangeLogListQuery, FundingChangeLogRow, FundingChangeLogTableProps } from './types'
 
 defineOptions({ inheritAttrs: false, name: 'MmFundingChangeLogTable' })
@@ -75,8 +75,19 @@ const display = (value: unknown) => value === null || value === undefined || Str
 const scalar = (filters: QueryBarValue, key: string) => { const value = filters[key]; return value === null || Array.isArray(value) ? '' : value }
 const normalizeDate = (value?: string) => value ? String(value).slice(0, 10) : ''
 const agentLabel = (row: Row) => row.agent_name || props.agentOptions.find(option => String(option.value) === String(row.agent_id))?.label || row.agent_id || '-'
-const typeLabel = (value: unknown) => ({ DEPOSIT: copy.value.typeDeposit, SECONDS_BET_DEBIT: copy.value.typeStake, SECONDS_BET_STAKE: copy.value.typeStake, SECONDS_BET_PAYOUT: copy.value.typePayout, SECONDS_BET_REFUND: copy.value.typeRefund }[String(value ?? '').toUpperCase()] || display(value))
-const typeTag = (value: unknown): TagType => { const type = String(value ?? '').toUpperCase(); return type === 'DEPOSIT' || type === 'SECONDS_BET_PAYOUT' ? 'success' : type === 'SECONDS_BET_REFUND' ? 'info' : type === 'SECONDS_BET_STAKE' || type === 'SECONDS_BET_DEBIT' ? 'warning' : 'default' }
+const typeLabel = (row: Row) => {
+  const mappedKey = fundingChangeTypeKey(row.business_type, row.entry_type)
+  if (mappedKey) return copy.value[mappedKey]
+  return ({ DEPOSIT: copy.value.typeDeposit, SECONDS_BET_DEBIT: copy.value.typeStake, SECONDS_BET_STAKE: copy.value.typeStake, SECONDS_BET_PAYOUT: copy.value.typePayout, SECONDS_BET_REFUND: copy.value.typeRefund }[String(row.business_type ?? '').toUpperCase()] || display(row.business_type))
+}
+const typeTag = (row: Row): TagType => {
+  const mappedKey = fundingChangeTypeKey(row.business_type, row.entry_type)
+  if (mappedKey === 'transferIn' || mappedKey === 'agentTransferIn') return 'success'
+  if (mappedKey === 'transferHoldReleased') return 'info'
+  if (mappedKey) return 'warning'
+  const type = String(row.business_type ?? '').toUpperCase()
+  return type === 'DEPOSIT' || type === 'SECONDS_BET_PAYOUT' ? 'success' : type === 'SECONDS_BET_REFUND' ? 'info' : type === 'SECONDS_BET_STAKE' || type === 'SECONDS_BET_DEBIT' ? 'warning' : 'default'
+}
 const gameLabel = (value: unknown) => ({ prediction: copy.value.gamePrediction, prediction_updown: copy.value.gameUpDown, prediction_highlow: copy.value.gameHighLow, grid: copy.value.gameGrid }[String(value ?? '').toLowerCase()] || '-')
 
 const { proTableBindings, reload } = useMmProTable<Row>({
@@ -106,7 +117,7 @@ defineExpose({ reload })
     <template #cell-user_id="slotProps"><slot name="cell-user_id" v-bind="slotProps">{{ display(slotProps.row.user_id) }}</slot></template>
     <template #cell-username="slotProps"><slot name="cell-username" v-bind="slotProps">{{ display(slotProps.row.nice_name || slotProps.row.username) }}</slot></template>
     <template #cell-ledger_id="slotProps"><slot name="cell-ledger_id" v-bind="slotProps">{{ display(slotProps.row.ledger_id) }}</slot></template>
-    <template #cell-business_type="slotProps"><slot name="cell-business_type" v-bind="slotProps"><MmTag :type="typeTag(slotProps.row.business_type)" effect="soft" round size="sm">{{ typeLabel(slotProps.row.business_type) }}</MmTag></slot></template>
+    <template #cell-business_type="slotProps"><slot name="cell-business_type" v-bind="slotProps"><MmTag :type="typeTag(slotProps.row)" effect="soft" round size="sm">{{ typeLabel(slotProps.row) }}</MmTag></slot></template>
     <template #cell-business_scope="slotProps"><slot name="cell-business_scope" v-bind="slotProps">{{ gameLabel(slotProps.row.business_scope) }}</slot></template>
     <template #cell-balance_change="slotProps"><slot name="cell-balance_change" v-bind="slotProps"><span class="mm-funding-change-log-table__amount" :class="fundingBalanceChangeClass(slotProps.row.balance_change)">{{ formatFundingAmount(slotProps.row.balance_change, slotProps.row.currency, true) }}</span></slot></template>
     <template #cell-balance_before="slotProps"><slot name="cell-balance_before" v-bind="slotProps"><span class="mm-funding-change-log-table__amount">{{ formatFundingAmount(slotProps.row.balance_before, slotProps.row.currency) }}</span></slot></template>

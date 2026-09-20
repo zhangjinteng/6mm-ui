@@ -15,3 +15,26 @@ export function fundingBalanceChangeClass(value: unknown): string {
   const amount = Number(value)
   return amount > 0 ? 'is-positive' : amount < 0 ? 'is-negative' : ''
 }
+
+export type FundingChangeTypeKey =
+  | 'agentTransferIn'
+  | 'agentTransferOut'
+  | 'transferHoldCreated'
+  | 'transferHoldReleased'
+  | 'transferIn'
+  | 'transferOut'
+
+export function fundingChangeTypeKey(
+  businessType: unknown,
+  entryType: unknown,
+): FundingChangeTypeKey | null {
+  const key = `${String(businessType ?? '').trim().toUpperCase()}:${String(entryType ?? '').trim().toUpperCase()}`
+  return ({
+    'AGENT_TRANSFER_IN:CREDIT': 'agentTransferIn',
+    'AGENT_TRANSFER_OUT:DEBIT': 'agentTransferOut',
+    'TRANSFER:TRANSFER_HOLD_CREATED': 'transferHoldCreated',
+    'TRANSFER:TRANSFER_HOLD_RELEASED': 'transferHoldReleased',
+    'TRANSFER:TRANSFER_IN': 'transferIn',
+    'TRANSFER:TRANSFER_OUT': 'transferOut',
+  } as const)[key] ?? null
+}

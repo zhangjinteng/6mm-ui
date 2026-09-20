@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatFundingAmount, fundingBalanceChangeClass } from '../formatters'
+import { formatFundingAmount, fundingBalanceChangeClass, fundingChangeTypeKey } from '../formatters'
 
 describe('funding change formatters', () => {
   it('keeps meaningful precision and adds direction signs', () => {
@@ -11,5 +11,20 @@ describe('funding change formatters', () => {
     expect(fundingBalanceChangeClass('1')).toBe('is-positive')
     expect(fundingBalanceChangeClass('-1')).toBe('is-negative')
     expect(fundingBalanceChangeClass('0')).toBe('')
+  })
+
+  it.each([
+    ['TRANSFER', 'TRANSFER_HOLD_CREATED', 'transferHoldCreated'],
+    ['TRANSFER', 'TRANSFER_HOLD_RELEASED', 'transferHoldReleased'],
+    ['TRANSFER', 'TRANSFER_OUT', 'transferOut'],
+    ['TRANSFER', 'TRANSFER_IN', 'transferIn'],
+    ['AGENT_TRANSFER_IN', 'CREDIT', 'agentTransferIn'],
+    ['AGENT_TRANSFER_OUT', 'DEBIT', 'agentTransferOut'],
+  ])('maps %s and %s to %s', (businessType, entryType, expected) => {
+    expect(fundingChangeTypeKey(businessType, entryType)).toBe(expected)
+  })
+
+  it('does not guess a label from only one side of the mapping', () => {
+    expect(fundingChangeTypeKey('TRANSFER', 'CREDIT')).toBeNull()
   })
 })

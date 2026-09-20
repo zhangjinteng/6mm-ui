@@ -34,6 +34,8 @@ import { MmExchangeLogo } from "./exchange-logo";
 import { MmFilterDrawer } from "./filter-drawer";
 import { MmFeeCommissionTable } from "./fee-commission-table";
 import { MmForm, MmFormItem } from "./form";
+import { MmFundingAccountTable } from "./funding-account-table";
+import { MmFundingChangeLogTable } from "./funding-change-log-table";
 import { MmHistoryPositionTable } from "./history-position-table";
 import { MmHistoryOrderTable } from "./history-order-table";
 import { MmHandlingFeeConfig } from "./handling-fee-config";
@@ -121,6 +123,8 @@ export * from "./exchange-logo";
 export * from "./filter-drawer";
 export * from "./fee-commission-table";
 export * from "./form";
+export * from "./funding-account-table";
+export * from "./funding-change-log-table";
 export * from "./history-position-table";
 export * from "./history-order-table";
 export * from "./handling-fee-config";
@@ -212,6 +216,8 @@ export const components: InstallableComponent[] = [
   MmFeeCommissionTable,
   MmForm,
   MmFormItem,
+  MmFundingAccountTable,
+  MmFundingChangeLogTable,
   MmHistoryPositionTable,
   MmHistoryOrderTable,
   MmHandlingFeeConfig,

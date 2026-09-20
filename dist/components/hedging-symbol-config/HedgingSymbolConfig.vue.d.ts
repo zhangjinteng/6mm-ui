@@ -14,8 +14,8 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<HedgingSymbolConfigProps, {
     refresh: typeof load;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<HedgingSymbolConfigProps> & Readonly<{}>, {
-    initialAgentId: number | string;
     agentOptions: SelectOption[];
+    initialAgentId: number | string;
     showAgent: boolean;
     labels: Partial<HedgingSymbolConfigLabels>;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

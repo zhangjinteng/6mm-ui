@@ -1,0 +1,3 @@
+.mm-funding-change-log-table__amount { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mm-funding-change-log-table__amount.is-positive { color: var(--mm-color-success); }
+.mm-funding-change-log-table__amount.is-negative { color: var(--mm-color-danger); }

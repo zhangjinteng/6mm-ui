@@ -152,7 +152,13 @@
               <template #content>
                 <div class="mm-hedging-execution-table__error">
                   <strong>{{ copy.failureReason }}</strong>
-                  <p>{{ row.error_message || copy.failureReasonEmpty }}</p>
+                  <p class="mm-hedging-execution-table__failure-summary">
+                    {{ row.failure_reason || copy.failureReasonEmpty }}
+                  </p>
+                  <template v-if="row.error_message && row.error_message !== row.failure_reason">
+                    <strong>{{ copy.failureDetail }}</strong>
+                    <p>{{ row.error_message }}</p>
+                  </template>
                 </div>
               </template>
             </MmPopover>
@@ -258,6 +264,7 @@ const zh = {
   loadingTitle: "正在加载数据",
   loadingDescription: "正在准备当前查询的数据，请稍候。",
   failureReason: "失败原因",
+  failureDetail: "原始错误",
   failureReasonAria: "查看执行失败原因",
   failureReasonEmpty: "暂无报错信息",
   merchant: "商户",
@@ -291,6 +298,7 @@ const en = {
   loadingTitle: "Loading data",
   loadingDescription: "Preparing data for the current query. Please wait.",
   failureReason: "Failure reason",
+  failureDetail: "Raw error",
   failureReasonAria: "View execution failure reason",
   failureReasonEmpty: "No error details available",
   merchant: "Merchant",
@@ -397,5 +405,6 @@ defineExpose({ reload: load });
 .mm-hedging-execution-table__actions{display:flex;justify-content:flex-end;gap:7px}.mm-hedging-execution-table__body{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-execution-table__body>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}
 .mm-hedging-execution-table__table{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:0}.mm-hedging-execution-table__table :deep(.mm-table__viewport),.mm-hedging-execution-table__table :deep(.mm-table__scroll){flex:1 1 auto;min-height:0}.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table>tbody),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table>tbody>tr),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__empty-cell){height:100%}.mm-hedging-execution-table__table.is-empty :deep(.mm-table__empty-cell){vertical-align:middle}.mm-hedging-execution-table__table :deep(th),.mm-hedging-execution-table__table :deep(td){min-width:0;padding:8px 6px;font-size:11px}
 .mm-hedging-execution-table__task,.mm-hedging-execution-table__time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-execution-table__task{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.mm-hedging-execution-table__amount-pair{display:grid;gap:2px;color:var(--mm-color-text-muted);line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}.mm-hedging-execution-table__amount-pair>strong{font-size:12px;font-weight:650}.mm-hedging-execution-table__amount-pair>span{font-size:11px;font-weight:550}.mm-hedging-execution-table__amount-pair.is-positive{color:var(--mm-color-success)}.mm-hedging-execution-table__amount-pair.is-negative{color:var(--mm-color-danger)}.mm-hedging-execution-table__time{color:var(--mm-color-text-muted);font-size:var(--mm-font-size-sm)}.mm-hedging-execution-table__status{display:inline-flex;align-items:center;gap:5px}.mm-hedging-execution-table__help{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:var(--mm-color-text-muted);cursor:help}.mm-hedging-execution-table__help:hover,.mm-hedging-execution-table__help:focus-visible{color:var(--mm-color-primary);outline:none}.mm-hedging-execution-table__error{display:grid;gap:8px}.mm-hedging-execution-table__error p{margin:0;overflow-wrap:anywhere;color:var(--mm-color-text-muted);line-height:1.55}.mm-hedging-execution-table__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;border-top:1px solid var(--mm-color-line);color:var(--mm-color-text-muted);font-size:12px}
+.mm-hedging-execution-table__failure-summary{color:var(--mm-color-danger)!important;font-weight:650}
 @media(max-width:1100px){.mm-hedging-execution-table__toolbar,.mm-hedging-execution-table__toolbar.has-agent-filter{grid-template-columns:repeat(3,minmax(150px,1fr))}.mm-hedging-execution-table__actions{grid-column:1/-1}}
 </style>

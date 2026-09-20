@@ -31,6 +31,8 @@ export interface HedgingExecutionRow {
   exchange: string;
   exchange_account_id: number;
   error_message: string;
+  failure_code?: string;
+  failure_reason?: string;
   executed_at: string | null;
   filled_notional_usdt: string;
   id: number;
@@ -47,7 +49,26 @@ export interface HedgingExecutionRow {
   task_no: string;
 }
 
+export interface HedgingCircuitBreaker {
+  account_name: string | null;
+  config_id: string;
+  consecutive_failures: number;
+  exchange: string | null;
+  exchange_account_id: string;
+  failure_code: string;
+  failure_reason: string;
+  failure_reason_label: string;
+  failure_threshold: number;
+  last_error: string;
+  last_execution_id: string | null;
+  last_failure_at: string | null;
+  opened_at: string | null;
+  status: "open";
+  symbol: string;
+}
+
 export interface HedgingExecutionResult {
+  circuit_breakers?: HedgingCircuitBreaker[];
   count: number;
   lists: HedgingExecutionRow[];
   options: {

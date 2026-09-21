@@ -1,0 +1,8 @@
+.mm-user-prediction-table__net-profit { font-variant-numeric: tabular-nums; }
+.mm-user-prediction-table__net-profit.is-positive { color: var(--mm-color-success); }
+.mm-user-prediction-table__net-profit.is-negative { color: var(--mm-color-danger); }
+.mm-user-prediction-table__net-profit.is-neutral { color: var(--mm-color-text-secondary); }
+.mm-user-prediction-table .mm-pro-table__auto-refresh { display: none; }
+.mm-user-prediction-table .mm-table tbody tr,
+.mm-user-prediction-table .mm-table tbody td { height: 43px; }
+.mm-user-prediction-table .mm-table tbody td { padding-block: 0; }

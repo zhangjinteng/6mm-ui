@@ -227,6 +227,34 @@ export interface MmUILocaleMessages {
     userUid: string;
     username: string;
   };
+  userPredictions: {
+    agent: string;
+    allAgents: string;
+    allPlays: string;
+    externalUserId: string;
+    grid: string;
+    highLow: string;
+    lastPredictionTime: string;
+    lastPredictionTimeAll: string;
+    loadFailed: string;
+    loseOrders: string;
+    netProfit30d: string;
+    orders30d: string;
+    pendingAmount: string;
+    pendingOrders: string;
+    playType: string;
+    refundOrders: string;
+    return30d: string;
+    stake30d: string;
+    tableAria: string;
+    upDown: string;
+    user: string;
+    userKeywordPlaceholder: string;
+    userUid: string;
+    username: string;
+    usernamePlaceholder: string;
+    winOrders: string;
+  };
   accountChangeLogs: {
     adminAdjust: string;
     adjustIsolatedMargin: string;

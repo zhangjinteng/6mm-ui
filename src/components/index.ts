@@ -63,6 +63,7 @@ import { MmPositionTable } from "./position-table";
 import { MmUserDetailDialog } from "./user-detail-dialog";
 import { MmUserAssetTable } from "./user-asset-table";
 import { MmUserTable } from "./user-table";
+import { MmUserPredictionTable } from "./user-prediction-table";
 import { MmPageHeader } from "./page-header";
 import { MmPopover } from "./popover";
 import { MmPagination } from "./pagination";
@@ -152,6 +153,7 @@ export * from "./position-table";
 export * from "./user-detail-dialog";
 export * from "./user-asset-table";
 export * from "./user-table";
+export * from "./user-prediction-table";
 export * from "./page-header";
 export * from "./popover";
 export * from "./pagination";
@@ -248,6 +250,7 @@ export const components: InstallableComponent[] = [
   MmUserDetailDialog,
   MmUserAssetTable,
   MmUserTable,
+  MmUserPredictionTable,
   MmPageHeader,
   MmPopover,
   MmPagination,

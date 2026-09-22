@@ -37,6 +37,18 @@ describe("MmAccountChangeLogTable", () => {
           wallet_balance_after: "108.75",
           wallet_balance_before: "98.75",
         },
+        {
+          amount: "100",
+          change_type: "FUNDING_TRANSFER_IN",
+          id: 103,
+          user_id: 9003,
+        },
+        {
+          amount: "-100",
+          change_type: "FUNDING_TRANSFER_OUT",
+          id: 104,
+          user_id: 9004,
+        },
       ],
     }));
     const wrapper = mount(AccountChangeLogTable, { props: { request } });
@@ -85,8 +97,21 @@ describe("MmAccountChangeLogTable", () => {
     );
     expect(wrapper.text()).toContain("手续费");
     expect(wrapper.text()).toContain("调整逐仓保证金");
+    expect(wrapper.text()).toContain("资金转合约");
+    expect(wrapper.text()).toContain("合约转资金");
     expect(wrapper.text()).toContain("-1.25");
     expect(wrapper.text()).toContain("98.75");
+    const changeTypeField = (
+      wrapper.findComponent(MmQueryBar).props("fields") as QueryBarField[]
+    ).find((field) => field.key === "change_type");
+    expect(changeTypeField).toEqual(
+      expect.objectContaining({
+        options: expect.arrayContaining([
+          { label: "资金转合约", value: "funding_transfer_in" },
+          { label: "合约转资金", value: "funding_transfer_out" },
+        ]),
+      }),
+    );
     wrapper.unmount();
   });
 

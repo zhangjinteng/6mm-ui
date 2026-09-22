@@ -274,6 +274,8 @@ export const zhCN: MmUILocale = {
       filterSubtitle: "资金流水",
       filterTitle: "筛选",
       flowId: "流水 ID",
+      fundingTransferIn: "资金转合约",
+      fundingTransferOut: "合约转资金",
       fundingFeeExpense: "资金费支出",
       fundingFeeIncome: "资金费收入",
       fundingFeeSettle: "资金费结算",

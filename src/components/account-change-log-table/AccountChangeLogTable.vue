@@ -82,6 +82,8 @@ const changeTypeLabels = computed<Record<string, string>>(() => {
     adjust_isolated_margin: copy.value.adjustIsolatedMargin,
     deposit: copy.value.deposit,
     funding_fee_settle: copy.value.fundingFeeSettle,
+    funding_transfer_in: copy.value.fundingTransferIn,
+    funding_transfer_out: copy.value.fundingTransferOut,
     handling_fee: copy.value.handlingFee,
     liquidation_fee: copy.value.liquidationFee,
     agent_transfer: copy.value.agentTransfer,

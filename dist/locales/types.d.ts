@@ -272,6 +272,8 @@ export interface MmUILocaleMessages {
         filterSubtitle: string;
         filterTitle: string;
         flowId: string;
+        fundingTransferIn: string;
+        fundingTransferOut: string;
         fundingFeeExpense: string;
         fundingFeeIncome: string;
         fundingFeeSettle: string;

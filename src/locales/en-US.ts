@@ -274,6 +274,8 @@ export const enUS: MmUILocale = {
       filterSubtitle: "Account Changes",
       filterTitle: "Filter",
       flowId: "Flow ID",
+      fundingTransferIn: "Funding to Contract",
+      fundingTransferOut: "Contract to Funding",
       fundingFeeExpense: "Funding Fee Expense",
       fundingFeeIncome: "Funding Fee Income",
       fundingFeeSettle: "Funding Fee Settlement",

@@ -204,6 +204,7 @@ export const enUS: MmUILocale = {
       balanceBefore: "Balance Before",
       balanceChange: "Balance Change",
       businessId: "Related Business ID",
+      frozenAmount: "Frozen Amount",
       game: "Game",
       gameGrid: "Grid Prediction",
       gameHighLow: "High/Low Prediction",

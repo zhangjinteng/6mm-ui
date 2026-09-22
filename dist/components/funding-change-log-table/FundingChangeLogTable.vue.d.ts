@@ -24,6 +24,8 @@ declare const __VLS_export: <Row extends FundingChangeLogRow = FundingChangeLogR
     } & {
         'cell-balance_change'?: (props: any) => any;
     } & {
+        'cell-frozen_amount'?: (props: any) => any;
+    } & {
         'cell-balance_before'?: (props: any) => any;
     } & {
         'cell-balance_after'?: (props: any) => any;

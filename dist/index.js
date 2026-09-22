@@ -217,6 +217,7 @@ var Y = {
 			balanceBefore: "Balance Before",
 			balanceChange: "Balance Change",
 			businessId: "Related Business ID",
+			frozenAmount: "Frozen Amount",
 			game: "Game",
 			gameGrid: "Grid Prediction",
 			gameHighLow: "High/Low Prediction",
@@ -1216,6 +1217,7 @@ var Y = {
 			balanceBefore: "账变前账户余额",
 			balanceChange: "账户余额变动",
 			businessId: "关联业务单号",
+			frozenAmount: "冻结金额",
 			game: "游戏",
 			gameGrid: "网格预测",
 			gameHighLow: "自选预测",
@@ -11655,7 +11657,7 @@ function nc(e, t) {
 }
 //#endregion
 //#region src/components/funding-change-log-table/FundingChangeLogTable.vue?vue&type=script&setup=true&lang.ts
-var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-funding-change-log-table__amount" }, ac = /* @__PURE__ */ p({
+var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-funding-change-log-table__amount" }, ac = { class: "mm-funding-change-log-table__amount" }, oc = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmFundingChangeLogTable",
 	__name: "FundingChangeLogTable",
@@ -11697,6 +11699,7 @@ var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-fun
 			"cell-business_type",
 			"cell-business_scope",
 			"cell-balance_change",
+			"cell-frozen_amount",
 			"cell-balance_before",
 			"cell-balance_after",
 			"cell-business_id"
@@ -11861,6 +11864,12 @@ var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-fun
 					sortable: !0
 				},
 				{
+					key: "frozen_amount",
+					dataIndex: "frozen_amount",
+					title: a.value.frozenAmount,
+					width: 145
+				},
+				{
 					key: "balance_before",
 					dataIndex: "balance_before",
 					title: a.value.balanceBefore,
@@ -11975,8 +11984,9 @@ var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-fun
 			}, 1032, ["type"])])]),
 			"cell-business_scope": K((e) => [M(t.$slots, "cell-business_scope", x(m(e)), () => [d(F(A(e.row.business_scope)), 1)])]),
 			"cell-balance_change": K((e) => [M(t.$slots, "cell-balance_change", x(m(e)), () => [l("span", { class: b(["mm-funding-change-log-table__amount", R(tc)(e.row.balance_change)]) }, F(R(ec)(e.row.balance_change, e.row.currency, !0)), 3)])]),
-			"cell-balance_before": K((e) => [M(t.$slots, "cell-balance_before", x(m(e)), () => [l("span", rc, F(R(ec)(e.row.balance_before, e.row.currency)), 1)])]),
-			"cell-balance_after": K((e) => [M(t.$slots, "cell-balance_after", x(m(e)), () => [l("span", ic, F(R(ec)(e.row.balance_after, e.row.currency)), 1)])]),
+			"cell-frozen_amount": K((e) => [M(t.$slots, "cell-frozen_amount", x(m(e)), () => [l("span", rc, F(R(ec)(e.row.frozen_amount, e.row.currency)), 1)])]),
+			"cell-balance_before": K((e) => [M(t.$slots, "cell-balance_before", x(m(e)), () => [l("span", ic, F(R(ec)(e.row.balance_before, e.row.currency)), 1)])]),
+			"cell-balance_after": K((e) => [M(t.$slots, "cell-balance_after", x(m(e)), () => [l("span", ac, F(R(ec)(e.row.balance_after, e.row.currency)), 1)])]),
 			"cell-business_id": K((e) => [M(t.$slots, "cell-business_id", x(m(e)), () => [d(F(C(e.row.business_id)), 1)])]),
 			_: 2
 		}, [j(S.value, (e) => ({
@@ -11993,44 +12003,44 @@ var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-fun
 });
 //#endregion
 //#region src/components/history-position-table/formatters.ts
-function oc(e) {
+function sc(e) {
 	let t = Number(e);
 	return Number.isFinite(t) ? t : 0;
-}
-function sc(e) {
-	return new Intl.NumberFormat("en-US", {
-		minimumFractionDigits: 2,
-		maximumFractionDigits: 2
-	}).format(oc(e));
 }
 function cc(e) {
 	return new Intl.NumberFormat("en-US", {
 		minimumFractionDigits: 2,
-		maximumFractionDigits: 4
-	}).format(oc(e));
+		maximumFractionDigits: 2
+	}).format(sc(e));
 }
 function lc(e) {
 	return new Intl.NumberFormat("en-US", {
-		minimumFractionDigits: 3,
-		maximumFractionDigits: 3
-	}).format(oc(e));
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 4
+	}).format(sc(e));
 }
 function uc(e) {
-	let t = oc(e);
-	return `${t > 0 ? "+" : ""}${sc(t)}`;
+	return new Intl.NumberFormat("en-US", {
+		minimumFractionDigits: 3,
+		maximumFractionDigits: 3
+	}).format(sc(e));
 }
 function dc(e) {
-	return oc(e.open_quantity ?? e.max_quantity ?? e.quantity);
+	let t = sc(e);
+	return `${t > 0 ? "+" : ""}${cc(t)}`;
 }
 function fc(e) {
-	return e.max_quantity ?? e.open_quantity ?? e.quantity ?? 0;
+	return sc(e.open_quantity ?? e.max_quantity ?? e.quantity);
 }
 function pc(e) {
-	return oc(e.entry_price) * dc(e);
+	return e.max_quantity ?? e.open_quantity ?? e.quantity ?? 0;
+}
+function mc(e) {
+	return sc(e.entry_price) * fc(e);
 }
 //#endregion
 //#region src/components/history-position-table/HistoryPositionTable.vue?vue&type=script&setup=true&lang.ts
-var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key: 1 }, _c = /* @__PURE__ */ p({
+var hc = { key: 1 }, gc = { class: "mm-history-position-table__id" }, _c = { key: 1 }, vc = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmHistoryPositionTable",
 	__name: "HistoryPositionTable",
@@ -12328,13 +12338,13 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 					title: a.value.maxQuantity,
 					width: 120,
 					sortable: !0,
-					formatter: (e, t) => lc(fc(t))
+					formatter: (e, t) => uc(pc(t))
 				},
 				{
 					key: "entry_cost",
 					title: a.value.entryCost,
 					width: 125,
-					formatter: (e, t) => sc(pc(t))
+					formatter: (e, t) => cc(mc(t))
 				},
 				{
 					key: "entry_price",
@@ -12342,14 +12352,14 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 					title: a.value.entryPrice,
 					width: 115,
 					sortable: !0,
-					formatter: cc
+					formatter: lc
 				},
 				{
 					key: "close_price",
 					dataIndex: "close_price",
 					title: a.value.closePrice,
 					width: 115,
-					formatter: cc
+					formatter: lc
 				},
 				{
 					key: "pnl",
@@ -12444,7 +12454,7 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 			}[Number(e.trigger_mode)] || "-";
 		}
 		function H(e) {
-			let t = oc(e);
+			let t = sc(e);
 			return t > 0 ? "is-profit" : t < 0 ? "is-loss" : "is-neutral";
 		}
 		function U(e, t) {
@@ -12528,8 +12538,8 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 			}, {
 				default: K(() => [d(F(P(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", mc, "-"))])]),
-			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", hc, F(k(e.row.id)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", hc, "-"))])]),
+			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", gc, F(k(e.row.id)), 1)])]),
 			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(k(e.row.symbol)), 1)])]),
 			"cell-product_category": K((e) => [M(t.$slots, "cell-product_category", x(m(e)), () => [f(R($), {
 				effect: "soft",
@@ -12549,7 +12559,7 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 			}, {
 				default: K(() => [d(F(I(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", gc, "-"))])]),
+			}, 1032, ["type"])) : (D(), c("span", _c, "-"))])]),
 			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -12559,7 +12569,7 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 				default: K(() => [d(F(L(e.row)), 1)]),
 				_: 2
 			}, 1032, ["type"])])]),
-			"cell-pnl": K((e) => [M(t.$slots, "cell-pnl", x(m(e)), () => [l("span", { class: b(["mm-history-position-table__change", H(e.row.pnl)]) }, F(R(uc)(e.row.pnl)), 3)])]),
+			"cell-pnl": K((e) => [M(t.$slots, "cell-pnl", x(m(e)), () => [l("span", { class: b(["mm-history-position-table__change", H(e.row.pnl)]) }, F(R(dc)(e.row.pnl)), 3)])]),
 			"cell-trigger_mode": K((e) => [M(t.$slots, "cell-trigger_mode", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -12609,12 +12619,12 @@ var mc = { key: 1 }, hc = { class: "mm-history-position-table__id" }, gc = { key
 });
 //#endregion
 //#region src/components/history-order-table/formatters.ts
-function vc(e) {
+function yc(e) {
 	if (e === !0 || e === 1) return !0;
 	let t = String(e ?? "").trim().toLowerCase();
 	return t === "1" || t === "true";
 }
-function yc(e) {
+function bc(e) {
 	let t = Number(e || 0);
 	return Number.isFinite(t) ? (Math.trunc(t * 1e4) / 1e4).toLocaleString("en-US", {
 		useGrouping: !1,
@@ -12622,13 +12632,13 @@ function yc(e) {
 		maximumFractionDigits: 4
 	}) : "0";
 }
-function bc(e) {
+function xc(e) {
 	let t = Number(e || 0);
 	return Number.isFinite(t) ? t.toFixed(2) : "0.00";
 }
 //#endregion
 //#region src/components/history-order-table/HistoryOrderTable.vue?vue&type=script&setup=true&lang.ts
-var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1 }, wc = { class: "mm-history-order-table__number" }, Tc = { class: "mm-history-order-table__number" }, Ec = { class: "mm-history-order-table__number" }, Dc = { class: "mm-history-order-table__number" }, Oc = /* @__PURE__ */ p({
+var Sc = { key: 1 }, Cc = { class: "mm-history-order-table__id" }, wc = { key: 1 }, Tc = { class: "mm-history-order-table__number" }, Ec = { class: "mm-history-order-table__number" }, Dc = { class: "mm-history-order-table__number" }, Oc = { class: "mm-history-order-table__number" }, kc = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmHistoryOrderTable",
 	__name: "HistoryOrderTable",
@@ -12912,7 +12922,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 		}
 		function N(e) {
 			let t = String(e.order_type ?? "").toLowerCase();
-			return t === "limit" && vc(e.maker_only) ? a.value.limitMaker : t === "limit" ? a.value.limitOrder : t === "market" ? a.value.marketOrder : C(e.order_type);
+			return t === "limit" && yc(e.maker_only) ? a.value.limitMaker : t === "limit" ? a.value.limitOrder : t === "market" ? a.value.marketOrder : C(e.order_type);
 		}
 		function P(e) {
 			return e.order_status_parse ? String(e.order_status_parse) : S.value[Number(e.order_status)] || C(e.order_status);
@@ -12983,7 +12993,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					dataIndex: "price",
 					title: a.value.orderPrice,
 					width: 110,
-					formatter: bc,
+					formatter: xc,
 					sortable: !0
 				},
 				{
@@ -12991,7 +13001,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					dataIndex: "quantity",
 					title: a.value.orderQuantity,
 					width: 130,
-					formatter: yc,
+					formatter: bc,
 					sortable: !0
 				},
 				{
@@ -12999,14 +13009,14 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					dataIndex: "filled_quantity",
 					title: a.value.filledQuantity,
 					width: 126,
-					formatter: yc
+					formatter: bc
 				},
 				{
 					key: "reduce_only",
 					dataIndex: "reduce_only",
 					title: a.value.reduceOnly,
 					width: 110,
-					formatter: (e) => vc(e) ? a.value.yes : a.value.no
+					formatter: (e) => yc(e) ? a.value.yes : a.value.no
 				},
 				{
 					key: "order_status",
@@ -13127,8 +13137,8 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			}, {
 				default: K(() => [d(F(T(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", xc, "-"))])]),
-			"cell-order_id": K((e) => [M(t.$slots, "cell-order_id", x(m(e)), () => [l("span", Sc, F(C(e.row.order_id)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", Sc, "-"))])]),
+			"cell-order_id": K((e) => [M(t.$slots, "cell-order_id", x(m(e)), () => [l("span", Cc, F(C(e.row.order_id)), 1)])]),
 			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(C(e.row.symbol)), 1)])]),
 			"cell-product_category": K((e) => [M(t.$slots, "cell-product_category", x(m(e)), () => [f(R($), {
 				effect: "soft",
@@ -13148,7 +13158,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			}, {
 				default: K(() => [d(F(E(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Cc, "-"))])]),
+			}, 1032, ["type"])) : (D(), c("span", wc, "-"))])]),
 			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -13158,10 +13168,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				default: K(() => [d(F(O(e.row)), 1)]),
 				_: 2
 			}, 1032, ["type"])])]),
-			"cell-leverage": K((e) => [M(t.$slots, "cell-leverage", x(m(e)), () => [l("span", wc, F(e.row.leverage == null || e.row.leverage === "" ? "-" : `${e.row.leverage}x`), 1)])]),
-			"cell-price": K((e) => [M(t.$slots, "cell-price", x(m(e)), () => [l("span", Tc, F(R(bc)(e.row.price)), 1)])]),
-			"cell-quantity": K((e) => [M(t.$slots, "cell-quantity", x(m(e)), () => [l("span", Ec, F(R(yc)(e.row.quantity)), 1)])]),
-			"cell-filled_quantity": K((e) => [M(t.$slots, "cell-filled_quantity", x(m(e)), () => [l("span", Dc, F(R(yc)(e.row.filled_quantity)), 1)])]),
+			"cell-leverage": K((e) => [M(t.$slots, "cell-leverage", x(m(e)), () => [l("span", Tc, F(e.row.leverage == null || e.row.leverage === "" ? "-" : `${e.row.leverage}x`), 1)])]),
+			"cell-price": K((e) => [M(t.$slots, "cell-price", x(m(e)), () => [l("span", Ec, F(R(xc)(e.row.price)), 1)])]),
+			"cell-quantity": K((e) => [M(t.$slots, "cell-quantity", x(m(e)), () => [l("span", Dc, F(R(bc)(e.row.quantity)), 1)])]),
+			"cell-filled_quantity": K((e) => [M(t.$slots, "cell-filled_quantity", x(m(e)), () => [l("span", Oc, F(R(bc)(e.row.filled_quantity)), 1)])]),
 			"cell-operation": K((n) => [M(t.$slots, "cell-operation", v(n, { openDetail: () => te("detail", e.actions.detail, n.row) }), () => [e.actions.detail ? (D(), o(R(Q), {
 				key: 0,
 				"aria-label": `${R(r).historyOrders.viewDetails} ${n.row.order_id}`,
@@ -13199,16 +13209,16 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			"page-sizes"
 		]));
 	}
-}), kc = { class: "mm-handling-fee-config__number" }, Ac = {
+}), Ac = { class: "mm-handling-fee-config__number" }, jc = {
 	key: 0,
 	class: "mm-handling-fee-config__actions"
-}, jc = {
+}, Mc = {
 	key: 1,
 	class: "mm-handling-fee-config__locked"
-}, Mc = { class: "mm-handling-fee-config__summary" }, Nc = { class: "mm-handling-fee-config__rates" }, Pc = { class: "mm-handling-fee-config__note" }, Fc = { class: "mm-handling-fee-config__footer" }, Ic = { class: "mm-handling-fee-config__delete-content" }, Lc = {
+}, Nc = { class: "mm-handling-fee-config__summary" }, Pc = { class: "mm-handling-fee-config__rates" }, Fc = { class: "mm-handling-fee-config__note" }, Ic = { class: "mm-handling-fee-config__footer" }, Lc = { class: "mm-handling-fee-config__delete-content" }, Rc = {
 	class: "mm-handling-fee-config__delete-icon",
 	"aria-hidden": "true"
-}, Rc = { class: "mm-handling-fee-config__delete-body" }, zc = { class: "mm-handling-fee-config__delete-title" }, Bc = { class: "mm-handling-fee-config__delete-description" }, Vc = { class: "mm-handling-fee-config__footer" }, Hc = /* @__PURE__ */ p({
+}, zc = { class: "mm-handling-fee-config__delete-body" }, Bc = { class: "mm-handling-fee-config__delete-title" }, Vc = { class: "mm-handling-fee-config__delete-description" }, Hc = { class: "mm-handling-fee-config__footer" }, Uc = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmHandlingFeeConfig",
 	__name: "HandlingFeeConfig",
@@ -13516,8 +13526,8 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					default: K(() => [d(F(ee(e.agent_id)), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-volume_30d": K(({ row: e }) => [l("span", kc, F(Number(e.level) === 0 ? `< ${q(e.volume_30d)}` : `≥ ${q(e.volume_30d)}`), 1)]),
-				"cell-operation": K(({ row: t }) => [e.actions.update && te(t) || e.actions.remove && Y(t) ? (D(), c("div", Ac, [e.actions.update && te(t) ? (D(), o(R(Q), {
+				"cell-volume_30d": K(({ row: e }) => [l("span", Ac, F(Number(e.level) === 0 ? `< ${q(e.volume_30d)}` : `≥ ${q(e.volume_30d)}`), 1)]),
+				"cell-operation": K(({ row: t }) => [e.actions.update && te(t) || e.actions.remove && Y(t) ? (D(), c("div", jc, [e.actions.update && te(t) ? (D(), o(R(Q), {
 					key: 0,
 					"aria-label": p.value.edit,
 					"icon-only": "",
@@ -13552,7 +13562,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					"aria-label",
 					"title",
 					"onClick"
-				])) : s("", !0)])) : (D(), c("span", jc, [f(R(Z), {
+				])) : s("", !0)])) : (D(), c("span", Mc, [f(R(Z), {
 					name: "lock-keyhole",
 					size: 14
 				}), d(" " + F(p.value.cannotEdit), 1)]))]),
@@ -13575,7 +13585,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					e || ye();
 				}
 			}, {
-				footer: K(() => [l("div", Fc, [f(R(Q), {
+				footer: K(() => [l("div", Ic, [f(R(Q), {
 					size: "sm",
 					disabled: ce.value,
 					onClick: ye
@@ -13608,7 +13618,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 							description: j.value,
 							type: "error"
 						}, null, 8, ["description"])) : s("", !0),
-						l("div", Mc, [f(R(Xs), {
+						l("div", Nc, [f(R(Xs), {
 							label: p.value.vipLevel,
 							prop: "level_name",
 							required: ""
@@ -13640,7 +13650,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 							])]),
 							_: 1
 						}, 8, ["label"])]),
-						l("div", Nc, [f(R(Xs), {
+						l("div", Pc, [f(R(Xs), {
 							label: p.value.makerFeeInput,
 							prop: "maker_fee_rate",
 							required: ""
@@ -13671,7 +13681,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 							}, 8, ["modelValue", "placeholder"])]),
 							_: 1
 						}, 8, ["label"])]),
-						l("div", Pc, F(p.value.formNote), 1)
+						l("div", Fc, F(p.value.formNote), 1)
 					]),
 					_: 1
 				}, 8, [
@@ -13695,7 +13705,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					e || be();
 				}
 			}, {
-				footer: K(() => [l("div", Vc, [f(R(Q), {
+				footer: K(() => [l("div", Hc, [f(R(Q), {
 					size: "sm",
 					disabled: O.value,
 					onClick: be
@@ -13715,10 +13725,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					key: 0,
 					description: N.value,
 					type: "error"
-				}, null, 8, ["description"])) : s("", !0), l("div", Ic, [l("div", Lc, [f(R(Z), {
+				}, null, 8, ["description"])) : s("", !0), l("div", Lc, [l("div", Rc, [f(R(Z), {
 					name: "trash-2",
 					size: 18
-				})]), l("div", Rc, [l("div", zc, F(p.value.deleteMessage), 1), l("div", Bc, F(p.value.deleteDescription), 1)])])]),
+				})]), l("div", zc, [l("div", Bc, F(p.value.deleteMessage), 1), l("div", Vc, F(p.value.deleteDescription), 1)])])]),
 				_: 1
 			}, 8, [
 				"model-value",
@@ -13727,10 +13737,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			])
 		], 16));
 	}
-}), Uc = { class: "mm-hedging-execution-table" }, Wc = { class: "mm-hedging-execution-table__actions" }, Gc = { class: "mm-hedging-execution-table__body mm-pro-table__body" }, Kc = ["title"], qc = { class: "mm-hedging-execution-table__status" }, Jc = ["aria-label"], Yc = { class: "mm-hedging-execution-table__error" }, Xc = { class: "mm-hedging-execution-table__failure-summary" }, Zc = { class: "mm-hedging-execution-table__time" }, Qc = {
+}), Wc = { class: "mm-hedging-execution-table" }, Gc = { class: "mm-hedging-execution-table__actions" }, Kc = { class: "mm-hedging-execution-table__body mm-pro-table__body" }, qc = ["title"], Jc = { class: "mm-hedging-execution-table__status" }, Yc = ["aria-label"], Xc = { class: "mm-hedging-execution-table__error" }, Zc = { class: "mm-hedging-execution-table__failure-summary" }, Qc = { class: "mm-hedging-execution-table__time" }, $c = {
 	class: "mm-pro-table__state-icon is-loading",
 	"aria-hidden": "true"
-}, $c = { class: "mm-hedging-execution-table__footer" }, el = /*#__PURE__*/ Yo(/* @__PURE__ */ p({
+}, el = { class: "mm-hedging-execution-table__footer" }, tl = /*#__PURE__*/ Yo(/* @__PURE__ */ p({
 	name: "MmHedgingExecutionTable",
 	__name: "HedgingExecutionTable",
 	props: {
@@ -14090,7 +14100,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 		}
 		return W(() => N.agentId, () => {
 			N.accountId = "";
-		}), w(J), n({ reload: J }), (n, r) => (D(), c("section", Uc, [
+		}), w(J), n({ reload: J }), (n, r) => (D(), c("section", Wc, [
 			l("div", { class: b(["mm-hedging-execution-table__toolbar", { "has-agent-filter": e.showAgent }]) }, [
 				e.showAgent ? (D(), o(Ln, {
 					key: 0,
@@ -14190,7 +14200,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					"options",
 					"placeholder"
 				]),
-				l("div", Wc, [
+				l("div", Gc, [
 					f(Q, {
 						loading: v.value,
 						size: "sm",
@@ -14236,7 +14246,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					])
 				])
 			], 2),
-			l("div", Gc, [!v.value || _.value.length ? (D(), o(jr, {
+			l("div", Kc, [!v.value || _.value.length ? (D(), o(jr, {
 				key: 0,
 				"aria-label": g.value.tableAria,
 				class: b(["mm-hedging-execution-table__table", { "is-empty": I.value.length === 0 }]),
@@ -14249,7 +14259,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				"cell-task_no": K(({ row: e }) => [l("span", {
 					class: "mm-hedging-execution-table__task",
 					title: e.task_no
-				}, F(e.task_no), 9, Kc)]),
+				}, F(e.task_no), 9, qc)]),
 				"cell-agent_id": K(({ row: e }) => [d(F(e.agent_id || "-"), 1)]),
 				"cell-agent_name": K(({ row: e }) => [d(F(e.agent_name || "-"), 1)]),
 				"cell-source_type": K(() => [f($, {
@@ -14290,7 +14300,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					default: K(() => [d(F(le(e)), 1)]),
 					_: 2
 				}, 1024)]),
-				"cell-status": K(({ row: e }) => [l("div", qc, [f($, {
+				"cell-status": K(({ row: e }) => [l("div", Jc, [f($, {
 					effect: "soft",
 					round: "",
 					size: "sm",
@@ -14309,9 +14319,9 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					trigger: "hover-focus",
 					width: 320
 				}, {
-					content: K(() => [l("div", Yc, [
+					content: K(() => [l("div", Xc, [
 						l("strong", null, F(g.value.failureReason), 1),
-						l("p", Xc, F(e.failure_reason || g.value.failureReasonEmpty), 1),
+						l("p", Zc, F(e.failure_reason || g.value.failureReasonEmpty), 1),
 						e.error_message && e.error_message !== e.failure_reason ? (D(), c(t, { key: 0 }, [l("strong", null, F(g.value.failureDetail), 1), l("p", null, F(e.error_message), 1)], 64)) : s("", !0)
 					])]),
 					default: K(() => [l("button", {
@@ -14321,10 +14331,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					}, [f(Z, {
 						name: "circle-help",
 						size: 14
-					})], 8, Jc)]),
+					})], 8, Yc)]),
 					_: 2
 				}, 1024)) : s("", !0)])]),
-				"cell-executed_at": K(({ row: e }) => [l("span", Zc, F(ce(e.executed_at)), 1)]),
+				"cell-executed_at": K(({ row: e }) => [l("span", Qc, F(ce(e.executed_at)), 1)]),
 				_: 3
 			}, 8, [
 				"aria-label",
@@ -14339,7 +14349,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				role: "status",
 				"aria-live": "polite"
 			}, [
-				l("span", Qc, [f(Z, {
+				l("span", $c, [f(Z, {
 					name: "loader-circle",
 					size: 24,
 					spin: ""
@@ -14347,7 +14357,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				l("strong", null, F(g.value.loadingTitle), 1),
 				l("p", null, F(g.value.loadingDescription), 1)
 			], 2)) : s("", !0)]),
-			l("footer", $c, [l("span", null, F(g.value.pagination(G.value, q.value, S.value)), 1), S.value ? (D(), o(Vr, {
+			l("footer", el, [l("span", null, F(g.value.pagination(G.value, q.value, S.value)), 1), S.value ? (D(), o(Vr, {
 				key: 0,
 				"current-page": y.value,
 				"onUpdate:currentPage": r[7] ||= (e) => y.value = e,
@@ -14369,7 +14379,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			])) : s("", !0)])
 		]));
 	}
-}), [["__scopeId", "data-v-dce4eeaa"]]), tl = { class: "mm-tooltip__content" }, nl = /* @__PURE__ */ p({
+}), [["__scopeId", "data-v-dce4eeaa"]]), nl = { class: "mm-tooltip__content" }, rl = /* @__PURE__ */ p({
 	name: "MmTooltip",
 	__name: "Tooltip",
 	props: {
@@ -14415,7 +14425,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				toggle: n,
 				triggerAttrs: r
 			})]),
-			content: K(() => [l("span", tl, [M(t.$slots, "content", {}, () => [d(F(e.content), 1)])])]),
+			content: K(() => [l("span", nl, [M(t.$slots, "content", {}, () => [d(F(e.content), 1)])])]),
 			_: 3
 		}, 8, [
 			"modelValue",
@@ -14428,13 +14438,13 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			"teleport"
 		]));
 	}
-}), rl = { class: "mm-hedging-monitor" }, il = { class: "mm-hedging-monitor__actions" }, al = { class: "mm-hedging-monitor__table-wrap mm-pro-table__body" }, ol = { class: "mm-hedging-monitor__column-header" }, sl = {
+}), il = { class: "mm-hedging-monitor" }, al = { class: "mm-hedging-monitor__actions" }, ol = { class: "mm-hedging-monitor__table-wrap mm-pro-table__body" }, sl = { class: "mm-hedging-monitor__column-header" }, cl = {
 	class: "mm-hedging-monitor__help",
 	tabindex: "0"
-}, cl = { class: "mm-hedging-monitor__account" }, ll = { class: "mm-hedging-monitor__account-copy" }, ul = { class: "mm-hedging-monitor__progress" }, dl = { class: "mm-hedging-monitor__time" }, fl = {
+}, ll = { class: "mm-hedging-monitor__account" }, ul = { class: "mm-hedging-monitor__account-copy" }, dl = { class: "mm-hedging-monitor__progress" }, fl = { class: "mm-hedging-monitor__time" }, pl = {
 	class: "mm-pro-table__state-icon is-loading",
 	"aria-hidden": "true"
-}, pl = { class: "mm-hedging-monitor__footer" }, ml = /*#__PURE__*/ Yo(/* @__PURE__ */ p({
+}, ml = { class: "mm-hedging-monitor__footer" }, hl = /*#__PURE__*/ Yo(/* @__PURE__ */ p({
 	name: "MmHedgingMonitor",
 	__name: "HedgingMonitor",
 	props: {
@@ -14874,7 +14884,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				return () => h("div", { class: "mm-hedging-monitor__amount-pair" }, [h("strong", { class: e.coinClass }, e.coin), h("span", { class: e.usdtClass }, e.usdt)]);
 			}
 		});
-		return w(te), t({ reload: te }), (t, n) => (D(), c("section", rl, [
+		return w(te), t({ reload: te }), (t, n) => (D(), c("section", il, [
 			l("div", { class: b(["mm-hedging-monitor__toolbar", {
 				"has-agent-filter": e.showAgent,
 				"has-switch-filters": e.showSwitchFilters
@@ -14949,7 +14959,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					"aria-label",
 					"options"
 				])) : s("", !0),
-				l("div", il, [
+				l("div", al, [
 					f(R(Q), {
 						disabled: E.value,
 						loading: E.value,
@@ -14996,7 +15006,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					])
 				])
 			], 2),
-			l("div", al, [!E.value || C.value.length ? (D(), o(R(jr), {
+			l("div", ol, [!E.value || C.value.length ? (D(), o(R(jr), {
 				key: 0,
 				"aria-label": y.value.tableAria,
 				class: b(["mm-hedging-monitor__table", { "is-empty": B.value.length === 0 }]),
@@ -15018,10 +15028,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					_: 1
 				})]),
 				"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(e.row.symbol || "-"), 1)], !0)]),
-				"cell-account": K((e) => [M(t.$slots, "cell-account", x(m(e)), () => [l("div", cl, [f(R(Ms), {
+				"cell-account": K((e) => [M(t.$slots, "cell-account", x(m(e)), () => [l("div", ll, [f(R(Ms), {
 					name: e.row.exchange || "",
 					size: 20
-				}, null, 8, ["name"]), l("div", ll, [l("strong", null, F(e.row.exchange || "-"), 1), l("span", null, F(e.row.account_name || "-"), 1)])])], !0)]),
+				}, null, 8, ["name"]), l("div", ul, [l("strong", null, F(e.row.exchange || "-"), 1), l("span", null, F(e.row.account_name || "-"), 1)])])], !0)]),
 				"cell-long_quantity": K(({ row: e }) => [l("strong", { class: b(ye(e.long_quantity)) }, F(ge(e.long_quantity, e)), 3)]),
 				"cell-short_quantity": K(({ row: e }) => [l("strong", { class: b(ye(-Number(e.short_quantity))) }, F(ge(e.short_quantity, e)), 3)]),
 				"cell-net_exposure": K(({ row: e }) => [f(R(Ce), {
@@ -15057,7 +15067,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					"usdt",
 					"usdt-class"
 				])]),
-				"cell-hedge_progress": K(({ row: e }) => [l("strong", ul, F(xe(e)), 1)]),
+				"cell-hedge_progress": K(({ row: e }) => [l("strong", dl, F(xe(e)), 1)]),
 				"cell-status": K(({ row: e }) => [f(R($), {
 					effect: "soft",
 					round: "",
@@ -15068,15 +15078,15 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					default: K(() => [d(F(ae(e.status, e.status_label)), 1)]),
 					_: 2
 				}, 1032, ["title", "type"])]),
-				"cell-calculated_at": K(({ row: e }) => [l("span", dl, F(Se(e.calculated_at)), 1)]),
+				"cell-calculated_at": K(({ row: e }) => [l("span", fl, F(Se(e.calculated_at)), 1)]),
 				_: 2
 			}, [j(V, (e) => ({
 				name: `header-${e}`,
-				fn: K(() => [l("span", ol, [d(F(y.value.columns[e]) + " ", 1), f(R(nl), {
+				fn: K(() => [l("span", sl, [d(F(y.value.columns[e]) + " ", 1), f(R(rl), {
 					content: y.value.tooltips[e],
 					placement: "top"
 				}, {
-					default: K(() => [l("span", sl, [f(R(Z), {
+					default: K(() => [l("span", cl, [f(R(Z), {
 						name: "circle-help",
 						size: 14
 					})])]),
@@ -15094,7 +15104,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				role: "status",
 				"aria-live": "polite"
 			}, [
-				l("span", fl, [f(R(Z), {
+				l("span", pl, [f(R(Z), {
 					name: "loader-circle",
 					size: 24,
 					spin: ""
@@ -15102,7 +15112,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				l("strong", null, F(y.value.loadingTitle), 1),
 				l("p", null, F(y.value.loadingDescription), 1)
 			], 2)) : s("", !0)]),
-			l("footer", pl, [l("span", null, F(y.value.pagination(q.value, J.value, P.value)), 1), P.value > 0 ? (D(), o(R(Vr), {
+			l("footer", ml, [l("span", null, F(y.value.pagination(q.value, J.value, P.value)), 1), P.value > 0 ? (D(), o(R(Vr), {
 				key: 0,
 				"current-page": O.value,
 				"onUpdate:currentPage": n[5] ||= (e) => O.value = e,
@@ -15124,10 +15134,10 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			])) : s("", !0)])
 		]));
 	}
-}), [["__scopeId", "data-v-e4e024a0"]]), hl = { class: "mm-hedging-symbol-config" }, gl = {
+}), [["__scopeId", "data-v-e4e024a0"]]), gl = { class: "mm-hedging-symbol-config" }, _l = {
 	key: 0,
 	class: "mm-hedging-symbol-config__table-header"
-}, _l = { class: "mm-hedging-symbol-config__toolbar" }, vl = { class: "mm-hedging-symbol-config__actions" }, yl = { class: "mm-hedging-symbol-config__body mm-pro-table__body" }, bl = { class: "mm-hedging-symbol-config__exchange" }, xl = { class: "mm-pro-table__state-icon is-loading" }, Sl = { class: "mm-hedging-symbol-config__footer" }, Cl = /* @__PURE__ */ p({
+}, vl = { class: "mm-hedging-symbol-config__toolbar" }, yl = { class: "mm-hedging-symbol-config__actions" }, bl = { class: "mm-hedging-symbol-config__body mm-pro-table__body" }, xl = { class: "mm-hedging-symbol-config__exchange" }, Sl = { class: "mm-pro-table__state-icon is-loading" }, Cl = { class: "mm-hedging-symbol-config__footer" }, wl = /* @__PURE__ */ p({
 	__name: "HedgingSymbolConfig",
 	props: {
 		agentOptions: { default: () => [] },
@@ -15297,7 +15307,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				}
 			},
 			setup(e) {
-				return () => h("span", { class: "mm-hedging-symbol-config__header" }, [e.label, h(nl, {
+				return () => h("span", { class: "mm-hedging-symbol-config__header" }, [e.label, h(rl, {
 					content: e.tip,
 					placement: "top"
 				}, { default: () => h("span", {
@@ -15354,9 +15364,9 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			S.accountId && !O.value.some((e) => String(e.value) === S.accountId) && (S.accountId = "");
 		}), W(() => S.agentId, () => {
 			S.accountId = "";
-		}), w(H), t({ refresh: H }), (t, n) => (D(), c("section", hl, [
-			t.$slots["table-header"] ? (D(), c("div", gl, [M(t.$slots, "table-header")])) : s("", !0),
-			l("div", _l, [
+		}), w(H), t({ refresh: H }), (t, n) => (D(), c("section", gl, [
+			t.$slots["table-header"] ? (D(), c("div", _l, [M(t.$slots, "table-header")])) : s("", !0),
+			l("div", vl, [
 				f(gt, {
 					modelValue: S.keyword,
 					"onUpdate:modelValue": n[0] ||= (e) => S.keyword = e,
@@ -15427,7 +15437,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					"options",
 					"placeholder"
 				]),
-				l("div", vl, [
+				l("div", yl, [
 					f(Q, {
 						loading: _.value,
 						size: "sm",
@@ -15468,7 +15478,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					}, 8, ["aria-label", "loading"])
 				])
 			]),
-			l("div", yl, [f(jr, {
+			l("div", bl, [f(jr, {
 				columns: E.value,
 				data: T.value,
 				"empty-text": a.value.noData,
@@ -15500,7 +15510,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				}, null, 8, ["label"])]),
 				"cell-symbol": K(({ row: e }) => [M(t.$slots, "symbol", { row: e }, () => [l("strong", null, F(e.symbol), 1)])]),
 				"cell-agent_name": K(({ row: e }) => [l("span", null, F(e.agent_name || e.agent_id || "-"), 1)]),
-				"cell-exchange": K(({ row: e }) => [l("span", bl, [e.exchange ? (D(), o(Ms, {
+				"cell-exchange": K(({ row: e }) => [l("span", xl, [e.exchange ? (D(), o(Ms, {
 					key: 0,
 					name: e.exchange,
 					size: 20
@@ -15538,12 +15548,12 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				key: 0,
 				class: b(["mm-pro-table__state", { "is-overlay": u.value.length > 0 }]),
 				role: "status"
-			}, [l("span", xl, [f(Z, {
+			}, [l("span", Sl, [f(Z, {
 				name: "loader-circle",
 				size: 24,
 				spin: ""
 			})]), l("strong", null, F(a.value.loading), 1)], 2)) : s("", !0)]),
-			l("footer", Sl, [l("span", null, F(I.value) + "-" + F(L.value) + " / " + F(x.value), 1), x.value ? (D(), o(Vr, {
+			l("footer", Cl, [l("span", null, F(I.value) + "-" + F(L.value) + " / " + F(x.value), 1), x.value ? (D(), o(Vr, {
 				key: 0,
 				"current-page": v.value,
 				"onUpdate:currentPage": n[6] ||= (e) => v.value = e,
@@ -15569,7 +15579,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			])) : s("", !0)])
 		]));
 	}
-}), wl = { class: "mm-hedging-subject-config" }, Tl = { class: "mm-hedging-subject-config__toolbar" }, El = { class: "mm-hedging-subject-config__actions" }, Dl = { class: "mm-hedging-subject-config__body mm-pro-table__body" }, Ol = { class: "mm-hedging-subject-config__time" }, kl = { class: "row-actions drawer-entry" }, Al = { class: "mm-pro-table__state-icon is-loading" }, jl = { class: "mm-hedging-subject-config__footer" }, Ml = /* @__PURE__ */ p({
+}), Tl = { class: "mm-hedging-subject-config" }, El = { class: "mm-hedging-subject-config__toolbar" }, Dl = { class: "mm-hedging-subject-config__actions" }, Ol = { class: "mm-hedging-subject-config__body mm-pro-table__body" }, kl = { class: "mm-hedging-subject-config__time" }, Al = { class: "row-actions drawer-entry" }, jl = { class: "mm-pro-table__state-icon is-loading" }, Ml = { class: "mm-hedging-subject-config__footer" }, Nl = /* @__PURE__ */ p({
 	__name: "HedgingSubjectConfig",
 	props: {
 		agentOptions: { default: () => [] },
@@ -15711,7 +15721,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 						h("strong", typeof e == "string" ? e : e.exchange),
 						...typeof e == "string" ? [] : [h("span", "/"), h("span", e.name)]
 					]);
-					return t.length === 1 ? r(n) : h(nl, { placement: "top" }, {
+					return t.length === 1 ? r(n) : h(rl, { placement: "top" }, {
 						default: () => h("button", {
 							class: "mm-hedging-subject-config__count",
 							type: "button"
@@ -15752,8 +15762,8 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 		function z() {
 			g.value = 1, P();
 		}
-		return w(P), t({ refresh: P }), (t, n) => (D(), c("section", wl, [
-			l("div", Tl, [
+		return w(P), t({ refresh: P }), (t, n) => (D(), c("section", Tl, [
+			l("div", El, [
 				f(Ln, {
 					modelValue: y.agentId,
 					"onUpdate:modelValue": n[0] ||= (e) => y.agentId = e,
@@ -15775,7 +15785,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					placeholder: "运行状态：全部",
 					size: "sm"
 				}, null, 8, ["modelValue"]),
-				l("div", El, [
+				l("div", Dl, [
 					f(Q, {
 						loading: m.value,
 						size: "sm",
@@ -15816,7 +15826,7 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					}, 8, ["loading"])
 				])
 			]),
-			l("div", Dl, [f(jr, {
+			l("div", Ol, [f(jr, {
 				columns: C,
 				data: S.value,
 				"empty-text": "暂无主体配置",
@@ -15859,8 +15869,8 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					default: K(() => [d(F(e.status_label), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-updated_at": K(({ row: t }) => [l("span", Ol, F(t.updated_at ? e.formatDateTime(t.updated_at) : "-"), 1)]),
-				"cell-operation": K(({ row: e }) => [l("div", kl, [f(Q, {
+				"cell-updated_at": K(({ row: t }) => [l("span", kl, F(t.updated_at ? e.formatDateTime(t.updated_at) : "-"), 1)]),
+				"cell-operation": K(({ row: e }) => [l("div", Al, [f(Q, {
 					class: "action-drawer-trigger contract-row-action",
 					"icon-only": "",
 					size: "sm",
@@ -15879,12 +15889,12 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				key: 0,
 				class: b(["mm-pro-table__state", { "is-overlay": u.value.length > 0 }]),
 				role: "status"
-			}, [l("span", Al, [f(Z, {
+			}, [l("span", jl, [f(Z, {
 				name: "loader-circle",
 				size: 24,
 				spin: ""
 			})]), n[8] ||= l("strong", null, "正在加载", -1)], 2)) : s("", !0)]),
-			l("footer", jl, [l("span", null, F(O.value) + "-" + F(j.value) + " / " + F(v.value), 1), v.value ? (D(), o(Vr, {
+			l("footer", Ml, [l("span", null, F(O.value) + "-" + F(j.value) + " / " + F(v.value), 1), v.value ? (D(), o(Vr, {
 				key: 0,
 				"current-page": g.value,
 				"onUpdate:currentPage": n[3] ||= (e) => g.value = e,
@@ -15910,22 +15920,22 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			])) : s("", !0)])
 		]));
 	}
-}), Nl = [
+}), Pl = [
 	"src",
 	"alt",
 	"loading"
-], Pl = {
+], Fl = {
 	key: 1,
 	class: "mm-image__state mm-image__placeholder",
 	"aria-hidden": "true"
-}, Fl = ["aria-label"], Il = {
+}, Il = ["aria-label"], Ll = {
 	key: 3,
 	class: "mm-image__preview-hint",
 	"aria-hidden": "true"
-}, Ll = ["aria-label"], Rl = ["aria-label"], zl = ["aria-label"], Bl = ["src", "alt"], Vl = ["aria-label"], Hl = {
+}, Rl = ["aria-label"], zl = ["aria-label"], Bl = ["aria-label"], Vl = ["src", "alt"], Hl = ["aria-label"], Ul = {
 	key: 2,
 	class: "mm-image-preview__counter"
-}, Ul = /* @__PURE__ */ p({
+}, Wl = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmImage",
 	__name: "Image",
@@ -16012,15 +16022,15 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 					style: S({ objectFit: e.fit }),
 					onLoad: k,
 					onError: j
-				}, null, 46, Nl)),
-				p.value && !m.value ? (D(), c("div", Pl, [M(r.$slots, "placeholder", {}, () => [i[2] ||= l("span", { class: "mm-image__spinner" }, null, -1)])])) : s("", !0),
+				}, null, 46, Pl)),
+				p.value && !m.value ? (D(), c("div", Fl, [M(r.$slots, "placeholder", {}, () => [i[2] ||= l("span", { class: "mm-image__spinner" }, null, -1)])])) : s("", !0),
 				m.value ? (D(), c("div", {
 					key: 2,
 					class: "mm-image__state mm-image__error",
 					role: "img",
 					"aria-label": R(f).image.loadFailedFor(e.alt || R(f).image.image)
-				}, [M(r.$slots, "error", {}, () => [i[3] ||= l("span", { "aria-hidden": "true" }, "◇", -1), l("small", null, F(R(f).image.loadFailed), 1)])], 8, Fl)) : s("", !0),
-				e.preview && !m.value && !p.value ? (D(), c("span", Il, "⌕")) : s("", !0)
+				}, [M(r.$slots, "error", {}, () => [i[3] ||= l("span", { "aria-hidden": "true" }, "◇", -1), l("small", null, F(R(f).image.loadFailed), 1)])], 8, Il)) : s("", !0),
+				e.preview && !m.value && !p.value ? (D(), c("span", Ll, "⌕")) : s("", !0)
 			]),
 			_: 3
 		}, 8, ["type", "aria-label"]))], 16), (D(), o(n, { to: "body" }, [h.value ? (D(), c("div", {
@@ -16040,30 +16050,30 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				type: "button",
 				"aria-label": R(f).image.closePreview,
 				onClick: I
-			}, "×", 8, Rl),
+			}, "×", 8, zl),
 			T.value.length > 1 ? (D(), c("button", {
 				key: 0,
 				class: "mm-image-preview__previous",
 				type: "button",
 				"aria-label": R(f).image.previous,
 				onClick: i[0] ||= (e) => L(-1)
-			}, "‹", 8, zl)) : s("", !0),
+			}, "‹", 8, Bl)) : s("", !0),
 			l("img", {
 				class: "mm-image-preview__image",
 				src: E.value,
 				alt: e.alt
-			}, null, 8, Bl),
+			}, null, 8, Vl),
 			T.value.length > 1 ? (D(), c("button", {
 				key: 1,
 				class: "mm-image-preview__next",
 				type: "button",
 				"aria-label": R(f).image.next,
 				onClick: i[1] ||= (e) => L(1)
-			}, "›", 8, Vl)) : s("", !0),
-			T.value.length > 1 ? (D(), c("span", Hl, F(g.value + 1) + " / " + F(T.value.length), 1)) : s("", !0)
-		], 8, Ll)) : s("", !0)]))], 64));
+			}, "›", 8, Hl)) : s("", !0),
+			T.value.length > 1 ? (D(), c("span", Ul, F(g.value + 1) + " / " + F(T.value.length), 1)) : s("", !0)
+		], 8, Rl)) : s("", !0)]))], 64));
 	}
-}), Wl = Symbol("mm-info-grid"), Gl = /* @__PURE__ */ p({
+}), Gl = Symbol("mm-info-grid"), Kl = /* @__PURE__ */ p({
 	name: "MmInfoGrid",
 	__name: "InfoGrid",
 	props: {
@@ -16072,13 +16082,13 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 	},
 	setup(e) {
 		let t = e, n = i(() => Math.max(1, Math.floor(t.columns)));
-		return O(Wl, { columns: n }), (t, r) => (D(), c("dl", {
+		return O(Gl, { columns: n }), (t, r) => (D(), c("dl", {
 			class: b(["mm-info-grid", [`mm-info-grid--${e.size}`, `mm-info-grid--columns-${n.value}`]]),
 			style: S({ "--mm-info-grid-columns": n.value }),
 			"data-mm-component": "info-grid"
 		}, [M(t.$slots, "default")], 6));
 	}
-}), Kl = { class: "mm-info-grid-item__label" }, ql = /* @__PURE__ */ p({
+}), ql = { class: "mm-info-grid-item__label" }, Jl = /* @__PURE__ */ p({
 	name: "MmInfoGridItem",
 	__name: "InfoGridItem",
 	props: {
@@ -16087,29 +16097,29 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 		valueClass: { default: void 0 }
 	},
 	setup(e) {
-		let t = e, n = g(Wl, { columns: A(2) }), r = i(() => Math.min(n.columns.value, Math.max(1, Math.floor(t.span)))), a = i(() => r.value === n.columns.value);
+		let t = e, n = g(Gl, { columns: A(2) }), r = i(() => Math.min(n.columns.value, Math.max(1, Math.floor(t.span)))), a = i(() => r.value === n.columns.value);
 		return (t, n) => (D(), c("div", {
 			class: b(["mm-info-grid-item", { "is-full": a.value }]),
 			style: S({ "--mm-info-grid-span": r.value }),
 			"data-mm-component": "info-grid-item"
-		}, [l("dt", Kl, [M(t.$slots, "label", {}, () => [d(F(e.label), 1)])]), l("dd", { class: b(["mm-info-grid-item__value", e.valueClass]) }, [M(t.$slots, "default")], 2)], 6));
+		}, [l("dt", ql, [M(t.$slots, "label", {}, () => [d(F(e.label), 1)])]), l("dd", { class: b(["mm-info-grid-item__value", e.valueClass]) }, [M(t.$slots, "default")], 2)], 6));
 	}
-}), Jl = {
+}), Yl = {
 	key: 0,
 	class: "mm-ip-location__ip",
 	"data-ip-location-ip": ""
-}, Yl = {
+}, Xl = {
 	key: 0,
 	class: "mm-ip-location__flag",
 	"aria-hidden": "true",
 	"data-ip-location-flag": ""
-}, Xl = {
+}, Zl = {
 	class: "mm-ip-location__address",
 	"data-ip-location-address": ""
-}, Zl = {
+}, Ql = {
 	key: 1,
 	class: "mm-ip-location__empty"
-}, Ql = /* @__PURE__ */ p({
+}, $l = /* @__PURE__ */ p({
 	name: "MmIpLocation",
 	__name: "IpLocation",
 	props: {
@@ -16191,25 +16201,25 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 				"mm-ip-location--location-first": e.locationFirst
 			}]),
 			"data-mm-component": "ip-location"
-		}, [e.showIp && f.value ? (D(), c("div", Jl, F(p.value), 1)) : s("", !0), C.value ? (D(), o(R(nl), {
+		}, [e.showIp && f.value ? (D(), c("div", Yl, F(p.value), 1)) : s("", !0), C.value ? (D(), o(R(rl), {
 			key: 1,
 			content: w.value,
 			disabled: !e.showTooltip,
 			placement: "top"
 		}, {
-			default: K(({ triggerAttrs: t }) => [l("div", v({ class: "mm-ip-location__meta" }, t), [e.useEmojiFlag && h.value && !_.value ? (D(), c("span", Yl, F(h.value), 1)) : (D(), o(R(Z), {
+			default: K(({ triggerAttrs: t }) => [l("div", v({ class: "mm-ip-location__meta" }, t), [e.useEmojiFlag && h.value && !_.value ? (D(), c("span", Xl, F(h.value), 1)) : (D(), o(R(Z), {
 				key: 1,
 				class: "mm-ip-location__icon",
 				name: T.value,
 				size: 14
-			}, null, 8, ["name"])), l("span", Xl, F(C.value), 1)], 16)]),
+			}, null, 8, ["name"])), l("span", Zl, F(C.value), 1)], 16)]),
 			_: 1
-		}, 8, ["content", "disabled"])) : s("", !0)], 2)) : (D(), c("span", Zl, F(e.emptyText), 1));
+		}, 8, ["content", "disabled"])) : s("", !0)], 2)) : (D(), c("span", Ql, F(e.emptyText), 1));
 	}
-}), $l = {
+}), eu = {
 	key: 0,
 	class: "mm-input-number__controls"
-}, eu = ["aria-label", "disabled"], tu = ["aria-label", "disabled"], nu = /* @__PURE__ */ p({
+}, tu = ["aria-label", "disabled"], nu = ["aria-label", "disabled"], ru = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmInputNumber",
 	__name: "InputNumber",
@@ -16329,23 +16339,23 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			"aria-valuemin",
 			"aria-valuemax",
 			"aria-valuenow"
-		]), e.controls ? (D(), c("span", $l, [l("button", {
+		]), e.controls ? (D(), c("span", eu, [l("button", {
 			class: "mm-input-number__control mm-input-number__increase",
 			type: "button",
 			tabindex: "-1",
 			"aria-label": R(a).input.increase,
 			disabled: !g.value,
 			onClick: n[3] ||= (e) => w(1)
-		}, " + ", 8, eu), l("button", {
+		}, " + ", 8, tu), l("button", {
 			class: "mm-input-number__control mm-input-number__decrease",
 			type: "button",
 			tabindex: "-1",
 			"aria-label": R(a).input.decrease,
 			disabled: !h.value,
 			onClick: n[4] ||= (e) => w(-1)
-		}, " − ", 8, tu)])) : s("", !0)], 2));
+		}, " − ", 8, nu)])) : s("", !0)], 2));
 	}
-}), ru = /* @__PURE__ */ p({
+}), iu = /* @__PURE__ */ p({
 	name: "MmLayout",
 	__name: "Layout",
 	props: {
@@ -16382,19 +16392,19 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			_: 3
 		}, 8, ["class", "style"]));
 	}
-}), iu = [
+}), au = [
 	"href",
 	"rel",
 	"target",
 	"aria-disabled",
 	"tabindex"
-], au = {
+], ou = {
 	key: 0,
 	class: "mm-link__prefix"
-}, ou = { class: "mm-link__label" }, su = {
+}, su = { class: "mm-link__label" }, cu = {
 	key: 1,
 	class: "mm-link__suffix"
-}, cu = /* @__PURE__ */ p({
+}, lu = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmLink",
 	__name: "Link",
@@ -16437,30 +16447,30 @@ var xc = { key: 1 }, Sc = { class: "mm-history-order-table__id" }, Cc = { key: 1
 			tabindex: e.disabled ? -1 : void 0,
 			onClick: u
 		}), [
-			t.$slots.prefix ? (D(), c("span", au, [M(t.$slots, "prefix")])) : s("", !0),
-			l("span", ou, [M(t.$slots, "default")]),
-			t.$slots.suffix ? (D(), c("span", su, [M(t.$slots, "suffix")])) : s("", !0)
-		], 16, iu));
+			t.$slots.prefix ? (D(), c("span", ou, [M(t.$slots, "prefix")])) : s("", !0),
+			l("span", su, [M(t.$slots, "default")]),
+			t.$slots.suffix ? (D(), c("span", cu, [M(t.$slots, "suffix")])) : s("", !0)
+		], 16, au));
 	}
 });
 //#endregion
 //#region src/components/liquidation-table/formatters.ts
-function lu(e) {
+function uu(e) {
 	return e == null || e === "" ? "-" : String(e);
 }
-function uu(e, t, n = 0) {
+function du(e, t, n = 0) {
 	let r = Number(e);
 	return Number.isFinite(r) ? r.toLocaleString("en-US", {
 		maximumFractionDigits: t,
 		minimumFractionDigits: n
 	}) : "-";
 }
-function du(e) {
-	return lu(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
+function fu(e) {
+	return uu(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
 }
 //#endregion
 //#region src/components/liquidation-table/LiquidationTable.vue?vue&type=script&setup=true&lang.ts
-var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }, hu = { key: 1 }, gu = { class: "mm-liquidation-table__number" }, _u = { class: "mm-liquidation-table__number" }, vu = { class: "mm-liquidation-table__number" }, yu = { class: "mm-liquidation-table__number" }, bu = { class: "mm-liquidation-table__actions" }, xu = /* @__PURE__ */ p({
+var pu = { key: 1 }, mu = { class: "mm-liquidation-table__id" }, hu = { key: 1 }, gu = { key: 1 }, _u = { class: "mm-liquidation-table__number" }, vu = { class: "mm-liquidation-table__number" }, yu = { class: "mm-liquidation-table__number" }, bu = { class: "mm-liquidation-table__number" }, xu = { class: "mm-liquidation-table__actions" }, Su = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmLiquidationTable",
 	__name: "LiquidationTable",
@@ -16762,7 +16772,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				"tradfi",
 				"traditional_finance",
 				"传统金融"
-			].includes(r) ? a.value.tradfi : lu(e);
+			].includes(r) ? a.value.tradfi : uu(e);
 		}
 		function L(e, t) {
 			return `${e}:${String(t.position_id)}`;
@@ -16825,7 +16835,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			"page-sizes": e.pageSizes,
 			"row-key": "position_id"
 		}), u({
-			"cell-user_uid": K((e) => [M(t.$slots, "cell-user_uid", x(m(e)), () => [d(F(R(du)(e.row)), 1)])]),
+			"cell-user_uid": K((e) => [M(t.$slots, "cell-user_uid", x(m(e)), () => [d(F(R(fu)(e.row)), 1)])]),
 			"cell-user_type": K((e) => [M(t.$slots, "cell-user_type", x(m(e)), () => [k(e.row) ? (D(), o(R($), {
 				key: 0,
 				effect: "outline",
@@ -16835,9 +16845,9 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			}, {
 				default: K(() => [d(F(k(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", fu, "-"))])]),
-			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", pu, F(R(lu)(e.row.position_id)), 1)])]),
-			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(R(lu)(e.row.symbol)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", pu, "-"))])]),
+			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", mu, F(R(uu)(e.row.position_id)), 1)])]),
+			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(R(uu)(e.row.symbol)), 1)])]),
 			"cell-product_category": K((e) => [M(t.$slots, "cell-product_category", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -16856,8 +16866,8 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			}, {
 				default: K(() => [d(F(N(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", mu, "-"))])]),
-			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [P(e.row) === "-" ? (D(), c("span", hu, "-")) : (D(), o(R($), {
+			}, 1032, ["type"])) : (D(), c("span", hu, "-"))])]),
+			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [P(e.row) === "-" ? (D(), c("span", gu, "-")) : (D(), o(R($), {
 				key: 0,
 				effect: "soft",
 				round: "",
@@ -16867,17 +16877,17 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				default: K(() => [d(F(P(e.row)), 1)]),
 				_: 2
 			}, 1032, ["type"]))])]),
-			"cell-leverage": K((e) => [M(t.$slots, "cell-leverage", x(m(e)), () => [l("span", gu, F(e.row.leverage == null ? "-" : `${e.row.leverage}x`), 1)])]),
-			"cell-liquidation_quantity": K((e) => [M(t.$slots, "cell-liquidation_quantity", x(m(e)), () => [l("span", _u, F(R(uu)(e.row.liquidation_quantity, 8)), 1)])]),
-			"cell-average_execution_price": K((e) => [M(t.$slots, "cell-average_execution_price", x(m(e)), () => [l("span", vu, F(R(uu)(e.row.average_execution_price, 4, 2)), 1)])]),
-			"cell-liquidation_fee": K((e) => [M(t.$slots, "cell-liquidation_fee", x(m(e)), () => [l("span", yu, F(R(uu)(e.row.liquidation_fee, 2, 2)), 1)])]),
-			"cell-occurred_at": K((e) => [M(t.$slots, "cell-occurred_at", x(m(e)), () => [d(F(R(lu)(e.row.occurred_at)), 1)])]),
+			"cell-leverage": K((e) => [M(t.$slots, "cell-leverage", x(m(e)), () => [l("span", _u, F(e.row.leverage == null ? "-" : `${e.row.leverage}x`), 1)])]),
+			"cell-liquidation_quantity": K((e) => [M(t.$slots, "cell-liquidation_quantity", x(m(e)), () => [l("span", vu, F(R(du)(e.row.liquidation_quantity, 8)), 1)])]),
+			"cell-average_execution_price": K((e) => [M(t.$slots, "cell-average_execution_price", x(m(e)), () => [l("span", yu, F(R(du)(e.row.average_execution_price, 4, 2)), 1)])]),
+			"cell-liquidation_fee": K((e) => [M(t.$slots, "cell-liquidation_fee", x(m(e)), () => [l("span", bu, F(R(du)(e.row.liquidation_fee, 2, 2)), 1)])]),
+			"cell-occurred_at": K((e) => [M(t.$slots, "cell-occurred_at", x(m(e)), () => [d(F(R(uu)(e.row.occurred_at)), 1)])]),
 			"cell-operation": K((n) => [M(t.$slots, "cell-operation", v(n, {
 				detail: () => B("detail", e.actions.detail, n.row),
 				trades: () => B("trades", e.actions.trades, n.row)
-			}), () => [l("div", bu, [e.actions.detail ? (D(), o(R(Q), {
+			}), () => [l("div", xu, [e.actions.detail ? (D(), o(R(Q), {
 				key: 0,
-				"aria-label": R(r).liquidations.viewDetailFor(R(lu)(n.row.position_id)),
+				"aria-label": R(r).liquidations.viewDetailFor(R(uu)(n.row.position_id)),
 				"icon-only": "",
 				size: "sm",
 				loading: z("detail", n.row),
@@ -16896,7 +16906,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				"onClick"
 			])) : s("", !0), e.actions.trades ? (D(), o(R(Q), {
 				key: 1,
-				"aria-label": R(r).liquidations.viewTradesFor(R(lu)(n.row.position_id)),
+				"aria-label": R(r).liquidations.viewTradesFor(R(uu)(n.row.position_id)),
 				"icon-only": "",
 				size: "sm",
 				loading: z("trades", n.row),
@@ -16931,24 +16941,24 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			"page-sizes"
 		]));
 	}
-}), Su = { class: "mm-liquidation-trades-dialog__title" }, Cu = {
+}), Cu = { class: "mm-liquidation-trades-dialog__title" }, wu = {
 	key: 0,
 	class: "mm-liquidation-trades-dialog__body"
-}, wu = { class: "mm-liquidation-trades-dialog__summary" }, Tu = { class: "mm-liquidation-trades-dialog__details" }, Eu = { class: "mm-liquidation-trades-dialog__section-title" }, Du = {
+}, Tu = { class: "mm-liquidation-trades-dialog__summary" }, Eu = { class: "mm-liquidation-trades-dialog__details" }, Du = { class: "mm-liquidation-trades-dialog__section-title" }, Ou = {
 	key: 0,
 	class: "mm-liquidation-trades-dialog__state",
 	role: "status"
-}, Ou = {
+}, ku = {
 	key: 1,
 	class: "mm-liquidation-trades-dialog__state is-error",
 	role: "alert"
-}, ku = {
+}, Au = {
 	key: 2,
 	class: "mm-liquidation-trades-dialog__state"
-}, Au = {
+}, ju = {
 	key: 3,
 	class: "mm-liquidation-trades-dialog__table-content"
-}, ju = { class: "mm-liquidation-trades-dialog__table-wrap" }, Mu = { class: "mm-liquidation-trades-dialog__table" }, Nu = /* @__PURE__ */ p({
+}, Mu = { class: "mm-liquidation-trades-dialog__table-wrap" }, Nu = { class: "mm-liquidation-trades-dialog__table" }, Pu = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmLiquidationTradesDialog",
 	__name: "LiquidationTradesDialog",
@@ -17100,14 +17110,14 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			width: "min(1180px, calc(100vw - 24px))",
 			onClosed: ae
 		}), {
-			header: K(() => [l("div", Su, [l("strong", null, F(p.value.tradeDialogTitle), 1), l("span", { id: m }, F(p.value.tradeDialogSubtitle(P(E.value?.position_id))), 1)])]),
+			header: K(() => [l("div", Cu, [l("strong", null, F(p.value.tradeDialogTitle), 1), l("span", { id: m }, F(p.value.tradeDialogSubtitle(P(E.value?.position_id))), 1)])]),
 			footer: K(() => [f(R(Q), { onClick: r[1] ||= (e) => T.value = !1 }, {
 				default: K(() => [d(F(R(u).common.close), 1)]),
 				_: 1
 			})]),
-			default: K(() => [E.value ? (D(), c("div", Cu, [l("dl", wu, [
+			default: K(() => [E.value ? (D(), c("div", wu, [l("dl", Tu, [
 				l("div", null, [l("dt", null, F(p.value.userUid), 1), l("dd", null, F(O.value), 1)]),
-				l("div", null, [l("dt", null, F(p.value.positionId), 1), l("dd", null, [G(E.value.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(cu), {
+				l("div", null, [l("dt", null, F(p.value.positionId), 1), l("dd", null, [G(E.value.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(lu), {
 					key: 0,
 					"aria-label": p.value.viewPositionFor(P(E.value.position_id)),
 					href: q(E.value.position_id),
@@ -17136,11 +17146,11 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				l("div", null, [l("dt", null, F(p.value.triggerPrice), 1), l("dd", null, F(I(S.value, 8)), 1)]),
 				l("div", null, [l("dt", null, F(p.value.liquidationResult), 1), l("dd", null, F(p.value.fullLiquidation), 1)]),
 				l("div", null, [l("dt", null, F(p.value.occurredAt), 1), l("dd", null, F(P(E.value.occurred_at)), 1)])
-			]), l("section", Tu, [l("div", Eu, [l("strong", null, F(p.value.tradeDetails), 1), l("span", null, F(p.value.tradeDetailsSummary(y.value, I(M.value, 8))), 1)]), h.value ? (D(), c("div", Du, [f(R(Z), {
+			]), l("section", Eu, [l("div", Du, [l("strong", null, F(p.value.tradeDetails), 1), l("span", null, F(p.value.tradeDetailsSummary(y.value, I(M.value, 8))), 1)]), h.value ? (D(), c("div", Ou, [f(R(Z), {
 				class: "is-loading",
 				name: "loader-circle",
 				size: 22
-			}), l("span", null, F(p.value.tradeLoading), 1)])) : g.value ? (D(), c("div", Ou, [
+			}), l("span", null, F(p.value.tradeLoading), 1)])) : g.value ? (D(), c("div", ku, [
 				f(R(Z), {
 					name: "alert",
 					size: 20
@@ -17153,7 +17163,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 					default: K(() => [d(F(R(u).common.retry), 1)]),
 					_: 1
 				})
-			])) : _.value.length === 0 ? (D(), c("div", ku, F(p.value.noTradeDetails), 1)) : (D(), c("div", Au, [l("div", ju, [l("table", Mu, [l("thead", null, [l("tr", null, [
+			])) : _.value.length === 0 ? (D(), c("div", Au, F(p.value.noTradeDetails), 1)) : (D(), c("div", ju, [l("div", Mu, [l("table", Nu, [l("thead", null, [l("tr", null, [
 				l("th", null, F(p.value.positionId), 1),
 				l("th", null, F(p.value.orderId), 1),
 				l("th", null, F(p.value.tradeSide), 1),
@@ -17165,7 +17175,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				l("th", null, F(p.value.tradeStatus), 1),
 				l("th", null, F(p.value.tradeTime), 1)
 			])]), l("tbody", null, [(D(!0), c(t, null, j(_.value, (e) => (D(), c("tr", { key: String(e.order_id) }, [
-				l("td", null, [G(e.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(cu), {
+				l("td", null, [G(e.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(lu), {
 					key: 0,
 					"aria-label": p.value.viewPositionFor(P(e.position_id)),
 					href: q(e.position_id),
@@ -17180,7 +17190,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 					"title",
 					"onClick"
 				]))]),
-				l("td", null, [f(R(cu), {
+				l("td", null, [f(R(lu), {
 					"aria-label": p.value.viewOrderTradesFor(P(e.order_id)),
 					"data-action": "view-liquidation-order-trades",
 					href: ee(e.order_id),
@@ -17240,12 +17250,12 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			_: 1
 		}, 16, ["modelValue"]));
 	}
-}), Pu = Object.assign(Nu, { install(e) {
-	e.component("MmLiquidationTradesDialog", Nu);
-} }), Fu = ["aria-label"], Iu = { class: "mm-loading__indicator" }, Lu = {
+}), Fu = Object.assign(Pu, { install(e) {
+	e.component("MmLiquidationTradesDialog", Pu);
+} }), Iu = ["aria-label"], Lu = { class: "mm-loading__indicator" }, Ru = {
 	key: 0,
 	class: "mm-loading__text"
-}, Ru = /* @__PURE__ */ p({
+}, zu = /* @__PURE__ */ p({
 	name: "MmLoading",
 	__name: "Loading",
 	props: {
@@ -17279,12 +17289,12 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			role: "status",
 			"aria-live": "polite",
 			"aria-label": a.value || R(r).common.loading
-		}, [l("div", Iu, [M(t.$slots, "icon", {}, () => [f(R(Z), {
+		}, [l("div", Lu, [M(t.$slots, "icon", {}, () => [f(R(Z), {
 			name: "loading",
 			spin: ""
-		})]), a.value ? (D(), c("span", Lu, F(a.value), 1)) : s("", !0)])], 10, Fu)) : s("", !0)], 8, ["disabled"]));
+		})]), a.value ? (D(), c("span", Ru, F(a.value), 1)) : s("", !0)])], 10, Iu)) : s("", !0)], 8, ["disabled"]));
 	}
-}), zu = ["role", "aria-live"], Bu = { class: "mm-message__content" }, Vu = ["aria-label"], Hu = /* @__PURE__ */ p({
+}), Bu = ["role", "aria-live"], Vu = { class: "mm-message__content" }, Hu = ["aria-label"], Uu = /* @__PURE__ */ p({
 	name: "MmMessage",
 	__name: "Message",
 	props: {
@@ -17326,7 +17336,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				name: h.value,
 				size: 16
 			}, null, 8, ["name"])) : s("", !0),
-			l("div", Bu, [M(t.$slots, "default", {}, () => [d(F(e.message), 1)])]),
+			l("div", Vu, [M(t.$slots, "default", {}, () => [d(F(e.message), 1)])]),
 			e.closable ? (D(), c("button", {
 				key: 1,
 				class: "mm-message__close",
@@ -17336,13 +17346,13 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			}, [f(R(Z), {
 				name: "close",
 				size: 13
-			})], 8, Vu)) : s("", !0)
-		], 42, zu));
+			})], 8, Hu)) : s("", !0)
+		], 42, Bu));
 	}
-}), Uu = ["id"], Wu = {
+}), Wu = ["id"], Gu = {
 	key: 1,
 	class: "mm-message-box__prompt"
-}, Gu = ["id"], Ku = /* @__PURE__ */ p({
+}, Ku = ["id"], qu = /* @__PURE__ */ p({
 	name: "MmMessageBox",
 	__name: "MessageBox",
 	props: {
@@ -17436,7 +17446,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				key: 0,
 				id: R(x),
 				class: "mm-message-box__message"
-			}, F(e.message), 9, Uu)) : s("", !0), e.type === "prompt" ? (D(), c("div", Wu, [f(R(gt), {
+			}, F(e.message), 9, Wu)) : s("", !0), e.type === "prompt" ? (D(), c("div", Gu, [f(R(gt), {
 				modelValue: g.value,
 				"onUpdate:modelValue": n[0] ||= (e) => g.value = e,
 				ref_key: "inputRef",
@@ -17458,7 +17468,7 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 				id: R(S),
 				class: "mm-message-box__error",
 				role: "alert"
-			}, F(_.value), 9, Gu)) : s("", !0)])) : s("", !0)]),
+			}, F(_.value), 9, Ku)) : s("", !0)])) : s("", !0)]),
 			_: 1
 		}, 8, [
 			"modelValue",
@@ -17468,31 +17478,31 @@ var fu = { key: 1 }, pu = { class: "mm-liquidation-table__id" }, mu = { key: 1 }
 			"title"
 		]));
 	}
-}), qu = new Intl.NumberFormat("en-US", {
+}), Ju = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 2,
 	maximumFractionDigits: 8,
 	useGrouping: !0
-}), Ju = new Intl.NumberFormat("en-US", {
+}), Yu = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 2,
 	maximumFractionDigits: 2,
 	useGrouping: !0
 });
-function Yu(e) {
-	let t = Number(e ?? 0);
-	if (!Number.isFinite(t)) return "0.00";
-	let n = qu.format(t);
-	return t > 0 ? `+${n}` : n;
-}
 function Xu(e) {
 	let t = Number(e ?? 0);
-	return Number.isFinite(t) ? Ju.format(t) : "0.00";
+	if (!Number.isFinite(t)) return "0.00";
+	let n = Ju.format(t);
+	return t > 0 ? `+${n}` : n;
 }
 function Zu(e) {
-	if (e == null || e === "") return "-";
-	let t = Number(e);
-	return Number.isFinite(t) ? qu.format(Math.abs(t)) : "-";
+	let t = Number(e ?? 0);
+	return Number.isFinite(t) ? Yu.format(t) : "0.00";
 }
 function Qu(e) {
+	if (e == null || e === "") return "-";
+	let t = Number(e);
+	return Number.isFinite(t) ? Ju.format(Math.abs(t)) : "-";
+}
+function $u(e) {
 	let t = String(e ?? "").trim();
 	if (!t) return "-";
 	let n = t.replace("T", " ").match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})(?::(\d{2}))?/);
@@ -17500,7 +17510,7 @@ function Qu(e) {
 }
 //#endregion
 //#region src/components/margin-change-log-table/MarginChangeLogTable.vue?vue&type=script&setup=true&lang.ts
-var $u = { key: 1 }, ed = { class: "mm-margin-change-log-table__currency" }, td = { class: "mm-margin-change-log-table__number" }, nd = { class: "mm-margin-change-log-table__number" }, rd = { class: "mm-margin-change-log-table__number" }, id = /* @__PURE__ */ p({
+var ed = { key: 1 }, td = { class: "mm-margin-change-log-table__currency" }, nd = { class: "mm-margin-change-log-table__number" }, rd = { class: "mm-margin-change-log-table__number" }, id = { class: "mm-margin-change-log-table__number" }, ad = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmMarginChangeLogTable",
 	__name: "MarginChangeLogTable",
@@ -17891,8 +17901,8 @@ var $u = { key: 1 }, ed = { class: "mm-margin-change-log-table__currency" }, td 
 			}, {
 				default: K(() => [d(F(H(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", $u, "-"))])]),
-			"cell-currency": K((e) => [M(t.$slots, "cell-currency", x(m(e)), () => [l("span", ed, F(L(e.row.currency)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", ed, "-"))])]),
+			"cell-currency": K((e) => [M(t.$slots, "cell-currency", x(m(e)), () => [l("span", td, F(L(e.row.currency)), 1)])]),
 			"cell-biz_type": K((e) => [M(t.$slots, "cell-biz_type", v(e, { label: C(e.row.biz_type) }), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -17905,11 +17915,11 @@ var $u = { key: 1 }, ed = { class: "mm-margin-change-log-table__currency" }, td 
 			"cell-delta_amount": K((e) => [M(t.$slots, "cell-delta_amount", x(m(e)), () => [l("span", { class: b(["mm-margin-change-log-table__amount", {
 				"is-positive": Number(e.row.delta_amount) > 0,
 				"is-negative": Number(e.row.delta_amount) < 0
-			}]) }, F(R(Yu)(e.row.delta_amount)), 3)])]),
-			"cell-transfer_amount": K((e) => [M(t.$slots, "cell-transfer_amount", x(m(e)), () => [l("span", td, F(R(Zu)(e.row.transfer_amount)), 1)])]),
-			"cell-balance_before": K((e) => [M(t.$slots, "cell-balance_before", x(m(e)), () => [l("span", nd, F(R(Xu)(e.row.balance_before)), 1)])]),
-			"cell-balance_after": K((e) => [M(t.$slots, "cell-balance_after", x(m(e)), () => [l("span", rd, F(R(Xu)(e.row.balance_after)), 1)])]),
-			"cell-created_at": K((e) => [M(t.$slots, "cell-created_at", x(m(e)), () => [d(F(R(Qu)(e.row.created_at)), 1)])]),
+			}]) }, F(R(Xu)(e.row.delta_amount)), 3)])]),
+			"cell-transfer_amount": K((e) => [M(t.$slots, "cell-transfer_amount", x(m(e)), () => [l("span", nd, F(R(Qu)(e.row.transfer_amount)), 1)])]),
+			"cell-balance_before": K((e) => [M(t.$slots, "cell-balance_before", x(m(e)), () => [l("span", rd, F(R(Zu)(e.row.balance_before)), 1)])]),
+			"cell-balance_after": K((e) => [M(t.$slots, "cell-balance_after", x(m(e)), () => [l("span", id, F(R(Zu)(e.row.balance_after)), 1)])]),
+			"cell-created_at": K((e) => [M(t.$slots, "cell-created_at", x(m(e)), () => [d(F(R($u)(e.row.created_at)), 1)])]),
 			"cell-transfer_status": K((e) => [M(t.$slots, "cell-transfer_status", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -17939,16 +17949,16 @@ var $u = { key: 1 }, ed = { class: "mm-margin-change-log-table__currency" }, td 
 });
 //#endregion
 //#region src/components/online-user-table/formatters.ts
-function ad(...e) {
+function od(...e) {
 	return e.find((e) => e != null && String(e).trim() !== "");
 }
-function od(e) {
-	return ad(e.login_time, e.login_at, e.last_login_at);
-}
 function sd(e) {
-	return ad(e.last_active_at, e.last_activity_at, e.last_active_time, e.active_at, e.updated_at, od(e));
+	return od(e.login_time, e.login_at, e.last_login_at);
 }
 function cd(e) {
+	return od(e.last_active_at, e.last_activity_at, e.last_active_time, e.active_at, e.updated_at, sd(e));
+}
+function ld(e) {
 	if (typeof e == "number" && Number.isFinite(e)) return e < 1e10 ? e * 1e3 : e;
 	let t = String(e ?? "").trim();
 	if (!t) return null;
@@ -17959,26 +17969,26 @@ function cd(e) {
 	let n = Date.parse(t.replace(" ", "T"));
 	return Number.isFinite(n) ? n : null;
 }
-function ld(e) {
+function ud(e) {
 	return String(e).padStart(2, "0");
 }
-function ud(e) {
+function dd(e) {
 	let t = String(e ?? "").trim();
 	if (!t) return "-";
 	let n = t.replace("T", " ").match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}:\d{2})(?::(\d{2}))?/);
 	if (n) return `${n[1]} ${n[2]}:${n[3] ?? "00"}`;
-	let r = cd(e);
+	let r = ld(e);
 	if (r === null) return t;
 	let i = new Date(r);
-	return [`${i.getFullYear()}-${ld(i.getMonth() + 1)}-${ld(i.getDate())}`, `${ld(i.getHours())}:${ld(i.getMinutes())}:${ld(i.getSeconds())}`].join(" ");
+	return [`${i.getFullYear()}-${ud(i.getMonth() + 1)}-${ud(i.getDate())}`, `${ud(i.getHours())}:${ud(i.getMinutes())}:${ud(i.getSeconds())}`].join(" ");
 }
-function dd(e) {
+function fd(e) {
 	if (e == null || e === "") return "-";
 	let t = String(e).trim();
 	return /^v/i.test(t) ? t.toUpperCase() : `V${t}`;
 }
-function fd(e, t, n) {
-	let r = cd(od(e));
+function pd(e, t, n) {
+	let r = ld(sd(e));
 	if (r === null) return "-";
 	let i = Math.max(0, Math.floor((t - r) / 1e3));
 	if (i < 60) return n.lessThanMinute;
@@ -17987,7 +17997,7 @@ function fd(e, t, n) {
 }
 //#endregion
 //#region src/components/online-user-table/OnlineUserTable.vue?vue&type=script&setup=true&lang.ts
-var pd = { key: 1 }, md = { class: "mm-online-user-table__emphasis" }, hd = { class: "mm-online-user-table__emphasis" }, gd = /* @__PURE__ */ p({
+var md = { key: 1 }, hd = { class: "mm-online-user-table__emphasis" }, gd = { class: "mm-online-user-table__emphasis" }, _d = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmOnlineUserTable",
 	__name: "OnlineUserTable",
@@ -18259,9 +18269,9 @@ var pd = { key: 1 }, md = { class: "mm-online-user-table__emphasis" }, hd = { cl
 			}, {
 				default: K(() => [d(F(N(e.row.user_type)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", pd, "-"))])]),
-			"cell-vip_level": K((e) => [M(t.$slots, "cell-vip_level", x(m(e)), () => [l("span", md, F(R(dd)(e.row.vip_level)), 1)])]),
-			"cell-login_ip": K((e) => [M(t.$slots, "cell-login_ip", x(m(e)), () => [f(R(Ql), {
+			}, 1032, ["type"])) : (D(), c("span", md, "-"))])]),
+			"cell-vip_level": K((e) => [M(t.$slots, "cell-vip_level", x(m(e)), () => [l("span", hd, F(R(fd)(e.row.vip_level)), 1)])]),
+			"cell-login_ip": K((e) => [M(t.$slots, "cell-login_ip", x(m(e)), () => [f(R($l), {
 				"country-first": "",
 				info: e.row.last_login_ip_info,
 				ip: e.row.last_login_ip,
@@ -18269,9 +18279,9 @@ var pd = { key: 1 }, md = { class: "mm-online-user-table__emphasis" }, hd = { cl
 				"show-ip-label": "",
 				"show-tooltip": !1
 			}, null, 8, ["info", "ip"])])]),
-			"cell-login_time": K((e) => [M(t.$slots, "cell-login_time", x(m(e)), () => [d(F(R(ud)(R(od)(e.row))), 1)])]),
-			"cell-online_duration": K((e) => [M(t.$slots, "cell-online_duration", x(m(e)), () => [l("span", hd, F(R(fd)(e.row, _.value, R(r).onlineUsers)), 1)])]),
-			"cell-last_active_at": K((e) => [M(t.$slots, "cell-last_active_at", x(m(e)), () => [d(F(R(ud)(R(sd)(e.row))), 1)])]),
+			"cell-login_time": K((e) => [M(t.$slots, "cell-login_time", x(m(e)), () => [d(F(R(dd)(R(sd)(e.row))), 1)])]),
+			"cell-online_duration": K((e) => [M(t.$slots, "cell-online_duration", x(m(e)), () => [l("span", gd, F(R(pd)(e.row, _.value, R(r).onlineUsers)), 1)])]),
+			"cell-last_active_at": K((e) => [M(t.$slots, "cell-last_active_at", x(m(e)), () => [d(F(R(dd)(R(cd)(e.row))), 1)])]),
 			"query-actions": K((e) => [M(t.$slots, "query-actions", x(m(e)))]),
 			"toolbar-actions": K(() => [M(t.$slots, "toolbar-actions")]),
 			_: 2
@@ -18291,69 +18301,69 @@ var pd = { key: 1 }, md = { class: "mm-online-user-table__emphasis" }, hd = { cl
 });
 //#endregion
 //#region src/components/position-table/formatters.ts
-function _d(e) {
+function vd(e) {
 	let t = Number(e);
 	return Number.isFinite(t) ? t : 0;
 }
-function vd(e, t = {}) {
-	let n = String(e.symbol ?? "").trim(), r = _d(t[n] ?? t[n.toUpperCase()] ?? t[n.toLowerCase()]);
-	return r > 0 ? r : _d(e.mark_price);
-}
 function yd(e, t = {}) {
-	let n = Math.abs(_d(e.quantity)), r = vd(e, t);
-	if (r > 0 && n > 0) return r * n;
-	let i = Math.abs(_d(e.position_value));
-	return i > 0 ? i : Math.abs(_d(e.entry_price) * n);
+	let n = String(e.symbol ?? "").trim(), r = vd(t[n] ?? t[n.toUpperCase()] ?? t[n.toLowerCase()]);
+	return r > 0 ? r : vd(e.mark_price);
 }
 function bd(e, t = {}) {
-	if (e.unrealized_pnl !== null && e.unrealized_pnl !== void 0 && e.unrealized_pnl !== "") return _d(e.unrealized_pnl);
-	if (e.pnl !== null && e.pnl !== void 0 && e.pnl !== "") return _d(e.pnl);
-	let n = vd(e, t);
-	if (n <= 0) return 0;
-	let r = String(e.position_side ?? "").toLowerCase() === "long" ? 1 : -1;
-	return _d(e.quantity) * r * (n - _d(e.entry_price));
+	let n = Math.abs(vd(e.quantity)), r = yd(e, t);
+	if (r > 0 && n > 0) return r * n;
+	let i = Math.abs(vd(e.position_value));
+	return i > 0 ? i : Math.abs(vd(e.entry_price) * n);
 }
 function xd(e, t = {}) {
-	let n = _d(e.leverage);
-	return n > 0 ? yd(e, t) / n : _d(e.margin_price);
+	if (e.unrealized_pnl !== null && e.unrealized_pnl !== void 0 && e.unrealized_pnl !== "") return vd(e.unrealized_pnl);
+	if (e.pnl !== null && e.pnl !== void 0 && e.pnl !== "") return vd(e.pnl);
+	let n = yd(e, t);
+	if (n <= 0) return 0;
+	let r = String(e.position_side ?? "").toLowerCase() === "long" ? 1 : -1;
+	return vd(e.quantity) * r * (n - vd(e.entry_price));
 }
 function Sd(e, t = {}) {
-	let n = xd(e, t);
-	return n === 0 ? 0 : bd(e, t) / n * 100;
+	let n = vd(e.leverage);
+	return n > 0 ? bd(e, t) / n : vd(e.margin_price);
 }
-var Cd = new Intl.NumberFormat("en-US", {
+function Cd(e, t = {}) {
+	let n = Sd(e, t);
+	return n === 0 ? 0 : xd(e, t) / n * 100;
+}
+var wd = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 2,
 	maximumFractionDigits: 2
-}), wd = new Intl.NumberFormat("en-US", {
+}), Td = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 2,
 	maximumFractionDigits: 4
-}), Td = new Intl.NumberFormat("en-US", {
+}), Ed = new Intl.NumberFormat("en-US", {
 	minimumFractionDigits: 3,
 	maximumFractionDigits: 3
 });
-function Ed(e) {
-	return Cd.format(_d(e));
-}
 function Dd(e) {
-	return wd.format(_d(e));
+	return wd.format(vd(e));
 }
 function Od(e) {
-	let t = _d(e);
-	return t > 0 ? Dd(t) : "-";
+	return Td.format(vd(e));
 }
 function kd(e) {
-	return Td.format(_d(e));
+	let t = vd(e);
+	return t > 0 ? Od(t) : "-";
 }
 function Ad(e) {
-	let t = _d(e);
-	return `${t > 0 ? "+" : ""}${Ed(t)}`;
+	return Ed.format(vd(e));
 }
 function jd(e) {
-	return `${Ad(e)}%`;
+	let t = vd(e);
+	return `${t > 0 ? "+" : ""}${Dd(t)}`;
+}
+function Md(e) {
+	return `${jd(e)}%`;
 }
 //#endregion
 //#region src/components/position-table/PositionTable.vue?vue&type=script&setup=true&lang.ts
-var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, Fd = { class: "mm-position-table__number" }, Id = { class: "mm-position-table__number" }, Ld = { class: "mm-position-table__number" }, Rd = { class: "mm-position-table__actions" }, zd = /* @__PURE__ */ p({
+var Nd = { key: 1 }, Pd = { class: "mm-position-table__id" }, Fd = { key: 1 }, Id = { class: "mm-position-table__number" }, Ld = { class: "mm-position-table__number" }, Rd = { class: "mm-position-table__number" }, zd = { class: "mm-position-table__actions" }, Bd = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmPositionTable",
 	__name: "PositionTable",
@@ -18593,7 +18603,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 					title: a.value.quantity,
 					width: 110,
 					sortable: !0,
-					formatter: kd
+					formatter: Ad
 				},
 				{
 					key: "position_value",
@@ -18607,7 +18617,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 					title: a.value.entryPrice,
 					width: 115,
 					sortable: !0,
-					formatter: Dd
+					formatter: Od
 				},
 				{
 					key: "mark_price",
@@ -18699,16 +18709,16 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			].includes(r) ? a.value.productCategoryCrypto : k(e);
 		}
 		function B(e) {
-			return vd(e, n.marketPrices);
-		}
-		function H(e) {
 			return yd(e, n.marketPrices);
 		}
-		function U(e) {
+		function H(e) {
 			return bd(e, n.marketPrices);
 		}
+		function U(e) {
+			return xd(e, n.marketPrices);
+		}
 		function W(e) {
-			return Sd(e, n.marketPrices);
+			return Cd(e, n.marketPrices);
 		}
 		function G(e) {
 			return e > 0 ? "is-profit" : e < 0 ? "is-loss" : "is-neutral";
@@ -18785,8 +18795,8 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			}, {
 				default: K(() => [d(F(P(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Md, "-"))])]),
-			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", Nd, F(k(e.row.id)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", Nd, "-"))])]),
+			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", Pd, F(k(e.row.id)), 1)])]),
 			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(k(e.row.symbol)), 1)])]),
 			"cell-product_category": K((e) => [M(t.$slots, "cell-product_category", x(m(e)), () => [f(R($), {
 				effect: "soft",
@@ -18806,7 +18816,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			}, {
 				default: K(() => [d(F(I(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Pd, "-"))])]),
+			}, 1032, ["type"])) : (D(), c("span", Fd, "-"))])]),
 			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
@@ -18816,15 +18826,15 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 				default: K(() => [d(F(L(e.row)), 1)]),
 				_: 2
 			}, 1032, ["type"])])]),
-			"cell-position_value": K((e) => [M(t.$slots, "cell-position_value", v(e, { value: H(e.row) }), () => [l("span", Fd, F(R(Ed)(H(e.row))), 1)])]),
-			"cell-mark_price": K((e) => [M(t.$slots, "cell-mark_price", v(e, { value: B(e.row) }), () => [l("span", Id, F(R(Dd)(B(e.row))), 1)])]),
-			"cell-pnl": K((e) => [M(t.$slots, "cell-pnl", v(e, { value: U(e.row) }), () => [l("span", { class: b(["mm-position-table__change", G(U(e.row))]) }, F(R(Ad)(U(e.row))), 3)])]),
-			"cell-return_rate": K((e) => [M(t.$slots, "cell-return_rate", v(e, { value: W(e.row) }), () => [l("span", { class: b(["mm-position-table__change", G(W(e.row))]) }, F(R(jd)(W(e.row))), 3)])]),
-			"cell-liq_price": K((e) => [M(t.$slots, "cell-liq_price", x(m(e)), () => [l("span", Ld, F(R(Od)(e.row.liq_price)), 1)])]),
+			"cell-position_value": K((e) => [M(t.$slots, "cell-position_value", v(e, { value: H(e.row) }), () => [l("span", Id, F(R(Dd)(H(e.row))), 1)])]),
+			"cell-mark_price": K((e) => [M(t.$slots, "cell-mark_price", v(e, { value: B(e.row) }), () => [l("span", Ld, F(R(Od)(B(e.row))), 1)])]),
+			"cell-pnl": K((e) => [M(t.$slots, "cell-pnl", v(e, { value: U(e.row) }), () => [l("span", { class: b(["mm-position-table__change", G(U(e.row))]) }, F(R(jd)(U(e.row))), 3)])]),
+			"cell-return_rate": K((e) => [M(t.$slots, "cell-return_rate", v(e, { value: W(e.row) }), () => [l("span", { class: b(["mm-position-table__change", G(W(e.row))]) }, F(R(Md)(W(e.row))), 3)])]),
+			"cell-liq_price": K((e) => [M(t.$slots, "cell-liq_price", x(m(e)), () => [l("span", Rd, F(R(kd)(e.row.liq_price)), 1)])]),
 			"cell-operation": K((n) => [M(t.$slots, "cell-operation", v(n, {
 				close: () => Y("close", e.actions.close, n.row),
 				detail: () => Y("detail", e.actions.detail, n.row)
-			}), () => [l("div", Rd, [e.actions.detail ? (D(), o(R(Q), {
+			}), () => [l("div", zd, [e.actions.detail ? (D(), o(R(Q), {
 				key: 0,
 				"aria-label": R(r).currentPositions.viewDetails,
 				"icon-only": "",
@@ -18882,7 +18892,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			"page-sizes"
 		]));
 	}
-}), Bd = Symbol("mm-tabs"), Vd = ["id", "aria-labelledby"], Hd = /* @__PURE__ */ p({
+}), Vd = Symbol("mm-tabs"), Hd = ["id", "aria-labelledby"], Ud = /* @__PURE__ */ p({
 	name: "MmTabPane",
 	__name: "TabPane",
 	props: {
@@ -18902,7 +18912,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 		name: {}
 	},
 	setup(e) {
-		let t = e, n = g(Bd);
+		let t = e, n = g(Vd);
 		if (!n) throw Error("[MmTabPane] must be used inside MmTabs");
 		let r = Re("mm-tab"), a = Re("mm-tab-panel"), o = i(() => t.disabled), l = i(() => t.label), u = i(() => Object.is(n.activeValue.value, t.name)), d = A(u.value), f = i(() => t.forceRender || !(t.lazy || n.isLazy.value) || u.value || d.value);
 		return W(u, (e) => {
@@ -18920,16 +18930,16 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			role: "tabpanel",
 			"aria-labelledby": R(r),
 			tabindex: "0"
-		}, [M(e.$slots, "default")], 8, Vd)), [[U, u.value]]) : s("", !0);
+		}, [M(e.$slots, "default")], 8, Hd)), [[U, u.value]]) : s("", !0);
 	}
-}), Ud = ["aria-orientation"], Wd = [
+}), Wd = ["aria-orientation"], Gd = [
 	"id",
 	"disabled",
 	"aria-controls",
 	"aria-selected",
 	"tabindex",
 	"onClick"
-], Gd = { class: "mm-tabs__panels" }, Kd = /* @__PURE__ */ p({
+], Kd = { class: "mm-tabs__panels" }, qd = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmTabs",
 	__name: "Tabs",
@@ -18974,7 +18984,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			let o = t.key === "Home" ? i[0] : t.key === "End" ? i.at(-1) : i[(a + (t.key === n ? 1 : -1) + i.length) % i.length];
 			o?.focus(), o?.click(), await y();
 		}
-		return O(Bd, {
+		return O(Vd, {
 			activeValue: f,
 			isLazy: p,
 			register: m,
@@ -19001,33 +19011,33 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			tabindex: g(e.name) ? 0 : -1,
 			onClick: (t) => _(e),
 			onKeydown: r[0] ||= (e) => S(e.currentTarget, e)
-		}, F(e.label.value), 43, Wd))), 128))], 16, Ud), l("div", Gd, [M(n.$slots, "default")])], 2));
+		}, F(e.label.value), 43, Gd))), 128))], 16, Wd), l("div", Kd, [M(n.$slots, "default")])], 2));
 	}
-}), qd = { class: "mm-user-detail-dialog__title" }, Jd = { id: "mm-user-detail-description" }, Yd = {
+}), Jd = { class: "mm-user-detail-dialog__title" }, Yd = { id: "mm-user-detail-description" }, Xd = {
 	key: 0,
 	class: "mm-user-detail-dialog__state",
 	role: "status"
-}, Xd = {
+}, Zd = {
 	key: 1,
 	class: "mm-user-detail-dialog__state is-error",
 	role: "alert"
-}, Zd = {
+}, Qd = {
 	key: 2,
 	class: "mm-user-detail-dialog__content"
-}, Qd = { class: "mm-user-detail-profile__identity" }, $d = { class: "mm-user-detail-profile__name" }, ef = { class: "mm-user-detail-profile__badges" }, tf = ["aria-label"], nf = { class: "mm-user-detail-field__label" }, rf = { class: "mm-user-detail-field__value" }, af = { class: "mm-user-detail-heading" }, of = { class: "mm-user-detail-caption" }, sf = ["aria-label"], cf = {
+}, $d = { class: "mm-user-detail-profile__identity" }, ef = { class: "mm-user-detail-profile__name" }, tf = { class: "mm-user-detail-profile__badges" }, nf = ["aria-label"], rf = { class: "mm-user-detail-field__label" }, af = { class: "mm-user-detail-field__value" }, of = { class: "mm-user-detail-heading" }, sf = { class: "mm-user-detail-caption" }, cf = ["aria-label"], lf = {
 	class: "mm-user-detail-login-field is-location",
 	role: "listitem"
-}, lf = { class: "mm-user-detail-login-field__label" }, uf = {
+}, uf = { class: "mm-user-detail-login-field__label" }, df = {
 	class: "mm-user-detail-login-field",
 	role: "listitem"
-}, df = { class: "mm-user-detail-login-field__label" }, ff = { class: "mm-user-detail-login-field__value" }, pf = {
+}, ff = { class: "mm-user-detail-login-field__label" }, pf = { class: "mm-user-detail-login-field__value" }, mf = {
 	class: "mm-user-detail-login-field",
 	role: "listitem"
-}, mf = { class: "mm-user-detail-login-field__label" }, hf = { class: "mm-user-detail-login-field__value" }, gf = {
+}, hf = { class: "mm-user-detail-login-field__label" }, gf = { class: "mm-user-detail-login-field__value" }, _f = {
 	key: 0,
 	class: "mm-user-detail-login-field",
 	role: "listitem"
-}, _f = { class: "mm-user-detail-login-field__label" }, vf = { class: "mm-user-detail-login-field__value" }, yf = { class: "mm-user-detail-caption" }, bf = { class: "mm-user-detail-business__metrics" }, xf = { class: "mm-user-detail-dialog__updated-at" }, Sf = /* @__PURE__ */ p({
+}, vf = { class: "mm-user-detail-login-field__label" }, yf = { class: "mm-user-detail-login-field__value" }, bf = { class: "mm-user-detail-caption" }, xf = { class: "mm-user-detail-business__metrics" }, Sf = { class: "mm-user-detail-dialog__updated-at" }, Cf = /* @__PURE__ */ p({
 	name: "MmUserDetailDialog",
 	__name: "UserDetailDialog",
 	props: {
@@ -19060,7 +19070,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			return e == null ? "-" : String(e).trim() || "-";
 		}
 		function k(e) {
-			return O(ad(e?.nice_name, e?.username));
+			return O(od(e?.nice_name, e?.username));
 		}
 		let N = i(() => k(g.value)), P = i(() => O(g.value?.agent_user_id)), I = i(() => (N.value === "-" ? "U" : N.value).slice(0, 1).toUpperCase());
 		function L(e) {
@@ -19093,9 +19103,9 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 				"online"
 			].includes(String(e ?? "").trim().toLowerCase());
 		}
-		let U = i(() => H(g.value?.online_status)), G = i(() => ad(g.value?.login_time, g.value?.login_at, g.value?.last_login_at)), q = i(() => ad(g.value?.last_active_at, g.value?.last_activity_at, g.value?.last_active_time, g.value?.active_at, g.value?.updated_at, G.value));
+		let U = i(() => H(g.value?.online_status)), G = i(() => od(g.value?.login_time, g.value?.login_at, g.value?.last_login_at)), q = i(() => od(g.value?.last_active_at, g.value?.last_activity_at, g.value?.last_active_time, g.value?.active_at, g.value?.updated_at, G.value));
 		function ee() {
-			let e = cd(G.value);
+			let e = ld(G.value);
 			if (e === null) return "-";
 			let t = Math.floor(Math.max(0, v.value - e) / 6e4);
 			if (t < 1) return p.value.userDetail.lessThanMinute;
@@ -19200,7 +19210,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			"panel-class": "mm-user-detail-dialog__panel",
 			width: e.width
 		}, {
-			header: K(() => [l("div", qd, [l("strong", null, F(R(p).userDetail.title), 1), l("span", Jd, F(N.value) + " · UID " + F(g.value?.user_id ?? e.userId ?? "-"), 1)])]),
+			header: K(() => [l("div", Jd, [l("strong", null, F(R(p).userDetail.title), 1), l("span", Yd, F(N.value) + " · UID " + F(g.value?.user_id ?? e.userId ?? "-"), 1)])]),
 			"header-actions": K(() => [M(n.$slots, "header-actions", {
 				detail: g.value,
 				loading: m.value,
@@ -19217,8 +19227,8 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 				default: K(() => [d(" " + F(R(p).userDetail.retry), 1)]),
 				_: 1
 			})) : s("", !0)])]),
-			footer: K(() => [l("span", xf, F(R(p).userDetail.updatedAt(_.value)), 1)]),
-			default: K(() => [m.value ? (D(), c("div", Yd, [
+			footer: K(() => [l("span", Sf, F(R(p).userDetail.updatedAt(_.value)), 1)]),
+			default: K(() => [m.value ? (D(), c("div", Xd, [
 				f(R(Z), {
 					class: "is-loading",
 					name: "loader-circle",
@@ -19226,20 +19236,20 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 				}),
 				l("strong", null, F(R(p).userDetail.loading), 1),
 				l("span", null, "UID " + F(e.userId || "-"), 1)
-			])) : h.value ? (D(), c("div", Xd, [
+			])) : h.value ? (D(), c("div", Zd, [
 				f(R(Z), {
 					name: "alert",
 					size: 24
 				}),
 				l("strong", null, F(R(p).userDetail.loadFailedTitle), 1),
 				l("span", null, F(h.value), 1)
-			])) : g.value ? (D(), c("div", Zd, [
+			])) : g.value ? (D(), c("div", Qd, [
 				f(R(mo), {
 					class: "mm-user-detail-profile",
 					bordered: "",
 					shadow: "never"
 				}, {
-					default: K(() => [l("div", Qd, [
+					default: K(() => [l("div", $d, [
 						f(R(ba), {
 							size: 38,
 							fallback: I.value
@@ -19247,8 +19257,8 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 							default: K(() => [d(F(I.value), 1)]),
 							_: 1
 						}, 8, ["fallback"]),
-						l("div", $d, [l("strong", null, F(N.value), 1), l("span", null, F(P.value), 1)]),
-						l("div", ef, [M(n.$slots, "user-type", {
+						l("div", ef, [l("strong", null, F(N.value), 1), l("span", null, F(P.value), 1)]),
+						l("div", tf, [M(n.$slots, "user-type", {
 							value: g.value.user_type,
 							detail: g.value
 						}, () => [f(R($), {
@@ -19274,13 +19284,13 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 						[R(p).userDetail.userUid, g.value.user_id],
 						[R(p).userDetail.username, N.value],
 						[R(p).userDetail.externalUserId, P.value],
-						[R(p).userDetail.registerTime, R(ud)(g.value.created_at)],
-						[R(p).userDetail.lastLoginTime, R(ud)(g.value.last_login_at)]
+						[R(p).userDetail.registerTime, R(dd)(g.value.created_at)],
+						[R(p).userDetail.lastLoginTime, R(dd)(g.value.last_login_at)]
 					], (e) => (D(), c("div", {
 						key: String(e[0]),
 						class: "mm-user-detail-field",
 						role: "listitem"
-					}, [l("strong", nf, F(e[0]), 1), l("strong", rf, F(e[1]), 1)]))), 128))], 8, tf)]),
+					}, [l("strong", rf, F(e[0]), 1), l("strong", af, F(e[1]), 1)]))), 128))], 8, nf)]),
 					_: 3
 				}),
 				f(R(mo), {
@@ -19288,42 +19298,42 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 					bordered: "",
 					shadow: "never"
 				}, {
-					header: K(() => [l("div", af, [l("strong", null, F(R(p).userDetail.loginInfo), 1), f(R($), {
+					header: K(() => [l("div", of, [l("strong", null, F(R(p).userDetail.loginInfo), 1), f(R($), {
 						round: "",
 						size: "sm",
 						type: U.value ? "success" : "info"
 					}, {
 						default: K(() => [r[2] ||= l("span", { class: "mm-user-detail-presence-dot" }, null, -1), d(" " + F(U.value ? R(p).userDetail.online : R(p).userDetail.offline), 1)]),
 						_: 1
-					}, 8, ["type"])]), l("span", of, F(R(p).userDetail.currentList(e.currentListLabel || R(p).userDetail.currentPage)), 1)]),
+					}, 8, ["type"])]), l("span", sf, F(R(p).userDetail.currentList(e.currentListLabel || R(p).userDetail.currentPage)), 1)]),
 					default: K(() => [l("div", {
 						class: b(["mm-user-detail-login__summary", { "is-online": U.value }]),
 						role: "list",
 						"aria-label": R(p).userDetail.loginSummary
 					}, [
-						l("div", cf, [l("strong", lf, F(U.value ? R(p).userDetail.loginIpRegion : R(p).userDetail.lastLoginIpRegion), 1), M(n.$slots, "login-location", {
+						l("div", lf, [l("strong", uf, F(U.value ? R(p).userDetail.loginIpRegion : R(p).userDetail.lastLoginIpRegion), 1), M(n.$slots, "login-location", {
 							detail: g.value,
 							ip: g.value.last_login_ip,
 							info: g.value.last_login_ip_info
-						}, () => [f(R(Ql), {
+						}, () => [f(R($l), {
 							class: "mm-user-detail-login-field__value",
 							"country-first": "",
 							info: g.value.last_login_ip_info,
 							ip: g.value.last_login_ip,
 							"location-first": ""
 						}, null, 8, ["info", "ip"])])]),
-						l("div", uf, [l("strong", df, F(U.value ? R(p).userDetail.loginTime : R(p).userDetail.lastLoginTime), 1), l("strong", ff, F(R(ud)(G.value)), 1)]),
-						l("div", pf, [l("strong", mf, F(U.value ? R(p).userDetail.onlineDuration : R(p).userDetail.currentSession), 1), l("strong", hf, F(U.value ? J.value : R(p).userDetail.offlineSession), 1)]),
-						U.value ? (D(), c("div", gf, [l("strong", _f, F(R(p).userDetail.lastActiveTime), 1), l("strong", vf, F(R(ud)(q.value)), 1)])) : s("", !0)
-					], 10, sf)]),
+						l("div", df, [l("strong", ff, F(U.value ? R(p).userDetail.loginTime : R(p).userDetail.lastLoginTime), 1), l("strong", pf, F(R(dd)(G.value)), 1)]),
+						l("div", mf, [l("strong", hf, F(U.value ? R(p).userDetail.onlineDuration : R(p).userDetail.currentSession), 1), l("strong", gf, F(U.value ? J.value : R(p).userDetail.offlineSession), 1)]),
+						U.value ? (D(), c("div", _f, [l("strong", vf, F(R(p).userDetail.lastActiveTime), 1), l("strong", yf, F(R(dd)(q.value)), 1)])) : s("", !0)
+					], 10, cf)]),
 					_: 3
 				}),
-				f(R(Kd), {
+				f(R(qd), {
 					modelValue: y.value,
 					"onUpdate:modelValue": r[0] ||= (e) => y.value = e,
 					class: "mm-user-detail-tabs"
 				}, {
-					default: K(() => [f(R(Hd), {
+					default: K(() => [f(R(Ud), {
 						label: R(p).userDetail.contract,
 						name: "contract"
 					}, {
@@ -19332,8 +19342,8 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 							bordered: "",
 							shadow: "never"
 						}, {
-							header: K(() => [l("strong", null, F(R(p).userDetail.contract), 1), l("span", yf, F(R(p).userDetail.summary), 1)]),
-							default: K(() => [l("div", bf, [(D(!0), c(t, null, j(Y.value, (t) => (D(), c("article", {
+							header: K(() => [l("strong", null, F(R(p).userDetail.contract), 1), l("span", bf, F(R(p).userDetail.summary), 1)]),
+							default: K(() => [l("div", xf, [(D(!0), c(t, null, j(Y.value, (t) => (D(), c("article", {
 								key: t.key,
 								class: "mm-user-detail-metric"
 							}, [
@@ -19368,22 +19378,22 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 			"width"
 		]));
 	}
-}), Cf = Object.assign(Sf, { install(e) {
-	e.component("MmUserDetailDialog", Sf);
+}), wf = Object.assign(Cf, { install(e) {
+	e.component("MmUserDetailDialog", Cf);
 } });
 //#endregion
 //#region src/components/user-asset-table/formatters.ts
-function wf(e) {
+function Tf(e) {
 	let t = Number(e ?? 0);
 	return Number.isFinite(t) ? t : 0;
 }
-function Tf(e) {
+function Ef(e) {
 	return e != null && e !== "";
 }
-function Ef(e, t) {
-	return e ? wf(t[e] ?? t[e.toUpperCase()]) : 0;
+function Df(e, t) {
+	return e ? Tf(t[e] ?? t[e.toUpperCase()]) : 0;
 }
-function Df(e) {
+function Of(e) {
 	let t = e.side ?? e.position_side, n = String(t ?? "").toLowerCase();
 	if ([
 		"1",
@@ -19395,34 +19405,34 @@ function Df(e) {
 		"sell",
 		"short"
 	].includes(n)) return "short";
-	let r = wf(e.quantity);
+	let r = Tf(e.quantity);
 	return r > 0 ? "long" : r < 0 ? "short" : null;
 }
-function Of(e) {
-	return wf(e).toFixed(2);
+function kf(e) {
+	return Tf(e).toFixed(2);
 }
-function kf(e, t = {}) {
-	if (Tf(e.position_amount)) return wf(e.position_amount);
+function Af(e, t = {}) {
+	if (Ef(e.position_amount)) return Tf(e.position_amount);
 	let n = e.total_quantity;
 	if (n && typeof n == "object") {
 		let e = Object.entries(n);
-		if (e.length > 0) return e.reduce((e, [n, r]) => e + Math.abs(wf(r)) * Ef(n, t), 0);
+		if (e.length > 0) return e.reduce((e, [n, r]) => e + Math.abs(Tf(r)) * Df(n, t), 0);
 	}
-	return (e.positions ?? []).reduce((e, n) => e + Math.abs(wf(n.quantity)) * Ef(n.symbol, t), 0);
+	return (e.positions ?? []).reduce((e, n) => e + Math.abs(Tf(n.quantity)) * Df(n.symbol, t), 0);
 }
-function Af(e, t = {}) {
-	return Tf(e.position_pnl) ? wf(e.position_pnl) : Tf(e.unrealized_pnl) ? wf(e.unrealized_pnl) : (e.positions ?? []).reduce((e, n) => {
-		if (Tf(n.unrealized_pnl)) return e + wf(n.unrealized_pnl);
-		let r = Ef(n.symbol, t), i = wf(n.entry_price), a = Math.abs(wf(n.quantity)), o = Df(n);
+function jf(e, t = {}) {
+	return Ef(e.position_pnl) ? Tf(e.position_pnl) : Ef(e.unrealized_pnl) ? Tf(e.unrealized_pnl) : (e.positions ?? []).reduce((e, n) => {
+		if (Ef(n.unrealized_pnl)) return e + Tf(n.unrealized_pnl);
+		let r = Df(n.symbol, t), i = Tf(n.entry_price), a = Math.abs(Tf(n.quantity)), o = Of(n);
 		return !r || !i || !a || !o ? e : e + (o === "long" ? r - i : i - r) * a;
 	}, 0);
 }
-function jf(e) {
-	return `${e >= 0 ? "+" : ""}${Of(e)}`;
+function Mf(e) {
+	return `${e >= 0 ? "+" : ""}${kf(e)}`;
 }
 //#endregion
 //#region src/components/user-asset-table/UserAssetTable.vue?vue&type=script&setup=true&lang.ts
-var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class: "mm-user-asset-table__amount" }, Ff = { class: "mm-user-asset-table__amount" }, If = { class: "mm-user-asset-table__amount" }, Lf = { class: "mm-user-asset-table__actions" }, Rf = /* @__PURE__ */ p({
+var Nf = { key: 1 }, Pf = { class: "mm-user-asset-table__amount" }, Ff = { class: "mm-user-asset-table__amount" }, If = { class: "mm-user-asset-table__amount" }, Lf = { class: "mm-user-asset-table__amount" }, Rf = { class: "mm-user-asset-table__actions" }, zf = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmUserAssetTable",
 	__name: "UserAssetTable",
@@ -19664,10 +19674,10 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 			} : null;
 		}
 		function W(e) {
-			return Of(kf(e, n.marketPrices));
+			return kf(Af(e, n.marketPrices));
 		}
 		function G(e) {
-			return Af(e, n.marketPrices);
+			return jf(e, n.marketPrices);
 		}
 		async function q({ filters: e, page: t, pageSize: i, signal: a, sort: o }) {
 			let s = o.order && g.has(o.key) ? o : h, c = {
@@ -19720,16 +19730,16 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 			}, {
 				default: K(() => [d(F(U(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Mf, "-"))])]),
-			"cell-wallet_balance": K((e) => [M(t.$slots, "cell-wallet_balance", x(m(e)), () => [l("span", Nf, F(R(Of)(e.row.wallet_balance)), 1)])]),
-			"cell-available_balance": K((e) => [M(t.$slots, "cell-available_balance", x(m(e)), () => [l("span", Pf, F(R(Of)(e.row.available_balance)), 1)])]),
-			"cell-position_amount": K((e) => [M(t.$slots, "cell-position_amount", v(e, { value: W(e.row) }), () => [l("span", Ff, F(W(e.row)), 1)])]),
-			"cell-total_margin": K((e) => [M(t.$slots, "cell-total_margin", x(m(e)), () => [l("span", If, F(R(Of)(e.row.total_margin)), 1)])]),
-			"cell-position_pnl": K((e) => [M(t.$slots, "cell-position_pnl", v(e, { value: G(e.row) }), () => [l("span", { class: b(["mm-user-asset-table__pnl", G(e.row) >= 0 ? "is-profit" : "is-loss"]) }, F(R(jf)(G(e.row))), 3)])]),
+			}, 1032, ["type"])) : (D(), c("span", Nf, "-"))])]),
+			"cell-wallet_balance": K((e) => [M(t.$slots, "cell-wallet_balance", x(m(e)), () => [l("span", Pf, F(R(kf)(e.row.wallet_balance)), 1)])]),
+			"cell-available_balance": K((e) => [M(t.$slots, "cell-available_balance", x(m(e)), () => [l("span", Ff, F(R(kf)(e.row.available_balance)), 1)])]),
+			"cell-position_amount": K((e) => [M(t.$slots, "cell-position_amount", v(e, { value: W(e.row) }), () => [l("span", If, F(W(e.row)), 1)])]),
+			"cell-total_margin": K((e) => [M(t.$slots, "cell-total_margin", x(m(e)), () => [l("span", Lf, F(R(kf)(e.row.total_margin)), 1)])]),
+			"cell-position_pnl": K((e) => [M(t.$slots, "cell-position_pnl", v(e, { value: G(e.row) }), () => [l("span", { class: b(["mm-user-asset-table__pnl", G(e.row) >= 0 ? "is-profit" : "is-loss"]) }, F(R(Mf)(G(e.row))), 3)])]),
 			"cell-actions": K((n) => [M(t.$slots, "cell-actions", v(n, {
 				deposit: () => O("deposit", e.actions.deposit, n.row),
 				deduct: () => O("deduct", e.actions.deduct, n.row)
-			}), () => [l("div", Lf, [e.actions.deposit ? (D(), o(R(nl), {
+			}), () => [l("div", Rf, [e.actions.deposit ? (D(), o(R(rl), {
 				key: 0,
 				content: R(r).userAssets.deposit
 			}, {
@@ -19751,7 +19761,7 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 					"onClick"
 				])]),
 				_: 2
-			}, 1032, ["content"])) : s("", !0), e.actions.deduct ? (D(), o(R(nl), {
+			}, 1032, ["content"])) : s("", !0), e.actions.deduct ? (D(), o(R(rl), {
 				key: 1,
 				content: R(r).userAssets.deduct
 			}, {
@@ -19793,7 +19803,7 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 			"row-key"
 		]));
 	}
-}), zf = { key: 1 }, Bf = { class: "mm-user-table__emphasis" }, Vf = { class: "mm-user-table__actions" }, Hf = /* @__PURE__ */ p({
+}), Bf = { key: 1 }, Vf = { class: "mm-user-table__emphasis" }, Hf = { class: "mm-user-table__actions" }, Uf = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmUserTable",
 	__name: "UserTable",
@@ -20093,9 +20103,9 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 			}, {
 				default: K(() => [d(F(P(e.row.user_type)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", zf, "-"))])]),
-			"cell-vip_level": K((e) => [M(t.$slots, "cell-vip_level", x(m(e)), () => [l("span", Bf, F(R(dd)(e.row.vip_level)), 1)])]),
-			"cell-login_ip": K((e) => [M(t.$slots, "cell-login_ip", x(m(e)), () => [f(R(Ql), {
+			}, 1032, ["type"])) : (D(), c("span", Bf, "-"))])]),
+			"cell-vip_level": K((e) => [M(t.$slots, "cell-vip_level", x(m(e)), () => [l("span", Vf, F(R(fd)(e.row.vip_level)), 1)])]),
+			"cell-login_ip": K((e) => [M(t.$slots, "cell-login_ip", x(m(e)), () => [f(R($l), {
 				"country-first": "",
 				info: e.row.last_login_ip_info,
 				ip: e.row.last_login_ip,
@@ -20103,12 +20113,12 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 				"show-ip-label": "",
 				"show-tooltip": !1
 			}, null, 8, ["info", "ip"])])]),
-			"cell-created_at": K((e) => [M(t.$slots, "cell-created_at", x(m(e)), () => [d(F(R(ud)(e.row.created_at)), 1)])]),
-			"cell-last_login_at": K((e) => [M(t.$slots, "cell-last_login_at", x(m(e)), () => [d(F(R(ud)(e.row.last_login_at)), 1)])]),
+			"cell-created_at": K((e) => [M(t.$slots, "cell-created_at", x(m(e)), () => [d(F(R(dd)(e.row.created_at)), 1)])]),
+			"cell-last_login_at": K((e) => [M(t.$slots, "cell-last_login_at", x(m(e)), () => [d(F(R(dd)(e.row.last_login_at)), 1)])]),
 			"cell-actions": K((n) => [M(t.$slots, "cell-actions", v(n, {
 				cancelAllOrders: () => E("cancelAllOrders", e.actions.cancelAllOrders, n.row),
 				closeAllPositions: () => E("closeAllPositions", e.actions.closeAllPositions, n.row)
-			}), () => [l("div", Vf, [e.actions.cancelAllOrders ? (D(), o(R(nl), {
+			}), () => [l("div", Hf, [e.actions.cancelAllOrders ? (D(), o(R(rl), {
 				key: 0,
 				content: R(r).users.cancelAllOrders
 			}, {
@@ -20132,7 +20142,7 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 					"onClick"
 				])]),
 				_: 2
-			}, 1032, ["content"])) : s("", !0), e.actions.closeAllPositions ? (D(), o(R(nl), {
+			}, 1032, ["content"])) : s("", !0), e.actions.closeAllPositions ? (D(), o(R(rl), {
 				key: 1,
 				content: R(r).users.closeAllPositions
 			}, {
@@ -20176,11 +20186,11 @@ var Mf = { key: 1 }, Nf = { class: "mm-user-asset-table__amount" }, Pf = { class
 });
 //#endregion
 //#region src/components/user-prediction-table/formatters.ts
-function Uf(e) {
+function Wf(e) {
 	let t = Number(e);
 	return Number.isFinite(t) ? Math.max(0, Math.trunc(t)).toString() : "0";
 }
-function Wf(e) {
+function Gf(e) {
 	let t = String(e ?? "0").trim().match(/^([+-]?)(\d+)(?:\.(\d*))?$/);
 	if (!t) return "-";
 	let [, n, r, i = ""] = t, a = i.padEnd(3, "0"), o = BigInt(`${r}${a.slice(0, 2)}`);
@@ -20188,13 +20198,13 @@ function Wf(e) {
 	let s = o.toString().padStart(3, "0"), c = s.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, ","), l = s.slice(-2);
 	return `${n === "-" && o !== 0n ? "-" : ""}${c}.${l}`;
 }
-function Gf(e) {
-	let t = Wf(e);
+function Kf(e) {
+	let t = Gf(e);
 	return t === "-" || t === "0.00" || t.startsWith("-") ? t : `+${t}`;
 }
 //#endregion
 //#region src/components/user-prediction-table/UserPredictionTable.vue
-var Kf = /* @__PURE__ */ p({
+var qf = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmUserPredictionTable",
 	__name: "UserPredictionTable",
@@ -20317,14 +20327,14 @@ var Kf = /* @__PURE__ */ p({
 			title: t,
 			width: n,
 			sortable: !0,
-			formatter: Uf
+			formatter: Wf
 		}), _ = (e, t, n = 132) => ({
 			key: String(e),
 			dataIndex: String(e),
 			title: t,
 			width: n,
 			sortable: !0,
-			formatter: Wf
+			formatter: Gf
 		}), y = (e) => e == null || String(e).trim() === "" ? "-" : String(e), S = i(() => {
 			let e = [
 				{
@@ -20432,7 +20442,7 @@ var Kf = /* @__PURE__ */ p({
 			"cell-user_id": K((e) => [M(t.$slots, "cell-user_id", x(m(e)), () => [d(F(y(e.row.user_id)), 1)])]),
 			"cell-username": K((e) => [M(t.$slots, "cell-username", x(m(e)), () => [d(F(y(e.row.nice_name || e.row.username)), 1)])]),
 			"cell-agent_user_id": K((e) => [M(t.$slots, "cell-agent_user_id", x(m(e)), () => [d(F(y(e.row.agent_user_id)), 1)])]),
-			"cell-net_profit_30d": K((e) => [M(t.$slots, "cell-net_profit_30d", x(m(e)), () => [l("span", { class: b(k(e.row.net_profit_30d)) }, F(R(Gf)(e.row.net_profit_30d)), 3)])]),
+			"cell-net_profit_30d": K((e) => [M(t.$slots, "cell-net_profit_30d", x(m(e)), () => [l("span", { class: b(k(e.row.net_profit_30d)) }, F(R(Kf)(e.row.net_profit_30d)), 3)])]),
 			_: 2
 		}, [j(w.value, (e) => ({
 			name: e,
@@ -20446,19 +20456,19 @@ var Kf = /* @__PURE__ */ p({
 			"page-sizes"
 		]));
 	}
-}), qf = ["aria-label"], Jf = {
+}), Jf = ["aria-label"], Yf = {
 	key: 0,
 	class: "mm-page-header__breadcrumb-row"
-}, Yf = ["aria-label"], Xf = { class: "mm-page-header__breadcrumbs" }, Zf = ["aria-current"], Qf = ["href"], $f = { key: 1 }, ep = { class: "mm-page-header__main" }, tp = ["aria-label"], np = { class: "mm-page-header__heading" }, rp = { class: "mm-page-header__title" }, ip = {
+}, Xf = ["aria-label"], Zf = { class: "mm-page-header__breadcrumbs" }, Qf = ["aria-current"], $f = ["href"], ep = { key: 1 }, tp = { class: "mm-page-header__main" }, np = ["aria-label"], rp = { class: "mm-page-header__heading" }, ip = { class: "mm-page-header__title" }, ap = {
 	key: 0,
 	class: "mm-page-header__subtitle"
-}, ap = {
-	key: 1,
-	class: "mm-page-header__extra"
 }, op = {
 	key: 1,
+	class: "mm-page-header__extra"
+}, sp = {
+	key: 1,
 	class: "mm-page-header__content"
-}, sp = /* @__PURE__ */ p({
+}, cp = /* @__PURE__ */ p({
 	name: "MmPageHeader",
 	__name: "PageHeader",
 	props: {
@@ -20479,20 +20489,20 @@ var Kf = /* @__PURE__ */ p({
 			"data-mm-component": "page-header",
 			"aria-label": e.title
 		}, [
-			n.$slots.breadcrumb || e.breadcrumbs.length ? (D(), c("div", Jf, [M(n.$slots, "breadcrumb", {}, () => [l("nav", { "aria-label": R(r).pageHeader.breadcrumb }, [l("ol", Xf, [(D(!0), c(t, null, j(e.breadcrumbs, (t, n) => (D(), c("li", {
+			n.$slots.breadcrumb || e.breadcrumbs.length ? (D(), c("div", Yf, [M(n.$slots, "breadcrumb", {}, () => [l("nav", { "aria-label": R(r).pageHeader.breadcrumb }, [l("ol", Zf, [(D(!0), c(t, null, j(e.breadcrumbs, (t, n) => (D(), c("li", {
 				key: `${n}-${t.label}`,
 				class: "mm-page-header__breadcrumb-item",
 				"aria-current": n === e.breadcrumbs.length - 1 ? "page" : void 0
 			}, [t.href && n < e.breadcrumbs.length - 1 ? (D(), c("a", {
 				key: 0,
 				href: t.href
-			}, F(t.label), 9, Qf)) : (D(), c("span", $f, F(t.label), 1)), n < e.breadcrumbs.length - 1 ? (D(), o(R(Z), {
+			}, F(t.label), 9, $f)) : (D(), c("span", ep, F(t.label), 1)), n < e.breadcrumbs.length - 1 ? (D(), o(R(Z), {
 				key: 2,
 				name: "chevron-right",
 				size: 12,
 				"aria-hidden": "true"
-			})) : s("", !0)], 8, Zf))), 128))])], 8, Yf)])])) : s("", !0),
-			l("div", ep, [
+			})) : s("", !0)], 8, Qf))), 128))])], 8, Xf)])])) : s("", !0),
+			l("div", tp, [
 				e.showBack ? (D(), c("button", {
 					key: 0,
 					class: "mm-page-header__back",
@@ -20502,28 +20512,28 @@ var Kf = /* @__PURE__ */ p({
 				}, [f(R(Z), {
 					name: "arrow-left",
 					size: 17
-				}), l("span", null, F(a.value), 1)], 8, tp)) : s("", !0),
-				l("div", np, [l("h1", rp, [M(n.$slots, "title", {}, () => [d(F(e.title), 1)])]), e.subtitle || n.$slots.subtitle ? (D(), c("p", ip, [M(n.$slots, "subtitle", {}, () => [d(F(e.subtitle), 1)])])) : s("", !0)]),
-				n.$slots.extra ? (D(), c("div", ap, [M(n.$slots, "extra")])) : s("", !0)
+				}), l("span", null, F(a.value), 1)], 8, np)) : s("", !0),
+				l("div", rp, [l("h1", ip, [M(n.$slots, "title", {}, () => [d(F(e.title), 1)])]), e.subtitle || n.$slots.subtitle ? (D(), c("p", ap, [M(n.$slots, "subtitle", {}, () => [d(F(e.subtitle), 1)])])) : s("", !0)]),
+				n.$slots.extra ? (D(), c("div", op, [M(n.$slots, "extra")])) : s("", !0)
 			]),
-			n.$slots.default ? (D(), c("div", op, [M(n.$slots, "default")])) : s("", !0)
-		], 8, qf));
+			n.$slots.default ? (D(), c("div", sp, [M(n.$slots, "default")])) : s("", !0)
+		], 8, Jf));
 	}
-}), cp = [
+}), lp = [
 	"aria-label",
 	"aria-valuenow",
 	"aria-valuetext"
-], lp = { class: "mm-progress__track" }, up = {
+], up = { class: "mm-progress__track" }, dp = {
 	key: 0,
 	class: "mm-progress__text"
-}, dp = {
+}, fp = {
 	class: "mm-progress__circle",
 	viewBox: "0 0 100 100",
 	"aria-hidden": "true"
-}, fp = ["r"], pp = ["r"], mp = {
+}, pp = ["r"], mp = ["r"], hp = {
 	key: 0,
 	class: "mm-progress__circle-text"
-}, hp = /* @__PURE__ */ p({
+}, gp = /* @__PURE__ */ p({
 	name: "MmProgress",
 	__name: "Progress",
 	props: {
@@ -20559,15 +20569,15 @@ var Kf = /* @__PURE__ */ p({
 			"aria-valuemax": "100",
 			"aria-valuenow": o.value,
 			"aria-valuetext": u.value
-		}, [e.type === "line" ? (D(), c(t, { key: 0 }, [l("div", lp, [l("span", {
+		}, [e.type === "line" ? (D(), c(t, { key: 0 }, [l("div", up, [l("span", {
 			class: "mm-progress__bar",
 			style: S({ "--mm-progress-value": `${o.value}%` })
-		}, null, 4)]), e.showText ? (D(), c("span", up, [M(n.$slots, "default", { percentage: o.value }, () => [d(F(u.value), 1)])])) : s("", !0)], 64)) : (D(), c(t, { key: 1 }, [(D(), c("svg", dp, [l("circle", {
+		}, null, 4)]), e.showText ? (D(), c("span", dp, [M(n.$slots, "default", { percentage: o.value }, () => [d(F(u.value), 1)])])) : s("", !0)], 64)) : (D(), c(t, { key: 1 }, [(D(), c("svg", fp, [l("circle", {
 			class: "mm-progress__circle-track",
 			cx: "50",
 			cy: "50",
 			r: f.value
-		}, null, 8, fp), l("circle", {
+		}, null, 8, pp), l("circle", {
 			class: "mm-progress__circle-value",
 			cx: "50",
 			cy: "50",
@@ -20576,9 +20586,9 @@ var Kf = /* @__PURE__ */ p({
 				strokeDasharray: p.value,
 				strokeDashoffset: m.value
 			})
-		}, null, 12, pp)])), e.showText ? (D(), c("span", mp, [M(n.$slots, "default", { percentage: o.value }, () => [d(F(u.value), 1)])])) : s("", !0)], 64))], 14, cp));
+		}, null, 12, mp)])), e.showText ? (D(), c("span", hp, [M(n.$slots, "default", { percentage: o.value }, () => [d(F(u.value), 1)])])) : s("", !0)], 64))], 14, lp));
 	}
-}), gp = Symbol("mm-radio-group"), _p = [
+}), _p = Symbol("mm-radio-group"), vp = [
 	"id",
 	"name",
 	"value",
@@ -20586,11 +20596,11 @@ var Kf = /* @__PURE__ */ p({
 	"disabled",
 	"aria-describedby",
 	"aria-readonly"
-], vp = {
+], yp = {
 	key: 0,
 	class: "mm-radio__circle",
 	"aria-hidden": "true"
-}, yp = { class: "mm-radio__label" }, bp = /* @__PURE__ */ p({
+}, bp = { class: "mm-radio__label" }, xp = /* @__PURE__ */ p({
 	name: "MmRadio",
 	__name: "Radio",
 	props: {
@@ -20627,7 +20637,7 @@ var Kf = /* @__PURE__ */ p({
 	},
 	emits: ["change", "update:modelValue"],
 	setup(e, { emit: t }) {
-		let n = e, r = t, a = g(gp, null), o = Re("mm-radio"), u = A(), f = at({
+		let n = e, r = t, a = g(_p, null), o = Re("mm-radio"), u = A(), f = at({
 			disabled: () => n.disabled,
 			id: () => n.id || (a ? o : void 0),
 			size: () => n.size || a?.size.value,
@@ -20675,18 +20685,18 @@ var Kf = /* @__PURE__ */ p({
 				onChange: v,
 				onKeydown: y,
 				onBlur: n[0] ||= (...e) => R(f).onBlur && R(f).onBlur(...e)
-			}, null, 40, _p),
-			e.button ? s("", !0) : (D(), c("span", vp, [...n[1] ||= [l("span", null, null, -1)]])),
-			l("span", yp, [M(t.$slots, "default", {}, () => [d(F(e.label), 1)])])
+			}, null, 40, vp),
+			e.button ? s("", !0) : (D(), c("span", yp, [...n[1] ||= [l("span", null, null, -1)]])),
+			l("span", bp, [M(t.$slots, "default", {}, () => [d(F(e.label), 1)])])
 		], 2));
 	}
-}), xp = [
+}), Sp = [
 	"id",
 	"aria-describedby",
 	"aria-labelledby",
 	"aria-invalid",
 	"aria-readonly"
-], Sp = /* @__PURE__ */ p({
+], Cp = /* @__PURE__ */ p({
 	name: "MmRadioGroup",
 	__name: "RadioGroup",
 	props: {
@@ -20729,7 +20739,7 @@ var Kf = /* @__PURE__ */ p({
 			let r = n[(n.indexOf(e) + t + n.length) % n.length];
 			r?.focus(), r && (r.checked = !0, r.dispatchEvent(new Event("change", { bubbles: !0 })));
 		}
-		return O(gp, {
+		return O(_p, {
 			change: d,
 			disabled: s.disabled,
 			modelValue: l,
@@ -20754,24 +20764,24 @@ var Kf = /* @__PURE__ */ p({
 			"aria-labelledby": R(s).labelledBy.value,
 			"aria-invalid": R(s).status.value === "error" ? "true" : void 0,
 			"aria-readonly": e.readonly ? "true" : void 0
-		}, [M(t.$slots, "default")], 10, xp));
+		}, [M(t.$slots, "default")], 10, Sp));
 	}
-}), Cp = {
+}), wp = {
 	class: "mm-result__icon",
 	"aria-hidden": "true"
-}, wp = {
+}, Tp = {
 	key: 0,
 	class: "mm-result__title"
-}, Tp = {
+}, Ep = {
 	key: 1,
 	class: "mm-result__subtitle"
-}, Ep = {
+}, Dp = {
 	key: 2,
 	class: "mm-result__content"
-}, Dp = {
+}, Op = {
 	key: 3,
 	class: "mm-result__extra"
-}, Op = /* @__PURE__ */ p({
+}, kp = /* @__PURE__ */ p({
 	name: "MmResult",
 	__name: "Result",
 	props: {
@@ -20791,14 +20801,14 @@ var Kf = /* @__PURE__ */ p({
 			"data-mm-component": "result",
 			role: "status"
 		}, [
-			l("div", Cp, [M(t.$slots, "icon", {}, () => [d(F(n.value), 1)])]),
-			e.title || t.$slots.title ? (D(), c("h2", wp, [M(t.$slots, "title", {}, () => [d(F(e.title), 1)])])) : s("", !0),
-			e.subtitle || t.$slots.subtitle ? (D(), c("p", Tp, [M(t.$slots, "subtitle", {}, () => [d(F(e.subtitle), 1)])])) : s("", !0),
-			t.$slots.default ? (D(), c("div", Ep, [M(t.$slots, "default")])) : s("", !0),
-			t.$slots.extra ? (D(), c("div", Dp, [M(t.$slots, "extra")])) : s("", !0)
+			l("div", wp, [M(t.$slots, "icon", {}, () => [d(F(n.value), 1)])]),
+			e.title || t.$slots.title ? (D(), c("h2", Tp, [M(t.$slots, "title", {}, () => [d(F(e.title), 1)])])) : s("", !0),
+			e.subtitle || t.$slots.subtitle ? (D(), c("p", Ep, [M(t.$slots, "subtitle", {}, () => [d(F(e.subtitle), 1)])])) : s("", !0),
+			t.$slots.default ? (D(), c("div", Dp, [M(t.$slots, "default")])) : s("", !0),
+			t.$slots.extra ? (D(), c("div", Op, [M(t.$slots, "extra")])) : s("", !0)
 		], 2));
 	}
-}), kp = ["tabindex"], Ap = /* @__PURE__ */ p({
+}), Ap = ["tabindex"], jp = /* @__PURE__ */ p({
 	name: "MmScrollbar",
 	__name: "Scrollbar",
 	props: {
@@ -20851,30 +20861,30 @@ var Kf = /* @__PURE__ */ p({
 			style: S(u.value),
 			tabindex: e.tabindex,
 			onScrollPassive: d
-		}, [l("div", { class: b(["mm-scrollbar__view", e.viewClass]) }, [M(t.$slots, "default")], 2)], 44, kp)], 2));
+		}, [l("div", { class: b(["mm-scrollbar__view", e.viewClass]) }, [M(t.$slots, "default")], 2)], 44, Ap)], 2));
 	}
-}), jp = {
+}), Mp = {
 	key: 0,
 	class: "mm-sidebar-nav__brand"
-}, Mp = { class: "mm-sidebar-nav__main" }, Np = ["aria-label"], Pp = [
+}, Np = { class: "mm-sidebar-nav__main" }, Pp = ["aria-label"], Fp = [
 	"disabled",
 	"aria-label",
 	"data-sidebar-collapsed-group"
-], Fp = {
+], Ip = {
 	key: 1,
 	"aria-hidden": "true"
-}, Ip = { class: "mm-sidebar-nav__flyout-header" }, Lp = [
+}, Lp = { class: "mm-sidebar-nav__flyout-header" }, Rp = [
 	"disabled",
 	"aria-label",
 	"data-sidebar-collapsed-item",
 	"onClick"
-], Rp = {
+], zp = {
 	key: 1,
 	"aria-hidden": "true"
-}, zp = {
+}, Bp = {
 	key: 1,
 	class: "mm-sidebar-nav__footer"
-}, Bp = /* @__PURE__ */ p({
+}, Vp = /* @__PURE__ */ p({
 	__name: "SidebarNavPanel",
 	props: {
 		activeKey: { default: void 0 },
@@ -20931,11 +20941,11 @@ var Kf = /* @__PURE__ */ p({
 			style: S(e.style)
 		}, {
 			default: K(() => [
-				e.showBrand && n.$slots.brand ? (D(), c("header", jp, [M(n.$slots, "brand", {
+				e.showBrand && n.$slots.brand ? (D(), c("header", Mp, [M(n.$slots, "brand", {
 					collapsed: e.collapsed,
 					mobile: e.mobile
 				})])) : s("", !0),
-				l("div", Mp, [f(R(Ap), {
+				l("div", Np, [f(R(jp), {
 					height: "100%",
 					tabindex: e.collapsed ? -1 : 0
 				}, {
@@ -20965,8 +20975,8 @@ var Kf = /* @__PURE__ */ p({
 							key: 0,
 							name: n.icon,
 							size: 16
-						}, null, 8, ["name"])) : (D(), c("span", Fp, "•"))], 16, Pp)]),
-						content: K(({ close: r }) => [l("header", Ip, F(n.label), 1), f(R(Ea), {
+						}, null, 8, ["name"])) : (D(), c("span", Ip, "•"))], 16, Fp)]),
+						content: K(({ close: r }) => [l("header", Lp, F(n.label), 1), f(R(Ea), {
 							"model-value": e.activeKey,
 							"aria-label": R(p).sidebar.submenu(n.label),
 							onSelect: (e) => C(e, r)
@@ -20998,7 +21008,7 @@ var Kf = /* @__PURE__ */ p({
 							"onSelect"
 						])]),
 						_: 2
-					}, 1024)) : (D(), o(R(nl), {
+					}, 1024)) : (D(), o(R(rl), {
 						key: 1,
 						content: n.label,
 						placement: "right",
@@ -21015,9 +21025,9 @@ var Kf = /* @__PURE__ */ p({
 							key: 0,
 							name: n.icon,
 							size: 16
-						}, null, 8, ["name"])) : (D(), c("span", Rp, "•"))], 16, Lp)]),
+						}, null, 8, ["name"])) : (D(), c("span", zp, "•"))], 16, Rp)]),
 						_: 2
-					}, 1032, ["content"]))], 64))), 128))], 8, Np)) : (D(), o(R(Ea), {
+					}, 1032, ["content"]))], 64))), 128))], 8, Pp)) : (D(), o(R(Ea), {
 						key: 0,
 						class: "mm-sidebar-nav__expanded-menu",
 						"model-value": e.activeKey,
@@ -21100,7 +21110,7 @@ var Kf = /* @__PURE__ */ p({
 					]))]),
 					_: 1
 				}, 8, ["tabindex"])]),
-				n.$slots.footer ? (D(), c("footer", zp, [M(n.$slots, "footer", {
+				n.$slots.footer ? (D(), c("footer", Bp, [M(n.$slots, "footer", {
 					collapsed: e.collapsed,
 					mobile: e.mobile
 				})])) : s("", !0)
@@ -21113,7 +21123,7 @@ var Kf = /* @__PURE__ */ p({
 			"style"
 		]));
 	}
-}), Vp = /* @__PURE__ */ p({
+}), Hp = /* @__PURE__ */ p({
 	name: "MmSidebarNav",
 	__name: "SidebarNav",
 	props: {
@@ -21213,7 +21223,7 @@ var Kf = /* @__PURE__ */ p({
 			title: t.$slots.brand ? void 0 : l.value,
 			"onUpdate:modelValue": n[0] ||= (e) => _.value = e
 		}, u({
-			default: K(() => [f(Bp, {
+			default: K(() => [f(Vp, {
 				as: "div",
 				"active-key": R(p),
 				"aria-label": c.value,
@@ -21250,7 +21260,7 @@ var Kf = /* @__PURE__ */ p({
 			"placement",
 			"size",
 			"title"
-		])) : (D(), o(Bp, {
+		])) : (D(), o(Vp, {
 			key: 0,
 			"active-key": R(p),
 			"aria-label": c.value,
@@ -21279,11 +21289,11 @@ var Kf = /* @__PURE__ */ p({
 			"style"
 		]));
 	}
-}), Hp = { class: "mm-space__item" }, Up = {
+}), Up = { class: "mm-space__item" }, Wp = {
 	key: 0,
 	class: "mm-space__separator",
 	"aria-hidden": "true"
-}, Wp = /* @__PURE__ */ p({
+}, Gp = /* @__PURE__ */ p({
 	name: "MmSpace",
 	__name: "Space",
 	props: {
@@ -21312,24 +21322,24 @@ var Kf = /* @__PURE__ */ p({
 			"data-mm-component": "space",
 			style: S(h.value)
 		}, {
-			default: K(() => [(D(!0), c(t, null, j(p.value, (r, i) => (D(), c(t, { key: r.key ?? i }, [l("span", Hp, [(D(), o(N(r)))]), i < p.value.length - 1 && (e.$slots.separator || n.separator) ? (D(), c("span", Up, [M(e.$slots, "separator", {}, () => [d(F(n.separator), 1)])])) : s("", !0)], 64))), 128))]),
+			default: K(() => [(D(!0), c(t, null, j(p.value, (r, i) => (D(), c(t, { key: r.key ?? i }, [l("span", Up, [(D(), o(N(r)))]), i < p.value.length - 1 && (e.$slots.separator || n.separator) ? (D(), c("span", Wp, [M(e.$slots, "separator", {}, () => [d(F(n.separator), 1)])])) : s("", !0)], 64))), 128))]),
 			_: 3
 		}, 8, ["class", "style"]));
 	}
-}), Gp = {
+}), Kp = {
 	key: 0,
 	class: "mm-statistic__title"
-}, Kp = { class: "mm-statistic__value" }, qp = {
+}, qp = { class: "mm-statistic__value" }, Jp = {
 	key: 0,
 	class: "mm-statistic__trend",
 	"aria-hidden": "true"
-}, Jp = {
+}, Yp = {
 	key: 1,
 	class: "mm-statistic__prefix"
-}, Yp = ["title"], Xp = {
+}, Xp = ["title"], Zp = {
 	key: 2,
 	class: "mm-statistic__suffix"
-}, Zp = /* @__PURE__ */ p({
+}, Qp = /* @__PURE__ */ p({
 	name: "MmStatistic",
 	__name: "Statistic",
 	props: {
@@ -21357,17 +21367,17 @@ var Kf = /* @__PURE__ */ p({
 		return (t, r) => (D(), c("div", {
 			class: b(["mm-statistic", `is-trend-${e.trend}`]),
 			"data-mm-component": "statistic"
-		}, [e.title || t.$slots.title ? (D(), c("div", Gp, [M(t.$slots, "title", {}, () => [d(F(e.title), 1)])])) : s("", !0), l("div", Kp, [
-			e.trend === "neutral" ? s("", !0) : (D(), c("span", qp, F(e.trend === "up" ? "↗" : "↘"), 1)),
-			e.prefix || t.$slots.prefix ? (D(), c("span", Jp, [M(t.$slots, "prefix", {}, () => [d(F(e.prefix), 1)])])) : s("", !0),
+		}, [e.title || t.$slots.title ? (D(), c("div", Kp, [M(t.$slots, "title", {}, () => [d(F(e.title), 1)])])) : s("", !0), l("div", qp, [
+			e.trend === "neutral" ? s("", !0) : (D(), c("span", Jp, F(e.trend === "up" ? "↗" : "↘"), 1)),
+			e.prefix || t.$slots.prefix ? (D(), c("span", Yp, [M(t.$slots, "prefix", {}, () => [d(F(e.prefix), 1)])])) : s("", !0),
 			l("span", {
 				class: "mm-statistic__number",
 				title: n.value
-			}, F(n.value), 9, Yp),
-			e.suffix || t.$slots.suffix ? (D(), c("span", Xp, [M(t.$slots, "suffix", {}, () => [d(F(e.suffix), 1)])])) : s("", !0)
+			}, F(n.value), 9, Xp),
+			e.suffix || t.$slots.suffix ? (D(), c("span", Zp, [M(t.$slots, "suffix", {}, () => [d(F(e.suffix), 1)])])) : s("", !0)
 		])], 2));
 	}
-}), Qp = { class: "mm-translation-config" }, $p = { class: "mm-translation-config__field" }, em = { class: "mm-translation-config__field" }, tm = { class: "mm-translation-config__field" }, nm = { class: "mm-translation-config__footer" }, rm = /* @__PURE__ */ p({
+}), $p = { class: "mm-translation-config" }, em = { class: "mm-translation-config__field" }, tm = { class: "mm-translation-config__field" }, nm = { class: "mm-translation-config__field" }, rm = { class: "mm-translation-config__footer" }, im = /* @__PURE__ */ p({
 	__name: "TranslationConfigDialog",
 	props: {
 		actions: {},
@@ -21495,7 +21505,7 @@ var Kf = /* @__PURE__ */ p({
 			width: "520px",
 			"onUpdate:modelValue": n[4] ||= (e) => r("update:modelValue", e)
 		}, {
-			footer: K(() => [l("div", nm, [f(Q, {
+			footer: K(() => [l("div", rm, [f(Q, {
 				disabled: x.value,
 				onClick: n[3] ||= (e) => r("update:modelValue", !1)
 			}, {
@@ -21517,8 +21527,8 @@ var Kf = /* @__PURE__ */ p({
 				default: K(() => [d(F(u.value.save), 1)]),
 				_: 1
 			}, 8, ["disabled", "loading"])])])]),
-			default: K(() => [l("div", Qp, [
-				l("div", $p, [l("label", null, F(u.value.apiVersion), 1), f(Ln, {
+			default: K(() => [l("div", $p, [
+				l("div", em, [l("label", null, F(u.value.apiVersion), 1), f(Ln, {
 					modelValue: h.api_version,
 					"onUpdate:modelValue": n[0] ||= (e) => h.api_version = e,
 					disabled: x.value,
@@ -21528,7 +21538,7 @@ var Kf = /* @__PURE__ */ p({
 					"disabled",
 					"options"
 				])]),
-				l("div", em, [
+				l("div", tm, [
 					l("label", null, F(u.value.apiKey), 1),
 					f(gt, {
 						modelValue: h.api_key,
@@ -21545,7 +21555,7 @@ var Kf = /* @__PURE__ */ p({
 					]),
 					l("small", null, F(u.value.apiKeyHint), 1)
 				]),
-				l("div", tm, [l("label", null, F(u.value.concurrency), 1), f(Ln, {
+				l("div", nm, [l("label", null, F(u.value.concurrency), 1), f(Ln, {
 					modelValue: h.concurrency,
 					"onUpdate:modelValue": n[2] ||= (e) => h.concurrency = e,
 					disabled: x.value,
@@ -21574,20 +21584,20 @@ var Kf = /* @__PURE__ */ p({
 			"title"
 		]));
 	}
-}), im = { class: "mm-tag-translation__title" }, am = { class: "mm-tag-translation" }, om = { class: "mm-tag-translation__toolbar" }, sm = { class: "mm-tag-translation__source" }, cm = {
+}), am = { class: "mm-tag-translation__title" }, om = { class: "mm-tag-translation" }, sm = { class: "mm-tag-translation__toolbar" }, cm = { class: "mm-tag-translation__source" }, lm = {
 	key: 1,
 	class: "mm-tag-translation__loading",
 	role: "status"
-}, lm = {
+}, um = {
 	key: 2,
 	class: "mm-tag-translation__grid"
-}, um = { class: "mm-tag-translation__language-head" }, dm = {
+}, dm = { class: "mm-tag-translation__language-head" }, fm = {
 	key: 0,
 	class: "mm-tag-translation__failure"
-}, fm = {
+}, pm = {
 	key: 0,
 	class: "mm-tag-translation__empty"
-}, pm = { class: "mm-tag-translation__footer" }, mm = /* @__PURE__ */ p({
+}, mm = { class: "mm-tag-translation__footer" }, hm = /* @__PURE__ */ p({
 	__name: "TagTranslationDialog",
 	props: {
 		actions: {},
@@ -21770,7 +21780,7 @@ var Kf = /* @__PURE__ */ p({
 			width: "920px",
 			"onUpdate:modelValue": r[5] ||= (e) => a("update:modelValue", e)
 		}, {
-			header: K(() => [l("div", im, [l("strong", null, F(m.value.title), 1), l("span", null, F(m.value.configured) + " " + F(E.value) + "/" + F(h.value.length || 20), 1)])]),
+			header: K(() => [l("div", am, [l("strong", null, F(m.value.title), 1), l("span", null, F(m.value.configured) + " " + F(E.value) + "/" + F(h.value.length || 20), 1)])]),
 			"header-actions": K(() => [e.showGoogleSettings ? (D(), o(Q, {
 				key: 0,
 				size: "sm",
@@ -21786,7 +21796,7 @@ var Kf = /* @__PURE__ */ p({
 				})]),
 				_: 1
 			})) : s("", !0)]),
-			footer: K(() => [l("div", pm, [l("span", null, [f(Z, {
+			footer: K(() => [l("div", mm, [l("span", null, [f(Z, {
 				name: "circle-help",
 				size: 13
 			}), d(F(m.value.translateHint), 1)]), l("div", null, [
@@ -21819,7 +21829,7 @@ var Kf = /* @__PURE__ */ p({
 					_: 1
 				}, 8, ["disabled", "loading"])
 			])])]),
-			default: K(() => [l("div", am, [
+			default: K(() => [l("div", om, [
 				w.text ? (D(), o(_e, {
 					key: 0,
 					closable: "",
@@ -21832,7 +21842,7 @@ var Kf = /* @__PURE__ */ p({
 					"title",
 					"type"
 				])) : s("", !0),
-				l("div", om, [l("div", sm, [
+				l("div", sm, [l("div", cm, [
 					l("label", null, F(m.value.source), 1),
 					f(Ln, {
 						modelValue: v.value,
@@ -21858,14 +21868,14 @@ var Kf = /* @__PURE__ */ p({
 					"disabled",
 					"options"
 				])]),
-				x.value ? (D(), c("div", cm, [f(Z, {
+				x.value ? (D(), c("div", lm, [f(Z, {
 					name: "loader-circle",
 					size: 18
-				}), d(F(m.value.loading), 1)])) : (D(), c("div", lm, [(D(!0), c(t, null, j(P.value, (e) => (D(), c("div", {
+				}), d(F(m.value.loading), 1)])) : (D(), c("div", um, [(D(!0), c(t, null, j(P.value, (e) => (D(), c("div", {
 					key: e.locale,
 					class: "mm-tag-translation__language"
 				}, [
-					l("div", um, [
+					l("div", dm, [
 						l("strong", null, F(I(e)), 1),
 						l("code", null, F(e.locale), 1),
 						l("span", { class: b(R(e).className) }, F(R(e).label), 3)
@@ -21882,26 +21892,26 @@ var Kf = /* @__PURE__ */ p({
 						"placeholder",
 						"onUpdate:modelValue"
 					]),
-					_[e.locale] ? (D(), c("small", dm, F(_[e.locale]), 1)) : s("", !0)
-				]))), 128)), P.value.length === 0 ? (D(), c("div", fm, F(m.value.noMatches), 1)) : s("", !0)]))
+					_[e.locale] ? (D(), c("small", fm, F(_[e.locale]), 1)) : s("", !0)
+				]))), 128)), P.value.length === 0 ? (D(), c("div", pm, F(m.value.noMatches), 1)) : s("", !0)]))
 			])]),
 			_: 1
 		}, 8, ["model-value", "show-close"]));
 	}
-}), hm = { class: "mm-symbol-tag-manager" }, gm = ["aria-label", "onClick"], _m = {
+}), gm = { class: "mm-symbol-tag-manager" }, _m = ["aria-label", "onClick"], vm = {
 	key: 1,
 	class: "mm-symbol-tag-manager__branch"
-}, vm = {
+}, ym = {
 	key: 2,
 	class: "mm-symbol-tag-manager__spacer"
-}, ym = { key: 1 }, bm = { class: "mm-symbol-tag-manager__actions" }, xm = { class: "mm-symbol-tag-manager__drawer-title" }, Sm = {
+}, bm = { key: 1 }, xm = { class: "mm-symbol-tag-manager__actions" }, Sm = { class: "mm-symbol-tag-manager__drawer-title" }, Cm = {
 	key: 0,
 	class: "mm-symbol-tag-manager__drawer-content"
-}, Cm = ["aria-label"], wm = { class: "mm-symbol-tag-manager__create-heading" }, Tm = ["aria-label"], Em = { class: "mm-symbol-tag-manager__display is-full" }, Dm = { class: "mm-symbol-tag-manager__display-control" }, Om = [
+}, wm = ["aria-label"], Tm = { class: "mm-symbol-tag-manager__create-heading" }, Em = ["aria-label"], Dm = { class: "mm-symbol-tag-manager__display is-full" }, Om = { class: "mm-symbol-tag-manager__display-control" }, km = [
 	"aria-checked",
 	"aria-label",
 	"disabled"
-], km = { class: "mm-symbol-tag-manager__notice is-full" }, Am = { class: "mm-symbol-tag-manager__dialog-footer" }, jm = /* @__PURE__ */ p({
+], Am = { class: "mm-symbol-tag-manager__notice is-full" }, jm = { class: "mm-symbol-tag-manager__dialog-footer" }, Mm = /* @__PURE__ */ p({
 	name: "MmSymbolTagManager",
 	__name: "SymbolTagManager",
 	props: {
@@ -22466,7 +22476,7 @@ var Kf = /* @__PURE__ */ p({
 		async function ze() {
 			a("action-success", "translations", N.value || void 0), await Te();
 		}
-		return w(Te), t({ reload: Te }), (t, n) => (D(), c("section", hm, [
+		return w(Te), t({ reload: Te }), (t, n) => (D(), c("section", gm, [
 			f(si, {
 				"aria-label": m.value.tableAria,
 				columns: U.value,
@@ -22531,11 +22541,11 @@ var Kf = /* @__PURE__ */ p({
 				}, [f(Z, {
 					name: e._expanded ? "chevron-down" : "chevron-right",
 					size: 14
-				}, null, 8, ["name"])], 8, gm)) : e._level > 0 ? (D(), c("span", _m, [f(Z, {
+				}, null, 8, ["name"])], 8, _m)) : e._level > 0 ? (D(), c("span", vm, [f(Z, {
 					name: "tree-branch",
 					size: 18,
 					"stroke-width": 1
-				})])) : (D(), c("span", vm)), l("span", null, F(e.tag_name || "-"), 1)], 4)]),
+				})])) : (D(), c("span", ym)), l("span", null, F(e.tag_name || "-"), 1)], 4)]),
 				"cell-tag_code": K(({ row: e }) => [e.tag_code ? (D(), o($, {
 					key: 0,
 					effect: "soft",
@@ -22544,7 +22554,7 @@ var Kf = /* @__PURE__ */ p({
 				}, {
 					default: K(() => [d(F(e.tag_code), 1)]),
 					_: 2
-				}, 1024)) : (D(), c("span", ym, "-"))]),
+				}, 1024)) : (D(), c("span", bm, "-"))]),
 				"cell-is_enable": K(({ row: e }) => [f($, {
 					type: Number(e.is_enable) === 1 ? "success" : "danger",
 					effect: "soft",
@@ -22554,7 +22564,7 @@ var Kf = /* @__PURE__ */ p({
 					default: K(() => [d(F(Number(e.is_enable) === 1 ? m.value.enabled : m.value.disabled), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": K(({ row: e }) => [l("div", bm, [f(Q, {
+				"cell-actions": K(({ row: e }) => [l("div", xm, [f(Q, {
 					"icon-only": "",
 					"aria-label": m.value.detail,
 					size: "sm",
@@ -22593,12 +22603,12 @@ var Kf = /* @__PURE__ */ p({
 				size: 500,
 				onClosed: n[10] ||= (e) => I.value = null
 			}, {
-				header: K(() => [l("div", xm, [l("strong", null, F(m.value.detail), 1), l("span", null, F(oe.value) + " · " + F(I.value?.id ?? "-"), 1)])]),
+				header: K(() => [l("div", Sm, [l("strong", null, F(m.value.detail), 1), l("span", null, F(oe.value) + " · " + F(I.value?.id ?? "-"), 1)])]),
 				footer: K(() => [f(Q, { onClick: n[8] ||= (e) => x.value = !1 }, {
 					default: K(() => [d(F(m.value.close), 1)]),
 					_: 1
 				})]),
-				default: K(() => [I.value ? (D(), c("div", Sm, [f(_s, {
+				default: K(() => [I.value ? (D(), c("div", Cm, [f(_s, {
 					class: "mm-symbol-tag-manager__descriptions",
 					title: m.value.tagInfo,
 					column: 1,
@@ -22743,7 +22753,7 @@ var Kf = /* @__PURE__ */ p({
 							size: 15
 						})
 					])) : s("", !0)
-				])], 8, Cm)])) : s("", !0)]),
+				])], 8, wm)])) : s("", !0)]),
 				_: 1
 			}, 8, ["modelValue", "aria-label"]),
 			f(Qe, {
@@ -22756,8 +22766,8 @@ var Kf = /* @__PURE__ */ p({
 				width: "min(700px, calc(100vw - 32px))",
 				onClose: De
 			}, {
-				header: K(() => [l("div", wm, [l("strong", null, F(V.editingId ? m.value.dialogEdit : m.value.dialogCreate), 1), l("span", null, F(V.editingId ? m.value.dialogSubtitleEdit : m.value.dialogSubtitleCreate), 1)])]),
-				footer: K(() => [l("div", Am, [f(Q, {
+				header: K(() => [l("div", Tm, [l("strong", null, F(V.editingId ? m.value.dialogEdit : m.value.dialogCreate), 1), l("span", null, F(V.editingId ? m.value.dialogSubtitleEdit : m.value.dialogSubtitleCreate), 1)])]),
+				footer: K(() => [l("div", jm, [f(Q, {
 					size: "sm",
 					disabled: V.saving,
 					onClick: n[19] ||= (e) => V.visible = !1
@@ -22886,7 +22896,7 @@ var Kf = /* @__PURE__ */ p({
 							prop: "sort",
 							required: ""
 						}, {
-							default: K(() => [f(nu, {
+							default: K(() => [f(ru, {
 								modelValue: H.sort,
 								"onUpdate:modelValue": n[17] ||= (e) => H.sort = e,
 								disabled: V.saving,
@@ -22909,8 +22919,8 @@ var Kf = /* @__PURE__ */ p({
 							})]),
 							default: K(() => [d(F(m.value.editTranslation), 1)]),
 							_: 1
-						}, 8, ["disabled"])], 8, Tm),
-						l("section", Em, [l("div", null, [l("strong", null, F(m.value.frontendDisplay), 1), l("small", null, F(m.value.displayHint), 1)]), l("div", Dm, [l("button", {
+						}, 8, ["disabled"])], 8, Em),
+						l("section", Dm, [l("div", null, [l("strong", null, F(m.value.frontendDisplay), 1), l("small", null, F(m.value.displayHint), 1)]), l("div", Om, [l("button", {
 							type: "button",
 							class: b(["mm-symbol-tag-manager__switch", { "is-checked": Number(H.is_enable) === 1 }]),
 							role: "switch",
@@ -22918,8 +22928,8 @@ var Kf = /* @__PURE__ */ p({
 							"aria-label": m.value.frontendDisplay,
 							disabled: V.saving,
 							onClick: n[18] ||= (e) => H.is_enable = Number(H.is_enable) === 1 ? 0 : 1
-						}, [...n[24] ||= [l("i", { "aria-hidden": "true" }, null, -1)]], 10, Om), l("span", null, F(Number(H.is_enable) === 1 ? m.value.enabled : m.value.disabled), 1)])]),
-						l("div", km, [f(Z, {
+						}, [...n[24] ||= [l("i", { "aria-hidden": "true" }, null, -1)]], 10, km), l("span", null, F(Number(H.is_enable) === 1 ? m.value.enabled : m.value.disabled), 1)])]),
+						l("div", Am, [f(Z, {
 							name: "circle-help",
 							size: 15
 						}), l("span", null, F(m.value.notice), 1)])
@@ -22932,7 +22942,7 @@ var Kf = /* @__PURE__ */ p({
 				"show-close",
 				"title"
 			]),
-			e.translationConfigActions ? (D(), o(rm, {
+			e.translationConfigActions ? (D(), o(im, {
 				key: 0,
 				modelValue: C.value,
 				"onUpdate:modelValue": n[21] ||= (e) => C.value = e,
@@ -22943,7 +22953,7 @@ var Kf = /* @__PURE__ */ p({
 				"actions",
 				"locale"
 			])) : s("", !0),
-			e.translationActions ? (D(), o(mm, {
+			e.translationActions ? (D(), o(hm, {
 				key: 1,
 				modelValue: T.value,
 				"onUpdate:modelValue": n[22] ||= (e) => T.value = e,
@@ -22965,7 +22975,7 @@ var Kf = /* @__PURE__ */ p({
 				"show-google-settings",
 				"tag-id"
 			])) : s("", !0),
-			f(Ku, {
+			f(qu, {
 				modelValue: L.value,
 				"onUpdate:modelValue": n[23] ||= (e) => L.value = e,
 				"cancel-button-text": m.value.cancel,
@@ -22983,13 +22993,13 @@ var Kf = /* @__PURE__ */ p({
 			])
 		]));
 	}
-}), Mm = ["data-status", "aria-current"], Nm = {
+}), Nm = ["data-status", "aria-current"], Pm = {
 	class: "mm-step__rail",
 	"aria-hidden": "true"
-}, Pm = { class: "mm-step__icon" }, Fm = { key: 3 }, Im = { class: "mm-step__title" }, Lm = {
+}, Fm = { class: "mm-step__icon" }, Im = { key: 3 }, Lm = { class: "mm-step__title" }, Rm = {
 	key: 0,
 	class: "mm-step__description"
-}, Rm = /* @__PURE__ */ p({
+}, zm = /* @__PURE__ */ p({
 	name: "MmSteps",
 	__name: "Steps",
 	props: {
@@ -23023,7 +23033,7 @@ var Kf = /* @__PURE__ */ p({
 			}]]),
 			"data-status": a(t, i),
 			"aria-current": i === e.current ? "step" : void 0
-		}, [l("div", Nm, [r[0] ||= l("span", { class: "mm-step__line" }, null, -1), l("span", Pm, [M(n.$slots, "icon", {
+		}, [l("div", Pm, [r[0] ||= l("span", { class: "mm-step__line" }, null, -1), l("span", Fm, [M(n.$slots, "icon", {
 			index: i,
 			item: t,
 			status: a(t, i)
@@ -23035,17 +23045,17 @@ var Kf = /* @__PURE__ */ p({
 			key: 2,
 			name: "close",
 			size: 14
-		})) : (D(), c("span", Fm, F(i + 1), 1))])])]), (D(), o(N(e.clickable ? "button" : "div"), {
+		})) : (D(), c("span", Im, F(i + 1), 1))])])]), (D(), o(N(e.clickable ? "button" : "div"), {
 			class: "mm-step__body",
 			type: e.clickable ? "button" : void 0,
 			disabled: e.clickable && t.disabled ? !0 : void 0,
 			onClick: (e) => u(i, t)
 		}, {
-			default: K(() => [l("span", Im, [M(n.$slots, "title", {
+			default: K(() => [l("span", Lm, [M(n.$slots, "title", {
 				index: i,
 				item: t,
 				status: a(t, i)
-			}, () => [d(F(t.title), 1)])]), t.description || n.$slots.description ? (D(), c("span", Lm, [M(n.$slots, "description", {
+			}, () => [d(F(t.title), 1)])]), t.description || n.$slots.description ? (D(), c("span", Rm, [M(n.$slots, "description", {
 				index: i,
 				item: t,
 				status: a(t, i)
@@ -23055,9 +23065,9 @@ var Kf = /* @__PURE__ */ p({
 			"type",
 			"disabled",
 			"onClick"
-		]))], 10, Mm))), 128))], 2));
+		]))], 10, Nm))), 128))], 2));
 	}
-}), zm = /* @__PURE__ */ p({
+}), Bm = /* @__PURE__ */ p({
 	name: "MmText",
 	__name: "Text",
 	props: {
@@ -23094,26 +23104,26 @@ var Kf = /* @__PURE__ */ p({
 });
 //#endregion
 //#region src/components/trade-fill-table/formatters.ts
-function Bm(e) {
+function Vm(e) {
 	return e == null || e === "" ? "-" : String(e);
 }
-function Vm(e) {
+function Hm(e) {
 	let t = Number(e);
 	return Number.isFinite(t) ? String(t) : "-";
 }
-function Hm(e, t = 8) {
+function Um(e, t = 8) {
 	let n = Number(e);
 	return Number.isFinite(n) ? n.toFixed(t) : "-";
 }
-function Um(e) {
-	return Bm(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
-}
 function Wm(e) {
-	return Bm(e.agent_user_id ?? e.user?.agent_user_id);
+	return Vm(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
+}
+function Gm(e) {
+	return Vm(e.agent_user_id ?? e.user?.agent_user_id);
 }
 //#endregion
 //#region src/components/trade-fill-table/TradeFillTable.vue?vue&type=script&setup=true&lang.ts
-var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "mm-trade-fill-table__id" }, Jm = { key: 1 }, Ym = { key: 1 }, Xm = { class: "mm-trade-fill-table__number" }, Zm = { class: "mm-trade-fill-table__number" }, Qm = { class: "mm-trade-fill-table__number" }, $m = { key: 1 }, eh = { class: "mm-trade-fill-table__actions" }, th = /* @__PURE__ */ p({
+var Km = { class: "mm-trade-fill-table__id" }, qm = { key: 1 }, Jm = { class: "mm-trade-fill-table__id" }, Ym = { key: 1 }, Xm = { key: 1 }, Zm = { class: "mm-trade-fill-table__number" }, Qm = { class: "mm-trade-fill-table__number" }, $m = { class: "mm-trade-fill-table__number" }, eh = { key: 1 }, th = { class: "mm-trade-fill-table__actions" }, nh = /* @__PURE__ */ p({
 	inheritAttrs: !1,
 	name: "MmTradeFillTable",
 	__name: "TradeFillTable",
@@ -23530,9 +23540,9 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			"page-sizes": e.pageSizes,
 			"row-key": "fill_id"
 		}), u({
-			"cell-order_id": K((e) => [M(t.$slots, "cell-order_id", x(m(e)), () => [l("span", Gm, F(R(Bm)(e.row.order_id)), 1)])]),
-			"cell-user_uid": K((e) => [M(t.$slots, "cell-user_uid", x(m(e)), () => [d(F(R(Um)(e.row)), 1)])]),
-			"cell-agent_user_id": K((e) => [M(t.$slots, "cell-agent_user_id", x(m(e)), () => [d(F(R(Wm)(e.row)), 1)])]),
+			"cell-order_id": K((e) => [M(t.$slots, "cell-order_id", x(m(e)), () => [l("span", Km, F(R(Vm)(e.row.order_id)), 1)])]),
+			"cell-user_uid": K((e) => [M(t.$slots, "cell-user_uid", x(m(e)), () => [d(F(R(Wm)(e.row)), 1)])]),
+			"cell-agent_user_id": K((e) => [M(t.$slots, "cell-agent_user_id", x(m(e)), () => [d(F(R(Gm)(e.row)), 1)])]),
 			"cell-user_type": K((e) => [M(t.$slots, "cell-user_type", x(m(e)), () => [N(e.row) ? (D(), o(R($), {
 				key: 0,
 				effect: "outline",
@@ -23542,19 +23552,19 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			}, {
 				default: K(() => [d(F(N(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Km, "-"))])]),
-			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", qm, F(R(Bm)(e.row.position_id)), 1)])]),
-			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(R(Bm)(e.row.symbol)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", qm, "-"))])]),
+			"cell-position_id": K((e) => [M(t.$slots, "cell-position_id", x(m(e)), () => [l("span", Jm, F(R(Vm)(e.row.position_id)), 1)])]),
+			"cell-symbol": K((e) => [M(t.$slots, "cell-symbol", x(m(e)), () => [d(F(R(Vm)(e.row.symbol)), 1)])]),
 			"cell-product_category": K((e) => [M(t.$slots, "cell-product_category", x(m(e)), () => [f(R($), {
 				effect: "soft",
 				round: "",
 				size: "sm",
 				type: "primary"
 			}, {
-				default: K(() => [d(F(R(Bm)(e.row.product_category_name || e.row.product_category)), 1)]),
+				default: K(() => [d(F(R(Vm)(e.row.product_category_name || e.row.product_category)), 1)]),
 				_: 2
 			}, 1024)])]),
-			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [P(e.row) === "-" ? (D(), c("span", Jm, "-")) : (D(), o(R($), {
+			"cell-margin_mode": K((e) => [M(t.$slots, "cell-margin_mode", x(m(e)), () => [P(e.row) === "-" ? (D(), c("span", Ym, "-")) : (D(), o(R($), {
 				key: 0,
 				effect: "soft",
 				round: "",
@@ -23573,11 +23583,11 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			}, {
 				default: K(() => [d(F(I(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", Ym, "-"))])]),
-			"cell-quantity": K((e) => [M(t.$slots, "cell-quantity", x(m(e)), () => [l("span", { class: b(["mm-trade-fill-table__number", B(e.row)]) }, F(R(Vm)(e.row.quantity)), 3)])]),
-			"cell-price": K((e) => [M(t.$slots, "cell-price", x(m(e)), () => [l("span", Xm, F(R(Vm)(e.row.price)), 1)])]),
-			"cell-trade_value": K((e) => [M(t.$slots, "cell-trade_value", x(m(e)), () => [l("span", Zm, F(R(Vm)(e.row.trade_value)), 1)])]),
-			"cell-handling_fee": K((e) => [M(t.$slots, "cell-handling_fee", x(m(e)), () => [l("span", Qm, F(R(Vm)(e.row.handling_fee)), 1)])]),
+			}, 1032, ["type"])) : (D(), c("span", Xm, "-"))])]),
+			"cell-quantity": K((e) => [M(t.$slots, "cell-quantity", x(m(e)), () => [l("span", { class: b(["mm-trade-fill-table__number", B(e.row)]) }, F(R(Hm)(e.row.quantity)), 3)])]),
+			"cell-price": K((e) => [M(t.$slots, "cell-price", x(m(e)), () => [l("span", Zm, F(R(Hm)(e.row.price)), 1)])]),
+			"cell-trade_value": K((e) => [M(t.$slots, "cell-trade_value", x(m(e)), () => [l("span", Qm, F(R(Hm)(e.row.trade_value)), 1)])]),
+			"cell-handling_fee": K((e) => [M(t.$slots, "cell-handling_fee", x(m(e)), () => [l("span", $m, F(R(Hm)(e.row.handling_fee)), 1)])]),
 			"cell-role_type": K((e) => [M(t.$slots, "cell-role_type", x(m(e)), () => [L(e.row) ? (D(), o(R($), {
 				key: 0,
 				effect: "soft",
@@ -23587,12 +23597,12 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			}, {
 				default: K(() => [d(F(L(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (D(), c("span", $m, "-"))])]),
-			"cell-realized_pnl": K((e) => [M(t.$slots, "cell-realized_pnl", x(m(e)), () => [l("span", { class: b(["mm-trade-fill-table__number", z(e.row.realized_pnl)]) }, F(R(Hm)(e.row.realized_pnl)), 3)])]),
-			"cell-trade_time": K((e) => [M(t.$slots, "cell-trade_time", x(m(e)), () => [d(F(R(Bm)(e.row.trade_time)), 1)])]),
-			"cell-operation": K((n) => [M(t.$slots, "cell-operation", v(n, { detail: () => H(e.actions.detail, n.row) }), () => [l("div", eh, [e.actions.detail ? (D(), o(R(Q), {
+			}, 1032, ["type"])) : (D(), c("span", eh, "-"))])]),
+			"cell-realized_pnl": K((e) => [M(t.$slots, "cell-realized_pnl", x(m(e)), () => [l("span", { class: b(["mm-trade-fill-table__number", z(e.row.realized_pnl)]) }, F(R(Um)(e.row.realized_pnl)), 3)])]),
+			"cell-trade_time": K((e) => [M(t.$slots, "cell-trade_time", x(m(e)), () => [d(F(R(Vm)(e.row.trade_time)), 1)])]),
+			"cell-operation": K((n) => [M(t.$slots, "cell-operation", v(n, { detail: () => H(e.actions.detail, n.row) }), () => [l("div", th, [e.actions.detail ? (D(), o(R(Q), {
 				key: 0,
-				"aria-label": R(r).tradeFills.viewDetailFor(R(Bm)(n.row.fill_id)),
+				"aria-label": R(r).tradeFills.viewDetailFor(R(Vm)(n.row.fill_id)),
 				"icon-only": "",
 				size: "sm",
 				loading: T.value.has(String(n.row.fill_id)),
@@ -23627,13 +23637,13 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			"page-sizes"
 		]));
 	}
-}), nh = {
+}), rh = {
 	key: 0,
 	class: "mm-typography__header"
-}, rh = {
+}, ih = {
 	key: 1,
 	class: "mm-typography__actions"
-}, ih = ["aria-expanded"], ah = /* @__PURE__ */ p({
+}, ah = ["aria-expanded"], oh = /* @__PURE__ */ p({
 	name: "MmTypography",
 	__name: "Typography",
 	props: {
@@ -23677,7 +23687,7 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			class: b(["mm-typography", [`mm-typography--${e.density}`, `is-align-${e.align}`]]),
 			"data-mm-component": "typography"
 		}, {
-			default: K(() => [e.title || t.$slots.title || e.copyable || e.collapsible ? (D(), c("header", nh, [e.title || t.$slots.title ? (D(), o(R(zm), {
+			default: K(() => [e.title || t.$slots.title || e.copyable || e.collapsible ? (D(), c("header", rh, [e.title || t.$slots.title ? (D(), o(R(Bm), {
 				key: 0,
 				as: h.value,
 				class: "mm-typography__title",
@@ -23686,7 +23696,7 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			}, {
 				default: K(() => [M(t.$slots, "title", {}, () => [d(F(e.title), 1)])]),
 				_: 3
-			}, 8, ["as", "size"])) : s("", !0), e.copyable || e.collapsible || t.$slots.actions ? (D(), c("div", rh, [
+			}, 8, ["as", "size"])) : s("", !0), e.copyable || e.collapsible || t.$slots.actions ? (D(), c("div", ih, [
 				M(t.$slots, "actions"),
 				e.copyable ? (D(), c("button", {
 					key: 0,
@@ -23700,7 +23710,7 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 					"data-action": "toggle",
 					"aria-expanded": R(m).value.value,
 					onClick: v
-				}, F(R(m).value.value ? R(a).typography.collapse : R(a).typography.expand), 9, ih)) : s("", !0)
+				}, F(R(m).value.value ? R(a).typography.collapse : R(a).typography.expand), 9, ah)) : s("", !0)
 			])) : s("", !0)])) : s("", !0), l("div", {
 				ref_key: "bodyRef",
 				ref: u,
@@ -23710,11 +23720,11 @@ var Gm = { class: "mm-trade-fill-table__id" }, Km = { key: 1 }, qm = { class: "m
 			_: 3
 		}, 8, ["class"]));
 	}
-}), oh = 0;
-function sh(e = "mm-file") {
-	return oh += 1, `${e}-${Date.now().toString(36)}-${oh.toString(36)}`;
+}), sh = 0;
+function ch(e = "mm-file") {
+	return sh += 1, `${e}-${Date.now().toString(36)}-${sh.toString(36)}`;
 }
-function ch(e, t) {
+function lh(e, t) {
 	if (!t?.trim()) return !0;
 	let n = e.name.toLowerCase(), r = e.type.toLowerCase();
 	return t.split(",").some((e) => {
@@ -23722,7 +23732,7 @@ function ch(e, t) {
 		return t ? t.startsWith(".") ? n.endsWith(t) : t.endsWith("/*") ? r.startsWith(t.slice(0, -1)) : r === t : !1;
 	});
 }
-function lh(e) {
+function uh(e) {
 	if (!Number.isFinite(e) || e <= 0) return "0 B";
 	let t = [
 		"B",
@@ -23735,7 +23745,7 @@ function lh(e) {
 }
 //#endregion
 //#region src/components/upload/Upload.vue?vue&type=script&setup=true&lang.ts
-var uh = [
+var dh = [
 	"id",
 	"name",
 	"accept",
@@ -23745,14 +23755,14 @@ var uh = [
 	"aria-describedby",
 	"aria-invalid",
 	"webkitdirectory"
-], dh = [
+], fh = [
 	"tabindex",
 	"aria-disabled",
 	"onKeydown"
-], fh = ["aria-label"], ph = {
+], ph = ["aria-label"], mh = {
 	class: "mm-upload__file-mark",
 	"aria-hidden": "true"
-}, mh = { class: "mm-upload__file-info" }, hh = ["aria-valuenow"], gh = { class: "mm-upload__file-actions" }, _h = ["aria-label", "onClick"], vh = ["aria-label", "onClick"], yh = /* @__PURE__ */ p({
+}, hh = { class: "mm-upload__file-info" }, gh = ["aria-valuenow"], _h = { class: "mm-upload__file-actions" }, vh = ["aria-label", "onClick"], yh = ["aria-label", "onClick"], bh = /* @__PURE__ */ p({
 	name: "MmUpload",
 	__name: "Upload",
 	props: {
@@ -23844,9 +23854,9 @@ var uh = [
 					size: n.size,
 					status: "ready",
 					type: n.type,
-					uid: sh()
+					uid: ch()
 				});
-				if (f.value.push(e), !ch(n, i.accept)) v(e, o.value.upload.invalidType(n.name));
+				if (f.value.push(e), !lh(n, i.accept)) v(e, o.value.upload.invalidType(n.name));
 				else if (n.size > i.maxSize) v(e, o.value.upload.fileTooLarge(n.name));
 				else if (i.beforeUpload) try {
 					await i.beforeUpload(n) === !1 ? v(e, o.value.upload.preflightRejected(n.name)) : t.push(e);
@@ -23947,7 +23957,7 @@ var uh = [
 				"aria-invalid": R(h).status.value === "error" ? "true" : void 0,
 				webkitdirectory: e.directory ? "" : void 0,
 				onChange: I
-			}, null, 40, uh),
+			}, null, 40, dh),
 			l("div", {
 				class: b(["mm-upload__dropzone", { "is-drag": e.drag }]),
 				role: "button",
@@ -23965,7 +23975,7 @@ var uh = [
 			}, () => [r[3] ||= l("span", {
 				class: "mm-upload__mark",
 				"aria-hidden": "true"
-			}, "↑", -1), l("span", null, [l("strong", null, F(e.drag ? R(o).upload.dragOrChoose : R(o).upload.chooseFile), 1), l("small", null, F(e.accept ? R(o).upload.acceptedTypes(e.accept) : R(o).upload.customRequest), 1)])])], 42, dh),
+			}, "↑", -1), l("span", null, [l("strong", null, F(e.drag ? R(o).upload.dragOrChoose : R(o).upload.chooseFile), 1), l("small", null, F(e.accept ? R(o).upload.acceptedTypes(e.accept) : R(o).upload.customRequest), 1)])])], 42, fh),
 			f.value.length ? (D(), c("ul", {
 				key: 0,
 				class: "mm-upload__list",
@@ -23974,10 +23984,10 @@ var uh = [
 				key: n.uid,
 				class: b(["mm-upload__file", `is-${n.status}`])
 			}, [
-				l("span", ph, F(n.status === "success" ? "✓" : n.status === "fail" ? "!" : "↥"), 1),
-				l("span", mh, [
+				l("span", mh, F(n.status === "success" ? "✓" : n.status === "fail" ? "!" : "↥"), 1),
+				l("span", hh, [
 					l("strong", null, F(n.name), 1),
-					l("small", null, [d(F(R(lh)(n.size)), 1), n.error ? (D(), c(t, { key: 0 }, [d(" · " + F(n.error), 1)], 64)) : s("", !0)]),
+					l("small", null, [d(F(R(uh)(n.size)), 1), n.error ? (D(), c(t, { key: 0 }, [d(" · " + F(n.error), 1)], 64)) : s("", !0)]),
 					n.status === "uploading" ? (D(), c("span", {
 						key: 0,
 						class: "mm-upload__progress",
@@ -23986,23 +23996,23 @@ var uh = [
 						"aria-valuenow": n.percentage,
 						"aria-valuemin": "0",
 						"aria-valuemax": "100"
-					}, null, 12, hh)) : s("", !0)
+					}, null, 12, gh)) : s("", !0)
 				]),
-				l("span", gh, [n.status === "fail" && e.request && !e.readonly ? (D(), c("button", {
+				l("span", _h, [n.status === "fail" && e.request && !e.readonly ? (D(), c("button", {
 					key: 0,
 					type: "button",
 					"aria-label": R(o).upload.retry(n.name),
 					onClick: (e) => O(n)
-				}, F(R(o).upload.retryText), 9, _h)) : s("", !0), e.readonly ? s("", !0) : (D(), c("button", {
+				}, F(R(o).upload.retryText), 9, vh)) : s("", !0), e.readonly ? s("", !0) : (D(), c("button", {
 					key: 1,
 					type: "button",
 					"aria-label": R(o).upload.remove(n.name),
 					onClick: (e) => E(n)
-				}, "×", 8, vh))])
-			], 2))), 128))], 8, fh)) : s("", !0)
+				}, "×", 8, yh))])
+			], 2))), 128))], 8, ph)) : s("", !0)
 		], 2));
 	}
-}), bh = [
+}), xh = [
 	_e,
 	ki,
 	ha,
@@ -24040,70 +24050,70 @@ var uh = [
 	Ws,
 	Xs,
 	$s,
-	ac,
-	_c,
-	Oc,
-	Hc,
-	el,
-	ml,
-	Cl,
-	Ml,
+	oc,
+	vc,
+	kc,
+	Uc,
+	tl,
+	hl,
+	wl,
+	Nl,
 	Z,
-	Ul,
-	Gl,
-	ql,
-	Ql,
+	Wl,
+	Kl,
+	Jl,
+	$l,
 	gt,
-	nu,
 	ru,
-	cu,
-	xu,
-	Pu,
-	Ru,
+	iu,
+	lu,
+	Su,
+	Fu,
+	zu,
 	Ea,
 	ja,
 	La,
-	Hu,
-	Ku,
-	id,
-	gd,
-	zd,
-	Cf,
-	Rf,
-	Hf,
-	Kf,
-	sp,
+	Uu,
+	qu,
+	ad,
+	_d,
+	Bd,
+	wf,
+	zf,
+	Uf,
+	qf,
+	cp,
 	kt,
 	Vr,
-	hp,
+	gp,
 	si,
 	gi,
 	Wr,
 	Hn,
-	bp,
-	Sp,
-	Op,
-	Ap,
+	xp,
+	Cp,
+	kp,
+	jp,
 	Sn,
 	Ln,
-	Vp,
-	Wp,
-	Zp,
-	jm,
-	Rm,
-	jr,
-	Hd,
-	Kd,
-	$,
+	Hp,
+	Gp,
+	Qp,
+	Mm,
 	zm,
-	nl,
-	th,
-	ah,
-	yh
+	jr,
+	Ud,
+	qd,
+	$,
+	Bm,
+	rl,
+	nh,
+	oh,
+	bh
 ];
 //#endregion
 //#region src/directives/loading.ts
-function xh(e) {
+function Sh(e) {
 	let t = typeof e == "boolean" ? { visible: e } : e ?? {};
 	return {
 		backdrop: t.backdrop ?? !0,
@@ -24113,19 +24123,19 @@ function xh(e) {
 		visible: t.visible ?? !0
 	};
 }
-function Sh(e, t) {
-	Object.assign(e.state, xh(t));
+function Ch(e, t) {
+	Object.assign(e.state, Sh(t));
 }
-function Ch(e) {
+function wh(e) {
 	let t = e.__mmLoading;
 	!t || t.destroyed || (t.destroyed = !0, t.app.unmount(), t.container.remove(), e.style.position = t.originalPosition, delete e.__mmLoading);
 }
-var wh = {
+var Th = {
 	mounted(e, t) {
 		if (typeof document > "u") return;
-		let n = k(xh(t.value)), r = p({
+		let n = k(Sh(t.value)), r = p({
 			name: "MmLoadingDirectiveHost",
-			setup: () => () => h(Ru, n)
+			setup: () => () => h(zu, n)
 		}), i = document.createElement("div");
 		i.dataset.mmLoadingHost = "";
 		let o = e.style.position;
@@ -24140,11 +24150,11 @@ var wh = {
 		}, s.mount(i);
 	},
 	updated(e, t) {
-		e.__mmLoading && Sh(e.__mmLoading, t.value);
+		e.__mmLoading && Ch(e.__mmLoading, t.value);
 	},
-	beforeUnmount: Ch,
-	unmounted: Ch
-}, Th = wh, Eh = {
+	beforeUnmount: wh,
+	unmounted: wh
+}, Eh = Th, Dh = {
 	danger: "--mm-color-danger",
 	dangerSoft: "--mm-color-danger-soft",
 	info: "--mm-color-info",
@@ -24158,17 +24168,17 @@ var wh = {
 	warning: "--mm-color-warning",
 	warningSoft: "--mm-color-warning-soft"
 };
-function Dh(e) {
+function Oh(e) {
 	return e?.trim() || void 0;
 }
-function Oh(e, t) {
+function kh(e, t) {
 	if (!t) return;
-	for (let [n, r] of Object.entries(Eh)) {
-		let i = Dh(t[n]);
+	for (let [n, r] of Object.entries(Dh)) {
+		let i = Oh(t[n]);
 		i && e.setProperty(r, i);
 	}
-	let n = Dh(t.primary);
-	n && !Dh(t.primaryHover) && e.setProperty("--mm-color-primary-hover", "color-mix(in srgb, var(--mm-color-primary) 86%, var(--mm-color-text))"), n && !Dh(t.primarySoft) && e.setProperty("--mm-color-primary-soft", "color-mix(in srgb, var(--mm-color-primary) 12%, var(--mm-color-panel))"), n && e.setProperty("--mm-focus-ring", "0 0 0 1px color-mix(in srgb, var(--mm-color-primary) 38%, transparent)");
+	let n = Oh(t.primary);
+	n && !Oh(t.primaryHover) && e.setProperty("--mm-color-primary-hover", "color-mix(in srgb, var(--mm-color-primary) 86%, var(--mm-color-text))"), n && !Oh(t.primarySoft) && e.setProperty("--mm-color-primary-soft", "color-mix(in srgb, var(--mm-color-primary) 12%, var(--mm-color-panel))"), n && e.setProperty("--mm-focus-ring", "0 0 0 1px color-mix(in srgb, var(--mm-color-primary) 38%, transparent)");
 	for (let n of [
 		"danger",
 		"info",
@@ -24176,10 +24186,10 @@ function Oh(e, t) {
 		"warning"
 	]) {
 		let r = `${n}Soft`;
-		Dh(t[n]) && !Dh(t[r]) && e.setProperty(Eh[r], `color-mix(in srgb, var(${Eh[n]}) 12%, var(--mm-color-panel))`);
+		Oh(t[n]) && !Oh(t[r]) && e.setProperty(Dh[r], `color-mix(in srgb, var(${Dh[n]}) 12%, var(--mm-color-panel))`);
 	}
 }
-function kh() {
+function Ah() {
 	let e = document.head.querySelector("style[data-mm-ui-theme]"), t = e ?? document.createElement("style");
 	return t.setAttribute("data-mm-ui-theme", ""), t.textContent = [
 		":root {}",
@@ -24187,20 +24197,20 @@ function kh() {
 		"[data-mm-theme='dark'] {}"
 	].join("\n"), e || document.head.append(t), Array.from(t.sheet?.cssRules ?? []).filter((e) => e instanceof CSSStyleRule);
 }
-function Ah(e) {
+function jh(e) {
 	if (!e || typeof document > "u") return;
-	let [t, n, r] = kh();
-	!t || !n || !r || (Oh(t.style, e), Oh(n.style, e.light), Oh(r.style, e.dark));
+	let [t, n, r] = Ah();
+	!t || !n || !r || (kh(t.style, e), kh(n.style, e.light), kh(r.style, e.dark));
 }
-function jh(e, t = {}) {
-	Ah(t.theme);
+function Mh(e, t = {}) {
+	jh(t.theme);
 	let n = ie(t.locale);
 	e.provide(re, n), e.config.globalProperties.$mmLocale = n, ce(n);
-	for (let t of bh) t.name && e.component(t.name, t);
-	e.directive("mm-loading", wh);
+	for (let t of xh) t.name && e.component(t.name, t);
+	e.directive("mm-loading", Th);
 }
-var Mh = { install: jh }, Nh = k([]), Ph, Fh, Ih = 0;
-function Lh(e, t) {
+var Nh = { install: Mh }, Ph = k([]), Fh, Ih, Lh = 0;
+function Rh(e, t) {
 	let n = typeof e == "string" ? { message: e } : e;
 	return {
 		closable: n.closable ?? !0,
@@ -24210,15 +24220,15 @@ function Lh(e, t) {
 		type: t ?? n.type ?? "info"
 	};
 }
-function Rh() {
-	Nh.length > 0 || (Ph?.unmount(), Fh?.remove(), Ph = void 0, Fh = void 0);
+function zh() {
+	Ph.length > 0 || (Fh?.unmount(), Ih?.remove(), Fh = void 0, Ih = void 0);
 }
-function zh(e) {
-	let t = Nh.findIndex((t) => t.id === e);
-	t < 0 || (Nh.splice(t, 1), Nh.length === 0 && queueMicrotask(Rh));
+function Bh(e) {
+	let t = Ph.findIndex((t) => t.id === e);
+	t < 0 || (Ph.splice(t, 1), Ph.length === 0 && queueMicrotask(zh));
 }
-function Bh() {
-	if (Ph) return !0;
+function Vh() {
+	if (Fh) return !0;
 	if (typeof document > "u" || !document.body) return !1;
 	let e = document.createElement("div");
 	e.dataset.mmMessageHost = "", document.body.append(e);
@@ -24227,45 +24237,45 @@ function Bh() {
 		setup: () => () => h("div", {
 			"aria-label": t.messages.value.message.notifications,
 			class: "mm-message-stack"
-		}, Nh.map((e) => h(Hu, {
+		}, Ph.map((e) => h(Uu, {
 			...e,
 			key: e.id,
-			onClose: () => zh(e.id)
+			onClose: () => Bh(e.id)
 		})))
 	});
-	return Fh = e, Ph = a(n), Ph.provide(re, t), Ph.mount(e), !0;
+	return Ih = e, Fh = a(n), Fh.provide(re, t), Fh.mount(e), !0;
 }
-function Vh(e, t) {
-	let n = `mm-message-${++Ih}`, r = !1;
-	return Bh() && Nh.push({
-		...Lh(e, t),
+function Hh(e, t) {
+	let n = `mm-message-${++Lh}`, r = !1;
+	return Vh() && Ph.push({
+		...Rh(e, t),
 		id: n
 	}), {
 		close: () => {
-			r || (r = !0, zh(n));
+			r || (r = !0, Bh(n));
 		},
 		id: n
 	};
 }
-var Hh = ((e) => Vh(e));
-Hh.info = (e) => Vh(e, "info"), Hh.success = (e) => Vh(e, "success"), Hh.warning = (e) => Vh(e, "warning"), Hh.error = (e) => Vh(e, "error"), Hh.closeAll = () => {
-	Nh.splice(0), Rh();
+var Uh = ((e) => Hh(e));
+Uh.info = (e) => Hh(e, "info"), Uh.success = (e) => Hh(e, "success"), Uh.warning = (e) => Hh(e, "warning"), Uh.error = (e) => Hh(e, "error"), Uh.closeAll = () => {
+	Ph.splice(0), zh();
 };
-var Uh = Hh, Wh = class extends Error {
+var Wh = Uh, Gh = class extends Error {
 	action;
 	constructor(e) {
 		super(e === "cancel" ? "Message box cancelled" : "Message box closed"), this.name = "MessageBoxCancelError", this.action = e;
 	}
 };
-function Gh(e, t) {
+function Kh(e, t) {
 	let n = typeof e == "string" ? { message: e } : e;
 	return {
 		...n,
 		type: t ?? n.type ?? "alert"
 	};
 }
-function Kh(e, t) {
-	let n = Gh(e, t), r, i, o = !1, s = () => void 0, c = new Promise((e, t) => {
+function qh(e, t) {
+	let n = Kh(e, t), r, i, o = !1, s = () => void 0, c = new Promise((e, t) => {
 		let c = () => {
 			r?.unmount(), i?.remove(), r = void 0, i = void 0;
 		};
@@ -24273,14 +24283,14 @@ function Kh(e, t) {
 			o || (o = !0, n === "confirm" ? e({
 				action: n,
 				value: r
-			}) : t(new Wh(n)), queueMicrotask(c));
+			}) : t(new Gh(n)), queueMicrotask(c));
 		}, typeof document > "u" || !document.body) {
 			s("close");
 			return;
 		}
 		i = document.createElement("div"), i.dataset.mmMessageBoxHost = "", document.body.append(i), r = a(p({
 			name: "MmMessageBoxServiceHost",
-			setup: () => () => h(Ku, {
+			setup: () => () => h(qu, {
 				...n,
 				modelValue: !0,
 				onAction: (e, t) => s(e, t)
@@ -24289,22 +24299,22 @@ function Kh(e, t) {
 	});
 	return c.close = () => s("close"), c;
 }
-function qh(e) {
-	return (t, n, r = {}) => Kh({
+function Jh(e) {
+	return (t, n, r = {}) => qh({
 		...r,
 		message: t,
 		title: n ?? r.title,
 		type: e
 	}, e);
 }
-var Jh = ((e) => Kh(e));
-Jh.alert = qh("alert"), Jh.confirm = qh("confirm"), Jh.prompt = qh("prompt");
-var Yh = Jh, Xh = "mm", Zh = "is-";
-function Qh(e, t) {
-	return `${Xh}-${e}${t ? `-${t}` : ""}`;
+var Yh = ((e) => qh(e));
+Yh.alert = Jh("alert"), Yh.confirm = Jh("confirm"), Yh.prompt = Jh("prompt");
+var Xh = Yh, Zh = "mm", Qh = "is-";
+function $h(e, t) {
+	return `${Zh}-${e}${t ? `-${t}` : ""}`;
 }
-function $h(e) {
-	let t = (t) => Qh(e, t), n = (e) => e ? `${t()}__${e}` : "", r = (e) => e ? `${t()}--${e}` : "", i = (e, n) => e && n ? `${t(e)}__${n}` : "", a = (e, n) => e && n ? `${t(e)}--${n}` : "", o = (e, t) => e && t ? `${n(e)}--${t}` : "", s = (e, t, n) => e && t && n ? `${i(e, t)}--${n}` : "", c = (e, t = !0) => e && t ? `${Zh}${e}` : "", l = (...e) => `--${Xh}-${e.join("-")}`;
+function eg(e) {
+	let t = (t) => $h(e, t), n = (e) => e ? `${t()}__${e}` : "", r = (e) => e ? `${t()}--${e}` : "", i = (e, n) => e && n ? `${t(e)}__${n}` : "", a = (e, n) => e && n ? `${t(e)}--${n}` : "", o = (e, t) => e && t ? `${n(e)}--${t}` : "", s = (e, t, n) => e && t && n ? `${i(e, t)}--${n}` : "", c = (e, t = !0) => e && t ? `${Qh}${e}` : "", l = (...e) => `--${Zh}-${e.join("-")}`;
 	return {
 		b: t,
 		be: i,
@@ -24319,6 +24329,6 @@ function $h(e) {
 	};
 }
 //#endregion
-export { Wh as MessageBoxCancelError, ki as MmAccountChangeLogTable, ha as MmAdminLoginShell, _e as MmAlert, ro as MmAppHeader, Rt as MmAutocomplete, ba as MmAvatar, Pe as MmBadge, io as MmBorder, Q as MmButton, oo as MmCalendar, mo as MmCard, yo as MmCheckbox, xo as MmCheckboxGroup, Co as MmCollapse, Oo as MmCollapseItem, Mo as MmColor, Zo as MmConditionOrderTable, No as MmContainer, ds as MmCurrentOrderTable, pi as MmCursorPagination, mn as MmDatePicker, fn as MmDatePickerPanel, yn as MmDateRangePicker, _s as MmDescriptions, bs as MmDescriptionsItem, Qe as MmDialog, Ts as MmDivider, $e as MmDrawer, za as MmDropdown, $n as MmEmpty, Ms as MmExchangeLogo, Us as MmFeeCommissionTable, Kn as MmFilterDrawer, Ws as MmForm, Xs as MmFormItem, $s as MmFundingAccountTable, ac as MmFundingChangeLogTable, Hc as MmHandlingFeeConfig, el as MmHedgingExecutionTable, ml as MmHedgingMonitor, Ml as MmHedgingSubjectConfig, Cl as MmHedgingSymbolConfig, Oc as MmHistoryOrderTable, _c as MmHistoryPositionTable, Z as MmIcon, Ul as MmImage, Gl as MmInfoGrid, ql as MmInfoGridItem, gt as MmInput, nu as MmInputNumber, Ql as MmIpLocation, ru as MmLayout, cu as MmLink, xu as MmLiquidationTable, Pu as MmLiquidationTradesDialog, Ru as MmLoading, id as MmMarginChangeLogTable, Ea as MmMenu, ja as MmMenuItem, Hu as MmMessage, Ku as MmMessageBox, gd as MmOnlineUserTable, sp as MmPageHeader, Vr as MmPagination, kt as MmPopover, zd as MmPositionTable, si as MmProTable, gi as MmProTableCursorPagination, Wr as MmProTablePagination, hp as MmProgress, Hn as MmQueryBar, bp as MmRadio, Sp as MmRadioGroup, Op as MmResult, Ap as MmScrollbar, Sn as MmSegmented, Ln as MmSelect, Vp as MmSidebarNav, Wp as MmSpace, Zp as MmStatistic, Rm as MmSteps, La as MmSubMenu, jm as MmSymbolTagManager, Hd as MmTabPane, jr as MmTable, Kd as MmTabs, $ as MmTag, zm as MmText, nl as MmTooltip, Qo as MmTpSlOrderTable, th as MmTradeFillTable, rm as MmTranslationConfigDialog, ah as MmTypography, yh as MmUpload, Rf as MmUserAssetTable, Cf as MmUserDetailDialog, Kf as MmUserPredictionTable, Hf as MmUserTable, ch as acceptsFile, Ue as acquireOverlay, Gt as addDays, Kt as addMonths, Qt as buildCalendarMonth, ns as calculateCurrentOrderRemainingQuantity, xd as calculatePositionMargin, bd as calculatePositionPnl, Sd as calculatePositionRoe, yd as calculatePositionValue, kf as calculateUserAssetPositionAmount, Af as calculateUserAssetUnrealizedPnl, it as cloneFormValue, ye as cloneQueryBarValue, qt as compareDateValues, bh as components, Io as conditionOrderTriggerOperator, sh as createFileUid, ie as createMmLocaleContext, Se as createQueryBarValue, Vt as daysInMonth, qn as debugWarn, Mh as default, Ns as displayFeeCommissionValue, lu as displayLiquidationValue, Bm as displayTradeFillValue, Y as enUS, ad as firstOnlineUserValue, et as formContextKey, tt as formItemContextKey, Si as formatAccountChangeAmount, Ci as formatAccountChangeBalance, Lo as formatConditionOrderLeverage, Bo as formatConditionOrderPrice, zo as formatConditionOrderQuantity, ts as formatCurrentOrderPrice, es as formatCurrentOrderQuantity, Yt as formatDate, Ht as formatDateValue, Ps as formatFeeCommissionNumber, Fs as formatFeeCommissionQuantity, lh as formatFileSize, ec as formatFundingAmount, Zs as formatFundingMoney, bc as formatHistoryOrderPrice, yc as formatHistoryOrderQuantity, sc as formatHistoryPositionAmount, cc as formatHistoryPositionPrice, lc as formatHistoryPositionQuantity, uu as formatLiquidationDecimal, Yu as formatMarginChangeAmount, Xu as formatMarginChangeBalance, Qu as formatMarginChangeDateTime, Zu as formatMarginTransferAmount, ud as formatOnlineUserDateTime, fd as formatOnlineUserDuration, dd as formatOnlineUserVipLevel, Ed as formatPositionAmount, Od as formatPositionOptionalPrice, Dd as formatPositionPrice, kd as formatPositionQuantity, uc as formatSignedHistoryPositionAmount, Ad as formatSignedPositionAmount, jd as formatSignedPositionPercent, Gf as formatSignedUserPredictionMoney, Hm as formatTradeFillFixed, Vm as formatTradeFillNumber, Of as formatUserAssetAmount, jf as formatUserAssetPnl, Uf as formatUserPredictionCount, Wf as formatUserPredictionMoney, tc as fundingBalanceChangeClass, nc as fundingChangeTypeKey, nt as getPathValue, pc as historyPositionEntryCost, fc as historyPositionMaxQuantity, oc as historyPositionNumber, dc as historyPositionOpenQuantity, ue as iconNames, jh as install, Vo as isCancelableConditionOrderStatus, $o as isCurrentOrderFlag, vc as isHistoryOrderFlag, Bt as isLeapYear, du as liquidationUserUid, Th as loadingDirective, Ce as materializeQueryBarValue, Uh as message, Yh as messageBox, re as mmLocaleKey, sd as onlineUserLastActiveTime, od as onlineUserLoginTime, Ut as parseDateValue, Zt as parseFormattedDate, cd as parseOnlineUserDateTime, wi as resolveAccountChangeType, vd as resolvePositionMarkPrice, rt as setPathValue, _d as toPositionNumber, Jt as todayDateValue, Wm as tradeFillExternalUserId, Um as tradeFillUserUid, yt as useClickOutside, Me as useControlled, _t as useEventListener, Tt as useFloating, Le as useFocusTrap, at as useFormField, Re as useId, X as useLocale, Be as useLockScroll, De as useMmProTable, $h as useNamespace, Sa as useRovingFocus, wh as vMmLoading, te as zhCN };
+export { Gh as MessageBoxCancelError, ki as MmAccountChangeLogTable, ha as MmAdminLoginShell, _e as MmAlert, ro as MmAppHeader, Rt as MmAutocomplete, ba as MmAvatar, Pe as MmBadge, io as MmBorder, Q as MmButton, oo as MmCalendar, mo as MmCard, yo as MmCheckbox, xo as MmCheckboxGroup, Co as MmCollapse, Oo as MmCollapseItem, Mo as MmColor, Zo as MmConditionOrderTable, No as MmContainer, ds as MmCurrentOrderTable, pi as MmCursorPagination, mn as MmDatePicker, fn as MmDatePickerPanel, yn as MmDateRangePicker, _s as MmDescriptions, bs as MmDescriptionsItem, Qe as MmDialog, Ts as MmDivider, $e as MmDrawer, za as MmDropdown, $n as MmEmpty, Ms as MmExchangeLogo, Us as MmFeeCommissionTable, Kn as MmFilterDrawer, Ws as MmForm, Xs as MmFormItem, $s as MmFundingAccountTable, oc as MmFundingChangeLogTable, Uc as MmHandlingFeeConfig, tl as MmHedgingExecutionTable, hl as MmHedgingMonitor, Nl as MmHedgingSubjectConfig, wl as MmHedgingSymbolConfig, kc as MmHistoryOrderTable, vc as MmHistoryPositionTable, Z as MmIcon, Wl as MmImage, Kl as MmInfoGrid, Jl as MmInfoGridItem, gt as MmInput, ru as MmInputNumber, $l as MmIpLocation, iu as MmLayout, lu as MmLink, Su as MmLiquidationTable, Fu as MmLiquidationTradesDialog, zu as MmLoading, ad as MmMarginChangeLogTable, Ea as MmMenu, ja as MmMenuItem, Uu as MmMessage, qu as MmMessageBox, _d as MmOnlineUserTable, cp as MmPageHeader, Vr as MmPagination, kt as MmPopover, Bd as MmPositionTable, si as MmProTable, gi as MmProTableCursorPagination, Wr as MmProTablePagination, gp as MmProgress, Hn as MmQueryBar, xp as MmRadio, Cp as MmRadioGroup, kp as MmResult, jp as MmScrollbar, Sn as MmSegmented, Ln as MmSelect, Hp as MmSidebarNav, Gp as MmSpace, Qp as MmStatistic, zm as MmSteps, La as MmSubMenu, Mm as MmSymbolTagManager, Ud as MmTabPane, jr as MmTable, qd as MmTabs, $ as MmTag, Bm as MmText, rl as MmTooltip, Qo as MmTpSlOrderTable, nh as MmTradeFillTable, im as MmTranslationConfigDialog, oh as MmTypography, bh as MmUpload, zf as MmUserAssetTable, wf as MmUserDetailDialog, qf as MmUserPredictionTable, Uf as MmUserTable, lh as acceptsFile, Ue as acquireOverlay, Gt as addDays, Kt as addMonths, Qt as buildCalendarMonth, ns as calculateCurrentOrderRemainingQuantity, Sd as calculatePositionMargin, xd as calculatePositionPnl, Cd as calculatePositionRoe, bd as calculatePositionValue, Af as calculateUserAssetPositionAmount, jf as calculateUserAssetUnrealizedPnl, it as cloneFormValue, ye as cloneQueryBarValue, qt as compareDateValues, xh as components, Io as conditionOrderTriggerOperator, ch as createFileUid, ie as createMmLocaleContext, Se as createQueryBarValue, Vt as daysInMonth, qn as debugWarn, Nh as default, Ns as displayFeeCommissionValue, uu as displayLiquidationValue, Vm as displayTradeFillValue, Y as enUS, od as firstOnlineUserValue, et as formContextKey, tt as formItemContextKey, Si as formatAccountChangeAmount, Ci as formatAccountChangeBalance, Lo as formatConditionOrderLeverage, Bo as formatConditionOrderPrice, zo as formatConditionOrderQuantity, ts as formatCurrentOrderPrice, es as formatCurrentOrderQuantity, Yt as formatDate, Ht as formatDateValue, Ps as formatFeeCommissionNumber, Fs as formatFeeCommissionQuantity, uh as formatFileSize, ec as formatFundingAmount, Zs as formatFundingMoney, xc as formatHistoryOrderPrice, bc as formatHistoryOrderQuantity, cc as formatHistoryPositionAmount, lc as formatHistoryPositionPrice, uc as formatHistoryPositionQuantity, du as formatLiquidationDecimal, Xu as formatMarginChangeAmount, Zu as formatMarginChangeBalance, $u as formatMarginChangeDateTime, Qu as formatMarginTransferAmount, dd as formatOnlineUserDateTime, pd as formatOnlineUserDuration, fd as formatOnlineUserVipLevel, Dd as formatPositionAmount, kd as formatPositionOptionalPrice, Od as formatPositionPrice, Ad as formatPositionQuantity, dc as formatSignedHistoryPositionAmount, jd as formatSignedPositionAmount, Md as formatSignedPositionPercent, Kf as formatSignedUserPredictionMoney, Um as formatTradeFillFixed, Hm as formatTradeFillNumber, kf as formatUserAssetAmount, Mf as formatUserAssetPnl, Wf as formatUserPredictionCount, Gf as formatUserPredictionMoney, tc as fundingBalanceChangeClass, nc as fundingChangeTypeKey, nt as getPathValue, mc as historyPositionEntryCost, pc as historyPositionMaxQuantity, sc as historyPositionNumber, fc as historyPositionOpenQuantity, ue as iconNames, Mh as install, Vo as isCancelableConditionOrderStatus, $o as isCurrentOrderFlag, yc as isHistoryOrderFlag, Bt as isLeapYear, fu as liquidationUserUid, Eh as loadingDirective, Ce as materializeQueryBarValue, Wh as message, Xh as messageBox, re as mmLocaleKey, cd as onlineUserLastActiveTime, sd as onlineUserLoginTime, Ut as parseDateValue, Zt as parseFormattedDate, ld as parseOnlineUserDateTime, wi as resolveAccountChangeType, yd as resolvePositionMarkPrice, rt as setPathValue, vd as toPositionNumber, Jt as todayDateValue, Gm as tradeFillExternalUserId, Wm as tradeFillUserUid, yt as useClickOutside, Me as useControlled, _t as useEventListener, Tt as useFloating, Le as useFocusTrap, at as useFormField, Re as useId, X as useLocale, Be as useLockScroll, De as useMmProTable, eg as useNamespace, Sa as useRovingFocus, Th as vMmLoading, te as zhCN };
 
 //# sourceMappingURL=index.js.map

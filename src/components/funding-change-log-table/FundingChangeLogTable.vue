@@ -22,7 +22,7 @@ const copy = computed(() => messages.value.fundingChangeLogs)
 const slots = useSlots()
 const defaultSort: TableSortState = { key: 'created_at', order: 'desc' }
 const sortableFields = new Set(['ledger_id', 'balance_change', 'balance_before', 'balance_after', 'created_at'])
-const managedSlots = new Set(['cell-agent_id', 'cell-user_id', 'cell-username', 'cell-ledger_id', 'cell-business_type', 'cell-business_scope', 'cell-balance_change', 'cell-balance_before', 'cell-balance_after', 'cell-business_id'])
+const managedSlots = new Set(['cell-agent_id', 'cell-user_id', 'cell-username', 'cell-ledger_id', 'cell-business_type', 'cell-business_scope', 'cell-balance_change', 'cell-frozen_amount', 'cell-balance_before', 'cell-balance_after', 'cell-business_id'])
 
 const queryFields = computed<QueryBarField[]>(() => {
   const fields: QueryBarField[] = [{
@@ -62,6 +62,7 @@ const defaultColumns = computed<ProTableColumn<Row>[]>(() => {
     { key: 'business_type', dataIndex: 'business_type', title: copy.value.type, width: 135 },
     { key: 'business_scope', dataIndex: 'business_scope', title: copy.value.game, width: 115 },
     { key: 'balance_change', dataIndex: 'balance_change', title: copy.value.balanceChange, width: 165, sortable: true },
+    { key: 'frozen_amount', dataIndex: 'frozen_amount', title: copy.value.frozenAmount, width: 145 },
     { key: 'balance_before', dataIndex: 'balance_before', title: copy.value.balanceBefore, width: 165, sortable: true },
     { key: 'balance_after', dataIndex: 'balance_after', title: copy.value.balanceAfter, width: 165, sortable: true },
     { key: 'business_id', dataIndex: 'business_id', title: copy.value.businessId, width: 165 },
@@ -125,6 +126,7 @@ defineExpose({ reload })
     <template #cell-business_type="slotProps"><slot name="cell-business_type" v-bind="slotProps"><MmTag :type="typeTag(slotProps.row)" effect="soft" round size="sm">{{ typeLabel(slotProps.row) }}</MmTag></slot></template>
     <template #cell-business_scope="slotProps"><slot name="cell-business_scope" v-bind="slotProps">{{ gameLabel(slotProps.row.business_scope) }}</slot></template>
     <template #cell-balance_change="slotProps"><slot name="cell-balance_change" v-bind="slotProps"><span class="mm-funding-change-log-table__amount" :class="fundingBalanceChangeClass(slotProps.row.balance_change)">{{ formatFundingAmount(slotProps.row.balance_change, slotProps.row.currency, true) }}</span></slot></template>
+    <template #cell-frozen_amount="slotProps"><slot name="cell-frozen_amount" v-bind="slotProps"><span class="mm-funding-change-log-table__amount">{{ formatFundingAmount(slotProps.row.frozen_amount, slotProps.row.currency) }}</span></slot></template>
     <template #cell-balance_before="slotProps"><slot name="cell-balance_before" v-bind="slotProps"><span class="mm-funding-change-log-table__amount">{{ formatFundingAmount(slotProps.row.balance_before, slotProps.row.currency) }}</span></slot></template>
     <template #cell-balance_after="slotProps"><slot name="cell-balance_after" v-bind="slotProps"><span class="mm-funding-change-log-table__amount">{{ formatFundingAmount(slotProps.row.balance_after, slotProps.row.currency) }}</span></slot></template>
     <template #cell-business_id="slotProps"><slot name="cell-business_id" v-bind="slotProps">{{ display(slotProps.row.business_id) }}</slot></template>

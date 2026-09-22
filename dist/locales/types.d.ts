@@ -202,6 +202,7 @@ export interface MmUILocaleMessages {
         balanceBefore: string;
         balanceChange: string;
         businessId: string;
+        frozenAmount: string;
         game: string;
         gameGrid: string;
         gameHighLow: string;

@@ -204,6 +204,7 @@ export const zhCN: MmUILocale = {
       balanceBefore: "账变前账户余额",
       balanceChange: "账户余额变动",
       businessId: "关联业务单号",
+      frozenAmount: "冻结金额",
       game: "游戏",
       gameGrid: "网格预测",
       gameHighLow: "自选预测",

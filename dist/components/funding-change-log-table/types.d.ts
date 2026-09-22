@@ -14,6 +14,7 @@ export interface FundingChangeLogRow extends TableRow {
     created_at?: string | null;
     currency?: string | null;
     entry_type?: string | null;
+    frozen_amount?: number | string | null;
     id: number | string;
     ledger_id: number | string;
     nice_name?: string | null;

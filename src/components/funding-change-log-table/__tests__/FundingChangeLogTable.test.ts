@@ -6,6 +6,23 @@ import type { QueryBarField, QueryBarSelectField } from '../../query-bar'
 import FundingChangeLogTable from '../FundingChangeLogTable.vue'
 
 describe('MmFundingChangeLogTable', () => {
+  it('displays the frozen amount returned by the funding ledger API', async () => {
+    const request = vi.fn(async () => ({
+      rows: [{
+        id: '1968632', ledger_id: '1968632', business_type: 'TRANSFER',
+        entry_type: 'TRANSFER_HOLD_CREATED', frozen_amount: '800.00000000', currency: 'USDT',
+      }],
+      total: 1,
+    }))
+    const wrapper = mount(FundingChangeLogTable, { props: { request } })
+    await flushPromises()
+
+    expect(wrapper.text()).toContain('冻结金额')
+    expect(wrapper.text()).toContain('800.00 USDT')
+
+    wrapper.unmount()
+  })
+
   it('exposes every supported funding change type filter', async () => {
     const request = vi.fn(async () => ({ rows: [], total: 0 }))
     const wrapper = mount(FundingChangeLogTable, { props: { request } })

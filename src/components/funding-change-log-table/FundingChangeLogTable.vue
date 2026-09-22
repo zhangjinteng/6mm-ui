@@ -38,6 +38,11 @@ const queryFields = computed<QueryBarField[]>(() => {
     { key: 'change_type', label: copy.value.type, type: 'select', defaultValue: '', placeholder: copy.value.allTypes, clearable: true, width: 160, options: [
       { label: copy.value.allTypes, value: '' }, { label: copy.value.typeDeposit, value: 'deposit' },
       { label: copy.value.typeStake, value: 'stake' }, { label: copy.value.typePayout, value: 'payout' }, { label: copy.value.typeRefund, value: 'refund' },
+      { label: copy.value.transferHoldCreated, value: 'transfer_hold_created' },
+      { label: copy.value.transferHoldReleased, value: 'transfer_hold_released' },
+      { label: copy.value.transferOut, value: 'transfer_out' }, { label: copy.value.transferIn, value: 'transfer_in' },
+      { label: copy.value.agentTransferIn, value: 'agent_transfer_in' },
+      { label: copy.value.agentTransferOut, value: 'agent_transfer_out' },
     ] },
     { key: 'game', label: copy.value.game, type: 'select', defaultValue: '', placeholder: copy.value.allGames, clearable: true, width: 150, options: [
       { label: copy.value.allGames, value: '' }, { label: copy.value.gameUpDown, value: 'prediction_updown' },

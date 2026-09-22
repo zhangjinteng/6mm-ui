@@ -11751,6 +11751,30 @@ var rc = { class: "mm-funding-change-log-table__amount" }, ic = { class: "mm-fun
 					{
 						label: a.value.typeRefund,
 						value: "refund"
+					},
+					{
+						label: a.value.transferHoldCreated,
+						value: "transfer_hold_created"
+					},
+					{
+						label: a.value.transferHoldReleased,
+						value: "transfer_hold_released"
+					},
+					{
+						label: a.value.transferOut,
+						value: "transfer_out"
+					},
+					{
+						label: a.value.transferIn,
+						value: "transfer_in"
+					},
+					{
+						label: a.value.agentTransferIn,
+						value: "agent_transfer_in"
+					},
+					{
+						label: a.value.agentTransferOut,
+						value: "agent_transfer_out"
 					}
 				]
 			}, {

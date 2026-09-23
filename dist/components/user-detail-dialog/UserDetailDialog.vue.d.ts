@@ -53,6 +53,8 @@ declare var __VLS_10: {
             lose_orders?: number | string | null | undefined;
             net_profit_30d?: number | string | null | undefined;
             orders_30d?: number | string | null | undefined;
+            pending_amount?: number | string | null | undefined;
+            pending_orders?: number | string | null | undefined;
             refund_orders?: number | string | null | undefined;
             return_30d?: number | string | null | undefined;
             stake_30d?: number | string | null | undefined;
@@ -120,6 +122,8 @@ declare var __VLS_10: {
             lose_orders?: number | string | null | undefined;
             net_profit_30d?: number | string | null | undefined;
             orders_30d?: number | string | null | undefined;
+            pending_amount?: number | string | null | undefined;
+            pending_orders?: number | string | null | undefined;
             refund_orders?: number | string | null | undefined;
             return_30d?: number | string | null | undefined;
             stake_30d?: number | string | null | undefined;
@@ -184,6 +188,8 @@ declare var __VLS_10: {
             lose_orders?: number | string | null | undefined;
             net_profit_30d?: number | string | null | undefined;
             orders_30d?: number | string | null | undefined;
+            pending_amount?: number | string | null | undefined;
+            pending_orders?: number | string | null | undefined;
             refund_orders?: number | string | null | undefined;
             return_30d?: number | string | null | undefined;
             stake_30d?: number | string | null | undefined;

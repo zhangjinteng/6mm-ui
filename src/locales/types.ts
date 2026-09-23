@@ -924,6 +924,8 @@ export interface MmUILocaleMessages {
     predictionLoseOrders: string;
     predictionNetProfit30d: string;
     predictionOrders30d: string;
+    predictionPendingAmount: string;
+    predictionPendingOrders: string;
     predictionRefundOrders: string;
     predictionReturn30d: string;
     predictionStake30d: string;

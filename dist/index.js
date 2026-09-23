@@ -938,6 +938,8 @@ var Y = {
 			predictionLoseOrders: "Losing Orders",
 			predictionNetProfit30d: "30D User Net PnL(U)",
 			predictionOrders30d: "30D Orders",
+			predictionPendingAmount: "Pending Amount(U)",
+			predictionPendingOrders: "Pending Orders",
 			predictionRefundOrders: "Refunded/Voided Orders",
 			predictionReturn30d: "30D Return(U)",
 			predictionStake30d: "30D Stake(U)",
@@ -1947,6 +1949,8 @@ var Y = {
 			predictionLoseOrders: "未中奖订单",
 			predictionNetProfit30d: "30日用户净盈亏(U)",
 			predictionOrders30d: "30日订单",
+			predictionPendingAmount: "待开奖金额(U)",
+			predictionPendingOrders: "待开奖订单",
 			predictionRefundOrders: "退款/作废订单",
 			predictionReturn30d: "30日返还(U)",
 			predictionStake30d: "30日下注(U)",
@@ -19055,7 +19059,7 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 	key: 0,
 	class: "mm-user-detail-login-field",
 	role: "listitem"
-}, _f = { class: "mm-user-detail-login-field__label" }, vf = { class: "mm-user-detail-login-field__value" }, yf = { class: "mm-user-detail-caption" }, bf = { class: "mm-user-detail-business__metrics" }, xf = { class: "mm-user-detail-caption" }, Sf = { class: "mm-user-detail-business__metrics" }, Cf = { class: "mm-user-detail-dialog__updated-at" }, wf = /* @__PURE__ */ p({
+}, _f = { class: "mm-user-detail-login-field__label" }, vf = { class: "mm-user-detail-login-field__value" }, yf = { class: "mm-user-detail-caption" }, bf = { class: "mm-user-detail-business__metrics" }, xf = { class: "mm-user-detail-caption" }, Sf = { class: "mm-user-detail-business__metrics is-prediction" }, Cf = { class: "mm-user-detail-dialog__updated-at" }, wf = /* @__PURE__ */ p({
 	name: "MmUserDetailDialog",
 	__name: "UserDetailDialog",
 	props: {
@@ -19179,6 +19183,16 @@ var Md = { key: 1 }, Nd = { class: "mm-position-table__id" }, Pd = { key: 1 }, F
 		}), te = i(() => {
 			let e = g.value?.prediction ?? {};
 			return [
+				{
+					key: "prediction_pending_orders",
+					label: p.value.userDetail.predictionPendingOrders,
+					value: B(e.pending_orders)
+				},
+				{
+					key: "prediction_pending_amount",
+					label: p.value.userDetail.predictionPendingAmount,
+					value: z(e.pending_amount)
+				},
 				{
 					key: "prediction_orders_30d",
 					label: p.value.userDetail.predictionOrders30d,

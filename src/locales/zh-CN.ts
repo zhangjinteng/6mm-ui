@@ -928,6 +928,8 @@ export const zhCN: MmUILocale = {
       predictionLoseOrders: "未中奖订单",
       predictionNetProfit30d: "30日用户净盈亏(U)",
       predictionOrders30d: "30日订单",
+      predictionPendingAmount: "待开奖金额(U)",
+      predictionPendingOrders: "待开奖订单",
       predictionRefundOrders: "退款/作废订单",
       predictionReturn30d: "30日返还(U)",
       predictionStake30d: "30日下注(U)",

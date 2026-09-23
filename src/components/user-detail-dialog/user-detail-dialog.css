@@ -41,6 +41,8 @@
 .mm-user-detail-metric { position: relative; display: grid; min-width: 0; min-height: 64px; padding: 9px 12px 20px; align-content: start; gap: 3px; border-right: 1px solid var(--mm-color-line); border-bottom: 1px solid var(--mm-color-line); }
 .mm-user-detail-metric:nth-child(4n) { border-right: 0; }
 .mm-user-detail-metric:nth-last-child(-n + 4) { border-bottom: 0; }
+.mm-user-detail-business__metrics.is-prediction .mm-user-detail-metric:nth-last-child(-n + 4) { border-bottom: 1px solid var(--mm-color-line); }
+.mm-user-detail-business__metrics.is-prediction .mm-user-detail-metric:nth-last-child(-n + 2) { border-bottom: 0; }
 .mm-user-detail-metric > span { color: var(--mm-color-text-muted); font-size: 11px; }
 .mm-user-detail-metric > strong { overflow: hidden; color: var(--mm-color-text); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
 .mm-user-detail-metric > strong.is-positive { color: var(--mm-color-success); }

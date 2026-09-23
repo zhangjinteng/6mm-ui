@@ -931,6 +931,8 @@ export const enUS: MmUILocale = {
       predictionLoseOrders: "Losing Orders",
       predictionNetProfit30d: "30D User Net PnL(U)",
       predictionOrders30d: "30D Orders",
+      predictionPendingAmount: "Pending Amount(U)",
+      predictionPendingOrders: "Pending Orders",
       predictionRefundOrders: "Refunded/Voided Orders",
       predictionReturn30d: "30D Return(U)",
       predictionStake30d: "30D Stake(U)",

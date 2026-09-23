@@ -44,7 +44,7 @@ describe('MmUserDetailDialog', () => {
         modelValue: true,
         request: async () => ({
           contract: {},
-          prediction: { orders_30d: 12, win_orders: 7 },
+          prediction: { orders_30d: 12, pending_amount: '6.5', pending_orders: 2, win_orders: 7 },
           user_id: 9001,
         }),
         userId: 9001,
@@ -57,6 +57,8 @@ describe('MmUserDetailDialog', () => {
     await flushPromises()
 
     expect(document.body.textContent).toContain('30日订单')
+    expect(document.body.textContent).toContain('待开奖订单')
+    expect(document.body.textContent).toContain('6.50')
     expect(document.body.textContent).toContain('12')
     const predictionLink = Array.from(document.body.querySelectorAll<HTMLButtonElement>('.mm-user-detail-metric__link'))
       .find(button => button.closest('.mm-user-detail-metric')?.textContent?.includes('30日订单'))

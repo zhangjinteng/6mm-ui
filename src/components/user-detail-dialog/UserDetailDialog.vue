@@ -147,6 +147,8 @@ const metrics = computed(() => {
 const predictionMetrics = computed(() => {
   const prediction = detail.value?.prediction ?? {}
   return [
+    { key: 'prediction_pending_orders' as const, label: messages.value.userDetail.predictionPendingOrders, value: formatCount(prediction.pending_orders) },
+    { key: 'prediction_pending_amount' as const, label: messages.value.userDetail.predictionPendingAmount, value: formatAmount(prediction.pending_amount) },
     { key: 'prediction_orders_30d' as const, label: messages.value.userDetail.predictionOrders30d, value: formatCount(prediction.orders_30d) },
     { key: 'prediction_win_orders' as const, label: messages.value.userDetail.predictionWinOrders, value: formatCount(prediction.win_orders) },
     { key: 'prediction_lose_orders' as const, label: messages.value.userDetail.predictionLoseOrders, value: formatCount(prediction.lose_orders) },
@@ -366,7 +368,7 @@ defineExpose({ reload: load })
               <strong>{{ messages.userDetail.prediction }}</strong>
               <span class="mm-user-detail-caption">{{ messages.userDetail.summary }}</span>
             </template>
-            <div class="mm-user-detail-business__metrics">
+            <div class="mm-user-detail-business__metrics is-prediction">
               <article v-for="metric in predictionMetrics" :key="metric.key" class="mm-user-detail-metric">
                 <span>{{ metric.label }}</span>
                 <strong :class="metric.tone ? `is-${metric.tone}` : undefined">{{ metric.value }}</strong>

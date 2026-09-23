@@ -1,5 +1,5 @@
 import { IpLocationInfo } from '../ip-location';
-export type UserDetailMetricKey = 'wallet_balance' | 'position_amount' | 'position_count' | 'order_count' | 'unrealized_pnl' | 'pnl_30d' | 'fee_30d' | 'last_trade_at' | 'prediction_orders_30d' | 'prediction_win_orders' | 'prediction_lose_orders' | 'prediction_refund_orders' | 'prediction_stake_30d' | 'prediction_return_30d' | 'prediction_net_profit_30d' | 'prediction_last_at';
+export type UserDetailMetricKey = 'wallet_balance' | 'position_amount' | 'position_count' | 'order_count' | 'unrealized_pnl' | 'pnl_30d' | 'fee_30d' | 'last_trade_at' | 'prediction_pending_orders' | 'prediction_pending_amount' | 'prediction_orders_30d' | 'prediction_win_orders' | 'prediction_lose_orders' | 'prediction_refund_orders' | 'prediction_stake_30d' | 'prediction_return_30d' | 'prediction_net_profit_30d' | 'prediction_last_at';
 export interface UserDetailContractSummary {
     fee_30d?: number | string | null;
     last_trade_at?: string | null;
@@ -16,6 +16,8 @@ export interface UserDetailPredictionSummary {
     lose_orders?: number | string | null;
     net_profit_30d?: number | string | null;
     orders_30d?: number | string | null;
+    pending_amount?: number | string | null;
+    pending_orders?: number | string | null;
     refund_orders?: number | string | null;
     return_30d?: number | string | null;
     stake_30d?: number | string | null;

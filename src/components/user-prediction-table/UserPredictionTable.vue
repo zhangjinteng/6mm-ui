@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<UserPredictionTableProps<Row>>(), {
   ariaLabel: undefined,
   columnsConfigurable: true,
   fillHeight: true,
+  initialKeyword: '',
   initialPageSize: 20,
   pageSizes: () => [20, 50, 100],
 })
@@ -122,7 +123,7 @@ const netProfitClass = (value: unknown) => {
 
 const { proTableBindings, reload } = useMmProTable<Row>({
   initialAutoRefreshSeconds: 0,
-  initialFilters: { keyword: '', username: '', agent_id: '', play_type: 'all', last_prediction_range: null },
+  initialFilters: { keyword: String(props.initialKeyword ?? ''), username: '', agent_id: '', play_type: 'all', last_prediction_range: null },
   initialPageSize: props.initialPageSize,
   initialSort: defaultSort,
   queryFields,

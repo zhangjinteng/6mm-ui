@@ -144,6 +144,20 @@ const metrics = computed(() => {
   ]
 })
 
+const predictionMetrics = computed(() => {
+  const prediction = detail.value?.prediction ?? {}
+  return [
+    { key: 'prediction_orders_30d' as const, label: messages.value.userDetail.predictionOrders30d, value: formatCount(prediction.orders_30d) },
+    { key: 'prediction_win_orders' as const, label: messages.value.userDetail.predictionWinOrders, value: formatCount(prediction.win_orders) },
+    { key: 'prediction_lose_orders' as const, label: messages.value.userDetail.predictionLoseOrders, value: formatCount(prediction.lose_orders) },
+    { key: 'prediction_refund_orders' as const, label: messages.value.userDetail.predictionRefundOrders, value: formatCount(prediction.refund_orders) },
+    { key: 'prediction_stake_30d' as const, label: messages.value.userDetail.predictionStake30d, value: formatAmount(prediction.stake_30d) },
+    { key: 'prediction_return_30d' as const, label: messages.value.userDetail.predictionReturn30d, value: formatAmount(prediction.return_30d) },
+    { key: 'prediction_net_profit_30d' as const, label: messages.value.userDetail.predictionNetProfit30d, value: formatAmount(prediction.net_profit_30d), tone: amountTone(prediction.net_profit_30d) },
+    { key: 'prediction_last_at' as const, label: messages.value.userDetail.predictionLastAt, value: displayValue(prediction.last_prediction_at) },
+  ]
+})
+
 function formatUpdatedAt(value: Date | string | undefined): string {
   const date = value instanceof Date ? value : value ? new Date(value) : new Date()
   if (!Number.isFinite(date.getTime())) return displayValue(value)
@@ -336,6 +350,24 @@ defineExpose({ reload: load })
             </template>
             <div class="mm-user-detail-business__metrics">
               <article v-for="metric in metrics" :key="metric.key" class="mm-user-detail-metric">
+                <span>{{ metric.label }}</span>
+                <strong :class="metric.tone ? `is-${metric.tone}` : undefined">{{ metric.value }}</strong>
+                <MmButton v-if="showMetricLinks" class="mm-user-detail-metric__link" size="sm" variant="text" @click="onMetricClick(metric.key)">
+                  {{ messages.userDetail.goToPage }}
+                  <MmIcon name="chevron-right" :size="11" />
+                </MmButton>
+              </article>
+            </div>
+          </MmCard>
+        </MmTabPane>
+        <MmTabPane :label="messages.userDetail.prediction" name="prediction">
+          <MmCard class="mm-user-detail-business" bordered shadow="never">
+            <template #header>
+              <strong>{{ messages.userDetail.prediction }}</strong>
+              <span class="mm-user-detail-caption">{{ messages.userDetail.summary }}</span>
+            </template>
+            <div class="mm-user-detail-business__metrics">
+              <article v-for="metric in predictionMetrics" :key="metric.key" class="mm-user-detail-metric">
                 <span>{{ metric.label }}</span>
                 <strong :class="metric.tone ? `is-${metric.tone}` : undefined">{{ metric.value }}</strong>
                 <MmButton v-if="showMetricLinks" class="mm-user-detail-metric__link" size="sm" variant="text" @click="onMetricClick(metric.key)">

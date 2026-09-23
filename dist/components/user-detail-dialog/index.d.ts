@@ -108,6 +108,16 @@ export declare const MmUserDetailDialog: {
                 login_time?: string | null | undefined;
                 nice_name?: string | null | undefined;
                 online_status?: boolean | number | string | null | undefined;
+                prediction?: {
+                    last_prediction_at?: string | null | undefined;
+                    lose_orders?: number | string | null | undefined;
+                    net_profit_30d?: number | string | null | undefined;
+                    orders_30d?: number | string | null | undefined;
+                    refund_orders?: number | string | null | undefined;
+                    return_30d?: number | string | null | undefined;
+                    stake_30d?: number | string | null | undefined;
+                    win_orders?: number | string | null | undefined;
+                } | null | undefined;
                 updated_at?: string | null | undefined;
                 user_id: number | string;
                 user_type?: number | string | null | undefined;
@@ -167,6 +177,16 @@ export declare const MmUserDetailDialog: {
                 login_time?: string | null | undefined;
                 nice_name?: string | null | undefined;
                 online_status?: boolean | number | string | null | undefined;
+                prediction?: {
+                    last_prediction_at?: string | null | undefined;
+                    lose_orders?: number | string | null | undefined;
+                    net_profit_30d?: number | string | null | undefined;
+                    orders_30d?: number | string | null | undefined;
+                    refund_orders?: number | string | null | undefined;
+                    return_30d?: number | string | null | undefined;
+                    stake_30d?: number | string | null | undefined;
+                    win_orders?: number | string | null | undefined;
+                } | null | undefined;
                 updated_at?: string | null | undefined;
                 user_id: number | string;
                 user_type?: number | string | null | undefined;
@@ -223,6 +243,16 @@ export declare const MmUserDetailDialog: {
                 login_time?: string | null | undefined;
                 nice_name?: string | null | undefined;
                 online_status?: boolean | number | string | null | undefined;
+                prediction?: {
+                    last_prediction_at?: string | null | undefined;
+                    lose_orders?: number | string | null | undefined;
+                    net_profit_30d?: number | string | null | undefined;
+                    orders_30d?: number | string | null | undefined;
+                    refund_orders?: number | string | null | undefined;
+                    return_30d?: number | string | null | undefined;
+                    stake_30d?: number | string | null | undefined;
+                    win_orders?: number | string | null | undefined;
+                } | null | undefined;
                 updated_at?: string | null | undefined;
                 user_id: number | string;
                 user_type?: number | string | null | undefined;

@@ -59,6 +59,7 @@ export interface UserPredictionTableProps<Row extends UserPredictionRow = UserPr
   columns?: UserPredictionTableColumns<Row>
   columnsConfigurable?: boolean
   fillHeight?: boolean
+  initialKeyword?: number | string
   initialPageSize?: number
   pageSizes?: number[]
   request: UserPredictionListRequest<Row>

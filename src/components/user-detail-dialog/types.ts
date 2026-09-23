@@ -7,6 +7,14 @@ export type UserDetailMetricKey =
   | 'pnl_30d'
   | 'fee_30d'
   | 'last_trade_at'
+  | 'prediction_orders_30d'
+  | 'prediction_win_orders'
+  | 'prediction_lose_orders'
+  | 'prediction_refund_orders'
+  | 'prediction_stake_30d'
+  | 'prediction_return_30d'
+  | 'prediction_net_profit_30d'
+  | 'prediction_last_at'
 
 export interface UserDetailContractSummary {
   fee_30d?: number | string | null
@@ -18,6 +26,17 @@ export interface UserDetailContractSummary {
   positions?: Array<Record<string, unknown>> | null
   unrealized_pnl?: number | string | null
   wallet_balance?: number | string | null
+}
+
+export interface UserDetailPredictionSummary {
+  last_prediction_at?: string | null
+  lose_orders?: number | string | null
+  net_profit_30d?: number | string | null
+  orders_30d?: number | string | null
+  refund_orders?: number | string | null
+  return_30d?: number | string | null
+  stake_30d?: number | string | null
+  win_orders?: number | string | null
 }
 
 export interface UserDetailData {
@@ -35,6 +54,7 @@ export interface UserDetailData {
   login_time?: string | null
   nice_name?: string | null
   online_status?: boolean | number | string | null
+  prediction?: UserDetailPredictionSummary | null
   updated_at?: string | null
   user_id: number | string
   user_type?: number | string | null

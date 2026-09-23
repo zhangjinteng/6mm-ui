@@ -918,6 +918,15 @@ export interface MmUILocaleMessages {
         onlineDuration: string;
         orderCount: string;
         pnl30d: string;
+        prediction: string;
+        predictionLastAt: string;
+        predictionLoseOrders: string;
+        predictionNetProfit30d: string;
+        predictionOrders30d: string;
+        predictionRefundOrders: string;
+        predictionReturn30d: string;
+        predictionStake30d: string;
+        predictionWinOrders: string;
         positionAmount: string;
         positionCount: string;
         registerTime: string;

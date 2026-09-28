@@ -18,6 +18,7 @@ export interface DialogProps {
   showClose?: boolean
   teleportTo?: string | HTMLElement
   title?: string
+  subtitle?: string
   width?: number | string
 }
 

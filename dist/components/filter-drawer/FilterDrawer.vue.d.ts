@@ -37,8 +37,8 @@ declare const __VLS_base: import('vue').DefineComponent<FilterDrawerProps, Filte
     modelValue: QueryBarValue;
     open: boolean;
     fields: import('..').QueryBarField[];
-    activeCount: number;
     subtitle: string;
+    activeCount: number;
     triggerAriaLabel: string;
     triggerTitle: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

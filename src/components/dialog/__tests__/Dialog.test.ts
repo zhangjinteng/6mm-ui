@@ -10,6 +10,32 @@ afterEach(() => {
 })
 
 describe('MmDialog', () => {
+  it('renders a title alone and an optional subtitle with accessible descriptions', async () => {
+    const wrapper = mount(Dialog, {
+      attachTo: document.body,
+      props: { modelValue: true, title: '确认踢下线' },
+    })
+    await nextTick()
+
+    const panel = document.body.querySelector<HTMLElement>('[role="dialog"]')!
+    expect(panel.querySelector('.mm-dialog__title')?.textContent).toBe('确认踢下线')
+    expect(panel.querySelector('.mm-dialog__subtitle')).toBeNull()
+    expect(panel.getAttribute('aria-describedby')).toBeNull()
+
+    await wrapper.setProps({ subtitle: '操作对象：UID 936001273' })
+    const subtitle = panel.querySelector<HTMLElement>('.mm-dialog__subtitle')!
+    expect(subtitle.textContent).toBe('操作对象：UID 936001273')
+    expect(panel.getAttribute('aria-labelledby')).toBe(panel.querySelector('.mm-dialog__title')?.id)
+    expect(panel.getAttribute('aria-describedby')).toBe(subtitle.id)
+
+    await wrapper.setProps({ ariaDescribedby: 'dialog-hint' })
+    expect(panel.getAttribute('aria-describedby')).toBe(`dialog-hint ${subtitle.id}`)
+
+    await wrapper.setProps({ subtitle: undefined })
+    expect(panel.querySelector('.mm-dialog__subtitle')).toBeNull()
+    wrapper.unmount()
+  })
+
   it('teleports, traps focus, closes on Escape, and restores focus', async () => {
     const outside = document.createElement('button')
     outside.textContent = '打开'
@@ -83,6 +109,21 @@ describe('MmDialog', () => {
     const title = document.getElementById(panel.getAttribute('aria-labelledby')!)
     expect(title?.textContent).toBe('用户详情')
     expect(panel.querySelector('.mm-dialog__header-actions')?.textContent).toContain('切换类型')
+    wrapper.unmount()
+  })
+
+  it('keeps a custom header in control when a subtitle prop is also provided', async () => {
+    const wrapper = mount(Dialog, {
+      attachTo: document.body,
+      props: { modelValue: true, title: '默认标题', subtitle: '默认副标题' },
+      slots: { header: '<strong>自定义标题</strong>' },
+    })
+    await nextTick()
+
+    const panel = document.body.querySelector<HTMLElement>('[role="dialog"]')!
+    expect(panel.querySelector('.mm-dialog__title')?.textContent).toBe('自定义标题')
+    expect(panel.querySelector('.mm-dialog__subtitle')).toBeNull()
+    expect(panel.getAttribute('aria-describedby')).toBeNull()
     wrapper.unmount()
   })
 

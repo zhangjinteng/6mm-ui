@@ -101,7 +101,7 @@
 | 组件        | 导入名                       | 核心能力                                       |
 | ----------- | ---------------------------- | ---------------------------------------------- |
 | Alert       | `MmAlert`                    | 类型、标题、描述、关闭、banner 与 live region  |
-| Dialog      | `MmDialog`                   | Teleport、焦点陷阱、Escape、遮罩与焦点回退     |
+| Dialog      | `MmDialog`                   | 可选 `title`/`subtitle` 双行标题、`header` 插槽、Teleport、焦点陷阱、Escape、遮罩与焦点回退 |
 | Drawer      | `MmDrawer`                   | 四方向、尺寸、遮罩、滚动锁定与焦点管理         |
 | Loading     | `MmLoading`、`vMmLoading`    | 组件、局部指令、fullscreen 与清理              |
 | Message     | `MmMessage`、`message`       | 组件、函数式队列、时长、关闭句柄与 live region |

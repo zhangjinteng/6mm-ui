@@ -27,6 +27,7 @@ const props = withDefaults(defineProps<DialogProps>(), {
   showClose: true,
   teleportTo: 'body',
   title: undefined,
+  subtitle: undefined,
   width: 520,
 })
 const emit = defineEmits<{
@@ -41,13 +42,15 @@ const slots = useSlots()
 const visible = ref(props.modelValue)
 const panelRef = ref<HTMLElement>()
 const titleId = useId('mm-dialog-title')
+const subtitleId = useId('mm-dialog-subtitle')
 const zIndex = ref(1200)
 const scrollLock = useLockScroll()
 let overlayHandle: OverlayHandle | undefined
 let closing = false
 
-const hasHeader = computed(() => Boolean(props.title || slots.header || slots['header-actions'] || props.showClose))
+const hasHeader = computed(() => Boolean(props.title || props.subtitle || slots.header || slots['header-actions'] || props.showClose))
 const labelledby = computed(() => props.title || slots.header ? titleId : undefined)
+const describedby = computed(() => [props.ariaDescribedby, props.subtitle && !slots.header ? subtitleId : undefined].filter(Boolean).join(' ') || undefined)
 const widthStyle = computed(() => typeof props.width === 'number' ? `${props.width}px` : props.width)
 const focusTrap = useFocusTrap(panelRef, {
   escapeDeactivates: false,
@@ -136,13 +139,16 @@ defineExpose<DialogExpose>({ close: requestClose, open })
         :style="[{ width: kind === 'dialog' ? widthStyle : undefined }, panelStyle]"
         role="dialog"
         aria-modal="true"
-        :aria-describedby="ariaDescribedby"
+        :aria-describedby="describedby"
         :aria-labelledby="labelledby"
         :aria-label="labelledby ? undefined : messages.dialog.label"
         tabindex="-1"
       >
         <header v-if="hasHeader" class="mm-dialog__header">
-          <div :id="titleId" class="mm-dialog__title"><slot name="header" :close="requestClose">{{ title }}</slot></div>
+          <div class="mm-dialog__heading">
+            <div :id="titleId" class="mm-dialog__title"><slot name="header" :close="requestClose">{{ title }}</slot></div>
+            <p v-if="subtitle && !$slots.header" :id="subtitleId" class="mm-dialog__subtitle">{{ subtitle }}</p>
+          </div>
           <div v-if="$slots['header-actions']" class="mm-dialog__header-actions">
             <slot name="header-actions" :close="requestClose" />
           </div>

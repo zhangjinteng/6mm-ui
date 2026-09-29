@@ -257,6 +257,23 @@ export const enUS: MmUILocale = {
       usernamePlaceholder: "Username",
       winOrders: "Winning Orders",
     },
+    userContracts: {
+      tableAria: "User contracts", filterTitle: "Filters", filterSubtitle: "User contracts",
+      userUid: "User UID", username: "Username", externalUserId: "External user ID",
+      positionStatus: "Position status", positionStatusAll: "All", hasPosition: "Has", noPosition: "None",
+      identityKeyword: "User UID / External user ID", lastContractTime: "Last trade", lastContractTimeAll: "Last trade: all",
+      walletBalance: "Wallet (U)", availableBalance: "Available (U)", positionAmount: "Position (U)", positionCount: "Positions",
+      orderAmount: "Orders (U)", orderCount: "Orders", unrealizedPnl: "Unrealized PnL (U)",
+      pnl30d: "30-day PnL (U)", fee30d: "30-day fees (U)", loadFailed: "Failed to load user contracts",
+    },
+    userMappings: {
+      agent: "Agent", allAgents: "All agents", user: "User", keywordPlaceholder: "External user ID / User UID",
+      mappingStatus: "Mapping status", allStatuses: "All statuses", normal: "Normal", processing: "Processing", abnormal: "Abnormal",
+      exceptionType: "Exception type", allExceptions: "All exceptions", duplicateMapping: "Duplicate mapping", userNotFound: "User not found",
+      signatureFailed: "Signature failed", syncFailed: "Sync failed", recentSyncTime: "Last synced", dateRange: "Select date range",
+      mappingId: "Mapping ID", username: "Username", externalUserId: "External user ID", userUid: "User UID",
+      tableAria: "User mappings", loadFailed: "Failed to load user mappings",
+    },
     accountChangeLogs: {
       adminAdjust: "Admin transfer",
       adjustIsolatedMargin: "Adjust Isolated Margin",

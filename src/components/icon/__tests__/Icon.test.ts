@@ -38,6 +38,7 @@ close
 coins
 columns
 copy
+crown
 database
 down
 external-link
@@ -59,6 +60,7 @@ key-round
 landmark
 layout-dashboard
 left
+link-2
 line-chart
 list
 list-checks
@@ -224,6 +226,27 @@ describe("MmIcon", () => {
     const wrapper = mount(Icon, { props: { name } });
 
     expect(wrapper.element.childElementCount).toBeGreaterThan(0);
+  });
+
+  it("renders the link-2 menu icon", () => {
+    const wrapper = mount(Icon, { props: { name: "link-2", strokeWidth: 2 } });
+
+    expect(wrapper.findAll("path").map((path) => path.attributes("d"))).toEqual([
+      "M9 17H7A5 5 0 0 1 7 7h2",
+      "M15 7h2a5 5 0 1 1 0 10h-2",
+    ]);
+    expect(wrapper.find("line").attributes()).toEqual(
+      expect.objectContaining({ x1: "8", x2: "16", y1: "12", y2: "12" }),
+    );
+  });
+
+  it("renders the crown menu icon", () => {
+    const wrapper = mount(Icon, { props: { name: "crown", strokeWidth: 2 } });
+
+    expect(wrapper.findAll("path").map((path) => path.attributes("d"))).toEqual([
+      "M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z",
+      "M5 21h14",
+    ]);
   });
 
   it("includes every reusable agent console icon", () => {

@@ -270,6 +270,11 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2";
     }]];
+    readonly crown: readonly [readonly ["path", {
+        readonly d: "M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z";
+    }], readonly ["path", {
+        readonly d: "M5 21h14";
+    }]];
     readonly database: readonly [readonly ["ellipse", {
         readonly cx: "12";
         readonly cy: "5";
@@ -434,6 +439,16 @@ export declare const iconDefinitions: {
     }]];
     readonly left: readonly [readonly ["path", {
         readonly d: "m15 18-6-6 6-6";
+    }]];
+    readonly "link-2": readonly [readonly ["path", {
+        readonly d: "M9 17H7A5 5 0 0 1 7 7h2";
+    }], readonly ["path", {
+        readonly d: "M15 7h2a5 5 0 1 1 0 10h-2";
+    }], readonly ["line", {
+        readonly x1: "8";
+        readonly x2: "16";
+        readonly y1: "12";
+        readonly y2: "12";
     }]];
     readonly "line-chart": readonly [readonly ["path", {
         readonly d: "M3 3v18h18";

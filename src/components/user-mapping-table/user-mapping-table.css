@@ -1,0 +1,8 @@
+.mm-user-mapping-table .mm-pro-table__auto-refresh { display: none; }
+.mm-user-mapping-table .mm-table th,
+.mm-user-mapping-table .mm-table td { font-size: 12px; }
+.mm-user-mapping-table .mm-table td { font-variant-numeric: tabular-nums; }
+.mm-user-mapping-table__exception.is-abnormal { color: var(--mm-color-danger); font-weight: 600; }
+.mm-user-mapping-table .mm-table tbody tr,
+.mm-user-mapping-table .mm-table tbody td { height: 43px; }
+.mm-user-mapping-table .mm-table tbody td { padding-block: 0; }

@@ -257,6 +257,23 @@ export const zhCN: MmUILocale = {
       usernamePlaceholder: "用户名",
       winOrders: "中奖订单",
     },
+    userContracts: {
+      tableAria: "用户合约数据", filterTitle: "筛选", filterSubtitle: "用户合约",
+      userUid: "用户 UID", username: "用户名", externalUserId: "外部用户 ID",
+      positionStatus: "持仓状态", positionStatusAll: "持仓状态:全部", hasPosition: "有", noPosition: "无",
+      identityKeyword: "用户 UID/外部用户 ID", lastContractTime: "最后成交时间", lastContractTimeAll: "最后成交时间：全部",
+      walletBalance: "账户余额(U)", availableBalance: "可用余额(U)", positionAmount: "持仓量(U)", positionCount: "仓位数量",
+      orderAmount: "委托量(U)", orderCount: "委托数", unrealizedPnl: "未实现盈亏(U)",
+      pnl30d: "30日累计盈亏(U)", fee30d: "30日手续费(U)", loadFailed: "获取用户合约失败",
+    },
+    userMappings: {
+      agent: "代理商", allAgents: "全部代理商", user: "用户", keywordPlaceholder: "外部用户 ID/用户 UID",
+      mappingStatus: "映射状态", allStatuses: "映射状态：全部", normal: "正常", processing: "处理中", abnormal: "异常",
+      exceptionType: "异常类型", allExceptions: "异常类型：全部", duplicateMapping: "重复映射", userNotFound: "用户不存在",
+      signatureFailed: "签名失败", syncFailed: "同步失败", recentSyncTime: "最近同步时间", dateRange: "选择日期范围",
+      mappingId: "映射 ID", username: "用户名", externalUserId: "外部用户 ID", userUid: "用户 UID",
+      tableAria: "用户映射", loadFailed: "获取用户映射失败",
+    },
     accountChangeLogs: {
       adminAdjust: "后台划转",
       adjustIsolatedMargin: "调整逐仓保证金",

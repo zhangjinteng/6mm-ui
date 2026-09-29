@@ -256,6 +256,22 @@ export interface MmUILocaleMessages {
     usernamePlaceholder: string;
     winOrders: string;
   };
+  userContracts: {
+    tableAria: string; filterTitle: string; filterSubtitle: string;
+    userUid: string; username: string; externalUserId: string;
+    positionStatus: string; positionStatusAll: string; hasPosition: string; noPosition: string;
+    identityKeyword: string; lastContractTime: string; lastContractTimeAll: string;
+    walletBalance: string; availableBalance: string; positionAmount: string; positionCount: string;
+    orderAmount: string; orderCount: string; unrealizedPnl: string; pnl30d: string; fee30d: string; loadFailed: string;
+  };
+  userMappings: {
+    agent: string; allAgents: string; user: string; keywordPlaceholder: string;
+    mappingStatus: string; allStatuses: string; normal: string; processing: string; abnormal: string;
+    exceptionType: string; allExceptions: string; duplicateMapping: string; userNotFound: string;
+    signatureFailed: string; syncFailed: string; recentSyncTime: string; dateRange: string;
+    mappingId: string; username: string; externalUserId: string; userUid: string;
+    tableAria: string; loadFailed: string;
+  };
   accountChangeLogs: {
     adminAdjust: string;
     adjustIsolatedMargin: string;

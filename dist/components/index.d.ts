@@ -60,6 +60,8 @@ export * from './user-detail-dialog';
 export * from './user-asset-table';
 export * from './user-table';
 export * from './user-prediction-table';
+export * from './user-contract-table';
+export * from './user-mapping-table';
 export * from './page-header';
 export * from './popover';
 export * from './pagination';

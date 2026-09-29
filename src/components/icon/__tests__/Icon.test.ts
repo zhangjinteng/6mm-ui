@@ -125,6 +125,7 @@ x
   .split("\n");
 
 const extendedIconNames = `
+archive
 camera
 circle-help
 clock
@@ -136,7 +137,9 @@ eye
 eye-off
 fullscreen
 fullscreen-exit
+handshake
 image
+list-ordered
 mail
 map
 map-pin
@@ -146,9 +149,12 @@ printer
 repeat-2
 scan-line
 share-2
+split
+timer-reset
 undo-2
 volume-2
 volume-x
+workflow
 `
   .trim()
   .split("\n");
@@ -255,6 +261,19 @@ describe("MmIcon", () => {
 
   it("includes the reusable icons migrated from the Vue admin assets", () => {
     expect(iconNames).toEqual(expect.arrayContaining(extendedIconNames));
+  });
+
+  it.each([
+    ["archive", ["rect", "path", "path"]],
+    ["handshake", ["path", "path", "path", "path", "path"]],
+    ["list-ordered", ["path", "path", "path", "path", "path", "path"]],
+    ["split", ["path", "path", "path", "path"]],
+    ["timer-reset", ["path", "path", "path", "path"]],
+    ["workflow", ["rect", "path", "rect"]],
+  ] as const)("renders the contract menu %s SVG", (name, tags) => {
+    const wrapper = mount(Icon, { props: { name } });
+
+    expect(wrapper.findAll("rect, path").map((node) => node.element.tagName.toLowerCase())).toEqual(tags);
   });
 
   it.each([

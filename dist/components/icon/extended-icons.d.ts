@@ -6,6 +6,17 @@
  * contract and public English icon names.
  */
 export declare const extendedIconDefinitions: {
+    readonly archive: readonly [readonly ["rect", {
+        readonly width: "20";
+        readonly height: "5";
+        readonly x: "2";
+        readonly y: "3";
+        readonly rx: "1";
+    }], readonly ["path", {
+        readonly d: "M4 8v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8";
+    }], readonly ["path", {
+        readonly d: "M10 12h4";
+    }]];
     readonly camera: readonly [readonly ["path", {
         readonly d: "M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z";
     }], readonly ["circle", {
@@ -103,6 +114,17 @@ export declare const extendedIconDefinitions: {
     }], readonly ["path", {
         readonly d: "M19 16h-3v3";
     }]];
+    readonly handshake: readonly [readonly ["path", {
+        readonly d: "m11 17 2 2a1 1 0 1 0 3-3";
+    }], readonly ["path", {
+        readonly d: "m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4";
+    }], readonly ["path", {
+        readonly d: "m21 3 1 11h-2";
+    }], readonly ["path", {
+        readonly d: "M3 3 2 14l6.5 6.5a1 1 0 0 0 3-3";
+    }], readonly ["path", {
+        readonly d: "M3 4h8";
+    }]];
     readonly image: readonly [readonly ["rect", {
         readonly x: "3";
         readonly y: "3";
@@ -115,6 +137,19 @@ export declare const extendedIconDefinitions: {
         readonly r: "2";
     }], readonly ["path", {
         readonly d: "m21 15-5-5L5 21";
+    }]];
+    readonly "list-ordered": readonly [readonly ["path", {
+        readonly d: "M11 5h10";
+    }], readonly ["path", {
+        readonly d: "M11 12h10";
+    }], readonly ["path", {
+        readonly d: "M11 19h10";
+    }], readonly ["path", {
+        readonly d: "M4 4h1v5";
+    }], readonly ["path", {
+        readonly d: "M4 9h2";
+    }], readonly ["path", {
+        readonly d: "M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02";
     }]];
     readonly mail: readonly [readonly ["rect", {
         readonly x: "2";
@@ -211,6 +246,24 @@ export declare const extendedIconDefinitions: {
         readonly y1: "13.49";
         readonly y2: "17.51";
     }]];
+    readonly split: readonly [readonly ["path", {
+        readonly d: "M16 3h5v5";
+    }], readonly ["path", {
+        readonly d: "M8 3H3v5";
+    }], readonly ["path", {
+        readonly d: "M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3";
+    }], readonly ["path", {
+        readonly d: "m15 9 6-6";
+    }]];
+    readonly "timer-reset": readonly [readonly ["path", {
+        readonly d: "M10 2h4";
+    }], readonly ["path", {
+        readonly d: "M12 14v-4";
+    }], readonly ["path", {
+        readonly d: "M4 13a8 8 0 0 1 8-7 8 8 0 1 1-5.3 14L4 17.6";
+    }], readonly ["path", {
+        readonly d: "M9 17H4v5";
+    }]];
     readonly "undo-2": readonly [readonly ["path", {
         readonly d: "M9 14 4 9l5-5";
     }], readonly ["path", {
@@ -235,5 +288,20 @@ export declare const extendedIconDefinitions: {
         readonly x2: "22";
         readonly y1: "9";
         readonly y2: "15";
+    }]];
+    readonly workflow: readonly [readonly ["rect", {
+        readonly width: "8";
+        readonly height: "8";
+        readonly x: "3";
+        readonly y: "3";
+        readonly rx: "2";
+    }], readonly ["path", {
+        readonly d: "M7 11v4a2 2 0 0 0 2 2h4";
+    }], readonly ["rect", {
+        readonly width: "8";
+        readonly height: "8";
+        readonly x: "13";
+        readonly y: "13";
+        readonly rx: "2";
     }]];
 };

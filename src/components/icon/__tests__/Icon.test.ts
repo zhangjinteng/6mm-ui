@@ -5,6 +5,7 @@ import Icon from "../Icon.vue";
 import { iconNames } from "../icons";
 
 const agentConsoleIconNames = `
+activity
 arrow-down
 arrow-down-to-line
 arrow-left
@@ -204,6 +205,15 @@ describe("MmIcon", () => {
 
     expect(wrapper.find("path").attributes("d")).toBe(
       "M5 2v10a7 7 0 0 0 7 7h8",
+    );
+  });
+
+  it("renders the reference activity menu icon", () => {
+    const wrapper = mount(Icon, { props: { name: "activity", strokeWidth: 2 } });
+
+    expect(wrapper.findAll("path")).toHaveLength(1);
+    expect(wrapper.find("path").attributes("d")).toBe(
+      "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2",
     );
   });
 

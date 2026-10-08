@@ -1,5 +1,5 @@
 <script setup lang="ts" generic="SummaryRow extends LiquidationTradeSummaryRow = LiquidationTradeSummaryRow, TradeRow extends LiquidationTradeRow = LiquidationTradeRow">
-import { computed, ref, useId, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import { useLocale } from '../../composables/use-locale'
 import { MmButton } from '../button'
@@ -35,7 +35,6 @@ const emit = defineEmits<{
 
 const { messages } = useLocale()
 const copy = computed(() => messages.value.liquidations)
-const descriptionId = `mm-liquidation-trades-dialog-${useId()}-description`
 const loading = ref(false)
 const loadError = ref('')
 const tradeRows = ref<TradeRow[]>([])
@@ -226,17 +225,17 @@ watch(
   <MmDialog
     v-bind="$attrs"
     v-model="visible"
-    :aria-describedby="descriptionId"
     :close-on-click-modal="false"
     panel-class="mm-liquidation-trades-dialog-panel"
+    :subtitle="copy.tradeDialogSubtitle(displayValue(row?.position_id))"
+    :title="copy.tradeDialogTitle"
     width="min(1180px, calc(100vw - 24px))"
     @closed="handleClosed"
   >
-    <template #header>
-      <div class="mm-liquidation-trades-dialog__title">
-        <strong>{{ copy.tradeDialogTitle }}</strong>
-        <span :id="descriptionId">{{ copy.tradeDialogSubtitle(displayValue(row?.position_id)) }}</span>
-      </div>
+    <template #header-actions>
+      <span class="mm-liquidation-trades-dialog__header-icon" aria-hidden="true">
+        <MmIcon name="triangle-alert" :size="18" />
+      </span>
     </template>
 
     <div v-if="row" class="mm-liquidation-trades-dialog__body">

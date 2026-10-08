@@ -49,8 +49,15 @@ describe('MmLiquidationTradesDialog', () => {
       expect.objectContaining({ signal: expect.any(AbortSignal) }),
     )
     const panel = document.body.querySelector<HTMLElement>('[role="dialog"]')!
-    expect(panel.textContent).toContain('强平成交记录')
-    expect(panel.textContent).toContain('仓位 10019033 · 每个强平单聚合展示一次')
+    const title = panel.querySelector<HTMLElement>('.mm-dialog__title')!
+    const subtitle = panel.querySelector<HTMLElement>('.mm-dialog__subtitle')!
+    const headerIcon = panel.querySelector<HTMLElement>('.mm-dialog__header-actions .mm-liquidation-trades-dialog__header-icon')!
+    expect(headerIcon.querySelector('svg.mm-icon')).not.toBeNull()
+    expect(headerIcon.getAttribute('aria-hidden')).toBe('true')
+    expect(title.textContent).toBe('强平成交记录')
+    expect(subtitle.textContent).toBe('仓位 10019033 · 每个强平单聚合展示一次')
+    expect(panel.getAttribute('aria-labelledby')).toBe(title.id)
+    expect(panel.getAttribute('aria-describedby')).toBe(subtitle.id)
     expect(panel.textContent).toContain('64,976.20')
     expect(panel.textContent).toContain('144,896.926')
     expect(panel.querySelector('a[href="/positions/10019033"]')).not.toBeNull()

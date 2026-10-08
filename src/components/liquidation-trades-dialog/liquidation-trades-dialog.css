@@ -2,6 +2,27 @@
   height: min(840px, calc(100vh - 48px));
 }
 
+.mm-liquidation-trades-dialog-panel .mm-dialog__header-actions {
+  order: -1;
+  padding: 13px 0;
+}
+
+.mm-liquidation-trades-dialog-panel .mm-dialog__title {
+  font-size: var(--mm-font-size-lg);
+}
+
+.mm-liquidation-trades-dialog__header-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  color: var(--mm-color-danger);
+  background: var(--mm-color-danger-soft);
+  border-radius: var(--mm-radius-md);
+}
+
 .mm-liquidation-trades-dialog-panel .mm-dialog__body {
   display: flex;
   min-height: 0;
@@ -9,9 +30,6 @@
   overflow: hidden;
 }
 
-.mm-liquidation-trades-dialog__title { display: flex; flex-direction: column; gap: 2px; }
-.mm-liquidation-trades-dialog__title strong { color: var(--mm-color-text); font-size: 16px; }
-.mm-liquidation-trades-dialog__title span,
 .mm-liquidation-trades-dialog__section-title span { color: var(--mm-color-text-secondary); font-size: 12px; }
 .mm-liquidation-trades-dialog__body { display: flex; min-height: 0; flex: 1 1 auto; flex-direction: column; gap: 16px; }
 .mm-liquidation-trades-dialog__summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); flex: 0 0 auto; margin: 0; overflow: hidden; border: 1px solid var(--mm-color-line); border-radius: 8px; }
@@ -23,11 +41,12 @@
 .mm-liquidation-trades-dialog__details { display: flex; min-height: 0; flex: 1 1 auto; flex-direction: column; gap: 8px; }
 .mm-liquidation-trades-dialog__section-title { display: flex; flex: 0 0 auto; align-items: baseline; gap: 8px; }
 .mm-liquidation-trades-dialog__table-content { display: flex; min-height: 0; min-width: 0; flex: 1 1 auto; flex-direction: column; gap: 10px; }
-.mm-liquidation-trades-dialog__table-wrap { min-height: 0; flex: 1 1 auto; overflow: auto; border: 1px solid var(--mm-color-line); border-radius: 8px; }
-.mm-liquidation-trades-dialog__table { width: 100%; min-width: 1020px; border-collapse: collapse; color: var(--mm-color-text); font-size: 12px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.mm-liquidation-trades-dialog__table { display: flex; min-height: 0; flex: 1 1 auto; flex-direction: column; border-radius: 8px; font-size: 12px; font-variant-numeric: tabular-nums; }
+.mm-liquidation-trades-dialog__table .mm-table__viewport { flex: 1 1 auto; }
+.mm-liquidation-trades-dialog__table .mm-table__scroll { flex: 1 1 auto; }
 .mm-liquidation-trades-dialog__table th,
 .mm-liquidation-trades-dialog__table td { height: 38px; padding: 0 10px; border-bottom: 1px solid var(--mm-color-line); text-align: left; }
-.mm-liquidation-trades-dialog__table th { position: sticky; z-index: 1; top: 0; color: var(--mm-color-text-secondary); background: var(--mm-color-soft); font-weight: 600; }
+.mm-liquidation-trades-dialog__table th { color: var(--mm-color-text-secondary); font-weight: 600; }
 .mm-liquidation-trades-dialog__table tbody tr:last-child td { border-bottom: 0; }
 .mm-liquidation-trades-dialog__pagination { box-sizing: border-box; width: 100%; min-width: 0; max-width: 100%; align-self: stretch; flex: 0 0 auto; flex-wrap: nowrap; overflow-x: auto; padding: 2px 0 4px; white-space: nowrap; }
 .mm-liquidation-trades-dialog__pagination .mm-pagination__size { width: 110px; min-width: 110px; flex: 0 0 110px; }

@@ -2416,6 +2416,7 @@ var le = {
 			rx: "2"
 		}]
 	],
+	activity: [["path", { d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" }]],
 	alert: [
 		["path", { d: "M12 3 2.7 20h18.6L12 3Z" }],
 		["path", { d: "M12 9v4" }],
@@ -17134,7 +17135,10 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 			"page-sizes"
 		]));
 	}
-}), wu = { class: "mm-liquidation-trades-dialog__title" }, Tu = {
+}), wu = {
+	class: "mm-liquidation-trades-dialog__header-icon",
+	"aria-hidden": "true"
+}, Tu = {
 	key: 0,
 	class: "mm-liquidation-trades-dialog__body"
 }, Eu = { class: "mm-liquidation-trades-dialog__summary" }, Du = { class: "mm-liquidation-trades-dialog__details" }, Ou = { class: "mm-liquidation-trades-dialog__section-title" }, ku = {
@@ -17182,24 +17186,24 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 		"update:modelValue"
 	],
 	setup(e, { emit: n }) {
-		let r = e, a = n, { messages: u } = X(), p = i(() => u.value.liquidations), m = `mm-liquidation-trades-dialog-${B()}-description`, h = A(!1), g = A(""), _ = A([]), y = A(0), b = A(1), x = A(N(r.initialPageSize)), S = A(null), C = 0, w = null, T = i({
+		let r = e, a = n, { messages: u } = X(), p = i(() => u.value.liquidations), m = A(!1), h = A(""), g = A([]), _ = A(0), y = A(1), b = A(M(r.initialPageSize)), x = A(null), S = 0, C = null, w = i({
 			get: () => r.modelValue,
 			set: (e) => a("update:modelValue", e)
-		}), E = i(() => r.row), O = i(() => P(E.value?.user?.public_user_id ?? E.value?.public_user_id ?? E.value?.user_id)), k = i(() => _.value.reduce((e, t) => {
+		}), T = i(() => r.row), E = i(() => N(T.value?.user?.public_user_id ?? T.value?.public_user_id ?? T.value?.user_id)), O = i(() => g.value.reduce((e, t) => {
 			let n = Number(t.quantity);
 			return Number.isFinite(n) ? e + Math.abs(n) : e;
-		}, 0)), M = i(() => {
-			let e = Number(E.value?.liquidation_quantity);
-			return Number.isFinite(e) ? Math.abs(e) : k.value;
+		}, 0)), k = i(() => {
+			let e = Number(T.value?.liquidation_quantity);
+			return Number.isFinite(e) ? Math.abs(e) : O.value;
 		});
-		function N(e) {
+		function M(e) {
 			let t = Number(e);
 			return Number.isFinite(t) ? Math.min(100, Math.max(1, Math.trunc(t))) : 15;
 		}
-		function P(e) {
+		function N(e) {
 			return e == null || e === "" ? "-" : String(e);
 		}
-		function I(e, t, n = 0) {
+		function P(e, t, n = 0) {
 			if (e == null || e === "") return "-";
 			let r = Number(e);
 			return Number.isFinite(r) ? r.toLocaleString("en-US", {
@@ -17207,156 +17211,160 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 				minimumFractionDigits: n
 			}) : "-";
 		}
-		function L(e) {
+		function I(e) {
 			let t = String(e ?? "").toLowerCase();
 			return t === "long" ? p.value.long : t === "short" ? p.value.short : "-";
 		}
-		function z(e) {
+		function L(e) {
 			let t = String(e ?? "").toLowerCase();
 			return t === "long" ? "success" : t === "short" ? "danger" : "info";
 		}
-		function V(e) {
+		function z(e) {
 			let t = String(e ?? "").toLowerCase();
-			return t === "buy" ? p.value.buy : t === "sell" ? p.value.sell : P(e);
+			return t === "buy" ? p.value.buy : t === "sell" ? p.value.sell : N(e);
 		}
-		function H(e) {
+		function B(e) {
 			return String(e ?? "").toLowerCase() === "sell" ? "danger" : "success";
 		}
-		function U(e) {
+		function V(e) {
 			let t = String(e ?? "").toUpperCase();
-			return t === "TAKER" ? "Taker" : t === "MAKER" ? "Maker" : P(e);
+			return t === "TAKER" ? "Taker" : t === "MAKER" ? "Maker" : N(e);
 		}
-		function G(e) {
+		function H(e) {
 			if (typeof e == "number" && Number.isFinite(e)) return e;
 			let t = String(e ?? "").trim();
 			return t === "" ? null : t;
 		}
-		function q(e) {
-			let t = G(e);
+		function U(e) {
+			let t = H(e);
 			return t === null ? void 0 : r.positionHref?.(t);
 		}
-		function ee(e) {
-			let t = G(e);
+		function G(e) {
+			let t = H(e);
 			return t === null ? void 0 : r.orderTradesHref?.(t);
 		}
-		function J(e, t) {
-			let n = G(e);
+		function q(e, t) {
+			let n = H(e);
 			if (n === null) {
 				t.preventDefault();
 				return;
 			}
 			a("position-click", n, t);
 		}
-		function Y(e, t) {
-			let n = G(e);
+		function ee(e, t) {
+			let n = H(e);
 			if (n === null) {
 				t.preventDefault();
 				return;
 			}
 			a("order-click", n, t);
 		}
-		async function te() {
-			let e = G(E.value?.position_id);
-			if (!T.value || e === null) return;
-			w?.abort();
+		async function J() {
+			let e = H(T.value?.position_id);
+			if (!w.value || e === null) return;
+			C?.abort();
 			let t = new AbortController();
-			w = t;
-			let n = ++C;
-			h.value = !0, g.value = "", _.value = [];
+			C = t;
+			let n = ++S;
+			m.value = !0, h.value = "", g.value = [];
 			try {
 				let i = await r.request({
-					page_no: b.value,
-					page_size: x.value,
+					page_no: y.value,
+					page_size: b.value,
 					position_id: e
 				}, { signal: t.signal });
-				if (n !== C || t.signal.aborted) return;
-				_.value = Array.isArray(i?.rows) ? i.rows : [], b.value === 1 && (S.value = _.value[0]?.price ?? null), y.value = Math.max(0, Number(i?.total) || _.value.length);
+				if (n !== S || t.signal.aborted) return;
+				g.value = Array.isArray(i?.rows) ? i.rows : [], y.value === 1 && (x.value = g.value[0]?.price ?? null), _.value = Math.max(0, Number(i?.total) || g.value.length);
 			} catch (e) {
-				if (n !== C || t.signal.aborted) return;
+				if (n !== S || t.signal.aborted) return;
 				let r = e;
-				g.value = r?.msg || r?.message || p.value.tradeLoadFailed;
+				h.value = r?.msg || r?.message || p.value.tradeLoadFailed;
 			} finally {
-				n === C && (h.value = !1), w === t && (w = null);
+				n === S && (m.value = !1), C === t && (C = null);
 			}
 		}
-		function ne(e) {
-			e !== b.value && (b.value = e, te());
+		function Y(e) {
+			e !== y.value && (y.value = e, J());
 		}
-		function re(e) {
-			let t = N(e);
-			t !== x.value && (x.value = t, b.value = 1, te());
+		function te(e) {
+			let t = M(e);
+			t !== b.value && (b.value = t, y.value = 1, J());
 		}
-		function ie() {
-			w?.abort(), w = null, C += 1, h.value = !1, g.value = "", _.value = [], y.value = 0, b.value = 1, S.value = null;
+		function ne() {
+			C?.abort(), C = null, S += 1, m.value = !1, h.value = "", g.value = [], _.value = 0, y.value = 1, x.value = null;
 		}
-		function ae() {
-			ie(), a("closed");
+		function re() {
+			ne(), a("closed");
 		}
 		return W(() => [r.modelValue, r.row?.position_id], ([e]) => {
-			e && (ie(), te());
+			e && (ne(), J());
 		}, { immediate: !0 }), (n, r) => (D(), o(R(et), v(n.$attrs, {
-			modelValue: T.value,
-			"onUpdate:modelValue": r[2] ||= (e) => T.value = e,
-			"aria-describedby": m,
+			modelValue: w.value,
+			"onUpdate:modelValue": r[2] ||= (e) => w.value = e,
 			"close-on-click-modal": !1,
 			"panel-class": "mm-liquidation-trades-dialog-panel",
+			subtitle: p.value.tradeDialogSubtitle(N(T.value?.position_id)),
+			title: p.value.tradeDialogTitle,
 			width: "min(1180px, calc(100vw - 24px))",
-			onClosed: ae
+			onClosed: re
 		}), {
-			header: K(() => [l("div", wu, [l("strong", null, F(p.value.tradeDialogTitle), 1), l("span", { id: m }, F(p.value.tradeDialogSubtitle(P(E.value?.position_id))), 1)])]),
-			footer: K(() => [f(R(Q), { onClick: r[1] ||= (e) => T.value = !1 }, {
+			"header-actions": K(() => [l("span", wu, [f(R(Z), {
+				name: "triangle-alert",
+				size: 18
+			})])]),
+			footer: K(() => [f(R(Q), { onClick: r[1] ||= (e) => w.value = !1 }, {
 				default: K(() => [d(F(R(u).common.close), 1)]),
 				_: 1
 			})]),
-			default: K(() => [E.value ? (D(), c("div", Tu, [l("dl", Eu, [
-				l("div", null, [l("dt", null, F(p.value.userUid), 1), l("dd", null, F(O.value), 1)]),
-				l("div", null, [l("dt", null, F(p.value.positionId), 1), l("dd", null, [G(E.value.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(uu), {
+			default: K(() => [T.value ? (D(), c("div", Tu, [l("dl", Eu, [
+				l("div", null, [l("dt", null, F(p.value.userUid), 1), l("dd", null, F(E.value), 1)]),
+				l("div", null, [l("dt", null, F(p.value.positionId), 1), l("dd", null, [H(T.value.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(uu), {
 					key: 0,
-					"aria-label": p.value.viewPositionFor(P(E.value.position_id)),
-					href: q(E.value.position_id),
+					"aria-label": p.value.viewPositionFor(N(T.value.position_id)),
+					href: U(T.value.position_id),
 					title: p.value.viewPosition,
-					onClick: r[0] ||= (e) => J(E.value.position_id, e)
+					onClick: r[0] ||= (e) => q(T.value.position_id, e)
 				}, {
-					default: K(() => [d(F(P(E.value.position_id)), 1)]),
+					default: K(() => [d(F(N(T.value.position_id)), 1)]),
 					_: 1
 				}, 8, [
 					"aria-label",
 					"href",
 					"title"
 				]))])]),
-				l("div", null, [l("dt", null, F(p.value.contract), 1), l("dd", null, F(P(E.value.symbol)), 1)]),
+				l("div", null, [l("dt", null, F(p.value.contract), 1), l("dd", null, F(N(T.value.symbol)), 1)]),
 				l("div", null, [l("dt", null, F(p.value.side), 1), l("dd", null, [f(R($), {
 					effect: "soft",
 					round: "",
 					size: "sm",
-					type: z(E.value.position_side)
+					type: L(T.value.position_side)
 				}, {
-					default: K(() => [d(F(L(E.value.position_side)), 1)]),
+					default: K(() => [d(F(I(T.value.position_side)), 1)]),
 					_: 1
 				}, 8, ["type"])])]),
-				l("div", null, [l("dt", null, F(p.value.liquidationQuantity), 1), l("dd", null, F(I(E.value.liquidation_quantity, 8)), 1)]),
-				l("div", null, [l("dt", null, F(p.value.averageExecutionPrice), 1), l("dd", null, F(I(E.value.average_execution_price, 4, 2)), 1)]),
-				l("div", null, [l("dt", null, F(p.value.triggerPrice), 1), l("dd", null, F(I(S.value, 8)), 1)]),
+				l("div", null, [l("dt", null, F(p.value.liquidationQuantity), 1), l("dd", null, F(P(T.value.liquidation_quantity, 8)), 1)]),
+				l("div", null, [l("dt", null, F(p.value.averageExecutionPrice), 1), l("dd", null, F(P(T.value.average_execution_price, 4, 2)), 1)]),
+				l("div", null, [l("dt", null, F(p.value.triggerPrice), 1), l("dd", null, F(P(x.value, 8)), 1)]),
 				l("div", null, [l("dt", null, F(p.value.liquidationResult), 1), l("dd", null, F(p.value.fullLiquidation), 1)]),
-				l("div", null, [l("dt", null, F(p.value.occurredAt), 1), l("dd", null, F(P(E.value.occurred_at)), 1)])
-			]), l("section", Du, [l("div", Ou, [l("strong", null, F(p.value.tradeDetails), 1), l("span", null, F(p.value.tradeDetailsSummary(y.value, I(M.value, 8))), 1)]), h.value ? (D(), c("div", ku, [f(R(Z), {
+				l("div", null, [l("dt", null, F(p.value.occurredAt), 1), l("dd", null, F(N(T.value.occurred_at)), 1)])
+			]), l("section", Du, [l("div", Ou, [l("strong", null, F(p.value.tradeDetails), 1), l("span", null, F(p.value.tradeDetailsSummary(_.value, P(k.value, 8))), 1)]), m.value ? (D(), c("div", ku, [f(R(Z), {
 				class: "is-loading",
 				name: "loader-circle",
 				size: 22
-			}), l("span", null, F(p.value.tradeLoading), 1)])) : g.value ? (D(), c("div", Au, [
+			}), l("span", null, F(p.value.tradeLoading), 1)])) : h.value ? (D(), c("div", Au, [
 				f(R(Z), {
 					name: "alert",
 					size: 20
 				}),
-				l("span", null, F(g.value), 1),
+				l("span", null, F(h.value), 1),
 				f(R(Q), {
 					size: "sm",
-					onClick: te
+					onClick: J
 				}, {
 					default: K(() => [d(F(R(u).common.retry), 1)]),
 					_: 1
 				})
-			])) : _.value.length === 0 ? (D(), c("div", ju, F(p.value.noTradeDetails), 1)) : (D(), c("div", Mu, [l("div", Nu, [l("table", Pu, [l("thead", null, [l("tr", null, [
+			])) : g.value.length === 0 ? (D(), c("div", ju, F(p.value.noTradeDetails), 1)) : (D(), c("div", Mu, [l("div", Nu, [l("table", Pu, [l("thead", null, [l("tr", null, [
 				l("th", null, F(p.value.positionId), 1),
 				l("th", null, F(p.value.orderId), 1),
 				l("th", null, F(p.value.tradeSide), 1),
@@ -17367,15 +17375,15 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 				l("th", null, F(p.value.handlingFee), 1),
 				l("th", null, F(p.value.tradeStatus), 1),
 				l("th", null, F(p.value.tradeTime), 1)
-			])]), l("tbody", null, [(D(!0), c(t, null, j(_.value, (e) => (D(), c("tr", { key: String(e.order_id) }, [
-				l("td", null, [G(e.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(uu), {
+			])]), l("tbody", null, [(D(!0), c(t, null, j(g.value, (e) => (D(), c("tr", { key: String(e.order_id) }, [
+				l("td", null, [H(e.position_id) === null ? (D(), c(t, { key: 1 }, [d("-")], 64)) : (D(), o(R(uu), {
 					key: 0,
-					"aria-label": p.value.viewPositionFor(P(e.position_id)),
-					href: q(e.position_id),
+					"aria-label": p.value.viewPositionFor(N(e.position_id)),
+					href: U(e.position_id),
 					title: p.value.viewPosition,
-					onClick: (t) => J(e.position_id, t)
+					onClick: (t) => q(e.position_id, t)
 				}, {
-					default: K(() => [d(F(P(e.position_id)), 1)]),
+					default: K(() => [d(F(N(e.position_id)), 1)]),
 					_: 2
 				}, 1032, [
 					"aria-label",
@@ -17384,16 +17392,16 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 					"onClick"
 				]))]),
 				l("td", null, [f(R(uu), {
-					"aria-label": p.value.viewOrderTradesFor(P(e.order_id)),
+					"aria-label": p.value.viewOrderTradesFor(N(e.order_id)),
 					"data-action": "view-liquidation-order-trades",
-					href: ee(e.order_id),
-					onClick: (t) => Y(e.order_id, t)
+					href: G(e.order_id),
+					onClick: (t) => ee(e.order_id, t)
 				}, {
 					suffix: K(() => [f(R(Z), {
 						name: "arrow-up-right",
 						size: 12
 					})]),
-					default: K(() => [d(F(P(e.order_id)) + " ", 1)]),
+					default: K(() => [d(F(N(e.order_id)) + " ", 1)]),
 					_: 2
 				}, 1032, [
 					"aria-label",
@@ -17404,16 +17412,16 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 					effect: "soft",
 					round: "",
 					size: "sm",
-					type: H(e.side)
+					type: B(e.side)
 				}, {
-					default: K(() => [d(F(V(e.side)), 1)]),
+					default: K(() => [d(F(z(e.side)), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				l("td", null, F(I(e.price, 8)), 1),
-				l("td", null, F(I(e.quantity, 8)), 1),
-				l("td", null, F(I(e.trade_value, 8, 2)), 1),
-				l("td", null, F(U(e.role_type)), 1),
-				l("td", null, F(I(e.handling_fee, 8, 2)), 1),
+				l("td", null, F(P(e.price, 8)), 1),
+				l("td", null, F(P(e.quantity, 8)), 1),
+				l("td", null, F(P(e.trade_value, 8, 2)), 1),
+				l("td", null, F(V(e.role_type)), 1),
+				l("td", null, F(P(e.handling_fee, 8, 2)), 1),
 				l("td", null, [f(R($), {
 					effect: "soft",
 					round: "",
@@ -17423,17 +17431,17 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 					default: K(() => [d(F(p.value.filled), 1)]),
 					_: 1
 				})]),
-				l("td", null, F(P(e.trade_time)), 1)
+				l("td", null, F(N(e.trade_time)), 1)
 			]))), 128))])])]), f(R(Ur), {
 				class: "mm-liquidation-trades-dialog__pagination",
-				"current-page": b.value,
-				"page-size": x.value,
+				"current-page": y.value,
+				"page-size": b.value,
 				"page-sizes": e.pageSizes,
 				"show-size-changer": "",
 				size: "sm",
-				total: y.value,
-				onCurrentChange: ne,
-				onSizeChange: re
+				total: _.value,
+				onCurrentChange: Y,
+				onSizeChange: te
 			}, null, 8, [
 				"current-page",
 				"page-size",
@@ -17441,7 +17449,11 @@ var mu = { key: 1 }, hu = { class: "mm-liquidation-table__id" }, gu = { key: 1 }
 				"total"
 			])]))])])) : s("", !0)]),
 			_: 1
-		}, 16, ["modelValue"]));
+		}, 16, [
+			"modelValue",
+			"subtitle",
+			"title"
+		]));
 	}
 }), Iu = Object.assign(Fu, { install(e) {
 	e.component("MmLiquidationTradesDialog", Fu);

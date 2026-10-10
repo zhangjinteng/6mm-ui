@@ -1,5 +1,38 @@
 export type MmUILocaleName = "en-US" | "zh-CN";
 export interface MmUILocaleMessages {
+    futuresTradeReport: {
+        day: string;
+        month: string;
+        period: string;
+        symbol: string;
+        allSymbols: string;
+        dateRange: string;
+        sourceId: string;
+        sourceName: string;
+        sourceType: string;
+        allSources: string;
+        merchant: string;
+        tenant: string;
+        platform: string;
+        statDate: string;
+        trading_user_count: string;
+        order_count: string;
+        order_amount: string;
+        filled_order_count: string;
+        fill_count: string;
+        trade_amount: string;
+        cancel_order_count: string;
+        cancel_amount: string;
+        amount_fill_rate: string;
+        status: string;
+        processing: string;
+        completed: string;
+        partial: string;
+        tableAria: string;
+        utcHelp: string;
+        usersHelp: string;
+        loadFailed: string;
+    };
     alert: {
         close: string;
     };

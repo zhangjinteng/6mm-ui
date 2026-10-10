@@ -34,6 +34,16 @@ createApp(App).use(MmUI).mount("#app");
 
 全量注册后的组件名统一使用 `Mm` 前缀，例如 `<MmButton>`、`<MmForm>` 和 `<MmTable>`。
 
+## 合约交易日报 / 月报
+
+`MmFuturesTradeReport` 基于 `MmProTable`，包含日报/月报切换、合约及日期筛选、排序、分页和中英文文案。通过 `request(query, { signal })` 注入请求，返回 `{ rows, total }`；商户端默认隐藏来源，平台端传入 `showSources` 显示商户/白标/平台筛选与来源列。
+
+```vue
+<MmFuturesTradeReport :request="loadReport" :show-sources="isPlatform" />
+```
+
+组件只格式化服务端十进制字符串，不计算统计总数。服务端必须对月报成交用户/订单/成交跨日去重，并强制限制商户范围。业务路由、接口地址和权限不属于组件。
+
 ## 按需导入
 
 所有组件、服务、指令和公开类型都可以从包根入口具名导入。公共 CSS 仍需在应用入口导入一次。

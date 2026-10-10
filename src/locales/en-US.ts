@@ -3,6 +3,15 @@ import type { MmUILocale } from "./types";
 export const enUS: MmUILocale = {
   name: "en-US",
   messages: {
+    futuresTradeReport: {
+      day: 'Daily', month: 'Monthly', period: 'Period', symbol: 'Contract', allSymbols: 'All contracts', dateRange: 'Report date range',
+      sourceId: 'Source', sourceName: 'Source name', sourceType: 'Source type', allSources: 'Merchants / white labels', merchant: 'Merchant', tenant: 'White label', platform: 'Platform',
+      statDate: 'Report date', trading_user_count: 'Trading users', order_count: 'Orders', order_amount: 'Order amount (U)',
+      filled_order_count: 'Filled orders', fill_count: 'Trades', trade_amount: 'Trade amount (U)', cancel_order_count: 'Cancellations', cancel_amount: 'Cancelled amount (U)', amount_fill_rate: 'Amount fill rate',
+      status: 'Status', processing: 'Processing', completed: 'Completed', partial: 'Incomplete', tableAria: 'Futures trading report',
+      utcHelp: 'UTC calendar days / months. Display timezone does not change reporting boundaries.',
+      usersHelp: 'Distinct users with trades in the period; monthly users are deduplicated across days. Merchant totals overlap white-label totals and must not be added together.', loadFailed: 'Could not load the futures trading report',
+    },
     alert: { close: "Close alert" },
     appHeader: {
       account: "Account",

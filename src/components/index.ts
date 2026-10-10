@@ -36,6 +36,7 @@ import { MmFeeCommissionTable } from "./fee-commission-table";
 import { MmForm, MmFormItem } from "./form";
 import { MmFundingAccountTable } from "./funding-account-table";
 import { MmFundingChangeLogTable } from "./funding-change-log-table";
+import { MmFuturesTradeReport } from "./futures-trade-report";
 import { MmHistoryPositionTable } from "./history-position-table";
 import { MmHistoryOrderTable } from "./history-order-table";
 import { MmHandlingFeeConfig } from "./handling-fee-config";
@@ -96,6 +97,7 @@ import { MmTypography } from "./typography";
 import { MmUpload } from "./upload";
 
 export * from "./alert";
+export * from "./futures-trade-report";
 export * from "./account-change-log-table";
 export * from "./admin-login-shell";
 export * from "./app-header";
@@ -262,6 +264,7 @@ export const components: InstallableComponent[] = [
   MmPagination,
   MmProgress,
   MmProTable,
+  MmFuturesTradeReport,
   MmProTableCursorPagination,
   MmProTablePagination,
   MmQueryBar,

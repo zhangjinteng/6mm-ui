@@ -1,5 +1,6 @@
 import { Component } from 'vue';
 export * from './alert';
+export * from './futures-trade-report';
 export * from './account-change-log-table';
 export * from './admin-login-shell';
 export * from './app-header';

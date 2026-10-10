@@ -15,6 +15,19 @@ const row: FuturesTradeReportRow = {
 }
 
 describe('MmFuturesTradeReport', () => {
+  it('keeps its layout class and query fields even when the report is empty', async () => {
+    const wrapper = mount(FuturesTradeReport, {
+      props: { request: async () => ({ rows: [], total: 0 }) },
+      attrs: { class: 'consumer-report', 'data-testid': 'consumer-report' },
+    })
+    await flushPromises()
+    expect(wrapper.classes()).toContain('mm-futures-trade-report')
+    expect(wrapper.classes()).toContain('consumer-report')
+    expect(wrapper.attributes('data-testid')).toBe('consumer-report')
+    expect(wrapper.findAll('[data-query-field]').map(field => field.attributes('data-query-field')))
+      .toEqual(['period', 'symbol', 'date_range'])
+    wrapper.unmount()
+  })
   it('uses precise decimals and hides platform-only columns for merchants', async () => {
     const request = vi.fn(async (..._args: unknown[]) => ({ rows: [row], total: 1 }))
     const wrapper = mount(FuturesTradeReport, { props: { request } })

@@ -60,7 +60,7 @@ defineExpose({ reload })
 </script>
 
 <template>
-  <MmProTable v-bind="{ ...$attrs, ...proTableBindings }" :aria-label="copy.tableAria" :columns="columns" :fill-height="fillHeight"
+  <MmProTable v-bind="{ ...$attrs, ...proTableBindings }" class="mm-futures-trade-report" :aria-label="copy.tableAria" :columns="columns" :fill-height="fillHeight"
     row-key="id" columns-configurable :page-sizes="[20, 30, 40]" :filter-drawer-title="copy.tableAria">
     <template #header-stat_date="{ column }">
       {{ column.title }} <MmTooltip :content="copy.utcHelp"><MmIcon name="circle-help" :size="12" /></MmTooltip>
@@ -81,3 +81,11 @@ defineExpose({ reload })
     <template v-for="(_, name) in $slots" #[name]="slotProps"><slot :name="name" v-bind="slotProps" /></template>
   </MmProTable>
 </template>
+
+<style scoped>
+.mm-futures-trade-report {
+  width: 100%;
+  min-width: 0;
+  flex: 1 1 0%;
+}
+</style>

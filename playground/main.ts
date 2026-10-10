@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import MmUI from "../src";
 import App from "./App.vue";
 import ComponentInfoPage from "./ComponentInfoPage.vue";
+import FuturesTradeReportPreviewPage from "./FuturesTradeReportPreviewPage.vue";
 import HandlingFeeConfigPreview from "./HandlingFeeConfigPreview.vue";
 import ProTablePreviewPage from "./ProTablePreviewPage.vue";
 import SidebarNavPreviewPage from "./SidebarNavPreviewPage.vue";
@@ -15,8 +16,10 @@ const RootView =
       ? HandlingFeeConfigPreview
       : normalizedPath === "/pro-table"
         ? ProTablePreviewPage
-        : normalizedPath === "/sidebar-nav"
-          ? SidebarNavPreviewPage
-          : App;
+        : normalizedPath === "/futures-trade-report"
+          ? FuturesTradeReportPreviewPage
+          : normalizedPath === "/sidebar-nav"
+            ? SidebarNavPreviewPage
+            : App;
 
 createApp(RootView).use(MmUI).mount("#app");

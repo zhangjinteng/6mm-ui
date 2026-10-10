@@ -12332,7 +12332,7 @@ function uc(e, t = 2) {
 }
 //#endregion
 //#region src/components/futures-trade-report/FuturesTradeReport.vue
-var dc = /* @__PURE__ */ p({
+var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesTradeReport",
 	inheritAttrs: !1,
 	__name: "FuturesTradeReport",
@@ -12495,6 +12495,7 @@ var dc = /* @__PURE__ */ p({
 			...t.$attrs,
 			...R(h)
 		}, {
+			class: "mm-futures-trade-report",
 			"aria-label": a.value.tableAria,
 			columns: l.value,
 			"fill-height": e.fillHeight,
@@ -12540,7 +12541,7 @@ var dc = /* @__PURE__ */ p({
 			_: 2
 		}, [j(t.$slots, (e, n) => ({
 			name: n,
-			fn: K((e) => [M(t.$slots, n, x(m(e)))])
+			fn: K((e) => [M(t.$slots, n, x(m(e)), void 0, !0)])
 		}))]), 1040, [
 			"aria-label",
 			"columns",
@@ -12548,7 +12549,7 @@ var dc = /* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-});
+}), [["__scopeId", "data-v-40f81511"]]);
 //#endregion
 //#region src/components/history-position-table/formatters.ts
 function fc(e) {

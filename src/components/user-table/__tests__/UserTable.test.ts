@@ -2,7 +2,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import { MmQueryBar } from '../../query-bar'
-import type { QueryBarField, QueryBarSegmentedField } from '../../query-bar'
+import type { QueryBarField, QueryBarSegmentedField, QueryBarSelectField } from '../../query-bar'
 import { MmSelect } from '../../select'
 import UserTable from '../UserTable.vue'
 
@@ -157,7 +157,8 @@ describe('MmUserTable', () => {
     await flushPromises()
 
     const queryBar = wrapper.getComponent(MmQueryBar)
-    const vipField = (queryBar.props('fields') as QueryBarField[]).find(field => field.key === 'vip_level')
+    const vipField = (queryBar.props('fields') as QueryBarField[])
+      .find(field => field.key === 'vip_level') as QueryBarSelectField | undefined
     expect(vipField?.options).toContainEqual({ label: 'V0', value: 0 })
 
     queryBar.vm.$emit('query', { vip_level: 0 })

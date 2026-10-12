@@ -161,9 +161,17 @@ export declare const iconDefinitions: {
         readonly d: "M3 3v16a2 2 0 0 0 2 2h16";
     }]];
     readonly "chart-no-axes-combined": readonly [readonly ["path", {
-        readonly d: "M3 3v18h18";
+        readonly d: "M12 16v5";
     }], readonly ["path", {
-        readonly d: "m7 16 4-5 4 3 5-7";
+        readonly d: "M16 14.639V21";
+    }], readonly ["path", {
+        readonly d: "M20 10.656V21";
+    }], readonly ["path", {
+        readonly d: "m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15";
+    }], readonly ["path", {
+        readonly d: "M4 18.463V21";
+    }], readonly ["path", {
+        readonly d: "M8 14.656V21";
     }]];
     readonly check: readonly [readonly ["path", {
         readonly d: "m5 12 4 4L19 6";
@@ -765,6 +773,23 @@ export declare const iconDefinitions: {
         readonly d: "M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z";
     }], readonly ["path", {
         readonly d: "m9 12 2 2 4-4";
+    }]];
+    readonly siren: readonly [readonly ["path", {
+        readonly d: "M7 18v-6a5 5 0 1 1 10 0v6";
+    }], readonly ["path", {
+        readonly d: "M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z";
+    }], readonly ["path", {
+        readonly d: "M21 12h1";
+    }], readonly ["path", {
+        readonly d: "M18.5 4.5 18 5";
+    }], readonly ["path", {
+        readonly d: "M2 12h1";
+    }], readonly ["path", {
+        readonly d: "M12 2v1";
+    }], readonly ["path", {
+        readonly d: "m4.929 4.929.707.707";
+    }], readonly ["path", {
+        readonly d: "M12 12v6";
     }]];
     readonly "sliders-horizontal": readonly [readonly ["path", {
         readonly d: "M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3";

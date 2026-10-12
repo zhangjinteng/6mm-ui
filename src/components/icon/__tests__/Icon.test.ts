@@ -102,6 +102,7 @@ settings
 settings-2
 shield-alert
 shield-check
+siren
 sliders-horizontal
 smartphone
 square-pen
@@ -237,6 +238,41 @@ describe("MmIcon", () => {
       ]);
     },
   );
+
+  it.each([
+    [
+      "chart-no-axes-combined",
+      [
+        "M12 16v5",
+        "M16 14.639V21",
+        "M20 10.656V21",
+        "m22 3-8.646 8.646a.5.5 0 0 1-.708 0L9.354 8.354a.5.5 0 0 0-.707 0L2 15",
+        "M4 18.463V21",
+        "M8 14.656V21",
+      ],
+    ],
+    [
+      "siren",
+      [
+        "M7 18v-6a5 5 0 1 1 10 0v6",
+        "M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z",
+        "M21 12h1",
+        "M18.5 4.5 18 5",
+        "M2 12h1",
+        "M12 2v1",
+        "m4.929 4.929.707.707",
+        "M12 12v6",
+      ],
+    ],
+  ] as const)("renders the native risk menu %s SVG", (name, paths) => {
+    const wrapper = mount(Icon, { props: { name, strokeWidth: 2 } });
+
+    expect(iconNames).toContain(name);
+    expect(wrapper.attributes("viewBox")).toBe("0 0 24 24");
+    expect(wrapper.attributes("stroke")).toBe("currentColor");
+    expect(wrapper.attributes("stroke-width")).toBe("2");
+    expect(wrapper.findAll("path").map((path) => path.attributes("d"))).toEqual(paths);
+  });
 
   it.each(iconNames)("renders the %s named icon", (name) => {
     const wrapper = mount(Icon, { props: { name } });

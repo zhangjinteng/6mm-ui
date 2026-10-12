@@ -184,6 +184,15 @@ import MmUI, {
 
 共享工具属于低层 API。业务页面优先使用组件和服务，只有在扩展组件库能力时才直接依赖它们。
 
+## 原生菜单图标
+
+`MmIcon` 原生支持 `chart-no-axes-combined`（组合趋势图）和 `siren`（警报灯），两者均包含在公开的 `iconNames` 和 `IconName` 中，消费项目无需修改 `node_modules` 或配置图标补丁。
+
+```vue
+<mm-icon name="chart-no-axes-combined" :size="16" />
+<mm-icon name="siren" :size="16" />
+```
+
 ## 类型导入
 
 每个组件入口的 props、值类型、事件相关数据结构都会从包根入口重新导出：

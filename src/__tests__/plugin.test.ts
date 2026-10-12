@@ -60,6 +60,7 @@ describe("MmUI plugin", () => {
     expect(app.component("MmInfoGridItem")).toBeDefined();
     expect(app.component("MmLiquidationTable")).toBeDefined();
     expect(app.component("MmFuturesRiskReport")).toBeDefined();
+    expect(app.component("MmFuturesFeeReport")).toBeDefined();
     expect(app.component("MmFuturesPositionReport")).toBeDefined();
     expect(app.component("MmLiquidationTradesDialog")).toBeDefined();
     expect(app.component("MmLoading")).toBeDefined();

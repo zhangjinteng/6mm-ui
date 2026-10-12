@@ -3,6 +3,17 @@ import type { MmUILocale } from "./types";
 export const enUS: MmUILocale = {
   name: "en-US",
   messages: {
+    futuresFeeReport: {
+      day: 'Daily', month: 'Monthly', period: 'Period', symbol: 'Contract', allSymbols: 'All contracts', dateRange: 'Report date range',
+      sourceId: 'Source', sourceName: 'Source name', sourceType: 'Source type', sourceSearchPlaceholder: 'Source name / ID',
+      merchant: 'Merchant', tenant: 'White label', platform: 'Platform', statDate: 'Report date',
+      fee_user_count: 'Charged users', fee_count: 'Fee charges', maker_trade_amount: 'Maker trade amount (U)', taker_trade_amount: 'Taker trade amount (U)',
+      maker_handling_fee: 'Maker fees (U)', taker_handling_fee: 'Taker fees (U)', total_handling_fee: 'Total fees (U)',
+      status: 'Status', processing: 'Processing', completed: 'Completed', partial: 'Incomplete', tableAria: 'Trading fee report',
+      utcHelp: 'Simulated users, USDT settlement, UTC calendar days / months. Total fees are Maker plus Taker handling fees, not commissions.',
+      usersHelp: 'Distinct users with non-zero fee records; monthly users are deduplicated across days. Merchant totals overlap white-label totals and must not be added.',
+      loadFailed: 'Could not load the trading fee report',
+    },
     futuresRiskReport: {
       day: 'Daily', month: 'Monthly', period: 'Period', symbol: 'Contract', allSymbols: 'All contracts', dateRange: 'Report date range',
       sourceId: 'Source', sourceName: 'Source name', sourceType: 'Source type', sourceSearchPlaceholder: 'Source name / ID',

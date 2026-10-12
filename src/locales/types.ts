@@ -1,6 +1,15 @@
 export type MmUILocaleName = "en-US" | "zh-CN";
 
 export interface MmUILocaleMessages {
+  futuresFeeReport: {
+    day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string; statDate: string;
+    fee_user_count: string; fee_count: string; maker_trade_amount: string; taker_trade_amount: string;
+    maker_handling_fee: string; taker_handling_fee: string; total_handling_fee: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; usersHelp: string; loadFailed: string;
+  };
   futuresRiskReport: {
     day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
     sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;

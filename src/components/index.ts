@@ -40,6 +40,7 @@ import { MmFuturesFundingFeeReport } from "./futures-funding-fee-report";
 import { MmFuturesPnlReport } from "./futures-pnl-report";
 import { MmFuturesTradeReport } from "./futures-trade-report";
 import { MmFuturesRiskReport } from "./futures-risk-report";
+import { MmFuturesFeeReport } from "./futures-fee-report";
 import { MmFuturesUserNetPnlReport } from "./futures-user-net-pnl-report";
 import { MmFuturesPositionReport } from "./futures-position-report";
 import { MmHistoryPositionTable } from "./history-position-table";
@@ -104,6 +105,7 @@ import { MmUpload } from "./upload";
 export * from "./alert";
 export * from "./futures-trade-report";
 export * from "./futures-risk-report";
+export * from "./futures-fee-report";
 export * from "./futures-user-net-pnl-report";
 export * from "./futures-position-report";
 export * from "./futures-funding-fee-report";
@@ -276,6 +278,7 @@ export const components: InstallableComponent[] = [
   MmProTable,
   MmFuturesTradeReport,
   MmFuturesRiskReport,
+  MmFuturesFeeReport,
   MmFuturesUserNetPnlReport,
   MmFuturesPositionReport,
   MmFuturesFundingFeeReport,

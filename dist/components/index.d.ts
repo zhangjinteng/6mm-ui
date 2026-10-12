@@ -2,6 +2,7 @@ import { Component } from 'vue';
 export * from './alert';
 export * from './futures-trade-report';
 export * from './futures-risk-report';
+export * from './futures-fee-report';
 export * from './futures-user-net-pnl-report';
 export * from './futures-position-report';
 export * from './futures-funding-fee-report';

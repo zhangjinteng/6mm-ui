@@ -3,6 +3,17 @@ import type { MmUILocale } from "./types";
 export const zhCN: MmUILocale = {
   name: "zh-CN",
   messages: {
+    futuresFeeReport: {
+      day: '日报', month: '月报', period: '统计周期', symbol: '合约币种', allSymbols: '全部合约', dateRange: '统计日期范围',
+      sourceId: '来源', sourceName: '来源名称', sourceType: '来源类型', sourceSearchPlaceholder: '来源名称 / ID',
+      merchant: '商户', tenant: '白标', platform: '平台', statDate: '统计日期',
+      fee_user_count: '扣费用户', fee_count: '扣费笔数', maker_trade_amount: 'Maker成交金额(U)', taker_trade_amount: 'Taker成交金额(U)',
+      maker_handling_fee: 'Maker手续费(U)', taker_handling_fee: 'Taker手续费(U)', total_handling_fee: '总手续费(U)',
+      status: '统计状态', processing: '统计中', completed: '已完成', partial: '数据不完整', tableAria: '手续费报表',
+      utcHelp: '模拟用户、USDT 结算，按 UTC 自然日 / 月统计。总手续费为 Maker 与 Taker 手续费之和，不是返佣金额。',
+      usersHelp: '有非零手续费记录的去重用户数；月报跨日去重。白标与商户汇总存在包含关系，不能相加。',
+      loadFailed: '手续费报表加载失败',
+    },
     futuresRiskReport: {
       day: '日报', month: '月报', period: '统计周期', symbol: '合约', allSymbols: '全部合约', dateRange: '统计日期范围',
       sourceId: '来源', sourceName: '来源名称', sourceType: '来源类型', sourceSearchPlaceholder: '来源名称 / ID',

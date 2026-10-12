@@ -1,6 +1,53 @@
 export type MmUILocaleName = "en-US" | "zh-CN";
 
 export interface MmUILocaleMessages {
+  futuresRiskReport: {
+    day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string; statDate: string;
+    liquidation_user_count: string; liquidation_count: string; liquidation_position_amount: string;
+    liquidation_trade_amount: string; liquidation_realized_pnl: string; liquidation_fee: string;
+    bankruptcy_count: string; bankruptcy_loss: string; uncollected_liquidation_fee: string; uncollected_trading_fee: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; usersHelp: string; loadFailed: string;
+  };
+  futuresUserNetPnlReport: {
+    day: string; month: string; period: string; dateRange: string; sourceName: string; sourceType: string;
+    sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string; statDate: string;
+    settled_user_count: string; profitable_user_count: string; losing_user_count: string;
+    breakeven_user_count: string; close_order_count: string; close_amount: string; realized_pnl: string;
+    trading_fee: string; funding_fee: string; liquidation_fee: string; true_net_pnl: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; usersHelp: string; loadFailed: string;
+  };
+  futuresPositionReport: {
+    day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string; statDate: string;
+    position_user_count: string; long_position_user_count: string; short_position_user_count: string;
+    long_position_amount: string; short_position_amount: string; closing_position_amount: string;
+    occupied_margin: string; unrealized_pnl: string; average_leverage: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; usersHelp: string; loadFailed: string;
+  };
+  futuresPnlReport: {
+    day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string; statDate: string;
+    trading_user_count: string; profitable_user_count: string; losing_user_count: string;
+    trade_amount: string; profit_amount: string; loss_amount: string; net_pnl: string;
+    status: string; processing: string; completed: string; tableAria: string; loadFailed: string;
+  };
+  futuresFundingFeeReport: {
+    day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string; statDate: string;
+    funding_settlement_user_count: string; funding_settlement_position_amount: string;
+    funding_settlement_count: string; funding_fee_income: string; funding_fee_expense: string;
+    funding_fee_net_income: string; funding_fee_net_income_rate: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; usersHelp: string; loadFailed: string;
+  };
   futuresTradeReport: {
     day: string; month: string; period: string; symbol: string; allSymbols: string;
     dateRange: string; sourceId: string; sourceName: string; sourceType: string; allSources: string; sourceSearchPlaceholder: string;

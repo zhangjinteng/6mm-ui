@@ -36,7 +36,12 @@ import { MmFeeCommissionTable } from "./fee-commission-table";
 import { MmForm, MmFormItem } from "./form";
 import { MmFundingAccountTable } from "./funding-account-table";
 import { MmFundingChangeLogTable } from "./funding-change-log-table";
+import { MmFuturesFundingFeeReport } from "./futures-funding-fee-report";
+import { MmFuturesPnlReport } from "./futures-pnl-report";
 import { MmFuturesTradeReport } from "./futures-trade-report";
+import { MmFuturesRiskReport } from "./futures-risk-report";
+import { MmFuturesUserNetPnlReport } from "./futures-user-net-pnl-report";
+import { MmFuturesPositionReport } from "./futures-position-report";
 import { MmHistoryPositionTable } from "./history-position-table";
 import { MmHistoryOrderTable } from "./history-order-table";
 import { MmHandlingFeeConfig } from "./handling-fee-config";
@@ -98,6 +103,11 @@ import { MmUpload } from "./upload";
 
 export * from "./alert";
 export * from "./futures-trade-report";
+export * from "./futures-risk-report";
+export * from "./futures-user-net-pnl-report";
+export * from "./futures-position-report";
+export * from "./futures-funding-fee-report";
+export * from "./futures-pnl-report";
 export * from "./account-change-log-table";
 export * from "./admin-login-shell";
 export * from "./app-header";
@@ -265,6 +275,11 @@ export const components: InstallableComponent[] = [
   MmProgress,
   MmProTable,
   MmFuturesTradeReport,
+  MmFuturesRiskReport,
+  MmFuturesUserNetPnlReport,
+  MmFuturesPositionReport,
+  MmFuturesFundingFeeReport,
+  MmFuturesPnlReport,
   MmProTableCursorPagination,
   MmProTablePagination,
   MmQueryBar,

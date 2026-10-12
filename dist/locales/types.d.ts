@@ -11,6 +11,7 @@ export interface MmUILocaleMessages {
         sourceName: string;
         sourceType: string;
         allSources: string;
+        sourceSearchPlaceholder: string;
         merchant: string;
         tenant: string;
         platform: string;

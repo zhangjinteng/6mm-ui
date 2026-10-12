@@ -12,7 +12,7 @@ import { formatTradeReportDecimal } from './formatters'
 import type { FuturesTradeReportProps, FuturesTradeReportQuery, FuturesTradeReportRow } from './types'
 
 defineOptions({ name: 'MmFuturesTradeReport', inheritAttrs: false })
-const props = withDefaults(defineProps<FuturesTradeReportProps>(), { showSources: false, fillHeight: true })
+const props = withDefaults(defineProps<FuturesTradeReportProps>(), { showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresTradeReport)
 const fields = computed<QueryBarField[]>(() => [
@@ -20,9 +20,11 @@ const fields = computed<QueryBarField[]>(() => [
     options: [{ value: 'day', label: copy.value.day }, { value: 'month', label: copy.value.month }] },
   { key: 'symbol', type: 'keyword', label: copy.value.symbol, placeholder: copy.value.allSymbols, defaultValue: '', width: 160, clearable: true },
   ...(props.showSources ? [
-    { key: 'source_type', type: 'select' as const, label: copy.value.sourceType, defaultValue: '', width: 150,
-      options: [{ label: copy.value.allSources, value: '' }, { label: copy.value.merchant, value: 'merchant' }, { label: copy.value.tenant, value: 'tenant' }, { label: copy.value.platform, value: 'platform' }] },
-    { key: 'source_id', type: 'keyword' as const, label: copy.value.sourceId, placeholder: copy.value.sourceId, defaultValue: '', width: 140, clearable: true },
+    { key: 'source_type', type: 'segmented' as const, label: copy.value.sourceType, defaultValue: 'platform', width: 180,
+      options: [{ label: copy.value.platform, value: 'platform' }, { label: copy.value.tenant, value: 'tenant' }, { label: copy.value.merchant, value: 'merchant' }] },
+    { key: 'source_id', type: 'keyword' as const, label: copy.value.sourceId,
+      placeholder: props.sourceSearch === 'name-or-id' ? copy.value.sourceSearchPlaceholder : copy.value.sourceId,
+      defaultValue: '', width: props.sourceSearch === 'name-or-id' ? 200 : 140, clearable: true },
   ] : []),
   { key: 'date_range', type: 'date-range', label: copy.value.dateRange, placeholder: copy.value.dateRange, defaultValue: null, width: 250 },
 ])
@@ -30,7 +32,7 @@ const metricKeys = ['trading_user_count', 'order_count', 'order_amount', 'filled
 const columns = computed<ProTableColumn<FuturesTradeReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
   ...(props.showSources ? [
-    { key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true },
+    ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
     { key: 'source_type', title: copy.value.sourceType, width: 100, sortable: true },
   ] : []),
@@ -47,7 +49,12 @@ const { filters, proTableBindings, query, reload } = useMmProTable<FuturesTradeR
       start_date: String(range[0] ?? ''), end_date: String(range[1] ?? ''),
       page_no: page, page_size: pageSize, order_by: sort.order ? sort.key : 'stat_date', order_dir: sort.order === 'asc' ? 'asc' : 'desc',
     }
-    if (props.showSources) { params.source_type = String(filters.source_type ?? ''); params.source_id = String(filters.source_id ?? '').trim() }
+    if (props.showSources) {
+      params.source_type = String(filters.source_type ?? '')
+      const source = String(filters.source_id ?? '').trim()
+      if (props.sourceSearch === 'name-or-id') params.source_keyword = source
+      else params.source_id = source
+    }
     try { return await props.request(params, { signal }) }
     catch (error) {
       const candidate = error as { msg?: string, message?: string }
@@ -55,7 +62,7 @@ const { filters, proTableBindings, query, reload } = useMmProTable<FuturesTradeR
     }
   },
 })
-watch(() => filters.value.period, () => query())
+watch([() => filters.value.period, () => filters.value.source_type], () => query())
 defineExpose({ reload })
 </script>
 

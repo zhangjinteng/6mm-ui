@@ -10,6 +10,7 @@ import type { SelectValue } from '../select'
 import type { ProTableColumn } from './types'
 
 const props = withDefaults(defineProps<{
+  autoRefreshable?: boolean
   autoRefreshOptions?: number[]
   autoRefreshSeconds?: number
   columns?: ProTableColumn<any>[]
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<{
   refreshing?: boolean
   visibleColumnKeys?: string[]
 }>(), {
+  autoRefreshable: true,
   autoRefreshOptions: () => [0, 5, 10, 30, 60],
   autoRefreshSeconds: 0,
   columns: () => [],
@@ -66,7 +68,7 @@ function defaultColumnKeys(): string[] {
 }
 
 function updateAutoRefresh(value: SelectValue | SelectValue[]): void {
-  if (Array.isArray(value)) return
+  if (!props.autoRefreshable || Array.isArray(value)) return
   const seconds = Number(value)
   if (Number.isFinite(seconds) && seconds >= 0) emit('update:autoRefreshSeconds', seconds)
 }
@@ -97,7 +99,7 @@ function resetColumns(): void {
 
 <template>
   <div class="mm-pro-table__tools" data-query-overflow-group>
-    <label v-if="refreshable" class="mm-pro-table__auto-refresh">
+    <label v-if="refreshable && autoRefreshable" class="mm-pro-table__auto-refresh">
       <span class="mm-sr-only">{{ messages.proTable.autoRefreshInterval }}</span>
       <MmSelect
         :model-value="autoRefreshSeconds"

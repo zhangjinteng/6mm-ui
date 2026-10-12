@@ -6,6 +6,7 @@ export const zhCN: MmUILocale = {
     futuresTradeReport: {
       day: '日报', month: '月报', period: '统计周期', symbol: '合约', allSymbols: '全部合约', dateRange: '统计日期范围',
       sourceId: '来源', sourceName: '来源名称', sourceType: '来源类型', allSources: '商户 / 白标', merchant: '商户', tenant: '白标', platform: '平台',
+      sourceSearchPlaceholder: '来源名称 / ID',
       statDate: '统计日期', trading_user_count: '成交用户', order_count: '委托笔数', order_amount: '委托金额(U)',
       filled_order_count: '成交订单数', fill_count: '成交笔数', trade_amount: '成交金额(U)', cancel_order_count: '撤单笔数', cancel_amount: '撤单金额(U)', amount_fill_rate: '金额成交率',
       status: '统计状态', processing: '统计中', completed: '已完成', partial: '数据不完整', tableAria: '合约交易报表',

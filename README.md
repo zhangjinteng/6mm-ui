@@ -42,6 +42,10 @@ createApp(App).use(MmUI).mount("#app");
 <MmFuturesTradeReport :request="loadReport" :show-sources="isPlatform" />
 ```
 
+平台可传入 `:show-source-code="false"` 移除来源编号列（来源名称和类型保留），并设置 `source-search="name-or-id"`，让来源搜索框发送 `source_keyword`，由后端支持名称模糊搜索或来源 ID 精确搜索。默认仍显示来源编号、发送原来的 `source_id`。
+
+传入 `:auto-refreshable="false"` 可隐藏自动刷新间隔并将当前间隔归零，手动刷新按钮保留；此选项也可直接用于 `MmProTable`，默认开启。
+
 组件只格式化服务端十进制字符串，不计算统计总数。服务端必须对月报成交用户/订单/成交跨日去重，并强制限制商户范围。业务路由、接口地址和权限不属于组件。
 
 ## 按需导入

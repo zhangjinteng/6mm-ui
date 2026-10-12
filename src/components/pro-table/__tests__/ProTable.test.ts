@@ -506,6 +506,17 @@ describe("MmProTable", () => {
     expect(wrapper.emitted("update:autoRefreshSeconds")?.at(-1)).toEqual([10]);
   });
 
+  it("disables automatic refresh independently while preserving manual refresh", async () => {
+    const wrapper = mount(ProTable, { props: { columns, data: rows, total: rows.length, autoRefreshSeconds: 10 } });
+    expect(wrapper.find('.mm-pro-table__auto-refresh').exists()).toBe(true);
+    await wrapper.setProps({ autoRefreshable: false });
+    expect(wrapper.find('.mm-pro-table__auto-refresh').exists()).toBe(false);
+    expect(wrapper.emitted('update:autoRefreshSeconds')?.at(-1)).toEqual([0]);
+    await wrapper.get('[data-pro-table-tool="refresh"]').trigger('click');
+    expect(wrapper.emitted('refresh')).toHaveLength(1);
+    wrapper.unmount();
+  });
+
   it("overlays populated rows for blocking requests and keeps auto refresh lightweight", async () => {
     const wrapper = mount(ProTable, {
       props: {

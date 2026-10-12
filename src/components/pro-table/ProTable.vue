@@ -17,6 +17,7 @@ import type { ProTableColumn, ProTableProps } from "./types";
 defineOptions({ name: "MmProTable" });
 
 const props = withDefaults(defineProps<ProTableProps<Row>>(), {
+  autoRefreshable: true,
   autoRefreshOptions: () => [0, 5, 10, 30, 60],
   autoRefreshSeconds: undefined,
   blockingLoading: undefined,
@@ -120,6 +121,11 @@ const { value: activeAutoRefresh } = useControlled<number>(
   () => props.autoRefreshSeconds,
   0,
   (value) => emit("update:autoRefreshSeconds", value),
+);
+watch(
+  () => [props.autoRefreshable, activeAutoRefresh.value] as const,
+  ([enabled, seconds]) => { if (!enabled && seconds !== 0) activeAutoRefresh.value = 0; },
+  { immediate: true },
 );
 const { value: activeSelectedKeys } = useControlled<TableKey[]>(
   () => props.selectedRowKeys,
@@ -333,6 +339,7 @@ function stateCopy(): {
             <slot name="toolbar-actions" />
           </span>
           <ProTableTools
+            :auto-refreshable="autoRefreshable"
             :auto-refresh-options="autoRefreshOptions"
             :auto-refresh-seconds="activeAutoRefresh"
             :columns="columns"
@@ -397,6 +404,7 @@ function stateCopy(): {
     <div v-if="!queryFields.length" class="mm-pro-table__standalone-tools">
       <slot name="toolbar-actions" />
       <ProTableTools
+        :auto-refreshable="autoRefreshable"
         :auto-refresh-options="autoRefreshOptions"
         :auto-refresh-seconds="activeAutoRefresh"
         :columns="columns"

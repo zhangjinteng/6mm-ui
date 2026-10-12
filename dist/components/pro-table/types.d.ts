@@ -23,6 +23,7 @@ export interface ProTableCursorPaginationProps extends Pick<CursorPaginationProp
 }
 export interface ProTableProps<Row extends TableRow = TableRow> {
     ariaLabel?: string;
+    autoRefreshable?: boolean;
     autoRefreshOptions?: number[];
     autoRefreshSeconds?: number;
     blockingLoading?: boolean;

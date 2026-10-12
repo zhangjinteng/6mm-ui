@@ -6,6 +6,7 @@ export const enUS: MmUILocale = {
     futuresTradeReport: {
       day: 'Daily', month: 'Monthly', period: 'Period', symbol: 'Contract', allSymbols: 'All contracts', dateRange: 'Report date range',
       sourceId: 'Source', sourceName: 'Source name', sourceType: 'Source type', allSources: 'Merchants / white labels', merchant: 'Merchant', tenant: 'White label', platform: 'Platform',
+      sourceSearchPlaceholder: 'Source name / ID',
       statDate: 'Report date', trading_user_count: 'Trading users', order_count: 'Orders', order_amount: 'Order amount (U)',
       filled_order_count: 'Filled orders', fill_count: 'Trades', trade_amount: 'Trade amount (U)', cancel_order_count: 'Cancellations', cancel_amount: 'Cancelled amount (U)', amount_fill_rate: 'Amount fill rate',
       status: 'Status', processing: 'Processing', completed: 'Completed', partial: 'Incomplete', tableAria: 'Futures trading report',

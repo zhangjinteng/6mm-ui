@@ -24,6 +24,7 @@ export interface FuturesTradeReportQuery {
     end_date: string;
     source_type?: string;
     source_id?: string;
+    source_keyword?: string;
     page_no: number;
     page_size: number;
     order_by: string;
@@ -38,5 +39,7 @@ export interface FuturesTradeReportProps {
         updatedAt?: Date | string;
     }>;
     showSources?: boolean;
+    showSourceCode?: boolean;
+    sourceSearch?: 'id' | 'name-or-id';
     fillHeight?: boolean;
 }

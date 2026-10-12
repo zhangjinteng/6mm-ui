@@ -1,5 +1,6 @@
 import { ProTableColumn } from './types';
 type __VLS_Props = {
+    autoRefreshable?: boolean;
     autoRefreshOptions?: number[];
     autoRefreshSeconds?: number;
     columns?: ProTableColumn<any>[];
@@ -27,6 +28,7 @@ declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {},
 }>, {
     columns: ProTableColumn<any>[];
     disabled: boolean;
+    autoRefreshable: boolean;
     autoRefreshOptions: number[];
     autoRefreshSeconds: number;
     columnsConfigurable: boolean;

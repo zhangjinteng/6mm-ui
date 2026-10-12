@@ -17,6 +17,7 @@ var Y = {
 			merchant: "Merchant",
 			tenant: "White label",
 			platform: "Platform",
+			sourceSearchPlaceholder: "Source name / ID",
 			statDate: "Report date",
 			trading_user_count: "Trading users",
 			order_count: "Orders",
@@ -1111,6 +1112,7 @@ var Y = {
 			merchant: "商户",
 			tenant: "白标",
 			platform: "平台",
+			sourceSearchPlaceholder: "来源名称 / ID",
 			statDate: "统计日期",
 			trading_user_count: "成交用户",
 			order_count: "委托笔数",
@@ -6898,6 +6900,10 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 ], $r = /* @__PURE__ */ p({
 	__name: "ProTableTools",
 	props: {
+		autoRefreshable: {
+			type: Boolean,
+			default: !0
+		},
 		autoRefreshOptions: { default: () => [
 			0,
 			5,
@@ -6944,7 +6950,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 			return r.columns.filter((e) => e.hideable === !1 || !e.defaultHidden).map((e) => e.key);
 		}
 		function y(e) {
-			if (Array.isArray(e)) return;
+			if (!r.autoRefreshable || Array.isArray(e)) return;
 			let t = Number(e);
 			Number.isFinite(t) && t >= 0 && a("update:autoRefreshSeconds", t);
 		}
@@ -6963,7 +6969,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 			a("update:visibleColumnKeys", _());
 		}
 		return (n, r) => (D(), c("div", qr, [
-			e.refreshable ? (D(), c("label", Jr, [l("span", Yr, F(R(d).proTable.autoRefreshInterval), 1), f(R(zn), {
+			e.refreshable && e.autoRefreshable ? (D(), c("label", Jr, [l("span", Yr, F(R(d).proTable.autoRefreshInterval), 1), f(R(zn), {
 				"model-value": e.autoRefreshSeconds,
 				options: p.value,
 				disabled: e.disabled,
@@ -7071,6 +7077,10 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 	__name: "ProTable",
 	props: {
 		ariaLabel: {},
+		autoRefreshable: {
+			type: Boolean,
+			default: !0
+		},
 		autoRefreshOptions: { default: () => [
 			0,
 			5,
@@ -7189,7 +7199,11 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 		let { value: S } = Me(() => n.filters, {}, (e) => r("update:filters", y(e))), { value: C } = Me(() => n.currentPage, 1, (e) => r("update:currentPage", e)), { value: w } = Me(() => n.pageSize, 20, (e) => r("update:pageSize", e)), { value: T } = Me(() => n.sort, {
 			key: "",
 			order: null
-		}, (e) => r("update:sort", e)), { value: E } = Me(() => n.autoRefreshSeconds, 0, (e) => r("update:autoRefreshSeconds", e)), { value: O } = Me(() => n.selectedRowKeys, [], (e) => r("update:selectedRowKeys", [...e])), { value: k } = Me(() => n.visibleColumnKeys, v(n.columns), (e) => r("update:visibleColumnKeys", [...e])), A = i(() => new Set(n.columns.map((e) => e.key))), N = i(() => n.columns.filter((e) => e.hideable === !1).map((e) => e.key)), P = i(() => n.columns.filter((e) => e.hideable === !1 || k.value.includes(e.key))), I = i(() => {
+		}, (e) => r("update:sort", e)), { value: E } = Me(() => n.autoRefreshSeconds, 0, (e) => r("update:autoRefreshSeconds", e));
+		W(() => [n.autoRefreshable, E.value], ([e, t]) => {
+			!e && t !== 0 && (E.value = 0);
+		}, { immediate: !0 });
+		let { value: O } = Me(() => n.selectedRowKeys, [], (e) => r("update:selectedRowKeys", [...e])), { value: k } = Me(() => n.visibleColumnKeys, v(n.columns), (e) => r("update:visibleColumnKeys", [...e])), A = i(() => new Set(n.columns.map((e) => e.key))), N = i(() => n.columns.filter((e) => e.hideable === !1).map((e) => e.key)), P = i(() => n.columns.filter((e) => e.hideable === !1 || k.value.includes(e.key))), I = i(() => {
 			if (n.inlineQueryFieldKeys === void 0) return n.queryFields;
 			let e = new Set(n.inlineQueryFieldKeys);
 			return n.queryFields.filter((t) => e.has(t.key));
@@ -7268,6 +7282,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 				onReturnContext: n[4] ||= (e) => r("return-context", e)
 			}, u({
 				buttons: K((i) => [l("span", ri, [M(t.$slots, "query-actions", x(m(i))), M(t.$slots, "toolbar-actions")]), f($r, {
+					"auto-refreshable": e.autoRefreshable,
 					"auto-refresh-options": e.autoRefreshOptions,
 					"auto-refresh-seconds": R(E),
 					columns: e.columns,
@@ -7344,6 +7359,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 					])) : s("", !0)]),
 					_: 2
 				}, 1032, [
+					"auto-refreshable",
 					"auto-refresh-options",
 					"auto-refresh-seconds",
 					"columns",
@@ -7366,6 +7382,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 				"size"
 			])])) : s("", !0),
 			e.queryFields.length ? s("", !0) : (D(), c("div", ii, [M(t.$slots, "toolbar-actions"), f($r, {
+				"auto-refreshable": e.autoRefreshable,
 				"auto-refresh-options": e.autoRefreshOptions,
 				"auto-refresh-seconds": R(E),
 				columns: e.columns,
@@ -7379,6 +7396,7 @@ var Xn = ["aria-label"], Zn = ["src"], Qn = {
 				"onUpdate:autoRefreshSeconds": n[6] ||= (e) => E.value = e,
 				"onUpdate:visibleColumnKeys": n[7] ||= (e) => k.value = e
 			}, null, 8, [
+				"auto-refreshable",
 				"auto-refresh-options",
 				"auto-refresh-seconds",
 				"columns",
@@ -12342,6 +12360,11 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			type: Boolean,
 			default: !1
 		},
+		showSourceCode: {
+			type: Boolean,
+			default: !0
+		},
+		sourceSearch: { default: "id" },
 		fillHeight: {
 			type: Boolean,
 			default: !0
@@ -12374,35 +12397,31 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			},
 			...n.showSources ? [{
 				key: "source_type",
-				type: "select",
+				type: "segmented",
 				label: a.value.sourceType,
-				defaultValue: "",
-				width: 150,
+				defaultValue: "platform",
+				width: 180,
 				options: [
 					{
-						label: a.value.allSources,
-						value: ""
-					},
-					{
-						label: a.value.merchant,
-						value: "merchant"
+						label: a.value.platform,
+						value: "platform"
 					},
 					{
 						label: a.value.tenant,
 						value: "tenant"
 					},
 					{
-						label: a.value.platform,
-						value: "platform"
+						label: a.value.merchant,
+						value: "merchant"
 					}
 				]
 			}, {
 				key: "source_id",
 				type: "keyword",
 				label: a.value.sourceId,
-				placeholder: a.value.sourceId,
+				placeholder: n.sourceSearch === "name-or-id" ? a.value.sourceSearchPlaceholder : a.value.sourceId,
 				defaultValue: "",
-				width: 140,
+				width: n.sourceSearch === "name-or-id" ? 200 : 140,
 				clearable: !0
 			}] : [],
 			{
@@ -12432,12 +12451,12 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				hideable: !1
 			},
 			...n.showSources ? [
-				{
+				...n.showSourceCode ? [{
 					key: "source_code",
 					title: a.value.sourceId,
 					width: 130,
 					sortable: !0
-				},
+				}] : [],
 				{
 					key: "source_name",
 					title: a.value.sourceName,
@@ -12482,7 +12501,11 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 					order_by: o.order ? o.key : "stat_date",
 					order_dir: o.order === "asc" ? "asc" : "desc"
 				};
-				n.showSources && (c.source_type = String(e.source_type ?? ""), c.source_id = String(e.source_id ?? "").trim());
+				if (n.showSources) {
+					c.source_type = String(e.source_type ?? "");
+					let t = String(e.source_id ?? "").trim();
+					n.sourceSearch === "name-or-id" ? c.source_keyword = t : c.source_id = t;
+				}
 				try {
 					return await n.request(c, { signal: i });
 				} catch (e) {
@@ -12491,7 +12514,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				}
 			}
 		});
-		return W(() => p.value.period, () => g()), t({ reload: _ }), (t, n) => (D(), o(R(li), v({
+		return W([() => p.value.period, () => p.value.source_type], () => g()), t({ reload: _ }), (t, n) => (D(), o(R(li), v({
 			...t.$attrs,
 			...R(h)
 		}, {
@@ -12549,7 +12572,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-40f81511"]]);
+}), [["__scopeId", "data-v-9221facc"]]);
 //#endregion
 //#region src/components/history-position-table/formatters.ts
 function fc(e) {

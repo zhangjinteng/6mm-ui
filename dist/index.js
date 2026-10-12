@@ -22255,13 +22255,20 @@ var Jf = { key: 1 }, Yf = { class: "mm-user-asset-table__amount" }, Xf = { class
 					label: a.vipLevel,
 					type: "select",
 					defaultValue: "",
-					options: [{
-						label: a.all,
-						value: ""
-					}, ...Array.from({ length: 10 }, (e, t) => ({
-						label: `V${t + 1}`,
-						value: t + 1
-					}))],
+					options: [
+						{
+							label: a.all,
+							value: ""
+						},
+						{
+							label: "V0",
+							value: 0
+						},
+						...Array.from({ length: 10 }, (e, t) => ({
+							label: `V${t + 1}`,
+							value: t + 1
+						}))
+					],
 					width: 150
 				},
 				{

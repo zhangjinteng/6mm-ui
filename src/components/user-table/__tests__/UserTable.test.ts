@@ -151,6 +151,24 @@ describe('MmUserTable', () => {
     wrapper.unmount()
   })
 
+  it('offers V0 and forwards it as a distinct VIP filter', async () => {
+    const request = vi.fn(async () => ({ rows: [], total: 0 }))
+    const wrapper = mount(UserTable, { props: { request } })
+    await flushPromises()
+
+    const queryBar = wrapper.getComponent(MmQueryBar)
+    const vipField = (queryBar.props('fields') as QueryBarField[]).find(field => field.key === 'vip_level')
+    expect(vipField?.options).toContainEqual({ label: 'V0', value: 0 })
+
+    queryBar.vm.$emit('query', { vip_level: 0 })
+    await flushPromises()
+    expect(request).toHaveBeenLastCalledWith(
+      expect.objectContaining({ vip_level: 0 }),
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    )
+    wrapper.unmount()
+  })
+
   it('renders and invokes optional cancel-order and close-position actions', async () => {
     const request = vi.fn(async () => ({ rows: [{ user_id: 9001 }], total: 1 }))
     const cancelAllOrders = vi.fn(async () => {})

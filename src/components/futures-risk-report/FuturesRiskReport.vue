@@ -12,7 +12,7 @@ import { formatTradeReportDecimal } from '../futures-trade-report/formatters'
 import type { FuturesRiskReportProps, FuturesRiskReportQuery, FuturesRiskReportRow } from './types'
 
 defineOptions({ name: 'MmFuturesRiskReport', inheritAttrs: false })
-const props = withDefaults(defineProps<FuturesRiskReportProps>(), { showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true })
+const props = withDefaults(defineProps<FuturesRiskReportProps>(), { showSources: false, showSourceCode: true, showSymbolWhenFiltered: false, sourceSearch: 'id', fillHeight: true })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresRiskReport)
 const fields = computed<QueryBarField[]>(() => [
@@ -31,6 +31,9 @@ const fields = computed<QueryBarField[]>(() => [
 const metricKeys = ['liquidation_user_count', 'liquidation_count', 'liquidation_position_amount', 'liquidation_trade_amount', 'liquidation_realized_pnl', 'liquidation_fee', 'bankruptcy_count', 'bankruptcy_loss', 'uncollected_liquidation_fee', 'uncollected_trading_fee'] as const
 const columns = computed<ProTableColumn<FuturesRiskReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
+  ...(props.showSymbolWhenFiltered && rows.value.some(row => String(row.symbol ?? '').trim()) ? [
+    { key: 'symbol', title: messages.value.futuresTradeReport.symbol, width: 150, align: 'left' as const, hideable: false },
+  ] : []),
   ...(props.showSources ? [
     ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
@@ -40,7 +43,7 @@ const columns = computed<ProTableColumn<FuturesRiskReportRow>[]>(() => [
     formatter: (value: unknown) => formatTradeReportDecimal(value, key.endsWith('count') ? 0 : 2) })),
   { key: 'stat_status', title: copy.value.status, width: 120, fixed: 'right' as const, sortable: true },
 ])
-const { filters, proTableBindings, query, reload } = useMmProTable<FuturesRiskReportRow>({
+const { filters, proTableBindings, query, reload, rows } = useMmProTable<FuturesRiskReportRow>({
   initialSort: { key: 'stat_date', order: 'desc' }, queryFields: fields,
   request: async ({ filters, page, pageSize, signal, sort }) => {
     const range = Array.isArray(filters.date_range) ? filters.date_range : []

@@ -38,6 +38,9 @@ createApp(App).use(MmUI).mount("#app");
 
 `MmFuturesTradeReport` 基于 `MmProTable`，包含日报/月报切换、合约及日期筛选、排序、分页和中英文文案。通过 `request(query, { signal })` 注入请求，返回 `{ rows, total }`；商户端默认隐藏来源，平台端传入 `showSources` 显示商户/白标/平台筛选与来源列。
 
+设置 `show-symbol-when-filtered` 后，只在查询结果包含具体合约时显示合约列，可通过 `cell-symbol` 插槽展示合约图标和名称。
+该参数同样适用于 `MmFuturesPnlReport`、`MmFuturesFeeReport`、`MmFuturesFundingFeeReport`、`MmFuturesRiskReport` 和 `MmFuturesPositionReport`。
+
 ```vue
 <MmFuturesTradeReport :request="loadReport" :show-sources="isPlatform" />
 ```

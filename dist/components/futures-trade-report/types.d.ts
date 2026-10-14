@@ -2,6 +2,7 @@ import { TableRow } from '../table';
 export interface FuturesTradeReportRow extends TableRow {
     id: string;
     stat_date: string;
+    symbol?: string;
     source_type?: 'merchant' | 'tenant' | 'platform';
     source_id?: string;
     source_code?: string;
@@ -40,6 +41,7 @@ export interface FuturesTradeReportProps {
     }>;
     showSources?: boolean;
     showSourceCode?: boolean;
+    showSymbolWhenFiltered?: boolean;
     sourceSearch?: 'id' | 'name-or-id';
     fillHeight?: boolean;
 }

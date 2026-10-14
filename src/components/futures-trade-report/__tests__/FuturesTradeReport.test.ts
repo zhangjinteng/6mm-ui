@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { describe, it, expect, vi } from 'vitest'
 import { createMmLocaleContext, mmLocaleKey } from '../../../composables/use-locale'
 import { MmQueryBar } from '../../query-bar'
+import type { ProTableColumn } from '../../pro-table'
 import FuturesTradeReport from '../FuturesTradeReport.vue'
 import { formatTradeReportDecimal } from '../formatters'
 import type { FuturesTradeReportRow } from '../types'
@@ -94,6 +95,65 @@ describe('MmFuturesTradeReport', () => {
     await (wrapper.vm as unknown as { reload: () => Promise<void> }).reload()
     await flushPromises()
     expect(wrapper.text()).toContain('Report unavailable')
+    wrapper.unmount()
+  })
+  it('shows the contract column only for accepted symbol results and keeps draft filters separate', async () => {
+    const request = vi.fn(async (query: { symbol: string }) => ({
+      rows: [{ ...row, symbol: query.symbol === 'BNB' ? 'BNBUSDT' : query.symbol }], total: 1,
+    }))
+    const wrapper = mount(FuturesTradeReport, { props: { request, showSymbolWhenFiltered: true } })
+    await flushPromises()
+    const keys = () => (wrapper.getComponent({ name: 'MmProTable' }).props('columns') as ProTableColumn<FuturesTradeReportRow>[]).map(column => column.key)
+    expect(keys()).not.toContain('symbol')
+
+    const bar = wrapper.getComponent(MmQueryBar)
+    await wrapper.get('[data-query-field="symbol"] input').setValue(' bnb ')
+    await flushPromises()
+    expect(keys()).not.toContain('symbol')
+    bar.vm.$emit('query', bar.props('modelValue'))
+    await flushPromises()
+    expect(keys().slice(0, 2)).toEqual(['stat_date', 'symbol'])
+    expect(wrapper.get('.mm-table__body-table').text()).toContain('BNBUSDT')
+    expect(request).toHaveBeenLastCalledWith(expect.objectContaining({ symbol: 'BNB' }), expect.anything())
+
+    await wrapper.get('[data-query-field="symbol"] input').setValue('ETHUSDT')
+    await flushPromises()
+    expect(wrapper.get('.mm-table__body-table').text()).toContain('BNBUSDT')
+    expect(wrapper.get('.mm-table__body-table').text()).not.toContain('ETHUSDT')
+
+    bar.vm.$emit('reset', { period: 'day', symbol: '', date_range: null })
+    await flushPromises()
+    expect(keys()).not.toContain('symbol')
+    wrapper.unmount()
+  })
+  it('keeps the contract column disabled for existing consumers unless opted in', async () => {
+    const wrapper = mount(FuturesTradeReport, {
+      props: { request: async () => ({ rows: [{ ...row, symbol: 'BTCUSDT' }], total: 1 }) },
+    })
+    await flushPromises()
+    const columns = wrapper.getComponent({ name: 'MmProTable' }).props('columns') as ProTableColumn<FuturesTradeReportRow>[]
+    expect(columns.map(column => column.key)).not.toContain('symbol')
+    wrapper.unmount()
+  })
+  it('does not replace the visible contract when an aborted search resolves late', async () => {
+    let resolveOlder!: (result: { rows: FuturesTradeReportRow[], total: number }) => void
+    const request = vi.fn(async (query: { symbol: string }) => {
+      if (query.symbol === 'BNBUSDT') {
+        return new Promise<{ rows: FuturesTradeReportRow[], total: number }>(resolve => { resolveOlder = resolve })
+      }
+      return { rows: [{ ...row, symbol: query.symbol }], total: 1 }
+    })
+    const wrapper = mount(FuturesTradeReport, { props: { request, showSymbolWhenFiltered: true } })
+    await flushPromises()
+    const bar = wrapper.getComponent(MmQueryBar)
+    bar.vm.$emit('query', { ...bar.props('modelValue'), symbol: 'BNBUSDT' })
+    await flushPromises()
+    bar.vm.$emit('query', { ...bar.props('modelValue'), symbol: 'ETHUSDT' })
+    await flushPromises()
+    resolveOlder({ rows: [{ ...row, symbol: 'BNBUSDT' }], total: 1 })
+    await flushPromises()
+    expect(wrapper.get('.mm-table__body-table').text()).toContain('ETHUSDT')
+    expect(wrapper.get('.mm-table__body-table').text()).not.toContain('BNBUSDT')
     wrapper.unmount()
   })
   it('rounds without float precision loss or negative zero', () => {

@@ -3,6 +3,7 @@ import type { TableRow } from '../table'
 export interface FuturesFundingFeeReportRow extends TableRow {
   id: string
   stat_date: string
+  symbol?: string
   source_type?: 'merchant' | 'tenant' | 'platform'
   source_id?: string
   source_code?: string
@@ -39,6 +40,7 @@ export interface FuturesFundingFeeReportProps {
   }>
   showSources?: boolean
   showSourceCode?: boolean
+  showSymbolWhenFiltered?: boolean
   sourceSearch?: 'id' | 'name-or-id'
   fillHeight?: boolean
 }

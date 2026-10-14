@@ -12759,6 +12759,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			type: Boolean,
 			default: !0
 		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
+		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
 			type: Boolean,
@@ -12845,6 +12849,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && y.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: a.value.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -12879,7 +12890,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: p, proTableBindings: h, query: g, reload: _ } = De({
+		]), { filters: p, proTableBindings: h, query: g, reload: _, rows: y } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -12967,7 +12978,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-9221facc"]]), fc = { class: "is-income" }, pc = { class: "is-expense" }, mc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
+}), [["__scopeId", "data-v-587a8fd6"]]), fc = { class: "is-income" }, pc = { class: "is-expense" }, mc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesFundingFeeReport",
 	inheritAttrs: !1,
 	__name: "FuturesFundingFeeReport",
@@ -12980,6 +12991,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 		showSourceCode: {
 			type: Boolean,
 			default: !0
+		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
 		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
@@ -13062,6 +13077,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && S.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: r.value.futuresTradeReport.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -13124,7 +13146,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: h, proTableBindings: g, query: _, reload: y } = De({
+		]), { filters: h, proTableBindings: g, query: _, reload: y, rows: S } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -13215,7 +13237,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-a170a405"]]), hc = { class: "mm-futures-pnl-report__positive" }, gc = { class: "mm-futures-pnl-report__negative" }, _c = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
+}), [["__scopeId", "data-v-1ff6b096"]]), hc = { class: "mm-futures-pnl-report__positive" }, gc = { class: "mm-futures-pnl-report__negative" }, _c = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesPnlReport",
 	inheritAttrs: !1,
 	__name: "FuturesPnlReport",
@@ -13228,6 +13250,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 		showSourceCode: {
 			type: Boolean,
 			default: !0
+		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
 		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
@@ -13314,6 +13340,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && C.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: r.value.futuresTradeReport.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -13358,7 +13391,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: g, proTableBindings: _, query: y, reload: S } = De({
+		]), { filters: g, proTableBindings: _, query: y, reload: S, rows: C } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -13435,7 +13468,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-3aad00c0"]]), vc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
+}), [["__scopeId", "data-v-9a965581"]]), vc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesRiskReport",
 	inheritAttrs: !1,
 	__name: "FuturesRiskReport",
@@ -13448,6 +13481,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 		showSourceCode: {
 			type: Boolean,
 			default: !0
+		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
 		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
@@ -13536,6 +13573,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && y.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: r.value.futuresTradeReport.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -13570,7 +13614,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: p, proTableBindings: h, query: g, reload: _ } = De({
+		]), { filters: p, proTableBindings: h, query: g, reload: _, rows: y } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -13659,7 +13703,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-9125faa0"]]), yc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
+}), [["__scopeId", "data-v-f9c23a13"]]), yc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesFeeReport",
 	inheritAttrs: !1,
 	__name: "FuturesFeeReport",
@@ -13672,6 +13716,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 		showSourceCode: {
 			type: Boolean,
 			default: !0
+		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
 		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
@@ -13757,6 +13805,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && y.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: r.value.futuresTradeReport.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -13791,7 +13846,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: p, proTableBindings: h, query: g, reload: _ } = De({
+		]), { filters: p, proTableBindings: h, query: g, reload: _, rows: y } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -13880,7 +13935,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-9b32faff"]]), bc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
+}), [["__scopeId", "data-v-79371a5b"]]), bc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 	name: "MmFuturesUserNetPnlReport",
 	inheritAttrs: !1,
 	__name: "FuturesUserNetPnlReport",
@@ -14105,6 +14160,10 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			type: Boolean,
 			default: !0
 		},
+		showSymbolWhenFiltered: {
+			type: Boolean,
+			default: !1
+		},
 		sourceSearch: { default: "id" },
 		fillHeight: {
 			type: Boolean,
@@ -14191,6 +14250,13 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				sortable: !0,
 				hideable: !1
 			},
+			...n.showSymbolWhenFiltered && S.value.some((e) => String(e.symbol ?? "").trim()) ? [{
+				key: "symbol",
+				title: r.value.futuresTradeReport.symbol,
+				width: 150,
+				align: "left",
+				hideable: !1
+			}] : [],
 			...n.showSources ? [
 				...n.showSourceCode ? [{
 					key: "source_code",
@@ -14225,7 +14291,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 				fixed: "right",
 				sortable: !0
 			}
-		]), { filters: h, proTableBindings: g, query: _, reload: y } = De({
+		]), { filters: h, proTableBindings: g, query: _, reload: y, rows: S } = De({
 			initialSort: {
 				key: "stat_date",
 				order: "desc"
@@ -14317,7 +14383,7 @@ var dc = /*#__PURE__*/ Zo(/* @__PURE__ */ p({
 			"filter-drawer-title"
 		]));
 	}
-}), [["__scopeId", "data-v-264311e3"]]);
+}), [["__scopeId", "data-v-fe8243a4"]]);
 //#endregion
 //#region src/components/history-position-table/formatters.ts
 function Sc(e) {
@@ -20361,9 +20427,9 @@ var Dd = { key: 1 }, Od = { class: "mm-online-user-table__emphasis" }, kd = { cl
 					options: [{
 						label: a.all,
 						value: ""
-					}, ...Array.from({ length: 10 }, (e, t) => ({
-						label: `V${t + 1}`,
-						value: t + 1
+					}, ...Array.from({ length: 11 }, (e, t) => ({
+						label: `V${t}`,
+						value: t
 					}))],
 					width: 150
 				},

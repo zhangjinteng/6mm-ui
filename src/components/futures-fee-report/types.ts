@@ -3,6 +3,7 @@ import type { TableRow } from '../table'
 export interface FuturesFeeReportRow extends TableRow {
   id: string
   stat_date: string
+  symbol?: string
   source_type?: 'merchant' | 'tenant' | 'platform'
   source_id?: string
   source_code?: string
@@ -35,6 +36,7 @@ export interface FuturesFeeReportProps {
   request: (query: FuturesFeeReportQuery, context: { signal: AbortSignal }) => Promise<{ rows: FuturesFeeReportRow[], total: number, updatedAt?: Date | string }>
   showSources?: boolean
   showSourceCode?: boolean
+  showSymbolWhenFiltered?: boolean
   sourceSearch?: 'id' | 'name-or-id'
   fillHeight?: boolean
 }

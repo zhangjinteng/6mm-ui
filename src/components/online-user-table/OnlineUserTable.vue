@@ -85,9 +85,9 @@ const queryFields = computed<QueryBarField[]>(() => {
       defaultValue: '',
       options: [
         { label: copy.all, value: '' },
-        ...Array.from({ length: 10 }, (_, index) => ({
-          label: `V${index + 1}`,
-          value: index + 1,
+        ...Array.from({ length: 11 }, (_, index) => ({
+          label: `V${index}`,
+          value: index,
         })),
       ],
       width: 150,

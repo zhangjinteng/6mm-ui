@@ -10,7 +10,7 @@ import { formatTradeReportDecimal } from '../futures-trade-report/formatters'
 import type { FuturesPnlReportProps, FuturesPnlReportQuery, FuturesPnlReportRow } from './types'
 
 defineOptions({ name: 'MmFuturesPnlReport', inheritAttrs: false })
-const props = withDefaults(defineProps<FuturesPnlReportProps>(), { showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true })
+const props = withDefaults(defineProps<FuturesPnlReportProps>(), { showSources: false, showSourceCode: true, showSymbolWhenFiltered: false, sourceSearch: 'id', fillHeight: true })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresPnlReport)
 const fields = computed<QueryBarField[]>(() => [
@@ -30,6 +30,9 @@ const countKeys = ['trading_user_count', 'profitable_user_count', 'losing_user_c
 const amountKeys = ['trade_amount', 'profit_amount', 'loss_amount', 'net_pnl'] as const
 const columns = computed<ProTableColumn<FuturesPnlReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
+  ...(props.showSymbolWhenFiltered && rows.value.some(row => String(row.symbol ?? '').trim()) ? [
+    { key: 'symbol', title: messages.value.futuresTradeReport.symbol, width: 150, align: 'left' as const, hideable: false },
+  ] : []),
   ...(props.showSources ? [
     ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
@@ -44,7 +47,7 @@ const columns = computed<ProTableColumn<FuturesPnlReportRow>[]>(() => [
     } })),
   { key: 'stat_status', title: copy.value.status, width: 120, fixed: 'right' as const, sortable: true },
 ])
-const { filters, proTableBindings, query, reload } = useMmProTable<FuturesPnlReportRow>({
+const { filters, proTableBindings, query, reload, rows } = useMmProTable<FuturesPnlReportRow>({
   initialSort: { key: 'stat_date', order: 'desc' }, queryFields: fields,
   request: async ({ filters, page, pageSize, signal, sort }) => {
     const range = Array.isArray(filters.date_range) ? filters.date_range : []

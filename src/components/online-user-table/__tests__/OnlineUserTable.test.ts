@@ -10,6 +10,37 @@ import OnlineUserTable from '../OnlineUserTable.vue'
 import type { OnlineUserRow } from '../types'
 
 describe('MmOnlineUserTable', () => {
+  it('offers V0 and preserves numeric zero separately from the all-levels filter', async () => {
+    const request = vi.fn(async () => ({ rows: [], total: 0 }))
+    const wrapper = mount(OnlineUserTable, { props: { request } })
+    await flushPromises()
+
+    const queryBar = wrapper.findComponent(MmQueryBar)
+    const vipSelect = queryBar.findAllComponents(MmSelect).find(select =>
+      select.props('options')?.some((option: { label?: unknown }) => option.label === 'V1'),
+    )
+    expect(vipSelect?.props('options')?.slice(0, 2)).toEqual([
+      { label: '全部', value: '' },
+      { label: 'V0', value: 0 },
+    ])
+    expect(vipSelect?.props('options')?.at(-1)).toEqual({ label: 'V10', value: 10 })
+
+    queryBar.vm.$emit('query', { vip_level: 0 })
+    await flushPromises()
+    expect(request).toHaveBeenLastCalledWith(
+      expect.objectContaining({ vip_level: 0 }),
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    )
+
+    queryBar.vm.$emit('query', { vip_level: '' })
+    await flushPromises()
+    expect(request).toHaveBeenLastCalledWith(
+      expect.objectContaining({ vip_level: '' }),
+      expect.objectContaining({ signal: expect.any(AbortSignal) }),
+    )
+    wrapper.unmount()
+  })
+
   it('normalizes the initial online-user query and renders returned rows', async () => {
     const request = vi.fn(async () => ({
       rows: [

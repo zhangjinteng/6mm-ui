@@ -12,7 +12,7 @@ import { formatTradeReportDecimal } from './formatters'
 import type { FuturesTradeReportProps, FuturesTradeReportQuery, FuturesTradeReportRow } from './types'
 
 defineOptions({ name: 'MmFuturesTradeReport', inheritAttrs: false })
-const props = withDefaults(defineProps<FuturesTradeReportProps>(), { showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true })
+const props = withDefaults(defineProps<FuturesTradeReportProps>(), { showSources: false, showSourceCode: true, showSymbolWhenFiltered: false, sourceSearch: 'id', fillHeight: true })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresTradeReport)
 const fields = computed<QueryBarField[]>(() => [
@@ -31,6 +31,9 @@ const fields = computed<QueryBarField[]>(() => [
 const metricKeys = ['trading_user_count', 'order_count', 'order_amount', 'filled_order_count', 'fill_count', 'trade_amount', 'cancel_order_count', 'cancel_amount', 'amount_fill_rate'] as const
 const columns = computed<ProTableColumn<FuturesTradeReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
+  ...(props.showSymbolWhenFiltered && rows.value.some(row => String(row.symbol ?? '').trim()) ? [
+    { key: 'symbol', title: copy.value.symbol, width: 150, align: 'left' as const, hideable: false },
+  ] : []),
   ...(props.showSources ? [
     ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
@@ -40,7 +43,7 @@ const columns = computed<ProTableColumn<FuturesTradeReportRow>[]>(() => [
     formatter: (value: unknown) => key === 'amount_fill_rate' ? `${formatTradeReportDecimal(value)}%` : formatTradeReportDecimal(value, key.endsWith('amount') ? 2 : 0) })),
   { key: 'stat_status', title: copy.value.status, width: 120, fixed: 'right' as const, sortable: true },
 ])
-const { filters, proTableBindings, query, reload } = useMmProTable<FuturesTradeReportRow>({
+const { filters, proTableBindings, query, reload, rows } = useMmProTable<FuturesTradeReportRow>({
   initialSort: { key: 'stat_date', order: 'desc' }, queryFields: fields,
   request: async ({ filters, page, pageSize, signal, sort }) => {
     const range = Array.isArray(filters.date_range) ? filters.date_range : []

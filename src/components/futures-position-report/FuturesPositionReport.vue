@@ -12,7 +12,7 @@ import { formatTradeReportDecimal } from '../futures-trade-report/formatters'
 import type { FuturesPositionReportProps, FuturesPositionReportQuery, FuturesPositionReportRow } from './types'
 
 defineOptions({ name: 'MmFuturesPositionReport', inheritAttrs: false })
-const props = withDefaults(defineProps<FuturesPositionReportProps>(), { showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true })
+const props = withDefaults(defineProps<FuturesPositionReportProps>(), { showSources: false, showSourceCode: true, showSymbolWhenFiltered: false, sourceSearch: 'id', fillHeight: true })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresPositionReport)
 const fields = computed<QueryBarField[]>(() => [
@@ -35,6 +35,9 @@ const metricKeys = [
 ] as const
 const columns = computed<ProTableColumn<FuturesPositionReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
+  ...(props.showSymbolWhenFiltered && rows.value.some(row => String(row.symbol ?? '').trim()) ? [
+    { key: 'symbol', title: messages.value.futuresTradeReport.symbol, width: 150, align: 'left' as const, hideable: false },
+  ] : []),
   ...(props.showSources ? [
     ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
@@ -45,7 +48,7 @@ const columns = computed<ProTableColumn<FuturesPositionReportRow>[]>(() => [
       : formatTradeReportDecimal(value, key.endsWith('_count') ? 0 : 2) })),
   { key: 'stat_status', title: copy.value.status, width: 120, fixed: 'right' as const, sortable: true },
 ])
-const { filters, proTableBindings, query, reload } = useMmProTable<FuturesPositionReportRow>({
+const { filters, proTableBindings, query, reload, rows } = useMmProTable<FuturesPositionReportRow>({
   initialSort: { key: 'stat_date', order: 'desc' }, queryFields: fields,
   request: async ({ filters, page, pageSize, signal, sort }) => {
     const range = Array.isArray(filters.date_range) ? filters.date_range : []

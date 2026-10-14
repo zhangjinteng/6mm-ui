@@ -13,7 +13,7 @@ import type { FuturesFundingFeeReportProps, FuturesFundingFeeReportQuery, Future
 
 defineOptions({ name: 'MmFuturesFundingFeeReport', inheritAttrs: false })
 const props = withDefaults(defineProps<FuturesFundingFeeReportProps>(), {
-  showSources: false, showSourceCode: true, sourceSearch: 'id', fillHeight: true,
+  showSources: false, showSourceCode: true, showSymbolWhenFiltered: false, sourceSearch: 'id', fillHeight: true,
 })
 const { messages } = useLocale()
 const copy = computed(() => messages.value.futuresFundingFeeReport)
@@ -33,6 +33,9 @@ const fields = computed<QueryBarField[]>(() => [
 const moneyKeys = ['funding_settlement_position_amount', 'funding_fee_income', 'funding_fee_expense', 'funding_fee_net_income'] as const
 const columns = computed<ProTableColumn<FuturesFundingFeeReportRow>[]>(() => [
   { key: 'stat_date', title: copy.value.statDate, width: 140, sortable: true, hideable: false },
+  ...(props.showSymbolWhenFiltered && rows.value.some(row => String(row.symbol ?? '').trim()) ? [
+    { key: 'symbol', title: messages.value.futuresTradeReport.symbol, width: 150, align: 'left' as const, hideable: false },
+  ] : []),
   ...(props.showSources ? [
     ...(props.showSourceCode ? [{ key: 'source_code', title: copy.value.sourceId, width: 130, sortable: true }] : []),
     { key: 'source_name', title: copy.value.sourceName, width: 160, sortable: true },
@@ -50,7 +53,7 @@ const columns = computed<ProTableColumn<FuturesFundingFeeReportRow>[]>(() => [
     formatter: value => `${formatTradeReportDecimal(value, 4)}%` },
   { key: 'stat_status', title: copy.value.status, width: 120, fixed: 'right' as const, sortable: true },
 ])
-const { filters, proTableBindings, query, reload } = useMmProTable<FuturesFundingFeeReportRow>({
+const { filters, proTableBindings, query, reload, rows } = useMmProTable<FuturesFundingFeeReportRow>({
   initialSort: { key: 'stat_date', order: 'desc' }, queryFields: fields,
   request: async ({ filters, page, pageSize, signal, sort }) => {
     const range = Array.isArray(filters.date_range) ? filters.date_range : []

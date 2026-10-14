@@ -1,4 +1,6 @@
 import type { Component } from "vue";
+import { MmAssetBalanceReport } from "./asset-balance-report";
+export * from "./asset-balance-report";
 import { MmPlatformTradeSummaryReport } from "./platform-trade-summary-report";
 export * from "./platform-trade-summary-report";
 
@@ -286,6 +288,7 @@ export const components: InstallableComponent[] = [
   MmProTable,
   MmFuturesTradeReport,
   MmPlatformTradeSummaryReport,
+  MmAssetBalanceReport,
   MmUserDailyReport,
   MmFuturesRiskReport,
   MmFuturesFeeReport,

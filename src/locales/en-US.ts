@@ -3,6 +3,15 @@ import type { MmUILocale } from "./types";
 export const enUS: MmUILocale = {
   name: "en-US",
   messages: {
+    assetBalanceReport: {
+      day: 'Daily', month: 'Monthly', period: 'Period', dateRange: 'Report date range', sourceName: 'Source name', sourceType: 'Source type',
+      sourceSearchPlaceholder: 'Source name / ID', merchant: 'Merchant', tenant: 'White label', platform: 'Platform', statDate: 'Report date',
+      currency: 'Currency', allCurrencies: 'All currencies', accountType: 'Account type', fundingAccount: 'Funding account', contractAccount: 'Contract account',
+      fundedUsers: 'Funded users', opening_total: 'Opening total', closing_total: 'Closing total', period_net_change: 'Net change',
+      closing_available: 'Available', closing_occupied: 'Occupied', status: 'Status', processing: 'Processing', completed: 'Completed',
+      partial: 'Incomplete', utcHelp: 'UTC daily balance snapshots. Monthly opening and closing use the first and last snapshot, not a sum. Direct-user history before capture began is incomplete.',
+      tableAria: 'Asset balance report', loadFailed: 'Could not load asset balances',
+    },
     platformTradeSummaryReport: {
       day: 'Daily', month: 'Monthly', period: 'Period', dateRange: 'Report date range', sourceName: 'Source name', sourceType: 'Source type',
       sourceSearchPlaceholder: 'Source name / ID', merchant: 'Merchant', tenant: 'White label', platform: 'Platform', statDate: 'Report date',

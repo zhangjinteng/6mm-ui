@@ -1,6 +1,14 @@
 export type MmUILocaleName = "en-US" | "zh-CN";
 
 export interface MmUILocaleMessages {
+  assetBalanceReport: {
+    day: string; month: string; period: string; dateRange: string; sourceName: string; sourceType: string;
+    sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string; statDate: string;
+    currency: string; allCurrencies: string; accountType: string; fundingAccount: string; contractAccount: string;
+    fundedUsers: string; opening_total: string; closing_total: string; period_net_change: string;
+    closing_available: string; closing_occupied: string; status: string; processing: string; completed: string;
+    partial: string; utcHelp: string; tableAria: string; loadFailed: string;
+  };
   platformTradeSummaryReport: {
     day: string; month: string; period: string; dateRange: string; sourceName: string; sourceType: string;
     sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string; statDate: string;

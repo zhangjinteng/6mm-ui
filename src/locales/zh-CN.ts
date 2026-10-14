@@ -3,6 +3,15 @@ import type { MmUILocale } from "./types";
 export const zhCN: MmUILocale = {
   name: "zh-CN",
   messages: {
+    assetBalanceReport: {
+      day: '日报', month: '月报', period: '统计周期', dateRange: '统计日期范围', sourceName: '来源名称', sourceType: '来源类型',
+      sourceSearchPlaceholder: '来源名称 / ID', merchant: '商户', tenant: '白标', platform: '平台', statDate: '统计日期',
+      currency: '币种', allCurrencies: '全部币种', accountType: '账户类型', fundingAccount: '资金账户', contractAccount: '合约账户',
+      fundedUsers: '有资用户', opening_total: '期初总额', closing_total: '期末总额', period_net_change: '期间净变动',
+      closing_available: '可用', closing_occupied: '占用', status: '统计状态', processing: '统计中', completed: '已完成',
+      partial: '数据不完整', utcHelp: '按 UTC 自然日取余额快照。月报取月初期初和月末期末，不累加每日余额；直客启用快照前的历史数据标为不完整。',
+      tableAria: '资产余额报表', loadFailed: '资产余额报表加载失败',
+    },
     platformTradeSummaryReport: {
       day: '日报', month: '月报', period: '统计周期', dateRange: '统计日期范围', sourceName: '来源名称', sourceType: '来源类型',
       sourceSearchPlaceholder: '来源名称 / ID', merchant: '商户', tenant: '白标', platform: '平台', statDate: '统计日期',

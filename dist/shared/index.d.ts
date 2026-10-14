@@ -1,6 +1,8 @@
 export { useNamespace } from './namespace';
 export type { CssVarRecord, CssVarValue, Namespace } from './namespace';
 export { debugWarn } from './warn';
+export { isCurrentReportPeriod, resolveReportDateStatus } from './report-date-status';
+export type { ReportDateStatus } from './report-date-status';
 export { addDays, addMonths, buildCalendarMonth, compareDateValues, daysInMonth, formatDate, formatDateValue, isLeapYear, parseDateValue, parseFormattedDate, todayDateValue, } from './date';
 export type { CalendarCell, PlainDate } from './date';
 export { acceptsFile, createFileUid, formatFileSize } from './file';

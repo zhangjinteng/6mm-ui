@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
+import { isCurrentReportPeriod } from '../../shared/report-date-status'
 import { useLocale } from '../../composables/use-locale'
 import { useMmProTable } from '../../composables/use-pro-table'
 import { MmIcon } from '../icon'
@@ -84,8 +85,8 @@ defineExpose({ reload })
       </MmTag>
     </template>
     <template #cell-stat_status="{ row }">
-      <MmTag :type="row.stat_status === 1 ? 'success' : 'warning'" size="sm" round>
-        {{ row.stat_status === 1 ? copy.completed : row.stat_status === 2 ? copy.partial : copy.processing }}
+      <MmTag :type="isCurrentReportPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
+        {{ isCurrentReportPeriod(row.stat_date) ? copy.processing : copy.completed }}
       </MmTag>
     </template>
     <template v-for="(_, name) in $slots" #[name]="slotProps"><slot :name="name" v-bind="slotProps" /></template>

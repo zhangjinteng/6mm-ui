@@ -28,7 +28,7 @@ describe('MmFuturesPnlReport', () => {
     expect(wrapper.text()).toContain('9,007,199,254,740,993.13')
     expect(wrapper.find('.mm-futures-pnl-report__positive').exists()).toBe(true)
     expect(wrapper.text()).toContain('+10.00')
-    expect(wrapper.text()).toContain('统计中')
+    expect(wrapper.text()).toContain('已完成')
     expect(request).toHaveBeenLastCalledWith(expect.objectContaining({ source_type: 'platform', period: 'day' }), expect.anything())
     const sourceField = wrapper.get('[data-query-field="source_type"]')
     expect(sourceField.findAll('button[role="radio"]').map(button => button.text())).toEqual(['平台', '白标', '商户'])

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, watch } from 'vue'
+import { isCurrentReportPeriod } from '../../shared/report-date-status'
 import { useLocale } from '../../composables/use-locale'
 import { useMmProTable } from '../../composables/use-pro-table'
 import { MmProTable } from '../pro-table'
@@ -82,8 +83,8 @@ defineExpose({ reload })
       </MmTag>
     </template>
     <template #cell-stat_status="{ row }">
-      <MmTag :type="row.stat_status === 1 ? 'success' : 'warning'" size="sm" round>
-        {{ row.stat_status === 1 ? copy.completed : copy.processing }}
+      <MmTag :type="isCurrentReportPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
+        {{ isCurrentReportPeriod(row.stat_date) ? copy.processing : copy.completed }}
       </MmTag>
     </template>
     <template #cell-profit_amount="{ row }"><span class="mm-futures-pnl-report__positive">{{ formatTradeReportDecimal(row.profit_amount) }}</span></template>

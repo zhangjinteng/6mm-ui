@@ -7,7 +7,7 @@ import type { ProTableColumn } from '../pro-table'
 import type { QueryBarField } from '../query-bar'
 import { MmTag } from '../tag'
 import { formatTradeReportDecimal } from '../futures-trade-report/formatters'
-import { isCurrentTradeSummaryPeriod } from './date-status'
+import { isCurrentReportPeriod } from '../../shared/report-date-status'
 import type { PlatformTradeSummaryProps, PlatformTradeSummaryQuery, PlatformTradeSummaryRow } from './types'
 
 defineOptions({ name: 'MmPlatformTradeSummaryReport', inheritAttrs: false })
@@ -64,8 +64,8 @@ defineExpose({ reload })
       </MmTag>
     </template>
     <template #cell-stat_status="{ row }">
-      <MmTag :type="isCurrentTradeSummaryPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
-        {{ isCurrentTradeSummaryPeriod(row.stat_date) ? copy.processing : copy.completed }}
+      <MmTag :type="isCurrentReportPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
+        {{ isCurrentReportPeriod(row.stat_date) ? copy.processing : copy.completed }}
       </MmTag>
     </template>
     <template v-for="(_, name) in $slots" #[name]="slotProps"><slot :name="name" v-bind="slotProps" /></template>

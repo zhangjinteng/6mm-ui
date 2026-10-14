@@ -41,11 +41,12 @@ describe('MmPlatformPnlReport', () => {
     wrapper.unmount()
   })
 
-  it('shows incomplete status when either product has not published', async () => {
+  it('shows completed for a historical date without changing an incomplete source status', async () => {
     const request = vi.fn(async (..._args: unknown[]) => ({ rows: [{ ...row, stat_status: 2 }], total: 1 }))
     const wrapper = mount(PlatformPnlReport, { props: { request } })
     await flushPromises()
-    expect(wrapper.text()).toContain('数据不完整')
+    expect(wrapper.text()).toContain('已完成')
+    expect(wrapper.text()).not.toContain('数据不完整')
     wrapper.unmount()
   })
 })

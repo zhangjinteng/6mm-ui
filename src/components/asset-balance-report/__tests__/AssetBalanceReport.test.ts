@@ -50,11 +50,12 @@ describe('MmAssetBalanceReport', () => {
     wrapper.unmount()
   })
 
-  it('does not mark a historical row complete when the direct-user snapshot is missing', async () => {
+  it('shows a historical row as completed regardless of backend completeness', async () => {
     const request = vi.fn(async () => ({ rows: [{ ...row, stat_status: 2 }], total: 1 }))
     const wrapper = mount(AssetBalanceReport, { props: { request, showSources: true } })
     await flushPromises()
-    expect(wrapper.get('[data-row-key="1"] td:last-child').text()).toBe('数据不完整')
+    expect(wrapper.get('[data-row-key="1"] td:last-child').text()).toBe('已完成')
+    expect(wrapper.text()).not.toContain('数据不完整')
     wrapper.unmount()
   })
 })

@@ -30,7 +30,7 @@ var Y = {
 			processing: "Processing",
 			completed: "Completed",
 			partial: "Incomplete",
-			utcHelp: "UTC daily balance snapshots. Monthly opening and closing use the first and last snapshot, not a sum. Direct-user history before capture began is incomplete.",
+			utcHelp: "UTC daily balance snapshots. Monthly opening and closing use the first and last snapshot, not a sum. The current day or month is processing; all other periods are completed.",
 			tableAria: "Asset balance report",
 			loadFailed: "Could not load asset balances"
 		},
@@ -84,7 +84,7 @@ var Y = {
 			completed: "Completed",
 			partial: "Incomplete",
 			tableAria: "Platform PnL summary",
-			utcHelp: "UTC calendar day / month. Contract and prediction data are published independently; a missing side is marked incomplete. Platform, white-label and merchant totals overlap.",
+			utcHelp: "UTC calendar day / month. The current day or month is processing; all other periods are completed. Platform, white-label and merchant totals overlap.",
 			loadFailed: "Could not load the platform PnL report"
 		},
 		futuresFeeReport: {
@@ -1469,7 +1469,7 @@ var Y = {
 			processing: "统计中",
 			completed: "已完成",
 			partial: "数据不完整",
-			utcHelp: "按 UTC 自然日取余额快照。月报取月初期初和月末期末，不累加每日余额；直客启用快照前的历史数据标为不完整。",
+			utcHelp: "按 UTC 自然日取余额快照。月报取月初期初和月末期末，不累加每日余额。当前日或当前月显示统计中，其余显示已完成。",
 			tableAria: "资产余额报表",
 			loadFailed: "资产余额报表加载失败"
 		},
@@ -1523,7 +1523,7 @@ var Y = {
 			completed: "已完成",
 			partial: "数据不完整",
 			tableAria: "平台盈亏汇总",
-			utcHelp: "按 UTC 自然日 / 月统计。合约侧与预测侧独立发布，缺失任一侧时显示数据不完整。平台、白标、商户为包含关系，不能相加。",
+			utcHelp: "按 UTC 自然日 / 月统计。当前日或当前月显示统计中，其余显示已完成。平台、白标、商户为包含关系，不能相加。",
 			loadFailed: "平台盈亏报表加载失败"
 		},
 		futuresFeeReport: {
@@ -8602,11 +8602,11 @@ var qn = ["aria-label"], Jn = ["src"], Yn = {
 				_: 2
 			}, 1032, ["type"])]),
 			"cell-stat_status": K(({ row: e }) => [f(R($), {
-				type: Number(e.stat_status) === 2 ? "danger" : R(ye)(e.stat_date) ? "warning" : "success",
+				type: R(ye)(e.stat_date) ? "warning" : "success",
 				size: "sm",
 				round: ""
 			}, {
-				default: K(() => [d(F(Number(e.stat_status) === 2 ? a.value.partial : R(ye)(e.stat_date) ? a.value.processing : a.value.completed), 1)]),
+				default: K(() => [d(F(R(ye)(e.stat_date) ? a.value.processing : a.value.completed), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
 			_: 2
@@ -8624,7 +8624,7 @@ var qn = ["aria-label"], Jn = ["src"], Yn = {
 	let n = e.__vccOpts || e;
 	for (let [e, r] of t) n[e] = r;
 	return n;
-}, wi = /*#__PURE__*/ Ci(Si, [["__scopeId", "data-v-1816a56c"]]), Ti = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
+}, wi = /*#__PURE__*/ Ci(Si, [["__scopeId", "data-v-085d9fac"]]), Ti = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
 	name: "MmPlatformTradeSummaryReport",
 	inheritAttrs: !1,
 	__name: "PlatformTradeSummaryReport",

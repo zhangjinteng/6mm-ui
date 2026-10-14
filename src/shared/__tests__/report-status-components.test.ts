@@ -12,12 +12,13 @@ import FuturesFundingFeeReport from '../../components/futures-funding-fee-report
 import FuturesRiskReport from '../../components/futures-risk-report/FuturesRiskReport.vue'
 import FuturesPositionReport from '../../components/futures-position-report/FuturesPositionReport.vue'
 import PredictionUserPnlReport from '../../components/prediction-user-pnl-report/PredictionUserPnlReport.vue'
+import AssetBalanceReport from '../../components/asset-balance-report/AssetBalanceReport.vue'
 
 const reports: [string, Component][] = [
   ['用户报表', UserDailyReport], ['交易汇总', PlatformTradeSummaryReport], ['商户盈亏', PlatformPnlReport],
   ['合约交易', FuturesTradeReport], ['合约盈亏', FuturesPnlReport], ['用户净盈亏', FuturesUserNetPnlReport],
   ['手续费报表', FuturesFeeReport], ['资金费报表', FuturesFundingFeeReport], ['强平报表', FuturesRiskReport],
-  ['持仓报表', FuturesPositionReport], ['预测报表', PredictionUserPnlReport],
+  ['持仓报表', FuturesPositionReport], ['预测报表', PredictionUserPnlReport], ['资产报表', AssetBalanceReport],
 ]
 
 describe.each([false, true])('report status (source selectors: %s)', (showSources) => {
@@ -38,6 +39,8 @@ describe.each([false, true])('report status (source selectors: %s)', (showSource
       ['2026-09', 0, '已完成', 'success'],
       ['2026-10-15', 0, '已完成', 'success'],
       ['2026-11', 2, '已完成', 'success'],
+      ['2026-10-14', undefined, '统计中', 'warning'],
+      ['2026-10-13', undefined, '已完成', 'success'],
     ] as const
     const rows = cases.map(([stat_date, stat_status], index) => ({
       id: `case-${index}`, stat_date, stat_status, source_type: 'merchant', source_id: '1',

@@ -9,7 +9,7 @@ export const enUS: MmUILocale = {
       currency: 'Currency', allCurrencies: 'All currencies', accountType: 'Account type', fundingAccount: 'Funding account', contractAccount: 'Contract account',
       fundedUsers: 'Funded users', opening_total: 'Opening total', closing_total: 'Closing total', period_net_change: 'Net change',
       closing_available: 'Available', closing_occupied: 'Occupied', status: 'Status', processing: 'Processing', completed: 'Completed',
-      partial: 'Incomplete', utcHelp: 'UTC daily balance snapshots. Monthly opening and closing use the first and last snapshot, not a sum. Direct-user history before capture began is incomplete.',
+      partial: 'Incomplete', utcHelp: 'UTC daily balance snapshots. Monthly opening and closing use the first and last snapshot, not a sum. The current day or month is processing; all other periods are completed.',
       tableAria: 'Asset balance report', loadFailed: 'Could not load asset balances',
     },
     platformTradeSummaryReport: {
@@ -28,7 +28,7 @@ export const enUS: MmUILocale = {
       contract_liquidation_fee_income: 'Liquidation fee income (U)', platform_funding_fee_net: 'Net platform funding fees (U)',
       contract_total_pnl: 'Total contract PnL (U)', prediction_business_pnl: 'Prediction business PnL (U)', total_pnl: 'Total PnL (U)',
       status: 'Status', processing: 'Processing', completed: 'Completed', partial: 'Incomplete', tableAria: 'Platform PnL summary',
-      utcHelp: 'UTC calendar day / month. Contract and prediction data are published independently; a missing side is marked incomplete. Platform, white-label and merchant totals overlap.',
+      utcHelp: 'UTC calendar day / month. The current day or month is processing; all other periods are completed. Platform, white-label and merchant totals overlap.',
       loadFailed: 'Could not load the platform PnL report',
     },
     futuresFeeReport: {

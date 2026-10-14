@@ -89,8 +89,8 @@ defineExpose({ reload })
       </MmTag>
     </template>
     <template #cell-stat_status="{ row }">
-      <MmTag :type="Number(row.stat_status) === 2 ? 'danger' : isCurrentReportPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
-        {{ Number(row.stat_status) === 2 ? copy.partial : isCurrentReportPeriod(row.stat_date) ? copy.processing : copy.completed }}
+      <MmTag :type="isCurrentReportPeriod(row.stat_date) ? 'warning' : 'success'" size="sm" round>
+        {{ isCurrentReportPeriod(row.stat_date) ? copy.processing : copy.completed }}
       </MmTag>
     </template>
     <template v-for="(_, name) in $slots" #[name]="slotProps"><slot :name="name" v-bind="slotProps" /></template>

@@ -9,7 +9,7 @@ export const zhCN: MmUILocale = {
       currency: '币种', allCurrencies: '全部币种', accountType: '账户类型', fundingAccount: '资金账户', contractAccount: '合约账户',
       fundedUsers: '有资用户', opening_total: '期初总额', closing_total: '期末总额', period_net_change: '期间净变动',
       closing_available: '可用', closing_occupied: '占用', status: '统计状态', processing: '统计中', completed: '已完成',
-      partial: '数据不完整', utcHelp: '按 UTC 自然日取余额快照。月报取月初期初和月末期末，不累加每日余额；直客启用快照前的历史数据标为不完整。',
+      partial: '数据不完整', utcHelp: '按 UTC 自然日取余额快照。月报取月初期初和月末期末，不累加每日余额。当前日或当前月显示统计中，其余显示已完成。',
       tableAria: '资产余额报表', loadFailed: '资产余额报表加载失败',
     },
     platformTradeSummaryReport: {
@@ -28,7 +28,7 @@ export const zhCN: MmUILocale = {
       contract_liquidation_fee_income: '强平手续费收入(U)', platform_funding_fee_net: '平台资金费净额(U)',
       contract_total_pnl: '合约总盈亏(U)', prediction_business_pnl: '预测业务盈亏(U)', total_pnl: '总盈亏(U)',
       status: '统计状态', processing: '统计中', completed: '已完成', partial: '数据不完整', tableAria: '平台盈亏汇总',
-      utcHelp: '按 UTC 自然日 / 月统计。合约侧与预测侧独立发布，缺失任一侧时显示数据不完整。平台、白标、商户为包含关系，不能相加。',
+      utcHelp: '按 UTC 自然日 / 月统计。当前日或当前月显示统计中，其余显示已完成。平台、白标、商户为包含关系，不能相加。',
       loadFailed: '平台盈亏报表加载失败',
     },
     futuresFeeReport: {

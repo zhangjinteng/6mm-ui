@@ -14,9 +14,9 @@ declare const __VLS_base: import('vue').DefineComponent<SegmentedProps, {}, {}, 
     "onUpdate:modelValue"?: ((value: SegmentedValue) => any) | undefined;
 }>, {
     name: string;
-    size: import('./types').SegmentedSize;
     disabled: boolean;
     modelValue: SegmentedValue;
+    size: import('./types').SegmentedSize;
     block: boolean;
     options: Array<SegmentedOption | SegmentedValue>;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

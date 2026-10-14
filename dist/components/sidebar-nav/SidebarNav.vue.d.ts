@@ -23,25 +23,25 @@ type __VLS_Slots = {} & {
     footer?: (props: typeof __VLS_39) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<SidebarNavProps, SidebarNavExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    select: (item: SidebarNavChildItem) => any;
     change: (value: MenuValue, item: SidebarNavChildItem) => any;
     "update:modelValue": (value: MenuValue) => any;
+    select: (item: SidebarNavChildItem) => any;
     "open-change": (keys: MenuValue[]) => any;
     "update:openKeys": (value: MenuValue[]) => any;
     "update:mobileOpen": (value: boolean) => any;
     "update:collapsed": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<SidebarNavProps> & Readonly<{
-    onSelect?: ((item: SidebarNavChildItem) => any) | undefined;
     onChange?: ((value: MenuValue, item: SidebarNavChildItem) => any) | undefined;
     "onUpdate:modelValue"?: ((value: MenuValue) => any) | undefined;
+    onSelect?: ((item: SidebarNavChildItem) => any) | undefined;
     "onOpen-change"?: ((keys: MenuValue[]) => any) | undefined;
     "onUpdate:openKeys"?: ((value: MenuValue[]) => any) | undefined;
     "onUpdate:mobileOpen"?: ((value: boolean) => any) | undefined;
     "onUpdate:collapsed"?: ((value: boolean) => any) | undefined;
 }>, {
-    width: number | string;
     modelValue: MenuValue;
     placement: import('./types').SidebarNavPlacement;
+    width: number | string;
     display: import('./types').SidebarNavDisplay;
     openKeys: MenuValue[];
     items: import('./types').SidebarNavItem[];

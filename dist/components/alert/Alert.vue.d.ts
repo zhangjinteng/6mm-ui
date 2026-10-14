@@ -10,12 +10,12 @@ declare const __VLS_base: import('vue').DefineComponent<AlertProps, {}, {}, {}, 
 }, string, import('vue').PublicProps, Readonly<AlertProps> & Readonly<{
     onClose?: (() => any) | undefined;
 }>, {
-    title: string;
     type: import('./types').AlertType;
-    banner: boolean;
+    title: string;
     center: boolean;
-    closable: boolean;
     description: string;
+    closable: boolean;
+    banner: boolean;
     showIcon: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

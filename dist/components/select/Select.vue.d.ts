@@ -18,14 +18,14 @@ declare const __VLS_base: import('vue').DefineComponent<SelectProps, {}, {}, {},
     "onUpdate:modelValue"?: ((value: SelectValue | SelectValue[]) => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
-    loading: boolean;
-    size: import('../..').FormControlSize;
-    status: import('../..').FormControlStatus;
     clearable: boolean;
     disabled: boolean;
     modelValue: SelectValue | SelectValue[];
     readonly: boolean;
+    size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     multiple: boolean;
+    loading: boolean;
     options: SelectOption[];
     max: number;
     filterable: boolean;

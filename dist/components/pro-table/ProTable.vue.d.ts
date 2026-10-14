@@ -3,9 +3,9 @@ import { TableKey, TableRow, TableSortState } from '../table';
 import { ProTableProps } from './types';
 declare const __VLS_export: <Row extends TableRow = TableRow>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: import('vue').PublicProps & __VLS_PrettifyLocal<ProTableProps<Row> & {
-        onRefresh?: (() => any) | undefined;
         onReset?: ((value: QueryBarValue) => any) | undefined;
         onQuery?: ((value: QueryBarValue) => any) | undefined;
+        onRefresh?: (() => any) | undefined;
         "onReturn-context"?: ((context: QueryBarReturnContext) => any) | undefined;
         "onRow-click"?: ((row: Row, index: number, event: MouseEvent) => any) | undefined;
         "onSelection-change"?: ((keys: TableKey[], rows: Row[]) => any) | undefined;
@@ -48,7 +48,7 @@ declare const __VLS_export: <Row extends TableRow = TableRow>(__VLS_props: NonNu
     } & {
         'toolbar-actions'?: (props: {}) => any;
     };
-    emit: ((evt: "refresh") => void) & ((evt: "reset", value: QueryBarValue) => void) & ((evt: "query", value: QueryBarValue) => void) & ((evt: "return-context", context: QueryBarReturnContext) => void) & ((evt: "row-click", row: Row, index: number, event: MouseEvent) => void) & ((evt: "selection-change", keys: TableKey[], rows: Row[]) => void) & ((evt: "sort-change", state: TableSortState) => void) & ((evt: "update:selectedRowKeys", keys: TableKey[]) => void) & ((evt: "update:sort", state: TableSortState) => void) & ((evt: "retry") => void) & ((evt: "update:currentPage", page: number) => void) & ((evt: "update:pageSize", size: number) => void) & ((evt: "update:autoRefreshSeconds", seconds: number) => void) & ((evt: "update:visibleColumnKeys", keys: string[]) => void) & ((evt: "update:filters", value: QueryBarValue) => void);
+    emit: ((evt: "reset", value: QueryBarValue) => void) & ((evt: "query", value: QueryBarValue) => void) & ((evt: "refresh") => void) & ((evt: "return-context", context: QueryBarReturnContext) => void) & ((evt: "row-click", row: Row, index: number, event: MouseEvent) => void) & ((evt: "selection-change", keys: TableKey[], rows: Row[]) => void) & ((evt: "sort-change", state: TableSortState) => void) & ((evt: "update:selectedRowKeys", keys: TableKey[]) => void) & ((evt: "update:sort", state: TableSortState) => void) & ((evt: "retry") => void) & ((evt: "update:currentPage", page: number) => void) & ((evt: "update:pageSize", size: number) => void) & ((evt: "update:autoRefreshSeconds", seconds: number) => void) & ((evt: "update:visibleColumnKeys", keys: string[]) => void) & ((evt: "update:filters", value: QueryBarValue) => void);
 }>) => import('vue').VNode & {
     __ctx?: NonNullable<Awaited<typeof __VLS_setup>>;
 };

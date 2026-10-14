@@ -32,22 +32,22 @@ declare const __VLS_base: import('vue').DefineComponent<QueryBarProps, {
     query: typeof query;
     reset: typeof reset;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    reset: (value: QueryBarValue) => any;
     change: (value: QueryBarValue, field: QueryBarField, fieldValue: QueryBarFieldValue) => any;
     "update:modelValue": (value: QueryBarValue) => any;
+    reset: (value: QueryBarValue) => any;
     query: (value: QueryBarValue) => any;
     "return-context": (context: QueryBarReturnContext) => any;
 }, string, import('vue').PublicProps, Readonly<QueryBarProps> & Readonly<{
-    onReset?: ((value: QueryBarValue) => any) | undefined;
     onChange?: ((value: QueryBarValue, field: QueryBarField, fieldValue: QueryBarFieldValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: QueryBarValue) => any) | undefined;
+    onReset?: ((value: QueryBarValue) => any) | undefined;
     onQuery?: ((value: QueryBarValue) => any) | undefined;
     "onReturn-context"?: ((context: QueryBarReturnContext) => any) | undefined;
 }>, {
-    loading: boolean;
-    size: import('../..').FormControlSize;
     disabled: boolean;
     modelValue: QueryBarValue;
+    size: import('../..').FormControlSize;
+    loading: boolean;
     fields: QueryBarField[];
     returnContext: QueryBarReturnContext;
     showReset: boolean;

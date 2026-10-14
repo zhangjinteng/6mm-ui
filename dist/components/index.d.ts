@@ -1,10 +1,14 @@
 import { Component } from 'vue';
+export * from './platform-trade-summary-report';
 export * from './alert';
 export * from './futures-trade-report';
+export * from './user-daily-report';
 export * from './futures-risk-report';
 export * from './futures-fee-report';
 export * from './futures-user-net-pnl-report';
+export * from './platform-pnl-report';
 export * from './futures-position-report';
+export * from './prediction-user-pnl-report';
 export * from './futures-funding-fee-report';
 export * from './futures-pnl-report';
 export * from './account-change-log-table';

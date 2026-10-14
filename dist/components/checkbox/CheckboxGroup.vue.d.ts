@@ -10,11 +10,11 @@ declare const __VLS_base: import('vue').DefineComponent<CheckboxGroupProps, {}, 
     onChange?: ((value: CheckboxValue[]) => any) | undefined;
     "onUpdate:modelValue"?: ((value: CheckboxValue[]) => any) | undefined;
 }>, {
-    size: import('../..').FormControlSize;
-    status: import('../..').FormControlStatus;
     disabled: boolean;
     modelValue: CheckboxValue[];
     readonly: boolean;
+    size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     direction: "horizontal" | "vertical";
     max: number;
     min: number;

@@ -8,7 +8,7 @@ declare var __VLS_11: {
         'aria-expanded'?: undefined;
     } | {
         'aria-controls': string | undefined;
-        'aria-expanded': "false" | "true";
+        'aria-expanded': "true" | "false";
         'aria-describedby'?: undefined;
     };
 }, __VLS_14: {};

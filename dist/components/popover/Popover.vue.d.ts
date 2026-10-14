@@ -12,7 +12,7 @@ declare var __VLS_1: {
         'aria-expanded'?: undefined;
     } | {
         'aria-controls': string | undefined;
-        'aria-expanded': "false" | "true";
+        'aria-expanded': "true" | "false";
         'aria-describedby'?: undefined;
     };
 }, __VLS_9: {
@@ -29,18 +29,16 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     toggle: typeof toggle;
     updatePosition: typeof updatePosition;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    close: () => any;
     "update:modelValue": (value: boolean) => any;
+    close: () => any;
     open: () => any;
     "visible-change": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<PopoverProps> & Readonly<{
-    onClose?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    onClose?: (() => any) | undefined;
     onOpen?: (() => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
-    width: number | string;
-    role: string;
     disabled: boolean;
     modelValue: boolean;
     closeDelay: number;
@@ -51,10 +49,12 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     openDelay: number;
     persistent: boolean;
     placement: import('../..').FloatingPlacement;
+    role: string;
     showArrow: boolean;
     teleport: boolean;
     teleportTo: string | HTMLElement;
     trigger: import('./types').PopoverTrigger;
+    width: number | string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

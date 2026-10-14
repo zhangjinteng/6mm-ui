@@ -12,12 +12,12 @@ declare const __VLS_base: import('vue').DefineComponent<ButtonProps, {}, {}, {},
 }, string, import('vue').PublicProps, Readonly<ButtonProps> & Readonly<{
     onClick?: ((event: MouseEvent) => any) | undefined;
 }>, {
-    loading: boolean;
-    size: import('./types').ButtonSize;
-    round: boolean;
     disabled: boolean;
+    size: import('./types').ButtonSize;
     nativeType: import('./types').ButtonNativeType;
+    round: boolean;
     block: boolean;
+    loading: boolean;
     iconOnly: boolean;
     plain: boolean;
     variant: import('./types').ButtonVariant;

@@ -1,4 +1,6 @@
 import type { Component } from "vue";
+import { MmPlatformTradeSummaryReport } from "./platform-trade-summary-report";
+export * from "./platform-trade-summary-report";
 
 import { MmAlert } from "./alert";
 import { MmAccountChangeLogTable } from "./account-change-log-table";
@@ -39,10 +41,13 @@ import { MmFundingChangeLogTable } from "./funding-change-log-table";
 import { MmFuturesFundingFeeReport } from "./futures-funding-fee-report";
 import { MmFuturesPnlReport } from "./futures-pnl-report";
 import { MmFuturesTradeReport } from "./futures-trade-report";
+import { MmUserDailyReport } from "./user-daily-report";
 import { MmFuturesRiskReport } from "./futures-risk-report";
 import { MmFuturesFeeReport } from "./futures-fee-report";
 import { MmFuturesUserNetPnlReport } from "./futures-user-net-pnl-report";
+import { MmPlatformPnlReport } from "./platform-pnl-report";
 import { MmFuturesPositionReport } from "./futures-position-report";
+import { MmPredictionUserPnlReport } from "./prediction-user-pnl-report";
 import { MmHistoryPositionTable } from "./history-position-table";
 import { MmHistoryOrderTable } from "./history-order-table";
 import { MmHandlingFeeConfig } from "./handling-fee-config";
@@ -104,10 +109,13 @@ import { MmUpload } from "./upload";
 
 export * from "./alert";
 export * from "./futures-trade-report";
+export * from "./user-daily-report";
 export * from "./futures-risk-report";
 export * from "./futures-fee-report";
 export * from "./futures-user-net-pnl-report";
+export * from "./platform-pnl-report";
 export * from "./futures-position-report";
+export * from "./prediction-user-pnl-report";
 export * from "./futures-funding-fee-report";
 export * from "./futures-pnl-report";
 export * from "./account-change-log-table";
@@ -277,10 +285,14 @@ export const components: InstallableComponent[] = [
   MmProgress,
   MmProTable,
   MmFuturesTradeReport,
+  MmPlatformTradeSummaryReport,
+  MmUserDailyReport,
   MmFuturesRiskReport,
   MmFuturesFeeReport,
   MmFuturesUserNetPnlReport,
+  MmPlatformPnlReport,
   MmFuturesPositionReport,
+  MmPredictionUserPnlReport,
   MmFuturesFundingFeeReport,
   MmFuturesPnlReport,
   MmProTableCursorPagination,

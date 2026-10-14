@@ -1,6 +1,32 @@
 export type MmUILocaleName = "en-US" | "zh-CN";
 
 export interface MmUILocaleMessages {
+  platformTradeSummaryReport: {
+    day: string; month: string; period: string; dateRange: string; sourceName: string; sourceType: string;
+    sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string; statDate: string;
+    total_trading_user_count: string; trading_user_count: string; contract_trade_count: string; contract_trade_amount: string;
+    prediction_trading_user_count: string; prediction_valid_order_count: string; prediction_valid_stake_amount: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string; loadFailed: string;
+  };
+  platformPnlReport: {
+    day: string; month: string; period: string; dateRange: string; sourceName: string; sourceType: string;
+    sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string; statDate: string;
+    contract_trade_pnl: string; contract_trading_fee_income: string; contract_liquidation_fee_income: string;
+    platform_funding_fee_net: string; contract_total_pnl: string; prediction_business_pnl: string; total_pnl: string;
+    status: string; processing: string; completed: string; partial: string; tableAria: string;
+    utcHelp: string; loadFailed: string;
+  };
+  predictionUserPnlReport: {
+    playType: string; allPlays: string; grid: string; highLow: string; upDown: string;
+    symbol: string; allSymbols: string; dateRange: string; sourceId: string; sourceName: string;
+    sourceType: string; sourceSearchPlaceholder: string; merchant: string; tenant: string; platform: string;
+    statDate: string; trading_user_count: string; profitable_user_count: string;
+    losing_user_count: string; breakeven_user_count: string; order_count: string;
+    win_order_count: string; lose_order_count: string; refund_order_count: string;
+    stake_amount: string; return_amount: string; user_net_pnl: string; platform_pnl: string;
+    payout_rate: string; status: string; processing: string; completed: string; partial: string;
+    tableAria: string; utcHelp: string; loadFailed: string;
+  };
   futuresFeeReport: {
     day: string; month: string; period: string; symbol: string; allSymbols: string; dateRange: string;
     sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
@@ -65,6 +91,17 @@ export interface MmUILocaleMessages {
     fill_count: string; trade_amount: string; cancel_order_count: string; cancel_amount: string; amount_fill_rate: string;
     status: string; processing: string; completed: string; partial: string; tableAria: string;
     utcHelp: string; usersHelp: string; loadFailed: string;
+  };
+  userDailyReport: {
+    day: string; month: string; period: string; dateRange: string; statDate: string;
+    sourceId: string; sourceName: string; sourceType: string; sourceSearchPlaceholder: string;
+    merchant: string; tenant: string; platform: string;
+    initial_user_count: string; new_user_count: string; transfer_in_user_count: string;
+    transfer_in_conversion_rate: string; transfer_in_amount: string; transfer_out_user_count: string;
+    transfer_out_amount: string; active_user_count: string; active_rate: string;
+    total_trading_user_count: string; trading_user_count: string; prediction_trading_user_count: string;
+    status: string; processing: string; completed: string; tableAria: string;
+    utcHelp: string; scopeHelp: string; loadFailed: string;
   };
   alert: {
     close: string;

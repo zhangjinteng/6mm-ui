@@ -19,24 +19,24 @@ type __VLS_Slots = {} & {
     footer?: (props: typeof __VLS_18) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<DialogProps, DialogExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    close: (reason: DialogCloseReason) => any;
     "update:modelValue": (value: boolean) => any;
+    close: (reason: DialogCloseReason) => any;
     open: () => any;
     closed: () => any;
     opened: () => any;
 }, string, import('vue').PublicProps, Readonly<DialogProps> & Readonly<{
-    onClose?: ((reason: DialogCloseReason) => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    onClose?: ((reason: DialogCloseReason) => any) | undefined;
     onOpen?: (() => any) | undefined;
     onClosed?: (() => any) | undefined;
     onOpened?: (() => any) | undefined;
 }>, {
-    width: number | string;
+    modelValue: boolean;
     title: string;
     mask: boolean;
-    modelValue: boolean;
     closeOnEscape: boolean;
     teleportTo: string | HTMLElement;
+    width: number | string;
     panelClass: string;
     ariaDescribedby: string;
     beforeClose: import('./types').DialogBeforeClose;

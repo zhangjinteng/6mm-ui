@@ -7,12 +7,12 @@ type __VLS_Slots = {} & {
     date?: (props: typeof __VLS_12) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<CalendarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    select: (value: DatePickerValue) => any;
     "update:modelValue": (value: DatePickerValue) => any;
+    select: (value: DatePickerValue) => any;
     "update:displayedMonth": (value: string) => any;
 }, string, import('vue').PublicProps, Readonly<CalendarProps> & Readonly<{
-    onSelect?: ((value: DatePickerValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
+    onSelect?: ((value: DatePickerValue) => any) | undefined;
     "onUpdate:displayedMonth"?: ((value: string) => any) | undefined;
 }>, {
     modelValue: DatePickerValue;

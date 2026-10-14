@@ -25,13 +25,13 @@ declare const __VLS_base: import('vue').DefineComponent<DatePickerProps, {}, {},
     onInvalid?: ((input: string) => any) | undefined;
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
 }>, {
-    size: import('../..').FormControlSize;
-    type: import('./types').DatePickerType;
-    status: import('../..').FormControlStatus;
     clearable: boolean;
     disabled: boolean;
     modelValue: DatePickerValue;
     readonly: boolean;
+    size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
+    type: import('./types').DatePickerType;
     open: boolean;
     disabledDate: (date: string) => boolean;
     max: string;

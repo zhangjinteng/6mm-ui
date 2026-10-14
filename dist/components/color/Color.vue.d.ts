@@ -4,8 +4,8 @@ declare const __VLS_export: import('vue').DefineComponent<ColorProps, {}, {}, {}
 }, string, import('vue').PublicProps, Readonly<ColorProps> & Readonly<{
     onSelect?: ((value: string) => any) | undefined;
 }>, {
-    label: string;
     size: import('./types').ColorSize;
+    label: string;
     selectable: boolean;
     contrast: import('./types').ColorContrast;
     showValue: boolean;

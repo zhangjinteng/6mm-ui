@@ -10,11 +10,11 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_3) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<ProgressProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<ProgressProps> & Readonly<{}>, {
-    color: string;
     size: number;
-    strokeWidth: number;
-    type: import('./types').ProgressType;
     status: import('./types').ProgressStatus;
+    type: import('./types').ProgressType;
+    color: string;
+    strokeWidth: number;
     format: (percentage: number) => string;
     percentage: number;
     showText: boolean;

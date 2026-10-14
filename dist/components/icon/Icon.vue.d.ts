@@ -5,11 +5,11 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<IconProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IconProps> & Readonly<{}>, {
     name: import('./icons').IconName;
-    color: string;
-    label: string;
     size: import('./types').IconSize;
-    spin: boolean;
+    label: string;
+    color: string;
     strokeWidth: number;
+    spin: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

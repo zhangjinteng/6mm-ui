@@ -21,21 +21,21 @@ type __VLS_Slots = {} & {
     trigger?: (props: typeof __VLS_1) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<FilterDrawerProps, FilterDrawerExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    reset: (value: QueryBarValue) => any;
     "update:modelValue": (value: QueryBarValue) => any;
+    reset: (value: QueryBarValue) => any;
     query: (value: QueryBarValue) => any;
     "update:open": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<FilterDrawerProps> & Readonly<{
-    onReset?: ((value: QueryBarValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: QueryBarValue) => any) | undefined;
+    onReset?: ((value: QueryBarValue) => any) | undefined;
     onQuery?: ((value: QueryBarValue) => any) | undefined;
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
 }>, {
-    loading: boolean;
-    size: number | string;
     disabled: boolean;
     modelValue: QueryBarValue;
+    size: number | string;
     open: boolean;
+    loading: boolean;
     fields: import('..').QueryBarField[];
     subtitle: string;
     activeCount: number;

@@ -1,4 +1,5 @@
 import type { SelectOption } from "../select";
+import type { HedgingSourceIdentity } from "../../shared/hedging-source";
 
 export type HedgingExecutionReason =
   | "first_trigger"
@@ -24,7 +25,7 @@ export interface HedgingExecutionOption<T extends string | number = string> {
   value: T;
 }
 
-export interface HedgingExecutionRow {
+export interface HedgingExecutionRow extends HedgingSourceIdentity {
   account_name: string;
   agent_id?: number;
   agent_name?: string | null;

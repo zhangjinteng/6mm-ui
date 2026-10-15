@@ -51,7 +51,8 @@ describe("MmHedgingExecutionTable", () => {
 
     expect(request).toHaveBeenCalledWith({ page: 1, page_size: 20 });
     expect(wrapper.text()).toContain("来源 ID");
-    expect(wrapper.text()).toContain("来源昵称");
+    expect(wrapper.text()).toContain("来源名称");
+    expect(wrapper.text()).not.toContain("来源昵称");
     expect(wrapper.text()).toContain("来源类型");
     expect(wrapper.text()).toContain("Agent 9");
     expect(wrapper.text()).toContain("商户");

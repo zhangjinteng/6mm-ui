@@ -1,11 +1,12 @@
 import { SelectOption } from '../select';
+import { HedgingSourceIdentity } from '../../shared/hedging-source';
 export type HedgingSubjectStatus = "running" | "disabled" | "pending_config" | "account_abnormal";
 export interface HedgingSubjectAccount {
     exchange: string;
     id: number;
     name: string;
 }
-export interface HedgingSubjectConfigRow {
+export interface HedgingSubjectConfigRow extends HedgingSourceIdentity {
     accounts: HedgingSubjectAccount[];
     agent_id: number;
     agent_name?: string | null;

@@ -2,16 +2,17 @@
   <section class="mm-hedging-execution-table">
     <div
       class="mm-hedging-execution-table__toolbar"
-      :class="{ 'has-agent-filter': showAgent }"
+      :class="{ 'has-agent-filter': showAgent, 'has-source-filter': !!$slots['source-filter'] }"
     >
+      <slot v-if="showAgent" name="source-filter" :loading="loading" :search="searchSource">
       <MmSelect
-        v-if="showAgent"
         v-model="draft.agentId"
         :aria-label="copy.agent"
         :options="agentOptions"
         :placeholder="copy.allAgents"
         size="sm"
       />
+      </slot>
       <MmInput
         v-model="draft.keyword"
         :aria-label="copy.searchAria"
@@ -96,10 +97,12 @@
             {{ row.task_no }}
           </span>
         </template>
-        <template #cell-agent_id="{ row }">{{ row.agent_id || "-" }}</template>
-        <template #cell-agent_name="{ row }">{{ row.agent_name || "-" }}</template>
-        <template #cell-source_type>
+        <template #cell-agent_id="{ row }"><slot name="cell-source_id" :row="row">{{ row.agent_id || "-" }}</slot></template>
+        <template #cell-agent_name="{ row }"><slot name="cell-source_name" :row="row">{{ row.agent_name || "-" }}</slot></template>
+        <template #cell-source_type="{ row }">
+          <slot name="cell-source_type" :row="row">
           <MmTag effect="soft" round size="sm" type="primary">{{ copy.merchant }}</MmTag>
+          </slot>
         </template>
         <template #cell-symbol="{ row }">
           <slot name="symbol" :row="row">{{ row.symbol }}</slot>
@@ -237,7 +240,7 @@ const props = withDefaults(defineProps<HedgingExecutionTableProps>(), {
   pageSizes: () => [10, 20, 30, 50],
   showAgent: false,
 });
-const emit = defineEmits<{ loaded: [result: HedgingExecutionResult] }>();
+const emit = defineEmits<{ loaded: [result: HedgingExecutionResult]; reset: [] }>();
 const { locale } = useLocale();
 
 const zh = {
@@ -269,7 +272,7 @@ const zh = {
   failureReasonEmpty: "暂无报错信息",
   merchant: "商户",
   pagination: (start: number, end: number, total: number) => `显示 ${start}-${end} 条，共 ${total} 条`,
-  columns: { taskNo: "任务编号", sourceId: "来源 ID", sourceName: "来源昵称", sourceType: "来源类型", symbol: "交易对", side: "方向", reason: "类型", notional: "对冲数量 (币/U)", account: "执行账号", status: "状态", time: "时间" },
+  columns: { taskNo: "任务编号", sourceId: "来源 ID", sourceName: "来源名称", sourceType: "来源类型", symbol: "交易对", side: "方向", reason: "类型", notional: "对冲数量 (币/U)", account: "执行账号", status: "状态", time: "时间" },
   directions: { BUY: "买入", SELL: "卖出" },
   reasons: { first_trigger: "首次触发", rebalance: "再平衡", exit_hedge: "退出对冲", manual_close: "手动平仓", position_flip_close: "反向开仓", hedge_ratio_adjustment: "对冲比例调整" },
   statuses: { planned: "已计划", skipped: "已跳过", submitted: "已提交", filled: "已完成", failed: "执行失败", dry_run: "模拟执行" },
@@ -379,7 +382,8 @@ async function load() {
   }
 }
 function search() { Object.assign(filters, draft, { keyword: draft.keyword.trim() }); page.value = 1; void load(); }
-function reset() { Object.assign(draft, { agentId: "", accountId: "", keyword: "", reason: "", side: "", status: "", symbol: "" }); Object.assign(filters, draft); page.value = 1; void load(); }
+function reset() { emit("reset"); Object.assign(draft, { agentId: "", accountId: "", keyword: "", reason: "", side: "", status: "", symbol: "" }); Object.assign(filters, draft); page.value = 1; void load(); }
+function searchSource() { draft.accountId = ""; search(); }
 function pageSizeChanged() { page.value = 1; void load(); }
 function signedAmount(value: string | number, side: HedgingExecutionSide) { const number = Number(value); if (!Number.isFinite(number)) return Number.NaN; const absolute = Math.abs(number); return side === "SELL" && absolute !== 0 ? -absolute : absolute; }
 function baseAsset(row: HedgingExecutionRow) { const target = String(row.target_symbol || "").split("/")[0]?.trim().toUpperCase(); if (target) return target; const symbol = String(row.symbol || "").trim().toUpperCase().replace(/[^A-Z0-9]/g, ""); const quote = ["USDT", "USDC", "BUSD", "FDUSD", "USD"].find((item) => symbol.endsWith(item)); return quote ? symbol.slice(0, -quote.length) : symbol; }
@@ -407,4 +411,18 @@ defineExpose({ reload: load });
 .mm-hedging-execution-table__task,.mm-hedging-execution-table__time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-execution-table__task{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.mm-hedging-execution-table__amount-pair{display:grid;gap:2px;color:var(--mm-color-text-muted);line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}.mm-hedging-execution-table__amount-pair>strong{font-size:12px;font-weight:650}.mm-hedging-execution-table__amount-pair>span{font-size:11px;font-weight:550}.mm-hedging-execution-table__amount-pair.is-positive{color:var(--mm-color-success)}.mm-hedging-execution-table__amount-pair.is-negative{color:var(--mm-color-danger)}.mm-hedging-execution-table__time{color:var(--mm-color-text-muted);font-size:var(--mm-font-size-sm)}.mm-hedging-execution-table__status{display:inline-flex;align-items:center;gap:5px}.mm-hedging-execution-table__help{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:var(--mm-color-text-muted);cursor:help}.mm-hedging-execution-table__help:hover,.mm-hedging-execution-table__help:focus-visible{color:var(--mm-color-primary);outline:none}.mm-hedging-execution-table__error{display:grid;gap:8px}.mm-hedging-execution-table__error p{margin:0;overflow-wrap:anywhere;color:var(--mm-color-text-muted);line-height:1.55}.mm-hedging-execution-table__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;border-top:1px solid var(--mm-color-line);color:var(--mm-color-text-muted);font-size:12px}
 .mm-hedging-execution-table__failure-summary{color:var(--mm-color-danger)!important;font-weight:650}
 @media(max-width:1100px){.mm-hedging-execution-table__toolbar,.mm-hedging-execution-table__toolbar.has-agent-filter{grid-template-columns:repeat(3,minmax(150px,1fr))}.mm-hedging-execution-table__actions{grid-column:1/-1}}
+</style>
+
+<style scoped>
+.mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(160px, 1fr) repeat(5, minmax(100px, 130px)) auto; }
+.mm-hedging-execution-table__toolbar.has-source-filter > * { min-width: 0; }
+@media (max-width: 1500px) {
+  .mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .mm-hedging-execution-table__toolbar.has-source-filter > :first-child { grid-column: span 2; }
+  .mm-hedging-execution-table__toolbar.has-source-filter .mm-hedging-execution-table__actions { grid-column: 1 / -1; flex-wrap: wrap; }
+}
+@media (max-width: 640px) {
+  .mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(0, 1fr); }
+  .mm-hedging-execution-table__toolbar.has-source-filter > :first-child { grid-column: auto; }
+}
 </style>

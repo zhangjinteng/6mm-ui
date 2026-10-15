@@ -30,7 +30,8 @@ describe("MmHedgingMonitor", () => {
 
     expect(request).toHaveBeenCalledWith({ global_enabled: "1", page: 1, page_size: 20, symbol_enabled: "1" });
     expect(wrapper.text()).toContain("来源 ID");
-    expect(wrapper.text()).toContain("来源昵称");
+    expect(wrapper.text()).toContain("来源名称");
+    expect(wrapper.text()).not.toContain("来源昵称");
     expect(wrapper.text()).toContain("来源类型");
     expect(wrapper.find(".mm-tag").text()).toBe("商户");
     expect(wrapper.text()).toContain("9");

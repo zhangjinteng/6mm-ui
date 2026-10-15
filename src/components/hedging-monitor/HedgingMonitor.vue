@@ -1,14 +1,15 @@
 <template>
   <section class="mm-hedging-monitor">
-    <div class="mm-hedging-monitor__toolbar" :class="{ 'has-agent-filter': showAgent, 'has-switch-filters': showSwitchFilters }">
+    <div class="mm-hedging-monitor__toolbar" :class="{ 'has-agent-filter': showAgent, 'has-switch-filters': showSwitchFilters, 'has-source-filter': !!$slots['source-filter'] }">
+      <slot v-if="showAgent" name="source-filter" :loading="loading" :search="handleSearch">
       <MmSelect
-        v-if="showAgent"
         v-model="filterDraft.agentId"
         :aria-label="copy.agent"
         :options="agentOptions"
         :placeholder="copy.allAgents"
         size="sm"
       />
+      </slot>
       <MmInput
         v-model="filterDraft.keyword"
         :aria-label="copy.searchAria"
@@ -73,10 +74,12 @@
             </MmTooltip>
           </span>
         </template>
-        <template #cell-source_id="{ row }">{{ row.agent_id || "-" }}</template>
-        <template #cell-source_name="{ row }">{{ row.agent_name || "-" }}</template>
-        <template #cell-source_type>
+        <template #cell-source_id="{ row }"><slot name="cell-source_id" :row="row">{{ row.agent_id || "-" }}</slot></template>
+        <template #cell-source_name="{ row }"><slot name="cell-source_name" :row="row">{{ row.agent_name || "-" }}</slot></template>
+        <template #cell-source_type="{ row }">
+          <slot name="cell-source_type" :row="row">
           <MmTag effect="soft" round size="sm" type="info">{{ copy.sourceType }}</MmTag>
+          </slot>
         </template>
         <template #cell-symbol="scope"><slot name="cell-symbol" v-bind="scope">{{ scope.row.symbol || "-" }}</slot></template>
         <template #cell-account="scope">
@@ -125,12 +128,12 @@ import type { HedgingMonitorRequest, HedgingMonitorResult, HedgingMonitorRow, He
 defineOptions({ name: "MmHedgingMonitor" });
 
 const props = withDefaults(defineProps<{ agentOptions?: SelectOption[]; formatDateTime?: (value: string) => string; initialPageSize?: number; pageSizes?: number[]; request: HedgingMonitorRequest; resolveMarkPrice?: (row: HedgingMonitorRow) => number; showAgent?: boolean; showSwitchFilters?: boolean }>(), { agentOptions: () => [], formatDateTime: (value: string) => value || "-", initialPageSize: 20, pageSizes: () => [10, 20, 30, 50], resolveMarkPrice: () => 0, showAgent: false, showSwitchFilters: false });
-const emit = defineEmits<{ loaded: [result: HedgingMonitorResult] }>();
+const emit = defineEmits<{ loaded: [result: HedgingMonitorResult]; reset: [] }>();
 const { locale } = useLocale();
 
 const zh = {
   agent: "代理商", allAgents: "全部代理", allStatuses: "状态：全部", globalSwitch: "自动对冲服务", globalSwitchAll: "自动对冲服务：全部", globalSwitchEnabled: "自动对冲服务：开启", globalSwitchDisabled: "自动对冲服务：关闭", symbolSwitch: "币种对冲", symbolSwitchAll: "币种对冲：全部", symbolSwitchEnabled: "币种对冲：开启", symbolSwitchDisabled: "币种对冲：关闭", searchAria: "搜索合约、交易所或账户", searchPlaceholder: "搜索合约、交易所或账户", statusFilterAria: "对冲状态", query: "查询", reset: "重置", refresh: "刷新", refreshAria: "刷新敞口监控", tableAria: "敞口监控数据", emptyText: "暂无敞口数据", loadingTitle: "正在加载敞口监控", loadingDescription: "正在读取最新敞口与对冲状态。", pagination: (start: number, end: number, total: number) => `显示 ${start}-${end} 条，共 ${total} 条`,
-  columns: { source_id: "来源 ID", source_name: "来源昵称", source_type: "来源类型", symbol: "合约", account: "交易所 / 对冲账户", long_quantity: "多头合计", short_quantity: "空头合计", net_exposure: "净敞口 (币/U)", target_hedge: "目标对冲量 (币/U)", actual_hedge: "已对冲量 (币/U)", hedge_progress: "对冲进度", status: "状态", calculated_at: "更新时间" },
+  columns: { source_id: "来源 ID", source_name: "来源名称", source_type: "来源类型", symbol: "合约", account: "交易所 / 对冲账户", long_quantity: "多头合计", short_quantity: "空头合计", net_exposure: "净敞口 (币/U)", target_hedge: "目标对冲量 (币/U)", actual_hedge: "已对冲量 (币/U)", hedge_progress: "对冲进度", status: "状态", calculated_at: "更新时间" },
   sourceType: "商户",
   tooltips: { long_quantity: "买入(做多)仓位的合约数量合计", short_quantity: "卖出(做空)仓位的合约数量合计", net_exposure: "买入(做多)与卖出(做空)仓位的币数量与对应(U)价值的净差值。", target_hedge: "下一次对冲的目标值=净敞口 (币/U)×目标对冲比例", actual_hedge: "当前合约已经实现对冲的币数量与对应(U)价值", hedge_progress: "已对冲量 ÷ 目标对冲量 × 100%" },
   statuses: { unconfigured: "未配置币种对冲", global_off: "总开关已关闭", symbol_off: "币种已关闭", account_unavailable: "账户不可用", observing: "观察中", data_stale: "数据已过期", open_required: "待首次对冲", rebalance_required: "待再平衡", exit_required: "待退出", balanced: "对冲正常", execution_failed: "执行失败" },
@@ -169,7 +172,7 @@ const rangeStart = computed(() => total.value ? (page.value - 1) * pageSize.valu
 const rowKey = (row: Row) => `${row.agent_id || 0}:${row.id}`;
 async function load() { loading.value = true; try { const result = await props.request({ ...(props.showAgent && filters.agentId ? { agent_id: filters.agentId } : {}), ...(props.showSwitchFilters && filters.globalEnabled ? { global_enabled: filters.globalEnabled as "0" | "1" } : {}), ...(filters.keyword ? { keyword: filters.keyword } : {}), ...(filters.status ? { status: filters.status as HedgingMonitorStatus } : {}), ...(props.showSwitchFilters && filters.symbolEnabled ? { symbol_enabled: filters.symbolEnabled as "0" | "1" } : {}), page: page.value, page_size: pageSize.value }); rows.value = Array.isArray(result?.lists) ? result.lists : []; total.value = Math.max(0, Number(result?.count) || 0); statuses.value = Array.isArray(result?.options?.statuses) ? result.options.statuses : fallbackStatuses; emit("loaded", result); const maxPage = Math.max(1, Math.ceil(total.value / pageSize.value)); if (page.value > maxPage) { page.value = maxPage; await load(); } } finally { loading.value = false; } }
 function handleSearch() { filters.agentId = filterDraft.agentId; filters.globalEnabled = filterDraft.globalEnabled; filters.keyword = filterDraft.keyword.trim(); filters.status = filterDraft.status; filters.symbolEnabled = filterDraft.symbolEnabled; page.value = 1; void load(); }
-function handleReset() { Object.assign(filterDraft, { agentId: "", globalEnabled: defaultSwitchFilter(), keyword: "", status: "", symbolEnabled: defaultSwitchFilter() }); Object.assign(filters, filterDraft); page.value = 1; void load(); }
+function handleReset() { emit("reset"); Object.assign(filterDraft, { agentId: "", globalEnabled: defaultSwitchFilter(), keyword: "", status: "", symbolEnabled: defaultSwitchFilter() }); Object.assign(filters, filterDraft); page.value = 1; void load(); }
 function handlePageSize() { page.value = 1; void load(); }
 function statusLabel(status: HedgingMonitorStatus, fallback = "") { return copy.value.statuses[status] || fallback || status; }
 function statusType(status: HedgingMonitorStatus): TagType { if (status === "balanced") return "success"; if (status === "execution_failed") return "danger"; if (status === "account_unavailable" || status === "data_stale") return "info"; return "warning"; }
@@ -199,4 +202,20 @@ defineExpose({ reload: load });
 .mm-hedging-monitor__toolbar{display:grid;grid-template-columns:minmax(200px,260px) 170px 1fr;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--mm-color-line)}.mm-hedging-monitor__toolbar.has-agent-filter{grid-template-columns:200px minmax(180px,260px) 170px 1fr}.mm-hedging-monitor__toolbar.has-switch-filters{grid-template-columns:minmax(180px,240px) repeat(3,160px) 1fr}.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters{grid-template-columns:180px minmax(170px,230px) repeat(3,160px) 1fr}
 .mm-hedging-monitor__progress{color:var(--mm-color-text);font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
 .mm-hedging-monitor__actions{display:flex;justify-content:flex-end;gap:7px}.mm-hedging-monitor__table-wrap{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-monitor__table-wrap>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}.mm-hedging-monitor__table{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:0}.mm-hedging-monitor__table :deep(.mm-table__viewport),.mm-hedging-monitor__table :deep(.mm-table__scroll){flex:1 1 auto;min-height:0}.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody>tr),.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){height:100%}.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){vertical-align:middle}.mm-hedging-monitor__table :deep(th),.mm-hedging-monitor__table :deep(td){min-width:0;padding:8px 6px;font-size:11px}.mm-hedging-monitor__column-header{display:inline-flex;align-items:center;justify-content:center;gap:4px}.mm-hedging-monitor__help{display:inline-flex;align-items:center;justify-content:center;cursor:help;color:var(--mm-color-text-muted)}.mm-hedging-monitor__account{display:flex;align-items:center;gap:7px;min-width:0;line-height:1.2}.mm-hedging-monitor__account-copy,.mm-hedging-monitor__agent{display:grid;min-width:0;gap:2px;line-height:1.2}.mm-hedging-monitor__account strong,.mm-hedging-monitor__agent strong{overflow:hidden;color:var(--mm-color-text);font-size:11px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__account-copy span,.mm-hedging-monitor__agent span,.mm-hedging-monitor__time{display:block;overflow:hidden;color:var(--mm-color-text-muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__time{font-size:var(--mm-font-size-sm)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount){color:var(--mm-color-text-muted);font-variant-numeric:tabular-nums;font-weight:650}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair){display:grid;justify-items:center;gap:2px;line-height:1.2;white-space:nowrap}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>strong){font-size:12px}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>span){font-size:11px;font-weight:550}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-positive){color:var(--mm-color-success)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-negative){color:var(--mm-color-danger)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-warning){color:var(--mm-color-warning)}.mm-hedging-monitor__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;color:var(--mm-color-text-muted);font-size:12px}@media(max-width:960px){.mm-hedging-monitor__toolbar,.mm-hedging-monitor__toolbar.has-agent-filter,.mm-hedging-monitor__toolbar.has-switch-filters,.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters{grid-template-columns:repeat(2,minmax(160px,1fr))}.mm-hedging-monitor__toolbar.has-switch-filters .mm-hedging-monitor__actions{grid-column:1/-1}}
+</style>
+
+<style scoped>
+.mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(170px, 230px) 160px 1fr; }
+.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(170px, 230px) repeat(3, minmax(120px, 160px)) 1fr; }
+.mm-hedging-monitor__toolbar.has-source-filter > * { min-width: 0; }
+@media (max-width: 1200px) {
+  .mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter,
+  .mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mm-hedging-monitor__toolbar.has-source-filter > :first-child { grid-column: 1 / -1; }
+  .mm-hedging-monitor__toolbar.has-source-filter .mm-hedging-monitor__actions { grid-column: 1 / -1; flex-wrap: wrap; }
+}
+@media (max-width: 640px) {
+  .mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter,
+  .mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: minmax(0, 1fr); }
+}
 </style>

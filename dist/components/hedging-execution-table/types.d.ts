@@ -1,4 +1,5 @@
 import { SelectOption } from '../select';
+import { HedgingSourceIdentity } from '../../shared/hedging-source';
 export type HedgingExecutionReason = "first_trigger" | "rebalance" | "exit_hedge" | "manual_close" | "position_flip_close" | "hedge_ratio_adjustment";
 export type HedgingExecutionSide = "BUY" | "SELL";
 export type HedgingExecutionStatus = "planned" | "skipped" | "submitted" | "filled" | "failed" | "dry_run";
@@ -7,7 +8,7 @@ export interface HedgingExecutionOption<T extends string | number = string> {
     label: string;
     value: T;
 }
-export interface HedgingExecutionRow {
+export interface HedgingExecutionRow extends HedgingSourceIdentity {
     account_name: string;
     agent_id?: number;
     agent_name?: string | null;

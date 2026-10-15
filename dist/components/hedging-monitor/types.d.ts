@@ -1,5 +1,6 @@
+import { HedgingSourceIdentity } from '../../shared/hedging-source';
 export type HedgingMonitorStatus = "unconfigured" | "global_off" | "symbol_off" | "account_unavailable" | "observing" | "data_stale" | "open_required" | "rebalance_required" | "exit_required" | "balanced" | "execution_failed";
-export interface HedgingMonitorRow {
+export interface HedgingMonitorRow extends HedgingSourceIdentity {
     agent_id?: number;
     agent_name?: string | null;
     account_name: string;

@@ -6425,7 +6425,11 @@ var Qt = ["aria-label"], $t = { class: "mm-date-panel__header" }, en = { class: 
 		}
 		function ge() {
 			let e = U.value;
-			return e ? Array.from(e.children).filter((e) => e instanceof HTMLElement && e.matches("[data-query-field]")) : [];
+			return e ? Array.from(e.children).flatMap((e) => {
+				if (!(e instanceof HTMLElement) || !e.matches("[data-query-field]")) return [];
+				let t = e.querySelector(":scope > [data-query-overflow-group]");
+				return t ? (e.hidden = !1, Array.from(t.children).filter((e) => e instanceof HTMLElement)) : [e];
+			}) : [];
 		}
 		function _e() {
 			let e = P.value;
@@ -6442,7 +6446,7 @@ var Qt = ["aria-label"], $t = { class: "mm-date-panel__header" }, en = { class: 
 			L = void 0;
 			let e = k.value, t = U.value, n = N.value, r = P.value, i = ge(), a = _e();
 			for (let e of [...i, ...a]) e.hidden = !1;
-			if (!O.value || !e || !t || !n || !r || e.clientWidth <= 0) return;
+			if (!O.value || !e || !t || !n || !r || e.clientWidth <= 0 || window.getComputedStyle(t).flexWrap.startsWith("wrap")) return;
 			let o = window.getComputedStyle(e), s = window.getComputedStyle(n), c = e.clientWidth - ye(o.paddingLeft) - ye(o.paddingRight), l = ye(o.columnGap || o.gap), u = () => {
 				let e = r.scrollWidth + ye(s.paddingLeft) + ye(s.paddingRight), n = t.scrollWidth > 0 && e > 0 ? l : 0;
 				return t.scrollWidth + e + n > c + 1;

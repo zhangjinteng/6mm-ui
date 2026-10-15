@@ -155,9 +155,14 @@ function returnToContext(): void {
 function fieldOverflowItems(): HTMLElement[] {
   const fields = fieldsRef.value
   if (!fields) return []
-  return Array.from(fields.children).filter(
-    (element): element is HTMLElement => element instanceof HTMLElement && element.matches('[data-query-field]'),
-  )
+  return Array.from(fields.children).flatMap((element) => {
+    if (!(element instanceof HTMLElement) || !element.matches('[data-query-field]')) return []
+    const group = element.querySelector<HTMLElement>(':scope > [data-query-overflow-group]')
+    if (!group) return [element]
+    // Custom field groups share a schema key, but each control can overflow independently.
+    element.hidden = false
+    return Array.from(group.children).filter((child): child is HTMLElement => child instanceof HTMLElement)
+  })
 }
 
 function actionOverflowItems(): HTMLElement[] {
@@ -189,6 +194,7 @@ function syncOverflow(): void {
   const actionItems = actionOverflowItems()
   for (const item of [...fieldItems, ...actionItems]) item.hidden = false
   if (!singleLineMode.value || !root || !fields || !actions || !track || root.clientWidth <= 0) return
+  if (window.getComputedStyle(fields).flexWrap.startsWith('wrap')) return
 
   const rootStyle = window.getComputedStyle(root)
   const actionsStyle = window.getComputedStyle(actions)

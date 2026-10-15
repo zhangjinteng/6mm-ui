@@ -42,17 +42,7 @@
   display: none;
 }
 
-@media (max-width: 768px) {
-  .mm-trade-fill-table .mm-query-bar__field:not([data-query-field='keyword']) {
-    display: none;
-  }
-}
-
 @media (max-width: 480px) {
-  .mm-trade-fill-table .mm-query-bar__field[data-query-field='keyword'] {
-    display: none;
-  }
-
   .mm-trade-fill-table .mm-pro-table__pagination-summary {
     display: none;
   }

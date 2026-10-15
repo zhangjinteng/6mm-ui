@@ -220,6 +220,74 @@ describe('MmQueryBar', () => {
     expect((wrapper.get('[data-low-priority-action]').element as HTMLElement).hidden).toBe(false)
   })
 
+  it('collapses custom field group controls one at a time and restores them when space returns', async () => {
+    const wrapper = mount(QueryBar, {
+      attachTo: document.body,
+      props: {
+        fields: [
+          { key: 'keyword', label: '关键词', type: 'keyword' },
+          { key: 'symbol', label: '交易对', type: 'coin' },
+        ],
+        singleLine: true,
+      },
+      slots: {
+        'field-symbol': `
+          <div data-query-overflow-group>
+            <input data-contract value="BTCUSDT">
+            <div data-source-type>全部 / 商户 / 白标 / 平台</div>
+            <select data-source-name><option value="12">Merchant 12</option></select>
+          </div>
+        `,
+      },
+    })
+    const root = wrapper.get('.mm-query-bar').element
+    const fieldsElement = wrapper.get('.mm-query-bar__fields').element as HTMLElement
+    const track = wrapper.get('.mm-query-bar__action-track').element
+    const selectors = ['[data-query-field="keyword"]', '[data-contract]', '[data-source-type]', '[data-source-name]']
+    const widths = [100, 120, 160, 140]
+    let availableWidth = 700
+    Object.defineProperty(root, 'clientWidth', { configurable: true, get: () => availableWidth })
+    Object.defineProperty(fieldsElement, 'scrollWidth', {
+      configurable: true,
+      get: () => selectors.reduce((total, selector, index) => {
+        const control = wrapper.get(selector).element as HTMLElement
+        return total + (control.hidden || control.closest('[data-query-field][hidden]') ? 0 : widths[index]!)
+      }, 0),
+    })
+    Object.defineProperty(track, 'scrollWidth', { configurable: true, get: () => 100 })
+    const visibleControls = () => selectors.map((selector) => !(wrapper.get(selector).element as HTMLElement).hidden)
+    const resize = async (width: number) => {
+      availableWidth = width
+      await wrapper.setProps({ loading: !wrapper.props('loading') })
+      await nextTick()
+    }
+
+    await resize(700)
+    expect(visibleControls()).toEqual([true, true, true, true])
+    await resize(600)
+    expect(visibleControls()).toEqual([true, true, true, false])
+    await resize(450)
+    expect(visibleControls()).toEqual([true, true, false, false])
+    await resize(300)
+    expect(visibleControls()).toEqual([true, false, false, false])
+    expect((wrapper.get('[data-query-field="symbol"]').element as HTMLElement).hidden).toBe(false)
+
+    await resize(700)
+    expect(visibleControls()).toEqual([true, true, true, true])
+    expect((wrapper.get('[data-contract]').element as HTMLInputElement).value).toBe('BTCUSDT')
+    expect((wrapper.get('[data-source-name]').element as HTMLSelectElement).value).toBe('12')
+
+    await resize(300)
+    await wrapper.setProps({ singleLine: false })
+    expect(visibleControls()).toEqual([true, true, true, true])
+
+    await wrapper.setProps({ singleLine: true })
+    fieldsElement.style.flexWrap = 'wrap'
+    await resize(200)
+    expect(visibleControls()).toEqual([true, true, true, true])
+    wrapper.unmount()
+  })
+
   it('renders and emits an optional return context', async () => {
     const returnContext = {
       label: '合约成交',

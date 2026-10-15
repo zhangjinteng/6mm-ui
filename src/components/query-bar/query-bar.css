@@ -121,6 +121,11 @@
   display: contents;
 }
 
+.mm-query-bar--single-line .mm-query-bar__field:has(> [data-query-overflow-group]),
+.mm-query-bar--single-line .mm-query-bar__field > [data-query-overflow-group] {
+  display: contents;
+}
+
 .mm-query-bar--single-line [hidden] {
   display: none !important;
 }

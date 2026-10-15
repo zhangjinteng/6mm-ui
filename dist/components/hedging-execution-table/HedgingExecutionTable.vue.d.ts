@@ -3,29 +3,28 @@ import { TableRow } from '../table';
 import { HedgingExecutionResult, HedgingExecutionRow, HedgingExecutionTableProps } from './types';
 type Row = HedgingExecutionRow & TableRow;
 declare function load(): Promise<void>;
-declare function searchSource(): void;
-declare var __VLS_1: {
+declare var __VLS_14: {
     loading: boolean;
-    search: typeof searchSource;
-}, __VLS_97: {
+    search: () => void;
+}, __VLS_24: {
     row: Row;
-}, __VLS_100: {
+}, __VLS_27: {
     row: Row;
-}, __VLS_103: {
+}, __VLS_30: {
     row: Row;
-}, __VLS_112: {
+}, __VLS_39: {
     row: Row;
 };
 type __VLS_Slots = {} & {
-    'source-filter'?: (props: typeof __VLS_1) => any;
+    'source-filter'?: (props: typeof __VLS_14) => any;
 } & {
-    'cell-source_id'?: (props: typeof __VLS_97) => any;
+    'cell-source_id'?: (props: typeof __VLS_24) => any;
 } & {
-    'cell-source_name'?: (props: typeof __VLS_100) => any;
+    'cell-source_name'?: (props: typeof __VLS_27) => any;
 } & {
-    'cell-source_type'?: (props: typeof __VLS_103) => any;
+    'cell-source_type'?: (props: typeof __VLS_30) => any;
 } & {
-    symbol?: (props: typeof __VLS_112) => any;
+    symbol?: (props: typeof __VLS_39) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<HedgingExecutionTableProps, {
     reload: typeof load;

@@ -3,25 +3,24 @@ import { TableRow } from '../table';
 import { HedgingSubjectConfigProps, HedgingSubjectConfigRow } from './types';
 type Row = HedgingSubjectConfigRow & TableRow;
 declare function load(): Promise<void>;
-declare function search(): void;
-declare var __VLS_1: {
+declare var __VLS_14: {
     loading: boolean;
-    search: typeof search;
-}, __VLS_67: {
+    search: () => void;
+}, __VLS_23: {
     row: Row;
-}, __VLS_70: {
+}, __VLS_26: {
     row: Row;
-}, __VLS_73: {
+}, __VLS_29: {
     row: Row;
 };
 type __VLS_Slots = {} & {
-    'source-filter'?: (props: typeof __VLS_1) => any;
+    'source-filter'?: (props: typeof __VLS_14) => any;
 } & {
-    'cell-source_id'?: (props: typeof __VLS_67) => any;
+    'cell-source_id'?: (props: typeof __VLS_23) => any;
 } & {
-    'cell-source_name'?: (props: typeof __VLS_70) => any;
+    'cell-source_name'?: (props: typeof __VLS_26) => any;
 } & {
-    'cell-source_type'?: (props: typeof __VLS_73) => any;
+    'cell-source_type'?: (props: typeof __VLS_29) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<HedgingSubjectConfigProps, {
     refresh: typeof load;

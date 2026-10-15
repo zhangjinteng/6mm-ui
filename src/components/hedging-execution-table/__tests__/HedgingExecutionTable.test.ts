@@ -61,15 +61,14 @@ describe("MmHedgingExecutionTable", () => {
     expect(wrapper.text()).toContain("-2,456.17 U");
     expect(wrapper.find(".mm-hedging-execution-table__amount-pair").classes()).toContain("is-negative");
 
-    const selects = wrapper.findAllComponents({ name: "MmSelect" });
-    selects[0]?.vm.$emit("update:modelValue", "9");
+    wrapper.get('[data-query-field="agentId"]').getComponent({ name: "MmSelect" }).vm.$emit("update:modelValue", "9");
     await wrapper.vm.$nextTick();
     await wrapper.findAll("button").find((button) => button.text().includes("查询"))?.trigger("click");
     await flushPromises();
 
     expect(request).toHaveBeenLastCalledWith({ agent_id: "9", page: 1, page_size: 20 });
 
-    selects[4]?.vm.$emit("update:modelValue", "filled");
+    wrapper.get('[data-query-field="status"]').getComponent({ name: "MmSelect" }).vm.$emit("update:modelValue", "filled");
     await wrapper.vm.$nextTick();
     await wrapper.findAll("button").find((button) => button.text().includes("查询"))?.trigger("click");
     await flushPromises();
@@ -88,7 +87,7 @@ describe("MmHedgingExecutionTable", () => {
     await flushPromises();
 
     expect(request).toHaveBeenCalledWith({ page: 1, page_size: 20 });
-    expect(wrapper.find('[aria-label="代理商"]').exists()).toBe(false);
+    expect(wrapper.find('[data-query-field="agentId"]').exists()).toBe(false);
     wrapper.unmount();
   });
 });

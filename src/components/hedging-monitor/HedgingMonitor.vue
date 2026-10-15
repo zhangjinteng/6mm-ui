@@ -1,58 +1,22 @@
 <template>
   <section class="mm-hedging-monitor">
-    <div class="mm-hedging-monitor__toolbar" :class="{ 'has-agent-filter': showAgent, 'has-switch-filters': showSwitchFilters, 'has-source-filter': !!$slots['source-filter'] }">
-      <slot v-if="showAgent" name="source-filter" :loading="loading" :search="handleSearch">
-      <MmSelect
-        v-model="filterDraft.agentId"
-        :aria-label="copy.agent"
-        :options="agentOptions"
-        :placeholder="copy.allAgents"
-        size="sm"
-      />
-      </slot>
-      <MmInput
-        v-model="filterDraft.keyword"
-        :aria-label="copy.searchAria"
-        clearable
-        :placeholder="copy.searchPlaceholder"
-        size="sm"
-        @keydown.enter="handleSearch"
-      >
-        <template #prefix><MmIcon name="search" :size="13" /></template>
-      </MmInput>
-      <MmSelect
-        v-model="filterDraft.status"
-        :aria-label="copy.statusFilterAria"
-        :options="statusFilterOptions"
-        :placeholder="copy.allStatuses"
-        size="sm"
-      />
-      <MmSelect
-        v-if="showSwitchFilters"
-        v-model="filterDraft.globalEnabled"
-        :aria-label="copy.globalSwitch"
-        :options="globalSwitchOptions"
-        size="sm"
-      />
-      <MmSelect
-        v-if="showSwitchFilters"
-        v-model="filterDraft.symbolEnabled"
-        :aria-label="copy.symbolSwitch"
-        :options="symbolSwitchOptions"
-        size="sm"
-      />
-      <div class="mm-hedging-monitor__actions">
-        <MmButton :disabled="loading" :loading="loading" size="sm" variant="primary" @click="handleSearch">
-          <template #icon><MmIcon name="search" :size="13" /></template>{{ copy.query }}
-        </MmButton>
-        <MmButton :disabled="loading" size="sm" @click="handleReset">
-          <template #icon><MmIcon name="rotate-ccw" :size="13" /></template>{{ copy.reset }}
-        </MmButton>
-        <MmButton :loading="loading" :aria-label="copy.refreshAria" icon-only size="sm" :title="copy.refresh" @click="load">
-          <template #icon><MmIcon name="refresh-cw" :size="14" /></template>
-        </MmButton>
-      </div>
-    </div>
+    <HedgingQueryBar
+      v-model:visible-column-keys="visibleColumnKeys"
+      :columns="columns"
+      :fields="queryFields"
+      :loading="loading"
+      :model-value="filterDraft"
+      :title="locale === 'en-US' ? 'Filter hedging overview' : '筛选对冲总览'"
+      @update:model-value="Object.assign(filterDraft, $event)"
+      @query="query"
+      @source-query="query"
+      @reset="handleReset"
+      @refresh="load"
+    >
+      <template v-if="showAgent && $slots['source-filter']" #source-filter="scope">
+        <slot name="source-filter" v-bind="scope" />
+      </template>
+    </HedgingQueryBar>
 
     <div class="mm-hedging-monitor__table-wrap mm-pro-table__body">
       <MmTable
@@ -60,7 +24,7 @@
         :aria-label="copy.tableAria"
         class="mm-hedging-monitor__table"
         :class="{ 'is-empty': tableRows.length === 0 }"
-        :columns="columns"
+        :columns="visibleColumns"
         :data="tableRows"
         :empty-text="copy.emptyText"
         :hoverable="false"
@@ -114,12 +78,12 @@
 <script lang="ts" setup>
 import { computed, defineComponent, h, onMounted, reactive, ref } from "vue";
 import { useLocale } from "../../composables/use-locale";
-import { MmButton } from "../button";
 import { MmExchangeLogo } from "../exchange-logo";
 import { MmIcon } from "../icon";
-import { MmInput } from "../input";
+import HedgingQueryBar from "../hedging-query-bar/HedgingQueryBar.vue";
 import { MmPagination } from "../pagination";
-import { MmSelect, type SelectOption } from "../select";
+import type { SelectOption } from "../select";
+import type { QueryBarField, QueryBarValue } from "../query-bar";
 import { MmTable, type TableColumn, type TableRow } from "../table";
 import { MmTag, type TagType } from "../tag";
 import { MmTooltip } from "../tooltip";
@@ -168,10 +132,22 @@ const columns = computed<TableColumn<Row>[]>(() => [
 const statusFilterOptions = computed<SelectOption[]>(() => [{ label: copy.value.allStatuses, value: "" }, ...statuses.value.map((item) => ({ label: statusLabel(item.value, item.label), value: item.value }))]);
 const globalSwitchOptions = computed<SelectOption[]>(() => [{ label: copy.value.globalSwitchAll, value: "" }, { label: copy.value.globalSwitchEnabled, value: "1" }, { label: copy.value.globalSwitchDisabled, value: "0" }]);
 const symbolSwitchOptions = computed<SelectOption[]>(() => [{ label: copy.value.symbolSwitchAll, value: "" }, { label: copy.value.symbolSwitchEnabled, value: "1" }, { label: copy.value.symbolSwitchDisabled, value: "0" }]);
+const visibleColumnKeys = ref<string[]>([]);
+const visibleColumns = computed(() => columns.value.filter(column => !visibleColumnKeys.value.length || visibleColumnKeys.value.includes(column.key)));
+const queryFields = computed<QueryBarField[]>(() => [
+  { key: "keyword", label: copy.value.searchAria, placeholder: copy.value.searchPlaceholder, type: "keyword", width: 230 },
+  ...(props.showAgent ? [{ key: "agentId", label: copy.value.columns.source_name, placeholder: copy.value.allAgents, type: "select", options: props.agentOptions, width: 180 } as QueryBarField] : []),
+  { key: "status", label: copy.value.statusFilterAria, placeholder: copy.value.allStatuses, type: "select", options: statusFilterOptions.value, width: 164 },
+  ...(props.showSwitchFilters ? [
+    { key: "globalEnabled", label: copy.value.globalSwitch, placeholder: copy.value.globalSwitchAll, type: "select", options: globalSwitchOptions.value, defaultValue: "1", width: 180 },
+    { key: "symbolEnabled", label: copy.value.symbolSwitch, placeholder: copy.value.symbolSwitchAll, type: "select", options: symbolSwitchOptions.value, defaultValue: "1", width: 164 },
+  ] as QueryBarField[] : []),
+]);
 const rangeStart = computed(() => total.value ? (page.value - 1) * pageSize.value + 1 : 0); const rangeEnd = computed(() => Math.min(total.value, page.value * pageSize.value));
 const rowKey = (row: Row) => `${row.agent_id || 0}:${row.id}`;
 async function load() { loading.value = true; try { const result = await props.request({ ...(props.showAgent && filters.agentId ? { agent_id: filters.agentId } : {}), ...(props.showSwitchFilters && filters.globalEnabled ? { global_enabled: filters.globalEnabled as "0" | "1" } : {}), ...(filters.keyword ? { keyword: filters.keyword } : {}), ...(filters.status ? { status: filters.status as HedgingMonitorStatus } : {}), ...(props.showSwitchFilters && filters.symbolEnabled ? { symbol_enabled: filters.symbolEnabled as "0" | "1" } : {}), page: page.value, page_size: pageSize.value }); rows.value = Array.isArray(result?.lists) ? result.lists : []; total.value = Math.max(0, Number(result?.count) || 0); statuses.value = Array.isArray(result?.options?.statuses) ? result.options.statuses : fallbackStatuses; emit("loaded", result); const maxPage = Math.max(1, Math.ceil(total.value / pageSize.value)); if (page.value > maxPage) { page.value = maxPage; await load(); } } finally { loading.value = false; } }
 function handleSearch() { filters.agentId = filterDraft.agentId; filters.globalEnabled = filterDraft.globalEnabled; filters.keyword = filterDraft.keyword.trim(); filters.status = filterDraft.status; filters.symbolEnabled = filterDraft.symbolEnabled; page.value = 1; void load(); }
+function query(value: QueryBarValue) { Object.assign(filterDraft, value); handleSearch(); }
 function handleReset() { emit("reset"); Object.assign(filterDraft, { agentId: "", globalEnabled: defaultSwitchFilter(), keyword: "", status: "", symbolEnabled: defaultSwitchFilter() }); Object.assign(filters, filterDraft); page.value = 1; void load(); }
 function handlePageSize() { page.value = 1; void load(); }
 function statusLabel(status: HedgingMonitorStatus, fallback = "") { return copy.value.statuses[status] || fallback || status; }
@@ -199,23 +175,5 @@ defineExpose({ reload: load });
 
 <style scoped>
 .mm-hedging-monitor{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;min-height:0;height:100%;border:1px solid var(--mm-color-line);border-radius:10px;background:var(--mm-color-panel)}
-.mm-hedging-monitor__toolbar{display:grid;grid-template-columns:minmax(200px,260px) 170px 1fr;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--mm-color-line)}.mm-hedging-monitor__toolbar.has-agent-filter{grid-template-columns:200px minmax(180px,260px) 170px 1fr}.mm-hedging-monitor__toolbar.has-switch-filters{grid-template-columns:minmax(180px,240px) repeat(3,160px) 1fr}.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters{grid-template-columns:180px minmax(170px,230px) repeat(3,160px) 1fr}
-.mm-hedging-monitor__progress{color:var(--mm-color-text);font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}
-.mm-hedging-monitor__actions{display:flex;justify-content:flex-end;gap:7px}.mm-hedging-monitor__table-wrap{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-monitor__table-wrap>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}.mm-hedging-monitor__table{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:0}.mm-hedging-monitor__table :deep(.mm-table__viewport),.mm-hedging-monitor__table :deep(.mm-table__scroll){flex:1 1 auto;min-height:0}.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody>tr),.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){height:100%}.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){vertical-align:middle}.mm-hedging-monitor__table :deep(th),.mm-hedging-monitor__table :deep(td){min-width:0;padding:8px 6px;font-size:11px}.mm-hedging-monitor__column-header{display:inline-flex;align-items:center;justify-content:center;gap:4px}.mm-hedging-monitor__help{display:inline-flex;align-items:center;justify-content:center;cursor:help;color:var(--mm-color-text-muted)}.mm-hedging-monitor__account{display:flex;align-items:center;gap:7px;min-width:0;line-height:1.2}.mm-hedging-monitor__account-copy,.mm-hedging-monitor__agent{display:grid;min-width:0;gap:2px;line-height:1.2}.mm-hedging-monitor__account strong,.mm-hedging-monitor__agent strong{overflow:hidden;color:var(--mm-color-text);font-size:11px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__account-copy span,.mm-hedging-monitor__agent span,.mm-hedging-monitor__time{display:block;overflow:hidden;color:var(--mm-color-text-muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__time{font-size:var(--mm-font-size-sm)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount){color:var(--mm-color-text-muted);font-variant-numeric:tabular-nums;font-weight:650}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair){display:grid;justify-items:center;gap:2px;line-height:1.2;white-space:nowrap}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>strong){font-size:12px}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>span){font-size:11px;font-weight:550}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-positive){color:var(--mm-color-success)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-negative){color:var(--mm-color-danger)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-warning){color:var(--mm-color-warning)}.mm-hedging-monitor__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;color:var(--mm-color-text-muted);font-size:12px}@media(max-width:960px){.mm-hedging-monitor__toolbar,.mm-hedging-monitor__toolbar.has-agent-filter,.mm-hedging-monitor__toolbar.has-switch-filters,.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters{grid-template-columns:repeat(2,minmax(160px,1fr))}.mm-hedging-monitor__toolbar.has-switch-filters .mm-hedging-monitor__actions{grid-column:1/-1}}
-</style>
-
-<style scoped>
-.mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(170px, 230px) 160px 1fr; }
-.mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(170px, 230px) repeat(3, minmax(120px, 160px)) 1fr; }
-.mm-hedging-monitor__toolbar.has-source-filter > * { min-width: 0; }
-@media (max-width: 1200px) {
-  .mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter,
-  .mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mm-hedging-monitor__toolbar.has-source-filter > :first-child { grid-column: 1 / -1; }
-  .mm-hedging-monitor__toolbar.has-source-filter .mm-hedging-monitor__actions { grid-column: 1 / -1; flex-wrap: wrap; }
-}
-@media (max-width: 640px) {
-  .mm-hedging-monitor__toolbar.has-agent-filter.has-source-filter,
-  .mm-hedging-monitor__toolbar.has-agent-filter.has-switch-filters.has-source-filter { grid-template-columns: minmax(0, 1fr); }
-}
+.mm-hedging-monitor__progress{color:var(--mm-color-text);font-variant-numeric:tabular-nums;font-weight:650;white-space:nowrap}.mm-hedging-monitor__table-wrap{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-monitor__table-wrap>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}.mm-hedging-monitor__table{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:0}.mm-hedging-monitor__table :deep(.mm-table__viewport),.mm-hedging-monitor__table :deep(.mm-table__scroll){flex:1 1 auto;min-height:0}.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody),.mm-hedging-monitor__table.is-empty :deep(.mm-table__body-table>tbody>tr),.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){height:100%}.mm-hedging-monitor__table.is-empty :deep(.mm-table__empty-cell){vertical-align:middle}.mm-hedging-monitor__table :deep(th),.mm-hedging-monitor__table :deep(td){min-width:0;padding:8px 6px;font-size:11px}.mm-hedging-monitor__column-header{display:inline-flex;align-items:center;justify-content:center;gap:4px}.mm-hedging-monitor__help{display:inline-flex;align-items:center;justify-content:center;cursor:help;color:var(--mm-color-text-muted)}.mm-hedging-monitor__account{display:flex;align-items:center;gap:7px;min-width:0;line-height:1.2}.mm-hedging-monitor__account-copy,.mm-hedging-monitor__agent{display:grid;min-width:0;gap:2px;line-height:1.2}.mm-hedging-monitor__account strong,.mm-hedging-monitor__agent strong{overflow:hidden;color:var(--mm-color-text);font-size:11px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__account-copy span,.mm-hedging-monitor__agent span,.mm-hedging-monitor__time{display:block;overflow:hidden;color:var(--mm-color-text-muted);font-size:10px;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-monitor__time{font-size:var(--mm-font-size-sm)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount){color:var(--mm-color-text-muted);font-variant-numeric:tabular-nums;font-weight:650}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair){display:grid;justify-items:center;gap:2px;line-height:1.2;white-space:nowrap}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>strong){font-size:12px}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount-pair>span){font-size:11px;font-weight:550}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-positive){color:var(--mm-color-success)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-negative){color:var(--mm-color-danger)}.mm-hedging-monitor :deep(.mm-hedging-monitor__amount.is-warning){color:var(--mm-color-warning)}.mm-hedging-monitor__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;color:var(--mm-color-text-muted);font-size:12px}
 </style>

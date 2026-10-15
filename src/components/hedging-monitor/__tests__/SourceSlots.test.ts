@@ -33,9 +33,9 @@ describe.each([
     const wrapper = mount(component as Component, {
       props: { request, showAgent: true, onReset: () => { selected.value = ""; } },
       slots: {
-        "source-filter": ({ search, loading }: { search: () => void; loading: boolean }) => h("form", {
-          "data-source-query": "", onSubmit: (event: Event) => { event.preventDefault(); search(); },
-        }, [h("button", { type: "submit", disabled: loading }, "Select source")]),
+        "source-filter": ({ search, loading }: { search: () => void; loading: boolean }) => h("button", {
+          "data-source-query": "", type: "button", disabled: loading, onClick: search,
+        }, "Select source"),
         "cell-source_id": ({ row }: { row: { source_id: string } }) => h("span", { "data-source-id": "" }, row.source_id),
         "cell-source_name": ({ row }: { row: { source_name: string } }) => h("span", { "data-source-name": "" }, row.source_name),
         "cell-source_type": ({ row }: { row: { source_type: string } }) => h("span", { "data-source-type": "" }, row.source_type),
@@ -45,13 +45,13 @@ describe.each([
     expect(wrapper.get("[data-source-id]").text()).toBe("300");
     expect(wrapper.get("[data-source-name]").text()).toBe("White label");
     expect(wrapper.get("[data-source-type]").text()).toBe("white_label");
-    expect(wrapper.find('[aria-label="代理商"]').exists()).toBe(false);
+    expect(wrapper.get('[data-query-field="agentId"]').find('[data-mm-component="select"]').exists()).toBe(false);
     const pagination = wrapper.getComponent(MmPagination);
     pagination.vm.$emit("update:currentPage", 2);
     pagination.vm.$emit("current-change", 2);
     await flushPromises();
     expect(request.mock.calls.at(-1)?.[0].page).toBe(2);
-    await wrapper.get("[data-source-query]").trigger("submit");
+    await wrapper.get("[data-source-query]").trigger("click");
     await flushPromises();
     expect(request.mock.calls.at(-1)?.[0].page).toBe(1);
     expect((await request.mock.results.at(-1)?.value).requestedSource).toBe("white_label");
@@ -67,18 +67,49 @@ it("changing execution source clears a previous account but retains the other fi
   const request = vi.fn(async () => ({ count: 0, lists: [], options: { statuses: [], symbols: [], accounts: [], directions: [], reasons: [] } }));
   const wrapper = mount(HedgingExecutionTable, {
     props: { request, showAgent: true },
-    slots: { "source-filter": ({ search }: { search: () => void }) => h("form", { onSubmit: (event: Event) => { event.preventDefault(); search(); } }) },
+    slots: { "source-filter": ({ search }: { search: () => void }) => h("button", { "data-source-query": "", type: "button", onClick: search }) },
   });
   await flushPromises();
-  const selects = wrapper.findAllComponents(MmSelect);
-  selects[0].vm.$emit("update:modelValue", "BTCUSDT");
-  selects[4].vm.$emit("update:modelValue", "8");
+  wrapper.get('[data-query-field="symbol"]').getComponent(MmSelect).vm.$emit("update:modelValue", "BTCUSDT");
+  wrapper.get('[data-query-field="accountId"]').getComponent(MmSelect).vm.$emit("update:modelValue", "8");
   await wrapper.vm.$nextTick();
   await wrapper.findAll("button").find(button => button.text() === "查询")?.trigger("click");
   await flushPromises();
   expect(request).toHaveBeenLastCalledWith({ account_id: "8", symbol: "BTCUSDT", page: 1, page_size: 20 });
-  await wrapper.get("form").trigger("submit");
+  await wrapper.get("[data-source-query]").trigger("click");
   await flushPromises();
   expect(request).toHaveBeenLastCalledWith({ symbol: "BTCUSDT", page: 1, page_size: 20 });
   wrapper.unmount();
+});
+
+describe.each([
+  ["executions", HedgingExecutionTable,
+    { keyword: "task-12", symbol: "BTCUSDT", side: "SELL", reason: "first_trigger", status: "filled", accountId: "8" },
+    { keyword: "task-12", symbol: "BTCUSDT", side: "SELL", reason: "first_trigger", status: "filled", account_id: "8" }],
+  ["monitor", HedgingMonitor,
+    { keyword: "BTC", status: "balanced", globalEnabled: "0", symbolEnabled: "0" },
+    { keyword: "BTC", status: "balanced", global_enabled: "0", symbol_enabled: "0" }],
+  ["subjects", HedgingSubjectConfig,
+    { enabled: "0", status: "running" },
+    { enabled: "0", status: "running" }],
+] as const)("hedging %s native filters", (_name, component, values, expected) => {
+  it("preserves every native query parameter through the standard query workspace", async () => {
+    const request = vi.fn(async () => ({ count: 1, lists: [row], options: { statuses: [], symbols: [], accounts: [], directions: [], reasons: [] } }));
+    const wrapper = mount(component as Component, { props: { request, showAgent: true, showSwitchFilters: true } });
+    await flushPromises();
+    for (const [key, value] of Object.entries(values)) {
+      const field = wrapper.get(`[data-query-field="${key}"]`);
+      if (key === "keyword") await field.get("input").setValue(value);
+      else {
+        field.getComponent(MmSelect).vm.$emit("update:modelValue", value);
+        await wrapper.vm.$nextTick();
+      }
+    }
+    const before = request.mock.calls.length;
+    await wrapper.get('[data-query-action="query"]').trigger("click");
+    await flushPromises();
+    expect(request).toHaveBeenCalledTimes(before + 1);
+    expect(request).toHaveBeenLastCalledWith(expect.objectContaining({ ...expected, page: 1, page_size: 20 }));
+    wrapper.unmount();
+  });
 });

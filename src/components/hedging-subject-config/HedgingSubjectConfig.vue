@@ -1,20 +1,25 @@
 <template>
   <section class="mm-hedging-subject-config">
-    <div class="mm-hedging-subject-config__toolbar" :class="{ 'has-source-filter': !!$slots['source-filter'] }">
-      <slot name="source-filter" :loading="loading" :search="search">
-      <MmSelect v-model="draft.agentId" :options="agentOptions" placeholder="全部代理商" size="sm" />
-      </slot>
-      <MmSelect v-model="draft.enabled" :options="switchOptions" placeholder="对冲总开关：全部" size="sm" />
-      <MmSelect v-model="draft.status" :options="statusOptions" placeholder="运行状态：全部" size="sm" />
-      <div class="mm-hedging-subject-config__actions">
-        <MmButton :loading="loading" size="sm" variant="primary" @click="search"><template #icon><MmIcon name="search" :size="13" /></template>查询</MmButton>
-        <MmButton :disabled="loading" size="sm" @click="reset"><template #icon><MmIcon name="rotate-ccw" :size="13" /></template>重置</MmButton>
-        <MmButton aria-label="刷新" :loading="loading" icon-only size="sm" @click="load"><template #icon><MmIcon name="refresh-cw" :size="14" /></template></MmButton>
-      </div>
-    </div>
+    <HedgingQueryBar
+      v-model:visible-column-keys="visibleColumnKeys"
+      :columns="columns"
+      :fields="queryFields"
+      :loading="loading"
+      :model-value="draft"
+      title="筛选对冲主体配置"
+      @update:model-value="Object.assign(draft, $event)"
+      @query="query"
+      @source-query="query"
+      @reset="reset"
+      @refresh="load"
+    >
+      <template v-if="$slots['source-filter']" #source-filter="scope">
+        <slot name="source-filter" v-bind="scope" />
+      </template>
+    </HedgingQueryBar>
 
     <div class="mm-hedging-subject-config__body mm-pro-table__body">
-      <MmTable :columns="columns" :data="tableRows" empty-text="暂无主体配置" row-key="agent_id">
+      <MmTable :columns="visibleColumns" :data="tableRows" empty-text="暂无主体配置" row-key="agent_id">
         <template #cell-agent_id="{ row }"><slot name="cell-source_id" :row="row">{{ row.agent_id }}</slot></template>
         <template #cell-agent_name="{ row }"><slot name="cell-source_name" :row="row">{{ row.agent_name || "-" }}</slot></template>
         <template #cell-source_type="{ row }"><slot name="cell-source_type" :row="row"><MmTag effect="soft" round size="sm" type="primary">商户</MmTag></slot></template>
@@ -52,12 +57,13 @@ import { computed, defineComponent, h, onMounted, reactive, ref } from "vue";
 import MmButton from "../button/Button.vue";
 import MmExchangeLogo from "../exchange-logo/ExchangeLogo.vue";
 import MmIcon from "../icon/Icon.vue";
+import HedgingQueryBar from "../hedging-query-bar/HedgingQueryBar.vue";
 import MmPagination from "../pagination/Pagination.vue";
-import MmSelect from "../select/Select.vue";
 import MmTable from "../table/Table.vue";
 import MmTag from "../tag/Tag.vue";
 import MmTooltip from "../tooltip/Tooltip.vue";
 import type { SelectOption } from "../select";
+import type { QueryBarField, QueryBarValue } from "../query-bar";
 import type { TableColumn, TableRow } from "../table";
 import type { HedgingSubjectConfigProps, HedgingSubjectConfigRow, HedgingSubjectStatus } from "./types";
 
@@ -83,6 +89,13 @@ const columns: TableColumn<Row>[] = [
 ];
 const switchOptions: SelectOption[] = [{ label: "对冲总开关：全部", value: "" }, { label: "已开启", value: "1" }, { label: "已关闭", value: "0" }];
 const statusOptions: SelectOption[] = [{ label: "运行状态：全部", value: "" }, { label: "运行中", value: "running" }, { label: "已停用", value: "disabled" }, { label: "待配置", value: "pending_config" }, { label: "账户异常", value: "account_abnormal" }];
+const visibleColumnKeys = ref<string[]>([]);
+const visibleColumns = computed(() => columns.filter(column => !visibleColumnKeys.value.length || visibleColumnKeys.value.includes(column.key)));
+const queryFields = computed<QueryBarField[]>(() => [
+  { key: "agentId", label: "来源名称", placeholder: "全部代理商", type: "select", options: props.agentOptions, width: 180 },
+  { key: "enabled", label: "对冲总开关", type: "select", options: switchOptions, width: 180 },
+  { key: "status", label: "运行状态", type: "select", options: statusOptions, width: 164 },
+]);
 const rangeStart = computed(() => total.value ? (page.value - 1) * pageSize.value + 1 : 0), rangeEnd = computed(() => Math.min(page.value * pageSize.value, total.value));
 
 const AggregateValue = defineComponent({
@@ -109,6 +122,7 @@ const AggregateValue = defineComponent({
 function statusType(status: HedgingSubjectStatus) { return status === "running" ? "success" : status === "disabled" ? "info" : "warning"; }
 async function load() { loading.value = true; try { const result = await props.request({ page: page.value, page_size: pageSize.value, agent_id: filters.agentId || undefined, enabled: (filters.enabled || undefined) as "0" | "1" | undefined, status: (filters.status || undefined) as HedgingSubjectStatus | undefined }); rows.value = result.lists || []; total.value = Number(result.count || 0); } finally { loading.value = false; } }
 function search() { Object.assign(filters, draft); page.value = 1; load(); }
+function query(value: QueryBarValue) { Object.assign(draft, value); search(); }
 function reset() { emit("reset"); Object.assign(draft, { agentId: "", enabled: "", status: "" }); search(); }
 function pageSizeChanged() { page.value = 1; load(); }
 onMounted(load);
@@ -116,15 +130,5 @@ defineExpose({ refresh: load });
 </script>
 
 <style>
-.mm-hedging-subject-config{display:flex;flex-direction:column;height:100%;min-height:460px;background:var(--mm-color-panel,#fff);border:1px solid var(--mm-color-border,#e5e7eb);border-radius:10px;overflow:hidden}.mm-hedging-subject-config__toolbar{display:flex;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--mm-color-border,#e5e7eb)}.mm-hedging-subject-config__toolbar>.mm-select{width:190px}.mm-hedging-subject-config__actions{display:flex;gap:6px;margin-left:auto}.mm-hedging-subject-config__body{position:relative;flex:1;min-height:0;overflow:auto}.mm-hedging-subject-config__footer{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-top:1px solid var(--mm-color-border,#e5e7eb);color:var(--mm-color-text-secondary,#64748b);font-size:12px}.mm-hedging-subject-config__aggregate-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.mm-hedging-subject-config__count{border:0;background:var(--mm-color-primary-soft,#eaf3ff);color:var(--mm-color-primary,#1677ff);border-radius:999px;padding:3px 9px;font:inherit;font-weight:600;cursor:help}.mm-hedging-subject-config__tooltip-list{display:grid;gap:7px;min-width:130px}.mm-hedging-subject-config__time{font-size:var(--mm-font-size-sm)}.mm-hedging-subject-config .row-actions{display:flex;align-items:center;justify-content:center}.mm-hedging-subject-config .contract-row-action{box-shadow:none}
-</style>
-
-<style scoped>
-.mm-hedging-subject-config__toolbar.has-source-filter { flex-wrap: wrap; }
-.mm-hedging-subject-config__toolbar.has-source-filter > :first-child { width: 394px; min-width: 0; }
-@media (max-width: 640px) {
-  .mm-hedging-subject-config__toolbar.has-source-filter > :first-child { width: 100%; }
-  .mm-hedging-subject-config__toolbar.has-source-filter > .mm-select { flex: 1 1 140px; min-width: 0; }
-  .mm-hedging-subject-config__toolbar.has-source-filter .mm-hedging-subject-config__actions { flex: 1 1 100%; flex-wrap: wrap; justify-content: flex-end; }
-}
+.mm-hedging-subject-config{display:flex;flex-direction:column;height:100%;min-height:460px;background:var(--mm-color-panel,#fff);border:1px solid var(--mm-color-border,#e5e7eb);border-radius:10px;overflow:hidden}.mm-hedging-subject-config__body{position:relative;flex:1;min-height:0;overflow:auto}.mm-hedging-subject-config__footer{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-top:1px solid var(--mm-color-border,#e5e7eb);color:var(--mm-color-text-secondary,#64748b);font-size:12px}.mm-hedging-subject-config__aggregate-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.mm-hedging-subject-config__count{border:0;background:var(--mm-color-primary-soft,#eaf3ff);color:var(--mm-color-primary,#1677ff);border-radius:999px;padding:3px 9px;font:inherit;font-weight:600;cursor:help}.mm-hedging-subject-config__tooltip-list{display:grid;gap:7px;min-width:130px}.mm-hedging-subject-config__time{font-size:var(--mm-font-size-sm)}.mm-hedging-subject-config .row-actions{display:flex;align-items:center;justify-content:center}.mm-hedging-subject-config .contract-row-action{box-shadow:none}
 </style>

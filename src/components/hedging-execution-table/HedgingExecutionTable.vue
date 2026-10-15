@@ -1,84 +1,22 @@
 <template>
   <section class="mm-hedging-execution-table">
-    <div
-      class="mm-hedging-execution-table__toolbar"
-      :class="{ 'has-agent-filter': showAgent, 'has-source-filter': !!$slots['source-filter'] }"
+    <HedgingQueryBar
+      v-model:visible-column-keys="visibleColumnKeys"
+      :columns="columns"
+      :fields="queryFields"
+      :loading="loading"
+      :model-value="draft"
+      :title="locale === 'en-US' ? 'Filter hedging executions' : '筛选对冲执行记录'"
+      @update:model-value="Object.assign(draft, $event)"
+      @query="query"
+      @source-query="querySource"
+      @reset="reset"
+      @refresh="load"
     >
-      <slot v-if="showAgent" name="source-filter" :loading="loading" :search="searchSource">
-      <MmSelect
-        v-model="draft.agentId"
-        :aria-label="copy.agent"
-        :options="agentOptions"
-        :placeholder="copy.allAgents"
-        size="sm"
-      />
-      </slot>
-      <MmInput
-        v-model="draft.keyword"
-        :aria-label="copy.searchAria"
-        clearable
-        :placeholder="copy.searchPlaceholder"
-        size="sm"
-        @keydown.enter="search"
-      >
-        <template #prefix><MmIcon name="search" :size="13" /></template>
-      </MmInput>
-      <MmSelect
-        v-model="draft.symbol"
-        :aria-label="copy.filterSymbolAria"
-        :options="symbolOptions"
-        :placeholder="copy.allSymbols"
-        size="sm"
-      />
-      <MmSelect
-        v-model="draft.side"
-        :aria-label="copy.filterSideAria"
-        :options="sideOptions"
-        :placeholder="copy.allSides"
-        size="sm"
-      />
-      <MmSelect
-        v-model="draft.reason"
-        :aria-label="copy.filterReasonAria"
-        :options="reasonOptions"
-        :placeholder="copy.allReasons"
-        size="sm"
-      />
-      <MmSelect
-        v-model="draft.status"
-        :aria-label="copy.filterStatusAria"
-        :options="statusOptions"
-        :placeholder="copy.allStatuses"
-        size="sm"
-      />
-      <MmSelect
-        v-model="draft.accountId"
-        :aria-label="copy.filterAccountAria"
-        :options="accountOptions"
-        :placeholder="copy.allAccounts"
-        size="sm"
-      />
-      <div class="mm-hedging-execution-table__actions">
-        <MmButton :loading="loading" size="sm" variant="primary" @click="search">
-          <template #icon><MmIcon name="search" :size="13" /></template>
-          {{ copy.query }}
-        </MmButton>
-        <MmButton :disabled="loading" size="sm" @click="reset">
-          <template #icon><MmIcon name="rotate-ccw" :size="13" /></template>
-          {{ copy.reset }}
-        </MmButton>
-        <MmButton
-          :aria-label="copy.refreshAria"
-          icon-only
-          :loading="loading"
-          size="sm"
-          :title="copy.refresh"
-          @click="load"
-        >
-          <template #icon><MmIcon name="refresh-cw" :size="14" /></template>
-        </MmButton>
-      </div>
-    </div>
+      <template v-if="showAgent && $slots['source-filter']" #source-filter="scope">
+        <slot name="source-filter" v-bind="scope" />
+      </template>
+    </HedgingQueryBar>
 
     <div class="mm-hedging-execution-table__body mm-pro-table__body">
       <MmTable
@@ -86,7 +24,7 @@
         :aria-label="copy.tableAria"
         class="mm-hedging-execution-table__table"
         :class="{ 'is-empty': tableRows.length === 0 }"
-        :columns="columns"
+        :columns="visibleColumns"
         :data="tableRows"
         :empty-text="copy.emptyText"
         :hoverable="false"
@@ -210,12 +148,11 @@
 import { computed, onMounted, reactive, ref, watch } from "vue";
 
 import { useLocale } from "../../composables/use-locale";
-import MmButton from "../button/Button.vue";
+import HedgingQueryBar from "../hedging-query-bar/HedgingQueryBar.vue";
 import MmIcon from "../icon/Icon.vue";
-import MmInput from "../input/Input.vue";
 import MmPagination from "../pagination/Pagination.vue";
 import MmPopover from "../popover/Popover.vue";
-import MmSelect from "../select/Select.vue";
+import type { QueryBarField, QueryBarValue } from "../query-bar";
 import type { SelectOption } from "../select";
 import MmTable from "../table/Table.vue";
 import type { TableColumn, TableRow } from "../table";
@@ -347,6 +284,17 @@ const sideOptions = computed<SelectOption[]>(() => [{ label: copy.value.allSides
 const reasonOptions = computed<SelectOption[]>(() => [{ label: copy.value.allReasons, value: "" }, ...reasons.value.map((option) => ({ label: reasonLabel(option.value), value: option.value }))]);
 const statusOptions = computed<SelectOption[]>(() => [{ label: copy.value.allStatuses, value: "" }, ...statuses.value.map((option) => ({ label: statusLabel(option.value), value: option.value }))]);
 const accountOptions = computed<SelectOption[]>(() => [{ label: copy.value.allAccounts, value: "" }, ...accounts.value.filter((option) => !draft.agentId || !option.agent_id || String(option.agent_id) === draft.agentId).map((option) => ({ label: option.label, value: String(option.value) }))]);
+const visibleColumnKeys = ref<string[]>([]);
+const visibleColumns = computed(() => columns.value.filter(column => !visibleColumnKeys.value.length || visibleColumnKeys.value.includes(column.key)));
+const queryFields = computed<QueryBarField[]>(() => [
+  { key: "keyword", label: copy.value.columns.taskNo, placeholder: copy.value.searchPlaceholder, type: "keyword", width: 220 },
+  { key: "symbol", label: copy.value.columns.symbol, placeholder: copy.value.allSymbols, type: "select", options: symbolOptions.value, width: 150 },
+  ...(props.showAgent ? [{ key: "agentId", label: copy.value.columns.sourceName, placeholder: copy.value.allAgents, type: "select", options: props.agentOptions, width: 180 } as QueryBarField] : []),
+  { key: "side", label: copy.value.columns.side, placeholder: copy.value.allSides, type: "select", options: sideOptions.value, width: 140 },
+  { key: "reason", label: copy.value.columns.reason, placeholder: copy.value.allReasons, type: "select", options: reasonOptions.value, width: 160 },
+  { key: "status", label: copy.value.columns.status, placeholder: copy.value.allStatuses, type: "select", options: statusOptions.value, width: 150 },
+  { key: "accountId", label: copy.value.columns.account, placeholder: copy.value.allAccounts, type: "select", options: accountOptions.value, width: 180 },
+]);
 const rangeStart = computed(() => total.value ? (page.value - 1) * pageSize.value + 1 : 0);
 const rangeEnd = computed(() => Math.min(total.value, page.value * pageSize.value));
 
@@ -382,6 +330,8 @@ async function load() {
   }
 }
 function search() { Object.assign(filters, draft, { keyword: draft.keyword.trim() }); page.value = 1; void load(); }
+function query(value: QueryBarValue) { Object.assign(draft, value); search(); }
+function querySource(value: QueryBarValue) { Object.assign(draft, value); searchSource(); }
 function reset() { emit("reset"); Object.assign(draft, { agentId: "", accountId: "", keyword: "", reason: "", side: "", status: "", symbol: "" }); Object.assign(filters, draft); page.value = 1; void load(); }
 function searchSource() { draft.accountId = ""; search(); }
 function pageSizeChanged() { page.value = 1; void load(); }
@@ -403,26 +353,8 @@ defineExpose({ reload: load });
 </script>
 
 <style scoped>
-.mm-hedging-execution-table{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;height:100%;min-height:460px;border:1px solid var(--mm-color-line);border-radius:10px;background:var(--mm-color-panel)}
-.mm-hedging-execution-table__toolbar{display:grid;grid-template-columns:minmax(170px,220px) repeat(5,minmax(120px,150px)) 1fr;gap:8px;align-items:center;padding:8px 10px;border-bottom:1px solid var(--mm-color-line)}
-.mm-hedging-execution-table__toolbar.has-agent-filter{grid-template-columns:150px minmax(160px,210px) repeat(5,minmax(115px,140px)) 1fr}
-.mm-hedging-execution-table__actions{display:flex;justify-content:flex-end;gap:7px}.mm-hedging-execution-table__body{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-execution-table__body>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}
+.mm-hedging-execution-table{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;height:100%;min-height:460px;border:1px solid var(--mm-color-line);border-radius:10px;background:var(--mm-color-panel)}.mm-hedging-execution-table__body{position:relative;display:flex;overflow:hidden;min-height:0}.mm-hedging-execution-table__body>.mm-pro-table__state{position:absolute;inset:0;min-height:100%}
 .mm-hedging-execution-table__table{display:flex;flex:1 1 auto;flex-direction:column;width:100%;height:100%;min-width:0;min-height:0;border:0;border-radius:0}.mm-hedging-execution-table__table :deep(.mm-table__viewport),.mm-hedging-execution-table__table :deep(.mm-table__scroll){flex:1 1 auto;min-height:0}.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table>tbody),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__body-table>tbody>tr),.mm-hedging-execution-table__table.is-empty :deep(.mm-table__empty-cell){height:100%}.mm-hedging-execution-table__table.is-empty :deep(.mm-table__empty-cell){vertical-align:middle}.mm-hedging-execution-table__table :deep(th),.mm-hedging-execution-table__table :deep(td){min-width:0;padding:8px 6px;font-size:11px}
 .mm-hedging-execution-table__task,.mm-hedging-execution-table__time{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mm-hedging-execution-table__task{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}.mm-hedging-execution-table__amount-pair{display:grid;gap:2px;color:var(--mm-color-text-muted);line-height:1.2;white-space:nowrap;font-variant-numeric:tabular-nums}.mm-hedging-execution-table__amount-pair>strong{font-size:12px;font-weight:650}.mm-hedging-execution-table__amount-pair>span{font-size:11px;font-weight:550}.mm-hedging-execution-table__amount-pair.is-positive{color:var(--mm-color-success)}.mm-hedging-execution-table__amount-pair.is-negative{color:var(--mm-color-danger)}.mm-hedging-execution-table__time{color:var(--mm-color-text-muted);font-size:var(--mm-font-size-sm)}.mm-hedging-execution-table__status{display:inline-flex;align-items:center;gap:5px}.mm-hedging-execution-table__help{display:inline-flex;align-items:center;justify-content:center;padding:0;border:0;background:transparent;color:var(--mm-color-text-muted);cursor:help}.mm-hedging-execution-table__help:hover,.mm-hedging-execution-table__help:focus-visible{color:var(--mm-color-primary);outline:none}.mm-hedging-execution-table__error{display:grid;gap:8px}.mm-hedging-execution-table__error p{margin:0;overflow-wrap:anywhere;color:var(--mm-color-text-muted);line-height:1.55}.mm-hedging-execution-table__footer{display:flex;align-items:center;justify-content:space-between;min-height:48px;padding:6px 12px;border-top:1px solid var(--mm-color-line);color:var(--mm-color-text-muted);font-size:12px}
 .mm-hedging-execution-table__failure-summary{color:var(--mm-color-danger)!important;font-weight:650}
-@media(max-width:1100px){.mm-hedging-execution-table__toolbar,.mm-hedging-execution-table__toolbar.has-agent-filter{grid-template-columns:repeat(3,minmax(150px,1fr))}.mm-hedging-execution-table__actions{grid-column:1/-1}}
-</style>
-
-<style scoped>
-.mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(394px, 420px) minmax(160px, 1fr) repeat(5, minmax(100px, 130px)) auto; }
-.mm-hedging-execution-table__toolbar.has-source-filter > * { min-width: 0; }
-@media (max-width: 1500px) {
-  .mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .mm-hedging-execution-table__toolbar.has-source-filter > :first-child { grid-column: span 2; }
-  .mm-hedging-execution-table__toolbar.has-source-filter .mm-hedging-execution-table__actions { grid-column: 1 / -1; flex-wrap: wrap; }
-}
-@media (max-width: 640px) {
-  .mm-hedging-execution-table__toolbar.has-agent-filter.has-source-filter { grid-template-columns: minmax(0, 1fr); }
-  .mm-hedging-execution-table__toolbar.has-source-filter > :first-child { grid-column: auto; }
-}
 </style>

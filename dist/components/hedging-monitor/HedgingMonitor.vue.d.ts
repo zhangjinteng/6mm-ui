@@ -13,39 +13,38 @@ type __VLS_Props = {
 };
 type Row = HedgingMonitorRow & TableRow;
 declare function load(): Promise<void>;
-declare function handleSearch(): void;
-declare var __VLS_1: {
+declare var __VLS_14: {
     loading: boolean;
-    search: typeof handleSearch;
-}, __VLS_98: {
+    search: () => void;
+}, __VLS_35: {
     row: Row;
-}, __VLS_101: {
+}, __VLS_38: {
     row: Row;
-}, __VLS_104: {
+}, __VLS_41: {
     row: Row;
-}, __VLS_113: {
+}, __VLS_50: {
     value: unknown;
     row: Row;
     column: TableColumn<Row>;
     index: number;
-}, __VLS_116: {
+}, __VLS_53: {
     value: unknown;
     row: Row;
     column: TableColumn<Row>;
     index: number;
 };
 type __VLS_Slots = {} & {
-    'source-filter'?: (props: typeof __VLS_1) => any;
+    'source-filter'?: (props: typeof __VLS_14) => any;
 } & {
-    'cell-source_id'?: (props: typeof __VLS_98) => any;
+    'cell-source_id'?: (props: typeof __VLS_35) => any;
 } & {
-    'cell-source_name'?: (props: typeof __VLS_101) => any;
+    'cell-source_name'?: (props: typeof __VLS_38) => any;
 } & {
-    'cell-source_type'?: (props: typeof __VLS_104) => any;
+    'cell-source_type'?: (props: typeof __VLS_41) => any;
 } & {
-    'cell-symbol'?: (props: typeof __VLS_113) => any;
+    'cell-symbol'?: (props: typeof __VLS_50) => any;
 } & {
-    'cell-account'?: (props: typeof __VLS_116) => any;
+    'cell-account'?: (props: typeof __VLS_53) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {
     reload: typeof load;

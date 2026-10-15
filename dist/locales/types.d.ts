@@ -555,6 +555,20 @@ export interface MmUILocaleMessages {
         emptySummary: (page: number) => string;
         summary: (start: number, end: number, page: number) => string;
     };
+    fundingOverview: {
+        user: string;
+        userUid: string;
+        username: string;
+        keywordPlaceholder: string;
+        fundingBalance: string;
+        contractEquity: string;
+        contractOccupied: string;
+        totalAssets: string;
+        lastChangedTime: string;
+        lastChangedTimeAll: string;
+        loadFailed: string;
+        tableAria: string;
+    };
     fundingAccounts: {
         accountBalance: string;
         agent: string;

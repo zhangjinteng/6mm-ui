@@ -1,6 +1,7 @@
 import { Component } from 'vue';
 export * from './asset-balance-report';
 export * from './platform-trade-summary-report';
+export * from './funding-overview-table';
 export * from './alert';
 export * from './futures-trade-report';
 export * from './user-daily-report';

@@ -309,6 +309,12 @@ export const enUS: MmUILocale = {
       emptySummary: (page) => `Page ${page}, no records`,
       summary: (start, end, page) => `Showing ${start}-${end}, page ${page}`,
     },
+    fundingOverview: {
+      user: "User", userUid: "User UID", username: "Username", keywordPlaceholder: "User UID / username",
+      fundingBalance: "Funding balance", contractEquity: "Contract equity", contractOccupied: "Contract occupied", totalAssets: "Total assets",
+      lastChangedTime: "Last balance change", lastChangedTimeAll: "Last balance change: All",
+      loadFailed: "Failed to load funding overview", tableAria: "User assets overview",
+    },
     fundingAccounts: {
       accountBalance: "Account Balance",
       agent: "Agent",

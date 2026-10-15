@@ -1,0 +1,6 @@
+.mm-funding-overview-table { font-variant-numeric: tabular-nums; }
+.mm-funding-overview-table__funding { color: var(--mm-color-primary); font-weight: var(--mm-font-weight-semibold); }
+.mm-funding-overview-table__total { color: var(--mm-color-text); font-weight: var(--mm-font-weight-semibold); }
+.mm-funding-overview-table .mm-table tbody tr,
+.mm-funding-overview-table .mm-table tbody td { height: 43px; }
+.mm-funding-overview-table .mm-table tbody td { padding-block: 0; }

@@ -309,6 +309,12 @@ export const zhCN: MmUILocale = {
       emptySummary: (page) => `第 ${page} 页，暂无记录`,
       summary: (start, end, page) => `显示 ${start}-${end} 条，第 ${page} 页`,
     },
+    fundingOverview: {
+      user: "用户", userUid: "用户 UID", username: "用户名", keywordPlaceholder: "用户 UID/用户名",
+      fundingBalance: "资金余额", contractEquity: "合约权益", contractOccupied: "合约占用", totalAssets: "总资产",
+      lastChangedTime: "最后账变时间", lastChangedTimeAll: "最后账变时间：全部",
+      loadFailed: "资金总览数据加载失败", tableAria: "用户资产总览",
+    },
     fundingAccounts: {
       accountBalance: "账户余额",
       agent: "代理商",

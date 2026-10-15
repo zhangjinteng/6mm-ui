@@ -39,6 +39,8 @@ import { MmFilterDrawer } from "./filter-drawer";
 import { MmFeeCommissionTable } from "./fee-commission-table";
 import { MmForm, MmFormItem } from "./form";
 import { MmFundingAccountTable } from "./funding-account-table";
+import { MmFundingOverviewTable } from "./funding-overview-table";
+export * from "./funding-overview-table";
 import { MmFundingChangeLogTable } from "./funding-change-log-table";
 import { MmFuturesFundingFeeReport } from "./futures-funding-fee-report";
 import { MmFuturesPnlReport } from "./futures-pnl-report";
@@ -247,6 +249,7 @@ export const components: InstallableComponent[] = [
   MmForm,
   MmFormItem,
   MmFundingAccountTable,
+  MmFundingOverviewTable,
   MmFundingChangeLogTable,
   MmHistoryPositionTable,
   MmHistoryOrderTable,

@@ -53,6 +53,7 @@ export declare const MmHistoryPositionTable: <Row extends import('./types').Hist
         includeRobotUserType?: boolean | undefined;
         initialKeyword?: string | undefined;
         initialPageSize?: number | undefined;
+        initialTimeRange?: (import('..').DateRangeValue | null) | undefined;
         pageSizes?: number[] | undefined;
         request: import('./types').HistoryPositionListRequest<Row>;
         showUserType?: boolean | undefined;

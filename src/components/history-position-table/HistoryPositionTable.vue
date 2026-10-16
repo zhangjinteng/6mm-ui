@@ -38,6 +38,7 @@ const props = withDefaults(defineProps<HistoryPositionTableProps<Row>>(), {
   includeRobotUserType: false,
   initialKeyword: '',
   initialPageSize: 20,
+  initialTimeRange: null,
   pageSizes: () => [20, 30, 40],
   showUserType: true,
 })
@@ -172,7 +173,7 @@ const queryFields = computed<QueryBarField[]>(() => [
     key: 'time_range',
     label: copy.value.closeTime,
     type: 'date-range',
-    defaultValue: null,
+    defaultValue: props.initialTimeRange,
     placeholder: copy.value.timeRange,
     shortcuts: ['today', 'yesterday', 'last7Days', 'last30Days', 'thisMonth', 'lastMonth'],
     width: 280,

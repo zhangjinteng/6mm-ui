@@ -448,6 +448,8 @@ const actions = {
 
 `MmHistoryOrderTable` 统一历史委托的筛选、列、服务端分页排序、请求取消和详情动作。`includeRobotUserType` 默认为 `false`，显式开启后才会在用户类型筛选中增加“机器人”。宿主注入接口并保留自身的 UID 弹窗、合约图标和详情抽屉。
 
+`initialTimeRange` 可传入 `[开始日期, 结束日期]`，用于首次查询和重置；默认 `null`，不限制时间。历史仓位和合约成交表格也支持同名参数。
+
 ```vue
 <script setup lang="ts">
 import {

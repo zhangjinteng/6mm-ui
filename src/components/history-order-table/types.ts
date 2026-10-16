@@ -1,4 +1,5 @@
 import type { ProTableColumn } from '../pro-table'
+import type { DateRangeValue } from '../date-picker-panel'
 import type { QueryBarField, QueryBarValue } from '../query-bar'
 import type { TableRow } from '../table'
 
@@ -122,6 +123,7 @@ export interface HistoryOrderTableProps<Row extends HistoryOrderRow = HistoryOrd
   includeRobotUserType?: boolean
   initialKeyword?: string
   initialPageSize?: number
+  initialTimeRange?: DateRangeValue | null
   pageSizes?: number[]
   queryFields?: HistoryOrderTableQueryFields
   request: HistoryOrderListRequest<Row>

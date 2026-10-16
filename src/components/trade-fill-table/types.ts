@@ -1,4 +1,5 @@
 import type { ProTableColumn } from '../pro-table'
+import type { DateRangeValue } from '../date-picker-panel'
 import type { TableRow } from '../table'
 
 export interface TradeFillIdentity {
@@ -104,6 +105,7 @@ export interface TradeFillTableProps<Row extends TradeFillRow = TradeFillRow> {
   includeRobotUserType?: boolean
   initialKeyword?: string
   initialPageSize?: number
+  initialTimeRange?: DateRangeValue | null
   pageSizes?: number[]
   request: TradeFillListRequest<Row>
   showUserType?: boolean

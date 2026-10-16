@@ -35,6 +35,7 @@ const props = withDefaults(defineProps<HistoryOrderTableProps<Row>>(), {
   includeRobotUserType: false,
   initialKeyword: '',
   initialPageSize: 20,
+  initialTimeRange: null,
   pageSizes: () => [20, 30, 40],
   showUserType: true,
 })
@@ -176,7 +177,7 @@ const defaultQueryFields = computed<QueryBarField[]>(() => [
     key: 'time_range',
     label: copy.value.orderTime,
     type: 'date-range',
-    defaultValue: null,
+    defaultValue: props.initialTimeRange,
     placeholder: `${copy.value.startTime} - ${copy.value.endTime}`,
     width: 224,
   },

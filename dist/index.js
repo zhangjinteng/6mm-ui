@@ -16055,6 +16055,7 @@ var Vc = { key: 1 }, Hc = { class: "mm-history-position-table__id" }, Uc = { key
 		},
 		initialKeyword: { default: "" },
 		initialPageSize: { default: 20 },
+		initialTimeRange: { default: null },
 		pageSizes: { default: () => [
 			20,
 			30,
@@ -16248,7 +16249,7 @@ var Vc = { key: 1 }, Hc = { class: "mm-history-position-table__id" }, Uc = { key
 				key: "time_range",
 				label: a.value.closeTime,
 				type: "date-range",
-				defaultValue: null,
+				defaultValue: n.initialTimeRange,
 				placeholder: a.value.timeRange,
 				shortcuts: [
 					"today",
@@ -16653,6 +16654,7 @@ var Jc = { key: 1 }, Yc = { class: "mm-history-order-table__id" }, Xc = { key: 1
 		},
 		initialKeyword: { default: "" },
 		initialPageSize: { default: 20 },
+		initialTimeRange: { default: null },
 		pageSizes: { default: () => [
 			20,
 			30,
@@ -16853,7 +16855,7 @@ var Jc = { key: 1 }, Yc = { class: "mm-history-order-table__id" }, Xc = { key: 1
 				key: "time_range",
 				label: a.value.orderTime,
 				type: "date-range",
-				defaultValue: null,
+				defaultValue: n.initialTimeRange,
 				placeholder: `${a.value.startTime} - ${a.value.endTime}`,
 				width: 224
 			}
@@ -27707,6 +27709,7 @@ var bh = { class: "mm-trade-fill-table__id" }, xh = { key: 1 }, Sh = { class: "m
 		},
 		initialKeyword: { default: "" },
 		initialPageSize: { default: 20 },
+		initialTimeRange: { default: null },
 		pageSizes: { default: () => [
 			20,
 			30,
@@ -27777,7 +27780,7 @@ var bh = { class: "mm-trade-fill-table__id" }, xh = { key: 1 }, Sh = { class: "m
 				key: "time_range",
 				label: a.value.tradeTime,
 				type: "date-range",
-				defaultValue: null,
+				defaultValue: n.initialTimeRange,
 				placeholder: a.value.timeRange,
 				width: 250
 			},

@@ -1,4 +1,5 @@
 import { ProTableColumn } from '../pro-table';
+import { DateRangeValue } from '../date-picker-panel';
 import { TableRow } from '../table';
 export interface HistoryPositionIdentity {
     agent_id?: number | string | null;
@@ -91,6 +92,7 @@ export interface HistoryPositionTableProps<Row extends HistoryPositionRow = Hist
     includeRobotUserType?: boolean;
     initialKeyword?: string;
     initialPageSize?: number;
+    initialTimeRange?: DateRangeValue | null;
     pageSizes?: number[];
     request: HistoryPositionListRequest<Row>;
     showUserType?: boolean;

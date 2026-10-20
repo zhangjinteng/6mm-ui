@@ -10,14 +10,14 @@ type __VLS_Props = {
 };
 declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     "update:modelValue": (value: boolean) => any;
+    saved: () => any;
     apply: (translations: Record<string, string>) => any;
     "open-settings": () => any;
-    saved: () => any;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    onSaved?: (() => any) | undefined;
     onApply?: ((translations: Record<string, string>) => any) | undefined;
     "onOpen-settings"?: (() => any) | undefined;
-    onSaved?: (() => any) | undefined;
 }>, {
     locale: string;
     draftMode: boolean;

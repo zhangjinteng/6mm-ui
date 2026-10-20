@@ -61,6 +61,7 @@ export * from './input-number';
 export * from './layout';
 export * from './link';
 export * from './liquidation-table';
+export * from './liquidation-warning-table';
 export * from './liquidation-trades-dialog';
 export * from './loading';
 export * from './menu';

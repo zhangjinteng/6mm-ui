@@ -44,8 +44,8 @@ declare const __VLS_base: import('vue').DefineComponent<UploadProps, {
     "update:modelValue": (files: UploadFile[]) => any;
     progress: (file: UploadFile, percentage: number) => any;
     abort: (file: UploadFile) => any;
-    exceed: (files: File[], currentFiles: UploadFile[]) => any;
     remove: (file: UploadFile) => any;
+    exceed: (files: File[], currentFiles: UploadFile[]) => any;
 }, string, import('vue').PublicProps, Readonly<UploadProps> & Readonly<{
     onError?: ((file: UploadFile, error: Error) => any) | undefined;
     onSuccess?: ((file: UploadFile, response: unknown) => any) | undefined;
@@ -53,8 +53,8 @@ declare const __VLS_base: import('vue').DefineComponent<UploadProps, {
     "onUpdate:modelValue"?: ((files: UploadFile[]) => any) | undefined;
     onProgress?: ((file: UploadFile, percentage: number) => any) | undefined;
     onAbort?: ((file: UploadFile) => any) | undefined;
-    onExceed?: ((files: File[], currentFiles: UploadFile[]) => any) | undefined;
     onRemove?: ((file: UploadFile) => any) | undefined;
+    onExceed?: ((files: File[], currentFiles: UploadFile[]) => any) | undefined;
 }>, {
     name: string;
     disabled: boolean;

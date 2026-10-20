@@ -68,6 +68,7 @@ import { MmInputNumber } from "./input-number";
 import { MmLayout } from "./layout";
 import { MmLink } from "./link";
 import { MmLiquidationTable } from "./liquidation-table";
+import { MmLiquidationWarningTable, MmLiquidationWarningRulesDialog } from "./liquidation-warning-table";
 import { MmLiquidationTradesDialog } from "./liquidation-trades-dialog";
 import { MmLoading } from "./loading";
 import { MmMenu, MmMenuItem, MmSubMenu } from "./menu";
@@ -170,6 +171,7 @@ export * from "./input-number";
 export * from "./layout";
 export * from "./link";
 export * from "./liquidation-table";
+export * from "./liquidation-warning-table";
 export * from "./liquidation-trades-dialog";
 export * from "./loading";
 export * from "./menu";
@@ -268,6 +270,8 @@ export const components: InstallableComponent[] = [
   MmLayout,
   MmLink,
   MmLiquidationTable,
+  MmLiquidationWarningTable,
+  MmLiquidationWarningRulesDialog,
   MmLiquidationTradesDialog,
   MmLoading,
   MmMenu,

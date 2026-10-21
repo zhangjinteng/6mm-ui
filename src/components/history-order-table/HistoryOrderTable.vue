@@ -253,6 +253,12 @@ function orderStatusLabel(row: Row): string {
   return orderStatusLabels.value[Number(row.order_status)] || displayValue(row.order_status)
 }
 
+function orderPriceLabel(row: Row): string {
+  return String(row.order_type || '').trim().toLowerCase() === 'market'
+    ? copy.value.marketPrice
+    : formatHistoryOrderPrice(row.price)
+}
+
 const defaultColumns = computed<ProTableColumn<Row>[]>(() => {
   const result: ProTableColumn<Row>[] = [
     { key: 'user_id', dataIndex: 'user_id', title: copy.value.userUid, width: 126, hideable: false, sortable: true },
@@ -266,7 +272,7 @@ const defaultColumns = computed<ProTableColumn<Row>[]>(() => {
     { key: 'margin_mode', dataIndex: 'margin_mode', title: copy.value.marginMode, width: 100 },
     { key: 'order_type', dataIndex: 'order_type', title: copy.value.orderType, width: 110, formatter: (_value, row) => orderTypeLabel(row) },
     { key: 'leverage', dataIndex: 'leverage', title: copy.value.leverage, width: 100, formatter: value => value == null || value === '' ? '-' : `${value}x` },
-    { key: 'price', dataIndex: 'price', title: copy.value.orderPrice, width: 110, formatter: formatHistoryOrderPrice, sortable: true },
+    { key: 'price', dataIndex: 'price', title: copy.value.orderPrice, width: 110, formatter: (_value, row) => orderPriceLabel(row), sortable: true },
     { key: 'quantity', dataIndex: 'quantity', title: copy.value.orderQuantity, width: 130, formatter: formatHistoryOrderQuantity, sortable: true },
     { key: 'filled_quantity', dataIndex: 'filled_quantity', title: copy.value.filledQuantity, width: 126, formatter: formatHistoryOrderQuantity },
     { key: 'reduce_only', dataIndex: 'reduce_only', title: copy.value.reduceOnly, width: 110, formatter: value => isHistoryOrderFlag(value) ? copy.value.yes : copy.value.no },
@@ -462,7 +468,7 @@ defineExpose({ reload: proTable.reload })
 
     <template #cell-price="slotProps">
       <slot name="cell-price" v-bind="slotProps">
-        <span class="mm-history-order-table__number">{{ formatHistoryOrderPrice(slotProps.row.price) }}</span>
+        <span class="mm-history-order-table__number">{{ orderPriceLabel(slotProps.row) }}</span>
       </slot>
     </template>
 

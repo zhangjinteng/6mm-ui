@@ -1,3 +1,5 @@
+import { formatOrderPrice } from '../../shared/order-price'
+
 export function isCurrentOrderFlag(value: unknown): boolean {
   if (value === true || value === 1) return true
   const normalized = String(value ?? '').trim().toLowerCase()
@@ -16,8 +18,7 @@ export function formatCurrentOrderQuantity(value: unknown): string {
 }
 
 export function formatCurrentOrderPrice(value: unknown): string {
-  const numberValue = Number(value || 0)
-  return Number.isFinite(numberValue) ? numberValue.toFixed(2) : '0.00'
+  return formatOrderPrice(value)
 }
 
 export function calculateCurrentOrderRemainingQuantity(

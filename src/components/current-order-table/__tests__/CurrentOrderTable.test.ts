@@ -1,6 +1,8 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
+import { createMmLocaleContext, mmLocaleKey } from '../../../composables/use-locale'
+import type { ProTableColumn } from '../../pro-table'
 import { MmQueryBar } from '../../query-bar'
 import type { QueryBarField, QueryBarSegmentedField } from '../../query-bar'
 import CurrentOrderTable from '../CurrentOrderTable.vue'
@@ -65,9 +67,39 @@ describe('MmCurrentOrderTable', () => {
       '委托状态',
     ]))
     expect(wrapper.text()).toContain('限价 Maker')
-    expect(wrapper.text()).toContain('70000.13')
+    expect(wrapper.text()).toContain('70000.126')
     expect(wrapper.text()).toContain('1.2345')
     expect(wrapper.text()).toContain('部分成交')
+    wrapper.unmount()
+  })
+
+  it.each([
+    ['zh-CN', '市价'],
+    ['en-US', 'Market'],
+  ] as const)('renders four-decimal prices and market orders in %s', async (locale, marketLabel) => {
+    const rows = [
+      { order_id: 901, order_type: 'limit', price: '0.100' },
+      { order_id: 902, order_type: 'limit', price: '0.0033' },
+      { order_id: 903, order_type: 'limit', price: '1.23456' },
+      { order_id: 904, order_type: 'market', price: null },
+      { order_id: 905, order_type: 'MARKET', price: 0 },
+    ]
+    const wrapper = mount(CurrentOrderTable, {
+      props: { request: async () => ({ rows, hasMore: false }) },
+      global: { provide: { [mmLocaleKey as symbol]: createMmLocaleContext(locale) } },
+    })
+    await flushPromises()
+
+    const headers = wrapper.findAll('thead th').map(header => header.text())
+    const priceIndex = headers.indexOf(locale === 'zh-CN' ? '委托价格' : 'Order price')
+    expect(priceIndex).toBeGreaterThanOrEqual(0)
+    expect(wrapper.findAll('tbody tr').map(row => row.findAll('td')[priceIndex]?.text()))
+      .toEqual(['0.1', '0.0033', '1.2346', marketLabel, marketLabel])
+    const columns = wrapper.getComponent({ name: 'MmProTable' }).props('columns') as ProTableColumn[]
+    const priceColumn = columns.find(column => column.key === 'price')
+    expect(rows.map((row, index) => priceColumn?.formatter?.(row.price, row, index)))
+      .toEqual(['0.1', '0.0033', '1.2346', marketLabel, marketLabel])
+    expect(rows[0]?.price).toBe('0.100')
     wrapper.unmount()
   })
 

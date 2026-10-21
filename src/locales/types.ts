@@ -661,6 +661,7 @@ export interface MmUILocaleMessages {
     makerOnly: string;
     marginMode: string;
     marketOrder: string;
+    marketPrice: string;
     newOrder: string;
     no: string;
     nonMakerOnly: string;
@@ -714,6 +715,7 @@ export interface MmUILocaleMessages {
     makerOnly: string;
     marginMode: string;
     marketOrder: string;
+    marketPrice: string;
     newOrder: string;
     no: string;
     nonMakerOnly: string;

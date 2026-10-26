@@ -11,6 +11,8 @@ const root=dirname(fileURLToPath(import.meta.url)),src=resolve(root,'../../..'),
 async function component(name){
  if(cache.has(name))return cache.get(name)
  const entry=resolve(root,name+'.vue'),out=await build({entryPoints:[entry],bundle:true,write:false,platform:'node',format:'esm',plugins:[{name:'owner-real-page',setup(b){
+ b.onResolve({filter:/ui$/},()=>({path:'ui',namespace:'sdk-ui'}));
+ b.onLoad({filter:/.*/,namespace:'sdk-ui'},()=>({contents:`import {h} from 'vue';export const MmInput={inheritAttrs:false,setup:(_,{attrs,slots})=>()=>h('mm-input',attrs,[slots.suffix?.(),slots.append?.()])};`}));
  b.onResolve({filter:/runtime$/},a=>({path:a.path,namespace:'sdk-runtime'}));
  b.onLoad({filter:/.*/,namespace:'sdk-runtime'},()=>({contents:`import {h} from 'vue';export const useConfigSymbol=()=>({render(){return h('stub',this.$attrs)}});export const useConfigUser=()=>globalThis.__ownerPage.user;export const useAgentConfigRuntime=()=>({api:{siteDirectorySymbols:async()=>globalThis.__ownerPage.api.directory?.()??['BTCUSDT'],ownerConfigurationModel:(...a)=>globalThis.__ownerPage.api.model(...a),ownerConfigurations:(...a)=>globalThis.__ownerPage.api.list(...a),ownerConfiguration:(...a)=>globalThis.__ownerPage.api.detail(...a),saveOwnerConfiguration:(...a)=>globalThis.__ownerPage.api.save(...a)}});`}));
 
@@ -39,19 +41,19 @@ test('child direct page performs no configuration API request',async()=>{const v
 test('late model response cannot install previous account page',async()=>{const d=deferred();const v=await mount('index',{api:{model:()=>d.promise}});try{v.user.userInfo.id='101';v.user.userInfo.can_manage_prediction_config=false;await tick();d.resolve({config_model:'OWNER_V1',actor});await tick();assert.equal(walk(v.root).some(n=>n.type==='stub'),false);assert.match(text(v.root),/仅代理商主账号/)}finally{v.unmount()}})
 test('owner page edits minimum only and has one save control',async()=>{const v=await mount('OwnerConfig');try{
  assert.equal(walk(v.root).filter(n=>n.type==='el-button'&&text(n)==='保存配置').length,1);assert.doesNotMatch(text(v.root),/35 秒/);assert.match(text(v.root),/5 秒/)
- const input=walk(v.root).find(n=>n.type==='el-input'&&n.props['aria-label']==='5秒单笔最小额');assert.ok(input);input.props['onUpdate:modelValue']('0.5')
+ const input=walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒单笔最小额');assert.ok(input);input.props['onUpdate:modelValue']('0.5')
  await tick()
  const button=walk(v.root).find(n=>n.type==='el-button'&&text(n)==='保存配置');assert.equal(button.props.disabled,false);await button.props.onClick();await tick()
  const saved=v.calls.find(c=>typeof c==='object');assert.equal(saved.changes.length,1);assert.equal(saved.changes[0].minimum_stake,'0.5');assert.equal('fixed_odds' in saved.changes[0],false);assert.equal(localStorage.getItem('prediction.owner.pending.v1'),null)
  }finally{v.unmount()}})
 test('owner catalog late result ignored after account changes',async()=>{const d=deferred(),v=await mount('OwnerConfig',{api:{list:()=>d.promise}});try{v.user.userInfo.id='200';await tick();d.resolve({items:[fixture()]});await tick();assert.equal(walk(v.root).filter(n=>n.type==='article').length,0)}finally{v.unmount()}})
 test('rejected stale save offers a usable fresh-read recovery',async()=>{const v=await mount('OwnerConfig',{api:{save:async()=>{throw {error_code:'CONFLICT'}}}});try{
- walk(v.root).find(n=>n.type==='el-input'&&n.props['aria-label']==='5秒单笔最小额').props['onUpdate:modelValue']('0.5');await tick();await walk(v.root).find(n=>n.type==='el-button'&&text(n)==='保存配置').props.onClick();await tick()
- const retry=walk(v.root).find(n=>n.type==='el-button'&&text(n).includes('读取最新配置'));assert.ok(retry);assert.equal(retry.props.disabled,false);await retry.props.onClick();await tick();assert.equal(walk(v.root).find(n=>n.type==='el-input'&&n.props['aria-label']==='5秒单笔最小额').props.modelValue,'0.1')
+ walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒单笔最小额').props['onUpdate:modelValue']('0.5');await tick();await walk(v.root).find(n=>n.type==='el-button'&&text(n)==='保存配置').props.onClick();await tick()
+ const retry=walk(v.root).find(n=>n.type==='el-button'&&text(n).includes('读取最新配置'));assert.ok(retry);assert.equal(retry.props.disabled,false);await retry.props.onClick();await tick();assert.equal(walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒单笔最小额').props.modelValue,'0.1')
  }finally{v.unmount()}})
 test('owner up-down edits payout rate but hides maximum odds and preserves its platform value',async()=>{const v=await mount('OwnerConfig');try{
- assert.equal(walk(v.root).some(n=>n.type==='el-input'&&n.props['aria-label']==='5秒最高赔率'),false)
- const payout=walk(v.root).find(n=>n.type==='el-input'&&n.props['aria-label']==='5秒目标返奖率');assert.ok(payout);assert.equal(payout.props.disabled,false);payout.props['onUpdate:modelValue']('75');await tick()
+ assert.equal(walk(v.root).some(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒最高赔率'),false)
+ const payout=walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒目标返奖率');assert.ok(payout);assert.equal(payout.props.disabled,false);payout.props['onUpdate:modelValue']('75');await tick()
  assert.match(text(v.root),/赔率配置/)
  walk(v.root).find(n=>n.props['data-room-remove']==='35').props.onClick();await tick();walk(v.root).find(n=>n.props['data-room-confirm']===true).props.onClick();await tick()
  const coin=walk(v.root).find(n=>n.type==='el-switch'&&n.props['aria-label']==='币种开关');assert.ok(coin);coin.props['onUpdate:modelValue'](false);await tick()
@@ -73,7 +75,7 @@ test('owner directory hides platform-disabled coin but retains merchant-disabled
 
 test('room tabs retain unsaved edits across rooms and submit them together',async()=>{
  const v=await mount('OwnerConfig');try {
- const input=label=>walk(v.root).find(n=>n.type==='el-input'&&n.props['aria-label']===label)
+ const input=label=>walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']===label)
  assert.ok(input('5秒单笔最小额'));assert.equal(input('10秒单笔最小额'),undefined)
  input('5秒单笔最小额').props['onUpdate:modelValue']('0.5');await tick()
  const ten=walk(v.root).find(n=>n.type==='button'&&n.props['data-room-choice']==='40');assert.ok(ten);ten.props.onClick();await tick()
@@ -98,7 +100,7 @@ test('merchant shows platform precision as read only including explicit zero and
   try {
    const display=walk(v.root).find(node=>node.props['data-price-precision']===true)
    assert.ok(display);assert.match(text(display),n===undefined?/沿用原规则/:new RegExp(n+' 位'))
-   assert.equal(walk(display).some(node=>node.type==='el-input'||node.type==='el-input-number'),false)
+   assert.equal(walk(display).some(node=>node.type==='mm-input'||node.type==='el-input-number'),false)
   }finally{v.unmount()}
  }
 })

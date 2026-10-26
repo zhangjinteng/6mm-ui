@@ -3,6 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import MmPredictionGameConfig from './MmPredictionGameConfig.vue'
 import type { AgentConfigAdapter, PlatformConfigAdapter, PredictionConfigContext } from './runtime'
+import type { OwnerConfig } from './agent/api/prediction/owner-types'
 
 const symbolComponent = defineComponent({ props: ['symbol'], setup: props => () => h('span', String(props.symbol)) })
 const context = (extra: Partial<PredictionConfigContext> = {}): PredictionConfigContext => ({ operatorId: '100', identityKey: 'session-1', permissions: ['*'], canManagePredictionConfig: true, ...extra })
@@ -18,6 +19,28 @@ function agent(): AgentConfigAdapter {
     siteConfiguration: vi.fn(), saveSiteConfiguration: vi.fn(), configuration: vi.fn(), saveConfiguration: vi.fn(),
   }, grid: { ...grid(), initializeGridMerchant: vi.fn() } }
 }
+function ownerInputConfig(game: 'UP_DOWN' | 'HIGH_LOW'): OwnerConfig {
+  const up = game === 'UP_DOWN'
+  const gameType = up ? 'GAME_TYPE_UP_DOWN' : 'GAME_TYPE_HIGH_LOW'
+  return {
+    enabled: true, platform_enabled: true, owner_agent_id: '100', game_type: gameType,
+    symbol: 'BTCUSDT', public_version: '8', owner_revision: '0',
+    rules: (up ? ['35', '40', '45', '60', '90'] : ['5', '10', '15', '30', '60']).map(duration => ({
+      platform_enabled: true, owner_enabled: true, rule_epoch: '2', custom: false,
+      platform_minimum_stake: '1', platform_maximum_stake: '3000',
+      platform_target_payout_rate: up ? '0.9' : '', platform_maximum_odds: up ? '5' : '',
+      platform_fixed_odds: up ? '' : '1.8',
+      rule: {
+        game_type: gameType, symbol: 'BTCUSDT', duration_seconds: duration,
+        market_id: 'BTC-' + duration, enabled: true, bet_open_seconds: up ? '30' : '0',
+        target_payout_rate: up ? '0.9' : '', minimum_odds: '1', maximum_odds: up ? '5' : '',
+        fixed_odds: up ? '' : '1.8', minimum_stake: '1', maximum_stake: '3000',
+        stake_tiers: up ? [{ stake_tier_id: 'tier-' + duration, enabled: true, retired: false,
+          display_order: 0, minimum_stake: '1', maximum_stake: '3000' }] : [],
+      },
+    })),
+  }
+}
 describe('shared game configuration host boundary', () => {
   beforeEach(() => {
     const values = new Map<string, string>()
@@ -26,6 +49,58 @@ describe('shared game configuration host boundary', () => {
     vi.stubGlobal('sessionStorage', storage)
   })
   afterEach(() => vi.unstubAllGlobals())
+  it.each(['UP_DOWN', 'HIGH_LOW', 'GRID'] as const)('uses real MmInput controls for %s without submitting while typing', async mode => {
+    const adapter = agent()
+    vi.mocked(adapter.api.ownerConfigurations).mockImplementation(async game => ({ items: [ownerInputConfig(game)] }))
+    vi.mocked(adapter.api.siteDirectorySymbols).mockResolvedValue(['BTCUSDT'])
+    vi.mocked(adapter.grid.initializeGridMerchant).mockResolvedValue({ created: 0 })
+    vi.mocked(adapter.grid.gridConfigSymbols).mockResolvedValue(['BTCUSDT'])
+    vi.mocked(adapter.grid.gridConfigCatalog).mockResolvedValue({ sites: [{
+      site_id: 'site-a', can_edit: true, can_edit_limits: false,
+      products: [{ symbol: 'BTCUSDT', enabled: true, default_enabled: true }],
+    }] })
+    vi.mocked(adapter.grid.gridConfigSite).mockResolvedValue({
+      site_id: 'site-a', symbol: 'BTCUSDT', layout_version: '1', site_version: '1',
+      effective_from_ms: '0', enabled: true, target_rtp: '0.6',
+      min_multiplier: '1.01', max_multiplier: '20', min_order_amount: '1', max_order_amount: '10000',
+    })
+    const wrapper = mount(MmPredictionGameConfig, { props: { adapter, context: context(), symbolComponent } })
+    try {
+      await flushPromises()
+      if (mode !== 'UP_DOWN') {
+        await wrapper.findAll('.game-tabs button')[mode === 'HIGH_LOW' ? 1 : 2]!.trigger('click')
+        await flushPromises()
+      }
+      expect(wrapper.findAll('.el-input')).toHaveLength(0)
+      const controls = wrapper.findAll('[data-mm-component="input"]')
+      expect(controls).toHaveLength(4)
+      const search = controls[0]!.find('input')
+      await search.setValue('BTC')
+      expect(wrapper.findAll('.symbol-option,.symbol-button')).toHaveLength(1)
+      await controls[0]!.find('.mm-input__clear').trigger('click')
+      expect((search.element as HTMLInputElement).value).toBe('')
+      const odds = controls[1]!.find('input')
+      const precise = mode === 'HIGH_LOW' ? '1.7500000000000001' : '59.1234567891234567'
+      await odds.setValue(precise)
+      expect((odds.element as HTMLInputElement).value).toBe(precise)
+      await odds.trigger('keydown', { key: 'ArrowUp' })
+      expect((odds.element as HTMLInputElement).value).toBe(mode === 'HIGH_LOW' ? '1.7600000000000001' : '60.1234567891234567')
+      await controls[1]!.find('button[aria-label="减少数值"]').trigger('click')
+      expect((odds.element as HTMLInputElement).value).toBe(precise)
+      for (const control of controls.slice(2)) {
+        await control.find('input').setValue('2.123456789123456789')
+        expect((control.find('input').element as HTMLInputElement).value).toBe('2.123456789123456789')
+        expect(control.find('.mm-input__append').text()).toBe('USDT')
+      }
+      expect(controls[1]!.find('.mm-input__append').text()).toBe(mode === 'HIGH_LOW' ? 'x' : '%')
+      expect(adapter.api.saveOwnerConfiguration).not.toHaveBeenCalled()
+      expect(adapter.grid.saveGridConfig).not.toHaveBeenCalled()
+      expect(localStorage.getItem('prediction.owner.pending.v1')).toBeNull()
+      expect(sessionStorage.getItem('grid.config.pending.v1')).toBeNull()
+    } finally {
+      wrapper.unmount()
+    }
+  })
   it('uses only the selected host adapter and never writes on initial render', async () => {
     const adapter = platform()
     const wrapper = mount(MmPredictionGameConfig, { props: { adapter, context: context(), symbolComponent } })

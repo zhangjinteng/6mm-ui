@@ -22,7 +22,7 @@
                     <el-option v-for="site in sites" :key="site.site_id" :label="site.site_id" :value="site.site_id" />
                 </el-select>
                 <p v-if="directoryError" class="directory-error" role="alert">{{ directoryError }}<el-button link type="primary" :disabled="blockingWork" @click="refresh">重试</el-button></p>
-                <el-input v-model="keyword" clearable placeholder="搜索交易对" aria-label="搜索交易对" />
+                <MmInput v-model="keyword" clearable placeholder="搜索交易对" aria-label="搜索交易对" />
                 <div class="symbol-list">
                     <div v-for="product in filteredProducts" :key="product.symbol" class="symbol-row" :class="{ active: product.symbol === symbol }">
                         <button type="button" class="symbol-button" :disabled="!product.configured || (blockingWork && product.symbol !== symbol)" @click="selectProduct(product.symbol)">
@@ -53,13 +53,13 @@
                         </article>
                         <article class="parameter-card"><header class="parameter-heading"><h3>赔率配置</h3><p class="parameter-description">格子赔率按目标返奖率与命中概率动态计算</p></header>
                             <div class="fields odds-fields">
-                                <label><span>目标返奖率<ParameterHelp label="目标返奖率" content="例如 97%：命中概率为 20% 时，计算赔率为 4.85x。" /></span><DecimalInput v-model="rtpPercent" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>%</template></DecimalInput><small>例如 97%：命中概率为 20% 时，计算赔率为 4.85x</small></label>
+                                <label><span>目标返奖率<ParameterHelp label="目标返奖率" content="例如 97%：命中概率为 20% 时，计算赔率为 4.85x。" /></span><DecimalInput :input-component="MmInput" v-model="rtpPercent" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>%</template></DecimalInput><small>例如 97%：命中概率为 20% 时，计算赔率为 4.85x</small></label>
                             </div>
                         </article>
                         <article class="parameter-card"><header class="parameter-heading"><h3>下注限制</h3><p class="parameter-description">{{ snapshot.symbol }} 每个格子生成一笔独立订单</p></header>
                             <div class="fields limit-fields">
-                                <label><span>最小下注金额<ParameterHelp label="最小下注金额" /></span><DecimalInput v-model="draft.min_order_amount" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>USDT</template></DecimalInput></label>
-                                <label><span>最大下注金额<ParameterHelp label="最大下注金额" /></span><DecimalInput v-model="draft.max_order_amount" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>USDT</template></DecimalInput></label>
+                                <label><span>最小下注金额<ParameterHelp label="最小下注金额" /></span><DecimalInput :input-component="MmInput" v-model="draft.min_order_amount" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>USDT</template></DecimalInput></label>
+                                <label><span>最大下注金额<ParameterHelp label="最大下注金额" /></span><DecimalInput :input-component="MmInput" v-model="draft.max_order_amount" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>USDT</template></DecimalInput></label>
                             </div>
                         </article>
                         <el-alert v-if="!canSavePermission" title="当前账号只有预测网格配置查看权限" type="info" :closable="false" />
@@ -73,7 +73,8 @@
 </template>
 
 <script setup lang="ts">
-import { ElAlert, ElButton, ElSelect, ElOption, ElInput, ElSwitch, ElEmpty } from 'element-plus'
+import { ElAlert, ElButton, ElSelect, ElOption, ElSwitch, ElEmpty } from 'element-plus'
+import { MmInput } from '../../../../ui'
 import PredictionLoadingRegion from '../../../../platform/views/prediction/components/PredictionLoadingRegion.vue'
 
 import { useAgentConfigRuntime } from '../../../../runtime'
@@ -483,9 +484,7 @@ defineExpose({ hasBlockingWork: blockingWork, confirmLeave, refresh, loading: ca
 .panel-heading,.config-heading,.pending-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; }
 .panel-heading { margin:2px 3px 10px; font-size:13px; font-weight:700; }
 .panel-heading span,small { color:var(--el-text-color-secondary); font-size:10px; font-weight:400; }
-.symbol-panel > .el-input { margin:0; }
-.symbol-panel :deep(.el-input__wrapper) { height:34px; padding:0 10px; border-radius:6px; }
-.symbol-panel :deep(.el-input__inner) { font-size:10px; }
+.symbol-panel > :deep(.mm-input) { margin:0; flex-shrink:0; }
 .symbol-list { display:grid; align-content:start; margin-top:8px; gap:6px; max-height:calc(100dvh - 330px); overflow-y:auto; }
 .symbol-row { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:0; padding:0; border:1px solid transparent; border-radius:6px; }
 .symbol-row.active { border-color:var(--el-color-primary); background:var(--el-color-primary-light-9); box-shadow:inset 2px 0 var(--el-color-primary); }
@@ -513,10 +512,8 @@ h2,h3,p { margin:0; }
 .odds-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .limit-fields { grid-template-columns:repeat(2,minmax(0,1fr)); }
 .fields label { min-width:0; }
-.fields label>span { display:block; margin-bottom:6px; color:var(--el-text-color-primary); font-size:10px; font-weight:650; line-height:14px; }
+.fields label>span:not(.mm-input) { display:block; margin-bottom:6px; color:var(--el-text-color-primary); font-size:10px; font-weight:650; line-height:14px; }
 .fields small { display:block; margin-top:6px; font-size:10px; line-height:16px; }
-.fields :deep(.el-input__wrapper) { min-height:36px; padding:0 10px; border-radius:5px; }
-.fields :deep(.el-input__inner) { height:34px; font-size:11px; font-weight:650; }
 .layout-notice { padding:0 12px 12px; color:var(--el-text-color-secondary); font-size:10px; line-height:16px; }
 .directory-error { color:var(--el-color-warning); font-size:11px; line-height:1.6; }
 .symbol-unconfigured { color:var(--el-text-color-secondary); font-size:11px; }

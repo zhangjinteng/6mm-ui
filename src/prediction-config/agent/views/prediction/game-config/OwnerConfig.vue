@@ -9,7 +9,7 @@
     <div v-else class="config-layout">
         <aside class="symbol-directory" aria-label="交易对配置">
             <h3>交易对配置 <small>{{items.filter(i=>i.platform_enabled).length}} 条</small></h3>
-            <el-input v-model="search" placeholder="搜索币种" clearable />
+            <MmInput v-model="search" placeholder="搜索币种" aria-label="搜索币种" clearable />
             <p v-if="loading" role="status">正在加载配置…</p>
             <div v-if="loadError" class="catalog-error" role="alert">{{loadError}} <el-button size="small" :disabled="busy||!!pending||loading" @click="load">读取最新配置（放弃未保存修改）</el-button></div>
             <div class="symbol-list">
@@ -46,13 +46,13 @@
                         <article class="parameter-card"><header class="parameter-heading"><h4>赔率配置 · {{activeRow.observation_seconds}} 秒</h4>
                             <p class="field-description">{{mode==='UP_DOWN'?'上涨/下跌赔率按资金池动态计算':'下单时锁定当前周期固定赔率，上涨和下跌使用相同赔率。'}}</p></header>
                             <div v-if="mode==='UP_DOWN'" class="limit-fields odds-fields">
-                                <el-form-item :label="`目标返奖率（平台上限 ${shiftDecimalText(activeRow.platform_target_payout_rate, 2)}%，且必须小于 100%）`"><DecimalInput v-model="activeRow.target_payout_rate" percentage unit="%" :max="shiftDecimalText(activeRow.platform_target_payout_rate, 2)" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒目标返奖率`" /></el-form-item>
-                                <el-form-item v-if="maximumOddsEditingEnabled" :label="`最高赔率（上限 ${activeRow.platform_maximum_odds}）`"><DecimalInput v-model="activeRow.maximum_odds" step="0.01" min="1" :max="activeRow.platform_maximum_odds" unit="x" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒最高赔率`" /></el-form-item>
+                                <el-form-item :label="`目标返奖率（平台上限 ${shiftDecimalText(activeRow.platform_target_payout_rate, 2)}%，且必须小于 100%）`"><DecimalInput :input-component="MmInput" v-model="activeRow.target_payout_rate" percentage unit="%" :max="shiftDecimalText(activeRow.platform_target_payout_rate, 2)" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒目标返奖率`" /></el-form-item>
+                                <el-form-item v-if="maximumOddsEditingEnabled" :label="`最高赔率（上限 ${activeRow.platform_maximum_odds}）`"><DecimalInput :input-component="MmInput" v-model="activeRow.maximum_odds" step="0.01" min="1" :max="activeRow.platform_maximum_odds" unit="x" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒最高赔率`" /></el-form-item>
                             </div>
-                            <div v-else class="limit-fields"><el-form-item :label="`固定赔率（平台上限 ${activeRow.platform_fixed_odds}，且必须小于 2，含本金）`"><DecimalInput v-model="activeRow.fixed_odds" step="0.01" min="1.01" :max="activeRow.platform_fixed_odds" unit="x" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒固定赔率`" /></el-form-item></div>
+                            <div v-else class="limit-fields"><el-form-item :label="`固定赔率（平台上限 ${activeRow.platform_fixed_odds}，且必须小于 2，含本金）`"><DecimalInput :input-component="MmInput" v-model="activeRow.fixed_odds" step="0.01" min="1.01" :max="activeRow.platform_fixed_odds" unit="x" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒固定赔率`" /></el-form-item></div>
                         </article>
                         <article class="parameter-card"><header class="parameter-heading"><h4>下注限制 · {{activeRow.observation_seconds}} 秒</h4><p class="field-description">平台单笔范围：{{activeRow.platform_minimum}} ~ {{activeRow.platform_maximum}} USDT。变更不影响已受理订单。</p></header>
-                            <div class="limit-fields"><el-form-item label="单笔最小额"><DecimalInput v-model="activeRow.minimum_stake" :min="activeRow.platform_minimum" :max="activeRow.maximum_stake" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒单笔最小额`"><template #append>USDT</template></DecimalInput></el-form-item><el-form-item label="单笔最大额"><DecimalInput v-model="activeRow.maximum_stake" :min="activeRow.minimum_stake" :max="activeRow.platform_maximum" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒单笔最大额`"><template #append>USDT</template></DecimalInput></el-form-item></div>
+                            <div class="limit-fields"><el-form-item label="单笔最小额"><DecimalInput :input-component="MmInput" v-model="activeRow.minimum_stake" :min="activeRow.platform_minimum" :max="activeRow.maximum_stake" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒单笔最小额`"><template #append>USDT</template></DecimalInput></el-form-item><el-form-item label="单笔最大额"><DecimalInput :input-component="MmInput" v-model="activeRow.maximum_stake" :min="activeRow.minimum_stake" :max="activeRow.platform_maximum" :disabled="!editable||busy||!!pending" :aria-label="`${activeRow.observation_seconds}秒单笔最大额`"><template #append>USDT</template></DecimalInput></el-form-item></div>
                         </article>
                 </template>
                 </div>
@@ -62,7 +62,8 @@
 </section>
 </template>
 <script setup lang="ts">
-import { ElButton, ElInput, ElSwitch, ElFormItem } from 'element-plus'
+import { ElButton, ElSwitch, ElFormItem } from 'element-plus'
+import { MmInput } from '../../../../ui'
 
 import { useAgentConfigRuntime } from '../../../../runtime'
 const { ownerConfigurations, ownerConfiguration, saveOwnerConfiguration, siteDirectorySymbols } = useAgentConfigRuntime().api
@@ -165,8 +166,7 @@ h3,h4,p { margin:0; }
 .symbol-directory { min-height:0; padding:14px 10px 10px; border-right:1px solid var(--el-border-color-lighter); display:flex; flex-direction:column; }
 .symbol-directory h3 { display:flex; justify-content:space-between; align-items:center; margin:2px 3px 10px; font-size:13px; font-weight:700; }
 .symbol-directory h3 small { font-size:10px; color:var(--el-text-color-secondary); font-weight:400; }
-.symbol-directory :deep(.el-input__wrapper) { height:34px; padding:0 10px; border-radius:6px; }
-.symbol-directory :deep(.el-input__inner) { font-size:10px; }
+.symbol-directory > :deep(.mm-input) { flex-shrink:0; }
 .symbol-list { display:grid; align-content:start; gap:6px; margin-top:8px; overflow-y:auto; min-height:0; }
 .symbol-entry { display:flex; align-items:center; border:1px solid transparent; border-radius:6px; }
 .symbol-entry.selected { border-color:var(--el-color-primary); background:var(--el-color-primary-light-9); box-shadow:inset 2px 0 var(--el-color-primary); }
@@ -201,9 +201,6 @@ h3,h4,p { margin:0; }
 @media(max-width:1100px) { .odds-fields { grid-template-columns:minmax(0,1fr); } }
 .parameter-card :deep(.el-form-item) { display:block; margin-bottom:0; }
 .parameter-card :deep(.el-form-item__label) { font-size:10px; font-weight:650; line-height:14px; height:auto; margin-bottom:6px; color:var(--el-text-color-primary); }
-.parameter-card :deep(.el-input__wrapper) { min-height:36px; padding:0 10px; border-radius:5px; }
-.parameter-card :deep(.el-input__inner) { height:34px; font-size:11px; font-weight:650; }
-.parameter-card :deep(.el-input-group__append) { padding:0 10px; font-size:10px; }
 .room-config :deep(.room-tag) { height:34px; }
 .room-config :deep(.room-tag button) { height:32px; font-size:10px; }
 .room-config :deep(.room-tag .room-remove) { height:22px; }

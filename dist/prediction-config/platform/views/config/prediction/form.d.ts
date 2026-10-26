@@ -1,0 +1,13 @@
+import { PlatformRuleInput, PredictionConfiguration, PredictionEditModel, PredictionGameType, SavePredictionConfigurationPayload } from './types';
+export declare const FIXED_DURATIONS: readonly ["35", "40", "45", "60", "90"];
+export declare const FIXED_HIGH_LOW_DURATIONS: readonly ["5", "10", "15", "30", "60"];
+export declare function nextDurationSeconds(currentDuration: string): string;
+export declare function createEditModel(configuration: PredictionConfiguration): PredictionEditModel;
+export declare function createSavePayload(model: PredictionEditModel, reason: string, requestId: string): SavePredictionConfigurationPayload;
+export declare function validatePredictionModel(model: PredictionEditModel, allowNewIdentifiers?: boolean): string[];
+export declare function summarizePredictionValidationErrors(errors: string[], game: PredictionGameType, currentDuration: string): string;
+export declare const decimalToPercentage: (value: string) => string;
+export declare const percentageToDecimal: (value: string) => string;
+export declare function updatePlatformStake(rule: PlatformRuleInput, field: 'minimum_stake' | 'maximum_stake', value: string): void;
+export declare const configurationEnabled: (configuration: PredictionConfiguration) => boolean;
+export declare const configuredRoomDurations: (configuration: PredictionConfiguration) => string[];

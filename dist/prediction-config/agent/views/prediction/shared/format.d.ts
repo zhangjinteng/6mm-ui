@@ -1,0 +1,10 @@
+export declare function exact(value: unknown): string;
+export declare function integer(value: unknown, positive?: boolean): value is string;
+export declare function identity(value: unknown): string | null;
+export declare function safeCount(value: unknown): number | null;
+export declare function decimal(value: unknown): value is string;
+export declare function compareDecimal(a: string, b: string): number;
+export declare function timestamp(value: unknown): string;
+export declare function text(value: unknown, maximum?: number, symbol?: boolean): value is string;
+export declare function localTime(ms: number): string;
+export declare function epoch(local: string): string;

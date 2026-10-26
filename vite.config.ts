@@ -23,13 +23,16 @@ export default defineConfig({
     emptyOutDir: true,
     lib: {
       cssFileName: 'style',
-      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
-      fileName: 'index',
+      entry: {
+        index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
+        'prediction-config': fileURLToPath(new URL('./src/prediction-config/index.ts', import.meta.url)),
+      },
+      fileName: (_format, entryName) => `${entryName}.js`,
       formats: ['es'],
       name: 'MmUI',
     },
     rollupOptions: {
-      external: ['vue'],
+      external: id => id === 'vue' || id === 'element-plus' || id.startsWith('element-plus/') || id === '@element-plus/icons-vue',
     },
     sourcemap: true,
   },

@@ -1,0 +1,19 @@
+.mm-prediction-game-config {
+  --el-color-primary: var(--mm-color-primary);
+  --el-color-primary-dark-2: var(--mm-color-primary-hover);
+  --el-color-primary-light-3: color-mix(in srgb, var(--mm-color-primary) 70%, var(--mm-color-panel));
+  --el-color-primary-light-5: color-mix(in srgb, var(--mm-color-primary) 45%, var(--mm-color-line));
+  --el-color-primary-light-7: color-mix(in srgb, var(--mm-color-primary) 25%, var(--mm-color-panel));
+  --el-color-primary-light-8: var(--mm-color-primary-soft);
+  --el-color-primary-light-9: var(--mm-color-primary-soft);
+  --el-bg-color: var(--mm-color-panel);
+  --el-bg-color-overlay: var(--mm-color-panel);
+  --el-fill-color-blank: var(--mm-color-panel);
+  --el-fill-color-light: var(--mm-color-soft);
+  --el-border-color: var(--mm-color-line-strong);
+  --el-border-color-light: var(--mm-color-line);
+  --el-border-color-lighter: var(--mm-color-line);
+  --el-text-color-primary: var(--mm-color-text);
+  --el-text-color-regular: var(--mm-color-text);
+  --el-text-color-secondary: var(--mm-color-text-muted);
+}

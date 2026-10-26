@@ -29350,6 +29350,3117 @@ function n_(e) {
 	};
 }
 //#endregion
-export { qg as MessageBoxCancelError, Vi as MmAccountChangeLogTable, Da as MmAdminLoginShell, ji as MmAlert, go as MmAppHeader, wi as MmAssetBalanceReport, Lt as MmAutocomplete, Ma as MmAvatar, Oe as MmBadge, _o as MmBorder, Z as MmButton, yo as MmCalendar, Eo as MmCard, jo as MmCheckbox, No as MmCheckboxGroup, Fo as MmCollapse, Bo as MmCollapseItem, Wo as MmColor, ss as MmConditionOrderTable, Go as MmContainer, Cs as MmCurrentOrderTable, fi as MmCursorPagination, pn as MmDatePicker, dn as MmDatePickerPanel, vn as MmDateRangePicker, ks as MmDescriptions, Ms as MmDescriptionsItem, Ze as MmDialog, Ls as MmDivider, Qe as MmDrawer, Za as MmDropdown, Qn as MmEmpty, Ws as MmExchangeLogo, tc as MmFeeCommissionTable, Gn as MmFilterDrawer, nc as MmForm, cc as MmFormItem, dc as MmFundingAccountTable, bc as MmFundingChangeLogTable, mc as MmFundingOverviewTable, Ac as MmFuturesFeeReport, wc as MmFuturesFundingFeeReport, Dc as MmFuturesPnlReport, Nc as MmFuturesPositionReport, kc as MmFuturesRiskReport, xc as MmFuturesTradeReport, jc as MmFuturesUserNetPnlReport, _l as MmHandlingFeeConfig, Al as MmHedgingExecutionTable, Vl as MmHedgingMonitor, ru as MmHedgingSubjectConfig, Xl as MmHedgingSymbolConfig, rl as MmHistoryOrderTable, Kc as MmHistoryPositionTable, Q as MmIcon, mu as MmImage, gu as MmInfoGrid, vu as MmInfoGridItem, ht as MmInput, Du as MmInputNumber, Cu as MmIpLocation, Ou as MmLayout, Nu as MmLink, Ku as MmLiquidationTable, gf as MmLiquidationTradesDialog, $d as MmLiquidationWarningRulesDialog, nf as MmLiquidationWarningTable, bf as MmLoading, If as MmMarginChangeLogTable, Ra as MmMenu, Ua as MmMenuItem, yd as MmMessage, wf as MmMessageBox, Jf as MmOnlineUserTable, xm as MmPageHeader, Br as MmPagination, Mc as MmPlatformPnlReport, Ti as MmPlatformTradeSummaryReport, Ot as MmPopover, hd as MmPositionTable, Pc as MmPredictionUserPnlReport, oi as MmProTable, hi as MmProTableCursorPagination, Ur as MmProTablePagination, km as MmProgress, Vn as MmQueryBar, Pm as MmRadio, Im as MmRadioGroup, Hm as MmResult, Wm as MmScrollbar, xn as MmSegmented, In as MmSelect, th as MmSidebarNav, ih as MmSpace, dh as MmStatistic, Qh as MmSteps, Ya as MmSubMenu, Gh as MmSymbolTagManager, Zf as MmTabPane, Ar as MmTable, tp as MmTabs, $ as MmTag, $h as MmText, bi as MmTooltip, cs as MmTpSlOrderTable, hg as MmTradeFillTable, _h as MmTranslationConfigDialog, yg as MmTypography, Ng as MmUpload, Jp as MmUserAssetTable, rm as MmUserContractTable, Oc as MmUserDailyReport, Np as MmUserDetailDialog, om as MmUserMappingTable, nm as MmUserPredictionTable, Qp as MmUserTable, Sg as acceptsFile, Le as acquireOverlay, Wt as addDays, Gt as addMonths, Zt as buildCalendarMonth, ms as calculateCurrentOrderRemainingQuantity, Zu as calculatePositionMargin, Xu as calculatePositionPnl, Qu as calculatePositionRoe, Yu as calculatePositionValue, zp as calculateUserAssetPositionAmount, Bp as calculateUserAssetUnrealizedPnl, rt as cloneFormValue, ue as cloneQueryBarValue, Kt as compareDateValues, Pg as components, Jo as conditionOrderTriggerOperator, xg as createFileUid, ie as createMmLocaleContext, pe as createQueryBarValue, Bt as daysInMonth, Kn as debugWarn, Kg as default, Gs as displayFeeCommissionValue, Pu as displayLiquidationValue, eg as displayTradeFillValue, Y as enUS, Lf as firstOnlineUserValue, $e as formContextKey, et as formItemContextKey, Pi as formatAccountChangeAmount, Fi as formatAccountChangeBalance, Yo as formatConditionOrderLeverage, Qo as formatConditionOrderPrice, Zo as formatConditionOrderQuantity, ps as formatCurrentOrderPrice, fs as formatCurrentOrderQuantity, Jt as formatDate, Vt as formatDateValue, Ks as formatFeeCommissionNumber, qs as formatFeeCommissionQuantity, Cg as formatFileSize, hc as formatFundingAmount, lc as formatFundingMoney, Yc as formatHistoryOrderPrice, Jc as formatHistoryOrderQuantity, Ic as formatHistoryPositionAmount, Lc as formatHistoryPositionPrice, Rc as formatHistoryPositionQuantity, Fu as formatLiquidationDecimal, Ld as formatLiquidationRiskRatio, Df as formatMarginChangeAmount, Of as formatMarginChangeBalance, Af as formatMarginChangeDateTime, kf as formatMarginTransferAmount, Hf as formatOnlineUserDateTime, Wf as formatOnlineUserDuration, Uf as formatOnlineUserVipLevel, nd as formatPositionAmount, id as formatPositionOptionalPrice, rd as formatPositionPrice, ad as formatPositionQuantity, zc as formatSignedHistoryPositionAmount, od as formatSignedPositionAmount, sd as formatSignedPositionPercent, tm as formatSignedUserPredictionMoney, ng as formatTradeFillFixed, tg as formatTradeFillNumber, xe as formatTradeReportDecimal, Rp as formatUserAssetAmount, Vp as formatUserAssetPnl, $p as formatUserPredictionCount, em as formatUserPredictionMoney, Fd as formatWarningThreshold, gc as fundingBalanceChangeClass, _c as fundingChangeTypeKey, tt as getPathValue, Hc as historyPositionEntryCost, Vc as historyPositionMaxQuantity, Fc as historyPositionNumber, Bc as historyPositionOpenQuantity, ze as iconNames, Gg as install, $o as isCancelableConditionOrderStatus, ds as isCurrentOrderFlag, ye as isCurrentReportPeriod, qc as isHistoryOrderFlag, zt as isLeapYear, Iu as liquidationUserUid, zg as loadingDirective, me as materializeQueryBarValue, am as mergeUserContractRows, Ad as message, Qg as messageBox, re as mmLocaleKey, zf as onlineUserLastActiveTime, Rf as onlineUserLoginTime, Ht as parseDateValue, Xt as parseFormattedDate, Bf as parseOnlineUserDateTime, Md as parseWarningRules, Ii as resolveAccountChangeType, Ju as resolvePositionMarkPrice, be as resolveReportDateStatus, Rd as resolveWarningLevel, nt as setPathValue, qu as toPositionNumber, Pd as toWarningRulePayload, qt as todayDateValue, ig as tradeFillExternalUserId, rg as tradeFillUserUid, vt as useClickOutside, Se as useControlled, gt as useEventListener, wt as useFloating, je as useFocusTrap, it as useFormField, Me as useId, X as useLocale, Pe as useLockScroll, ve as useMmProTable, n_ as useNamespace, Pa as useRovingFocus, Rg as vMmLoading, Nd as validateWarningDraft, te as zhCN };
+//#region src/components/prediction-operations/use-symbol-options.ts
+function r_(e, t, n) {
+	let r = A([]), i;
+	return W([e, () => n?.()], async ([e]) => {
+		if (i?.abort(), r.value = [], !e || !t) return;
+		let n = i = new AbortController();
+		try {
+			let e = await t(n.signal);
+			n.signal.aborted || (r.value = e.filter((e) => typeof e == "string"));
+		} catch {}
+	}, { immediate: !0 }), C(() => i?.abort()), r;
+}
+//#endregion
+//#region src/components/prediction-operations/calendar-range.ts
+function i_(e = /* @__PURE__ */ new Date()) {
+	return [new Date(e.getFullYear(), e.getMonth(), e.getDate()), new Date(e.getFullYear(), e.getMonth(), e.getDate() + 1)];
+}
+function a_(e = /* @__PURE__ */ new Date()) {
+	let [t, n] = i_(e);
+	return t.setDate(t.getDate() - 6), [t, n];
+}
+function o_(e) {
+	return [
+		e.getFullYear(),
+		String(e.getMonth() + 1).padStart(2, "0"),
+		String(e.getDate()).padStart(2, "0")
+	].join("-");
+}
+function s_(e) {
+	return !e || e.length !== 2 || e.some((e) => !Number.isFinite(e.getTime())) || e[0] >= e[1] ? null : [o_(e[0]), o_(/* @__PURE__ */ new Date(e[1].getTime() - 1))];
+}
+function c_(e) {
+	if (!Array.isArray(e) || e.length !== 2) return;
+	let t = [];
+	for (let n of e) {
+		if (typeof n != "string" || !/^\d{4}-\d{2}-\d{2}$/.test(n)) return;
+		let [e, r, i] = n.split("-").map(Number), a = /* @__PURE__ */ new Date(0);
+		if (a.setFullYear(e, r - 1, i), a.setHours(0, 0, 0, 0), o_(a) !== n) return;
+		t.push(a);
+	}
+	if (!(t[0] > t[1])) return t[1].setDate(t[1].getDate() + 1), [t[0], t[1]];
+}
+//#endregion
+//#region src/components/prediction-operations/column-width.ts
+function l_(e, t) {
+	if (t === "grid-history") return e === "order_no" ? 176 : e === "user_name" ? 102 : e === "source_type" ? 76 : [
+		"source_name",
+		"symbol",
+		"result_price"
+	].includes(e) ? 112 : e === "price_range" ? 200 : e === "locked_multiplier" ? 88 : ["created_at_ms", "settled_at_ms"].includes(e) ? 94 : e === "operation" ? 64 : 104;
+	if (t === "high-low-history") {
+		if (e === "order_id") return 176;
+		if ([
+			"public_user_id",
+			"source_name",
+			"symbol"
+		].includes(e)) return 104;
+		if ([
+			"user_name",
+			"open_price",
+			"result_price"
+		].includes(e)) return 100;
+		if (e === "source_type") return 76;
+		if (e === "duration_seconds") return 56;
+		if ([
+			"direction",
+			"actual_direction",
+			"operation"
+		].includes(e)) return 64;
+		if (["stake", "actual_return"].includes(e)) return 92;
+		if (e === "fixed_odds") return 80;
+		if (e === "order_status") return 96;
+		if (e === "realized_pnl") return 90;
+		if (["expire_at_ms", "funds_completed_at_ms"].includes(e)) return 94;
+	}
+	if (t === "up-down-history") {
+		if (e === "order_id") return 200;
+		if (e === "round_id") return 202;
+		if (e === "public_user_id") return 104;
+		if (e === "source_name") return 100;
+		if (e === "symbol") return 128;
+		if (["open_price", "result_price"].includes(e)) return 112;
+		if (e === "user_name") return 124;
+		if ([
+			"stake",
+			"actual_return",
+			"realized_pnl"
+		].includes(e)) return 96;
+		if (e === "order_status") return 84;
+		if (e === "source_type") return 76;
+		if (e === "duration_seconds") return 56;
+		if ([
+			"direction",
+			"actual_direction",
+			"operation"
+		].includes(e)) return 64;
+		if (e === "final_odds") return 80;
+		if (e === "funds_completed_at_ms") return 94;
+		if (["debit_ledger_id", "settlement_ledger_id"].includes(e)) return 148;
+	}
+	if (t === "up-down-current") {
+		if (e === "round_id") return 202;
+		if ([
+			"user_name",
+			"ownership_name",
+			"stake",
+			"open_price",
+			"order_status"
+		].includes(e)) return 100;
+		if (e === "ownership_type") return 80;
+		if (e === "ownership_id") return 90;
+		if (["symbol", "estimated_return"].includes(e)) return 110;
+		if (e === "duration_seconds") return 60;
+		if (e === "direction") return 64;
+		if (e === "final_odds") return 72;
+		if (e === "created_at_ms") return 156;
+	}
+	if (t === "rounds") {
+		if (e === "round_id") return 202;
+		if (e === "symbol") return 110;
+		if ([
+			"bet_open_at_ms",
+			"bet_close_at_ms",
+			"draw_at_ms"
+		].includes(e)) return 94;
+		if (["start_price", "end_price"].includes(e)) return 98;
+		if (e === "settled_at_ms") return 100;
+		if (e === "duration_seconds") return 50;
+		if ([
+			"draw_outcome",
+			"participant_count",
+			"order_count"
+		].includes(e)) return 70;
+		if (e === "status") return 80;
+		if (["up_pool", "down_pool"].includes(e)) return 110;
+		if ([
+			"total_stake",
+			"total_return",
+			"round_pnl"
+		].includes(e)) return 100;
+	}
+	return e === "order_no" ? 196 : e === "round_id" ? 252 : [
+		"order_id",
+		"debit_ledger_id",
+		"settlement_ledger_id"
+	].includes(e) || e.endsWith("_at_ms") ? 164 : e === "price_range" ? 184 : e === "order_status" ? 120 : e === "source_name" ? 150 : e === "source_type" ? 100 : ["user_name", "ownership_name"].includes(e) ? 116 : [
+		"public_user_id",
+		"user_id",
+		"ownership_id"
+	].includes(e) ? 104 : e === "symbol" ? 116 : [
+		"duration_seconds",
+		"fixed_odds",
+		"final_odds",
+		"locked_multiplier"
+	].includes(e) ? 80 : [
+		"direction",
+		"actual_direction",
+		"ownership_type",
+		"draw_outcome",
+		"status",
+		"cell_id",
+		"result_cell",
+		"participant_count",
+		"order_count"
+	].includes(e) ? 88 : 116;
+}
+//#endregion
+//#region src/components/prediction-operations/status-tone.ts
+var u_ = {
+	direction: "DIRECTION_",
+	business: "BUSINESS_STATUS_",
+	fund: "FUND_STATUS_",
+	round: "ROUND_STATE_"
+}, d_ = {
+	direction: {
+		UP: "success",
+		DOWN: "danger"
+	},
+	business: {
+		PENDING: "warning",
+		ACTIVE: "primary",
+		RESULT_READY: "warning",
+		SETTLED: "success",
+		CANCELED: "neutral"
+	},
+	fund: {
+		PENDING: "warning",
+		DEBITED: "primary",
+		SETTLE_PENDING: "warning",
+		SETTLED: "success",
+		REFUND_PENDING: "warning",
+		REFUNDED: "success",
+		UNKNOWN: "warning",
+		REJECTED: "danger",
+		MANUAL_REQUIRED: "warning"
+	},
+	round: {
+		PREPARING: "warning",
+		BETTING: "primary",
+		LOCKED: "warning",
+		OBSERVING: "primary",
+		RESULTING: "warning",
+		SETTLING: "warning",
+		FINISHED: "success"
+	}
+};
+function f_(e, t) {
+	if (typeof t != "string") return "neutral";
+	let n = u_[e], r = t.startsWith(n) ? t.slice(n.length) : t;
+	return Object.prototype.hasOwnProperty.call(d_[e], r) ? d_[e][r] : "neutral";
+}
+function p_(e) {
+	return ["business_status", "fund_status"].flatMap((t) => {
+		let n = e[t];
+		return typeof n == "string" && n ? [{
+			key: t,
+			value: n,
+			tone: f_(t === "business_status" ? "business" : "fund", n)
+		}] : [];
+	});
+}
+function m_(e) {
+	switch (e) {
+		case 1:
+		case 3:
+		case 4: return "warning";
+		case 2: return "primary";
+		case 5:
+		case 6: return "success";
+		case 8: return "danger";
+		default: return "neutral";
+	}
+}
+function h_(e) {
+	let t = p_(e);
+	if (!t.length) return null;
+	let n = t.find((e) => e.key === "business_status"), r = t.find((e) => e.key === "fund_status"), i = n?.value.replace(/^BUSINESS_STATUS_/, ""), a = r?.value.replace(/^FUND_STATUS_/, "");
+	return r ? a !== "SETTLED" && a !== "DEBITED" ? r : n ? a === "DEBITED" && i === "SETTLED" ? {
+		...r,
+		tone: "warning"
+	} : n : {
+		key: "business_status",
+		value: "BUSINESS_STATUS_UNKNOWN",
+		tone: "neutral"
+	} : {
+		key: "fund_status",
+		value: "FUND_STATUS_UNKNOWN",
+		tone: "warning"
+	};
+}
+function g_(e) {
+	return p_(e).map((e) => `${e.key}: ${e.value}`).join(" / ");
+}
+function __(e) {
+	return typeof e != "string" || !/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e) || !/[1-9]/.test(e) ? "neutral" : e.startsWith("-") ? "danger" : "success";
+}
+//#endregion
+//#region src/components/prediction-operations/context.ts
+var v_ = Symbol("prediction-presentation"), y_ = (e) => {
+	let t = X();
+	O(v_, e), O(re, ie(i(() => e().locale === "en-US" ? "en-US" : e().locale === "zh-CN" ? "zh-CN" : t.locale.value)));
+}, b_ = () => g(v_, () => ({ showSources: !0 })), x_ = {
+	内部用户ID: "Internal user ID",
+	订单号: "Order number",
+	扣款流水号: "Debit ledger ID",
+	场次编号: "Round number",
+	UID: "UID",
+	用户账号: "User account",
+	交易品种: "Trading pair",
+	周期: "Duration",
+	预测方向: "Prediction direction",
+	"下注金额(U)": "Stake (U)",
+	最终赔率: "Final odds",
+	"预计返还(U)": "Expected return (U)",
+	开盘价格: "Opening price",
+	订单状态: "Order status",
+	下单时间: "Order time",
+	实际方向: "Actual direction",
+	结算价格: "Settlement price",
+	"实际返还(U)": "Actual return (U)",
+	"订单盈亏(U)": "Order PnL (U)",
+	结算时间: "Settlement time",
+	结算流水号: "Settlement ledger ID",
+	固定赔率: "Fixed odds",
+	到期时间: "Expires at",
+	开始下注时间: "Betting opens",
+	停止下注时间: "Betting closes",
+	开奖时间: "Draw time",
+	"上涨下注金额(U)": "Up stakes (U)",
+	"下跌下注金额(U)": "Down stakes (U)",
+	开奖结果: "Draw result",
+	参与人数: "Participants",
+	订单数量: "Orders",
+	"总下注金额(U)": "Total stakes (U)",
+	"总返还金额(U)": "Total return (U)",
+	"场次盈亏(U)": "Round PnL (U)",
+	场次状态: "Round status",
+	结算完成时间: "Settlement completed",
+	总记录: "Total records",
+	总页数: "Total pages",
+	上一页: "Previous",
+	下一页: "Next",
+	页码: "Page",
+	跳转: "Go",
+	每页数量: "Page size",
+	页码超出有效范围: "Page is outside the valid range",
+	详情: "Details",
+	无详情权限: "No detail permission",
+	"加载中…": "Loading…",
+	重试: "Retry",
+	结算与价格证据: "Settlement and price evidence",
+	返回数据不完整或不匹配: "Incomplete or mismatched response",
+	"加载失败，请重试": "Unable to load. Please retry",
+	"未找到该资金业务号对应的订单，请确认资金号与玩法": "No order matches that funding id. Check the id and the gameplay.",
+	场次: "Rounds",
+	当前订单: "Current orders",
+	历史订单: "Order history",
+	只读运营数据: "Read-only operation data",
+	"无（下单时已扣款）": "None (debited at placement)",
+	关联异常: "Missing linked credit",
+	无此页面读取权限: "You do not have permission to read this page",
+	查找方式: "Search by",
+	按结算时间: "Settlement time",
+	按下单时间查找: "Find by placement time",
+	"结算时间仅含资金已完成记录；无结算时间可切换按下单时间查找，最多31天": "Settlement time includes completed funds only. Use placement time to find orders without settlement; up to 31 days.",
+	"按开奖时间查询，含预计开奖；最多31天": "Filter by draw time, including scheduled draws; up to 31 days.",
+	"时间范围（当前时区，最多31天）": "Time range (local timezone, up to 31 days)",
+	查询: "Search",
+	重置: "Reset",
+	暂无数据: "No data",
+	"请检查筛选值及时间范围：必须先于结束时间，最多31天；ID和数值需保持规范格式": "Check the filters and time range: start must precede end, up to 31 days; identifiers and numbers must use canonical format",
+	玩法配置: "Game configuration",
+	"涨跌预测固定30秒下注、1最低额，仅可调整五个房间的开关和最大下注额": "Up/Down uses a fixed 30-second betting window and minimum stake of 1. Only room switches and maximum stakes can be changed",
+	选择交易对: "Select a symbol",
+	刷新: "Refresh",
+	"无法安全保存或读取待确认请求，已禁止新提交。原记录不会被自动清除": "Pending request storage is unavailable or invalid. New writes are disabled; existing records are retained",
+	"结果待确认，请保留原请求，不要创建新的提交": "Outcome pending. Keep the original request and do not create a new submission",
+	原始原因: "Original reason",
+	确认原请求: "Confirm original request",
+	"此标签页有其他身份或交易对的待确认请求。请返回原身份和交易对处理": "This tab has a pending request for another identity or symbol. Return to that identity and symbol to confirm it",
+	"当前操作员身份无法精确确认，已禁止写入": "The operator identity cannot be confirmed precisely; writes are disabled",
+	当前权限只允许查看配置: "Your current permissions allow viewing only",
+	"房间（完整周期 / 观察时长）": "Room (total cycle / observation)",
+	观察: "observation",
+	可编辑: "Editable",
+	操作原因: "Reason",
+	检查并提交: "Review changes",
+	确认提交: "Confirm submission",
+	取消: "Cancel",
+	"有效规则、平台约束及调整记录": "Effective rules, platform constraints and adjustments",
+	原始操作回执: "Original operation receipt",
+	"配置不满足五个固定房间与唯一活动档位约束，已禁止编辑": "Configuration does not meet the five-room and single-active-tier contract; editing is disabled",
+	"请检查五行开关、最大额允许范围和操作原因；不能修改只读最大额": "Check all five switches, maximum-stake bounds and reason; read-only maximum stakes cannot be changed",
+	"保存成功，已核对原始操作回执": "Saved. The original operation receipt has been verified",
+	"请求已明确拒绝，请检查原因；版本冲突时先手动刷新": "The request was rejected. Check the reason and refresh manually for a version conflict",
+	启用: "Enabled",
+	停用: "Disabled",
+	订单ID: "Order ID",
+	"派彩／退款流水号": "Payout or refund ledger ID",
+	代理ID: "Agent ID",
+	用户ID: "User ID",
+	归属站点ID: "Home site ID",
+	订单来源: "Order source",
+	玩法: "Game",
+	交易对: "Symbol",
+	市场ID: "Market ID",
+	方向: "Direction",
+	结算资产: "Settlement asset",
+	下注额: "Stake",
+	预估净收益: "Estimated net profit",
+	预估返还: "Estimated return",
+	最终净收益: "Final net profit",
+	最终返还: "Final return",
+	业务状态: "Business status",
+	资金状态: "Funding status",
+	未知结果来源状态: "Unknown outcome from",
+	结果: "Result",
+	配置版本: "Configuration version",
+	创建时间: "Created at",
+	受理时间: "Accepted at",
+	结果时间: "Result at",
+	场次ID: "Round ID",
+	"完整周期（秒）": "Total cycle (seconds)",
+	开仓价: "Open price",
+	结果价格: "Result price",
+	资金事务ID: "Funds transaction ID",
+	代理利润: "Agent profit",
+	原请求ID: "Original request ID",
+	订单版本: "Order version",
+	生成批次ID: "Generation ID",
+	房间代码: "Room code",
+	阶段: "Stage",
+	取消原因: "Cancellation reason",
+	奖池分配比例: "Pool share",
+	上涨池: "Up pool",
+	下跌池: "Down pool",
+	封盘上涨池: "Locked up pool",
+	封盘下跌池: "Locked down pool",
+	上涨赔率: "Up odds",
+	下跌赔率: "Down odds",
+	起始价: "Start price",
+	结束价: "End price",
+	开始下注: "Betting opens",
+	停止下注: "Betting closes",
+	观察结束: "Observation ends",
+	展示结束: "Display ends",
+	订单数: "Order count",
+	总下注额: "Total stake",
+	总返还: "Total return",
+	平台收入: "Platform revenue",
+	截断尾差: "Truncation tail",
+	玩家下注额: "Player stake",
+	做市下注额: "Market-maker stake",
+	玩家订单数: "Player order count",
+	做市订单数: "Market-maker order count",
+	排序字段: "Sort field",
+	排序方向: "Sort direction",
+	稳定档位ID: "Stable tier ID",
+	单笔最大额: "Maximum stake",
+	单笔最小额: "Minimum stake",
+	平台模板版本: "Template version",
+	代理版本: "Agent version",
+	有效版本: "Effective version",
+	"更新时间（毫秒）": "Updated at (milliseconds)",
+	配置校验状态: "Validation status",
+	强制调整记录: "Forced adjustments",
+	档位与约束: "Tiers and constraints",
+	下注开放秒数: "Betting window seconds",
+	结算展示秒数: "Settlement display seconds",
+	平台默认开关: "Default switch",
+	操作ID: "Operation ID",
+	操作员ID: "Operator ID",
+	能力: "Capability",
+	动作: "Action",
+	目标类型: "Target type",
+	目标ID: "Target ID",
+	"变更前记录（Base64）": "Before record (Base64)",
+	"变更后记录（Base64）": "After record (Base64)",
+	错误码: "Error code",
+	"完成时间（毫秒）": "Completed at (milliseconds)",
+	来源服务: "Source service",
+	原追踪ID: "Original trace ID",
+	价格证据: "Price evidence",
+	净收益率: "Net return rate",
+	到期价格: "Expiry price",
+	风险准备金: "Risk reserve",
+	目标返奖率: "Target payout rate",
+	最低赔率: "Minimum odds",
+	最高赔率: "Maximum odds",
+	待处理: "Pending",
+	进行中: "Active",
+	结果已生成: "Result ready",
+	已结算: "Settled",
+	已取消: "Canceled",
+	已扣款: "Debited",
+	待结算: "Settlement pending",
+	待退款: "Refund pending",
+	已退款: "Refunded",
+	结果未知: "Outcome unknown",
+	已拒绝: "Rejected",
+	需人工处理: "Manual action required",
+	赢: "Win",
+	输: "Lose",
+	平局: "Draw",
+	准备中: "Preparing",
+	下注中: "Betting",
+	已封盘: "Locked",
+	观察中: "Observing",
+	计算结果: "Computing result",
+	结算中: "Settling",
+	已结束: "Finished",
+	上涨: "Up",
+	下跌: "Down",
+	玩家: "Player",
+	做市: "Market maker",
+	升序: "Ascending",
+	降序: "Descending",
+	结果确定时间: "Result time",
+	下注开始: "Betting opens",
+	下注结束: "Betting closes",
+	代理收入: "Agent revenue",
+	未指定: "Unspecified",
+	涨跌预测: "Up/Down",
+	自选预测: "High/Low",
+	币种目录: "Symbols",
+	搜索币种: "Search symbols",
+	未配置: "Not configured",
+	配置不可用: "Configuration unavailable",
+	"已启用 {count}/5 个房间": "{count}/5 rooms enabled",
+	未保存: "Unsaved changes",
+	"此币种尚未配置涨跌玩法，当前不可编辑。": "Up/Down is not configured for this symbol. Editing is unavailable.",
+	观察房间: "Observation room",
+	秒: "seconds",
+	房间启用: "Room enabled",
+	场次时间: "Timing",
+	赔率配置: "Odds",
+	下注限制: "Stake limits",
+	未提供: "Not provided",
+	"币种目录加载失败，已配置币种仍可查看。": "Could not load the symbol catalog. Configured symbols remain available.",
+	订单信息: "Order information",
+	金额与价格: "Amounts and prices",
+	场次信息: "Round information",
+	资金池与价格: "Pools and prices",
+	时间记录: "Timeline",
+	网格当前订单: "Grid Current Orders",
+	网格历史订单: "Grid Order History",
+	只读查询: "Read-only",
+	没有订单查询权限: "Order list permission is required",
+	没有详情查询权限: "Order detail permission is required",
+	筛选订单: "Filter orders",
+	"创建日期（最多31天）": "Created time (start inclusive, end exclusive, at most 31 days)",
+	暂无符合条件的记录: "No matching records",
+	"请检查时间范围、筛选内容和页码": "Check the date range, filters and page number",
+	总记录数: "Total records",
+	每页条数: "Rows per page",
+	"仅可查询前1000页，请缩小时间或筛选范围": "Only the first 1000 pages can be queried. Narrow the time range or filters.",
+	加载中: "Loading",
+	"登录状态已失效，请重新登录": "Session expired. Sign in again.",
+	订单查询范围暂不可用: "Order query scope is unavailable",
+	订单查询服务暂不可用: "Order query service is unavailable",
+	没有此次查询权限: "This query is not permitted",
+	订单不存在或不在查询范围内: "Order not found or outside your scope",
+	查询条件不合法: "Invalid query",
+	"订单数据不完整，请重试": "Incomplete order data. Please retry.",
+	"订单加载失败，请重试": "Unable to load orders. Please retry.",
+	订单编号: "Order number",
+	内部订单ID: "Internal order ID",
+	网格单元: "Grid cell",
+	价格下界: "Lower price",
+	价格上界: "Upper price",
+	本金: "Stake",
+	锁定倍率: "Locked multiplier",
+	锁定总返还: "Locked gross payout",
+	用户已实现净收益: "User realized net profit",
+	结算标记价: "Settlement mark price",
+	结算价格行情时间: "Settlement price market time",
+	"派彩／退款类型": "Payout or refund type",
+	入口站点ID: "Entry site ID",
+	单元开始时间: "Cell start",
+	单元结束时间: "Cell end",
+	锁定净收益: "Locked net profit",
+	更新时间: "Updated at",
+	结果代码: "Result code",
+	客户端订单号: "Client order ID",
+	公共报价ID: "Public quote ID",
+	报价ID: "Quote ID",
+	锁定布局版本: "Locked layout version",
+	锁定站点配置版本: "Locked site config version",
+	锁定模型版本: "Locked model version",
+	封盘时间: "Bet close time",
+	锁定命中概率: "Locked hit probability",
+	命中时间: "Hit time",
+	命中价格: "Hit mark price",
+	返还舍弃余数: "Discarded payout remainder",
+	结果说明: "Result message",
+	归属类型: "Owner type",
+	归属ID: "Owner ID",
+	归属名称: "Owner",
+	下单格子: "Placed cell",
+	格子价格区间: "Cell price range",
+	下单赔率: "Placement odds",
+	结果格子: "Result cell",
+	待扣款: "Pending debit",
+	已命中: "Hit",
+	未命中: "Miss",
+	已结算·赢: "Settled win",
+	已结算·输: "Settled loss",
+	作废: "Void",
+	拒绝: "Rejected",
+	用户名: "Username",
+	用户搜索: "User search",
+	"用户 UID/用户名/昵称": "User UID / username / nickname",
+	来源名称: "Source name",
+	来源类型: "Source type",
+	操作: "Actions",
+	查看详情: "View details",
+	关闭: "Close",
+	用户信息: "User information",
+	预测信息: "Prediction",
+	结算信息: "Settlement",
+	时间信息: "Times",
+	场次列表: "Rounds",
+	预测网格订单详情: "Grid order details",
+	涨跌预测订单详情: "Up/Down order details",
+	自选预测订单详情: "High/Low order details",
+	没有此页面的查询权限: "You do not have permission to view this page",
+	请选择条件查询: "Select filters to search",
+	"按下单时间查询，最多31天": "Search by order time, up to 31 days",
+	全部: "All",
+	筛选: "Filter",
+	商户: "Merchant",
+	白标: "White label",
+	平台: "Platform",
+	"UID（精确）": "UID (exact)",
+	排序: "Sort",
+	顺序: "Order",
+	状态: "Status",
+	开放下注时间: "Bet opens",
+	总本金: "Total stake",
+	代理收益: "Agent revenue",
+	数据格式异常: "Invalid data",
+	服务暂不可用: "Service unavailable",
+	"查询超时，请稍后重试": "Query timed out. Retry later.",
+	查询服务版本不匹配: "Query service version mismatch",
+	"匹配用户超过500个，请缩小筛选条件": "More than 500 users match. Narrow the search.",
+	请求参数无效: "Invalid query",
+	无权访问: "Access denied",
+	订单不存在: "Order not found",
+	分页响应格式异常: "Invalid page response",
+	"查询失败，请稍后重试": "Query failed. Retry later."
+};
+function S_(e) {
+	let t = b_(), n = X();
+	return (r) => (e?.() ?? t().locale ?? n.locale.value) === "en-US" ? x_[r] ? x_[r] : /^\d+秒$/.test(r) ? r.replace("秒", "s") : r.includes(" · ") ? r.split(" · ").map((e) => x_[e] || e).join(" · ") : r.endsWith("：全部") ? (x_[r.slice(0, -3)] || r.slice(0, -3)) + ": All" : r.endsWith("（最多31天）") ? (x_[r.slice(0, -7)] || r.slice(0, -7)) + " (up to 31 days)" : r.startsWith("筛选") ? "Filter " + (x_[r.slice(2)] || r.slice(2)) : r : r;
+}
+//#endregion
+//#region src/components/prediction-operations/order-location.ts
+function C_(e = {}) {
+	let t = (t) => typeof e[t] == "string" ? e[t].trim() : "";
+	if (t("order_id")) return { order_id: t("order_id") };
+	if (t("scope") && t("business_id")) return {
+		scope: t("scope"),
+		business_id: t("business_id")
+	};
+	if (e.order_id !== void 0 || e.scope !== void 0 || e.business_id !== void 0) throw Error("订单定位参数不完整");
+	return null;
+}
+function w_(e, t, n, r) {
+	if (!e || ![
+		"up-down",
+		"high-low",
+		"grid"
+	].includes(e.segment) || typeof e.order_id != "string" || !e.order_id) throw Error("订单定位响应无效");
+	let i = e.segment === "grid" && t !== "grid" && e.created_at_ms === void 0 && e.view === void 0, a = i ? "history" : e.view;
+	if (a !== "current" && a !== "history") throw Error("订单列表归属无效");
+	if (!r(e.segment === "grid" ? "grid_order:lists" : `prediction_operation:${a === "current" ? "current_orders" : "history_orders"}`)) throw Error("无权查看目标订单列表");
+	let o = [/* @__PURE__ */ new Date(0), /* @__PURE__ */ new Date(0)];
+	if (!i) {
+		let t = e.created_at_ms;
+		if (typeof t != "string" || !/^(0|[1-9][0-9]*)$/.test(t)) throw Error("订单创建时间无效");
+		let n = Number(t);
+		if (!Number.isSafeInteger(n) || n < 0 || n > 0xe677d21fdbff) throw Error("订单创建时间无效");
+		let r = new Date(n);
+		r.setHours(0, 0, 0, 0);
+		let i = new Date(r);
+		if (i.setDate(i.getDate() + 1), !Number.isFinite(+r) || !Number.isFinite(+i) || +r < 0 || +i > 0xe677d21fdbff || +i <= +r) throw Error("订单创建日期超出查询范围");
+		o = [r, i];
+	}
+	return {
+		range: o,
+		redirect: e.segment === t && a === n ? null : `/prediction/${e.segment}/${a === "current" ? "current-orders" : "order-history"}`
+	};
+}
+var T_ = class {
+	version = 0;
+	controller;
+	attempts;
+	hops;
+	constructor(e = "0", t = "0") {
+		this.attempts = +(e === "1"), this.hops = t === "3" ? 3 : t === "2" ? 2 : +(t === "1");
+	}
+	begin() {
+		this.cancel(), this.controller = new AbortController();
+		let e = this.version;
+		return {
+			signal: this.controller.signal,
+			current: () => e === this.version
+		};
+	}
+	cancel() {
+		this.version++, this.controller?.abort();
+	}
+	retry() {
+		if (this.attempts >= 1) throw Error("订单状态已变化或未找到，请重新定位");
+		return ++this.attempts;
+	}
+	redirect() {
+		if (this.hops >= 2 + this.attempts) throw Error("订单定位跳转次数已达上限，请重新定位");
+		return ++this.hops;
+	}
+	get retryCount() {
+		return this.attempts;
+	}
+}, E_ = [
+	"35",
+	"40",
+	"45",
+	"60",
+	"90"
+], D_ = [
+	"5",
+	"10",
+	"15",
+	"30",
+	"60"
+], O_ = 9223372036854775807n;
+function k_(e, t = O_, n = !0) {
+	return typeof e == "string" && /^(0|[1-9]\d*)$/.test(e) && BigInt(e) <= t && (n || e !== "0");
+}
+function A_(e) {
+	return e == null ? "未提供" : typeof e == "string" && /^-?(0|[1-9]\d*)(\.\d+)?$/.test(e) ? e : "数据格式异常";
+}
+function j_(e) {
+	return e == null ? "未提供" : k_(e, 8640000000000000n) ? new Date(Number(e)).toLocaleString("zh-CN", { hour12: !1 }) : `${String(e)}（无法显示时间）`;
+}
+function M_(e, t = "UP_DOWN") {
+	let n = {
+		35: "5",
+		40: "10",
+		45: "15",
+		60: "30",
+		90: "60"
+	};
+	return t === "UP_DOWN" ? n[e] ? `${n[e]}秒` : `历史周期${e}秒` : `${e}秒`;
+}
+var N_ = {
+	PLAYER: "玩家",
+	MARKET_MAKER: "做市机器人",
+	UP: "上涨",
+	DOWN: "下跌",
+	PENDING: "待处理",
+	ACTIVE: "生效",
+	RESULT_READY: "待结算",
+	SETTLED: "已结算",
+	CANCELED: "已取消",
+	UNKNOWN: "资金结果未知",
+	MANUAL_REQUIRED: "需人工处理",
+	DEBITED: "已扣款",
+	SETTLE_PENDING: "待派发",
+	REFUND_PENDING: "待退款",
+	REFUNDED: "已退款",
+	REJECTED: "已拒绝",
+	WIN: "赢",
+	LOSE: "输",
+	DRAW: "平",
+	PREPARING: "准备中",
+	BETTING: "下注中",
+	LOCKED: "已封盘",
+	OBSERVING: "观察中",
+	RESULTING: "计算结果",
+	SETTLING: "结算中",
+	FINISHED: "已结束",
+	UNBOUND: "未绑定",
+	DRAINING: "等待旧业务完成",
+	READY: "条件就绪",
+	BLOCKED: "条件未就绪",
+	MAKER_DISABLED: "做市关闭",
+	UNAVAILABLE: "暂无运行健康证据",
+	PLANNED: "已计划",
+	FUNDING: "资金处理中",
+	COMPENSATING: "退款处理中",
+	COMPENSATED: "已退款完成",
+	ACTIVATED: "已激活",
+	INITIAL: "初始做市",
+	REPLENISHMENT: "动态补单",
+	STRATEGY_MISSING: "尚未配置策略",
+	SITE_BINDING_MISSING: "尚未绑定站点",
+	SITE_BINDING_DRAINING: "站点正在变更",
+	ROBOT_HOME_SITE_MISMATCH: "机器人归属站点不一致",
+	ROBOT_BINDINGS_INSUFFICIENT: "可用机器人不足",
+	FROZEN: "冻结",
+	DISABLED: "禁用"
+};
+function P_(e) {
+	if (e == null || e === "") return "未提供";
+	let t = String(e);
+	return N_[t.replace(/^(MARKET_MAKER_READINESS_BLOCKER_|MARKET_MAKER_READINESS_STATE_|MARKET_MAKER_SITE_BINDING_STATE_|MARKET_MAKER_WORKER_HEALTH_|MARKET_MAKER_RUNTIME_BATCH_STATE_|MARKET_MAKER_RUNTIME_BATCH_KIND_|SITE_BINDING_STATE_|BUSINESS_STATUS_|FUND_STATUS_|ORDER_SOURCE_|ORDER_RESULT_|ROUND_STATE_|DIRECTION_)/, "")] ?? `未识别（${t}）`;
+}
+var F_ = /* @__PURE__ */ new Set([
+	"请选择有效的开始和结束时间",
+	"分页范围无效",
+	"查询只接受UID和账号条件",
+	"查询时间用途无效",
+	"请选择不超过31天的有效时间范围",
+	"查询字段必须为文本",
+	"用户、代理或站点ID无效",
+	"房间周期无效",
+	"交易对格式无效",
+	"筛选选项无效",
+	"UID或账号格式无效",
+	"查询内容过长",
+	"订单定位参数不完整",
+	"订单定位响应无效",
+	"订单列表归属无效",
+	"无权查看目标订单列表",
+	"订单创建时间无效",
+	"订单创建时间无效",
+	"订单创建日期超出查询范围",
+	"订单状态已变化或未找到，请重新定位",
+	"订单定位跳转次数已达上限，请重新定位"
+]);
+function I_(e) {
+	if (e instanceof Error && F_.has(e.message)) return e.message;
+	let t = e;
+	if (t?.response?.status === 401) return "登录状态已失效，请重新登录";
+	let n = t?.response?.data?.data?.error_code ?? t?.data?.error_code ?? t?.error_code;
+	return {
+		INVALID_ARGUMENT: "请求参数无效",
+		INVALID_REQUEST: "请求参数无效",
+		USER_FILTER_TOO_BROAD: "匹配用户超过500个，请缩小筛选条件",
+		PERMISSION_DENIED: "无权访问",
+		FORBIDDEN: "无权访问",
+		UNAUTHENTICATED: "登录状态已失效，请重新登录",
+		QUERY_CONTRACT_MISMATCH: "查询服务版本不匹配",
+		ORDER_NOT_FOUND: "订单不存在",
+		NOT_FOUND: "订单不存在",
+		DEPENDENCY_UNAVAILABLE: "服务暂不可用",
+		UNAVAILABLE: "服务暂不可用",
+		SCOPE_UNAVAILABLE: "站点授权暂不可用",
+		DEADLINE_EXCEEDED: "查询超时，请稍后重试"
+	}[typeof n == "string" ? n.replace(/^ERROR_CODE_/, "") : ""] || "查询失败，请稍后重试";
+}
+//#endregion
+//#region src/components/prediction-operations/query.ts
+var L_ = (e, t) => e.includes("*") || e.includes(t);
+function R_(e, t) {
+	if (!Array.isArray(e) || e.length !== 2 || e.some((e) => !(e instanceof Date) || !Number.isSafeInteger(e.getTime()) || e.getTime() <= 0)) throw Error("请选择有效的开始和结束时间");
+	return t ? {
+		time_field: t,
+		time_from_ms: String(e[0].getTime()),
+		time_to_ms: String(e[1].getTime())
+	} : {
+		created_from_ms: String(e[0].getTime()),
+		created_to_ms: String(e[1].getTime())
+	};
+}
+function z_(e, t = /* @__PURE__ */ new Date()) {
+	return e === "current" ? i_(t) : a_(t);
+}
+var B_ = {
+	direction: ["UP", "DOWN"],
+	order_source: ["PLAYER", "MARKET_MAKER"],
+	business_status: [
+		"PENDING",
+		"ACTIVE",
+		"RESULT_READY",
+		"SETTLED",
+		"CANCELED"
+	],
+	fund_status: [
+		"PENDING",
+		"DEBITED",
+		"SETTLE_PENDING",
+		"SETTLED",
+		"REFUND_PENDING",
+		"REFUNDED",
+		"UNKNOWN",
+		"REJECTED",
+		"MANUAL_REQUIRED"
+	],
+	result: [
+		"PENDING",
+		"WIN",
+		"LOSE",
+		"DRAW",
+		"CANCELED"
+	],
+	sort_field: [
+		"CREATED_AT",
+		"SETTLED_AT",
+		"STAKE",
+		"FINAL_RETURN"
+	],
+	sort_direction: ["ASC", "DESC"]
+}, V_ = {
+	status: [
+		"PREPARING",
+		"BETTING",
+		"LOCKED",
+		"OBSERVING",
+		"RESULTING",
+		"SETTLING",
+		"FINISHED"
+	],
+	result: B_.result,
+	sort_field: [
+		"BET_OPEN_AT",
+		"BET_CLOSE_AT",
+		"TOTAL_STAKE",
+		"AGENT_REVENUE"
+	],
+	sort_direction: B_.sort_direction
+};
+function H_(e, t, n, r, i) {
+	if (!Number.isInteger(r) || r < 1 || r > 2147483647 || !Number.isInteger(i) || i < 1 || i > 200) throw Error("分页范围无效");
+	if ("user_filter" in n || "user_ids" in n) throw Error("查询只接受UID和账号条件");
+	let a = [
+		"time_field",
+		"time_from_ms",
+		"time_to_ms"
+	].some((e) => e in n);
+	if (a && (["created_from_ms", "created_to_ms"].some((e) => e in n) || !(t ? ["CREATED_AT", "DRAW_AT"] : ["CREATED_AT", "FUNDS_COMPLETED_AT"]).includes(String(n.time_field)))) throw Error("查询时间用途无效");
+	let o = n[a ? "time_from_ms" : "created_from_ms"], s = n[a ? "time_to_ms" : "created_to_ms"];
+	if (!k_(o) || !k_(s) || BigInt(o) <= 0n || BigInt(o) >= BigInt(s) || BigInt(s) - BigInt(o) > 2678400000n) throw Error("请选择不超过31天的有效时间范围");
+	let c = {
+		game_type: e,
+		page_number: r,
+		page_size: i
+	}, l = ["agent_id", ...t ? [] : ["home_site_id", "user_id"]], u = [
+		"symbol",
+		"market_id",
+		"round_id",
+		...t ? [] : [
+			"order_id",
+			"public_user_id",
+			"user_name",
+			"user_keyword"
+		],
+		"duration_seconds",
+		...a ? [
+			"time_field",
+			"time_from_ms",
+			"time_to_ms"
+		] : ["created_from_ms", "created_to_ms"],
+		...l
+	], d = t ? V_ : B_;
+	for (let e of [...u, ...Object.keys(d)]) {
+		let t = n[e];
+		if (t == null || t === "") continue;
+		if (typeof t != "string") throw Error("查询字段必须为文本");
+		let r = t.trim();
+		if (r) {
+			if (l.includes(e) && !k_(r, void 0, !1)) throw Error("用户、代理或站点ID无效");
+			if (e === "duration_seconds" && !k_(r)) throw Error("房间周期无效");
+			if (e === "symbol" && !/^[A-Z0-9]{2,32}$/.test(r.toUpperCase())) throw Error("交易对格式无效");
+			if (d[e] && !d[e].includes(r)) throw Error("筛选选项无效");
+			if ([
+				"public_user_id",
+				"user_name",
+				"user_keyword"
+			].includes(e) && (/[\u0000-\u001f\u007f]/.test(t) || [...r].length > (e === "public_user_id" ? 64 : 128))) throw Error("UID或账号格式无效");
+			if (r.length > 128) throw Error("查询内容过长");
+			c[e] = e === "symbol" ? r.toUpperCase() : r;
+		}
+	}
+	return c;
+}
+//#endregion
+//#region src/components/prediction-operations/order-identity.ts
+function U_(e, t) {
+	if (e === "source_name") return typeof t.source_name == "string" && t.source_name ? t.source_name : "-";
+	if (e === "source_type") switch (t.source_type) {
+		case "merchant": return "商户";
+		case "white_label": return "白标";
+		case "platform": return "平台";
+		default: return "-";
+	}
+	if (e === "user_name") return String(t.user_type ?? "") === "3" && typeof t.user_name == "string" && t.user_name.trim() ? t.user_name : typeof t.nick_name == "string" && t.nick_name.trim() ? t.nick_name : "匿名用户";
+	if (![
+		"ownership_type",
+		"ownership_id",
+		"ownership_name"
+	].includes(e)) return;
+	let n = t.agent_id;
+	return typeof n != "string" || !/^(0|[1-9]\d*)$/.test(n) ? "—" : e === "ownership_type" ? String(t.user_type ?? "") === "3" ? "机器人" : n === "0" ? "白标" : "商户" : e === "ownership_id" ? n : n === "0" ? "6mm" : typeof t.agent_name == "string" && t.agent_name.trim() ? t.agent_name : "—";
+}
+[
+	...[
+		["stake", "本金"],
+		["estimated_net_profit", "预计净收益"],
+		["estimated_return", "预计返还"],
+		["final_net_profit", "最终净收益"],
+		["final_return", "最终返还"],
+		["agent_profit", "代理收益"],
+		["open_price", "起始价格"],
+		["result_price", "结果价格"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t,
+		kind: "amount"
+	})),
+	...[
+		["business_status", "业务状态"],
+		["fund_status", "资金状态"],
+		["unknown_from", "资金未知前状态"],
+		["result", "结果"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t,
+		kind: "enum"
+	})),
+	...[
+		["created_at_ms", "创建时间"],
+		["accepted_at_ms", "接受时间"],
+		["expire_at_ms", "到期时间"],
+		["result_at_ms", "结果时间"],
+		["settled_at_ms", "结算时间"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t,
+		kind: "time"
+	}))
+], [
+	...[
+		["player_stake", "玩家本金"],
+		["market_maker_stake", "做市本金"],
+		["total_stake", "总本金"],
+		["up_pool", "上涨资金池"],
+		["down_pool", "下跌资金池"],
+		["locked_up_pool", "封盘上涨资金池"],
+		["locked_down_pool", "封盘下跌资金池"],
+		["start_price", "起始价格"],
+		["end_price", "结束价格"],
+		["total_return", "总返还"],
+		["platform_revenue", "平台收入"],
+		["truncation_tail", "截断尾差"],
+		["agent_profit", "代理收益"],
+		["pool_share", "资金池分成"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t,
+		kind: "amount"
+	})),
+	...[
+		["participant_count", "参与人数"],
+		["order_count", "订单总数"],
+		["player_order_count", "玩家订单数"],
+		["market_maker_order_count", "做市订单数"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t
+	})),
+	...[
+		["bet_open_at_ms", "开放下注"],
+		["bet_close_at_ms", "停止下注"],
+		["observe_end_at_ms", "观察结束"],
+		["draw_at_ms", "开奖时间"],
+		["display_end_at_ms", "展示结束"],
+		["result_at_ms", "结果时间"],
+		["settled_at_ms", "结算时间"]
+	].map(([e, t]) => ({
+		key: e,
+		label: t,
+		kind: "time"
+	}))
+];
+function W_(e, t, n) {
+	if (t.key === "order_no") {
+		let t = e.order_no, r = n === "UP_DOWN" ? "UD" : n === "HIGH_LOW" ? "HL" : "";
+		return r && typeof t == "string" && RegExp(`^${r}[0-9]{12}[A-Z0-9]{6}$`).test(t) ? t : typeof e.order_id == "string" && e.order_id ? e.order_id : "未提供";
+	}
+	if (t.key === "settlement_ledger_id") {
+		let t = G_(e);
+		if (t) return t;
+	}
+	let r = e[t.key];
+	return t.kind === "amount" ? A_(r) : t.kind === "enum" ? P_(r) : t.kind === "time" ? j_(r) : r == null ? "未提供" : t.kind === "room" ? typeof r == "string" ? M_(r, n) : "数据格式异常" : typeof r == "string" ? r : typeof r == "boolean" ? r ? "是" : "否" : "数据格式异常";
+}
+function G_(e) {
+	if (!(e.settlement_ledger_id !== void 0 && e.settlement_ledger_id !== null && e.settlement_ledger_id !== "") && !(typeof e.debit_ledger_id != "string" || !/^[1-9][0-9]*$/.test(e.debit_ledger_id)) && ["SETTLED", "BUSINESS_STATUS_SETTLED"].includes(String(e.business_status))) {
+		if (["LOSE", "ORDER_RESULT_LOSE"].includes(String(e.result))) return "无（下单时已扣款）";
+		if ([
+			"WIN",
+			"ORDER_RESULT_WIN",
+			"DRAW",
+			"ORDER_RESULT_DRAW"
+		].includes(String(e.result))) return "关联异常";
+	}
+}
+var K_ = {
+	order_id: {
+		key: "order_id",
+		label: "订单号"
+	},
+	debit_ledger_id: {
+		key: "debit_ledger_id",
+		label: "扣款流水号"
+	},
+	round_id: {
+		key: "round_id",
+		label: "场次编号"
+	},
+	public_user_id: {
+		key: "public_user_id",
+		label: "UID"
+	},
+	user_name: {
+		key: "user_name",
+		label: "用户账号"
+	},
+	ownership_type: {
+		key: "ownership_type",
+		label: "归属类型"
+	},
+	ownership_id: {
+		key: "ownership_id",
+		label: "归属ID"
+	},
+	ownership_name: {
+		key: "ownership_name",
+		label: "归属名称"
+	},
+	source_name: {
+		key: "source_name",
+		label: "来源名称"
+	},
+	source_type: {
+		key: "source_type",
+		label: "来源类型"
+	},
+	symbol: {
+		key: "symbol",
+		label: "交易品种"
+	},
+	duration_seconds: {
+		key: "duration_seconds",
+		label: "周期",
+		kind: "room"
+	},
+	direction: {
+		key: "direction",
+		label: "预测方向",
+		kind: "enum"
+	},
+	stake: {
+		key: "stake",
+		label: "下注金额(U)",
+		kind: "amount"
+	},
+	final_odds: {
+		key: "final_odds",
+		label: "最终赔率"
+	},
+	estimated_return: {
+		key: "estimated_return",
+		label: "预计返还(U)",
+		kind: "amount"
+	},
+	open_price: {
+		key: "open_price",
+		label: "开盘价格",
+		kind: "amount"
+	},
+	order_status: {
+		key: "order_status",
+		label: "订单状态"
+	},
+	created_at_ms: {
+		key: "created_at_ms",
+		label: "下单时间",
+		kind: "time"
+	},
+	actual_direction: {
+		key: "actual_direction",
+		label: "实际方向",
+		kind: "enum"
+	},
+	result_price: {
+		key: "result_price",
+		label: "结算价格",
+		kind: "amount"
+	},
+	actual_return: {
+		key: "actual_return",
+		label: "实际返还(U)",
+		kind: "amount"
+	},
+	realized_pnl: {
+		key: "realized_pnl",
+		label: "订单盈亏(U)",
+		kind: "amount"
+	},
+	funds_completed_at_ms: {
+		key: "funds_completed_at_ms",
+		label: "结算时间",
+		kind: "time"
+	},
+	settlement_ledger_id: {
+		key: "settlement_ledger_id",
+		label: "结算流水号"
+	},
+	fixed_odds: {
+		key: "fixed_odds",
+		label: "固定赔率",
+		kind: "amount"
+	},
+	expire_at_ms: {
+		key: "expire_at_ms",
+		label: "到期时间",
+		kind: "time"
+	},
+	bet_open_at_ms: {
+		key: "bet_open_at_ms",
+		label: "开始下注时间",
+		kind: "time"
+	},
+	bet_close_at_ms: {
+		key: "bet_close_at_ms",
+		label: "停止下注时间",
+		kind: "time"
+	},
+	draw_at_ms: {
+		key: "draw_at_ms",
+		label: "开奖时间",
+		kind: "time"
+	},
+	start_price: {
+		key: "start_price",
+		label: "开盘价格",
+		kind: "amount"
+	},
+	end_price: {
+		key: "end_price",
+		label: "结算价格",
+		kind: "amount"
+	},
+	up_pool: {
+		key: "up_pool",
+		label: "上涨下注金额(U)",
+		kind: "amount"
+	},
+	down_pool: {
+		key: "down_pool",
+		label: "下跌下注金额(U)",
+		kind: "amount"
+	},
+	draw_outcome: {
+		key: "draw_outcome",
+		label: "开奖结果"
+	},
+	participant_count: {
+		key: "participant_count",
+		label: "参与人数"
+	},
+	order_count: {
+		key: "order_count",
+		label: "订单数量"
+	},
+	total_stake: {
+		key: "total_stake",
+		label: "总下注金额(U)",
+		kind: "amount"
+	},
+	total_return: {
+		key: "total_return",
+		label: "总返还金额(U)",
+		kind: "amount"
+	},
+	round_pnl: {
+		key: "round_pnl",
+		label: "场次盈亏(U)"
+	},
+	status: {
+		key: "status",
+		label: "场次状态",
+		kind: "enum"
+	},
+	settled_at_ms: {
+		key: "settled_at_ms",
+		label: "结算完成时间",
+		kind: "time"
+	}
+}, q_ = {
+	UP_DOWN_CURRENT: [
+		"order_id",
+		"round_id",
+		"public_user_id",
+		"user_name",
+		"source_name",
+		"source_type",
+		"symbol",
+		"duration_seconds",
+		"direction",
+		"stake",
+		"final_odds",
+		"estimated_return",
+		"open_price",
+		"order_status",
+		"created_at_ms"
+	],
+	UP_DOWN_HISTORY: [
+		"order_id",
+		"round_id",
+		"public_user_id",
+		"user_name",
+		"source_name",
+		"source_type",
+		"symbol",
+		"duration_seconds",
+		"direction",
+		"actual_direction",
+		"stake",
+		"final_odds",
+		"open_price",
+		"result_price",
+		"order_status",
+		"actual_return",
+		"realized_pnl",
+		"funds_completed_at_ms",
+		"debit_ledger_id",
+		"settlement_ledger_id"
+	],
+	HIGH_LOW_CURRENT: [
+		"order_id",
+		"public_user_id",
+		"user_name",
+		"source_name",
+		"source_type",
+		"symbol",
+		"duration_seconds",
+		"direction",
+		"open_price",
+		"stake",
+		"fixed_odds",
+		"estimated_return",
+		"created_at_ms",
+		"order_status"
+	],
+	HIGH_LOW_HISTORY: [
+		"order_id",
+		"public_user_id",
+		"user_name",
+		"source_name",
+		"source_type",
+		"symbol",
+		"duration_seconds",
+		"direction",
+		"actual_direction",
+		"open_price",
+		"stake",
+		"fixed_odds",
+		"expire_at_ms",
+		"result_price",
+		"order_status",
+		"actual_return",
+		"realized_pnl",
+		"funds_completed_at_ms",
+		"debit_ledger_id",
+		"settlement_ledger_id"
+	],
+	UP_DOWN_ROUNDS: [
+		"round_id",
+		"symbol",
+		"duration_seconds",
+		"bet_open_at_ms",
+		"bet_close_at_ms",
+		"draw_at_ms",
+		"start_price",
+		"end_price",
+		"up_pool",
+		"down_pool",
+		"draw_outcome",
+		"participant_count",
+		"order_count",
+		"total_stake",
+		"total_return",
+		"round_pnl",
+		"status",
+		"settled_at_ms"
+	]
+};
+function J_(e) {
+	return q_[`${e}_HISTORY`].map((e) => ({
+		...K_[e],
+		...e === "user_name" ? { label: "用户名" } : {}
+	}));
+}
+function Y_(e, t) {
+	let n = q_[t === "rounds" ? "UP_DOWN_ROUNDS" : `${e}_${t.toUpperCase()}`] ?? [];
+	return t === "history" && (n = n.filter((t) => !["debit_ledger_id", "settlement_ledger_id"].includes(t) && (e !== "UP_DOWN" || t !== "round_id")), e === "HIGH_LOW" && (n = [
+		...n.filter((e) => !["expire_at_ms", "funds_completed_at_ms"].includes(e)),
+		"expire_at_ms",
+		"funds_completed_at_ms"
+	])), n.map((e) => K_[e]);
+}
+function X_(e) {
+	if (!/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
+	let [t, n = ""] = e.split(".");
+	return t + "." + n.replace(/0+$/, "").padEnd(2, "0");
+}
+function Z_(e) {
+	if (!e || typeof e != "object" || Array.isArray(e)) return "—";
+	let { numerator: t, denominator: n } = e, r = (e) => typeof e == "string" && e.length <= 128 && /^(0|[1-9]\d*)(\.\d+)?$/.test(e);
+	if (!r(t) || !r(n)) return "—";
+	let i = (e) => e.split(".")[1]?.length ?? 0, a = BigInt(t.replace(".", "")) * 10n ** BigInt(i(n)), o = BigInt(n.replace(".", "")) * 10n ** BigInt(i(t));
+	if (o === 0n) return "—";
+	let s = a % o, c = "";
+	for (let e = 0; s !== 0n && e < 4; e++) s *= 10n, c += String(s / o), s %= o;
+	return c = c.replace(/0+$/, ""), `${s === 0n ? "" : "≈"}${a / o}${c ? "." + c : ""}x`;
+}
+function Q_(e, t, n) {
+	let r = t.key;
+	if (r === "round_id" && typeof e.round_no == "string" && /^[0-9]{14}[0-9A-Z]{9}$/.test(e.round_no)) return e.round_no;
+	if (r === "order_no") return W_(e, t, n);
+	if (r === "order_id" && typeof e.order_no == "string" && RegExp(`^${n === "UP_DOWN" ? "UD" : "HL"}[0-9]{12}[A-Z0-9]{6}$`).test(e.order_no)) return e.order_no;
+	if (r === "settlement_ledger_id") {
+		let t = G_(e);
+		if (t) return t;
+	}
+	let i = U_(r, e);
+	if (i !== void 0) return i;
+	if (["draw_outcome", "round_pnl"].includes(r)) return "—";
+	if (r === "order_status") {
+		let t = h_(e);
+		return t ? P_(t.value) : "—";
+	}
+	if (r === "final_odds") return Z_(e.final_odds);
+	let a = e[r];
+	return a == null || a === "" || r === "open_price" && n === "HIGH_LOW" && ["PENDING", "BUSINESS_STATUS_PENDING"].includes(String(e.business_status)) && typeof a == "string" && /^0(\.0+)?$/.test(a) ? "—" : r === "fixed_odds" ? Z_({
+		numerator: a,
+		denominator: "1"
+	}) : [
+		"stake",
+		"estimated_return",
+		"actual_return",
+		"realized_pnl",
+		"up_pool",
+		"down_pool",
+		"total_stake",
+		"total_return"
+	].includes(r) ? typeof a == "string" ? X_(a) : "—" : W_(e, t, n);
+}
+//#endregion
+//#region src/components/prediction-operations/format-user-name.ts
+var $_ = (e, t) => e?.trim() || t?.trim() || "-", ev = { key: 1 }, tv = /* @__PURE__ */ p({
+	__name: "SymbolDisplay",
+	props: { symbol: {} },
+	setup(e) {
+		let t = b_();
+		return (n, r) => R(t)().symbolComponent ? (D(), o(N(R(t)().symbolComponent), {
+			key: 0,
+			symbol: e.symbol
+		}, null, 8, ["symbol"])) : (D(), c("span", ev, F(e.symbol || "-"), 1));
+	}
+}), nv = /* @__PURE__ */ p({
+	__name: "SourceTypeTag",
+	props: { sourceType: { default: "merchant" } },
+	setup(e) {
+		let t = S_(), n = e, r = {
+			merchant: "商户",
+			white_label: "白标",
+			platform: "平台"
+		}, a = {
+			merchant: "primary",
+			white_label: "info",
+			platform: "success"
+		}, s = i(() => n.sourceType ? t(r[n.sourceType]) : "-"), c = i(() => n.sourceType ? a[n.sourceType] : "default");
+		return (e, t) => (D(), o(R($), {
+			effect: "soft",
+			round: "",
+			size: "sm",
+			type: c.value
+		}, {
+			default: K(() => [d(F(s.value), 1)]),
+			_: 1
+		}, 8, ["type"]));
+	}
+}), rv = { class: "order-detail-title" }, iv = {
+	key: 0,
+	class: "order-detail-content"
+}, av = { class: "order-detail-summary" }, ov = ["aria-label"], sv = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
+	__name: "HistoryOrderDetailDrawer",
+	props: {
+		modelValue: { type: Boolean },
+		row: {},
+		game: {}
+	},
+	emits: ["update:modelValue", "closed"],
+	setup(e, { emit: n }) {
+		let r = S_(), a = b_(), u = e, p = n, m = i({
+			get: () => u.modelValue,
+			set: (e) => p("update:modelValue", e)
+		}), h = i(() => `${u.game === "UP_DOWN" ? "涨跌预测" : "自选预测"}订单详情`), g = i(() => (u.game === "UP_DOWN" ? [
+			{
+				title: "订单信息",
+				keys: [
+					"order_id",
+					"round_id",
+					"symbol",
+					"duration_seconds"
+				]
+			},
+			{
+				title: "用户信息",
+				keys: [
+					"public_user_id",
+					"user_name",
+					"source_name",
+					"source_type"
+				]
+			},
+			{
+				title: "预测信息",
+				keys: [
+					"direction",
+					"actual_direction",
+					"stake",
+					"final_odds",
+					"open_price",
+					"result_price"
+				]
+			},
+			{
+				title: "结算信息",
+				keys: [
+					"order_status",
+					"actual_return",
+					"realized_pnl",
+					"funds_completed_at_ms",
+					"debit_ledger_id",
+					"settlement_ledger_id"
+				]
+			}
+		] : [
+			{
+				title: "订单信息",
+				keys: [
+					"order_id",
+					"symbol",
+					"duration_seconds",
+					"fixed_odds"
+				]
+			},
+			{
+				title: "用户信息",
+				keys: [
+					"public_user_id",
+					"user_name",
+					"source_name",
+					"source_type"
+				]
+			},
+			{
+				title: "预测信息",
+				keys: [
+					"direction",
+					"actual_direction",
+					"open_price",
+					"result_price"
+				]
+			},
+			{
+				title: "结算信息",
+				keys: [
+					"stake",
+					"actual_return",
+					"realized_pnl",
+					"order_status",
+					"debit_ledger_id",
+					"settlement_ledger_id",
+					"expire_at_ms",
+					"funds_completed_at_ms"
+				]
+			}
+		]).map((e) => ({
+			title: e.title,
+			fields: e.keys.filter((e) => a().showSources || !["source_name", "source_type"].includes(e)).map((e) => J_(u.game).find((t) => t.key === e))
+		}))), _ = (e) => {
+			if (!u.row) return "-";
+			if (e.key === "user_name") return $_(u.row.nick_name, u.row.user_name);
+			let t = Q_(u.row, e, u.game);
+			return [
+				"source_name",
+				"order_id",
+				"round_id",
+				"symbol",
+				"public_user_id"
+			].includes(e.key) ? t : r(t);
+		}, v = i(() => {
+			let e = u.row && h_(u.row)?.tone;
+			return !e || e === "neutral" ? "default" : e;
+		});
+		return (n, i) => (D(), o(R(Qe), {
+			modelValue: m.value,
+			"onUpdate:modelValue": i[1] ||= (e) => m.value = e,
+			"aria-label": R(r)(h.value),
+			placement: "right",
+			size: 500,
+			onClosed: i[2] ||= (e) => p("closed")
+		}, {
+			header: K(() => [l("div", rv, [l("strong", null, F(R(r)(h.value)), 1), l("span", null, F(e.row ? _({
+				key: "order_id",
+				label: "订单号"
+			}) : "-"), 1)])]),
+			footer: K(() => [f(R(Z), { onClick: i[0] ||= (e) => m.value = !1 }, {
+				default: K(() => [d(F(R(r)("关闭")), 1)]),
+				_: 1
+			})]),
+			default: K(() => [e.row ? (D(), c("div", iv, [l("div", av, [f(tv, { symbol: e.row.symbol }, null, 8, ["symbol"]), f(R($), {
+				type: v.value,
+				effect: "soft",
+				round: "",
+				size: "sm",
+				title: R(g_)(e.row)
+			}, {
+				default: K(() => [d(F(_({
+					key: "order_status",
+					label: "订单状态"
+				})), 1)]),
+				_: 1
+			}, 8, ["type", "title"])]), (D(!0), c(t, null, j(g.value, (n) => (D(), c("section", {
+				key: n.title,
+				class: "order-detail-section",
+				"aria-label": R(r)(n.title)
+			}, [l("h3", null, F(R(r)(n.title)), 1), f(R(gu), { size: "md" }, {
+				default: K(() => [(D(!0), c(t, null, j(n.fields, (t) => (D(), o(R(vu), {
+					key: t.key,
+					label: R(r)(t.label),
+					"data-detail-field": t.key
+				}, {
+					default: K(() => [t.key === "source_type" ? (D(), o(nv, {
+						key: 0,
+						"source-type": e.row.source_type ?? null
+					}, null, 8, ["source-type"])) : t.key === "symbol" ? (D(), o(tv, {
+						key: 1,
+						symbol: e.row.symbol
+					}, null, 8, ["symbol"])) : t.key === "order_status" ? (D(), o(R($), {
+						key: 2,
+						type: v.value,
+						effect: "soft",
+						round: "",
+						size: "sm",
+						title: R(g_)(e.row)
+					}, {
+						default: K(() => [d(F(_(t)), 1)]),
+						_: 2
+					}, 1032, ["type", "title"])) : (D(), c("span", {
+						key: 3,
+						class: b(t.key === "realized_pnl" ? `is-${R(__)(e.row.realized_pnl)}` : void 0)
+					}, F(_(t)), 3))]),
+					_: 2
+				}, 1032, ["label", "data-detail-field"]))), 128))]),
+				_: 2
+			}, 1024)], 8, ov))), 128))])) : s("", !0)]),
+			_: 1
+		}, 8, ["modelValue", "aria-label"]));
+	}
+}), [["__scopeId", "data-v-d419f413"]]), cv = {
+	key: 0,
+	role: "alert"
+}, lv = { class: "prediction-table-time" }, uv = { key: 1 }, dv = ["title", "data-status-field"], fv = { key: 1 }, pv = ["title"], mv = ["title"], hv = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
+	__name: "OperationPage",
+	props: {
+		adapter: {},
+		context: {},
+		showSources: { type: Boolean },
+		locale: {},
+		game: {},
+		view: {}
+	},
+	setup(e) {
+		let n = S_(() => r.locale), r = e;
+		y_(() => ({
+			symbolComponent: r.adapter.symbolComponent,
+			showSources: r.showSources !== !1,
+			locale: r.locale
+		}));
+		let a = {
+			get perms() {
+				return r.context.permissions;
+			},
+			get userInfo() {
+				return { id: r.context.actorId };
+			}
+		}, p = i(() => r.view === "rounds"), m = i(() => r.game === "UP_DOWN" && r.view === "current"), h = i(() => r.game === "UP_DOWN" && r.view === "history"), g = i(() => r.game === "HIGH_LOW" && r.view === "history"), _ = i(() => r.view === "history"), v = A(!1), x = A(null);
+		function S(e) {
+			!_.value || !L.value || (x.value = e, v.value = !0);
+		}
+		function w() {
+			v.value || (x.value = null);
+		}
+		let T = (e) => {
+			let t = f_("round", e);
+			return t === "neutral" ? "default" : t;
+		}, E = i(() => r.game === "UP_DOWN" && p.value ? [
+			"bet_open_at_ms",
+			"bet_close_at_ms",
+			"draw_at_ms",
+			"settled_at_ms"
+		] : g.value ? ["expire_at_ms", "funds_completed_at_ms"] : h.value ? ["funds_completed_at_ms"] : []), O = new Intl.DateTimeFormat("zh-CN", {
+			year: "numeric",
+			month: "2-digit",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+			second: "2-digit",
+			hourCycle: "h23"
+		}), N = (e, t) => {
+			let n = e[t];
+			if (!k_(n, 8640000000000000n)) return Q_(e, {
+				key: t,
+				label: "",
+				kind: "time"
+			}, r.game);
+			let i = Object.fromEntries(O.formatToParts(new Date(Number(n))).map(({ type: e, value: t }) => [e, t]));
+			return `${i.year}/${i.month}/${i.day}\n${i.hour}:${i.minute}:${i.second}`;
+		}, P = i(() => `${r.game === "UP_DOWN" ? "涨跌预测" : "自选预测"} · ${p.value ? "场次列表" : r.view === "current" ? "当前订单" : "历史订单"}`), I = i(() => `prediction_operation:${p.value ? "rounds" : r.view === "current" ? "current_orders" : "history_orders"}`), L = i(() => !!r.context.actorId && L_(a.perms, I.value)), z = () => z_(r.view), B = () => p.value ? "DRAW_AT" : r.view === "history" ? "FUNDS_COMPLETED_AT" : "CREATED_AT", V = A(r.view === "current" ? void 0 : z()), H = k({
+			agent_id: "",
+			...p.value ? {} : { order_source: "PLAYER" },
+			time_field: B(),
+			sort_field: p.value ? "BET_OPEN_AT" : "CREATED_AT",
+			sort_direction: "DESC"
+		}), U = i(() => H.time_field || B()), G = i(() => U.value === "DRAW_AT" ? "开奖时间" : U.value === "FUNDS_COMPLETED_AT" ? "结算时间" : "下单时间"), q = i(() => [
+			...p.value ? [] : [{
+				key: "order_id",
+				label: "订单号"
+			}],
+			...r.game === "UP_DOWN" ? [{
+				key: "round_id",
+				label: "场次编号"
+			}] : [],
+			...p.value ? [] : [{
+				key: "public_user_id",
+				label: "UID（精确）"
+			}, {
+				key: "user_name",
+				label: "用户账号"
+			}],
+			{
+				key: "symbol",
+				label: "交易品种"
+			}
+		]), ee = i(() => p.value ? [{
+			key: "status",
+			label: "状态",
+			values: V_.status
+		}, {
+			key: "result",
+			label: "结果",
+			values: V_.result
+		}] : [
+			{
+				key: "direction",
+				label: "方向",
+				values: B_.direction
+			},
+			{
+				key: "order_source",
+				label: "订单来源",
+				values: B_.order_source
+			},
+			{
+				key: "business_status",
+				label: "业务状态",
+				values: B_.business_status
+			},
+			{
+				key: "fund_status",
+				label: "资金状态",
+				values: B_.fund_status
+			},
+			{
+				key: "result",
+				label: "结果",
+				values: B_.result
+			}
+		]), J = i(() => p.value ? [
+			{
+				value: "BET_OPEN_AT",
+				label: "开放下注时间"
+			},
+			{
+				value: "BET_CLOSE_AT",
+				label: "停止下注时间"
+			},
+			{
+				value: "TOTAL_STAKE",
+				label: "总本金"
+			},
+			{
+				value: "AGENT_REVENUE",
+				label: "代理收益"
+			}
+		] : [
+			{
+				value: "CREATED_AT",
+				label: "创建时间"
+			},
+			{
+				value: "SETTLED_AT",
+				label: "结果确定时间"
+			},
+			{
+				value: "STAKE",
+				label: "本金"
+			},
+			{
+				value: "FINAL_RETURN",
+				label: "最终返还"
+			}
+		]), Y = A([]), te = A(!1), ne = A(""), re = A(!1), ie = A(1), ae = A(20), oe = A("0"), se = A("0"), ce = i(() => {
+			if (!re.value) return 0;
+			let e = BigInt(oe.value), t = 2147483647n * BigInt(ae.value);
+			return Number(e > t ? t : e);
+		}), X = i(() => [...Y_(r.game, r.view).filter((e) => r.showSources !== !1 || !["source_name", "source_type"].includes(e.key)).map((e) => ({
+			key: e.key,
+			dataIndex: e.key,
+			title: e.key === "user_name" ? "用户名" : e.label,
+			width: l_(e.key, g.value ? "high-low-history" : h.value ? "up-down-history" : m.value ? "up-down-current" : r.game === "UP_DOWN" && p.value ? "rounds" : void 0),
+			align: "left",
+			formatter: (t, n) => e.key === "user_name" ? $_(typeof n.nick_name == "string" ? n.nick_name : void 0, typeof n.user_name == "string" ? n.user_name : void 0) : Q_(n, e, r.game)
+		})), ..._.value ? [{
+			key: "operation",
+			title: "操作",
+			width: 64,
+			align: "center",
+			fixed: "right"
+		}] : []]), le = i(() => X.value.map((e) => ({
+			...e,
+			title: n(String(e.title)),
+			formatter: e.formatter ? (t, r, i) => {
+				let a = e.formatter(t, r, i);
+				return [
+					"user_name",
+					"source_name",
+					"symbol",
+					"order_id",
+					"round_id",
+					"public_user_id"
+				].includes(String(e.key)) ? a : n(String(a));
+			} : void 0
+		}))), ue = i(() => p.value ? [
+			"created_range",
+			"status",
+			"round_id",
+			"symbol",
+			"duration_seconds"
+		] : [
+			"user_keyword",
+			"created_range",
+			"order_id",
+			...r.game === "UP_DOWN" ? ["round_id"] : []
+		]), de = r_(L, r.adapter.symbols, () => r.context.identityKey), fe = i(() => {
+			let e = [
+				...p.value ? [] : [{
+					key: "user_keyword",
+					label: "用户搜索",
+					type: "keyword",
+					placeholder: "用户 UID/用户名/昵称",
+					width: 230,
+					maxlength: 128,
+					clearable: !0
+				}],
+				...q.value.map((e) => e.key === "symbol" ? {
+					...e,
+					type: "coin",
+					clearable: !0,
+					width: 150,
+					options: de.value
+				} : {
+					...e,
+					type: "keyword",
+					clearable: !0,
+					maxlength: e.key === "public_user_id" ? 64 : 128,
+					placeholder: e.label,
+					width: e.key === "round_id" ? 180 : e.key === "public_user_id" ? 130 : 150
+				}),
+				...ee.value.map((e) => ({
+					key: e.key,
+					label: e.label,
+					type: "select",
+					clearable: !0,
+					placeholder: `${e.label}：全部`,
+					width: 120,
+					options: e.values.map((e) => ({
+						value: e,
+						label: P_(e)
+					}))
+				})),
+				r.game === "UP_DOWN" ? {
+					key: "duration_seconds",
+					label: "周期",
+					type: "select",
+					clearable: !0,
+					placeholder: "周期：全部",
+					width: 110,
+					options: E_.map((e) => ({
+						value: e,
+						label: M_(e)
+					}))
+				} : {
+					key: "duration_seconds",
+					label: "周期",
+					type: "select",
+					clearable: !0,
+					placeholder: "周期：全部",
+					width: 110,
+					options: D_.map((e) => ({
+						value: e,
+						label: M_(e, "HIGH_LOW")
+					}))
+				},
+				...!p.value && r.showSources !== !1 ? [{
+					key: "agent_id",
+					label: "归属名称",
+					type: "keyword"
+				}] : [],
+				...r.view === "history" ? [{
+					key: "time_field",
+					label: "查找方式",
+					type: "select",
+					options: [{
+						value: "FUNDS_COMPLETED_AT",
+						label: "按结算时间"
+					}, {
+						value: "CREATED_AT",
+						label: "按下单时间查找"
+					}]
+				}] : [],
+				{
+					key: "created_range",
+					label: `${G.value}（最多31天）`,
+					type: "date-range",
+					width: 240
+				},
+				{
+					key: "sort_field",
+					label: "排序",
+					type: "select",
+					options: J.value,
+					defaultValue: p.value ? "BET_OPEN_AT" : "CREATED_AT"
+				},
+				{
+					key: "sort_direction",
+					label: "顺序",
+					type: "select",
+					options: [{
+						value: "DESC",
+						label: "降序"
+					}, {
+						value: "ASC",
+						label: "升序"
+					}],
+					defaultValue: "DESC"
+				}
+			], t = p.value ? [
+				"created_range",
+				"status",
+				"round_id",
+				"symbol",
+				"duration_seconds"
+			] : [
+				"user_keyword",
+				"created_range",
+				"order_id",
+				...r.game === "UP_DOWN" ? ["round_id"] : [],
+				"public_user_id",
+				"user_name",
+				"agent_id",
+				"order_source",
+				"business_status",
+				"symbol",
+				...r.game === "HIGH_LOW" ? ["direction"] : [],
+				"duration_seconds",
+				...r.view === "history" ? ["time_field"] : []
+			];
+			return [...t.flatMap((t) => e.filter((e) => e.key === t)), ...e.filter((e) => !t.includes(e.key))];
+		}), pe = i(() => fe.value.map((e) => {
+			let t = {
+				...e,
+				label: n(e.label),
+				placeholder: e.placeholder ? n(e.placeholder) : void 0
+			};
+			return t.type === "select" && (t.options = t.options.map((e) => ({
+				...e,
+				label: n(e.label)
+			}))), t.type === "segmented" && (t.options = t.options.map((e) => typeof e == "object" ? {
+				...e,
+				label: n(e.label)
+			} : e)), t;
+		})), me = (e) => Array.isArray(e) && e.length === 2 && e.every((e) => e instanceof Date && Number.isFinite(e.getTime())) ? [e[0].getTime().toString(), e[1].getTime().toString()] : null, he = (e) => {
+			if (e == null || Array.isArray(e) && e.length === 2 && e.every((e) => e === "")) return;
+			if (!Array.isArray(e) || e.length !== 2 || !e.every((e) => typeof e == "string" && /^\d+$/.test(e))) return [/* @__PURE__ */ new Date(NaN), /* @__PURE__ */ new Date(NaN)];
+			let t = e.map((e) => new Date(Number(e)));
+			return t.every((e) => Number.isFinite(e.getTime())) ? [t[0], t[1]] : [/* @__PURE__ */ new Date(NaN), /* @__PURE__ */ new Date(NaN)];
+		}, ge = i(() => ({
+			...H,
+			created_range: me(V.value)
+		}));
+		function _e(e) {
+			for (let t of fe.value) t.key !== "created_range" && (H[t.key] = typeof e[t.key] == "string" ? e[t.key] : "");
+			"created_range" in e && (V.value = he(e.created_range));
+		}
+		function ve(e) {
+			_e(e), Ce();
+		}
+		let ye = 0, be, xe;
+		async function Se() {
+			if (Ae || je || !L.value) return;
+			be?.abort(), be = new AbortController();
+			let e = ++ye;
+			ne.value = "";
+			try {
+				let t = xe ? {
+					...xe,
+					page_number: ie.value,
+					page_size: ae.value
+				} : H_(r.game, p.value, {
+					...H,
+					...R_(V.value ?? z(), U.value)
+				}, ie.value, ae.value);
+				te.value = !0;
+				let n = p.value ? await r.adapter.rounds(t, be.signal) : await r.adapter.orders(r.view === "current" ? "current" : "history", t, be.signal);
+				if (e !== ye) return;
+				if (n.page_number !== ie.value || n.page_size !== ae.value || !Array.isArray(n.items) || n.items.length > ae.value || n.items.some((e) => !e || typeof e != "object" || typeof e[p.value ? "round_id" : "order_id"] != "string" || !p.value && e.game_type !== "GAME_TYPE_" + r.game) || !k_(n.total_count) || !k_(n.total_pages)) throw Error("分页响应格式异常");
+				if (ke && !n.items.some((e) => e.order_id === ke)) {
+					Oe.retry(), await Ne({ order_id: ke });
+					return;
+				}
+				Y.value = n.items, oe.value = n.total_count, se.value = n.total_pages, re.value = !0, xe = t;
+			} catch (t) {
+				e === ye && (ne.value = n(I_(t)), Y.value = [], oe.value = "0", se.value = "0", re.value = !1);
+			} finally {
+				e === ye && (te.value = !1);
+			}
+		}
+		function Ce() {
+			(Ae || je || ke) && Me(), ie.value = 1, xe = void 0, Se();
+		}
+		function we() {
+			Me();
+			for (let e of Object.keys(H)) delete H[e];
+			Object.assign(H, {
+				agent_id: "",
+				...p.value ? {} : { order_source: "PLAYER" },
+				time_field: B(),
+				sort_field: p.value ? "BET_OPEN_AT" : "CREATED_AT",
+				sort_direction: "DESC"
+			}), V.value = r.view === "current" ? void 0 : z(), Ce();
+		}
+		function Te(e, t) {
+			if (te.value || !re.value || !Number.isSafeInteger(e) || e < 1 || e > 2147483647 || ![
+				20,
+				50,
+				100,
+				200
+			].includes(t) || e === ie.value && t === ae.value) return;
+			ie.value = e, ae.value = t;
+			let n = ye;
+			y(() => {
+				n === ye && Se();
+			});
+		}
+		let Ee = {
+			get query() {
+				return r.context.route.query;
+			},
+			get fullPath() {
+				return r.context.route.fullPath;
+			}
+		}, De = { replace: (e) => r.adapter.navigate(e) }, Oe = new T_(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ke = "", Ae = !1, je = !1;
+		function Me() {
+			v.value = !1, x.value = null, Oe.cancel(), ke = "", Ae = !1, je = !1, ye++, be?.abort(), te.value = !1, xe = void 0, Y.value = [], ne.value = "", oe.value = "0", se.value = "0", re.value = !1;
+		}
+		async function Ne(e) {
+			if (ye++, be?.abort(), Y.value = [], xe = void 0, !L.value) return;
+			let t = Oe.begin();
+			Ae = !0, je = !1;
+			try {
+				let n = await r.adapter.locate(e, r.view === "current" ? "current" : "history", t.signal);
+				if (!t.current()) return;
+				if ("order_id" in e && n.order_id !== e.order_id) throw Error("订单定位响应无效");
+				let i = w_(n, r.game === "HIGH_LOW" ? "high-low" : "up-down", r.view === "current" ? "current" : "history", (e) => L_(a.perms, e));
+				if (i.redirect) {
+					await De.replace({
+						path: i.redirect,
+						query: {
+							order_id: n.order_id,
+							_order_link_retry: String(Oe.retryCount),
+							_order_link_hops: String(Oe.redirect())
+						}
+					});
+					return;
+				}
+				for (let e of Object.keys(H)) delete H[e];
+				H.order_id = n.order_id, H.time_field = "CREATED_AT", ke = n.order_id, V.value = i.range, ie.value = 1, Ae = !1, await Se();
+			} catch (e) {
+				if (!t.current()) return;
+				Ae = !1, je = !0, te.value = !1, ne.value = n(I_(e));
+			}
+		}
+		function Pe() {
+			if (Me(), Oe = new T_(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ie.value = 1, L.value) try {
+				let e = p.value ? null : C_(Ee.query);
+				e ? Ne(e) : Se();
+			} catch (e) {
+				je = !0, ne.value = n(I_(e));
+			}
+		}
+		function Fe() {
+			if (!te.value) return Se();
+		}
+		return W(() => [
+			Ee.fullPath,
+			r.game,
+			r.view,
+			a.userInfo.id,
+			a.perms,
+			r.context.identityKey
+		], Pe, {
+			immediate: !0,
+			deep: !0
+		}), C(() => {
+			Oe.cancel(), ye++, be?.abort();
+		}), (e, i) => (D(), c("section", { class: b(["prediction-operation prediction-table-page prediction-compact-table mm-ui", {
+			"prediction-rounds-table": p.value,
+			"prediction-current-orders-table": m.value,
+			"prediction-history-orders-table": _.value
+		}]) }, [L.value ? (D(), c(t, { key: 1 }, [f(R(oi), {
+			"aria-label": R(n)(P.value),
+			data: Y.value,
+			columns: le.value,
+			loading: te.value,
+			error: ne.value,
+			"show-pagination": !0,
+			"current-page": ie.value,
+			"page-size": ae.value,
+			"page-sizes": [
+				20,
+				50,
+				100,
+				200
+			],
+			total: ce.value,
+			"auto-refresh-seconds": 0,
+			"auto-refresh-options": [0],
+			"query-fields": pe.value,
+			"inline-query-field-keys": ue.value,
+			filters: ge.value,
+			"filter-drawer": "",
+			"filter-drawer-title": R(n)("筛选") + R(n)(P.value),
+			"filter-drawer-subtitle": R(n)(p.value ? "按开奖时间查询，含预计开奖；最多31天" : r.view === "history" ? "结算时间仅含资金已完成记录；无结算时间可切换按下单时间查找，最多31天" : "按下单时间查询，最多31天"),
+			"columns-configurable": "",
+			"fill-height": "",
+			"show-cell-title": "",
+			"row-key": p.value ? "round_id" : "order_id",
+			"empty-text": R(n)(re.value ? "暂无符合条件的记录" : "请选择条件查询"),
+			"onUpdate:filters": _e,
+			"onUpdate:currentPage": i[0] ||= (e) => Te(e, ae.value),
+			"onUpdate:pageSize": i[1] ||= (e) => Te(1, e),
+			onQuery: ve,
+			onReset: we,
+			onRefresh: Fe,
+			onRetry: Se
+		}, u({
+			"field-agent_id": K(({ value: t, update: n }) => [M(e.$slots, "field-agent_id", {
+				value: t,
+				update: n
+			}, void 0, !0)]),
+			"field-created_range": K(({ value: e, update: t }) => [f(R(vn), {
+				size: "sm",
+				"model-value": R(s_)(he(e)),
+				placeholder: R(n)(G.value),
+				"onUpdate:modelValue": (e) => t(me(R(c_)(e)))
+			}, null, 8, [
+				"model-value",
+				"placeholder",
+				"onUpdate:modelValue"
+			])]),
+			"cell-symbol": K(({ row: e }) => [f(tv, { symbol: e.symbol }, null, 8, ["symbol"])]),
+			"cell-source_type": K(({ row: e }) => [f(nv, { "source-type": e.source_type ?? null }, null, 8, ["source-type"])]),
+			"cell-status": K(({ row: e }) => [f(R($), {
+				type: T(e.status),
+				effect: "soft",
+				size: "sm",
+				round: ""
+			}, {
+				default: K(() => [d(F(R(n)(R(Q_)(e, {
+					key: "status",
+					label: "status",
+					kind: "enum"
+				}, r.game))), 1)]),
+				_: 2
+			}, 1032, ["type"])]),
+			"cell-direction": K(({ row: e }) => [l("span", { class: b(["prediction-status prediction-direction", `prediction-status--${R(f_)("direction", e.direction)}`]) }, F(R(n)(R(Q_)(e, {
+				key: "direction",
+				label: "direction",
+				kind: "enum"
+			}, r.game))), 3)]),
+			"cell-ownership_type": K(({ row: e }) => [[
+				"白标",
+				"商户",
+				"机器人"
+			].includes(R(Q_)(e, {
+				key: "ownership_type",
+				label: ""
+			}, r.game)) ? (D(), c("span", {
+				key: 0,
+				class: b(["prediction-status prediction-ownership", e.user_type === "3" ? "prediction-status--warning" : e.agent_id === "0" ? "prediction-status--primary" : "prediction-ownership--merchant"])
+			}, F(R(Q_)(e, {
+				key: "ownership_type",
+				label: ""
+			}, r.game)), 3)) : (D(), c("span", uv, "—"))]),
+			"cell-order_status": K(({ row: e }) => [R(h_)(e) ? (D(), c("span", {
+				key: 0,
+				class: b(["prediction-status prediction-order-status", [`prediction-status--${R(h_)(e).tone}`, { "prediction-fund-alert": R(h_)(e).key === "fund_status" }]]),
+				title: R(g_)(e),
+				"data-status-field": R(h_)(e).key
+			}, F(R(n)(R(P_)(R(h_)(e).value))), 11, dv)) : (D(), c("span", fv, "—"))]),
+			"cell-realized_pnl": K(({ row: e }) => [l("span", { class: b(["prediction-pnl", `prediction-pnl--${R(__)(e.realized_pnl)}`]) }, F(R(Q_)(e, {
+				key: "realized_pnl",
+				label: "",
+				kind: "amount"
+			}, r.game)), 3)]),
+			"cell-order_id": K(({ row: e }) => [l("span", { title: R(Q_)(e, {
+				key: "order_id",
+				label: "订单号"
+			}, r.game) }, F(R(Q_)(e, {
+				key: "order_id",
+				label: "订单号"
+			}, r.game)), 9, pv)]),
+			"cell-round_id": K(({ row: e }) => [l("span", {
+				class: b(["prediction-round-number", { "prediction-round-number--legacy": !e.round_no }]),
+				title: e.round_no || e.round_id
+			}, F(e.round_no || e.round_id), 11, mv)]),
+			_: 2
+		}, [j(E.value, (e) => ({
+			name: `cell-${e}`,
+			fn: K(({ row: t }) => [l("span", lv, F(N(t, e)), 1)])
+		})), _.value ? {
+			name: "cell-operation",
+			fn: K(({ row: e }) => [f(R(Z), {
+				size: "sm",
+				"icon-only": "",
+				"aria-label": R(n)("查看详情"),
+				title: R(n)("查看详情"),
+				onClick: (t) => S(e)
+			}, {
+				default: K(() => [f(R(Q), {
+					name: "panel-left-close",
+					size: 15
+				})]),
+				_: 1
+			}, 8, [
+				"aria-label",
+				"title",
+				"onClick"
+			])]),
+			key: "0"
+		} : void 0]), 1032, [
+			"aria-label",
+			"data",
+			"columns",
+			"loading",
+			"error",
+			"current-page",
+			"page-size",
+			"total",
+			"query-fields",
+			"inline-query-field-keys",
+			"filters",
+			"filter-drawer-title",
+			"filter-drawer-subtitle",
+			"row-key",
+			"empty-text"
+		]), _.value ? (D(), o(sv, {
+			key: 0,
+			modelValue: v.value,
+			"onUpdate:modelValue": i[2] ||= (e) => v.value = e,
+			game: r.game,
+			row: x.value,
+			onClosed: w
+		}, null, 8, [
+			"modelValue",
+			"game",
+			"row"
+		])) : s("", !0)], 64)) : (D(), c("p", cv, F(R(n)("没有此页面的查询权限")), 1))], 2));
+	}
+}), [["__scopeId", "data-v-2f84dc6d"]]), gv = (e) => e == null ? "—" : e === "" ? "（空）" : typeof e == "string" || typeof e == "number" ? String(e) : "—";
+function _v(e) {
+	let t = new Date(e), n = (e) => String(e).padStart(2, "0");
+	return `${t.getFullYear()}-${n(t.getMonth() + 1)}-${n(t.getDate())} ${n(t.getHours())}:${n(t.getMinutes())}:${n(t.getSeconds())}`;
+}
+function vv(e) {
+	return typeof e != "string" || !/^\d+$/.test(e) || BigInt(e) > 253402300799999n ? gv(e) : _v(Number(e));
+}
+var yv = {
+	order_no: "订单编号",
+	order_id: "内部订单ID",
+	user_id: "用户ID",
+	symbol: "交易对",
+	cell_id: "网格单元",
+	price_low: "价格下界",
+	price_high: "价格上界",
+	stake_amount: "本金",
+	locked_multiplier: "锁定倍率",
+	status: "订单状态",
+	created_at_ms: "创建时间",
+	locked_gross_payout: "锁定总返还",
+	realized_net_profit: "用户已实现净收益",
+	settled_at_ms: "结算时间",
+	settlement_mark_price: "结算标记价",
+	settlement_price_time_ms: "结算价格行情时间",
+	debit_ledger_id: "扣款流水号",
+	settlement_funding_type: "派彩／退款类型",
+	settlement_ledger_id: "派彩／退款流水号",
+	home_site_id: "归属站点ID",
+	entry_site_id: "入口站点ID",
+	settlement_asset: "结算资产",
+	time_start_ms: "单元开始时间",
+	time_end_ms: "单元结束时间",
+	locked_net_profit: "锁定净收益",
+	order_version: "订单版本",
+	updated_at_ms: "更新时间",
+	result_code: "结果代码",
+	client_order_id: "客户端订单号",
+	public_quote_id: "公共报价ID",
+	quote_id: "报价ID",
+	locked_layout_version: "锁定布局版本",
+	locked_config_version: "锁定站点配置版本",
+	locked_model_version: "锁定模型版本",
+	bet_close_time_ms: "封盘时间",
+	locked_hit_probability: "锁定命中概率",
+	hit_time_ms: "命中时间",
+	hit_mark_price: "命中价格",
+	payout_discarded_remainder: "返还舍弃余数",
+	result_message: "结果说明"
+}, bv = [
+	"",
+	"待扣款",
+	"进行中",
+	"已命中",
+	"未命中",
+	"已结算·赢",
+	"已结算·输",
+	"作废",
+	"拒绝"
+], xv = (e, t) => e.endsWith("_ms") ? vv(t) : e === "status" && typeof t == "number" && bv[t] || gv(t);
+function Sv(e) {
+	let t = e, n = t?.response?.data?.data, r = n?.error_code || t?.error_code || t?.message || "";
+	return {
+		code: [
+			"SCOPE_UNAVAILABLE",
+			"DEPENDENCY_UNAVAILABLE",
+			"FORBIDDEN",
+			"ORDER_NOT_FOUND",
+			"INVALID_REQUEST",
+			"USER_FILTER_TOO_BROAD",
+			"INVALID_RESPONSE"
+		].includes(r) ? r : "LOAD_FAILED",
+		unauthorized: t?.response?.status === 401,
+		trace: typeof n?.trace_id == "string" && /^[a-zA-Z0-9-]{1,64}$/.test(n.trace_id) ? n.trace_id : ""
+	};
+}
+var Cv = {
+	current: "网格当前订单",
+	history: "网格历史订单",
+	readOnly: "只读查询",
+	noPermission: "没有订单查询权限",
+	noDetail: "没有详情查询权限",
+	detail: "详情",
+	query: "筛选订单",
+	timeRange: "创建日期（最多31天）",
+	empty: "暂无符合条件的记录",
+	invalidQuery: "请检查时间范围、筛选内容和页码",
+	total: "总记录数",
+	previous: "上一页",
+	next: "下一页",
+	pageSize: "每页条数",
+	limit: "仅可查询前1000页，请缩小时间或筛选范围",
+	retry: "重试",
+	loading: "加载中",
+	authExpired: "登录状态已失效，请重新登录",
+	SCOPE_UNAVAILABLE: "订单查询范围暂不可用",
+	DEPENDENCY_UNAVAILABLE: "订单查询服务暂不可用",
+	FORBIDDEN: "没有此次查询权限",
+	ORDER_NOT_FOUND: "订单不存在或不在查询范围内",
+	INVALID_REQUEST: "查询条件不合法",
+	USER_FILTER_TOO_BROAD: "匹配用户超过500个，请缩小筛选条件",
+	INVALID_RESPONSE: "订单数据不完整，请重试",
+	LOAD_FAILED: "订单加载失败，请重试"
+}, wv = {
+	order_no: "订单编号",
+	order_id: "内部订单ID",
+	debit_ledger_id: "扣款流水号",
+	public_user_id: "UID",
+	user_name: "用户账号",
+	source_name: "来源名称",
+	source_type: "来源类型",
+	symbol: "交易品种",
+	cell_id: "下单格子",
+	price_range: "格子价格区间",
+	stake_amount: "下注金额(U)",
+	locked_multiplier: "下单赔率",
+	locked_gross_payout: "预计返还(U)",
+	created_at_ms: "下单时间",
+	order_status: "订单状态",
+	result_price: "结算价格",
+	result_cell: "结果格子",
+	actual_return: "实际返还(U)",
+	realized_pnl: "订单盈亏(U)",
+	settled_at_ms: "结算时间",
+	settlement_ledger_id: "派彩／退款流水号",
+	internal_user_id: "内部用户ID"
+}, Tv = {
+	current: [
+		"order_no",
+		"public_user_id",
+		"user_name",
+		"symbol",
+		"price_range",
+		"stake_amount",
+		"locked_multiplier",
+		"locked_gross_payout",
+		"debit_ledger_id",
+		"order_status",
+		"created_at_ms"
+	],
+	history: [
+		"order_no",
+		"public_user_id",
+		"user_name",
+		"symbol",
+		"price_range",
+		"stake_amount",
+		"locked_multiplier",
+		"result_price",
+		"order_status",
+		"actual_return",
+		"realized_pnl",
+		"created_at_ms",
+		"settled_at_ms",
+		"debit_ledger_id",
+		"settlement_ledger_id"
+	]
+};
+function Ev(e, t) {
+	let n = [...Tv[e] ?? []];
+	return t && n.splice(n.indexOf("user_name") + 1, 0, "source_name", "source_type"), n;
+}
+function Dv(e, t = !1) {
+	return Ev(e, t).filter((t) => e !== "history" || !["debit_ledger_id", "settlement_ledger_id"].includes(t));
+}
+function Ov(e) {
+	if (typeof e != "string" || !/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
+	let [t, n = ""] = e.split(".");
+	return t + "." + n.replace(/0+$/, "").padEnd(2, "0");
+}
+function kv(e) {
+	if (typeof e != "string" || !/^(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
+	let [t, n = ""] = e.split("."), r = /[1-9]/.test(n.slice(4)), i = n.slice(0, 4).replace(/0+$/, "");
+	return `${r ? "≈" : ""}${t}${i ? "." + i : ""}x`;
+}
+function Av(e, t, n = xv) {
+	let r = U_(e, t);
+	if (r !== void 0) return r;
+	if (e === "result_price") return typeof t.settlement_mark_price == "string" && t.settlement_mark_price !== "" ? t.settlement_mark_price : "—";
+	if ([
+		"debit_ledger_id",
+		"settlement_funding_type",
+		"settlement_ledger_id"
+	].includes(e) && t.funding_read_available !== !0) return n("ledger_unavailable", "暂不可用");
+	if (e === "settlement_ledger_id") return t.status === 6 ? t.settlement_ledger_id || t.settlement_funding_type ? n("ledger_anomaly", "关联异常") : n("ledger_loss", "无（下单时已扣款）") : t.status === 5 && t.settlement_funding_type === "REFUND" || t.status === 7 && t.settlement_funding_type === "PAYOUT" ? n("ledger_anomaly", "关联异常") : typeof t.settlement_ledger_id == "string" && t.settlement_ledger_id !== "" ? t.settlement_ledger_id : t.status === 5 || t.status === 7 && (t.debit_ledger_id || t.settlement_funding_type === "REFUND") ? n("ledger_anomaly", "关联异常") : [
+		1,
+		2,
+		3,
+		4
+	].includes(Number(t.status)) ? n("ledger_pending", "结算中") : "—";
+	if (e === "result_cell") return "—";
+	if (e === "order_status") return n("status", t.status);
+	if (e === "price_range") return typeof t.price_low == "string" && typeof t.price_high == "string" ? `${Ov(t.price_low)} – ${Ov(t.price_high)}` : "—";
+	if (e === "actual_return") return Ov(t.status === 5 ? t.locked_gross_payout : t.status === 6 ? "0" : t.status === 7 ? t.stake_amount : void 0);
+	if (e === "realized_pnl") return typeof t.status == "number" && [
+		5,
+		6,
+		7
+	].includes(t.status) ? Ov(t.realized_net_profit) : "—";
+	if (e === "locked_multiplier") return kv(t[e]);
+	if (["stake_amount", "locked_gross_payout"].includes(e)) return Ov(t[e]);
+	let i = t[e];
+	return typeof i == "string" && i !== "" ? n(e, i) : "—";
+}
+//#endregion
+//#region src/components/prediction-operations/grid/components/GridHistoryDetailDrawer.vue?vue&type=script&setup=true&lang.ts
+var jv = { class: "order-detail-title" }, Mv = {
+	key: 0,
+	class: "order-detail-content"
+}, Nv = { class: "order-detail-summary" }, Pv = ["aria-label"], Fv = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
+	__name: "GridHistoryDetailDrawer",
+	props: {
+		modelValue: { type: Boolean },
+		row: {}
+	},
+	emits: ["update:modelValue", "closed"],
+	setup(e, { emit: n }) {
+		let r = S_(), a = b_(), u = e, p = n, m = i({
+			get: () => u.modelValue,
+			set: (e) => p("update:modelValue", e)
+		}), h = i(() => [
+			{
+				title: "订单信息",
+				keys: [
+					"order_no",
+					"symbol",
+					"price_range"
+				]
+			},
+			{
+				title: "用户信息",
+				keys: [
+					"public_user_id",
+					"user_name",
+					"source_name",
+					"source_type"
+				]
+			},
+			{
+				title: "结算信息",
+				keys: [
+					"stake_amount",
+					"locked_multiplier",
+					"result_price",
+					"order_status",
+					"actual_return",
+					"realized_pnl",
+					"debit_ledger_id",
+					"settlement_ledger_id"
+				]
+			},
+			{
+				title: "时间信息",
+				keys: ["created_at_ms", "settled_at_ms"]
+			}
+		].map((e) => ({
+			...e,
+			keys: e.keys.filter((e) => a().showSources || !["source_name", "source_type"].includes(e))
+		}))), g = (e) => {
+			if (!u.row) return "-";
+			if (e === "user_name") return $_(typeof u.row.nick_name == "string" ? u.row.nick_name : void 0, typeof u.row.user_name == "string" ? u.row.user_name : void 0);
+			let t = Av(e, u.row);
+			return [
+				"source_name",
+				"order_no",
+				"symbol",
+				"public_user_id"
+			].includes(e) ? t : r(t);
+		}, _ = i(() => {
+			let e = u.row ? m_(u.row.status) : "neutral";
+			return e === "neutral" ? "default" : e;
+		});
+		return (n, i) => (D(), o(R(Qe), {
+			modelValue: m.value,
+			"onUpdate:modelValue": i[1] ||= (e) => m.value = e,
+			"aria-label": R(r)("预测网格订单详情"),
+			placement: "right",
+			size: 500,
+			onClosed: i[2] ||= (e) => p("closed")
+		}, {
+			header: K(() => [l("div", jv, [l("strong", null, F(R(r)("预测网格订单详情")), 1), l("span", null, F(e.row ? g("order_no") : "-"), 1)])]),
+			footer: K(() => [f(R(Z), { onClick: i[0] ||= (e) => m.value = !1 }, {
+				default: K(() => [d(F(R(r)("关闭")), 1)]),
+				_: 1
+			})]),
+			default: K(() => [e.row ? (D(), c("div", Mv, [l("div", Nv, [f(tv, { symbol: e.row.symbol }, null, 8, ["symbol"]), f(R($), {
+				type: _.value,
+				effect: "soft",
+				round: "",
+				size: "sm"
+			}, {
+				default: K(() => [d(F(g("order_status")), 1)]),
+				_: 1
+			}, 8, ["type"])]), (D(!0), c(t, null, j(h.value, (n) => (D(), c("section", {
+				key: n.title,
+				class: "order-detail-section",
+				"aria-label": R(r)(n.title)
+			}, [l("h3", null, F(R(r)(n.title)), 1), f(R(gu), { size: "md" }, {
+				default: K(() => [(D(!0), c(t, null, j(n.keys, (t) => (D(), o(R(vu), {
+					key: t,
+					label: R(r)(t === "user_name" ? "用户名" : R(wv)[t]),
+					span: t === "price_range" ? 2 : 1,
+					"data-detail-field": t
+				}, {
+					default: K(() => [t === "source_type" ? (D(), o(nv, {
+						key: 0,
+						"source-type": e.row.source_type ?? null
+					}, null, 8, ["source-type"])) : t === "symbol" ? (D(), o(tv, {
+						key: 1,
+						symbol: e.row.symbol
+					}, null, 8, ["symbol"])) : t === "order_status" ? (D(), o(R($), {
+						key: 2,
+						type: _.value,
+						effect: "soft",
+						round: "",
+						size: "sm"
+					}, {
+						default: K(() => [d(F(g(t)), 1)]),
+						_: 2
+					}, 1032, ["type"])) : (D(), c("span", {
+						key: 3,
+						class: b(t === "realized_pnl" ? `is-${R(__)(g(t))}` : void 0)
+					}, F(g(t)), 3))]),
+					_: 2
+				}, 1032, [
+					"label",
+					"span",
+					"data-detail-field"
+				]))), 128))]),
+				_: 2
+			}, 1024)], 8, Pv))), 128))])) : s("", !0)]),
+			_: 1
+		}, 8, ["modelValue", "aria-label"]));
+	}
+}), [["__scopeId", "data-v-acaa154b"]]), Iv = 9223372036854775807n, Lv = 253402300799999n, Rv = (e) => e === "current" ? [
+	1,
+	2,
+	3,
+	4
+] : [
+	5,
+	6,
+	7,
+	8
+];
+function zv() {
+	throw Error("INVALID_REQUEST");
+}
+function Bv(e, t = Iv, n = !1) {
+	return typeof e == "string" && (n ? /^(0|[1-9]\d*)$/ : /^[1-9]\d*$/).test(e) && e.length <= 19 && BigInt(e) <= t;
+}
+function Vv(e) {
+	let t = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.exec(e);
+	if (!t) return zv();
+	let [n, r, i, a, o, s] = t.slice(1).map(Number), c = /* @__PURE__ */ new Date(0);
+	return c.setFullYear(n, r - 1, i), c.setHours(a, o, s, 0), c.getFullYear() !== n || c.getMonth() !== r - 1 || c.getDate() !== i || c.getHours() !== a || c.getMinutes() !== o || c.getSeconds() !== s || c.getTime() < 0 ? zv() : String(c.getTime());
+}
+function Hv(e, t, n, r) {
+	let i = [
+		"created_from_ms",
+		"created_to_ms",
+		"order_id",
+		"order_no",
+		"user_id",
+		"public_user_id",
+		"user_keyword",
+		"client_order_id",
+		"home_site_id",
+		"symbol",
+		"status"
+	];
+	if (Object.keys(t).some((e) => !i.includes(e)) || !Number.isInteger(n) || n < 1 || n > 1e3 || !Number.isInteger(r) || r < 1 || r > 100) return zv();
+	let a = t.created_from_ms, o = t.created_to_ms;
+	if (!Bv(a, Lv, !0) || !Bv(o, Lv, !0) || BigInt(o) <= BigInt(a) || BigInt(o) - BigInt(a) > 2678400000n) return zv();
+	let s = new URLSearchParams({
+		created_from_ms: a,
+		created_to_ms: o
+	});
+	for (let e of i.slice(2, -1)) {
+		let n = t[e];
+		if (n === void 0 || n === "") continue;
+		if (typeof n != "string") return zv();
+		let r = n;
+		if (e === "user_keyword") {
+			if (/[\x00-\x1f\x7f]/.test(r)) return zv();
+			if (r = r.trim(), !r) continue;
+			if ([...r].length > 128) return zv();
+		}
+		if (["order_id", "user_id"].includes(e) && !Bv(r) || e === "public_user_id" && (r.trim() !== r || [...r].length > 64 || /[\x00-\x1f\x7f]/.test(r)) || e === "order_no" && (r.length !== 20 || !/^GC[0-9]{12}[A-Z0-9]{6}$/.test(r)) || e === "client_order_id" && !/^[A-Za-z0-9_-]{8,64}$/.test(r) || e === "symbol" && !/^[A-Z0-9]{2,32}$/.test(r) || e === "home_site_id" && (r.trim() !== r || r.includes("\0") || new TextEncoder().encode(r).length > 64)) return zv();
+		s.set(e, r);
+	}
+	let c = t.status;
+	if (c !== void 0 && c !== "" && (typeof c != "string" || !Rv(e).map(String).includes(c))) return zv();
+	for (let t of c ? [Number(c)] : Rv(e)) s.append("statuses[]", String(t));
+	return s.set("page_no", String(n)), s.set("page_size", String(r)), s.toString();
+}
+function Uv(e) {
+	return typeof e == "object" && !!e && !Array.isArray(e);
+}
+var Wv = (e, t = !1) => typeof e == "string" && (t ? /^-?(0|[1-9]\d*)(\.\d+)?$/ : /^(0|[1-9]\d*)(\.\d+)?$/).test(e);
+function Gv(e, t, n, r = !1) {
+	if (!Uv(e) || !Number.isInteger(e.status) || ![
+		1,
+		2,
+		3,
+		4,
+		5,
+		6,
+		7,
+		8
+	].includes(e.status) || t && !Rv(t).includes(e.status) || n && e.order_id !== n) throw Error("INVALID_RESPONSE");
+	for (let t of [
+		"order_id",
+		"user_id",
+		"order_version",
+		"time_start_ms",
+		"time_end_ms"
+	]) if (!Bv(e[t])) throw Error("INVALID_RESPONSE");
+	for (let t of [
+		"home_site_id",
+		"entry_site_id",
+		"symbol",
+		"settlement_asset",
+		"cell_id",
+		"price_low",
+		"price_high",
+		"status_name"
+	]) if (typeof e[t] != "string") throw Error("INVALID_RESPONSE");
+	for (let t of [
+		"stake_amount",
+		"locked_gross_payout",
+		"locked_net_profit",
+		"locked_multiplier"
+	]) if (!Wv(e[t])) throw Error("INVALID_RESPONSE");
+	for (let t of ["created_at_ms", "updated_at_ms"]) if (!Bv(e[t], Lv, !0)) throw Error("INVALID_RESPONSE");
+	if (e.settled_at_ms !== null && !Bv(e.settled_at_ms) || e.order_no != null && (typeof e.order_no != "string" || !/^GC\d{12}[A-Z0-9]{6}$/.test(e.order_no)) || e.settlement_mark_price != null && !Wv(e.settlement_mark_price) || e.settlement_price_time_ms != null && !Bv(e.settlement_price_time_ms, Lv) || Object.hasOwn(e, "funding_read_available") && typeof e.funding_read_available != "boolean") throw Error("INVALID_RESPONSE");
+	for (let t of ["debit_ledger_id", "settlement_ledger_id"]) if (e[t] != null && !Bv(e[t])) throw Error("INVALID_RESPONSE");
+	if (e.settlement_funding_type != null && !["PAYOUT", "REFUND"].includes(e.settlement_funding_type) || !Number.isInteger(e.result_code) || e.result_code < 1 || ([
+		5,
+		6,
+		7
+	].includes(e.status) ? !Wv(e.realized_net_profit, !0) : Object.hasOwn(e, "realized_net_profit"))) throw Error("INVALID_RESPONSE");
+	if (r) {
+		for (let t of [
+			"client_order_id",
+			"public_quote_id",
+			"quote_id",
+			"locked_model_version",
+			"result_message"
+		]) if (typeof e[t] != "string") throw Error("INVALID_RESPONSE");
+		for (let t of [
+			"locked_layout_version",
+			"locked_config_version",
+			"bet_close_time_ms"
+		]) if (!Bv(e[t])) throw Error("INVALID_RESPONSE");
+		if (!Wv(e.locked_hit_probability) || !Number.isInteger(e.payout_discarded_remainder) || e.payout_discarded_remainder < 0 || e.payout_discarded_remainder > 99 || (e.hit_time_ms === null ? e.hit_mark_price !== null : !Bv(e.hit_time_ms) || typeof e.hit_mark_price != "string")) throw Error("INVALID_RESPONSE");
+	}
+	return e;
+}
+function Kv(e, t, n, r) {
+	if (!Uv(e) || !Array.isArray(e.lists) || e.lists.length > r || e.page_no !== n || e.page_size !== r || !Number.isSafeInteger(e.count) || e.count < 0 || !Uv(e.extend) || !Bv(e.extend.query_snapshot_at_ms, Lv, !0)) throw Error("INVALID_RESPONSE");
+	return e.lists.forEach((e) => Gv(e, t)), e;
+}
+var qv = class {
+	generation = 0;
+	controller;
+	close() {
+		this.generation++, this.controller?.abort(), this.controller = void 0;
+	}
+	next() {
+		this.close();
+		let e = this.generation, t = new AbortController();
+		return this.controller = t, {
+			signal: t.signal,
+			current: () => e === this.generation && !t.signal.aborted
+		};
+	}
+}, Jv = { class: "mm-sr-only" }, Yv = {
+	key: 0,
+	role: "alert"
+}, Xv = {
+	key: 1,
+	role: "alert"
+}, Zv = {
+	key: 0,
+	role: "alert",
+	class: "validation"
+}, Qv = { class: "grid-history-time" }, $v = {
+	key: 2,
+	role: "status"
+}, ey = /*#__PURE__*/ Ci(/* @__PURE__ */ p({
+	__name: "GridOrders",
+	props: {
+		view: {},
+		adapter: {},
+		context: {},
+		showSources: { type: Boolean },
+		locale: {}
+	},
+	setup(e) {
+		let n = e, r = S_(() => n.locale), a = i(() => n.view === "history"), d = A(!1), m = A(null);
+		function g(e) {
+			!a.value || !V.value || (m.value = e, d.value = !0);
+		}
+		function _() {
+			d.value || (m.value = null);
+		}
+		let v = i(() => a.value ? ["created_at_ms", "settled_at_ms"] : []), x = new Intl.DateTimeFormat("zh-CN", {
+			year: "numeric",
+			month: "2-digit",
+			day: "2-digit",
+			hour: "2-digit",
+			minute: "2-digit",
+			second: "2-digit",
+			hourCycle: "h23"
+		});
+		function S(e, t) {
+			let n = e[t];
+			if (typeof n != "string" || !/^\d+$/.test(n) || BigInt(n) > 253402300799999n) return Av(t, e, xv);
+			let r = Object.fromEntries(x.formatToParts(new Date(Number(n))).map(({ type: e, value: t }) => [e, t]));
+			return `${r.year}/${r.month}/${r.day}\n${r.hour}:${r.minute}:${r.second}`;
+		}
+		y_(() => ({
+			symbolComponent: n.adapter.symbolComponent,
+			showSources: n.showSources !== !1,
+			locale: n.locale
+		}));
+		let w = {
+			get perms() {
+				return n.context.permissions;
+			},
+			get userInfo() {
+				return { id: n.context.actorId };
+			}
+		}, T = {
+			get query() {
+				return n.context.route.query;
+			},
+			get fullPath() {
+				return n.context.route.fullPath;
+			}
+		}, E = { replace: (e) => n.adapter.navigate(e) }, O = new qv(), k = (e) => r(Cv[e] || yv[e] || e), M = (e) => r(wv[e] || e), N = (e, t) => ["status", "duration_seconds"].includes(e) || e.startsWith("ledger_") ? r(xv(e, t)) : xv(e, t), P = (e) => r(bv[e]), I = Intl.DateTimeFormat().resolvedOptions().timeZone, L = i(() => String(w.userInfo.id || "")), z = (e) => !!L.value && (w.perms.includes("*") || w.perms.includes(e)), B = A(!1), V = i(() => z("grid_order:lists") && !B.value), H = i(() => JSON.stringify([
+			L.value,
+			w.perms,
+			n.view,
+			T.fullPath,
+			n.context.identityKey
+		])), U = () => {
+			let [e, t] = z_(n.view);
+			return [_v(e.getTime()), _v(t.getTime())];
+		}, G = () => ({ date_range: n.view === "history" ? U() : null }), q = A(G()), ee = A(""), J = A(""), Y = A(!1), te = A(null), ne = A(1), re = A(20), ie = i(() => te.value ? Math.ceil(te.value.count / re.value) : 0), ae = i(() => Math.min(te.value?.count ?? 0, 1e3 * re.value)), oe = [
+			"order_no",
+			"public_user_id",
+			"symbol",
+			"user_id",
+			"client_order_id",
+			"home_site_id"
+		], se = [
+			"user_keyword",
+			"order_id",
+			...oe
+		], ce = r_(V, n.adapter.symbols, () => n.context.identityKey), X = i(() => [
+			{
+				key: "user_keyword",
+				label: r("用户搜索"),
+				type: "keyword",
+				placeholder: r("用户 UID/用户名/昵称"),
+				width: 230,
+				maxlength: 128,
+				clearable: !0
+			},
+			{
+				key: "date_range",
+				type: "date-range",
+				label: k("timeRange"),
+				width: 240
+			},
+			...oe.map((e) => e === "symbol" ? {
+				key: e,
+				type: "coin",
+				label: k(e),
+				clearable: !0,
+				width: 150,
+				options: ce.value
+			} : {
+				key: e,
+				type: "keyword",
+				label: e === "public_user_id" ? M("public_user_id") : e === "user_id" ? M("internal_user_id") : k(e),
+				clearable: !0,
+				width: e === "public_user_id" ? 130 : 150
+			}),
+			{
+				key: "status",
+				type: "select",
+				label: k("status"),
+				clearable: !0,
+				width: 120,
+				options: Rv(n.view).map((e) => ({
+					value: String(e),
+					label: P(e)
+				}))
+			}
+		]), le = i(() => [...Dv(n.view, n.showSources !== !1).map((e) => ({
+			key: e,
+			dataIndex: e,
+			title: e === "user_name" ? r("用户名") : M(e),
+			width: l_(e, a.value ? "grid-history" : void 0),
+			align: "left",
+			formatter: (t, n) => e === "user_name" ? $_(typeof n.nick_name == "string" ? n.nick_name : void 0, typeof n.user_name == "string" ? n.user_name : void 0) : Av(e, n, N)
+		})), ...a.value ? [{
+			key: "operation",
+			title: r("操作"),
+			width: l_("operation", "grid-history"),
+			align: "center",
+			fixed: "right"
+		}] : []]), ue = (e, t) => Array.isArray(e) && typeof e[t] == "string" ? e[t] : "", de = p({
+			props: { value: { type: null } },
+			emits: ["update"],
+			setup(e, { emit: t }) {
+				return () => h(vn, {
+					size: "sm",
+					modelValue: s_([0, 1].map((t) => new Date(ue(e.value, t).replace(" ", "T")))),
+					placeholder: M("created_at_ms"),
+					"onUpdate:modelValue": (e) => t("update", c_(e)?.map((e) => _v(e.getTime())) ?? ["", ""])
+				});
+			}
+		});
+		function fe() {
+			d.value = !1, m.value = null, ge++, he = "", O.close(), te.value = null, Y.value = !1, J.value = "";
+		}
+		function pe() {
+			fe(), B.value = !0;
+		}
+		function me(e) {
+			q.value = {
+				date_range: [ue(e.date_range, 0), ue(e.date_range, 1)],
+				...Object.fromEntries([...se, "status"].map((t) => [t, typeof e[t] == "string" ? e[t] : ""]))
+			};
+		}
+		let he = "", ge = 0;
+		async function _e(e = !1) {
+			if (ge++, Ce || we || (e ? J.value = "" : (he = "", fe()), ee.value = "", !V.value)) return;
+			let t = O.next(), i = n.view, a = ne.value, o = re.value, s, c = [ue(q.value.date_range, 0), ue(q.value.date_range, 1)], [l, u] = c.every((e) => !e) ? U() : c;
+			try {
+				if (e && he) {
+					let e = new URLSearchParams(he);
+					e.set("page_no", String(a)), e.set("page_size", String(o)), s = e.toString();
+				} else s = Hv(i, {
+					...Object.fromEntries([...se, "status"].map((e) => [e, q.value[e]])),
+					created_from_ms: Vv(l),
+					created_to_ms: Vv(u)
+				}, a, o);
+			} catch {
+				ee.value = k("invalidQuery");
+				return;
+			}
+			Y.value = !0;
+			try {
+				let e = await n.adapter.orders(s, t.signal);
+				if (!t.current()) return;
+				let r = Kv(e, i, a, o);
+				if (Se && !r.lists.some((e) => e.order_id === Se)) {
+					xe.retry(), await Ee(Se);
+					return;
+				}
+				te.value = r, he = s;
+			} catch (e) {
+				t.current() && (te.value = null, Sv(e).unauthorized ? pe() : J.value = r(I_(e)));
+			} finally {
+				t.current() && (Y.value = !1);
+			}
+		}
+		function ve(e) {
+			Te(), me(e), ne.value = 1, _e();
+		}
+		function ye() {
+			Te(), q.value = G(), ne.value = 1, _e();
+		}
+		function be(e, t) {
+			if (Y.value || !te.value || ![
+				20,
+				50,
+				100
+			].includes(t) || !Number.isSafeInteger(e) || e < 1 || e > 1e3 || e === ne.value && t === re.value) return;
+			re.value = t, ne.value = e;
+			let n = ++ge;
+			y(() => {
+				n === ge && _e(!!he);
+			});
+		}
+		let xe = new T_(T.query?._order_link_retry, T.query?._order_link_hops), Se = "", Ce = !1, we = !1;
+		function Te() {
+			xe.cancel(), Se = "", Ce = !1, we = !1, fe();
+		}
+		async function Ee(e) {
+			if (fe(), !V.value) return;
+			let t = xe.begin();
+			Se = e, Ce = !0, we = !1;
+			try {
+				let r = await n.adapter.locate(e, t.signal);
+				if (!t.current()) return;
+				let i = w_(r, "grid", n.view, z);
+				if (r.order_id !== e || r.segment !== "grid") throw Error("订单定位响应无效");
+				if (i.redirect) {
+					await E.replace({
+						path: i.redirect,
+						query: {
+							order_id: e,
+							_order_link_retry: String(xe.retryCount),
+							_order_link_hops: String(xe.redirect())
+						}
+					});
+					return;
+				}
+				q.value = {
+					date_range: [_v(+i.range[0]), _v(+i.range[1])],
+					order_id: e
+				}, ne.value = 1, Ce = !1, await _e();
+			} catch (e) {
+				if (!t.current()) return;
+				Ce = !1, we = !0, Y.value = !1, J.value = r(I_(e));
+			}
+		}
+		function De() {
+			if (Te(), xe = new T_(T.query?._order_link_retry, T.query?._order_link_hops), V.value) try {
+				let e = C_(T.query);
+				if (!e) {
+					_e();
+					return;
+				}
+				let t = "order_id" in e ? e.order_id : e.scope === "grid" ? e.business_id : "";
+				if (!t) throw Error("网格订单定位参数无效");
+				Ee(t);
+			} catch (e) {
+				we = !0, J.value = r(I_(e));
+			}
+		}
+		W(H, (e, t) => {
+			t && JSON.parse(t)[0] !== L.value && (B.value = !1), ne.value = 1, De();
+		}, {
+			immediate: !0,
+			flush: "sync"
+		});
+		function Oe() {
+			if (!Y.value) return _e(!!he);
+		}
+		return C(() => {
+			xe.cancel(), fe();
+		}), (n, i) => (D(), c("section", { class: b(["grid-orders prediction-table-page prediction-compact-table mm-ui", { "grid-history-orders": a.value }]) }, [l("header", Jv, [l("h2", null, F(k(e.view)), 1), l("p", null, F(k("readOnly")) + " · " + F(R(I)), 1)]), B.value ? (D(), c("p", Yv, F(k("authExpired")), 1)) : V.value ? (D(), c(t, { key: 2 }, [
+			ee.value ? (D(), c("p", Zv, F(ee.value), 1)) : s("", !0),
+			f(R(oi), {
+				"fill-height": "",
+				"aria-label": k(e.view),
+				"query-fields": X.value,
+				filters: q.value,
+				"inline-query-field-keys": [
+					"user_keyword",
+					"date_range",
+					"order_no",
+					"status",
+					"symbol"
+				],
+				"filter-drawer": "",
+				"filter-drawer-title": k("query"),
+				"filter-drawer-subtitle": k("timeRange"),
+				columns: le.value,
+				data: te.value?.lists || [],
+				loading: Y.value,
+				error: J.value,
+				"empty-text": k("empty"),
+				"show-pagination": !0,
+				"current-page": ne.value,
+				"page-size": re.value,
+				"page-sizes": [
+					20,
+					50,
+					100
+				],
+				total: ae.value,
+				refreshable: !0,
+				"auto-refresh-seconds": 0,
+				"auto-refresh-options": [0],
+				"columns-configurable": "",
+				"show-cell-title": a.value,
+				"row-key": "order_id",
+				"onUpdate:filters": me,
+				"onUpdate:currentPage": i[0] ||= (e) => be(e, re.value),
+				"onUpdate:pageSize": i[1] ||= (e) => be(1, e),
+				onQuery: ve,
+				onReset: ye,
+				onRefresh: Oe,
+				onRetry: _e
+			}, u({
+				"field-date_range": K(({ value: e, update: t }) => [f(R(de), {
+					value: e,
+					onUpdate: t
+				}, null, 8, ["value", "onUpdate"])]),
+				"cell-symbol": K(({ row: e }) => [f(tv, { symbol: e.symbol }, null, 8, ["symbol"])]),
+				"cell-source_type": K(({ row: e }) => [f(nv, { "source-type": e.source_type ?? null }, null, 8, ["source-type"])]),
+				"cell-order_status": K(({ row: e }) => [l("span", { class: b(["prediction-status prediction-grid-status", [`prediction-status--${R(m_)(e.status)}`, { "prediction-grid-loss": e.status === 6 }]]) }, F(R(Av)("order_status", e, N) || String(e.status ?? "—")), 3)]),
+				"cell-realized_pnl": K(({ row: e }) => [l("span", { class: b(["prediction-pnl", `prediction-pnl--${R(__)(R(Av)("realized_pnl", e, N))}`]) }, F(R(Av)("realized_pnl", e, N)), 3)]),
+				_: 2
+			}, [j(v.value, (e) => ({
+				name: `cell-${e}`,
+				fn: K(({ row: t }) => [l("span", Qv, F(S(t, e)), 1)])
+			})), a.value ? {
+				name: "cell-operation",
+				fn: K(({ row: e }) => [f(R(Z), {
+					size: "sm",
+					"icon-only": "",
+					"aria-label": R(r)("查看详情"),
+					title: R(r)("查看详情"),
+					onClick: (t) => g(e)
+				}, {
+					default: K(() => [f(R(Q), {
+						name: "panel-left-close",
+						size: 15
+					})]),
+					_: 1
+				}, 8, [
+					"aria-label",
+					"title",
+					"onClick"
+				])]),
+				key: "0"
+			} : void 0]), 1032, [
+				"aria-label",
+				"query-fields",
+				"filters",
+				"filter-drawer-title",
+				"filter-drawer-subtitle",
+				"columns",
+				"data",
+				"loading",
+				"error",
+				"empty-text",
+				"current-page",
+				"page-size",
+				"total",
+				"show-cell-title"
+			]),
+			a.value ? (D(), o(Fv, {
+				key: 1,
+				modelValue: d.value,
+				"onUpdate:modelValue": i[2] ||= (e) => d.value = e,
+				row: m.value,
+				onClosed: _
+			}, null, 8, ["modelValue", "row"])) : s("", !0),
+			ie.value > 1e3 ? (D(), c("p", $v, F(k("limit")), 1)) : s("", !0)
+		], 64)) : (D(), c("p", Xv, F(k("noPermission")), 1))], 2));
+	}
+}), [["__scopeId", "data-v-9c4e16e8"]]);
+//#endregion
+export { qg as MessageBoxCancelError, Vi as MmAccountChangeLogTable, Da as MmAdminLoginShell, ji as MmAlert, go as MmAppHeader, wi as MmAssetBalanceReport, Lt as MmAutocomplete, Ma as MmAvatar, Oe as MmBadge, _o as MmBorder, Z as MmButton, yo as MmCalendar, Eo as MmCard, jo as MmCheckbox, No as MmCheckboxGroup, Fo as MmCollapse, Bo as MmCollapseItem, Wo as MmColor, ss as MmConditionOrderTable, Go as MmContainer, Cs as MmCurrentOrderTable, fi as MmCursorPagination, pn as MmDatePicker, dn as MmDatePickerPanel, vn as MmDateRangePicker, ks as MmDescriptions, Ms as MmDescriptionsItem, Ze as MmDialog, Ls as MmDivider, Qe as MmDrawer, Za as MmDropdown, Qn as MmEmpty, Ws as MmExchangeLogo, tc as MmFeeCommissionTable, Gn as MmFilterDrawer, nc as MmForm, cc as MmFormItem, dc as MmFundingAccountTable, bc as MmFundingChangeLogTable, mc as MmFundingOverviewTable, Ac as MmFuturesFeeReport, wc as MmFuturesFundingFeeReport, Dc as MmFuturesPnlReport, Nc as MmFuturesPositionReport, kc as MmFuturesRiskReport, xc as MmFuturesTradeReport, jc as MmFuturesUserNetPnlReport, _l as MmHandlingFeeConfig, Al as MmHedgingExecutionTable, Vl as MmHedgingMonitor, ru as MmHedgingSubjectConfig, Xl as MmHedgingSymbolConfig, rl as MmHistoryOrderTable, Kc as MmHistoryPositionTable, Q as MmIcon, mu as MmImage, gu as MmInfoGrid, vu as MmInfoGridItem, ht as MmInput, Du as MmInputNumber, Cu as MmIpLocation, Ou as MmLayout, Nu as MmLink, Ku as MmLiquidationTable, gf as MmLiquidationTradesDialog, $d as MmLiquidationWarningRulesDialog, nf as MmLiquidationWarningTable, bf as MmLoading, If as MmMarginChangeLogTable, Ra as MmMenu, Ua as MmMenuItem, yd as MmMessage, wf as MmMessageBox, Jf as MmOnlineUserTable, xm as MmPageHeader, Br as MmPagination, Mc as MmPlatformPnlReport, Ti as MmPlatformTradeSummaryReport, Ot as MmPopover, hd as MmPositionTable, ey as MmPredictionGridOrderTable, hv as MmPredictionOperationTable, Pc as MmPredictionUserPnlReport, oi as MmProTable, hi as MmProTableCursorPagination, Ur as MmProTablePagination, km as MmProgress, Vn as MmQueryBar, Pm as MmRadio, Im as MmRadioGroup, Hm as MmResult, Wm as MmScrollbar, xn as MmSegmented, In as MmSelect, th as MmSidebarNav, ih as MmSpace, dh as MmStatistic, Qh as MmSteps, Ya as MmSubMenu, Gh as MmSymbolTagManager, Zf as MmTabPane, Ar as MmTable, tp as MmTabs, $ as MmTag, $h as MmText, bi as MmTooltip, cs as MmTpSlOrderTable, hg as MmTradeFillTable, _h as MmTranslationConfigDialog, yg as MmTypography, Ng as MmUpload, Jp as MmUserAssetTable, rm as MmUserContractTable, Oc as MmUserDailyReport, Np as MmUserDetailDialog, om as MmUserMappingTable, nm as MmUserPredictionTable, Qp as MmUserTable, Sg as acceptsFile, Le as acquireOverlay, Wt as addDays, Gt as addMonths, Zt as buildCalendarMonth, ms as calculateCurrentOrderRemainingQuantity, Zu as calculatePositionMargin, Xu as calculatePositionPnl, Qu as calculatePositionRoe, Yu as calculatePositionValue, zp as calculateUserAssetPositionAmount, Bp as calculateUserAssetUnrealizedPnl, rt as cloneFormValue, ue as cloneQueryBarValue, Kt as compareDateValues, Pg as components, Jo as conditionOrderTriggerOperator, xg as createFileUid, ie as createMmLocaleContext, pe as createQueryBarValue, Bt as daysInMonth, Kn as debugWarn, Kg as default, Gs as displayFeeCommissionValue, Pu as displayLiquidationValue, eg as displayTradeFillValue, Y as enUS, Lf as firstOnlineUserValue, $e as formContextKey, et as formItemContextKey, Pi as formatAccountChangeAmount, Fi as formatAccountChangeBalance, Yo as formatConditionOrderLeverage, Qo as formatConditionOrderPrice, Zo as formatConditionOrderQuantity, ps as formatCurrentOrderPrice, fs as formatCurrentOrderQuantity, Jt as formatDate, Vt as formatDateValue, Ks as formatFeeCommissionNumber, qs as formatFeeCommissionQuantity, Cg as formatFileSize, hc as formatFundingAmount, lc as formatFundingMoney, Yc as formatHistoryOrderPrice, Jc as formatHistoryOrderQuantity, Ic as formatHistoryPositionAmount, Lc as formatHistoryPositionPrice, Rc as formatHistoryPositionQuantity, Fu as formatLiquidationDecimal, Ld as formatLiquidationRiskRatio, Df as formatMarginChangeAmount, Of as formatMarginChangeBalance, Af as formatMarginChangeDateTime, kf as formatMarginTransferAmount, Hf as formatOnlineUserDateTime, Wf as formatOnlineUserDuration, Uf as formatOnlineUserVipLevel, nd as formatPositionAmount, id as formatPositionOptionalPrice, rd as formatPositionPrice, ad as formatPositionQuantity, zc as formatSignedHistoryPositionAmount, od as formatSignedPositionAmount, sd as formatSignedPositionPercent, tm as formatSignedUserPredictionMoney, ng as formatTradeFillFixed, tg as formatTradeFillNumber, xe as formatTradeReportDecimal, Rp as formatUserAssetAmount, Vp as formatUserAssetPnl, $p as formatUserPredictionCount, em as formatUserPredictionMoney, Fd as formatWarningThreshold, gc as fundingBalanceChangeClass, _c as fundingChangeTypeKey, tt as getPathValue, Hc as historyPositionEntryCost, Vc as historyPositionMaxQuantity, Fc as historyPositionNumber, Bc as historyPositionOpenQuantity, ze as iconNames, Gg as install, $o as isCancelableConditionOrderStatus, ds as isCurrentOrderFlag, ye as isCurrentReportPeriod, qc as isHistoryOrderFlag, zt as isLeapYear, Iu as liquidationUserUid, zg as loadingDirective, me as materializeQueryBarValue, am as mergeUserContractRows, Ad as message, Qg as messageBox, re as mmLocaleKey, zf as onlineUserLastActiveTime, Rf as onlineUserLoginTime, Ht as parseDateValue, Xt as parseFormattedDate, Bf as parseOnlineUserDateTime, Md as parseWarningRules, Ii as resolveAccountChangeType, Ju as resolvePositionMarkPrice, be as resolveReportDateStatus, Rd as resolveWarningLevel, nt as setPathValue, qu as toPositionNumber, Pd as toWarningRulePayload, qt as todayDateValue, ig as tradeFillExternalUserId, rg as tradeFillUserUid, vt as useClickOutside, Se as useControlled, gt as useEventListener, wt as useFloating, je as useFocusTrap, it as useFormField, Me as useId, X as useLocale, Pe as useLockScroll, ve as useMmProTable, n_ as useNamespace, Pa as useRovingFocus, Rg as vMmLoading, Nd as validateWarningDraft, te as zhCN };
 
 //# sourceMappingURL=index.js.map

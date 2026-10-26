@@ -7,3 +7,4 @@ export * from './directives';
 export * from './locales';
 export * from './services';
 export * from './shared';
+export * from './components/prediction-operations';

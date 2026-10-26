@@ -1,0 +1,108 @@
+/** 预测模块的 Element 控件沿用后台原型主题，不影响其他业务页面。 */
+.prediction-table-page {
+    --el-color-primary: var(--mm-color-primary);
+    --el-color-primary-dark-2: var(--mm-color-primary-hover);
+    --el-color-primary-light-3: color-mix(in srgb, var(--mm-color-primary) 70%, var(--mm-color-panel));
+    --el-color-primary-light-5: color-mix(in srgb, var(--mm-color-primary) 45%, var(--mm-color-line));
+    --el-color-primary-light-7: color-mix(in srgb, var(--mm-color-primary) 25%, var(--mm-color-panel));
+    --el-color-primary-light-8: var(--mm-color-primary-soft);
+    --el-color-primary-light-9: var(--mm-color-primary-soft);
+    --el-bg-color: var(--mm-color-panel);
+    --el-bg-color-overlay: var(--mm-color-panel);
+    --el-fill-color-blank: var(--mm-color-panel);
+    --el-fill-color-light: var(--mm-color-soft);
+    --el-border-color: var(--mm-color-line-strong);
+    --el-border-color-light: var(--mm-color-line);
+    --el-border-color-lighter: var(--mm-color-line);
+    --el-text-color-primary: var(--mm-color-text);
+    --el-text-color-regular: var(--mm-color-text);
+    --el-text-color-secondary: var(--mm-color-text-muted);
+}
+
+.prediction-table-page .el-button--primary:not(.is-link):not(.is-text):not(.is-plain) {
+    --el-button-bg-color: color-mix(in srgb, var(--mm-color-primary) 90%, var(--mm-color-text));
+    --el-button-border-color: var(--el-button-bg-color);
+    --el-button-hover-bg-color: var(--mm-color-primary-hover);
+    --el-button-hover-border-color: var(--mm-color-primary-hover);
+    --el-button-active-bg-color: var(--mm-color-primary-hover);
+    --el-button-active-border-color: var(--mm-color-primary-hover);
+    --el-button-text-color: var(--mm-color-on-primary, #fff);
+    --el-button-hover-text-color: var(--mm-color-on-primary, #fff);
+    --el-button-active-text-color: var(--mm-color-on-primary, #fff);
+}
+
+/** 预测业务状态颜色，表格排版沿用后台共用组件。 */
+.prediction-compact-table {
+    --prediction-body-size: 11px;
+    --prediction-body-line: 13.75px;
+    --prediction-row-height: 36px;
+    --prediction-header-bg: #f9fafb;
+    --prediction-header-text: #475569;
+    --prediction-body-text: #1f2937;
+    --prediction-line: #e5e7eb;
+    --prediction-positive: #13845b;
+    --prediction-negative: #c2410c;
+    --prediction-muted: #626d7c;
+    --prediction-success: #0b8f63;
+    --prediction-success-bg: #e9fbf4;
+    --prediction-success-line: #a9ead4;
+    --prediction-danger: #d84a5b;
+    --prediction-danger-bg: #fff0f2;
+    --prediction-danger-line: #f4bec5;
+    --prediction-primary: #2673db;
+    --prediction-primary-bg: #edf5ff;
+    --prediction-primary-line: #bdd6fa;
+    --prediction-warning: #b56b12;
+    --prediction-warning-bg: #fff7e8;
+    --prediction-warning-line: #f0d39f;
+    --prediction-neutral: #5d6675;
+    --prediction-neutral-bg: #f5f6f8;
+    --prediction-neutral-line: #e5e7eb;
+    --prediction-owner: #a75a16;
+    --prediction-owner-bg: #fff4e8;
+    --prediction-owner-line: #f1c99f;
+    --prediction-control-line: #d1d5db;
+    --prediction-control-radius: 6px;
+}
+:root.dark .prediction-compact-table {
+    --prediction-header-bg: #151e2a;
+    --prediction-header-text: #adb8c6;
+    --prediction-body-text: #c0c7d0;
+    --prediction-line: #2c394a;
+    --prediction-positive: #71d9b0;
+    --prediction-negative: #ff9d9d;
+    --prediction-muted: #929dac;
+    --prediction-success: #71d9b0;
+    --prediction-danger: #ff9d9d;
+    --prediction-primary: #4d9aff;
+    --prediction-warning: #f4bd73;
+    --prediction-neutral: #b6c4c9;
+    --prediction-neutral-bg: #151e2a;
+    --prediction-neutral-line: #2c394a;
+    --prediction-owner: #f1b778;
+    --prediction-owner-bg: #3d2c1d;
+    --prediction-owner-line: #78502d;
+    --prediction-control-line: #34404e;
+    --prediction-success-bg: #151e2a;
+    --prediction-success-line: #2c394a;
+    --prediction-danger-bg: #151e2a;
+    --prediction-danger-line: #2c394a;
+    --prediction-primary-bg: #151e2a;
+    --prediction-primary-line: #2c394a;
+    --prediction-warning-bg: #151e2a;
+    --prediction-warning-line: #2c394a;
+}
+
+/** 列表的表头、筛选和控件使用后台共用 MmProTable 样式。 */
+.prediction-compact-table .mm-table td {
+    font-variant-numeric: tabular-nums;
+}
+.prediction-compact-table .mm-pro-table__auto-refresh { display: none; }
+/** 复用共用单行查询栏；窄宽度先收缩输入框，避免场次周期被挤到第二行。 */
+.prediction-table-page .mm-pro-table__query > .mm-query-bar--single-line {
+    grid-template-columns: minmax(0, 1fr) auto;
+}
+.prediction-table-page .mm-query-bar--single-line .mm-query-bar__field {
+    min-width: 100px;
+    flex: 0 1 var(--mm-query-bar-field-width);
+}

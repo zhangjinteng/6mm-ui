@@ -1,0 +1,25 @@
+import { PredictionPageContext, PredictionPageAdapter } from '../types';
+type __VLS_Props = {
+    adapter: PredictionPageAdapter;
+    context: PredictionPageContext;
+    showSources?: boolean;
+    locale?: string;
+    game: 'UP_DOWN' | 'HIGH_LOW';
+    view: 'rounds' | 'current' | 'history';
+};
+declare var __VLS_16: {
+    value: any;
+    update: any;
+};
+type __VLS_Slots = {} & {
+    'field-agent_id'?: (props: typeof __VLS_16) => any;
+};
+declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{}>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
+declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
+declare const _default: typeof __VLS_export;
+export default _default;
+type __VLS_WithSlots<T, S> = T & {
+    new (): {
+        $slots: S;
+    };
+};

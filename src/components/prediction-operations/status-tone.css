@@ -1,0 +1,25 @@
+.prediction-status {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    padding: 2px 10px;
+    border: 1px solid var(--prediction-neutral-line);
+    border-radius: 999px;
+    background: var(--prediction-neutral-bg);
+    color: var(--prediction-neutral);
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 12px;
+    white-space: nowrap;
+}
+.prediction-status--success { color: var(--prediction-success); background: var(--prediction-success-bg); border-color: var(--prediction-success-line); }
+.prediction-status--danger { color: var(--prediction-danger); background: var(--prediction-danger-bg); border-color: var(--prediction-danger-line); }
+.prediction-status--primary { color: var(--prediction-primary); background: var(--prediction-primary-bg); border-color: var(--prediction-primary-line); }
+.prediction-status--warning { color: var(--prediction-warning); background: var(--prediction-warning-bg); border-color: var(--prediction-warning-line); }
+.prediction-pnl { font-variant-numeric: tabular-nums; font-weight: 600; }
+.prediction-pnl--success { color: var(--prediction-positive); }
+.prediction-pnl--danger { color: var(--prediction-negative); }
+.prediction-pnl--neutral { color: var(--prediction-muted); }
+.prediction-ownership { font-size: 11px; font-weight: 700; line-height: 11px; }
+.prediction-ownership--merchant { color: var(--prediction-owner); background: var(--prediction-owner-bg); border-color: var(--prediction-owner-line); }
+.prediction-grid-loss { color: var(--prediction-danger); background: var(--prediction-danger-bg); border-color: var(--prediction-danger-line); }

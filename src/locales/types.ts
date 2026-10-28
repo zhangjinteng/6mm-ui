@@ -139,6 +139,21 @@ export interface MmUILocaleMessages {
     notifications: (value: string | number | undefined) => string;
     status: string;
   };
+  richTextEditor: {
+    label: string;
+    toolbar: string;
+    placeholder: string;
+    blockType: string;
+    paragraph: string;
+    heading: (level: number) => string;
+    undo: string; redo: string; bold: string; italic: string; underline: string; strike: string;
+    code: string; bulletList: string; orderedList: string; blockquote: string; codeBlock: string;
+    alignLeft: string; alignCenter: string; alignRight: string; link: string; unlink: string;
+    image: string; imageAlt: string; table: string; horizontalRule: string; clearFormatting: string;
+    html: string; color: string; url: string; invalidUrl: string; invalidImageUrl: string;
+    tableTools: string; addRow: string; deleteRow: string; addColumn: string; deleteColumn: string; deleteTable: string;
+    characters: (count: number) => string;
+  };
   common: {
     cancel: string;
     clear: string;

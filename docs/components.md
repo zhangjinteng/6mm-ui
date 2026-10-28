@@ -24,7 +24,7 @@
 | Space      | `MmSpace`      | 横纵排列、wrap、分隔符和尺寸                 |
 | Typography | `MmTypography` | 标题/段落语义、复制、折叠与代码内容          |
 
-## 表单（13）
+## 表单（14）
 
 | 组件              | 导入名                          | 核心能力                                                         |
 | ----------------- | ------------------------------- | ---------------------------------------------------------------- |
@@ -39,6 +39,7 @@
 | Filter Drawer     | `MmFilterDrawer`                | 筛选图标、激活数量、私有草稿、抽屉、重置与查询提交               |
 | Query Bar         | `MmQueryBar`                    | 配置化关键词、选择、币种、日期、分段、可选返回上下文、重置与查询 |
 | Radio             | `MmRadio`、`MmRadioGroup`       | 单项/组、按钮形态、readonly 与方向键                             |
+| Rich Text Editor  | `MmRichTextEditor`              | Tiptap 富文本、HTML 绑定/导入/源码编辑、排版、链接、图片、表格与表单验证；见 [详细 API](rich-text-editor.md) |
 | Select            | `MmSelect`                      | 单选/多选、过滤、远程选项、上限与键盘                            |
 | Upload            | `MmUpload`                      | 选择/拖拽、校验、进度、取消、重试和注入式请求                    |
 

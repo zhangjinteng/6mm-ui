@@ -54,6 +54,7 @@ describe("MmUI plugin", () => {
     expect(app.component("MmFilterDrawer")).toBeDefined();
     expect(app.component("MmFeeCommissionTable")).toBeDefined();
     expect(app.component("MmInput")).toBeDefined();
+    expect(app.component("MmRichTextEditor")).toBeDefined();
     expect(app.component("MmInputNumber")).toBeDefined();
     expect(app.component("MmImage")).toBeDefined();
     expect(app.component("MmInfoGrid")).toBeDefined();

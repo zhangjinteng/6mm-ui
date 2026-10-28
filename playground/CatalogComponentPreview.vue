@@ -63,6 +63,7 @@ import {
   MmRadio,
   MmRadioGroup,
   MmResult,
+  MmRichTextEditor,
   MmScrollbar,
   MmSegmented,
   MmSelect,
@@ -92,6 +93,7 @@ const props = withDefaults(
 const checkboxValue = ref<CheckboxValue>(true);
 const radioValue = ref<RadioValue>("maker");
 const inputValue = ref("网格策略 #2048");
+const richTextValue = ref('<h2>产品公告</h2><p>欢迎使用 <strong>6MM</strong>。</p>');
 const numberValue = ref(3);
 const selectValue = ref<SelectValue>("running");
 const dateValue = ref<DatePickerValue>("2026-07-16");
@@ -582,6 +584,13 @@ watch(
           </div>
         </div>
       </div>
+
+      <MmRichTextEditor
+        v-else-if="name === 'Rich Text Editor'"
+        v-model="richTextValue"
+        :min-height="160"
+        :max-height="320"
+      />
 
       <div
         v-else-if="name === 'Radio'"

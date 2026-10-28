@@ -95,6 +95,7 @@ import {
 import { MmQueryBar } from "./query-bar";
 import { MmRadio, MmRadioGroup } from "./radio";
 import { MmResult } from "./result";
+import { MmRichTextEditor } from "./rich-text-editor";
 import { MmScrollbar } from "./scrollbar";
 import { MmSegmented } from "./segmented";
 import { MmSelect } from "./select";
@@ -194,6 +195,7 @@ export * from "./pro-table";
 export * from "./query-bar";
 export * from "./radio";
 export * from "./result";
+export * from "./rich-text-editor";
 export * from "./scrollbar";
 export * from "./segmented";
 export * from "./select";
@@ -311,6 +313,7 @@ export const components: InstallableComponent[] = [
   MmRadio,
   MmRadioGroup,
   MmResult,
+  MmRichTextEditor,
   MmScrollbar,
   MmSegmented,
   MmSelect,

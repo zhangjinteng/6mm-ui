@@ -106,7 +106,7 @@ const mode = ref<SiteGame | 'GRID'>('UP_DOWN'), gridRef = shallowRef<InstanceTyp
 const game = computed<SiteGame>(() => mode.value === 'HIGH_LOW' ? 'HIGH_LOW' : 'UP_DOWN')
 const elementLocale = computed(() => locale.value === 'en-US' ? elementEn : elementZh)
 const can = (key: string) => user.perms.includes('*') || user.perms.includes(key)
-const canRead = computed(() => can('prediction_config:lists')), canEdit = computed(() => can('prediction_config:edit'))
+const canRead = computed(() => can('prediction_config:lists')), canEdit = canRead
 const operator = computed(() => identity(user.userInfo.id))
 const actor = ref<SiteActor | null>(null), targets = ref<SiteTargets['sites']>([]), siteId = ref(''), symbol = ref(''), symbolSearch = ref('')
 const symbols = computed(() => targets.value.find(s => s.site_id === siteId.value)?.games.find(g => g.game_type === game.value)?.symbols ?? [])

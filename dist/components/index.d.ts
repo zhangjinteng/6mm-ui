@@ -84,6 +84,7 @@ export * from './pro-table';
 export * from './query-bar';
 export * from './radio';
 export * from './result';
+export * from './rich-text-editor';
 export * from './scrollbar';
 export * from './segmented';
 export * from './select';

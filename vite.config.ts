@@ -32,7 +32,7 @@ export default defineConfig({
       name: 'MmUI',
     },
     rollupOptions: {
-      external: id => id === 'vue' || id === 'element-plus' || id.startsWith('element-plus/') || id === '@element-plus/icons-vue',
+      external: id => id === 'vue' || id === 'element-plus' || id.startsWith('element-plus/') || id === '@element-plus/icons-vue' || id.startsWith('@tiptap/') || id === '@lucide/vue',
     },
     sourcemap: true,
   },

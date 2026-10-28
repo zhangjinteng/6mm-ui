@@ -93,6 +93,26 @@ const dateRange = ref<DateRangeValue | null>(null);
 
 默认快捷项为今日、昨日、近 7 日、近 30 日、本月和上月。可以使用 `shortcuts` 调整顺序或隐藏项目，并继续使用 `min`、`max` 与 `disabledDate` 限制可选范围。
 
+## 富文本编辑器
+
+`MmRichTextEditor` 基于 Tiptap 3，使用组件库主题和中英文工具栏，支持 HTML 双向绑定、网页富文本粘贴、HTML 源码编辑、图片链接和表格。
+
+```vue
+<script setup lang="ts">
+import { ref } from 'vue'
+import { MmRichTextEditor } from '@work-gpt/6mm-ui'
+import '@work-gpt/6mm-ui/style.css'
+
+const content = ref('<h2>公告</h2><p>欢迎使用 6MM。</p>')
+</script>
+
+<template>
+  <MmRichTextEditor v-model="content" :min-height="280" :max-height="560" />
+</template>
+```
+
+HTML 导入仅保留已注册节点、标记和属性；图片工具插入 URL，文件上传由宿主系统提供。完整属性、事件和实例方法见 [富文本编辑器 API](docs/rich-text-editor.md)。
+
 ## 统一查询栏
 
 `MmQueryBar` 用显式字段配置统一关键词、Select、币种、日期范围、Segmented、重置和查询。组件只管理筛选草稿；请求、分页、缓存和 URL 状态仍由页面负责。

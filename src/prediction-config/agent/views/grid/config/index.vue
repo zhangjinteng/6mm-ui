@@ -95,8 +95,8 @@ import { attemptPending, isUnconfirmedReceipt, captureSaveReview, makeCommand, n
 import { mergeGridDirectory } from './directory'
 const user = useUserStore()
 const can = (permission: string) => user.perms.includes('*') || user.perms.includes(permission)
-const canRead = computed(() => can('grid_config:read'))
-const canSavePermission = computed(() => can('grid_config:save'))
+const canRead = computed(() => can('prediction_config:lists'))
+const canSavePermission = canRead
 const operator = computed(() => {
     const value = String(user.userInfo.id || '')
     return /^[1-9]\d*$/.test(value) ? value : ''

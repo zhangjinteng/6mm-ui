@@ -30,8 +30,8 @@ const node=(type,text='')=>({type,text,props:{},children:[],parent:null})
 const renderer=createRenderer({createElement:node,createText:t=>node('#text',t),createComment:t=>node('#comment',t),setText:(n,t)=>n.text=t,setElementText:(n,t)=>{n.text=t;n.children=[]},parentNode:n=>n?.parent??null,nextSibling:n=>n?.parent?.children[n.parent.children.indexOf(n)+1]??null,patchProp:(n,k,_,v)=>n.props[k]=v,insert(n,p,anchor){if(n.parent){const at=n.parent.children.indexOf(n);if(at>=0)n.parent.children.splice(at,1)}n.parent=p;const i=anchor?p.children.indexOf(anchor):-1;i<0?p.children.push(n):p.children.splice(i,0,n)},remove(n){if(n.parent){const i=n.parent.children.indexOf(n);if(i>=0)n.parent.children.splice(i,1)}}})
 const walk=n=>[n,...n.children.flatMap(walk)],text=n=>n.text+n.children.map(text).join('')
 const tick=async()=>{for(let i=0;i<12;i++){await Promise.resolve();await nextTick()}}
-async function mount(name,{main=true,api={}}={}){
- const calls=[],user=reactive({userInfo:{id:main?'100':'101',can_manage_prediction_config:main},token:'fixture',perms:['*']});globalThis.localStorage=memory()
+async function mount(name,{main=true,api={},perms=['*']}={}){
+ const calls=[],user=reactive({userInfo:{id:main?'100':'101',can_manage_prediction_config:main},token:'fixture',perms});globalThis.localStorage=memory()
  globalThis.__ownerPage={user,api:{model:async()=>{calls.push('model');return {config_model:'OWNER_V1',actor}},list:async()=>{calls.push('list');return {items:[fixture()]}},detail:async()=>({configuration:fixture()}),save:async b=>{calls.push(b);return success(b)},...api}}
  const app=renderer.createApp(await component(name),name==='OwnerConfig'?{actor}:{}),root=node('root');app.config.warnHandler=()=>{}
  for(const tag of ['el-button','el-input','el-tag','el-form-item','el-switch','el-dialog','el-select','el-option'])app.component(tag,{inheritAttrs:false,setup:(_,{attrs,slots})=>()=>h(tag,attrs,[slots.default?.(),slots.footer?.()])})
@@ -39,7 +39,7 @@ async function mount(name,{main=true,api={}}={}){
 }
 test('child direct page performs no configuration API request',async()=>{const v=await mount('index',{main:false});try{assert.deepEqual(v.calls,[]);assert.match(text(v.root),/仅代理商主账号/)}finally{v.unmount()}})
 test('late model response cannot install previous account page',async()=>{const d=deferred();const v=await mount('index',{api:{model:()=>d.promise}});try{v.user.userInfo.id='101';v.user.userInfo.can_manage_prediction_config=false;await tick();d.resolve({config_model:'OWNER_V1',actor});await tick();assert.equal(walk(v.root).some(n=>n.type==='stub'),false);assert.match(text(v.root),/仅代理商主账号/)}finally{v.unmount()}})
-test('owner page edits minimum only and has one save control',async()=>{const v=await mount('OwnerConfig');try{
+test('owner page edits minimum with page permission only and has one save control',async()=>{const v=await mount('OwnerConfig',{perms:['prediction_config:lists']});try{
  assert.equal(walk(v.root).filter(n=>n.type==='el-button'&&text(n)==='保存配置').length,1);assert.doesNotMatch(text(v.root),/35 秒/);assert.match(text(v.root),/5 秒/)
  const input=walk(v.root).find(n=>n.type==='mm-input'&&n.props['aria-label']==='5秒单笔最小额');assert.ok(input);input.props['onUpdate:modelValue']('0.5')
  await tick()

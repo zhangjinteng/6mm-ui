@@ -90,7 +90,7 @@ const tabs=[{key:'UP_DOWN',label:'涨跌预测',description:'按系统场次预�
 const mode=ref<SiteGame|'GRID'>('UP_DOWN'),items=shallowRef<OwnerConfig[]>([]),symbol=ref(''),search=ref(''),rows=ref<OwnerRow[]>([]),loading=ref(false),busy=ref(false),loadError=ref(''),message=ref(''),pending=shallowRef<OwnerPending|null>(null),legacyBlocked=ref(false),storageError=ref(false)
 const gate=new OwnerReadGate();let mounted=true
 const current=()=>mounted&&canManageOwnerConfig(props.actor)&&identity(user.userInfo.id)===props.actor.operator_id&&user.userInfo.can_manage_prediction_config===true&&(user.perms.includes('*')||user.perms.includes('prediction_config:lists'))
-const editable=computed(()=>current()&&(user.perms.includes('*')||user.perms.includes('prediction_config:edit'))&&!legacyBlocked.value&&!storageError.value)
+const editable=computed(()=>current()&&!legacyBlocked.value&&!storageError.value)
 const selected=computed(()=>items.value.find(i=>i.symbol===symbol.value))
 const selectedRoom=ref('35'),roomGeneration=ref(0)
 const presentRows=computed(()=>rows.value.filter(row=>row.owner_enabled&&row.platform_enabled))

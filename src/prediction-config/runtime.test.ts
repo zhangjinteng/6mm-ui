@@ -64,7 +64,7 @@ describe('shared game configuration host boundary', () => {
       effective_from_ms: '0', enabled: true, target_rtp: '0.6',
       min_multiplier: '1.01', max_multiplier: '20', min_order_amount: '1', max_order_amount: '10000',
     })
-    const wrapper = mount(MmPredictionGameConfig, { props: { adapter, context: context(), symbolComponent } })
+    const wrapper = mount(MmPredictionGameConfig, { props: { adapter, context: context({ permissions: ['prediction_config:lists'] }), symbolComponent } })
     try {
       await flushPromises()
       if (mode !== 'UP_DOWN') {
@@ -80,6 +80,7 @@ describe('shared game configuration host boundary', () => {
       await controls[0]!.find('.mm-input__clear').trigger('click')
       expect((search.element as HTMLInputElement).value).toBe('')
       const odds = controls[1]!.find('input')
+      expect(odds.attributes('disabled')).toBeUndefined()
       const precise = mode === 'HIGH_LOW' ? '1.7500000000000001' : '59.1234567891234567'
       await odds.setValue(precise)
       expect((odds.element as HTMLInputElement).value).toBe(precise)

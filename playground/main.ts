@@ -7,10 +7,13 @@ import FuturesTradeReportPreviewPage from "./FuturesTradeReportPreviewPage.vue";
 import HandlingFeeConfigPreview from "./HandlingFeeConfigPreview.vue";
 import ProTablePreviewPage from "./ProTablePreviewPage.vue";
 import SidebarNavPreviewPage from "./SidebarNavPreviewPage.vue";
+import RichTextEditorPreview from "./RichTextEditorPreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
-  normalizedPath === "/component-info"
+  normalizedPath === "/rich-text-editor"
+    ? RichTextEditorPreview
+    : normalizedPath === "/component-info"
     ? ComponentInfoPage
     : normalizedPath === "/handling-fee-config"
       ? HandlingFeeConfigPreview

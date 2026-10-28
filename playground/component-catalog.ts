@@ -36,6 +36,7 @@ export const componentCatalog: ComponentCatalogItem[] = [
   { category: "表单", group: "07", name: "Filter Drawer" },
   { category: "表单", group: "07", name: "Query Bar" },
   { category: "表单", group: "06", name: "Radio" },
+  { category: "表单", group: "07", name: "Rich Text Editor" },
   { category: "表单", group: "07", name: "Select" },
   { category: "表单", group: "07", name: "Upload" },
   { category: "数据展示", group: "08", name: "Avatar" },
@@ -178,6 +179,7 @@ const componentUsage: Record<string, string> = {
   Typography:
     '<MmTypography copyable title="接口签名说明">请求必须携带签名。</MmTypography>',
   Upload: '<MmUpload accept=".json,.csv" drag :limit="2" />',
+  "Rich Text Editor": '<MmRichTextEditor model-value="<h2>产品公告</h2><p>欢迎使用 <strong>6MM</strong>。</p>" :min-height="200" />',
 };
 
 const componentExtraImports: Record<string, string[]> = {

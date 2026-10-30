@@ -15,6 +15,8 @@ Supply a `PredictionPageAdapter` or `PredictionGridAdapter` and a reactive `Pred
 - `locale`: Agent passes its existing `zh-CN`/`en-US` locale; absent values inherit the 6mm locale provider.
 - `symbolComponent`/`symbols`: optional host-owned symbol display and directory. Historical symbols remain searchable if the directory is unavailable.
 - `field-agent_id` slot: optional Platform merchant selector, backed by its existing authorized endpoint.
+- `columns(defaults)` prop: optional host column transform, matching other shared table components. Receives shallow copies of the existing columns, including layout-specific widths. The host can replace source columns with its common column factory without copying the page or changing the request adapter. Omitted transforms retain the existing Agent/Platform defaults.
+- `cell-source_type` slot: optional host source-tag renderer; the SDK source tag remains the fallback. This slot and column transform affect presentation only and do not change `showSources`, identity, permissions or query scope.
 
 ## Shared Behavior
 

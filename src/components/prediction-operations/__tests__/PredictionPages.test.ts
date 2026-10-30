@@ -14,7 +14,7 @@ const Table = defineComponent({
     props: ['data','columns','filters','total','currentPage','pageSize','queryFields','error'],
     emits: ['update:filters','update:current-page','update:page-size','query','reset','refresh'],
     setup(props, { slots }) {
-        return () => h('main', {}, props.data?.[0] && slots['cell-operation']?.({ row: props.data[0] }))
+        return () => h('main', {}, props.data?.[0] && [slots['cell-operation']?.({ row: props.data[0] }), slots['cell-source_type']?.({ row: props.data[0] })])
     }
 })
 const Drawer = defineComponent({
@@ -26,8 +26,8 @@ const context = (): PredictionPageContext => ({
 })
 const mounted: ReturnType<typeof mount>[] = []
 afterEach(() => { mounted.splice(0).forEach(wrapper => wrapper.unmount()); vi.useRealTimers() })
-function render(component: any, props: any) {
-    const wrapper = mount(component, {props, global: { stubs: { MmProTable: Table, MmDrawer: Drawer } }})
+function render(component: any, props: any, slots = {}) {
+    const wrapper = mount(component, {props, slots, global: { stubs: { MmProTable: Table, MmDrawer: Drawer } }})
     mounted.push(wrapper)
     return wrapper
 }
@@ -62,6 +62,25 @@ function gridAdapter(view: string) {
     }),locate:vi.fn(),navigate:vi.fn()}
 }
 describe('shared prediction pages', () => {
+    for (const [game, view] of [['UP_DOWN','current'],['UP_DOWN','history'],['HIGH_LOW','current'],['HIGH_LOW','history'],['GRID','current'],['GRID','history']]) {
+        it(game+' '+view+' supports host source columns and tag slots without changing default layout or requests',async()=>{
+            const adapter=game==='GRID'?gridAdapter(view):operationAdapter(game)
+            const columns=vi.fn(defaults=>defaults.map((column:any)=>column.key==='source_name'
+                ? {...column,title:'统一来源名称',formatter:()=> '统一名称'} : column))
+            const wrapper=render(game==='GRID'?Grid:Operation,{game,view,adapter,context:context(),showSources:true,columns},
+                {'cell-source_type':()=>h('mark','统一来源标签')})
+            await flushPromises()
+            const before=columns.mock.calls.at(-1)![0], actual=wrapper.findComponent(Table).props('columns')
+            expect(actual.map((c:any)=>[c.key,c.width])).toEqual(before.map((c:any)=>[c.key,c.width]))
+            expect(actual.find((c:any)=>c.key==='source_name').formatter(null,{},0)).toBe('统一名称')
+            expect(before.find((c:any)=>c.key==='source_name').title).toBe('来源名称')
+            expect(wrapper.get('mark').text()).toBe('统一来源标签')
+            expect(adapter.orders).toHaveBeenCalledTimes(1)
+            await wrapper.setProps({showSources:false});await flushPromises()
+            expect(wrapper.findComponent(Table).props('columns').some((c:any)=>c.key==='source_name')).toBe(false)
+            expect(adapter.orders).toHaveBeenCalledTimes(1)
+        })
+    }
     for (const [game,view] of [['UP_DOWN','rounds'],['UP_DOWN','current'],['UP_DOWN','history'],['HIGH_LOW','current'],['HIGH_LOW','history']]) {
         it(game+' '+view+' preserves committed rows and pagination while editing dates', async () => {
             const adapter=operationAdapter(game), wrapper=render(Operation,{game,view,adapter,context:context()})

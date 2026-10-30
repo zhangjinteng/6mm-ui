@@ -45,7 +45,7 @@
                     ><GridDateRange :value="value" @update="update"
                 /></template>
                 <template #cell-symbol="{ row }"><SymbolDisplay :symbol="row.symbol" /></template>
-                <template #cell-source_type="{ row }"><SourceTypeTag :source-type="row.source_type ?? null" /></template>
+                <template #cell-source_type="{ row }"><slot name="cell-source_type" :row="row"><SourceTypeTag :source-type="row.source_type ?? null" /></slot></template>
                 <template #cell-order_status="{ row }">
                     <span class="prediction-status prediction-grid-status" :class="[`prediction-status--${gridStatusTone(row.status)}`, {'prediction-grid-loss': row.status === 6}]">{{ gridTableDisplay('order_status', row, fieldDisplay) || String(row.status ?? '—') }}</span>
                 </template>
@@ -106,7 +106,7 @@ import {
     messages,
     statusNames
 } from '../format'
-const props = defineProps<{ view: OrderView; adapter: PredictionGridAdapter; context: PredictionPageContext; showSources?: boolean; locale?: string }>()
+const props = defineProps<{ view: OrderView; adapter: PredictionGridAdapter; context: PredictionPageContext; showSources?: boolean; locale?: string; columns?: (defaults: ProTableColumn[]) => ProTableColumn[] }>()
 const t = usePredictionLocale(() => props.locale)
 const isHistory = computed(() => props.view === 'history')
 const historyDetailVisible = ref(false)
@@ -194,7 +194,7 @@ const queryFields = computed<QueryBarField[]>(() => [
         }))
     }
 ])
-const columns = computed<ProTableColumn[]>(() => [
+const defaultColumns = computed<ProTableColumn[]>(() => [
     ...gridTableKeys(props.view, props.showSources !== false).map((key) => ({
         key,
         dataIndex: key,
@@ -208,6 +208,7 @@ const columns = computed<ProTableColumn[]>(() => [
     })),
     ...(isHistory.value ? [{ key: 'operation', title: t('操作'), width: predictionColumnWidth('operation', 'grid-history'), align: 'center' as const, fixed: 'right' as const }] : [])
 ])
+const columns = computed(() => props.columns ? props.columns(defaultColumns.value.map(column => ({ ...column }))) : defaultColumns.value)
 const rangePart = (value: unknown, index: number): string =>
     Array.isArray(value) && typeof value[index] === 'string' ? value[index] : ''
 // Keep drawer drafts independent; selecting days emits one complete time range.

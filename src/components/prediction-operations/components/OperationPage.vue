@@ -52,7 +52,7 @@
                     />
                 </template>
                 <template #cell-symbol="{ row }"><SymbolDisplay :symbol="row.symbol" /></template>
-                <template #cell-source_type="{ row }"><SourceTypeTag :source-type="row.source_type ?? null" /></template>
+                <template #cell-source_type="{ row }"><slot name="cell-source_type" :row="row"><SourceTypeTag :source-type="row.source_type ?? null" /></slot></template>
                 <template v-for="key in twoLineTimeKeys" :key="key" #[`cell-${key}`]="{ row }">
                     <span class="prediction-table-time">{{ twoLineTimeText(row, key) }}</span>
                 </template>
@@ -132,6 +132,7 @@ const props = defineProps<{
     adapter: PredictionPageAdapter
     context: PredictionPageContext
     showSources?: boolean
+    columns?: (defaults: ProTableColumn[]) => ProTableColumn[]
     locale?: string
     game: 'UP_DOWN' | 'HIGH_LOW'
     view: 'rounds' | 'current' | 'history'
@@ -270,7 +271,7 @@ const columns = computed<ProTableColumn[]>(() => [
     })),
     ...(isHistory.value ? [{ key: 'operation', title: '操作', width: 64, align: 'center' as const, fixed: 'right' as const }] : [])
 ])
-const localizedColumns = computed(() => columns.value.map(column => ({
+const localizedColumns = computed(() => (props.columns ? props.columns(columns.value.map(column => ({ ...column }))) : columns.value).map(column => ({
     ...column, title: t(String(column.title)),
     formatter: column.formatter ? (value: unknown, row: Record<string, unknown>, index: number) => {
         const result = column.formatter!(value, row, index)

@@ -3022,7 +3022,7 @@ function P(e = "mm") {
 	return `${e}-${C()}`;
 }
 //#endregion
-//#region src/components/icon/icons.ts
+//#region src/components/icon/extended-icons.ts
 var F = {
 	archive: [
 		["rect", {
@@ -3290,7 +3290,103 @@ var F = {
 			y: "13",
 			rx: "2"
 		}]
+	]
+}, ee = {
+	"folder-tree": [
+		["path", { d: "M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" }],
+		["path", { d: "M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" }],
+		["path", { d: "M3 5a2 2 0 0 0 2 2h3" }],
+		["path", { d: "M3 3v13a2 2 0 0 0 2 2h3" }]
 	],
+	newspaper: [
+		["path", { d: "M15 18h-5" }],
+		["path", { d: "M18 14h-8" }],
+		["path", { d: "M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" }],
+		["rect", {
+			width: "8",
+			height: "4",
+			x: "10",
+			y: "6",
+			rx: "1"
+		}]
+	],
+	folders: [["path", { d: "M20 5a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2.5a1.5 1.5 0 0 1 1.2.6l.6.8a1.5 1.5 0 0 0 1.2.6z" }], ["path", { d: "M3 8.268a2 2 0 0 0-1 1.738V19a2 2 0 0 0 2 2h11a2 2 0 0 0 1.732-1" }]],
+	"graduation-cap": [
+		["path", { d: "M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" }],
+		["path", { d: "M22 10v6" }],
+		["path", { d: "M6 12.5V16a6 3 0 0 0 12 0v-3.5" }]
+	],
+	"folder-search": [
+		["path", { d: "M10.7 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H20a2 2 0 0 1 2 2v4.1" }],
+		["path", { d: "m21 21-1.9-1.9" }],
+		["circle", {
+			cx: "17",
+			cy: "17",
+			r: "3"
+		}]
+	],
+	"message-square-more": [
+		["path", { d: "M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" }],
+		["path", { d: "M12 11h.01" }],
+		["path", { d: "M16 11h.01" }],
+		["path", { d: "M8 11h.01" }]
+	],
+	"folder-cog": [
+		["path", { d: "M10.3 20H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.98a2 2 0 0 1 1.69.9l.66 1.2A2 2 0 0 0 12 6h8a2 2 0 0 1 2 2v3.3" }],
+		["path", { d: "m14.305 19.53.923-.382" }],
+		["path", { d: "m15.228 16.852-.923-.383" }],
+		["path", { d: "m16.852 15.228-.383-.923" }],
+		["path", { d: "m16.852 20.772-.383.924" }],
+		["path", { d: "m19.148 15.228.383-.923" }],
+		["path", { d: "m19.53 21.696-.382-.924" }],
+		["path", { d: "m20.772 16.852.924-.383" }],
+		["path", { d: "m20.772 19.148.924.383" }],
+		["circle", {
+			cx: "18",
+			cy: "18",
+			r: "3"
+		}]
+	],
+	"panel-top-open": [
+		["rect", {
+			width: "18",
+			height: "18",
+			x: "3",
+			y: "3",
+			rx: "2"
+		}],
+		["path", { d: "M3 9h18" }],
+		["path", { d: "m15 14-3 3-3-3" }]
+	],
+	"monitor-cog": [
+		["path", { d: "M12 17v4" }],
+		["path", { d: "m14.305 7.53.923-.382" }],
+		["path", { d: "m15.228 4.852-.923-.383" }],
+		["path", { d: "m16.852 3.228-.383-.924" }],
+		["path", { d: "m16.852 8.772-.383.923" }],
+		["path", { d: "m19.148 3.228.383-.924" }],
+		["path", { d: "m19.53 9.696-.382-.924" }],
+		["path", { d: "m20.772 4.852.924-.383" }],
+		["path", { d: "m20.772 7.148.924.383" }],
+		["path", { d: "M22 13v2a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7" }],
+		["path", { d: "M8 21h8" }],
+		["circle", {
+			cx: "18",
+			cy: "6",
+			r: "3"
+		}]
+	],
+	languages: [
+		["path", { d: "m5 8 6 6" }],
+		["path", { d: "m4 14 6-6 2-3" }],
+		["path", { d: "M2 5h12" }],
+		["path", { d: "M7 2h1" }],
+		["path", { d: "m22 22-5-10-5 10" }],
+		["path", { d: "M14 18h6" }]
+	]
+}, I = {
+	...F,
+	...ee,
 	activity: [["path", { d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" }]],
 	alert: [
 		["path", { d: "M12 3 2.7 20h18.6L12 3Z" }],
@@ -3989,13 +4085,13 @@ var F = {
 		["path", { d: "m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8" }]
 	],
 	x: [["path", { d: "M18 6 6 18" }], ["path", { d: "m6 6 12 12" }]]
-}, I = Object.keys(F), L = [
+}, L = Object.keys(I), R = [
 	"aria-hidden",
 	"aria-label",
 	"role",
 	"stroke",
 	"stroke-width"
-], R = /* @__PURE__ */ l({
+], z = /* @__PURE__ */ l({
 	inheritAttrs: !1,
 	name: "MmIcon",
 	__name: "Icon",
@@ -4011,7 +4107,7 @@ var F = {
 		strokeWidth: { default: 1.8 }
 	},
 	setup(t) {
-		let r = t, o = n(() => typeof r.size == "number" ? `${r.size}px` : r.size), s = n(() => r.name ? F[r.name] : []);
+		let r = t, o = n(() => typeof r.size == "number" ? `${r.size}px` : r.size), s = n(() => r.name ? I[r.name] : []);
 		return (n, r) => (m(), a("svg", f(n.$attrs, {
 			class: ["mm-icon", { "is-spinning": t.spin }],
 			"data-mm-component": "icon",
@@ -4051,15 +4147,15 @@ var F = {
 		}, t[1]), null, 16)) : t[0] === "rect" ? (m(), a("rect", f({
 			key: 6,
 			ref_for: !0
-		}, t[1]), null, 16)) : i("", !0)], 64))), 128))])], 16, L));
+		}, t[1]), null, 16)) : i("", !0)], 64))), 128))])], 16, R));
 	}
-}), z = Symbol("mm-form"), B = Symbol("mm-form-item");
-function V(e, t) {
+}), B = Symbol("mm-form"), V = Symbol("mm-form-item");
+function H(e, t) {
 	return t ? t.replace(/\[(\w+)\]/g, ".$1").split(".").filter(Boolean).reduce((e, t) => {
 		if (!(typeof e != "object" || !e)) return e[t];
 	}, e) : e;
 }
-function H(e, t, n) {
+function U(e, t, n) {
 	let r = t.replace(/\[(\w+)\]/g, ".$1").split(".").filter(Boolean);
 	if (!r.length) return;
 	let i = e;
@@ -4069,7 +4165,7 @@ function H(e, t, n) {
 	}
 	i[r.at(-1)] = n;
 }
-function U(e) {
+function W(e) {
 	if (e == null) return e;
 	let t = typeof e == "object" ? y(e) : e;
 	if (typeof structuredClone == "function") try {
@@ -4079,8 +4175,8 @@ function U(e) {
 }
 //#endregion
 //#region src/composables/use-form-field.ts
-function W(e = {}) {
-	let t = u(z, null), r = u(B, null), i = P("mm-field"), a = n(() => b(e.id) || r?.inputId || i), o = n(() => !!(b(e.disabled) || t?.disabled.value)), s = n(() => b(e.size) || t?.size.value || "md"), c = n(() => b(e.status) || (r?.validateState.value === "error" ? "error" : void 0));
+function G(e = {}) {
+	let t = u(B, null), r = u(V, null), i = P("mm-field"), a = n(() => b(e.id) || r?.inputId || i), o = n(() => !!(b(e.disabled) || t?.disabled.value)), s = n(() => b(e.size) || t?.size.value || "md"), c = n(() => b(e.status) || (r?.validateState.value === "error" ? "error" : void 0));
 	return {
 		describedBy: n(() => r?.validateMessage.value ? r.errorId : void 0),
 		disabled: o,
@@ -4096,13 +4192,13 @@ function W(e = {}) {
 }
 //#endregion
 //#region src/components/input/Input.vue?vue&type=script&setup=true&lang.ts
-var G = {
+var K = {
 	key: 0,
 	class: "mm-input__prepend"
-}, K = { class: "mm-input__control" }, q = {
+}, q = { class: "mm-input__control" }, J = {
 	key: 0,
 	class: "mm-input__prefix"
-}, J = [
+}, Y = [
 	"id",
 	"value",
 	"type",
@@ -4115,24 +4211,24 @@ var G = {
 	"readonly",
 	"aria-describedby",
 	"aria-invalid"
-], Y = {
+], X = {
 	key: 1,
 	class: "mm-input__suffix"
-}, X = {
+}, Z = {
 	key: 2,
 	class: "mm-input__actions"
-}, Z = ["aria-label"], Q = [
+}, Q = ["aria-label"], $ = [
 	"aria-label",
 	"aria-pressed",
 	"disabled"
-], $ = {
+], te = {
 	key: 2,
 	class: "mm-input__count",
 	"aria-live": "polite"
-}, ee = {
+}, ne = {
 	key: 1,
 	class: "mm-input__append"
-}, te = /* @__PURE__ */ l({
+}, re = /* @__PURE__ */ l({
 	inheritAttrs: !1,
 	name: "MmInput",
 	__name: "Input",
@@ -4177,7 +4273,7 @@ var G = {
 		"update:modelValue"
 	],
 	setup(t, { expose: r, emit: c }) {
-		let l = t, u = c, { messages: d } = N(), g = S(), y = h(), b = h(!1), C = h(!1), w = W({
+		let l = t, u = c, { messages: d } = N(), g = S(), y = h(), b = h(!1), C = h(!1), w = G({
 			disabled: () => l.disabled,
 			id: () => l.id,
 			size: () => l.size,
@@ -4217,9 +4313,9 @@ var G = {
 			]]),
 			"data-mm-component": "input"
 		}, [
-			n.$slots.prepend ? (m(), a("span", G, [_(n.$slots, "prepend")])) : i("", !0),
-			o("span", K, [
-				n.$slots.prefix ? (m(), a("span", q, [_(n.$slots, "prefix")])) : i("", !0),
+			n.$slots.prepend ? (m(), a("span", K, [_(n.$slots, "prepend")])) : i("", !0),
+			o("span", q, [
+				n.$slots.prefix ? (m(), a("span", J, [_(n.$slots, "prefix")])) : i("", !0),
 				o("input", f(x(g), {
 					id: x(w).id.value,
 					ref_key: "inputRef",
@@ -4242,16 +4338,16 @@ var G = {
 					onBlur: M,
 					onCompositionstart: r[1] ||= (e) => C.value = !0,
 					onCompositionend: j
-				}), null, 16, J),
-				n.$slots.suffix ? (m(), a("span", Y, [_(n.$slots, "suffix")])) : i("", !0),
-				O.value ? (m(), a("span", X, [
+				}), null, 16, Y),
+				n.$slots.suffix ? (m(), a("span", X, [_(n.$slots, "suffix")])) : i("", !0),
+				O.value ? (m(), a("span", Z, [
 					D.value ? (m(), a("button", {
 						key: 0,
 						class: "mm-input__action mm-input__clear",
 						type: "button",
 						"aria-label": x(d).input.clear,
 						onClick: F
-					}, "×", 8, Z)) : i("", !0),
+					}, "×", 8, Q)) : i("", !0),
 					t.showPassword ? (m(), a("button", {
 						key: 1,
 						class: "mm-input__action mm-input__password",
@@ -4260,21 +4356,21 @@ var G = {
 						"aria-pressed": b.value,
 						disabled: x(w).disabled.value,
 						onClick: r[2] ||= (e) => b.value = !b.value
-					}, v(b.value ? "◉" : "◎"), 9, Q)) : i("", !0),
-					t.showCount ? (m(), a("span", $, [s(v(T.value.length), 1), t.maxlength ? (m(), a(e, { key: 0 }, [s(" / " + v(t.maxlength), 1)], 64)) : i("", !0)])) : i("", !0)
+					}, v(b.value ? "◉" : "◎"), 9, $)) : i("", !0),
+					t.showCount ? (m(), a("span", te, [s(v(T.value.length), 1), t.maxlength ? (m(), a(e, { key: 0 }, [s(" / " + v(t.maxlength), 1)], 64)) : i("", !0)])) : i("", !0)
 				])) : i("", !0)
 			]),
-			n.$slots.append ? (m(), a("span", ee, [_(n.$slots, "append")])) : i("", !0)
+			n.$slots.append ? (m(), a("span", ne, [_(n.$slots, "append")])) : i("", !0)
 		], 2));
 	}
-}), ne = (e, t) => {
+}), ie = (e, t) => {
 	let n = e.__vccOpts || e;
 	for (let [e, r] of t) n[e] = r;
 	return n;
-}, re = ["aria-label"], ie = { class: "mm-loading__indicator" }, ae = {
+}, ae = ["aria-label"], oe = { class: "mm-loading__indicator" }, se = {
 	key: 0,
 	class: "mm-loading__text"
-}, oe = /* @__PURE__ */ l({
+}, ce = /* @__PURE__ */ l({
 	name: "MmLoading",
 	__name: "Loading",
 	props: {
@@ -4308,13 +4404,13 @@ var G = {
 			role: "status",
 			"aria-live": "polite",
 			"aria-label": u.value || x(l).common.loading
-		}, [o("div", ie, [_(n.$slots, "icon", {}, () => [c(x(R), {
+		}, [o("div", oe, [_(n.$slots, "icon", {}, () => [c(x(z), {
 			name: "loading",
 			spin: ""
-		})]), u.value ? (m(), a("span", ae, v(u.value), 1)) : i("", !0)])], 10, re)) : i("", !0)], 8, ["disabled"]));
+		})]), u.value ? (m(), a("span", se, v(u.value), 1)) : i("", !0)])], 10, ae)) : i("", !0)], 8, ["disabled"]));
 	}
 });
 //#endregion
-export { N as _, U as a, V as c, I as d, P as f, M as g, D as h, W as i, H as l, j as m, ne as n, z as o, O as p, te as r, B as s, oe as t, R as u, T as v, w as y };
+export { N as _, W as a, H as c, L as d, P as f, M as g, D as h, G as i, U as l, j as m, ie as n, B as o, O as p, re as r, V as s, ce as t, z as u, T as v, w as y };
 
-//# sourceMappingURL=Loading-DlKfRjF6.js.map
+//# sourceMappingURL=Loading-BKO1YKDw.js.map

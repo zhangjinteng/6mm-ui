@@ -1,4 +1,5 @@
 import { extendedIconDefinitions } from "./extended-icons";
+import { contentIconDefinitions } from "./content-icons";
 
 export type IconNodeTag =
   "circle" | "ellipse" | "line" | "path" | "polygon" | "polyline" | "rect";
@@ -8,6 +9,7 @@ export type IconNode = readonly [IconNodeTag, IconNodeAttributes];
 
 export const iconDefinitions = {
   ...extendedIconDefinitions,
+  ...contentIconDefinitions,
   activity: [
     [
       "path",

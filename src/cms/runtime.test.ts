@@ -24,6 +24,48 @@ function runtime(mode: CmsRuntime['mode'] = 'white_label') {
 describe('CMS site runtime', () => {
   it.each<CmsPage>([
     'news/categories', 'news/list', 'academy/categories', 'academy/courses',
+    'help/categories', 'help/articles', 'feedback/list', 'announcement/categories',
+    'announcement/list', 'localization/translations',
+  ])('mounts %s immediately and never requests sites in inline mode', async page => {
+    requests.length = 0
+    const adapter = { ...runtime(), resolveSiteInRequest: true }
+    adapter.request.get.mockResolvedValue({ lists: [], count: 0, cms_context: {
+      sites: [{ site_id: '1', space_id: '11', label: 'A' }, { site_id: '2', space_id: '22', label: 'B' }],
+      site_id: '1', space_id: '11',
+    } })
+    const wrapper = mount(MmCmsPage, { props: { page, runtime: adapter, identityKey: 'session' } })
+    expect(wrapper.text()).toContain('CMS child')
+    expect(wrapper.text()).not.toContain('正在加载站点')
+    expect(adapter.request.get).not.toHaveBeenCalled()
+    await requests[0].get({ url: '/cms/business' }); await flushPromises()
+    expect(adapter.request.get).toHaveBeenCalledTimes(1)
+    expect(requests).toHaveLength(1)
+    expect(wrapper.get('select').element.value).toBe('1')
+    const old = requests[0]
+    await wrapper.get('select').setValue('2'); await nextTick()
+    expect(requests).toHaveLength(2)
+    expect(() => old.post({ url: '/cms/save' })).toThrow('站点已切换')
+    await requests[1].post({ url: '/cms/save' })
+    expect(adapter.request.post.mock.calls.at(-1)?.[0].params.space_id).toBe('22')
+    wrapper.unmount()
+  })
+  it('shows the uninitialized state from a business response and initializes without a site refresh', async () => {
+    requests.length = 0
+    const adapter = { ...runtime(), resolveSiteInRequest: true }
+    const sites = [{ site_id: '1', space_id: null as string | null, label: 'A' }]
+    adapter.request.get.mockResolvedValue({ cms_context: { sites, site_id: '1', space_id: null } })
+    adapter.request.post.mockResolvedValue({ space_id: '11', cms_context: { sites: [{ ...sites[0], space_id: '11' }], site_id: '1', space_id: '11' } })
+    const wrapper = mount(MmCmsPage, { props: { page: 'news/list', runtime: adapter, identityKey: 'session' } })
+    await requests[0].get({ url: '/cms/news/articles' }); await flushPromises()
+    expect(wrapper.text()).toContain('尚未初始化')
+    await wrapper.get('button').trigger('click'); await flushPromises()
+    expect(wrapper.text()).toContain('CMS child')
+    expect(adapter.request.get).toHaveBeenCalledTimes(1)
+    expect(adapter.request.post.mock.calls[0][0]).toEqual({ url: '/cms/initialize', params: { site_id: '1' } })
+    wrapper.unmount()
+  })
+  it.each<CmsPage>([
+    'news/categories', 'news/list', 'academy/categories', 'academy/courses',
     'help/categories', 'help/articles', 'feedback/list',
     'announcement/categories', 'announcement/list'
   ])('can hide the site toolbar on %s without dropping space isolation', async page => {
@@ -44,7 +86,7 @@ describe('CMS site runtime', () => {
     const wrapper = mount(MmCmsPage, { props: { page: 'news/list', runtime: adapter, identityKey: 'session', showSiteSelector: false } })
     expect(wrapper.get('[role="status"]').text()).toContain('正在加载')
     await flushPromises()
-    expect(wrapper.text()).toContain('尚未初始化')
+    expect(wrapper.text()).toContain('暂无可管理')
     expect(wrapper.text()).not.toContain('CMS child')
     expect(adapter.request.post).not.toHaveBeenCalled()
     wrapper.unmount()

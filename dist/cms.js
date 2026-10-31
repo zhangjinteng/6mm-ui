@@ -7475,7 +7475,11 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 	props: {
 		page: {},
 		runtime: {},
-		identityKey: {}
+		identityKey: {},
+		showSiteSelector: {
+			type: Boolean,
+			default: !0
+		}
 	},
 	setup(e) {
 		let t = e, n = {
@@ -7561,7 +7565,7 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 			}
 		}), ce(() => {
 			f = !1, d.abort();
-		}), (t, n) => (O(), y("section", oi, [e.runtime.mode === "white_label" ? (O(), y("header", si, [b("label", null, [n[1] ||= x("内容站点 ", -1), z(b("select", {
+		}), (t, n) => (O(), y("section", oi, [e.runtime.mode === "white_label" && e.showSiteSelector ? (O(), y("header", si, [b("label", null, [n[1] ||= x("内容站点 ", -1), z(b("select", {
 			"onUpdate:modelValue": n[0] ||= (e) => i.value = e,
 			disabled: o.value
 		}, [(O(!0), y(se, null, fe(r.value, (e) => (O(), y("option", {
@@ -7574,7 +7578,7 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 			onClick: ne
 		}, "初始化空内容空间", 8, pi)) : v("", !0)])) : (O(), _(A(l.value), { key: `${e.page}:${e.identityKey}:${c.value?.space_id ?? "platform"}` }))]));
 	}
-}), [["__scopeId", "data-v-e30f9db5"]]);
+}), [["__scopeId", "data-v-3df1b635"]]);
 //#endregion
 export { mi as MmCmsPage };
 

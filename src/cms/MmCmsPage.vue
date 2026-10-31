@@ -1,6 +1,6 @@
 <template>
   <section class="mm-cms-page">
-    <header v-if="runtime.mode === 'white_label'" class="mm-cms-site">
+    <header v-if="runtime.mode === 'white_label' && showSiteSelector" class="mm-cms-site">
       <label>内容站点 <select v-model="siteId" :disabled="loading">
         <option v-for="site in sites" :key="site.site_id" :value="site.site_id">{{ site.label }}</option>
       </select></label>
@@ -28,7 +28,7 @@ import Feedback from './views/content/feedback/list/index.vue'
 import AnnouncementCategories from './views/content/announcement/categories/index.vue'
 import Announcements from './views/content/announcement/list/index.vue'
 import Translations from './views/content/localization/translations/index.vue'
-const props = defineProps<{ page: CmsPage; runtime: CmsRuntime; identityKey: string }>()
+const props = withDefaults(defineProps<{ page: CmsPage; runtime: CmsRuntime; identityKey: string; showSiteSelector?: boolean }>(), { showSiteSelector: true })
 export type CmsPage = 'news/categories' | 'news/list' | 'academy/categories' | 'academy/courses' | 'help/categories' | 'help/articles' | 'feedback/list' | 'announcement/categories' | 'announcement/list' | 'localization/translations'
 const pages = { 'news/categories': NewsCategories, 'news/list': NewsList, 'academy/categories': AcademyCategories, 'academy/courses': AcademyCourses, 'help/categories': HelpCategories, 'help/articles': HelpArticles, 'feedback/list': Feedback, 'announcement/categories': AnnouncementCategories, 'announcement/list': Announcements, 'localization/translations': Translations }
 type Site = { site_id: string; space_id: string | null; label: string }

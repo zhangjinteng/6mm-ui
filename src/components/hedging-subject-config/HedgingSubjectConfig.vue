@@ -19,7 +19,7 @@
     </HedgingQueryBar>
 
     <div class="mm-hedging-subject-config__body mm-pro-table__body">
-      <MmTable :columns="visibleColumns" :data="tableRows" empty-text="暂无主体配置" row-key="agent_id">
+      <MmTable :class="{ 'is-empty': !tableRows.length }" :columns="visibleColumns" :data="tableRows" empty-text="暂无主体配置" row-key="agent_id">
         <template #cell-agent_id="{ row }"><slot name="cell-source_id" :row="row">{{ row.agent_id }}</slot></template>
         <template #cell-agent_name="{ row }"><slot name="cell-source_name" :row="row">{{ row.agent_name || "-" }}</slot></template>
         <template #cell-source_type="{ row }"><slot name="cell-source_type" :row="row"><MmTag effect="soft" round size="sm" type="primary">商户</MmTag></slot></template>
@@ -131,4 +131,28 @@ defineExpose({ refresh: load });
 
 <style>
 .mm-hedging-subject-config{display:flex;flex-direction:column;height:100%;min-height:460px;background:var(--mm-color-panel,#fff);border:1px solid var(--mm-color-border,#e5e7eb);border-radius:10px;overflow:hidden}.mm-hedging-subject-config__body{position:relative;flex:1;min-height:0;overflow:auto}.mm-hedging-subject-config__footer{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-top:1px solid var(--mm-color-border,#e5e7eb);color:var(--mm-color-text-secondary,#64748b);font-size:12px}.mm-hedging-subject-config__aggregate-item{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}.mm-hedging-subject-config__count{border:0;background:var(--mm-color-primary-soft,#eaf3ff);color:var(--mm-color-primary,#1677ff);border-radius:999px;padding:3px 9px;font:inherit;font-weight:600;cursor:help}.mm-hedging-subject-config__tooltip-list{display:grid;gap:7px;min-width:130px}.mm-hedging-subject-config__time{font-size:var(--mm-font-size-sm)}.mm-hedging-subject-config .row-actions{display:flex;align-items:center;justify-content:center}.mm-hedging-subject-config .contract-row-action{box-shadow:none}
+</style>
+<style>
+/* Only stretch the empty state; populated subject rows keep their natural height. */
+.mm-hedging-subject-config__body > .mm-table.is-empty {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.mm-hedging-subject-config__body > .mm-table.is-empty .mm-table__viewport,
+.mm-hedging-subject-config__body > .mm-table.is-empty .mm-table__scroll {
+  flex: 1 1 0px;
+  min-height: 0;
+}
+.mm-hedging-subject-config .mm-table.is-empty .mm-table__body-table,
+.mm-hedging-subject-config .mm-table.is-empty .mm-table__body-table > tbody,
+.mm-hedging-subject-config .mm-table.is-empty .mm-table__body-table > tbody > tr,
+.mm-hedging-subject-config .mm-table.is-empty .mm-table__empty-cell {
+  height: 100%;
+}
+.mm-hedging-subject-config .mm-table.is-empty .mm-empty {
+  height: 100%;
+  align-content: center;
+}
 </style>

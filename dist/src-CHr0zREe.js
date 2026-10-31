@@ -15612,6 +15612,7 @@ var al = { key: 1 }, ol = { class: "mm-history-order-table__id" }, sl = { key: 1
 				"model-value"
 			]),
 			T("div", su, [O(Vr, {
+				class: F({ "is-empty": !f.value.length }),
 				columns: v.value,
 				data: f.value,
 				"empty-text": "暂无主体配置",
@@ -15672,7 +15673,11 @@ var al = { key: 1 }, ol = { class: "mm-history-order-table__id" }, sl = { key: 1
 					_: 1
 				}, 8, ["aria-label", "onClick"])])]),
 				_: 3
-			}, 8, ["columns", "data"]), o.value ? (B(), w("div", {
+			}, 8, [
+				"class",
+				"columns",
+				"data"
+			]), o.value ? (B(), w("div", {
 				key: 0,
 				class: F(["mm-pro-table__state", { "is-overlay": a.value.length > 0 }]),
 				role: "status"
@@ -28802,4 +28807,4 @@ var hy = class {
 //#endregion
 export { Hf as $, Wo as $n, Et as $r, il as $t, uh as A, uc as An, nr as Ar, fd as At, om as B, Ss as Bn, rn as Br, Hu as Bt, bg as C, Tc as Cn, Ci as Cr, wd as Ct, Eh as D, vc as Dn, Vr as Dr, id as Dt, Nh as E, bc as En, Zr as Er, sd as Et, Em as F, Ks as Fn, wn as Fr, nd as Ft, Wp as G, rs as Gn, $t as Gr, Tu as Gt, am as H, bs as Hn, on as Hr, Iu as Ht, dm as I, Vs as In, Sn as Ir, td as It, Kp as J, os as Jn, Jt as Jr, au as Jt, Gp as K, is as Kn, cn as Kr, Cu as Kt, um as L, Rs as Ln, tn as Lr, Uu as Lt, Vm as M, tc as Mn, qn as Mr, hd as Mt, zm as N, nc as Nn, Mn as Nr, gd as Nt, Ch as O, _c as On, lr as Or, dd as Ot, Pm as P, $s as Pn, kn as Pr, rd as Pt, $f as Q, Yo as Qn, Dt as Qr, fl as Qt, cm as R, Ms as Rn, nn as Rr, Wu as Rt, xg as S, wc as Sn, Ei as Sr, Od as St, zh as T, Cc as Tn, ei as Tr, ad as Tt, rm as U, _s as Un, Qt as Ur, Mu as Ut, im as V, xs as Vn, Zt as Vr, Lu as Vt, $p as W, gs as Wn, Xt as Wr, Du as Wt, op as X, es as Xn, Ft as Xr, zl as Xt, Rp as Y, cs as Yn, zt as Yr, Xl as Yt, np as Z, $o as Zn, kt as Zr, El as Zt, Sg as _, Lc as _n, Bi as _r, Vd as _t, b_ as a, Q as ai, qc as an, To as ar, Gf as at, Eg as b, Ac as bn, ji as br, Hd as bt, s_ as c, Ze as ci, Xc as cn, Qa as cr, Nf as ct, t_ as d, He as di, Uc as dn, Va as dr, kf as dt, Tt as ei, rl as en, Ho as er, qf as et, Wg as f, Ge as fi, Hc as fn, Ia as fr, Tf as ft, Lg as g, Rc as gn, Gi as gr, Wd as gt, Vg as h, zc as hn, Wi as hr, Kd as ht, h_ as i, ot as ii, Kc as in, Eo as ir, Uf as it, qm as j, ec as jn, Qn as jr, md as jt, fh as k, dc as kn, rr as kr, pd as kt, o_ as l, Qe as li, Wc as ln, qa as lr, Ff as lt, Gg as m, Bc as mn, Ui as mr, lf as mt, Lv as n, dt as ni, tl as nn, Fo as nr, Jf as nt, m_ as o, et as oi, Jc as on, oo as or, Vf as ot, Ug as p, Ke as pi, Vc as pn, Xi as pr, ff as pt, Up as q, ss as qn, an as qr, fu as qt, w_ as r, lt as ri, Gc as rn, Oo as rr, Wf as rt, p_ as s, $e as si, Zc as sn, io as sr, Mf as st, Sy as t, mt as ti, nl as tn, Bo as tr, Yf as tt, n_ as u, Xe as ui, Yc as un, Ua as ur, Pf as ut, wg as v, Ic as vn, Pi as vr, qd as vt, pg as w, Ec as wn, _i as wr, od as wt, Tg as x, kc as xn, $ as xr, zd as xt, Cg as y, Nc as yn, Ni as yr, Ud as yt, sm as z, Cs as zn, ln as zr, Gu as zt };
 
-//# sourceMappingURL=src-CpdqL-SF.js.map
+//# sourceMappingURL=src-CHr0zREe.js.map

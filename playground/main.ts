@@ -9,9 +9,11 @@ import ProTablePreviewPage from "./ProTablePreviewPage.vue";
 import SidebarNavPreviewPage from "./SidebarNavPreviewPage.vue";
 import RichTextEditorPreview from "./RichTextEditorPreview.vue";
 import CmsViewportPreview from "./CmsViewportPreview.vue";
+import HedgingSubjectEmptyPreview from "./HedgingSubjectEmptyPreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
+  normalizedPath === "/hedging-subject-empty" ? HedgingSubjectEmptyPreview :
   normalizedPath === "/cms-viewport" ? CmsViewportPreview :
   normalizedPath === "/rich-text-editor"
     ? RichTextEditorPreview

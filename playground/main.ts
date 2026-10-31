@@ -8,9 +8,11 @@ import HandlingFeeConfigPreview from "./HandlingFeeConfigPreview.vue";
 import ProTablePreviewPage from "./ProTablePreviewPage.vue";
 import SidebarNavPreviewPage from "./SidebarNavPreviewPage.vue";
 import RichTextEditorPreview from "./RichTextEditorPreview.vue";
+import CmsViewportPreview from "./CmsViewportPreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
+  normalizedPath === "/cms-viewport" ? CmsViewportPreview :
   normalizedPath === "/rich-text-editor"
     ? RichTextEditorPreview
     : normalizedPath === "/component-info"

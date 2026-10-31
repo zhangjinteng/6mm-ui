@@ -7461,16 +7461,16 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 			}, 8, ["modelValue"])
 		], 8, lr));
 	}
-}), [["__scopeId", "data-v-85b2a00f"]]), oi = { class: "mm-cms-page" }, si = {
+}), [["__scopeId", "data-v-85b2a00f"]]), oi = {
 	key: 0,
 	class: "mm-cms-site"
-}, ci = ["disabled"], li = ["value"], ui = {
+}, si = ["disabled"], ci = ["value"], li = {
 	key: 1,
 	role: "alert"
-}, di = {
+}, ui = {
 	key: 2,
 	role: "status"
-}, fi = { key: 3 }, pi = ["disabled"], mi = /*#__PURE__*/ p(/* @__PURE__ */ C({
+}, di = { key: 3 }, fi = ["disabled"], pi = /*#__PURE__*/ p(/* @__PURE__ */ C({
 	__name: "MmCmsPage",
 	props: {
 		page: {},
@@ -7479,6 +7479,10 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 		showSiteSelector: {
 			type: Boolean,
 			default: !0
+		},
+		viewport: {
+			type: Boolean,
+			default: !1
 		}
 	},
 	setup(e) {
@@ -7565,21 +7569,39 @@ var lr = ["aria-busy"], ur = { class: "translation-toolbar surface" }, dr = { cl
 			}
 		}), ce(() => {
 			f = !1, d.abort();
-		}), (t, n) => (O(), y("section", oi, [e.runtime.mode === "white_label" && e.showSiteSelector ? (O(), y("header", si, [b("label", null, [n[1] ||= x("内容站点 ", -1), z(b("select", {
+		}), (t, n) => (O(), y("section", { class: D(["mm-cms-page", { "is-viewport": e.viewport }]) }, [e.runtime.mode === "white_label" && e.showSiteSelector ? (O(), y("header", oi, [b("label", null, [n[1] ||= x("内容站点 ", -1), z(b("select", {
 			"onUpdate:modelValue": n[0] ||= (e) => i.value = e,
 			disabled: o.value
 		}, [(O(!0), y(se, null, fe(r.value, (e) => (O(), y("option", {
 			key: e.site_id,
 			value: e.site_id
-		}, M(e.label), 9, li))), 128))], 8, ci), [[P, i.value]])]), n[2] ||= b("span", null, "各站点内容独立管理", -1)])) : v("", !0), a.value ? (O(), y("p", ui, M(a.value), 1)) : o.value ? (O(), y("p", di, "正在加载站点…")) : e.runtime.mode === "white_label" && !c.value?.space_id ? (O(), y("div", fi, [n[3] ||= b("p", null, "该站点尚未初始化内容空间。", -1), c.value && u.value ? (O(), y("button", {
+		}, M(e.label), 9, ci))), 128))], 8, si), [[P, i.value]])]), n[2] ||= b("span", null, "各站点内容独立管理", -1)])) : v("", !0), a.value ? (O(), y("p", li, M(a.value), 1)) : o.value ? (O(), y("p", ui, "正在加载站点…")) : e.runtime.mode === "white_label" && !c.value?.space_id ? (O(), y("div", di, [n[3] ||= b("p", null, "该站点尚未初始化内容空间。", -1), c.value && u.value ? (O(), y("button", {
 			key: 0,
 			type: "button",
 			disabled: s.value,
 			onClick: ne
-		}, "初始化空内容空间", 8, pi)) : v("", !0)])) : (O(), _(A(l.value), { key: `${e.page}:${e.identityKey}:${c.value?.space_id ?? "platform"}` }))]));
+		}, "初始化空内容空间", 8, fi)) : v("", !0)])) : (O(), _(A(l.value), { key: `${e.page}:${e.identityKey}:${c.value?.space_id ?? "platform"}` }))], 2));
 	}
-}), [["__scopeId", "data-v-3df1b635"]]);
+}), [["__scopeId", "data-v-771302ea"]]);
 //#endregion
-export { mi as MmCmsPage };
+//#region src/cms/permission-tree.ts
+function mi(e, t, n = "", r = 0) {
+	let i = e.children ?? [], a = e.type === "C" && !!e.perms?.startsWith("cms_"), o = t(e), s = n ? `${n} / ${o}` : o, c = a || e.type === "M" && r > 0 ? s : n;
+	return [...!i.length || a ? [{
+		id: e.id,
+		name: a || e.type === "A" && e.perms?.startsWith("cms_") ? s : o
+	}] : [], ...i.flatMap((e) => mi(e, t, c, r + 1))];
+}
+function hi(e, t) {
+	let n = new Set(t.map(String)), r = /* @__PURE__ */ new Set(), i = [];
+	function a(e) {
+		let t = e.children ?? [], o = (!t.length || e.type === "C" && e.perms?.startsWith("cms_")) && n.has(String(e.id));
+		for (let e of t) a(e) && (o = !0);
+		return o && !r.has(String(e.id)) && (r.add(String(e.id)), i.push(e.id)), !!o;
+	}
+	return e.forEach(a), i;
+}
+//#endregion
+export { pi as MmCmsPage, mi as cmsPermissionItems, hi as cmsPermissionSubmission };
 
 //# sourceMappingURL=cms.js.map

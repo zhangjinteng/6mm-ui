@@ -1,6 +1,6 @@
 {
   "name": "@work-gpt/6mm-ui",
-  "version": "1.0.101",
+  "version": "1.0.102",
   "description": "Vue 3 component library for 6MM products",
   "type": "module",
   "main": "./dist/index.js",
@@ -39,7 +39,7 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.json",
     "test": "vitest",
     "test:prediction-config": "node --import tsx --test src/prediction-config/**/*.test.mjs && vitest run src/prediction-config/runtime.test.ts",
-    "test:cms": "node --import tsx --test src/cms/views/content/*.test.mjs src/cms/views/content/academy/courses/*.test.mjs src/cms/views/content/localization/translations/*.test.mjs && vitest run src/cms/runtime.test.ts",
+    "test:cms": "node --import tsx --test src/cms/views/content/*.test.mjs src/cms/views/content/academy/courses/*.test.mjs src/cms/views/content/localization/translations/*.test.mjs && vitest run src/cms/*.test.ts",
     "test:a11y": "playwright test --grep @a11y",
     "test:e2e": "playwright test",
     "build": "vite build",

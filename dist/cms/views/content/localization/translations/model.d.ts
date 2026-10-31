@@ -1,0 +1,10 @@
+import { TranslationDetail, TranslationEdit, TranslationField, TranslationJob } from '../../../../api/content/translations';
+export declare const percent: (done: number, total: number) => number;
+export declare const valueKey: (field: string, locale: string) => string;
+export declare function editsFor(detail: TranslationDetail | undefined, values: Record<string, string>): TranslationEdit[];
+export declare function valuesFor(detail: TranslationDetail): Record<string, string>;
+export declare function fieldDone(field?: TranslationField): number;
+export declare const jobActive: (job?: TranslationJob | null) => boolean;
+export declare const jobLabels: Record<string, string>;
+export declare const publishLabels: Record<string, string>;
+export declare function readableError(error: unknown): string;

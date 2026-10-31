@@ -24,6 +24,7 @@ export default defineConfig({
     lib: {
       cssFileName: 'style',
       entry: {
+        cms: fileURLToPath(new URL('./src/cms/index.ts', import.meta.url)),
         index: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
         'prediction-config': fileURLToPath(new URL('./src/prediction-config/index.ts', import.meta.url)),
       },
@@ -32,7 +33,7 @@ export default defineConfig({
       name: 'MmUI',
     },
     rollupOptions: {
-      external: id => id === 'vue' || id === 'element-plus' || id.startsWith('element-plus/') || id === '@element-plus/icons-vue' || id.startsWith('@tiptap/') || id === '@lucide/vue',
+      external: id => id === 'vue' || id === 'vue-router' || id === 'element-plus' || id.startsWith('element-plus/') || id === '@element-plus/icons-vue' || id.startsWith('@tiptap/') || id === '@lucide/vue',
     },
     sourcemap: true,
   },

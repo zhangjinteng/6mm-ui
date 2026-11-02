@@ -19,7 +19,7 @@
     </HedgingQueryBar>
 
     <div class="mm-hedging-subject-config__body mm-pro-table__body">
-      <MmTable :class="{ 'is-empty': !tableRows.length }" :columns="visibleColumns" :data="tableRows" empty-text="暂无主体配置" row-key="agent_id">
+      <MmTable :class="{ 'is-empty': !tableRows.length }" :columns="visibleColumns" :data="tableRows" empty-text="暂无主体配置" :row-key="rowKey">
         <template #cell-agent_id="{ row }"><slot name="cell-source_id" :row="row">{{ row.agent_id }}</slot></template>
         <template #cell-agent_name="{ row }"><slot name="cell-source_name" :row="row">{{ row.agent_name || "-" }}</slot></template>
         <template #cell-source_type="{ row }"><slot name="cell-source_type" :row="row"><MmTag effect="soft" round size="sm" type="primary">商户</MmTag></slot></template>
@@ -54,6 +54,7 @@
 
 <script setup lang="ts">
 import { computed, defineComponent, h, onMounted, reactive, ref } from "vue";
+import { hedgingOwnerKey } from "../../shared/hedging-source";
 import MmButton from "../button/Button.vue";
 import MmExchangeLogo from "../exchange-logo/ExchangeLogo.vue";
 import MmIcon from "../icon/Icon.vue";
@@ -74,6 +75,7 @@ const draft = reactive({ agentId: "", enabled: "", status: "" });
 const filters = reactive({ ...draft });
 type Row = HedgingSubjectConfigRow & TableRow;
 const tableRows = computed(() => rows.value as Row[]);
+const rowKey = (row: Row) => hedgingOwnerKey(row);
 const columns: TableColumn<Row>[] = [
   { key: "agent_id", dataIndex: "agent_id", title: "来源 ID", width: 100 },
   { key: "agent_name", dataIndex: "agent_name", title: "来源名称", width: 150 },

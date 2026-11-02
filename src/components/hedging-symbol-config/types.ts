@@ -1,8 +1,9 @@
 import type { SelectOption } from "../select";
+import type { HedgingSourceIdentity } from "../../shared/hedging-source";
 
 export type HedgingUnit = "base" | "usdt";
 
-export interface HedgingSymbolConfigRow {
+export interface HedgingSymbolConfigRow extends HedgingSourceIdentity {
   account_id: number;
   account_name: string | null;
   agent_id?: number;
@@ -26,7 +27,7 @@ export interface HedgingSymbolConfigRow {
   updated_at?: string;
 }
 
-export interface HedgingSymbolAccountOption {
+export interface HedgingSymbolAccountOption extends HedgingSourceIdentity {
   exchange: string;
   id: number;
   is_primary: boolean;
@@ -41,6 +42,8 @@ export interface HedgingSymbolConfigResult {
 }
 
 export interface HedgingSymbolConfigQuery {
+  owner_type?: "merchant" | "tenant";
+  owner_id?: number | string;
   account_id?: number | string;
   agent_id?: number | string;
   enabled?: "0" | "1";

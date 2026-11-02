@@ -77,6 +77,7 @@
 
 <script lang="ts" setup>
 import { computed, defineComponent, h, onMounted, reactive, ref } from "vue";
+import { hedgingOwnerKey } from "../../shared/hedging-source";
 import { useLocale } from "../../composables/use-locale";
 import { MmExchangeLogo } from "../exchange-logo";
 import { MmIcon } from "../icon";
@@ -144,7 +145,7 @@ const queryFields = computed<QueryBarField[]>(() => [
   ] as QueryBarField[] : []),
 ]);
 const rangeStart = computed(() => total.value ? (page.value - 1) * pageSize.value + 1 : 0); const rangeEnd = computed(() => Math.min(total.value, page.value * pageSize.value));
-const rowKey = (row: Row) => `${row.agent_id || 0}:${row.id}`;
+const rowKey = (row: Row) => `${hedgingOwnerKey(row)}:${row.id}`;
 async function load() { loading.value = true; try { const result = await props.request({ ...(props.showAgent && filters.agentId ? { agent_id: filters.agentId } : {}), ...(props.showSwitchFilters && filters.globalEnabled ? { global_enabled: filters.globalEnabled as "0" | "1" } : {}), ...(filters.keyword ? { keyword: filters.keyword } : {}), ...(filters.status ? { status: filters.status as HedgingMonitorStatus } : {}), ...(props.showSwitchFilters && filters.symbolEnabled ? { symbol_enabled: filters.symbolEnabled as "0" | "1" } : {}), page: page.value, page_size: pageSize.value }); rows.value = Array.isArray(result?.lists) ? result.lists : []; total.value = Math.max(0, Number(result?.count) || 0); statuses.value = Array.isArray(result?.options?.statuses) ? result.options.statuses : fallbackStatuses; emit("loaded", result); const maxPage = Math.max(1, Math.ceil(total.value / pageSize.value)); if (page.value > maxPage) { page.value = maxPage; await load(); } } finally { loading.value = false; } }
 function handleSearch() { filters.agentId = filterDraft.agentId; filters.globalEnabled = filterDraft.globalEnabled; filters.keyword = filterDraft.keyword.trim(); filters.status = filterDraft.status; filters.symbolEnabled = filterDraft.symbolEnabled; page.value = 1; void load(); }
 function query(value: QueryBarValue) { Object.assign(filterDraft, value); handleSearch(); }

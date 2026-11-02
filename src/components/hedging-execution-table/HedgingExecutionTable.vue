@@ -146,6 +146,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from "vue";
+import { hedgingOwnerKey } from "../../shared/hedging-source";
 
 import { useLocale } from "../../composables/use-locale";
 import HedgingQueryBar from "../hedging-query-bar/HedgingQueryBar.vue";
@@ -263,7 +264,7 @@ const draft = reactive({ agentId: "", accountId: "", keyword: "", reason: "", si
 const filters = reactive({ ...draft });
 type Row = HedgingExecutionRow & TableRow;
 const tableRows = computed(() => rows.value as Row[]);
-const rowKey = (row: Row) => `${row.agent_id || 0}:${row.id}`;
+const rowKey = (row: Row) => `${hedgingOwnerKey(row)}:${row.id}`;
 const columns = computed<TableColumn<Row>[]>(() => [
   { key: "task_no", dataIndex: "task_no", title: copy.value.columns.taskNo, width: 210 },
   ...(props.showAgent ? [

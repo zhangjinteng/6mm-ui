@@ -3,10 +3,16 @@ import { SiteEffectiveRule, SiteGame, SiteProtoGame } from './site-types';
 export type OwnerActor = {
     operator_id: string;
     agent_id: string;
+    config_site_id?: string;
+    kind?: 'MERCHANT' | 'SITE';
+    tenant_id?: string;
 };
 export type OwnerModel = {
-    config_model: 'AGENT_V1' | 'SITE_V1' | 'OWNER_V1';
-    actor: OwnerActor;
+    config_model: 'AGENT_V1' | 'SITE_V1' | 'OWNER_V1' | 'SCOPED_OWNER_V1';
+    actor: OwnerActor & {
+        tenant_id?: string;
+        site_ids?: string[];
+    };
 };
 export type OwnerLimitChange = {
     duration_seconds: string;
@@ -20,6 +26,13 @@ export type OwnerLimitChange = {
     fixed_odds?: string;
 };
 export type OwnerConfig = {
+    config_model?: 'SCOPED_OWNER_V1';
+    config_site_id?: string;
+    revision?: string;
+    site_revision?: string;
+    effective_enabled?: boolean;
+    can_enable?: boolean;
+    blocked_reason?: '' | 'PARENT_CONSTRAINT_CHANGED';
     enabled: boolean;
     platform_enabled: boolean;
     owner_agent_id: string;
@@ -49,7 +62,41 @@ export type OwnerSaveBody = {
     client_request_id: string;
     reason: string;
 };
+export type ScopedStoredConfig = {
+    key: {
+        configSiteId: string;
+        ownerAgentId: string;
+        gameType: SiteGame;
+        symbol: string;
+    };
+    revision: string;
+    basedPublicVersion: string;
+    basedSiteRevision: string;
+    disabled: boolean;
+    overrides: Array<{
+        key: {
+            gameType: SiteGame;
+            symbol: string;
+            durationSeconds: number;
+        };
+        enabled: boolean;
+        stakeTierId: string;
+        basedRuleEpoch: string;
+        bounds: {
+            minimum: string;
+            maximum: string;
+        };
+        odds: {
+            targetPayoutRate?: string;
+            maximumOdds?: string;
+            fixedOdds?: string;
+        };
+    }>;
+};
 export type OwnerSaveResult = {
     configuration: OwnerConfig;
+    receipt: OperationReceipt;
+} | {
+    stored: ScopedStoredConfig;
     receipt: OperationReceipt;
 };

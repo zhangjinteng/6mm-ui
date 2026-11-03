@@ -1,3 +1,4 @@
+import { gridParameterKeys, gridParameters, gridGlobalVersion, type GridParameterMetadata } from '../../../../grid-parameters'
 export interface GridLayout {
     row_count: string
     column_count: string
@@ -8,7 +9,7 @@ export interface GridLayout {
     editable: boolean
     affected_site_ids: string[]
 }
-export interface GridSnapshot {
+export interface GridSnapshot extends Partial<GridParameterMetadata> {
     config_id?: string
     requested_agent_id?: string
     agent_id?: string | null
@@ -35,6 +36,7 @@ export interface GridSnapshot {
     max_order_amount: string
 }
 export interface GridCommand {
+    based_on_global_version?: string
     based_on_config_id?: string
     based_on_default_version?: string
     based_on_default_resolution_epoch?: string
@@ -191,7 +193,7 @@ export function hasLayoutChanges(source: GridSnapshot, draft: GridSnapshot, allo
 export function normalizeSnapshot(value: unknown): GridSnapshot {
     requireValid(object(value), 'INVALID_GRID_CONFIGURATION')
     const required = ['site_id', 'symbol', 'layout_version', 'site_version', 'effective_from_ms', 'enabled', 'target_rtp', 'min_multiplier', 'max_multiplier', 'min_order_amount', 'max_order_amount']
-    exactKeys(value, [...required, ...('layout' in value ? ['layout'] : []), ...('config_id' in value ? identityKeys : [])])
+    exactKeys(value, [...required, ...('layout' in value ? ['layout'] : []), ...('config_id' in value ? identityKeys : []), ...gridParameterKeys.filter(key=>key in value)])
     requireValid(typeof value.site_id === 'string' && value.site_id.length > 0 && value.site_id.length <= 64 && value.site_id.trim() === value.site_id, 'INVALID_GRID_CONFIGURATION')
     requireValid(typeof value.symbol === 'string' && symbolPattern.test(value.symbol), 'INVALID_GRID_CONFIGURATION')
     requireValid([value.layout_version, value.site_version].every(item => typeof item === 'string' && positiveIntegerPattern.test(item)), 'INVALID_GRID_CONFIGURATION')
@@ -224,6 +226,7 @@ export function normalizeSnapshot(value: unknown): GridSnapshot {
         for (const key of ['inherited','default_enabled','effective_enabled'] as const) { requireValid(typeof value[key]==='boolean');result[key]=value[key] as boolean }
         for (const key of ['default_target_rtp','default_min_order_amount','default_max_order_amount'] as const) result[key]=canonicalDecimal(value[key])
     }
+    Object.assign(result, gridParameters(value, canonicalDecimal))
     if ('layout' in value) result.layout = normalizeLayout(value.layout)
     return result
 }
@@ -239,10 +242,7 @@ export function makeCommand(sourceValue: unknown, draftValue: unknown, reason: s
     requireValid(typeof requestId === 'string' && /^[A-Za-z0-9_-]{8,64}$/.test(requestId), 'INVALID_REQUEST_ID')
     requireValid(source.config_id && source.default_version && source.default_resolution_epoch, 'CONFIG_IDENTITY_REQUIRED')
     requireValid(identityKeys.every(key => source[key] === draft[key]), 'INVALID_GRID_TARGET')
-    if (source.requested_agent_id !== '0') {
-        requireValid(!draft.enabled || source.default_enabled, 'PLATFORM_LIMIT')
-        requireValid(compareDecimal(draft.target_rtp, source.default_target_rtp!) <= 0 && compareDecimal(draft.min_order_amount, source.default_min_order_amount!) >= 0 && compareDecimal(draft.max_order_amount, source.default_max_order_amount!) <= 0, 'PLATFORM_LIMIT')
-    }
+    requireValid(JSON.stringify(gridParameters(source as unknown as Record<string,unknown>, canonicalDecimal)) === JSON.stringify(gridParameters(draft as unknown as Record<string,unknown>, canonicalDecimal)), 'INVALID_GRID_TARGET')
     const changes: GridCommand['changes'] = {}
     for (const key of changeKeys) {
         if (source[key] !== draft[key]) changes[key] = draft[key] as never
@@ -252,6 +252,10 @@ export function makeCommand(sourceValue: unknown, draftValue: unknown, reason: s
             requireValid(allowLayout && source.layout?.editable && draft.layout, 'FIELD_FORBIDDEN')
             changes[key] = draft.layout[key] as never
         }
+    }
+    if (source.requested_agent_id !== '0' && !(changes.enabled === false && Object.keys(changes).length === 1)) {
+        requireValid(!draft.enabled || source.default_enabled, 'PLATFORM_LIMIT')
+        requireValid(compareDecimal(draft.target_rtp, source.default_target_rtp!) <= 0 && compareDecimal(draft.min_order_amount, source.default_min_order_amount!) >= 0 && compareDecimal(draft.max_order_amount, source.default_max_order_amount!) <= 0, 'PLATFORM_LIMIT')
     }
     if (layoutChangeKeys.some(key => key in changes)) {
         const layout = source.layout!
@@ -270,6 +274,7 @@ export function makeCommand(sourceValue: unknown, draftValue: unknown, reason: s
         based_on_layout_version: source.layout_version,
         based_on_site_version: source.site_version,
         based_on_config_id: source.config_id,
+        ...(gridGlobalVersion(source) ? {based_on_global_version:gridGlobalVersion(source)} : {}),
         based_on_default_version: source.default_version,
         based_on_default_resolution_epoch: source.default_resolution_epoch,
         client_request_id: requestId,
@@ -279,7 +284,8 @@ export function makeCommand(sourceValue: unknown, draftValue: unknown, reason: s
 }
 function commandShape(value: unknown): asserts value is GridCommand {
     requireValid(object(value), 'PENDING_CORRUPT')
-    exactKeys(value, [...commandKeys, ...('based_on_config_id' in value ? commandIdentityKeys : [])])
+    exactKeys(value, [...commandKeys, ...('based_on_config_id' in value ? commandIdentityKeys : []), ...('based_on_global_version' in value ? ['based_on_global_version'] : [])])
+    if ('based_on_global_version' in value) requireValid(typeof value.based_on_global_version==='string' && /^(0|[1-9][0-9]*)$/.test(value.based_on_global_version) && compareDecimal(value.based_on_global_version,'9223372036854775807')<=0, 'PENDING_CORRUPT')
     if ('based_on_config_id' in value) for (const key of commandIdentityKeys) requireValid(typeof value[key] === 'string' && positiveIntegerPattern.test(value[key] as string) && compareDecimal(value[key] as string,'9223372036854775807') <= 0, 'PENDING_CORRUPT')
     requireValid(typeof value.site_id === 'string' && value.site_id.length > 0 && value.site_id.length <= 64 && value.site_id.trim() === value.site_id, 'PENDING_CORRUPT')
     requireValid(typeof value.symbol === 'string' && symbolPattern.test(value.symbol), 'PENDING_CORRUPT')

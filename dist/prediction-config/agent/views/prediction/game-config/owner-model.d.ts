@@ -2,6 +2,7 @@ import { SiteEffectiveRule, SiteEffectiveTier } from '../../../api/prediction/si
 import { OwnerActor, OwnerConfig, OwnerLimitChange, OwnerSaveBody } from '../../../api/prediction/owner-types';
 export type { OwnerActor, OwnerConfig, OwnerLimitChange, OwnerSaveBody };
 export declare function ownerTier(rule: SiteEffectiveRule): SiteEffectiveTier;
+export declare function scopedOwnerActor(actor: OwnerActor): boolean;
 export declare function canManageOwnerConfig(actor: OwnerActor): boolean;
 export declare const money: (v: unknown) => v is string;
 export declare function validateOwnerBounds(platformMin: string, platformMax: string, minimum: string, maximum: string): boolean;
@@ -31,6 +32,8 @@ export declare class OwnerReadGate {
         generation: number;
         operator: string;
         owner: string;
+        site: string | undefined;
+        kind: "SITE" | "MERCHANT" | undefined;
         game: string;
         symbol: string;
     };

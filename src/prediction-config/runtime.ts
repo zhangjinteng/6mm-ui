@@ -41,6 +41,11 @@ export interface AgentConfigAdapter {
   role: 'agent'
   api: {
     ownerConfigurationModel(signal?: AbortSignal): Promise<OwnerModel>
+    initializeOwnerConfigurations?(signal?: AbortSignal): Promise<{ created: number }>
+    initializeSiteConfigurations?(siteId: string, signal?: AbortSignal): Promise<{ created: number }>
+    scopedSiteConfigurations?(siteId: string, game: PredictionGameType, signal?: AbortSignal): Promise<{ items: OwnerConfig[] }>
+    scopedSiteConfiguration?(siteId: string, game: PredictionGameType, symbol: string, signal?: AbortSignal): Promise<{ configuration: OwnerConfig }>
+    saveScopedSiteConfiguration?(siteId: string, body: OwnerSaveBody, signal?: AbortSignal): Promise<OwnerSaveResult>
     ownerConfigurations(game: PredictionGameType, signal?: AbortSignal): Promise<{ items: OwnerConfig[] }>
     ownerConfiguration(game: PredictionGameType, symbol: string, signal?: AbortSignal): Promise<{ configuration: OwnerConfig }>
     saveOwnerConfiguration(body: OwnerSaveBody, signal?: AbortSignal): Promise<OwnerSaveResult>
@@ -53,6 +58,7 @@ export interface AgentConfigAdapter {
     saveConfiguration(body: SaveBody, signal?: AbortSignal): Promise<SaveResult>
   }
   grid: {
+    initializeGridSite?(siteId: string, signal?: AbortSignal): Promise<{ created: number }>
     initializeGridMerchant(signal?: AbortSignal): Promise<{ created: number }>
     gridConfigSymbols(signal?: AbortSignal): Promise<string[]>
     gridConfigCatalog(signal?: AbortSignal): Promise<AgentGridCatalog>

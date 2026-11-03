@@ -9,7 +9,7 @@ export declare function mergeGridDirectory(products: Array<{
     symbol: string;
     enabled: boolean;
     default_enabled: boolean;
-}>, symbols: string[]): GridDirectoryProduct[];
+}>, symbols: string[], includeDisabledDefaults?: boolean): GridDirectoryProduct[];
 export declare function sortConfigSymbols<T extends {
     symbol: string;
 }>(rows: readonly T[], symbols: readonly string[], enabled?: (row: T) => boolean): T[];

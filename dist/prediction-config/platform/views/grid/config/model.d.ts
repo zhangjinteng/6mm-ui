@@ -1,3 +1,4 @@
+import { GridParameterMetadata } from '../../../../grid-parameters';
 export interface GridLayout {
     row_count: string;
     column_count: string;
@@ -8,7 +9,7 @@ export interface GridLayout {
     editable: boolean;
     affected_site_ids: string[];
 }
-export interface GridSnapshot {
+export interface GridSnapshot extends Partial<GridParameterMetadata> {
     config_id?: string;
     requested_agent_id?: string;
     agent_id?: string | null;
@@ -35,6 +36,7 @@ export interface GridSnapshot {
     max_order_amount: string;
 }
 export interface GridCommand {
+    based_on_global_version?: string;
     based_on_config_id?: string;
     based_on_default_version?: string;
     based_on_default_resolution_epoch?: string;
@@ -81,24 +83,19 @@ export declare function hasLayoutChanges(source: GridSnapshot, draft: GridSnapsh
 export declare function normalizeSnapshot(value: unknown): GridSnapshot;
 export declare function normalizeSnapshotForTarget(value: unknown, siteId: string, symbol: string): GridSnapshot;
 export declare function makeCommand(sourceValue: unknown, draftValue: unknown, reason: string, requestId: string, allowMultipliers: boolean, allowLayout?: boolean): GridCommand;
-export declare function readPending(storage: PendingStorage): PendingGridCommand | null;
-export declare function persistPending(storage: PendingStorage, operatorId: string, command: GridCommand): PendingGridCommand;
-export declare function captureSaveReview(operatorId: string, command: GridCommand): GridSaveReview;
-export declare function persistReviewedCommand(storage: PendingStorage, review: GridSaveReview, currentOperatorId: string, currentCommand: GridCommand): PendingGridCommand;
-export declare function pendingForActor(storage: PendingStorage, operatorId: string): {
-    status: 'none' | 'bound' | 'foreign';
-    pending?: PendingGridCommand;
-};
 export declare function isUnconfirmedReceipt(error: unknown): boolean;
-export declare function attemptPending(storage: PendingStorage, pending: PendingGridCommand, mode: 'save' | 'receipt' | 'recover', sender: (mode: 'save' | 'receipt', command: GridCommand) => Promise<unknown>): Promise<{
-    status: 'success';
+export declare const readPending: (storage: import('./journal').PendingStorage) => import('./journal').PendingCommand<GridCommand> | null, persistPending: (storage: import('./journal').PendingStorage, operatorId: string, command: GridCommand) => import('./journal').PendingCommand<GridCommand>, captureSaveReview: (operatorId: string, command: GridCommand) => import('./journal').Review<GridCommand>, persistReviewedCommand: (storage: import('./journal').PendingStorage, review: import('./journal').Review<GridCommand>, currentOperatorId: string, currentCommand: GridCommand) => import('./journal').PendingCommand<GridCommand>, pendingForActor: (storage: import('./journal').PendingStorage, operatorId: string) => {
+    status: "none" | "bound" | "foreign";
+    pending?: import('./journal').PendingCommand<GridCommand> | undefined;
+}, attemptPending: (storage: import('./journal').PendingStorage, pending: import('./journal').PendingCommand<GridCommand>, mode: "save" | "receipt" | "recover", sender: (mode: "save" | "receipt", command: GridCommand) => Promise<unknown>) => Promise<{
+    status: "success";
     value: GridOperationResult;
 } | {
-    status: 'rejected';
+    status: "rejected";
     error: unknown;
     journalCleared: boolean;
 } | {
-    status: 'unknown';
+    status: "unknown";
     error: unknown;
 }>;
 export declare class SelectionGate {

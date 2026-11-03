@@ -1,3 +1,4 @@
+import { GridParameterMetadata } from '../../../../grid-parameters';
 export interface GridLayout {
     row_count: string;
     column_count: string;
@@ -8,7 +9,7 @@ export interface GridLayout {
     editable: boolean;
     affected_site_ids: string[];
 }
-export interface GridSnapshot {
+export interface GridSnapshot extends Partial<GridParameterMetadata> {
     config_id?: string;
     requested_agent_id?: string;
     agent_id?: string | null;
@@ -35,6 +36,7 @@ export interface GridSnapshot {
     max_order_amount: string;
 }
 export interface GridCommand {
+    based_on_global_version?: string;
     based_on_config_id?: string;
     based_on_default_version?: string;
     based_on_default_resolution_epoch?: string;

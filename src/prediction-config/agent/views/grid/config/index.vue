@@ -44,16 +44,18 @@
                         <div><h2>{{ snapshot.symbol }} · 预测网格</h2><p data-config-updated-at>更新时间 {{ configUpdatedAt }}</p><p v-if="sites.length > 1">当前站点：{{ snapshot.site_id }}</p></div>
                         <div class="config-heading__actions"><el-button @click="guideVisible = true">玩法说明</el-button><el-button v-if="canSavePermission" type="primary" :loading="busy" :disabled="!editable || !dirty" @click="reviewSave">保存配置</el-button></div>
                     </header>
-                    <p v-if="snapshot.requested_agent_id !== '0'" class="parameter-description">{{ snapshot.inherited ? '当前继承平台配置' : '当前使用商户配置' }}；平台更新后恢复平台配置。平台返奖率上限 {{ snapshot.default_target_rtp ? `${ratioToPercent(snapshot.default_target_rtp)}%` : '—' }}，单笔范围 {{ snapshot.default_min_order_amount }} ~ {{ snapshot.default_max_order_amount }} USDT。</p>
-                    <el-alert v-if="snapshot.default_enabled === false" title="平台已关闭此币种，商户不能开启" type="info" :closable="false" />
+                    <p v-if="snapshot.requested_agent_id !== '0'" class="parameter-description">{{ snapshot.inherited ? '当前继承所属站点配置' : '当前使用商户配置' }}；已有商户配置保持不变。平台返奖率上限 {{ snapshot.default_target_rtp ? `${ratioToPercent(snapshot.default_target_rtp)}%` : '—' }}，单笔范围 {{ snapshot.default_min_order_amount }} ~ {{ snapshot.default_max_order_amount }} USDT。</p>
+                    <el-alert v-if="!whiteLabel && snapshot.default_enabled === false" title="平台已关闭此币种，商户不能开启" type="info" :closable="false" />
                     <PredictionLoadingRegion :loading="detailLoading">
                         <article v-if="snapshot.layout" class="parameter-card" data-price-precision>
-                            <header class="parameter-heading"><h3>价格精度</h3><p class="parameter-description">由平台统一设置，商户只读</p></header>
+                            <header class="parameter-heading"><h3>价格精度</h3><p class="parameter-description">由总后台统一设置，此处只读</p></header>
                             <div class="fields"><label><span>价格小数位：{{ snapshot.layout.price_decimals == null ? '未设置（沿用原规则）' : `${snapshot.layout.price_decimals} 位` }}</span></label></div>
                         </article>
                         <article class="parameter-card"><header class="parameter-heading"><h3>赔率配置</h3><p class="parameter-description">格子赔率按目标返奖率与命中概率动态计算</p></header>
                             <div class="fields odds-fields">
                                 <label><span>目标返奖率<ParameterHelp label="目标返奖率" content="例如 97%：命中概率为 20% 时，计算赔率为 4.85x。" /></span><DecimalInput :input-component="MmInput" v-model="rtpPercent" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>%</template></DecimalInput><small>例如 97%：命中概率为 20% 时，计算赔率为 4.85x</small></label>
+                                <label v-if="canEditMultipliers"><span>最低赔率</span><DecimalInput :input-component="MmInput" v-model="draft.min_multiplier" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>x</template></DecimalInput></label>
+                                <label v-if="canEditMultipliers"><span>最高赔率</span><DecimalInput :input-component="MmInput" v-model="draft.max_multiplier" :disabled="!editable" inputmode="decimal" @input="invalidateMessage"><template #append>x</template></DecimalInput></label>
                             </div>
                         </article>
                         <article class="parameter-card"><header class="parameter-heading"><h3>下注限制</h3><p class="parameter-description">{{ snapshot.symbol }} 每个格子生成一笔独立订单</p></header>
@@ -78,7 +80,7 @@ import { MmInput } from '../../../../ui'
 import PredictionLoadingRegion from '../../../../platform/views/prediction/components/PredictionLoadingRegion.vue'
 
 import { useAgentConfigRuntime } from '../../../../runtime'
-const { initializeGridMerchant, gridConfigSymbols: readSymbolDirectory, gridConfigCatalog, gridConfigReceipt, gridConfigSite, saveGridConfig } = useAgentConfigRuntime().grid
+const { initializeGridSite, initializeGridMerchant, gridConfigSymbols: readSymbolDirectory, gridConfigCatalog, gridConfigReceipt, gridConfigSite, saveGridConfig } = useAgentConfigRuntime().grid
 
 import { timestamp as formatConfigTime } from '../../prediction/shared/format'
 import DecimalInput from '../../../../platform/views/prediction/components/DecimalInput.vue'
@@ -93,14 +95,20 @@ import { useConfigUser as useUserStore } from '../../../../runtime'
 import type { AgentGridCatalog as GridCatalog } from '../../../../runtime'
 import { attemptPending, isUnconfirmedReceipt, captureSaveReview, makeCommand, normalizeSnapshotForTarget, pendingForActor, percentToRatio, persistReviewedCommand, ratioToPercent, secureRequestId, SelectionGate, type GridCommand, type GridSnapshot, type PendingGridCommand } from './model'
 import { mergeGridDirectory } from './directory'
+import type { OwnerActor } from '../../../api/prediction/owner-types'
+import { gridPendingStorage } from './pending-scope'
+const props = defineProps<{ actor?: OwnerActor }>()
+const whiteLabel = computed(() => props.actor?.kind === 'SITE')
+const journal = () => gridPendingStorage(sessionStorage, props.actor)
 const user = useUserStore()
 const can = (permission: string) => user.perms.includes('*') || user.perms.includes(permission)
-const canRead = computed(() => can('prediction_config:lists'))
+const canRead = computed(() => can('prediction_config:lists') && (!whiteLabel.value || (user.userInfo.can_manage_prediction_config === true && props.actor?.operator_id === String(user.userInfo.id))))
 const canSavePermission = canRead
 const operator = computed(() => {
     const value = String(user.userInfo.id || '')
     return /^[1-9]\d*$/.test(value) ? value : ''
 })
+const sessionKey = computed(() => `${operator.value}:${user.token ?? ''}:${props.actor?.kind ?? ''}:${props.actor?.tenant_id ?? ''}:${props.actor?.config_site_id ?? ''}`)
 const sites = ref<GridCatalog['sites']>([])
 const siteId = ref('')
 const symbol = ref('')
@@ -129,8 +137,9 @@ let writeGeneration = 0
 
 const permissionError = computed(() => !canRead.value ? '当前账号没有预测网格配置查询权限' : !operator.value ? '无法确认当前操作人身份' : '')
 const selectedSite = computed(() => sites.value.find(site => site.site_id === siteId.value))
+const canEditMultipliers = computed(() => whiteLabel.value && selectedSite.value?.can_edit_limits === true)
 const directorySymbols = ref<string[]>([]), directoryError = ref('')
-const products = computed(() => mergeGridDirectory(selectedSite.value?.products ?? [], directorySymbols.value))
+const products = computed(() => mergeGridDirectory(selectedSite.value?.products ?? [], directorySymbols.value, whiteLabel.value))
 const filteredProducts = computed(() => {
     const query = keyword.value.trim().toUpperCase()
     return products.value.filter(product => !query || product.symbol.includes(query))
@@ -190,11 +199,11 @@ function normalizeCatalog(value: GridCatalog) {
             seenProducts.add(product.symbol)
         }
     }
-    return value.sites.map(site => ({...site, products: site.products.filter(product => product.default_enabled)}))
+    return value.sites.filter(site => !whiteLabel.value || site.site_id === props.actor?.config_site_id).map(site => ({...site, products: site.products.filter(product => whiteLabel.value || product.default_enabled)}))
 }
 function syncPending() {
     try {
-        const state = pendingForActor(sessionStorage, operator.value)
+        const state = pendingForActor(journal(), operator.value)
         pending.value = state.pending ?? null
         storageError.value = false
     } catch {
@@ -202,7 +211,7 @@ function syncPending() {
         pending.value = null
     }
 }
-function currentKey() { return `${operator.value}:${siteId.value}:${symbol.value}` }
+function currentKey() { return `${sessionKey.value}:${siteId.value}:${symbol.value}` }
 function clearEditor() {
     detailGate.close()
     snapshot.value = null
@@ -227,13 +236,16 @@ async function loadCatalog(preferredTarget?: GridCommand) {
     message.value = ''
     syncPending()
     if (permissionError.value || storageError.value) return
-    const read = catalogGate.next(operator.value)
+    const read = catalogGate.next(sessionKey.value)
     catalogLoading.value = true
     try {
-        await initializeGridMerchant(read.signal)
-        if (!read.current(operator.value)) return
+        if (whiteLabel.value) {
+            if (!initializeGridSite || !props.actor?.config_site_id) throw Error('SITE_UNAVAILABLE')
+            if (!boundPending.value) await initializeGridSite(props.actor.config_site_id, read.signal)
+        } else { await initializeGridMerchant(read.signal) }
+        if (!read.current(sessionKey.value)) return
         const [catalog, directory] = await Promise.allSettled([gridConfigCatalog(read.signal), readSymbolDirectory(read.signal)])
-        if (!read.current(operator.value)) return
+        if (!read.current(sessionKey.value)) return
         if (directory.status === 'fulfilled' && Array.isArray(directory.value) && directory.value.every(value => typeof value === 'string')) {
             directorySymbols.value = directory.value
         } else {
@@ -250,9 +262,9 @@ async function loadCatalog(preferredTarget?: GridCommand) {
         symbol.value = wantedSymbol
         if (wantedSymbol) detailTask = loadDetail()
     } catch (problem) {
-        if (read.current(operator.value)) error.value = errorText(problem)
+        if (read.current(sessionKey.value)) error.value = errorText(problem)
     } finally {
-        if (read.current(operator.value)) catalogLoading.value = false
+        if (read.current(sessionKey.value)) catalogLoading.value = false
     }
 }
 function selectSite(value: string) {
@@ -280,6 +292,7 @@ async function loadDetail() {
         const value = await gridConfigSite(requestedSite, requestedSymbol, read.signal)
         if (!read.current(currentKey())) return
         const result = normalizeSnapshotForTarget(value, requestedSite, requestedSymbol)
+        if (whiteLabel.value && result.requested_agent_id !== '0') throw Error('CONFIG_IDENTITY_REQUIRED')
         snapshot.value = result
         draft.value = structuredClone(result)
         rtpPercent.value = ratioToPercent(result.target_rtp)
@@ -290,10 +303,10 @@ async function loadDetail() {
     }
 }
 function displayEnabled(product: { symbol: string; enabled: boolean }) {
-    return product.symbol === symbol.value && draft.value ? draft.value.enabled && draft.value.default_enabled !== false : product.enabled
+    return product.symbol === symbol.value && draft.value ? draft.value.enabled && (whiteLabel.value || draft.value.default_enabled !== false) : product.enabled
 }
 function switchDisabled(product: { symbol: string }) {
-    return (product.symbol === symbol.value && snapshot.value?.default_enabled === false) || !selectedSite.value?.products.some(item => item.symbol === product.symbol) || !canSavePermission.value || !selectedSite.value?.can_edit || detailLoading.value || busy.value || !!pending.value || storageError.value || (dirty.value && product.symbol !== symbol.value)
+    return (!whiteLabel.value && product.symbol === symbol.value && snapshot.value?.default_enabled === false) || !selectedSite.value?.products.some(item => item.symbol === product.symbol) || !canSavePermission.value || !selectedSite.value?.can_edit || detailLoading.value || busy.value || !!pending.value || storageError.value || (dirty.value && product.symbol !== symbol.value)
 }
 async function changeEnabled(product: { symbol: string }, value: unknown) {
     if (typeof value !== 'boolean' || switchDisabled(product)) return
@@ -313,7 +326,7 @@ async function reviewSave() {
     if (!editable.value || !snapshot.value || !draft.value || !operator.value) return
     let command
     try {
-        command = makeCommand(snapshot.value, { ...draft.value, target_rtp: percentToRatio(rtpPercent.value) }, reason.value, secureRequestId(), false, false)
+        command = makeCommand(snapshot.value, { ...draft.value, target_rtp: percentToRatio(rtpPercent.value) }, reason.value, secureRequestId(), canEditMultipliers.value, false)
     } catch (problem) {
         messageType.value = 'warning'
         message.value = errorText(problem)
@@ -331,7 +344,7 @@ async function reviewSave() {
     }
     let currentCommand
     try {
-        currentCommand = makeCommand(snapshot.value, { ...draft.value, target_rtp: percentToRatio(rtpPercent.value) }, reason.value, review.command.client_request_id, false, false)
+        currentCommand = makeCommand(snapshot.value, { ...draft.value, target_rtp: percentToRatio(rtpPercent.value) }, reason.value, review.command.client_request_id, canEditMultipliers.value, false)
     } catch {
         messageType.value = 'warning'
         message.value = '确认期间账号、目标或编辑状态已变化，本次保存已取消'
@@ -339,7 +352,7 @@ async function reviewSave() {
     }
     let original: PendingGridCommand
     try {
-        original = persistReviewedCommand(sessionStorage, review, operator.value, currentCommand)
+        original = persistReviewedCommand(journal(), review, operator.value, currentCommand)
         syncPending()
     } catch (problem) {
         if ((problem as Error)?.message === 'STALE_CONFIRMATION') {
@@ -382,7 +395,7 @@ async function send(original: PendingGridCommand, mode: 'save' | 'receipt' | 're
     recoverablePending.value = ''
     message.value = ''
     try {
-        const result = await attemptPending(sessionStorage, original, mode, (route, command) => route === 'save' ? saveGridConfig(command) : gridConfigReceipt(command))
+        const result = await attemptPending(journal(), original, mode, (route, command) => route === 'save' ? saveGridConfig(command) : gridConfigReceipt(command))
         if (!owner.current(currentKey())) return
         syncPending()
         if (result.status === 'success') {
@@ -462,7 +475,7 @@ function beforeUnload(event: BeforeUnloadEvent) {
     event.preventDefault()
     event.returnValue = ''
 }
-watch(() => [operator.value, canRead.value, canSavePermission.value], () => loadCatalog(), { immediate: true })
+watch(() => [sessionKey.value, canRead.value, canSavePermission.value], () => loadCatalog(), { immediate: true })
 onBeforeRouteLeave(confirmLeave)
 window.addEventListener('beforeunload', beforeUnload)
 onBeforeUnmount(() => {

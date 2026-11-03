@@ -2,7 +2,7 @@ import { OwnerActor, OwnerConfig, OwnerSaveBody, OwnerSaveResult } from '../../.
 import { PendingStorage } from '../shared/mutation';
 export declare const ownerStorageKey = "prediction.owner.pending.v1";
 export interface OwnerPending extends OwnerActor {
-    schema: 'owner-v1';
+    schema: 'owner-v1' | 'scoped-owner-v1';
     body: OwnerSaveBody;
     attempted: boolean;
     attempt: number;

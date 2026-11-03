@@ -135,7 +135,7 @@
             </main>
         </div>
         </PredictionLoadingRegion>
-        <grid-config v-else-if="uiMode === 'GRID'" ref="gridRef" class="grid-mode" />
+        <component :is="platformGrid" v-else-if="uiMode === 'GRID'" ref="gridRef" class="grid-mode" />
     </section>
 </template>
 
@@ -154,6 +154,7 @@ import { ElMessage } from 'element-plus'
 import PredictionEdit from './edit.vue'
 import PredictionLoadingRegion from '../../prediction/components/PredictionLoadingRegion.vue'
 import GridConfig from '../../grid/config/index.vue'
+import GlobalGridConfig from '../../grid/config/GlobalGridConfig.vue'
 import { useConfigSymbol } from '../../../../runtime'
 const SymbolDisplay = useConfigSymbol()
 import { useConfigUser as useUserStore } from '../../../../runtime'
@@ -182,7 +183,8 @@ const configurations = ref<PredictionConfiguration[]>([])
 type UiMode = PredictionGameType | 'GRID'
 const gameTypeFilter = ref<PredictionGameType>('UP_DOWN')
 const uiMode = ref<UiMode>('UP_DOWN')
-const gridRef = shallowRef<InstanceType<typeof GridConfig>>()
+const platformGrid = usePlatformConfigRuntime().grid.globalTemplate ? GlobalGridConfig : GridConfig
+const gridRef = shallowRef<{confirmLeave(): Promise<boolean>; refresh(): void}>()
 const games: { value: UiMode; label: string; description: string }[] = [
     {
         value: 'UP_DOWN',

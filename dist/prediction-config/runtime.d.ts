@@ -61,6 +61,17 @@ export interface PlatformConfigAdapter {
         symbols(signal?: AbortSignal): Promise<string[]>;
     };
     grid: {
+        globalTemplate?: {
+            catalog(signal?: AbortSignal): Promise<{
+                products: Array<{
+                    symbol: string;
+                    configured: boolean;
+                }>;
+            }>;
+            detail(symbol: string, signal?: AbortSignal): Promise<unknown>;
+            save(command: import('./platform/views/grid/config/global-template').GlobalCommand): Promise<unknown>;
+            receipt(command: import('./platform/views/grid/config/global-template').GlobalCommand): Promise<unknown>;
+        };
         gridConfigSymbols(signal?: AbortSignal): Promise<string[]>;
         gridConfigCatalog(signal?: AbortSignal): Promise<PlatformGridCatalog>;
         gridConfigCreation(symbol: string, signal?: AbortSignal): Promise<unknown>;

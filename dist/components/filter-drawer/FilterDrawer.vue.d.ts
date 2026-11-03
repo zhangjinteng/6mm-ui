@@ -34,8 +34,8 @@ declare const __VLS_base: import('vue').DefineComponent<FilterDrawerProps, Filte
     disabled: boolean;
     modelValue: QueryBarValue;
     size: number | string;
-    open: boolean;
     loading: boolean;
+    open: boolean;
     fields: import('..').QueryBarField[];
     subtitle: string;
     activeCount: number;

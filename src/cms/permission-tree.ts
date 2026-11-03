@@ -7,7 +7,7 @@ export interface CmsPermissionNode {
   children?: CmsPermissionNode[]
 }
 
-/** CMS list access remains selectable even when a page has write-action children. */
+/** CMS / white-label settings list access remains selectable beside write actions. */
 export function cmsPermissionItems(
   node: CmsPermissionNode,
   name: (node: CmsPermissionNode) => string,
@@ -15,7 +15,7 @@ export function cmsPermissionItems(
   depth = 0,
 ): { id: CmsMenuId; name: string }[] {
   const children = node.children ?? []
-  const isCmsPage = node.type === 'C' && !!node.perms?.startsWith('cms_')
+  const isCmsPage = node.type === 'C' && !!(node.perms?.startsWith('cms_') || node.perms?.startsWith('whiteLabel:site:'))
   const label = name(node)
   const contextualLabel = parentPage ? `${parentPage} / ${label}` : label
   const context = isCmsPage || (node.type === 'M' && depth > 0) ? contextualLabel : parentPage
@@ -32,7 +32,7 @@ export function cmsPermissionSubmission(nodes: CmsPermissionNode[], selectedIds:
   const result: CmsMenuId[] = []
   function visit(node: CmsPermissionNode): boolean {
     const children = node.children ?? []
-    let keep = (!children.length || (node.type === 'C' && node.perms?.startsWith('cms_')))
+    let keep = (!children.length || (node.type === 'C' && (node.perms?.startsWith('cms_') || node.perms?.startsWith('whiteLabel:site:'))))
       && selected.has(String(node.id))
     for (const child of children) if (visit(child)) keep = true
     if (keep && !included.has(String(node.id))) {

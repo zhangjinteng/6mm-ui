@@ -17,8 +17,8 @@ declare const __VLS_base: import('vue').DefineComponent<ButtonProps, {}, {}, {},
     nativeType: import('./types').ButtonNativeType;
     round: boolean;
     block: boolean;
-    loading: boolean;
     iconOnly: boolean;
+    loading: boolean;
     plain: boolean;
     variant: import('./types').ButtonVariant;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

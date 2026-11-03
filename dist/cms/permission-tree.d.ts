@@ -6,7 +6,7 @@ export interface CmsPermissionNode {
     perms?: string;
     children?: CmsPermissionNode[];
 }
-/** CMS list access remains selectable even when a page has write-action children. */
+/** CMS / white-label settings list access remains selectable beside write actions. */
 export declare function cmsPermissionItems(node: CmsPermissionNode, name: (node: CmsPermissionNode) => string, parentPage?: string, depth?: number): {
     id: CmsMenuId;
     name: string;

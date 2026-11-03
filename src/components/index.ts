@@ -1,4 +1,6 @@
 import type { Component } from "vue";
+import { MmSocialChannels, MmTenantChannelSettings } from "./tenant-channel-config";
+export * from "./tenant-channel-config";
 import { MmAssetBalanceReport } from "./asset-balance-report";
 export * from "./asset-balance-report";
 import { MmPlatformTradeSummaryReport } from "./platform-trade-summary-report";
@@ -276,6 +278,8 @@ export const components: InstallableComponent[] = [
   MmLiquidationWarningRulesDialog,
   MmLiquidationTradesDialog,
   MmLoading,
+  MmSocialChannels,
+  MmTenantChannelSettings,
   MmMenu,
   MmMenuItem,
   MmSubMenu,

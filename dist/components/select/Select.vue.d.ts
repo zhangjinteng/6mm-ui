@@ -24,8 +24,8 @@ declare const __VLS_base: import('vue').DefineComponent<SelectProps, {}, {}, {},
     readonly: boolean;
     size: import('../..').FormControlSize;
     status: import('../..').FormControlStatus;
-    multiple: boolean;
     loading: boolean;
+    multiple: boolean;
     options: SelectOption[];
     max: number;
     filterable: boolean;

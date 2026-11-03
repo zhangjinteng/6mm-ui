@@ -41,6 +41,8 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
 }>, {
     disabled: boolean;
     modelValue: boolean;
+    width: number | string;
+    role: string;
     closeDelay: number;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;
@@ -49,12 +51,10 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     openDelay: number;
     persistent: boolean;
     placement: import('../..').FloatingPlacement;
-    role: string;
     showArrow: boolean;
     teleport: boolean;
     teleportTo: string | HTMLElement;
     trigger: import('./types').PopoverTrigger;
-    width: number | string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

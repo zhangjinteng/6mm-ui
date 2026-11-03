@@ -34,9 +34,9 @@ declare const __VLS_base: import('vue').DefineComponent<DialogProps, DialogExpos
     modelValue: boolean;
     title: string;
     mask: boolean;
+    width: number | string;
     closeOnEscape: boolean;
     teleportTo: string | HTMLElement;
-    width: number | string;
     panelClass: string;
     ariaDescribedby: string;
     beforeClose: import('./types').DialogBeforeClose;

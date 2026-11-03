@@ -11,6 +11,18 @@ const tree: CmsPermissionNode[] = [{ id: 1, name: '内容管理', type: 'M', chi
   ] },
 ] }]
 describe('CMS page and action grants', () => {
+  it('keeps white-label channel viewing separate from saving', () => {
+    const settings: CmsPermissionNode[] = [{ id: 30, name: '站点配置', type: 'M', children: [
+      { id: 31, name: '渠道配置', type: 'C', perms: 'whiteLabel:site:channel', children: [
+        { id: 32, name: '保存渠道配置', type: 'F', perms: 'whiteLabel:site:channel:save' },
+      ] },
+    ] }]
+    expect(cmsPermissionItems(settings[0], node => node.name!)).toEqual([
+      { id: 31, name: '渠道配置' }, { id: 32, name: '保存渠道配置' },
+    ])
+    expect(cmsPermissionSubmission(settings, [31])).toEqual([31, 30])
+    expect(cmsPermissionSubmission(settings, [32])).toEqual([32, 31, 30])
+  })
   it('keeps list-only permissions and disambiguates same-named actions by page', () => {
     expect(cmsPermissionItems(tree[0], node => node.name!)).toEqual([
       { id: 2, name: '新闻列表' }, { id: 3, name: '新闻列表 / 新增' },

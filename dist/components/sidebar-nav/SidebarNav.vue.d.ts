@@ -40,8 +40,8 @@ declare const __VLS_base: import('vue').DefineComponent<SidebarNavProps, Sidebar
     "onUpdate:collapsed"?: ((value: boolean) => any) | undefined;
 }>, {
     modelValue: MenuValue;
-    placement: import('./types').SidebarNavPlacement;
     width: number | string;
+    placement: import('./types').SidebarNavPlacement;
     display: import('./types').SidebarNavDisplay;
     openKeys: MenuValue[];
     items: import('./types').SidebarNavItem[];

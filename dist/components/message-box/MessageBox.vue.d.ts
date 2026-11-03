@@ -10,8 +10,8 @@ declare const __VLS_export: import('vue').DefineComponent<MessageBoxProps, {}, {
 }>, {
     modelValue: boolean;
     type: import('./types').MessageBoxType;
-    closeOnEscape: boolean;
     message: string;
+    closeOnEscape: boolean;
     closeOnClickModal: boolean;
     inputValidator: import('./types').MessageBoxInputValidator;
     inputValue: string;

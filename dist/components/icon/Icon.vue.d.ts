@@ -8,8 +8,8 @@ declare const __VLS_base: import('vue').DefineComponent<IconProps, {}, {}, {}, {
     size: import('./types').IconSize;
     label: string;
     color: string;
-    strokeWidth: number;
     spin: boolean;
+    strokeWidth: number;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

@@ -41,12 +41,12 @@ declare const __VLS_base: import('vue').DefineComponent<DropdownProps, {}, {}, {
 }>, {
     disabled: boolean;
     modelValue: MenuValue;
+    width: number | string;
+    visible: boolean;
     floatingClass: string;
     placement: import('../..').FloatingPlacement;
     teleport: boolean;
     trigger: import('..').PopoverTrigger;
-    width: number | string;
-    visible: boolean;
     closeOnSelect: boolean;
     items: DropdownItem[];
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

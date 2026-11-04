@@ -12,7 +12,7 @@ declare var __VLS_1: {
         'aria-expanded'?: undefined;
     } | {
         'aria-controls': string | undefined;
-        'aria-expanded': "true" | "false";
+        'aria-expanded': "false" | "true";
         'aria-describedby'?: undefined;
     };
 }, __VLS_9: {
@@ -39,9 +39,9 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
-    disabled: boolean;
     width: number | string;
     role: string;
+    disabled: boolean;
     closeOnEscape: boolean;
     modelValue: boolean;
     teleportTo: string | HTMLElement;

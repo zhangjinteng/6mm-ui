@@ -10,8 +10,8 @@ declare const __VLS_base: import('vue').DefineComponent<MessageProps, {}, {}, {}
 }>, {
     type: import('./types').MessageType;
     closable: boolean;
-    showIcon: boolean;
     duration: number;
+    showIcon: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

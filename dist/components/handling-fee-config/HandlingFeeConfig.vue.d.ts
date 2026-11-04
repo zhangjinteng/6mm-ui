@@ -3,7 +3,7 @@ import { HandlingFeeConfigActionName, HandlingFeeConfigProps, HandlingFeeConfigR
 declare const __VLS_export: <Row extends HandlingFeeConfigRow = HandlingFeeConfigRow>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: __VLS_PrettifyLocal<Pick<NonNullable<Awaited<typeof __VLS_setup>>, "attrs" | "emit" | "slots">>, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: import('vue').PublicProps & __VLS_PrettifyLocal<HandlingFeeConfigProps<Row> & {
         "onAction-error"?: ((action: HandlingFeeConfigActionName, error: unknown) => any) | undefined;
-        "onAction-success"?: ((action: "update" | "delete" | "create", row?: Row | undefined) => any) | undefined;
+        "onAction-success"?: ((action: "delete" | "update" | "create", row?: Row | undefined) => any) | undefined;
     }> & (typeof globalThis extends {
         __VLS_PROPS_FALLBACK: infer P;
     } ? P : {});
@@ -28,7 +28,7 @@ declare const __VLS_export: <Row extends HandlingFeeConfigRow = HandlingFeeConfi
             value: QueryBarValue;
         }) => any;
     };
-    emit: ((evt: "action-error", action: HandlingFeeConfigActionName, error: unknown) => void) & ((evt: "action-success", action: "update" | "delete" | "create", row?: Row | undefined) => void);
+    emit: ((evt: "action-error", action: HandlingFeeConfigActionName, error: unknown) => void) & ((evt: "action-success", action: "delete" | "update" | "create", row?: Row | undefined) => void);
 }>) => import('vue').VNode & {
     __ctx?: NonNullable<Awaited<typeof __VLS_setup>>;
 };

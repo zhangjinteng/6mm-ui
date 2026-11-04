@@ -19,26 +19,26 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     blur: (event: FocusEvent) => any;
     change: (event: Event) => any;
     focus: (event: FocusEvent) => any;
-    "update:modelValue": (value: string) => any;
     clear: () => any;
+    "update:modelValue": (value: string) => any;
 }, string, import('vue').PublicProps, Readonly<InputProps> & Readonly<{
     onInput?: ((event: Event) => any) | undefined;
     onBlur?: ((event: FocusEvent) => any) | undefined;
     onChange?: ((event: Event) => any) | undefined;
     onFocus?: ((event: FocusEvent) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: string) => any) | undefined;
     onClear?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: string) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: import('../..').FormControlSize;
     type: string;
-    modelValue: string | number | null;
     status: import('../..').FormControlStatus;
-    clearable: boolean;
-    readonly: boolean;
+    disabled: boolean;
+    modelValue: string | number | null;
     autocomplete: string;
+    clearable: boolean;
     maxlength: number;
     minlength: number;
+    readonly: boolean;
     showCount: boolean;
     showPassword: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

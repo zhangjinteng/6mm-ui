@@ -19,8 +19,8 @@ declare const __VLS_base: import('vue').DefineComponent<FormProps, {
 }, string, import('vue').PublicProps, Readonly<FormProps> & Readonly<{
     onSubmit?: ((event: SubmitEvent) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: import('../..').FormControlSize;
+    disabled: boolean;
     inline: boolean;
     labelPosition: import('../..').FormLabelPosition;
     labelWidth: number | string;

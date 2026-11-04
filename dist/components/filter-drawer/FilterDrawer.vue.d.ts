@@ -31,9 +31,9 @@ declare const __VLS_base: import('vue').DefineComponent<FilterDrawerProps, Filte
     onQuery?: ((value: QueryBarValue) => any) | undefined;
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
 }>, {
-    disabled: boolean;
     loading: boolean;
     size: number | string;
+    disabled: boolean;
     modelValue: QueryBarValue;
     subtitle: string;
     open: boolean;

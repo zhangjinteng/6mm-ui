@@ -38,31 +38,31 @@ declare const __VLS_base: import('vue').DefineComponent<UploadProps, {
     open: typeof open;
     submit: typeof submit;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    success: (file: UploadFile, response: unknown) => any;
     progress: (file: UploadFile, percentage: number) => any;
+    error: (file: UploadFile, error: Error) => any;
+    success: (file: UploadFile, response: unknown) => any;
+    remove: (file: UploadFile) => any;
     abort: (file: UploadFile) => any;
     change: (files: UploadFile[]) => any;
-    error: (file: UploadFile, error: Error) => any;
     "update:modelValue": (files: UploadFile[]) => any;
-    remove: (file: UploadFile) => any;
     exceed: (files: File[], currentFiles: UploadFile[]) => any;
 }, string, import('vue').PublicProps, Readonly<UploadProps> & Readonly<{
-    onSuccess?: ((file: UploadFile, response: unknown) => any) | undefined;
     onProgress?: ((file: UploadFile, percentage: number) => any) | undefined;
+    onError?: ((file: UploadFile, error: Error) => any) | undefined;
+    onSuccess?: ((file: UploadFile, response: unknown) => any) | undefined;
+    onRemove?: ((file: UploadFile) => any) | undefined;
     onAbort?: ((file: UploadFile) => any) | undefined;
     onChange?: ((files: UploadFile[]) => any) | undefined;
-    onError?: ((file: UploadFile, error: Error) => any) | undefined;
     "onUpdate:modelValue"?: ((files: UploadFile[]) => any) | undefined;
-    onRemove?: ((file: UploadFile) => any) | undefined;
     onExceed?: ((files: File[], currentFiles: UploadFile[]) => any) | undefined;
 }>, {
     name: string;
-    disabled: boolean;
     size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     drag: boolean;
+    disabled: boolean;
     modelValue: UploadFile[];
     multiple: boolean;
-    status: import('../..').FormControlStatus;
     readonly: boolean;
     request: import('./types').UploadRequest;
     limit: number;

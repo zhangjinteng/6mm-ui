@@ -3,13 +3,13 @@ import { DateRangePickerProps, DateRangeShortcut } from './types';
 declare const __VLS_export: import('vue').DefineComponent<DateRangePickerProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     change: (value: DateRangeValue | null) => any;
     invalid: (input: string) => any;
-    "update:modelValue": (value: DateRangeValue | null) => any;
     clear: () => any;
+    "update:modelValue": (value: DateRangeValue | null) => any;
 }, string, import('vue').PublicProps, Readonly<DateRangePickerProps> & Readonly<{
     onChange?: ((value: DateRangeValue | null) => any) | undefined;
     onInvalid?: ((input: string) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: DateRangeValue | null) => any) | undefined;
     onClear?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: DateRangeValue | null) => any) | undefined;
 }>, {
     modelValue: DateRangeValue | null;
     triggerVariant: import('../date-picker/types').DatePickerTriggerVariant;

@@ -44,9 +44,9 @@ declare const __VLS_base: import('vue').DefineComponent<QueryBarProps, {
     onQuery?: ((value: QueryBarValue) => any) | undefined;
     "onReturn-context"?: ((context: QueryBarReturnContext) => any) | undefined;
 }>, {
-    disabled: boolean;
     loading: boolean;
     size: import('../..').FormControlSize;
+    disabled: boolean;
     modelValue: QueryBarValue;
     fields: QueryBarField[];
     returnContext: QueryBarReturnContext;

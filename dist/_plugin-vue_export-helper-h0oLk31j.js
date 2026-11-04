@@ -3017,13 +3017,8 @@ function N() {
 	return u(D, k);
 }
 //#endregion
-//#region src/composables/use-id.ts
-function P(e = "mm") {
-	return `${e}-${C()}`;
-}
-//#endregion
 //#region src/components/icon/extended-icons.ts
-var F = {
+var P = {
 	archive: [
 		["rect", {
 			width: "20",
@@ -3291,7 +3286,7 @@ var F = {
 			rx: "2"
 		}]
 	]
-}, ee = {
+}, F = {
 	"folder-tree": [
 		["path", { d: "M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" }],
 		["path", { d: "M20 21a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1h-2.9a1 1 0 0 1-.88-.55l-.42-.85a1 1 0 0 0-.92-.6H13a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z" }],
@@ -3385,8 +3380,8 @@ var F = {
 		["path", { d: "M14 18h6" }]
 	]
 }, I = {
+	...P,
 	...F,
-	...ee,
 	activity: [["path", { d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2" }]],
 	alert: [
 		["path", { d: "M12 3 2.7 20h18.6L12 3Z" }],
@@ -4149,55 +4144,21 @@ var F = {
 			ref_for: !0
 		}, t[1]), null, 16)) : i("", !0)], 64))), 128))])], 16, R));
 	}
-}), B = ["aria-label"], V = { class: "mm-loading__indicator" }, H = {
-	key: 0,
-	class: "mm-loading__text"
-}, U = /* @__PURE__ */ l({
-	name: "MmLoading",
-	__name: "Loading",
-	props: {
-		backdrop: {
-			type: Boolean,
-			default: !0
-		},
-		fullscreen: {
-			type: Boolean,
-			default: !1
-		},
-		size: { default: "md" },
-		text: {},
-		visible: {
-			type: Boolean,
-			default: !0
-		}
-	},
-	setup(e) {
-		let s = e, { messages: l } = N(), u = n(() => s.text ?? l.value.common.loading);
-		return (n, s) => (m(), r(t, {
-			to: "body",
-			disabled: !e.fullscreen
-		}, [e.visible ? (m(), a("div", {
-			key: 0,
-			class: p(["mm-loading", [`mm-loading--${e.size}`, {
-				"has-backdrop": e.backdrop,
-				"is-fullscreen": e.fullscreen
-			}]]),
-			"data-mm-component": "loading",
-			role: "status",
-			"aria-live": "polite",
-			"aria-label": u.value || x(l).common.loading
-		}, [o("div", V, [_(n.$slots, "icon", {}, () => [c(x(z), {
-			name: "loading",
-			spin: ""
-		})]), u.value ? (m(), a("span", H, v(u.value), 1)) : i("", !0)])], 10, B)) : i("", !0)], 8, ["disabled"]));
-	}
-}), W = Symbol("mm-form"), G = Symbol("mm-form-item");
-function K(e, t) {
+});
+//#endregion
+//#region src/composables/use-id.ts
+function B(e = "mm") {
+	return `${e}-${C()}`;
+}
+//#endregion
+//#region src/shared/form.ts
+var V = Symbol("mm-form"), H = Symbol("mm-form-item");
+function U(e, t) {
 	return t ? t.replace(/\[(\w+)\]/g, ".$1").split(".").filter(Boolean).reduce((e, t) => {
 		if (!(typeof e != "object" || !e)) return e[t];
 	}, e) : e;
 }
-function q(e, t, n) {
+function W(e, t, n) {
 	let r = t.replace(/\[(\w+)\]/g, ".$1").split(".").filter(Boolean);
 	if (!r.length) return;
 	let i = e;
@@ -4207,7 +4168,7 @@ function q(e, t, n) {
 	}
 	i[r.at(-1)] = n;
 }
-function J(e) {
+function G(e) {
 	if (e == null) return e;
 	let t = typeof e == "object" ? y(e) : e;
 	if (typeof structuredClone == "function") try {
@@ -4217,8 +4178,8 @@ function J(e) {
 }
 //#endregion
 //#region src/composables/use-form-field.ts
-function Y(e = {}) {
-	let t = u(W, null), r = u(G, null), i = P("mm-field"), a = n(() => b(e.id) || r?.inputId || i), o = n(() => !!(b(e.disabled) || t?.disabled.value)), s = n(() => b(e.size) || t?.size.value || "md"), c = n(() => b(e.status) || (r?.validateState.value === "error" ? "error" : void 0));
+function K(e = {}) {
+	let t = u(V, null), r = u(H, null), i = B("mm-field"), a = n(() => b(e.id) || r?.inputId || i), o = n(() => !!(b(e.disabled) || t?.disabled.value)), s = n(() => b(e.size) || t?.size.value || "md"), c = n(() => b(e.status) || (r?.validateState.value === "error" ? "error" : void 0));
 	return {
 		describedBy: n(() => r?.validateMessage.value ? r.errorId : void 0),
 		disabled: o,
@@ -4234,13 +4195,13 @@ function Y(e = {}) {
 }
 //#endregion
 //#region src/components/input/Input.vue?vue&type=script&setup=true&lang.ts
-var X = {
+var q = {
 	key: 0,
 	class: "mm-input__prepend"
-}, Z = { class: "mm-input__control" }, Q = {
+}, J = { class: "mm-input__control" }, Y = {
 	key: 0,
 	class: "mm-input__prefix"
-}, $ = [
+}, X = [
 	"id",
 	"value",
 	"type",
@@ -4253,24 +4214,24 @@ var X = {
 	"readonly",
 	"aria-describedby",
 	"aria-invalid"
-], te = {
+], Z = {
 	key: 1,
 	class: "mm-input__suffix"
-}, ne = {
+}, Q = {
 	key: 2,
 	class: "mm-input__actions"
-}, re = ["aria-label"], ie = [
+}, $ = ["aria-label"], ee = [
 	"aria-label",
 	"aria-pressed",
 	"disabled"
-], ae = {
+], te = {
 	key: 2,
 	class: "mm-input__count",
 	"aria-live": "polite"
-}, oe = {
+}, ne = {
 	key: 1,
 	class: "mm-input__append"
-}, se = /* @__PURE__ */ l({
+}, re = /* @__PURE__ */ l({
 	inheritAttrs: !1,
 	name: "MmInput",
 	__name: "Input",
@@ -4315,7 +4276,7 @@ var X = {
 		"update:modelValue"
 	],
 	setup(t, { expose: r, emit: c }) {
-		let l = t, u = c, { messages: d } = N(), g = S(), y = h(), b = h(!1), C = h(!1), w = Y({
+		let l = t, u = c, { messages: d } = N(), g = S(), y = h(), b = h(!1), C = h(!1), w = K({
 			disabled: () => l.disabled,
 			id: () => l.id,
 			size: () => l.size,
@@ -4355,9 +4316,9 @@ var X = {
 			]]),
 			"data-mm-component": "input"
 		}, [
-			n.$slots.prepend ? (m(), a("span", X, [_(n.$slots, "prepend")])) : i("", !0),
-			o("span", Z, [
-				n.$slots.prefix ? (m(), a("span", Q, [_(n.$slots, "prefix")])) : i("", !0),
+			n.$slots.prepend ? (m(), a("span", q, [_(n.$slots, "prepend")])) : i("", !0),
+			o("span", J, [
+				n.$slots.prefix ? (m(), a("span", Y, [_(n.$slots, "prefix")])) : i("", !0),
 				o("input", f(x(g), {
 					id: x(w).id.value,
 					ref_key: "inputRef",
@@ -4380,16 +4341,16 @@ var X = {
 					onBlur: M,
 					onCompositionstart: r[1] ||= (e) => C.value = !0,
 					onCompositionend: j
-				}), null, 16, $),
-				n.$slots.suffix ? (m(), a("span", te, [_(n.$slots, "suffix")])) : i("", !0),
-				O.value ? (m(), a("span", ne, [
+				}), null, 16, X),
+				n.$slots.suffix ? (m(), a("span", Z, [_(n.$slots, "suffix")])) : i("", !0),
+				O.value ? (m(), a("span", Q, [
 					D.value ? (m(), a("button", {
 						key: 0,
 						class: "mm-input__action mm-input__clear",
 						type: "button",
 						"aria-label": x(d).input.clear,
 						onClick: F
-					}, "×", 8, re)) : i("", !0),
+					}, "×", 8, $)) : i("", !0),
 					t.showPassword ? (m(), a("button", {
 						key: 1,
 						class: "mm-input__action mm-input__password",
@@ -4398,12 +4359,54 @@ var X = {
 						"aria-pressed": b.value,
 						disabled: x(w).disabled.value,
 						onClick: r[2] ||= (e) => b.value = !b.value
-					}, v(b.value ? "◉" : "◎"), 9, ie)) : i("", !0),
-					t.showCount ? (m(), a("span", ae, [s(v(T.value.length), 1), t.maxlength ? (m(), a(e, { key: 0 }, [s(" / " + v(t.maxlength), 1)], 64)) : i("", !0)])) : i("", !0)
+					}, v(b.value ? "◉" : "◎"), 9, ee)) : i("", !0),
+					t.showCount ? (m(), a("span", te, [s(v(T.value.length), 1), t.maxlength ? (m(), a(e, { key: 0 }, [s(" / " + v(t.maxlength), 1)], 64)) : i("", !0)])) : i("", !0)
 				])) : i("", !0)
 			]),
-			n.$slots.append ? (m(), a("span", oe, [_(n.$slots, "append")])) : i("", !0)
+			n.$slots.append ? (m(), a("span", ne, [_(n.$slots, "append")])) : i("", !0)
 		], 2));
+	}
+}), ie = ["aria-label"], ae = { class: "mm-loading__indicator" }, oe = {
+	key: 0,
+	class: "mm-loading__text"
+}, se = /* @__PURE__ */ l({
+	name: "MmLoading",
+	__name: "Loading",
+	props: {
+		backdrop: {
+			type: Boolean,
+			default: !0
+		},
+		fullscreen: {
+			type: Boolean,
+			default: !1
+		},
+		size: { default: "md" },
+		text: {},
+		visible: {
+			type: Boolean,
+			default: !0
+		}
+	},
+	setup(e) {
+		let s = e, { messages: l } = N(), u = n(() => s.text ?? l.value.common.loading);
+		return (n, s) => (m(), r(t, {
+			to: "body",
+			disabled: !e.fullscreen
+		}, [e.visible ? (m(), a("div", {
+			key: 0,
+			class: p(["mm-loading", [`mm-loading--${e.size}`, {
+				"has-backdrop": e.backdrop,
+				"is-fullscreen": e.fullscreen
+			}]]),
+			"data-mm-component": "loading",
+			role: "status",
+			"aria-live": "polite",
+			"aria-label": u.value || x(l).common.loading
+		}, [o("div", ae, [_(n.$slots, "icon", {}, () => [c(x(z), {
+			name: "loading",
+			spin: ""
+		})]), u.value ? (m(), a("span", oe, v(u.value), 1)) : i("", !0)])], 10, ie)) : i("", !0)], 8, ["disabled"]));
 	}
 }), ce = (e, t) => {
 	let n = e.__vccOpts || e;
@@ -4411,6 +4414,6 @@ var X = {
 	return n;
 };
 //#endregion
-export { N as _, W as a, q as c, L as d, P as f, M as g, D as h, J as i, U as l, j as m, se as n, G as o, O as p, Y as r, K as s, ce as t, z as u, T as v, w as y };
+export { N as _, G as a, U as c, z as d, L as f, M as g, D as h, K as i, W as l, j as m, se as n, V as o, O as p, re as r, H as s, ce as t, B as u, T as v, w as y };
 
-//# sourceMappingURL=_plugin-vue_export-helper-DsPr7-pr.js.map
+//# sourceMappingURL=_plugin-vue_export-helper-h0oLk31j.js.map

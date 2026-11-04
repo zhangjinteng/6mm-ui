@@ -15,31 +15,31 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<DatePickerProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     change: (value: DatePickerValue) => any;
     invalid: (input: string) => any;
-    "update:modelValue": (value: DatePickerValue) => any;
     clear: () => any;
+    "update:modelValue": (value: DatePickerValue) => any;
     "update:open": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<DatePickerProps> & Readonly<{
     onChange?: ((value: DatePickerValue) => any) | undefined;
     onInvalid?: ((input: string) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     onClear?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: import('../..').FormControlSize;
     type: import('./types').DatePickerType;
+    status: import('../..').FormControlStatus;
+    disabled: boolean;
     modelValue: DatePickerValue;
     panelClass: string;
     open: boolean;
-    status: import('../..').FormControlStatus;
     clearable: boolean;
-    max: string;
     readonly: boolean;
+    max: string;
+    min: string;
+    format: string;
     editable: boolean;
     disabledDate: (date: string) => boolean;
-    min: string;
     closeOnSelect: boolean;
-    format: string;
     panelCompact: boolean;
     panelFloatingClass: string;
     panelWidth: number | string;

@@ -20,14 +20,14 @@ declare const __VLS_export: import('vue').DefineComponent<ProTablePaginationProp
     "onUpdate:currentPage"?: ((page: number) => any) | undefined;
     "onUpdate:pageSize"?: ((size: number) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: PaginationSize;
+    disabled: boolean;
+    total: number;
     currentPage: number;
     pageSize: number;
     pageSizes: number[];
     showJumper: boolean;
     showSizeChanger: boolean;
-    total: number;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const _default: typeof __VLS_export;
 export default _default;

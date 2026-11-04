@@ -33,8 +33,8 @@ declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {},
     "onOpen-change"?: ((keys: MenuValue[]) => any) | undefined;
 }>, {
     style: CSSProperties;
-    placement: "left" | "right";
     mobile: boolean;
+    placement: "left" | "right";
     openKeys: MenuValue[];
     items: SidebarNavItem[];
     as: string;

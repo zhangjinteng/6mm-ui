@@ -12,11 +12,11 @@ declare const __VLS_base: import('vue').DefineComponent<AlertProps, {}, {}, {}, 
 }>, {
     title: string;
     type: import('./types').AlertType;
+    closable: boolean;
+    showIcon: boolean;
+    banner: boolean;
     center: boolean;
     description: string;
-    closable: boolean;
-    banner: boolean;
-    showIcon: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

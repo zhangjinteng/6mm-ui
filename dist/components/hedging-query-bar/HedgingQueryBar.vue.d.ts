@@ -21,15 +21,15 @@ type __VLS_Slots = {} & {
     'source-filter'?: (props: typeof __VLS_67) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    reset: (value: QueryBarValue) => any;
     refresh: () => any;
+    reset: (value: QueryBarValue) => any;
     "update:modelValue": (value: QueryBarValue) => any;
     query: (value: QueryBarValue) => any;
     "update:visibleColumnKeys": (keys: string[]) => any;
     "source-query": (value: QueryBarValue) => any;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
-    onReset?: ((value: QueryBarValue) => any) | undefined;
     onRefresh?: (() => any) | undefined;
+    onReset?: ((value: QueryBarValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: QueryBarValue) => any) | undefined;
     onQuery?: ((value: QueryBarValue) => any) | undefined;
     "onUpdate:visibleColumnKeys"?: ((keys: string[]) => any) | undefined;

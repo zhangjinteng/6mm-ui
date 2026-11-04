@@ -10,12 +10,12 @@ declare const __VLS_base: import('vue').DefineComponent<RadioGroupProps, {}, {},
     onChange?: ((value: RadioValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: RadioValue) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: import('../..').FormControlSize;
-    modelValue: RadioValue;
     status: import('../..').FormControlStatus;
-    direction: "horizontal" | "vertical";
+    disabled: boolean;
+    modelValue: RadioValue;
     readonly: boolean;
+    direction: "horizontal" | "vertical";
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

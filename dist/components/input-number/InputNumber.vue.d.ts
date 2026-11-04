@@ -14,16 +14,16 @@ declare const __VLS_base: import('vue').DefineComponent<InputNumberProps, {}, {}
     onFocus?: ((event: FocusEvent) => any) | undefined;
     "onUpdate:modelValue"?: ((value: number | null) => any) | undefined;
 }>, {
-    disabled: boolean;
     size: import('../..').FormControlSize;
-    modelValue: number | null;
     status: import('../..').FormControlStatus;
-    max: number;
+    disabled: boolean;
+    modelValue: number | null;
     readonly: boolean;
+    max: number;
     min: number;
-    step: number;
     controls: boolean;
     precision: number;
+    step: number;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

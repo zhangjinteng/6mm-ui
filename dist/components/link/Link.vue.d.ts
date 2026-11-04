@@ -15,8 +15,8 @@ declare const __VLS_base: import('vue').DefineComponent<LinkProps, {}, {}, {}, {
     disabled: boolean;
     underline: import('./types').LinkUnderline;
     target: string;
-    external: boolean;
     href: string;
+    external: boolean;
     rel: string;
     tone: import('./types').LinkTone;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

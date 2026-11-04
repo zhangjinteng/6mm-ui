@@ -31,9 +31,9 @@ declare const __VLS_base: import('vue').DefineComponent<DialogProps, DialogExpos
     onOpened?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }>, {
+    width: number | string;
     title: string;
     mask: boolean;
-    width: number | string;
     ariaDescribedby: string;
     beforeClose: import('./types').DialogBeforeClose;
     closeOnClickModal: boolean;

@@ -13,9 +13,11 @@ import HedgingSubjectEmptyPreview from "./HedgingSubjectEmptyPreview.vue";
 import TenantChannelsPreview from "./TenantChannelsPreview.vue";
 import TenantBrandPreview from "./TenantBrandPreview.vue";
 import TenantFeaturesPreview from "./TenantFeaturesPreview.vue";
+import TenantSeoPreview from "./TenantSeoPreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
+  normalizedPath === "/tenant-seo" ? TenantSeoPreview :
   normalizedPath === "/tenant-features" ? TenantFeaturesPreview :
   normalizedPath === "/tenant-brand" ? TenantBrandPreview :
   normalizedPath === "/tenant-channels" ? TenantChannelsPreview :

@@ -12,8 +12,8 @@ declare const __VLS_base: import('vue').DefineComponent<StatisticProps, {}, {}, 
     title: string;
     prefix: string;
     suffix: string;
-    formatter: (value: number | string) => string;
     precision: number;
+    formatter: (value: number | string) => string;
     decimalSeparator: string;
     groupSeparator: string;
     trend: import('./types').StatisticTrend;

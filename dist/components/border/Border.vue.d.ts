@@ -8,9 +8,9 @@ declare const __VLS_base: import('vue').DefineComponent<BorderProps, {}, {}, {},
     color: string;
     padding: number | string;
     background: string;
+    radius: import('./types').BorderRadius;
     as: string;
     interactive: boolean;
-    radius: import('./types').BorderRadius;
     styleType: import('./types').BorderStyleType;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

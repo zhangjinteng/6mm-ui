@@ -20,6 +20,7 @@ describe('shared 6MM customer service', () => {
     const wrapper = mount(Card, { props: { transport: { load: async () => state(), toggle } } })
     await flushPromises()
     expect(wrapper.text()).toContain('影响当前白标所有站点')
+    expect(wrapper.find('p.mm-tenant-customer__hint').exists()).toBe(false)
     expect(toggle).not.toHaveBeenCalled()
     await wrapper.get('[role="switch"]').trigger('click'); await flushPromises()
     expect(toggle).toHaveBeenCalledOnce()

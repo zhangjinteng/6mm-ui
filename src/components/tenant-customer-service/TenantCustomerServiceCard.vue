@@ -11,14 +11,13 @@ const emit = defineEmits<{ 'state-change': [value: TenantCustomerServiceDetail |
 const { locale } = useLocale()
 const copy = computed(() => locale.value === 'en-US' ? {
   name: '6MM Customer Service', description: 'Create and manage the customer-service account for this white label.',
-  scope: 'Effective immediately · Applies to all sites of this white label', hint: 'Turning off does not delete the account. Re-enabling does not reset its password.',
+  scope: 'Effective immediately · Applies to all sites of this white label',
   loading: 'Loading…', writing: 'Processing…', enabled: 'Enabled', disabled: 'Disabled', pending: 'Needs verification', failed: 'Operation failed',
   ready: 'Customer service is not configured. Contact the platform administrator.', unsupported: 'Another provider is configured. Contact the platform administrator.',
   error: 'Could not load the customer-service status.', uncertain: 'The operation was not confirmed. Reload the status before trying again.',
   reload: 'Reload status', verify: 'Verify', readonly: 'You do not have permission to change customer service.', cooldown: 'Please wait before verifying again.',
 } : {
   name: '6MM客服', description: '开通并管理当前白标的客服服务。', scope: '即时生效 · 影响当前白标所有站点',
-  hint: '首次开启自动开户；关闭不删除账号，再次开启不重置账号密码。',
   loading: '加载中', writing: '处理中', enabled: '已启用', disabled: '已关闭', pending: '待核验', failed: '操作失败',
   ready: '客服服务未配置，请联系平台管理员。', unsupported: '已有其他客服服务商，请联系平台管理员处理。',
   error: '客服状态读取失败。', uncertain: '操作结果未确认，请先重新加载状态后核验。', reload: '重新加载状态', verify: '核验',
@@ -98,7 +97,6 @@ defineExpose({ reload: load, isBusy: busy })
         <button type="button" class="mm-tenant-feature-settings__switch" role="switch" :aria-label="copy.name" :aria-checked="detail?.enabled ?? false" :disabled="disabled" @click="toggle()"><span /></button>
       </div>
     </article>
-    <p class="mm-tenant-customer__hint">{{ copy.hint }}</p>
     <div v-if="notice || failedRead || uncertain || unresolved" class="mm-tenant-customer__feedback" :class="{ 'is-error': error || detail?.operation?.status === 'failed' }">
       <p v-if="notice" role="alert">{{ notice }}</p>
       <MmButton v-if="failedRead || uncertain" size="sm" :disabled="busy || props.disabled" @click="load">{{ copy.reload }}</MmButton>

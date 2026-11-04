@@ -22,6 +22,7 @@ describe('tenant frontend-entry switches', () => {
     expect(wrapper.get('[role="switch"]').attributes('aria-label')).toBe('交易排行')
     expect(wrapper.get('[role="switch"]').attributes('aria-checked')).toBe('true')
     expect(wrapper.text()).toContain('1 / 1 已启用')
+    expect(button(wrapper, '保存配置').get('.mm-button__icon .mm-icon').attributes('stroke')).toBe('currentColor')
     expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
     expect(save).not.toHaveBeenCalled(); wrapper.unmount()
   })

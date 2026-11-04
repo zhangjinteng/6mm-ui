@@ -31,6 +31,7 @@ describe('shared tenant brand settings', () => {
     const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => fixture(), save } })
     await flushPromises()
     expect(button(wrapper, '添加域名').get('.mm-button__icon .mm-icon').attributes('stroke')).toBe('currentColor')
+    expect(button(wrapper, '保存配置').get('.mm-button__icon .mm-icon').attributes('stroke')).toBe('currentColor')
     expect(wrapper.get('input[aria-label="访问域名 1"]').attributes('readonly')).toBeUndefined()
     expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
     await button(wrapper, '添加域名').trigger('click')

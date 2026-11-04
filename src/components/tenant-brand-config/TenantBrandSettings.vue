@@ -183,7 +183,10 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: saving })
       <MmButton v-if="saveError" :disabled="busy" @click="load">{{ copy.discardReload }}</MmButton>
       <MmButton v-if="fullPage" :disabled="busy || !dirty || !editable" @click="discard">{{ copy.discard }}</MmButton>
       <MmButton v-else :disabled="busy" @click="emit('close')">{{ editable ? copy.cancel : copy.close }}</MmButton>
-      <MmButton v-if="editable" variant="primary" :loading="saving" :disabled="busy || !selectedSite || !dirty || !!validationError || loadFailed" @click="confirmSave"><MmIcon name="save" :size="14" />{{ copy.save }}</MmButton>
+      <MmButton v-if="editable" variant="primary" :loading="saving" :disabled="busy || !selectedSite || !dirty || !!validationError || loadFailed" @click="confirmSave">
+        <template #icon><MmIcon name="save" :size="14" /></template>
+        {{ copy.save }}
+      </MmButton>
     </footer>
     <MmDialog v-model="switchVisible" :title="copy.switchTitle" width="400px" :close-on-click-modal="false">
       <template #footer><MmButton @click="switchVisible = false">{{ copy.cancel }}</MmButton><MmButton variant="primary" @click="confirmSwitch">{{ copy.switchSite }}</MmButton></template>

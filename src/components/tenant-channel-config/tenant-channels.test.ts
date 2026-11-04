@@ -36,6 +36,7 @@ describe('tenant channel settings page', () => {
     const wrapper = mount(TenantChannelSettings, { props: { load: vi.fn(async () => fixture()), save } })
     await flushPromises()
     expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
+    expect(button(wrapper, '保存配置').get('.mm-button__icon .mm-icon').attributes('stroke')).toBe('currentColor')
     await wrapper.find('input').setValue('https://x.com/discard')
     await button(wrapper, '放弃修改').trigger('click')
     expect((wrapper.find('input').element as HTMLInputElement).value).toBe('https://x.com/alpha')

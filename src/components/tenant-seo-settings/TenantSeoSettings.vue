@@ -362,8 +362,10 @@ onBeforeUnmount(() => {
                                     class="seo-language-button"
                                     size="sm"
                                     @click="showLanguages = true"
-                                    ><mm-icon name="languages" :size="14" />多语言文案</mm-button
                                 >
+                                    <template #icon><mm-icon name="languages" :size="14" /></template>
+                                    多语言文案
+                                </mm-button>
                             </div>
                         </div>
                         <label class="seo-field"

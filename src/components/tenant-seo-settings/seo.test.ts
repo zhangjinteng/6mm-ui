@@ -62,6 +62,7 @@ describe('shared SEO page behavior', () => {
   it('loads server values without inserting or autosaving', async () => {
     const { w, save } = setup(); await flushPromises()
     expect(w.find<HTMLInputElement>('input[aria-label="首页标题"]').element.value).toBe('Title')
+    expect(button(w, '多语言文案').get('.mm-button__icon .mm-icon').attributes('stroke')).toBe('currentColor')
     expect(button(w, '保存配置').attributes('disabled')).toBeDefined()
     expect(save).not.toHaveBeenCalled(); w.unmount()
   })

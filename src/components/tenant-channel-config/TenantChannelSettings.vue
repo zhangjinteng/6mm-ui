@@ -103,7 +103,8 @@ defineExpose({ hasUnsavedChanges: dirty })
       <MmButton v-if="saveError" :disabled="busy" @click="load">{{ copy.reload }}</MmButton>
       <MmButton :disabled="busy || !dirty || !editable" @click="discard">{{ copy.discard }}</MmButton>
       <MmButton variant="primary" :loading="saving" :disabled="busy || !detail || !editable || !dirty || invalid" @click="save">
-        <MmIcon name="save" :size="14" /> {{ saving ? copy.saving : copy.save }}
+        <template #icon><MmIcon name="save" :size="14" /></template>
+        {{ saving ? copy.saving : copy.save }}
       </MmButton>
     </footer>
   </section>

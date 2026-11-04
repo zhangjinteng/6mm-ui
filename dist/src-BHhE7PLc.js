@@ -3485,10 +3485,11 @@ var Rr = Lr, zr = ["role", "aria-live"], Br = { class: "mm-alert__content" }, Vr
 						size: "sm",
 						onClick: n[3] ||= (e) => p.value = !0
 					}, {
-						default: Z(() => [O(Y(r), {
+						icon: Z(() => [O(Y(r), {
 							name: "languages",
 							size: 14
-						}), n[17] ||= D("多语言文案", -1)]),
+						})]),
+						default: Z(() => [n[17] ||= D(" 多语言文案 ", -1)]),
 						_: 1
 					})])]),
 					T("label", Li, [
@@ -3626,7 +3627,7 @@ var Rr = Lr, zr = ["role", "aria-live"], Br = { class: "mm-alert__content" }, Vr
 			}, 8, ["modelValue"])
 		], 2));
 	}
-}), [["__scopeId", "data-v-75b12abd"]]), Zi = [{
+}), [["__scopeId", "data-v-83519b93"]]), Zi = [{
 	code: "trade_ranking",
 	group: "growth",
 	icon: "chart-candlestick"
@@ -3949,10 +3950,11 @@ var Rr = Lr, zr = ["role", "aria-live"], Br = { class: "mm-alert__content" }, Vr
 					disabled: P.value || !u.value || !F.value || !N.value || h.value,
 					onClick: ne
 				}, {
-					default: Z(() => [O(Y(r), {
+					icon: Z(() => [O(Y(r), {
 						name: "save",
 						size: 14
-					}), D(J(l.value.save), 1)]),
+					})]),
+					default: Z(() => [D(" " + J(l.value.save), 1)]),
 					_: 1
 				}, 8, ["loading", "disabled"])
 			]),
@@ -4590,10 +4592,11 @@ var Fa = ["aria-busy"], Ia = {
 					disabled: L.value || !P.value || !R.value || !!B.value || g.value,
 					onClick: le
 				}, {
-					default: Z(() => [O(Y(r), {
+					icon: Z(() => [O(Y(r), {
 						name: "save",
 						size: 14
-					}), D(J(u.value.save), 1)]),
+					})]),
+					default: Z(() => [D(" " + J(u.value.save), 1)]),
 					_: 1
 				}, 8, ["loading", "disabled"])) : C("", !0)
 			]),
@@ -5018,10 +5021,11 @@ var lo = (e, t) => {
 					disabled: v.value || !c.value || !h.value || !g.value || _.value,
 					onClick: M
 				}, {
-					default: Z(() => [O(Y(r), {
+					icon: Z(() => [O(Y(r), {
 						name: "save",
 						size: 14
-					}), D(" " + J(d.value ? s.value.saving : s.value.save), 1)]),
+					})]),
+					default: Z(() => [D(" " + J(d.value ? s.value.saving : s.value.save), 1)]),
 					_: 1
 				}, 8, ["loading", "disabled"])
 			])
@@ -31727,4 +31731,4 @@ var VS = class {
 //#endregion
 export { Ag as $, du as $n, Qr as $r, $f as $t, Iv as A, ft as Ai, Hd as An, Ho as Ar, rh as At, R_ as B, dd as Bn, oo as Br, vm as Bt, Ky as C, zt as Ci, hf as Cn, ss as Cr, hh as Ct, Qv as D, ut as Di, rf as Dn, Wo as Dr, vh as Dt, ay as E, At as Ei, sf as En, Ko as Er, _h as Et, U_ as F, ct as Fi, wd as Fn, Ao as Fr, zm as Ft, S_ as G, $u as Gn, Na as Gr, _p as Gt, M_ as H, fd as Hn, ao as Hr, nm as Ht, V_ as I, gt as Ii, xd as In, vo as Ir, Rm as It, zg as J, Wu as Jn, ka as Jr, sp as Jt, T_ as K, Ju as Kn, Ma as Kr, lp as Kt, B_ as L, pt as Li, bd as Ln, co as Lr, Nm as Lt, pv as M, mt as Mi, Dd as Mn, Mo as Mr, Km as Mt, av as N, st as Ni, Ed as Nn, Fo as Nr, qm as Nt, Yv as O, dt as Oi, Xd as On, Uo as Or, ah as Ot, W_ as P, at as Pi, Td as Pn, Io as Pr, Wm as Pt, Pg as Q, ku as Qn, ni as Qr, Qf as Qt, z_ as R, rt as Ri, sd as Rn, lo as Rr, jm as Rt, qy as S, Ut as Si, gf as Sn, fs as Sr, ph as St, dy as T, jt as Ti, of as Tn, qo as Tr, gh as Tt, C_ as U, id as Un, io as Ur, Gp as Ut, I_ as V, ud as Vn, so as Vr, dm as Vt, w_ as W, rd as Wn, Pa as Wr, jp as Wt, Ng as X, Mu as Xn, Zi as Xr, Xf as Xt, Og as Y, zu as Yn, wa as Yr, op as Yt, Fg as Z, Au as Zn, Xi as Zr, Zf as Zt, Jy as _, dn as _i, jf as _n, dc as _r, Eh as _t, Kb as a, Hn as ai, qf as an, Vl as ar, xg as at, Qy as b, Jt as bi, Cf as bn, _s as br, lh as bt, Nb as c, Un as ci, Wf as cn, Yc as cr, dg as ct, Db as d, qn as di, Vf as dn, Wc as dr, Nh as dt, Wr as ei, np as en, lu as er, kg as et, gb as f, $ as fi, Rf as fn, Hc as fr, jh as ft, lb as g, mn as gi, Af as gn, mc as gr, kh as gt, pb as h, kn as hi, kf as hn, jc as hr, Ah as ht, Vb as i, Bn as ii, Jf as in, Kl as ir, yg as it, yv as j, ot as ji, Id as jn, Bo as jr, Gm as jt, Rv as k, _t as ki, Gd as kn, Vo as kr, ih as kt, Mb as l, Wn as li, Uf as ln, Xc as lr, Qh as lt, _b as m, Mn as mi, Pf as mn, Lc as mr, Ph as mt, lS as n, Dr as ni, Yf as nn, Ql as nr, Dg as nt, Bb as o, Gn as oi, Kf as on, tl as or, bg as ot, hb as p, In as pi, Ff as pn, Bc as pr, Oh as pt, __ as q, Ku as qn, ja as qr, cp as qt, Xb as r, Cr as ri, ep as rn, Jl as rr, vg as rt, zb as s, Vn as si, Gf as sn, Jc as sr, hg as st, JS as t, Rr as ti, tp as tn, ru as tr, jg as tt, Ob as u, Kn as ui, Hf as un, Gc as ur, Yh as ut, Xy as v, $t as vi, Of as vn, tc as vr, ch as vt, zy as w, Nt as wi, af as wn, ns as wr, mh as wt, Zy as x, Gt as xi, Sf as xn, gs as xr, oh as xt, Yy as y, Xt as yi, Tf as yn, Cs as yr, sh as yt, L_ as z, Q as zi, cd as zn, uo as zr, km as zt };
 
-//# sourceMappingURL=src-X5tjMLEk.js.map
+//# sourceMappingURL=src-BHhE7PLc.js.map

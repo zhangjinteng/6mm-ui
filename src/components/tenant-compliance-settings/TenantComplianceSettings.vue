@@ -262,10 +262,6 @@ onBeforeUnmount(() => {
         <div class="compliance-updated"><span><MmIcon name="clock" :size="12" />最近更新</span><time>{{ updatedLabel }}</time></div>
     </header>
     <div class="compliance-body">
-        <template v-if="activeTab !== 'profile' && detail">
-            <label v-if="siteOptions.length > 1" class="compliance-site">站点<MmSelect :model-value="detail.site_id" :options="siteOptions" aria-label="配置站点" :disabled="saving || loading" @update:model-value="selectSite(String($event))" /></label>
-            <p v-else class="compliance-site">站点：{{ detail.site_name }} · {{ detail.site_id }}</p>
-        </template>
             <div ref="editor" class="compliance-editor" :aria-busy="loading">
                 <MmLoading v-if="loading" text="正在读取合规配置…" />
                 <div v-else-if="loadFailed" class="load-message">
@@ -367,6 +363,8 @@ onBeforeUnmount(() => {
                                     <p>
                                         使用平台最新已发布模板，或填写本站点的公开 HTTPS 协议链接。
                                     </p>
+                                    <label v-if="siteOptions.length > 1" class="compliance-site">站点<MmSelect :model-value="detail.site_id" :options="siteOptions" aria-label="配置站点" :disabled="saving || loading" @update:model-value="selectSite(String($event))" /></label>
+                                    <p v-else class="compliance-site">站点：{{ detail.site_name }} · {{ detail.site_id }}</p>
                                 </div>
                                 <mm-tag size="sm" effect="soft">{{ customCount }} 项自定义</mm-tag>
                             </header>

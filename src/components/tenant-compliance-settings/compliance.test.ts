@@ -36,11 +36,26 @@ describe('shared compliance editor', () => {
         expect(w.get('.section-intro').findComponent(MmSelect).exists()).toBe(true)
         expect(w.find('.compliance-body > .compliance-site').exists()).toBe(false)
         await button(w, '协议文件').trigger('click')
-        expect(w.get('.compliance-body > .compliance-site').findComponent(MmSelect).exists()).toBe(true)
-        w.get('.compliance-body > .compliance-site').getComponent(MmSelect).vm.$emit('update:modelValue', '11')
+        expect(w.find('.compliance-body > .compliance-site').exists()).toBe(false)
+        const site = w.get('.intro-row .compliance-site')
+        expect(site.findComponent(MmSelect).exists()).toBe(true)
+        expect(site.element.previousElementSibling?.textContent).toContain('使用平台最新已发布模板')
+        site.getComponent(MmSelect).vm.$emit('update:modelValue', '11')
         await flushPromises()
         expect(load).toHaveBeenLastCalledWith(expect.any(AbortSignal), '11')
         w.unmount()
+    })
+    it('places agreement site information below its description in full-page and embedded editors', async () => {
+        for (const fullPage of [true, false]) {
+            const { w } = setup({ fullPage, load: async () => ({ ...detail(), sites: [detail().sites![0]] }) })
+            await flushPromises()
+            await button(w, '协议文件').trigger('click')
+            const site = w.get('.intro-row .compliance-site')
+            expect(site.text()).toBe('站点：Site 10 · 10')
+            expect(site.element.previousElementSibling?.textContent).toContain('使用平台最新已发布模板，或填写本站点的公开 HTTPS 协议链接。')
+            expect(w.find('.compliance-body > .compliance-site').exists()).toBe(false)
+            w.unmount()
+        }
     })
     it('uses the shared date picker and saves calendar selections as YYYY-MM-DD', async () => {
         for (const fullPage of [true, false]) {

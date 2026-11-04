@@ -28,6 +28,11 @@
 .mm-tenant-feature-settings__card.is-enabled { border-color: var(--mm-color-primary); }
 .mm-tenant-feature-settings__card-icon { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; color: var(--mm-color-text-muted); border-radius: 9px; background: var(--mm-color-soft); }
 .mm-tenant-feature-settings__card.is-enabled .mm-tenant-feature-settings__card-icon { color: var(--mm-color-primary); background: color-mix(in srgb, var(--mm-color-primary) 10%, transparent); }
+/* Keep MmIcon's base text color from overriding these semantic containers. */
+.mm-tenant-feature-settings__icon > .mm-icon,
+.mm-tenant-feature-settings__group-icon > .mm-icon,
+.mm-tenant-feature-settings__card-icon > .mm-icon,
+.mm-tenant-feature-settings__updated > span > .mm-icon { color: inherit; }
 .mm-tenant-feature-settings__card-copy { min-width: 0; }
 .mm-tenant-feature-settings__card h4 { margin: 0 0 4px; font-size: 13px; font-weight: 650; }
 .mm-tenant-feature-settings__card p, .mm-tenant-feature-settings__card small { margin: 0; color: var(--mm-color-text-muted); font-size: 11px; line-height: 1.6; }

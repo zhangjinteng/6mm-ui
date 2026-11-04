@@ -1938,26 +1938,26 @@ function qn(e) {
 var Jn = {
 	key: 0,
 	class: "compliance-header"
-}, Yn = { class: "compliance-header__icon" }, Xn = { class: "compliance-updated" }, Zn = { class: "compliance-body" }, Qn = {
-	key: 0,
-	class: "compliance-site"
-}, $n = {
-	key: 1,
-	class: "compliance-site"
-}, er = ["aria-busy"], tr = {
+}, Yn = { class: "compliance-header__icon" }, Xn = { class: "compliance-updated" }, Zn = { class: "compliance-body" }, Qn = ["aria-busy"], $n = {
 	key: 1,
 	class: "load-message"
-}, nr = { class: "section-intro" }, rr = {
+}, er = { class: "section-intro" }, tr = {
 	key: 0,
 	class: "compliance-site"
-}, ir = {
+}, nr = {
 	key: 1,
 	class: "compliance-site"
-}, ar = { class: "profile-grid" }, or = { class: "field" }, sr = ["for"], cr = {
+}, rr = { class: "profile-grid" }, ir = { class: "field" }, ar = ["for"], or = {
 	key: 0,
 	class: "required",
 	"aria-hidden": "true"
-}, lr = ["id"], ur = ["textContent"], dr = { class: "section-intro intro-row" }, fr = {
+}, sr = ["id"], cr = ["textContent"], lr = { class: "section-intro intro-row" }, ur = {
+	key: 0,
+	class: "compliance-site"
+}, dr = {
+	key: 1,
+	class: "compliance-site"
+}, fr = {
 	key: 0,
 	class: "footnote"
 }, pr = { class: "agreement-cards" }, mr = { class: "agreement-heading" }, hr = { class: "agreement-icon" }, gr = { class: "agreement-controls" }, _r = { class: "agreement-value" }, vr = ["id"], yr = [
@@ -2126,17 +2126,7 @@ var Jn = {
 					size: 12
 				}), n[7] ||= D("最近更新", -1)]), T("time", null, J(_e.value), 1)])
 			])) : C("", !0),
-			T("div", Zn, [g.value !== "profile" && f.value ? (V(), w(_, { key: 0 }, [ge.value.length > 1 ? (V(), w("label", Qn, [n[9] ||= D("站点", -1), O(Y(kn), {
-				"model-value": f.value.site_id,
-				options: ge.value,
-				"aria-label": "配置站点",
-				disabled: u.value || c.value,
-				"onUpdate:modelValue": n[0] ||= (e) => ve(String(e))
-			}, null, 8, [
-				"model-value",
-				"options",
-				"disabled"
-			])])) : (V(), w("p", $n, "站点：" + J(f.value.site_name) + " · " + J(f.value.site_id), 1))], 64)) : C("", !0), T("div", {
+			T("div", Zn, [T("div", {
 				ref_key: "editor",
 				ref: h,
 				class: "compliance-editor",
@@ -2144,8 +2134,8 @@ var Jn = {
 			}, [c.value ? (V(), S(Y(m), {
 				key: 0,
 				text: "正在读取合规配置…"
-			})) : d.value ? (V(), w("div", tr, [n[11] ||= T("p", { role: "alert" }, "读取失败，请重试。", -1), O(Y(Q), { onClick: ce }, {
-				default: Z(() => [...n[10] ||= [D("重新加载", -1)]]),
+			})) : d.value ? (V(), w("div", $n, [n[10] ||= T("p", { role: "alert" }, "读取失败，请重试。", -1), O(Y(Q), { onClick: ce }, {
+				default: Z(() => [...n[9] ||= [D("重新加载", -1)]]),
 				_: 1
 			})])) : p.value && f.value ? (V(), w(_, { key: 2 }, [O(Y(In), {
 				modelValue: g.value,
@@ -2156,35 +2146,35 @@ var Jn = {
 					label: te.value ? `主体信息 (${te.value})` : "主体信息"
 				}, {
 					default: Z(() => [
-						T("header", nr, [
-							n[13] ||= T("h3", null, "协议变量", -1),
-							n[14] ||= T("p", null, " 各站点独立管理。主体信息与该站点开户资料共用；启用平台模板时需完整填写。 ", -1),
-							ge.value.length > 1 ? (V(), w("label", rr, [n[12] ||= D("站点", -1), O(Y(kn), {
+						T("header", er, [
+							n[12] ||= T("h3", null, "协议变量", -1),
+							n[13] ||= T("p", null, " 各站点独立管理。主体信息与该站点开户资料共用；启用平台模板时需完整填写。 ", -1),
+							ge.value.length > 1 ? (V(), w("label", tr, [n[11] ||= D("站点", -1), O(Y(kn), {
 								"model-value": f.value.site_id,
 								options: ge.value,
 								"aria-label": "配置站点",
 								disabled: u.value || c.value,
-								"onUpdate:modelValue": n[1] ||= (e) => ve(String(e))
+								"onUpdate:modelValue": n[0] ||= (e) => ve(String(e))
 							}, null, 8, [
 								"model-value",
 								"options",
 								"disabled"
-							])])) : (V(), w("p", ir, "站点：" + J(f.value.site_name) + " · " + J(f.value.site_id), 1))
+							])])) : (V(), w("p", nr, "站点：" + J(f.value.site_name) + " · " + J(f.value.site_id), 1))
 						]),
-						T("div", ar, [T("div", or, [
-							n[15] ||= T("label", { for: "compliance-tenant-name" }, "白标名称", -1),
+						T("div", rr, [T("div", ir, [
+							n[14] ||= T("label", { for: "compliance-tenant-name" }, "白标名称", -1),
 							O(Y(l), {
 								id: "compliance-tenant-name",
 								"model-value": f.value.tenant_name,
 								"aria-label": "白标名称",
 								disabled: ""
 							}, null, 8, ["model-value"]),
-							n[16] ||= T("small", { textContent: "{{WHITE_LABEL_NAME}} · 读取开户资料" }, null, -1)
+							n[15] ||= T("small", { textContent: "{{WHITE_LABEL_NAME}} · 读取开户资料" }, null, -1)
 						]), (V(!0), w(_, null, G(Y(Vn), (e) => (V(), w("div", {
 							key: e.key,
 							class: "field"
 						}, [
-							T("label", { for: `compliance-${e.key}` }, [D(J(e.label), 1), R.value ? (V(), w("span", cr, " *")) : C("", !0)], 8, sr),
+							T("label", { for: `compliance-${e.key}` }, [D(J(e.label), 1), R.value ? (V(), w("span", or, " *")) : C("", !0)], 8, ar),
 							e.key === "effective_date" ? (V(), S(Y(Gt), {
 								key: A.value,
 								id: `compliance-${e.key}`,
@@ -2233,10 +2223,10 @@ var Jn = {
 								key: 2,
 								id: `error-${e.key}`,
 								class: "field-error"
-							}, J(P.value[`profile.${e.key}`]), 9, lr)) : C("", !0),
-							T("small", { textContent: J("{{" + e.token + "}}") }, null, 8, ur)
+							}, J(P.value[`profile.${e.key}`]), 9, sr)) : C("", !0),
+							T("small", { textContent: J("{{" + e.token + "}}") }, null, 8, cr)
 						]))), 128))]),
-						n[17] ||= T("p", { class: "footnote" }, " 协议联系邮箱使用本站点资料中的 support_email；不会改动渠道配置中的租户级备用客服邮箱。 ", -1)
+						n[16] ||= T("p", { class: "footnote" }, " 协议联系邮箱使用本站点资料中的 support_email；不会改动渠道配置中的租户级备用客服邮箱。 ", -1)
 					]),
 					_: 1
 				}, 8, ["label"]), O(Y(Mn), {
@@ -2244,7 +2234,21 @@ var Jn = {
 					label: H.value ? `协议文件 (${H.value})` : "协议文件"
 				}, {
 					default: Z(() => [
-						T("header", dr, [n[18] ||= T("div", null, [T("h3", null, "协议文件"), T("p", null, " 使用平台最新已发布模板，或填写本站点的公开 HTTPS 协议链接。 ")], -1), O(Y($), {
+						T("header", lr, [T("div", null, [
+							n[18] ||= T("h3", null, "协议文件", -1),
+							n[19] ||= T("p", null, " 使用平台最新已发布模板，或填写本站点的公开 HTTPS 协议链接。 ", -1),
+							ge.value.length > 1 ? (V(), w("label", ur, [n[17] ||= D("站点", -1), O(Y(kn), {
+								"model-value": f.value.site_id,
+								options: ge.value,
+								"aria-label": "配置站点",
+								disabled: u.value || c.value,
+								"onUpdate:modelValue": n[1] ||= (e) => ve(String(e))
+							}, null, 8, [
+								"model-value",
+								"options",
+								"disabled"
+							])])) : (V(), w("p", dr, "站点：" + J(f.value.site_name) + " · " + J(f.value.site_id), 1))
+						]), O(Y($), {
 							size: "sm",
 							effect: "soft"
 						}, {
@@ -2277,12 +2281,12 @@ var Jn = {
 							}, [O(Y(r), {
 								name: "refresh-cw",
 								size: 14
-							}), D(J(re(e.agreement_type)), 1)], 2)) : e.mode === "content" ? (V(), w(_, { key: 1 }, [n[20] ||= T("span", { class: "muted" }, "保留已存自定义正文 · 此入口不编辑正文", -1), O(Y(Q), {
+							}), D(J(re(e.agreement_type)), 1)], 2)) : e.mode === "content" ? (V(), w(_, { key: 1 }, [n[21] ||= T("span", { class: "muted" }, "保留已存自定义正文 · 此入口不编辑正文", -1), O(Y(Q), {
 								size: "sm",
 								disabled: u.value || !o.value,
 								onClick: (t) => e.mode = "url"
 							}, {
-								default: Z(() => [...n[19] ||= [D("改用链接", -1)]]),
+								default: Z(() => [...n[20] ||= [D("改用链接", -1)]]),
 								_: 1
 							}, 8, ["disabled", "onClick"])], 64)) : (V(), w(_, { key: 2 }, [O(Y(l), {
 								modelValue: e.url,
@@ -2317,14 +2321,14 @@ var Jn = {
 								"aria-checked": e.is_enabled,
 								disabled: u.value || !o.value,
 								onClick: (t) => e.is_enabled = !e.is_enabled
-							}, [...n[21] ||= [T("span", null, null, -1)]], 8, yr),
+							}, [...n[22] ||= [T("span", null, null, -1)]], 8, yr),
 							T("span", br, J(e.is_enabled ? "已启用" : "已停用"), 1)
 						])]))), 128))])
 					]),
 					_: 1
 				}, 8, ["label"])]),
 				_: 1
-			}, 8, ["modelValue"]), P.value.agreements || P.value.config ? (V(), w("p", xr, J(P.value.agreements || P.value.config), 1)) : C("", !0)], 64)) : C("", !0)], 8, er)]),
+			}, 8, ["modelValue"]), P.value.agreements || P.value.config ? (V(), w("p", xr, J(P.value.agreements || P.value.config), 1)) : C("", !0)], 64)) : C("", !0)], 8, Qn)]),
 			T("footer", Sr, [
 				T("span", {
 					role: "status",
@@ -2345,7 +2349,7 @@ var Jn = {
 					disabled: c.value || !p.value || !L.value || u.value || E.value === "uncertain" || !!P.value.expected_revision,
 					onClick: ue
 				}, {
-					default: Z(() => [...n[22] ||= [D("保存配置", -1)]]),
+					default: Z(() => [...n[23] ||= [D("保存配置", -1)]]),
 					_: 1
 				}, 8, ["loading", "disabled"])) : C("", !0),
 				E.value === "uncertain" || P.value.expected_revision ? (V(), S(Y(Q), {
@@ -2355,7 +2359,7 @@ var Jn = {
 						N(me) ? me.value = void 0 : me = void 0, he.value = !0;
 					}
 				}, {
-					default: Z(() => [...n[23] ||= [D("重新加载核验", -1)]]),
+					default: Z(() => [...n[24] ||= [D("重新加载核验", -1)]]),
 					_: 1
 				}, 8, ["disabled"])) : C("", !0)
 			]),
@@ -2369,21 +2373,21 @@ var Jn = {
 				footer: Z(() => [O(Y(Q), { onClick: n[5] ||= (e) => {
 					he.value = !1, N(me) ? me.value = void 0 : me = void 0;
 				} }, {
-					default: Z(() => [...n[24] ||= [D("继续编辑", -1)]]),
+					default: Z(() => [...n[25] ||= [D("继续编辑", -1)]]),
 					_: 1
 				}), O(Y(Q), {
 					variant: "primary",
 					onClick: ye
 				}, {
-					default: Z(() => [...n[25] ||= [D("确认重新加载", -1)]]),
+					default: Z(() => [...n[26] ||= [D("确认重新加载", -1)]]),
 					_: 1
 				})]),
-				default: Z(() => [n[26] ||= T("p", null, "重新加载后将以服务器上的配置为准，当前未保存的修改不会保留。", -1)]),
+				default: Z(() => [n[27] ||= T("p", null, "重新加载后将以服务器上的配置为准，当前未保存的修改不会保留。", -1)]),
 				_: 1
 			}, 8, ["modelValue"])
 		], 2));
 	}
-}), [["__scopeId", "data-v-7ec1347d"]]), wr = ["role", "aria-live"], Tr = { class: "mm-message__content" }, Er = ["aria-label"], Dr = /* @__PURE__ */ k({
+}), [["__scopeId", "data-v-0ee59f59"]]), wr = ["role", "aria-live"], Tr = { class: "mm-message__content" }, Er = ["aria-label"], Dr = /* @__PURE__ */ k({
 	name: "MmMessage",
 	__name: "Message",
 	props: {
@@ -31723,4 +31727,4 @@ var VS = class {
 //#endregion
 export { Ag as $, du as $n, Qr as $r, $f as $t, Iv as A, ft as Ai, Hd as An, Ho as Ar, rh as At, R_ as B, dd as Bn, oo as Br, vm as Bt, Ky as C, zt as Ci, hf as Cn, ss as Cr, hh as Ct, Qv as D, ut as Di, rf as Dn, Wo as Dr, vh as Dt, ay as E, At as Ei, sf as En, Ko as Er, _h as Et, U_ as F, ct as Fi, wd as Fn, Ao as Fr, zm as Ft, S_ as G, $u as Gn, Na as Gr, _p as Gt, M_ as H, fd as Hn, ao as Hr, nm as Ht, V_ as I, gt as Ii, xd as In, vo as Ir, Rm as It, zg as J, Wu as Jn, ka as Jr, sp as Jt, T_ as K, Ju as Kn, Ma as Kr, lp as Kt, B_ as L, pt as Li, bd as Ln, co as Lr, Nm as Lt, pv as M, mt as Mi, Dd as Mn, Mo as Mr, Km as Mt, av as N, st as Ni, Ed as Nn, Fo as Nr, qm as Nt, Yv as O, dt as Oi, Xd as On, Uo as Or, ah as Ot, W_ as P, at as Pi, Td as Pn, Io as Pr, Wm as Pt, Pg as Q, ku as Qn, ni as Qr, Qf as Qt, z_ as R, rt as Ri, sd as Rn, lo as Rr, jm as Rt, qy as S, Ut as Si, gf as Sn, fs as Sr, ph as St, dy as T, jt as Ti, of as Tn, qo as Tr, gh as Tt, C_ as U, id as Un, io as Ur, Gp as Ut, I_ as V, ud as Vn, so as Vr, dm as Vt, w_ as W, rd as Wn, Pa as Wr, jp as Wt, Ng as X, Mu as Xn, Zi as Xr, Xf as Xt, Og as Y, zu as Yn, wa as Yr, op as Yt, Fg as Z, Au as Zn, Xi as Zr, Zf as Zt, Jy as _, dn as _i, jf as _n, dc as _r, Eh as _t, Kb as a, Hn as ai, qf as an, Vl as ar, xg as at, Qy as b, Jt as bi, Cf as bn, _s as br, lh as bt, Nb as c, Un as ci, Wf as cn, Yc as cr, dg as ct, Db as d, qn as di, Vf as dn, Wc as dr, Nh as dt, Wr as ei, np as en, lu as er, kg as et, gb as f, $ as fi, Rf as fn, Hc as fr, jh as ft, lb as g, mn as gi, Af as gn, mc as gr, kh as gt, pb as h, kn as hi, kf as hn, jc as hr, Ah as ht, Vb as i, Bn as ii, Jf as in, Kl as ir, yg as it, yv as j, ot as ji, Id as jn, Bo as jr, Gm as jt, Rv as k, _t as ki, Gd as kn, Vo as kr, ih as kt, Mb as l, Wn as li, Uf as ln, Xc as lr, Qh as lt, _b as m, Mn as mi, Pf as mn, Lc as mr, Ph as mt, lS as n, Dr as ni, Yf as nn, Ql as nr, Dg as nt, Bb as o, Gn as oi, Kf as on, tl as or, bg as ot, hb as p, In as pi, Ff as pn, Bc as pr, Oh as pt, __ as q, Ku as qn, ja as qr, cp as qt, Xb as r, Cr as ri, ep as rn, Jl as rr, vg as rt, zb as s, Vn as si, Gf as sn, Jc as sr, hg as st, JS as t, Rr as ti, tp as tn, ru as tr, jg as tt, Ob as u, Kn as ui, Hf as un, Gc as ur, Yh as ut, Xy as v, $t as vi, Of as vn, tc as vr, ch as vt, zy as w, Nt as wi, af as wn, ns as wr, mh as wt, Zy as x, Gt as xi, Sf as xn, gs as xr, oh as xt, Yy as y, Xt as yi, Tf as yn, Cs as yr, sh as yt, L_ as z, Q as zi, cd as zn, uo as zr, km as zt };
 
-//# sourceMappingURL=src--cx3jFOw.js.map
+//# sourceMappingURL=src-X5tjMLEk.js.map

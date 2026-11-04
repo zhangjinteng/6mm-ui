@@ -1,0 +1,40 @@
+/* Shared by CMS settings in both hosts and the platform SEO settings dialog. */
+.mm-translation-settings {
+  display: grid;
+  gap: 18px;
+}
+
+.mm-translation-settings > label,
+.mm-translation-settings__credential > label,
+.mm-translation-settings__grid > label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  font-size: 12px;
+  color: var(--mm-color-text-muted);
+}
+
+.mm-translation-settings__credential {
+  min-width: 0;
+}
+
+.mm-translation-settings__credential small {
+  display: block;
+  margin-top: 6px;
+  color: var(--mm-color-text-subtle);
+  font-size: 11px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.mm-translation-settings__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 650px) {
+  .mm-translation-settings__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

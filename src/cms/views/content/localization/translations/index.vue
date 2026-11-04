@@ -353,92 +353,94 @@
             subtitle="当前内容空间共用 · Google Cloud Translation Basic v2"
             width="560px"
             :close-on-click-modal="false"
-            :before-close="() => !configSaving"
+            :before-close="() => !configSaving && !testing"
         >
             <MmAlert v-if="settingsError" type="error">{{ settingsError }}</MmAlert>
             <div v-if="settingsLoading" class="region-status">加载配置中…</div>
-            <MmForm
-                v-else-if="settings"
-                :model="settings"
-                class="translation-config"
-                label-position="top"
-            >
-                <MmFormItem label="目标语言"
-                    ><MmSelect
+            <div v-else-if="settings" class="mm-translation-settings">
+                <label>
+                    目标语言
+                    <MmSelect
                         v-model="settings.target_locales"
-                        :options="localeOptions"
+                        :options="settingsLocaleOptions"
                         multiple
                         filterable
                         :max-tag-count="4"
                         placeholder="选择需要维护的目标语言"
-                        :disabled="configSaving"
-                    /></MmFormItem
-                >
-                <MmFormItem label="Google Translate"
-                    ><div class="config-service">
-                        <strong>Google Cloud Translation · Basic v2</strong
-                        ><MmCheckbox
-                            v-model="settings.is_enabled"
-                            :disabled="configSaving || testing || (!settings.credential_configured && !apiKey.trim())"
-                            >开启自动翻译</MmCheckbox
-                        >
-                    </div>
-                </MmFormItem
-                >
-                <MmFormItem label="Google API Key"
-                    ><MmInput v-model="apiKey" type="password" autocomplete="new-password"
                         :disabled="configSaving || testing"
-                        :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'" />
+                        aria-label="翻译目标语言"
+                    />
+                </label>
+                <MmCheckbox
+                    v-model="settings.is_enabled"
+                    :disabled="configSaving || testing || (!settings.credential_configured && !apiKey.trim())"
+                    >开启自动翻译</MmCheckbox
+                >
+                <div class="mm-translation-settings__credential">
+                    <label>
+                        Google API Key
+                        <MmInput
+                            v-model="apiKey"
+                            type="password"
+                            autocomplete="new-password"
+                            :disabled="configSaving || testing"
+                            :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'"
+                        />
+                    </label>
                     <small v-if="settings.api_key_mask">{{ settings.credential_source === 'database' ? '数据库密钥' : '环境配置密钥' }}：{{ settings.api_key_mask }}</small>
                     <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_DECRYPT_FAILED'">数据库密钥无法解密，请检查两套后台的专用加密配置，或输入新密钥替换。</small>
-                    <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small
-                    ></MmFormItem
-                >
-                <div class="config-grid">
-                    <MmFormItem label="并发上限"
-                        ><MmInputNumber
+                    <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small>
+                </div>
+                <div class="mm-translation-settings__grid">
+                    <label>
+                        并发上限
+                        <MmInputNumber
                             v-model="settings.concurrency_limit"
                             :min="1"
                             :max="20"
-                            :disabled="configSaving" /></MmFormItem
-                    ><MmFormItem label="请求超时（秒）"
-                        ><MmInputNumber
+                            :disabled="configSaving || testing"
+                        />
+                    </label>
+                    <label>
+                        请求超时（秒）
+                        <MmInputNumber
                             v-model="settings.request_timeout_seconds"
                             :min="1"
                             :max="120"
-                            :disabled="configSaving" /></MmFormItem
-                    ><MmFormItem label="最大尝试次数"
-                        ><MmInputNumber
+                            :disabled="configSaving || testing"
+                        />
+                    </label>
+                    <label>
+                        最大尝试次数
+                        <MmInputNumber
                             v-model="settings.max_attempts"
                             :min="1"
                             :max="10"
-                            :disabled="configSaving"
-                    /></MmFormItem>
+                            :disabled="configSaving || testing"
+                        />
+                    </label>
                 </div>
                 <MmAlert v-if="!settings.supported" type="warning"
                     >当前空间关联了其他版本的翻译配置。保存将为该空间创建独立的 Google v2
                     配置，不修改其他空间。</MmAlert
                 >
-            </MmForm>
+            </div>
             <template #footer
                 ><MmButton
-                    size="sm"
                     :loading="testing"
                     :disabled="(!settings?.credential_configured && !apiKey.trim()) || configSaving || settingsLoading"
                     @click="testConnection"
                     >测试连接</MmButton
-                ><span class="footer-spacer" /><MmButton
-                    size="sm"
-                    :disabled="configSaving"
+                ><MmButton
+                    :disabled="configSaving || testing"
                     @click="settingsOpen = false"
                     >取消</MmButton
                 ><MmButton
-                    size="sm"
                     variant="primary"
                     :loading="configSaving"
                     :disabled="!settings || settingsLoading || testing"
                     @click="saveConfig"
-                    >保存配置</MmButton
+                    >保存翻译配置</MmButton
                 ></template
             >
         </MmDialog>
@@ -515,7 +517,6 @@ import {
     MmCheckbox,
     MmDialog,
     MmEmpty,
-    MmForm,
     MmFormItem,
     MmIcon,
     MmInput,
@@ -607,6 +608,9 @@ const targetOptions = computed(
 )
 const localeOptions = computed(() =>
     targetOptions.value.map((l) => ({ label: `${l.flag} ${l.label}`, value: l.code }))
+)
+const settingsLocaleOptions = computed(() =>
+    targetOptions.value.map((l) => ({ label: `${l.label} · ${l.code}`, value: l.code }))
 )
 const enabledLocaleOptions = computed(() =>
     localeOptions.value.filter((l) => isEnabled(String(l.value)))
@@ -1447,34 +1451,6 @@ h1 {
     font-size: 10px;
     color: #ba5c18;
 }
-.translation-config {
-    padding: 4px 0;
-}
-.translation-config small {
-    display: block;
-    color: #8793a6;
-    font-size: 11px;
-    line-height: 1.7;
-    margin-top: 6px;
-}
-.config-service {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.config-service strong {
-    flex: 1;
-    font-size: 12px;
-    font-weight: 500;
-}
-.config-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-.config-grid :deep(.mm-input-number) {
-    width: 100%;
-}
 .footer-spacer {
     flex: 1;
 }
@@ -1528,9 +1504,6 @@ h1 {
     .language-overview {
         max-height: 110px;
         overflow: auto;
-    }
-    .config-grid {
-        grid-template-columns: 1fr;
     }
 }
 </style>

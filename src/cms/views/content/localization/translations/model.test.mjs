@@ -95,7 +95,6 @@ test('page compiles and uses installed 6mm components, not unsupported controls 
         'MmTabs',
         'MmTabPane',
         'MmDialog',
-        'MmForm',
         'MmInput',
         'MmCheckbox'
     ])
@@ -197,7 +196,6 @@ function mount(overrides = {}) {
             'MmButton',
             'MmCheckbox',
             'MmEmpty',
-            'MmForm',
             'MmFormItem',
             'MmIcon',
             'MmInput',
@@ -367,7 +365,7 @@ test('configuration accepts a password input, tests candidate with configuration
         assert.equal(v.button('测试连接').props.disabled, false)
         await v.button('测试连接').props.onClick()
         assert.deepEqual(calls[0], ['test', '41', '9', 'FAKE_CANDIDATE_KEY'])
-        await v.button('保存配置').props.onClick()
+        await v.button('保存翻译配置').props.onClick()
         await flush()
         assert.equal(calls[1][2], 'FAKE_CANDIDATE_KEY')
         assert.equal(calls[1][1].api_key, undefined)
@@ -388,7 +386,7 @@ test('existing key is masked, empty saves preserve it, and closing clears candid
         await v.button('翻译配置').props.onClick()
         await flush()
         assert.ok(text(v.root).includes('数据库密钥：••••1234'))
-        await v.button('保存配置').props.onClick()
+        await v.button('保存翻译配置').props.onClick()
         await flush()
         assert.equal(calls[0][1], '')
         await v.button('翻译配置').props.onClick()

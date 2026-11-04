@@ -14,21 +14,21 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<RichTextEditorProps, RichTextEditorExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     blur: (event: FocusEvent) => any;
     change: (html: string) => any;
-    focus: (event: FocusEvent) => any;
     "update:modelValue": (html: string) => any;
+    focus: (event: FocusEvent) => any;
     update: (value: RichTextEditorValue) => any;
 }, string, import('vue').PublicProps, Readonly<RichTextEditorProps> & Readonly<{
     onBlur?: ((event: FocusEvent) => any) | undefined;
     onChange?: ((html: string) => any) | undefined;
-    onFocus?: ((event: FocusEvent) => any) | undefined;
     "onUpdate:modelValue"?: ((html: string) => any) | undefined;
+    onFocus?: ((event: FocusEvent) => any) | undefined;
     onUpdate?: ((value: RichTextEditorValue) => any) | undefined;
 }>, {
     disabled: boolean;
     modelValue: string | null;
-    toolbar: boolean;
     readonly: boolean;
     showCount: boolean;
+    toolbar: boolean;
     minHeight: number | string;
     extensions: import('@tiptap/core').Extensions;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

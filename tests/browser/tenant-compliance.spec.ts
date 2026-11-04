@@ -1,5 +1,20 @@
 import { test, expect } from '@playwright/test'
 
+test('effective date opens the shared calendar and saves a selected date', async ({ page }) => {
+    await page.goto('/tenant-compliance')
+    const input = page.getByRole('combobox', { name: '协议生效日期', exact: true })
+    await expect(input).toHaveValue('2026-04-02')
+    await expect(page.locator('input[type="date"]')).toHaveCount(0)
+    await input.click()
+    await expect(page.locator('.mm-date-picker__floating [role="grid"]')).toBeVisible()
+    await page.screenshot({ path: '/tmp/compliance-mm-datepicker.png', animations: 'disabled' })
+    await page.locator('.mm-date-picker__floating [data-date="2026-04-03"]').click()
+    await expect(input).toHaveValue('2026-04-03')
+    await page.getByRole('button', { name: '保存配置', exact: true }).click()
+    await expect(page.locator('.save-status')).toHaveText('已保存')
+    await expect(input).toHaveValue('2026-04-03')
+})
+
 test('compliance profile and agreement configuration share the same page shell', async ({ page }) => {
     await page.goto('/tenant-compliance')
     await expect(page.getByRole('heading', { name: '合规配置', exact: true })).toBeVisible()
@@ -20,6 +35,7 @@ test('compliance profile and agreement configuration share the same page shell',
 })
 test('readonly compliance settings cannot be edited', async ({ page }) => {
     await page.goto('/tenant-compliance?readonly')
+    await expect(page.getByRole('combobox', { name: '协议生效日期', exact: true })).toBeDisabled()
     await expect(page.getByRole('textbox', { name: '公司主体名称', exact: true })).toBeDisabled()
     await expect(page.getByRole('button', { name: '保存配置', exact: true })).toHaveCount(0)
     await page.getByRole('tab', { name: '协议文件', exact: true }).click()

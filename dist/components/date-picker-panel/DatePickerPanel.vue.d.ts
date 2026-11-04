@@ -7,20 +7,20 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<DatePickerPanelProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     select: (value: DatePickerValue) => any;
-    "update:modelValue": (value: DatePickerValue) => any;
     "update:displayedMonth": (value: string) => any;
+    "update:modelValue": (value: DatePickerValue) => any;
 }, string, import('vue').PublicProps, Readonly<DatePickerPanelProps> & Readonly<{
     onSelect?: ((value: DatePickerValue) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     "onUpdate:displayedMonth"?: ((value: string) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
 }>, {
-    modelValue: DatePickerValue;
     compact: boolean;
-    max: string;
-    min: string;
     disabledDate: (date: string) => boolean;
     displayedMonth: string;
     firstDayOfWeek: 0 | 1;
+    max: string;
+    min: string;
+    modelValue: DatePickerValue;
     selectionMode: import('./types').DateSelectionMode;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

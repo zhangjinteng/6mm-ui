@@ -18,16 +18,16 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     input: (event: Event) => any;
     blur: (event: FocusEvent) => any;
     change: (event: Event) => any;
-    focus: (event: FocusEvent) => any;
     "update:modelValue": (value: string) => any;
     clear: () => any;
+    focus: (event: FocusEvent) => any;
 }, string, import('vue').PublicProps, Readonly<InputProps> & Readonly<{
     onInput?: ((event: Event) => any) | undefined;
     onBlur?: ((event: FocusEvent) => any) | undefined;
     onChange?: ((event: Event) => any) | undefined;
-    onFocus?: ((event: FocusEvent) => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
     onClear?: (() => any) | undefined;
+    onFocus?: ((event: FocusEvent) => any) | undefined;
 }>, {
     disabled: boolean;
     size: import('../..').FormControlSize;

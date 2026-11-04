@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { MmButton } from '../button'
+import { MmDatePicker } from '../date-picker'
+import type { DatePickerValue } from '../date-picker-panel'
 import { MmDialog } from '../dialog'
 import { MmIcon } from '../icon'
 import { MmInput } from '../input'
@@ -27,14 +29,16 @@ const editor = ref<HTMLElement | null>(null),
     baseline = ref('')
 const serverErrors = ref<Record<string, string>>({}),
     saveState = ref<'saved' | 'failed' | 'uncertain' | ''>('')
+const invalidEffectiveDate = ref(false), datePickerKey = ref(0)
 let controller: AbortController | undefined,
     generation = 0
-const errors = computed(() => ({
+const errors = computed<Record<string, string>>(() => ({
     ...(attempted.value && draft.value ? validateCompliance(draft.value) : {}),
+    ...(invalidEffectiveDate.value ? { 'profile.effective_date': '请输入有效日期' } : {}),
     ...serverErrors.value
 }))
 const dirty = computed(() =>
-    Boolean(draft.value && JSON.stringify(normalizeCompliance(draft.value)) !== baseline.value)
+    Boolean(draft.value && (invalidEffectiveDate.value || JSON.stringify(normalizeCompliance(draft.value)) !== baseline.value))
 )
 const needsProfile = computed(() =>
     draft.value?.agreements.some((a) => a.mode === 'platform' && a.is_enabled)
@@ -90,11 +94,21 @@ function setMode(index: number, value: string) {
               : 'url'
 }
 function applyDetail(value: ComplianceDetail) {
+    invalidEffectiveDate.value = false
+    ++datePickerKey.value
     detail.value = value
     draft.value = toComplianceDraft(value)
     baseline.value = JSON.stringify(normalizeCompliance(draft.value))
     serverErrors.value = {}
     attempted.value = false
+}
+function setEffectiveDate(value: DatePickerValue) {
+    if (!draft.value || saving.value || !canSave.value || Array.isArray(value)) return
+    invalidEffectiveDate.value = false
+    draft.value.profile.effective_date = value || ''
+}
+function rejectEffectiveDate() {
+    if (!saving.value && canSave.value) invalidEffectiveDate.value = true
 }
 async function loadDetail() {
     if (saving.value) return
@@ -248,8 +262,10 @@ onBeforeUnmount(() => {
         <div class="compliance-updated"><span><MmIcon name="clock" :size="12" />最近更新</span><time>{{ updatedLabel }}</time></div>
     </header>
     <div class="compliance-body">
-        <label v-if="detail && siteOptions.length > 1" class="compliance-site">站点<MmSelect :model-value="detail.site_id" :options="siteOptions" aria-label="配置站点" :disabled="saving || loading" @update:model-value="selectSite(String($event))" /></label>
-        <p v-else-if="detail" class="compliance-site">站点：{{ detail.site_name }} · {{ detail.site_id }}</p>
+        <template v-if="activeTab !== 'profile' && detail">
+            <label v-if="siteOptions.length > 1" class="compliance-site">站点<MmSelect :model-value="detail.site_id" :options="siteOptions" aria-label="配置站点" :disabled="saving || loading" @update:model-value="selectSite(String($event))" /></label>
+            <p v-else class="compliance-site">站点：{{ detail.site_name }} · {{ detail.site_id }}</p>
+        </template>
             <div ref="editor" class="compliance-editor" :aria-busy="loading">
                 <MmLoading v-if="loading" text="正在读取合规配置…" />
                 <div v-else-if="loadFailed" class="load-message">
@@ -269,6 +285,8 @@ onBeforeUnmount(() => {
                                 <p>
                                     各站点独立管理。主体信息与该站点开户资料共用；启用平台模板时需完整填写。
                                 </p>
+                                <label v-if="siteOptions.length > 1" class="compliance-site">站点<MmSelect :model-value="detail.site_id" :options="siteOptions" aria-label="配置站点" :disabled="saving || loading" @update:model-value="selectSite(String($event))" /></label>
+                                <p v-else class="compliance-site">站点：{{ detail.site_name }} · {{ detail.site_id }}</p>
                             </header>
                             <div class="profile-grid">
                                 <div class="field">
@@ -287,11 +305,26 @@ onBeforeUnmount(() => {
                                 >
                                     <label :for="`compliance-${field.key}`"
                                         >{{ field.label
-                                        }}<span v-if="needsProfile" class="required">
+                                        }}<span v-if="needsProfile" class="required" aria-hidden="true">
                                             *</span
                                         ></label
                                     >
+                                    <MmDatePicker
+                                        v-if="field.key === 'effective_date'"
+                                        :key="datePickerKey"
+                                        :id="`compliance-${field.key}`"
+                                        :model-value="draft.profile.effective_date || null"
+                                        type="date"
+                                        format="YYYY-MM-DD"
+                                        :disabled="saving || !canSave"
+                                        :status="errors['profile.effective_date'] ? 'error' : undefined"
+                                        :aria-describedby="`error-${field.key}`"
+                                        data-error-key="profile.effective_date"
+                                        @update:model-value="setEffectiveDate"
+                                        @invalid="rejectEffectiveDate"
+                                    />
                                     <mm-input
+                                        v-else
                                         :id="`compliance-${field.key}`"
                                         v-model="draft.profile[field.key]"
                                         :aria-label="field.label"
@@ -651,6 +684,7 @@ onBeforeUnmount(() => {
 .compliance-updated > span { display:inline-flex; justify-content:flex-end; align-items:center; gap:5px; }
 .compliance-body { flex:1; min-height:180px; overflow:auto; padding:16px 20px 24px; }
 .compliance-site { display:flex; align-items:center; gap:12px; margin:0 0 12px; font-size:12px; }
+.section-intro .compliance-site { margin-top:12px; margin-bottom:0; color:var(--mm-color-text); }
 .compliance-site .mm-select { width:340px; max-width:calc(100% - 50px); }
 .compliance-footer { display:flex; gap:8px; align-items:center; padding:14px 18px; border-top:1px solid var(--mm-color-line); }
 .is-page .section-intro,.is-page .profile-grid,.is-page .agreement-cards,.is-page .footnote,.is-page .compliance-site { max-width:1180px; margin-left:auto; margin-right:auto; }

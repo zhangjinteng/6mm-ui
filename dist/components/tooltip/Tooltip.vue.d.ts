@@ -23,13 +23,13 @@ declare const __VLS_base: import('vue').DefineComponent<TooltipProps, {}, {}, {}
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
-    content: string;
     closeDelay: number;
     offset: number;
     openDelay: number;
     placement: import('../..').FloatingPlacement;
     showArrow: boolean;
     teleport: boolean;
+    content: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

@@ -8,16 +8,16 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<AutocompleteProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     select: (option: AutocompleteOption) => any;
-    blur: (event: FocusEvent) => any;
     error: (error: Error) => any;
-    focus: (event: FocusEvent) => any;
+    blur: (event: FocusEvent) => any;
     "update:modelValue": (value: string) => any;
+    focus: (event: FocusEvent) => any;
 }, string, import('vue').PublicProps, Readonly<AutocompleteProps> & Readonly<{
     onSelect?: ((option: AutocompleteOption) => any) | undefined;
-    onBlur?: ((event: FocusEvent) => any) | undefined;
     onError?: ((error: Error) => any) | undefined;
-    onFocus?: ((event: FocusEvent) => any) | undefined;
+    onBlur?: ((event: FocusEvent) => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
+    onFocus?: ((event: FocusEvent) => any) | undefined;
 }>, {
     disabled: boolean;
     size: import('../..').FormControlSize;

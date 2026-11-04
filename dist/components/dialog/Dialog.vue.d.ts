@@ -20,32 +20,32 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<DialogProps, DialogExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     close: (reason: DialogCloseReason) => any;
-    closed: () => any;
-    open: () => any;
-    opened: () => any;
     "update:modelValue": (value: boolean) => any;
+    open: () => any;
+    closed: () => any;
+    opened: () => any;
 }, string, import('vue').PublicProps, Readonly<DialogProps> & Readonly<{
     onClose?: ((reason: DialogCloseReason) => any) | undefined;
-    onClosed?: (() => any) | undefined;
-    onOpen?: (() => any) | undefined;
-    onOpened?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    onOpen?: (() => any) | undefined;
+    onClosed?: (() => any) | undefined;
+    onOpened?: (() => any) | undefined;
 }>, {
     title: string;
     mask: boolean;
     width: number | string;
+    modelValue: boolean;
+    closeOnEscape: boolean;
+    teleportTo: string | HTMLElement;
+    panelClass: string;
     ariaDescribedby: string;
     beforeClose: import('./types').DialogBeforeClose;
     closeOnClickModal: boolean;
-    closeOnEscape: boolean;
     kind: "dialog" | "drawer";
     lockScroll: boolean;
-    modelValue: boolean;
     overlayClass: string;
-    panelClass: string;
     panelStyle: import('vue').CSSProperties;
     showClose: boolean;
-    teleportTo: string | HTMLElement;
     subtitle: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

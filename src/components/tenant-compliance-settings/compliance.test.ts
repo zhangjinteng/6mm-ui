@@ -2,6 +2,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { nextTick } from 'vue'
 import { describe, it, expect, vi } from 'vitest'
 import { MmSelect } from '../select'
+import { MmDatePicker } from '../date-picker'
 import Settings from './TenantComplianceSettings.vue'
 import { complianceTypes } from './model'
 import type { ComplianceDetail, ComplianceSaveInput, ComplianceSettingsProps } from './types'
@@ -21,6 +22,70 @@ function setup(extra: Partial<ComplianceSettingsProps> = {}) {
     return { w, load, save }
 }
 describe('shared compliance editor', () => {
+    it('places single-site information below the profile description', async () => {
+        const { w } = setup({ load: async () => ({ ...detail(), sites: [detail().sites![0]] }) })
+        await flushPromises()
+        const intro = w.get('.section-intro')
+        expect(intro.get('.compliance-site').text()).toBe('站点：Site 10 · 10')
+        expect(intro.get('.compliance-site').element.previousElementSibling?.textContent).toContain('各站点独立管理。')
+        expect(w.find('.compliance-body > .compliance-site').exists()).toBe(false)
+        w.unmount()
+    })
+    it('keeps site selection available on both tabs', async () => {
+        const { w, load } = setup(); await flushPromises()
+        expect(w.get('.section-intro').findComponent(MmSelect).exists()).toBe(true)
+        expect(w.find('.compliance-body > .compliance-site').exists()).toBe(false)
+        await button(w, '协议文件').trigger('click')
+        expect(w.get('.compliance-body > .compliance-site').findComponent(MmSelect).exists()).toBe(true)
+        w.get('.compliance-body > .compliance-site').getComponent(MmSelect).vm.$emit('update:modelValue', '11')
+        await flushPromises()
+        expect(load).toHaveBeenLastCalledWith(expect.any(AbortSignal), '11')
+        w.unmount()
+    })
+    it('uses the shared date picker and saves calendar selections as YYYY-MM-DD', async () => {
+        for (const fullPage of [true, false]) {
+            const { w, save } = setup({ fullPage }); await flushPromises()
+            expect(w.find('input[type="date"]').exists()).toBe(false)
+            const picker = w.getComponent(MmDatePicker)
+            expect(picker.props('format')).toBe('YYYY-MM-DD')
+            expect(picker.props('modelValue')).toBe('2028-02-29')
+            await picker.get('input').trigger('click'); await nextTick()
+            await w.get('[data-date="2028-02-28"]').trigger('click')
+            await button(w, '保存配置').trigger('click'); await flushPromises()
+            expect(save.mock.calls[0][0].profile.effective_date).toBe('2028-02-28')
+            w.unmount()
+        }
+    })
+    it('blocks invalid typed dates, including when other profile fields change, and restores discarded input', async () => {
+        Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
+        const { w, save } = setup(); await flushPromises()
+        let input = w.getComponent(MmDatePicker).get('input')
+        await input.setValue('2028-02-30'); await input.trigger('blur')
+        await w.get('input[aria-label="公司主体名称"]').setValue('Other edit')
+        await button(w, '保存配置').trigger('click'); await flushPromises()
+        expect(save).not.toHaveBeenCalled()
+        expect(w.text()).toContain('请输入有效日期')
+        await button(w, '放弃修改').trigger('click'); await nextTick()
+        input = w.getComponent(MmDatePicker).get('input')
+        expect(input.element.value).toBe('2028-02-29')
+        await input.setValue('2028-02-28'); await input.trigger('blur')
+        await button(w, '保存配置').trigger('click'); await flushPromises()
+        expect(save.mock.calls[0][0].profile.effective_date).toBe('2028-02-28')
+        w.unmount()
+    })
+    it('normalizes cleared dates to an empty string and retains platform-template required validation', async () => {
+        Object.defineProperty(Element.prototype, 'scrollIntoView', { configurable: true, value: vi.fn() })
+        const { w, save } = setup(); await flushPromises()
+        await w.getComponent(MmDatePicker).get('.mm-input__clear').trigger('click')
+        await button(w, '保存配置').trigger('click'); await flushPromises()
+        expect(save).not.toHaveBeenCalled()
+        expect(w.getComponent(MmDatePicker).props('status')).toBe('error')
+        await button(w, '协议文件').trigger('click')
+        for (const toggle of w.findAll('[role="switch"]')) await toggle.trigger('click')
+        await button(w, '保存配置').trigger('click'); await flushPromises()
+        expect(save.mock.calls[0][0].profile.effective_date).toBe('')
+        w.unmount()
+    })
     it('loads without saving defaults and keeps the tenant name read-only', async () => {
         const { w, save } = setup(); await flushPromises()
         expect(w.get<HTMLInputElement>('input[aria-label="公司主体名称"]').element.value).toBe('Alpha Ltd')
@@ -93,6 +158,7 @@ describe('shared compliance editor', () => {
         for (const extra of [{ canEdit: false }, { load: async () => ({ ...detail(), can_edit: false }) }]) {
             const { w, save } = setup(extra); await flushPromises()
             expect(w.get('input[aria-label="公司主体名称"]').attributes('disabled')).toBeDefined()
+            expect(w.getComponent(MmDatePicker).get('input').attributes('disabled')).toBeDefined()
             expect(button(w, '保存配置')).toBeUndefined()
             expect(save).not.toHaveBeenCalled(); w.unmount()
         }

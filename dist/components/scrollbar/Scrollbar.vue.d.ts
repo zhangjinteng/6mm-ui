@@ -17,8 +17,8 @@ declare const __VLS_base: import('vue').DefineComponent<ScrollbarProps, {
     onScroll?: ((position: ScrollbarPosition) => any) | undefined;
 }>, {
     height: number | string;
-    always: boolean;
     tabindex: number;
+    always: boolean;
     maxHeight: number | string;
     viewClass: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

@@ -8,19 +8,19 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<CalendarProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     select: (value: DatePickerValue) => any;
-    "update:modelValue": (value: DatePickerValue) => any;
     "update:displayedMonth": (value: string) => any;
+    "update:modelValue": (value: DatePickerValue) => any;
 }, string, import('vue').PublicProps, Readonly<CalendarProps> & Readonly<{
     onSelect?: ((value: DatePickerValue) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     "onUpdate:displayedMonth"?: ((value: string) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
 }>, {
-    modelValue: DatePickerValue;
-    max: string;
-    min: string;
     disabledDate: (date: string) => boolean;
     displayedMonth: string;
     firstDayOfWeek: 0 | 1;
+    max: string;
+    min: string;
+    modelValue: DatePickerValue;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

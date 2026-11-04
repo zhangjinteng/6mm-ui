@@ -10,9 +10,76 @@ const fixture = (site_id = '10'): TenantFeatureSettingsDetail => ({ tenant_id: '
   sites: [{ site_id: '10', site_name: 'Main' }, { site_id: '11', site_name: 'Second' }],
 })
 const options = { global: { stubs: { teleport: true } } }
+const contentFixture = (): TenantFeatureSettingsDetail => ({ ...fixture(), expected_revision: 'a'.repeat(64),
+  features: { trade_ranking: true, news: true, academy: true, help_center: true, feedback: true, announcement: true },
+})
 const button = (wrapper: ReturnType<typeof mount>, text: string) => wrapper.findAll('button').find(item => item.text().trim() === text)!
 
 describe('tenant frontend-entry switches', () => {
+  it('opts into five site content cards, tracks drafts and saves the full revision without identity', async () => {
+    const save = vi.fn(async (input: TenantFeatureSaveInput) => ({ changed: true, detail: { ...contentFixture(), ...input, expected_revision: 'b'.repeat(64) } }))
+    const wrapper = mount(TenantFeatureSettings, { ...options, props: { contentFeatures: true, load: async () => contentFixture(), save } })
+    await flushPromises()
+    expect(wrapper.findAll('[role="switch"]')).toHaveLength(6)
+    expect(wrapper.findAll('[role="switch"]').map(item => item.attributes('aria-label'))).toEqual(['交易排行', '新闻', '学院', '帮助中心', '意见反馈', '公告'])
+    expect(wrapper.text()).toContain('6 / 6 已启用')
+    await wrapper.get('[data-feature-code="news"] button').trigger('click')
+    await wrapper.get('[data-feature-code="feedback"] button').trigger('click')
+    expect(save).not.toHaveBeenCalled()
+    expect(wrapper.text()).toContain('已修改 2 项配置，待保存')
+    expect(wrapper.text()).toContain('4 / 6 已启用')
+    await button(wrapper, '放弃修改').trigger('click')
+    expect(wrapper.text()).toContain('6 / 6 已启用')
+    expect(save).not.toHaveBeenCalled()
+    await wrapper.get('[data-feature-code="news"] button').trigger('click')
+    await button(wrapper, '保存配置').trigger('click'); await flushPromises()
+    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_updated_at: null, expected_revision: 'a'.repeat(64), features: { ...contentFixture().features, news: false } })
+    expect(wrapper.text()).toContain('当前配置已保存')
+    await wrapper.get('[data-feature-code="academy"] button').trigger('click')
+    await button(wrapper, '保存配置').trigger('click'); await flushPromises()
+    expect(save.mock.calls[1][0].expected_revision).toBe('b'.repeat(64))
+    wrapper.unmount()
+  })
+
+  it('does not expose or submit content flags on platform even when present in the response', async () => {
+    const save = vi.fn(async () => ({ changed: true, detail: contentFixture() }))
+    const wrapper = mount(TenantFeatureSettings, { ...options, props: { load: async () => contentFixture(), save } })
+    await flushPromises()
+    expect(wrapper.findAll('[role="switch"]')).toHaveLength(1)
+    expect(wrapper.text()).not.toContain('服务与内容')
+    await wrapper.get('[role="switch"]').trigger('click'); await button(wrapper, '保存配置').trigger('click'); await flushPromises()
+    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_updated_at: null, features: { trade_ranking: false } })
+    wrapper.unmount()
+  })
+
+  it('fails closed if the opted-in backend is not upgraded', async () => {
+    for (const value of [fixture(), { ...contentFixture(), expected_revision: undefined }]) {
+      const wrapper = mount(TenantFeatureSettings, { ...options, props: { contentFeatures: true, load: async () => value, save: vi.fn() } })
+      await flushPromises()
+      expect(wrapper.text()).toContain('功能开关读取失败')
+      expect(wrapper.findAll('[role="switch"]')).toHaveLength(0)
+      expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
+      wrapper.unmount()
+    }
+  })
+
+  it('retains multiple content drafts on conflict and discards them when switching sites', async () => {
+    const load = vi.fn(async (_signal: AbortSignal, siteId?: string) => ({ ...contentFixture(), site_id: siteId ?? '10' }))
+    const wrapper = mount(TenantFeatureSettings, { ...options, props: { contentFeatures: true, load, save: vi.fn().mockRejectedValue(new Error('conflict')) } })
+    await flushPromises()
+    await wrapper.get('[data-feature-code="news"] button').trigger('click')
+    await wrapper.get('[data-feature-code="announcement"] button').trigger('click')
+    await button(wrapper, '保存配置').trigger('click'); await flushPromises()
+    expect(wrapper.get('[data-feature-code="news"] button').attributes('aria-checked')).toBe('false')
+    expect(wrapper.get('[data-feature-code="announcement"] button').attributes('aria-checked')).toBe('false')
+    wrapper.findComponent(MmSelect).vm.$emit('update:modelValue', '11'); await nextTick()
+    expect(load).toHaveBeenCalledTimes(1)
+    await button(wrapper, '切换站点').trigger('click'); await flushPromises()
+    expect(load.mock.calls[1][1]).toBe('11')
+    expect(wrapper.text()).toContain('6 / 6 已启用')
+    wrapper.unmount()
+  })
+
   it('exposes only the existing ranking switch and loads without autosaving', async () => {
     expect(tenantFeatureCatalogue.map(row => row.code)).toEqual(['trade_ranking'])
     const save = vi.fn()

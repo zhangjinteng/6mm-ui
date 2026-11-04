@@ -12,6 +12,7 @@ declare const __VLS_export: import('vue').DefineComponent<TenantFeatureSettingsP
 }>, {
     canEdit: boolean;
     fullPage: boolean;
+    contentFeatures: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const _default: typeof __VLS_export;
 export default _default;

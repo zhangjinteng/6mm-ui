@@ -18,8 +18,8 @@ declare const __VLS_base: import('vue').DefineComponent<ScrollbarProps, {
 }>, {
     height: number | string;
     always: boolean;
-    maxHeight: number | string;
     tabindex: number;
+    maxHeight: number | string;
     viewClass: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

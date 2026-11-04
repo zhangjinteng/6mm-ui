@@ -11,9 +11,13 @@ import RichTextEditorPreview from "./RichTextEditorPreview.vue";
 import CmsViewportPreview from "./CmsViewportPreview.vue";
 import HedgingSubjectEmptyPreview from "./HedgingSubjectEmptyPreview.vue";
 import TenantChannelsPreview from "./TenantChannelsPreview.vue";
+import TenantBrandPreview from "./TenantBrandPreview.vue";
+import TenantFeaturesPreview from "./TenantFeaturesPreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
+  normalizedPath === "/tenant-features" ? TenantFeaturesPreview :
+  normalizedPath === "/tenant-brand" ? TenantBrandPreview :
   normalizedPath === "/tenant-channels" ? TenantChannelsPreview :
   normalizedPath === "/hedging-subject-empty" ? HedgingSubjectEmptyPreview :
   normalizedPath === "/cms-viewport" ? CmsViewportPreview :

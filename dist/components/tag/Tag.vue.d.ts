@@ -11,9 +11,9 @@ declare const __VLS_base: import('vue').DefineComponent<TagProps, {}, {}, {}, {}
     onClose?: ((event: MouseEvent) => any) | undefined;
 }>, {
     disabled: boolean;
+    round: boolean;
     size: import('./types').TagSize;
     type: import('./types').TagType;
-    round: boolean;
     closable: boolean;
     effect: import('./types').TagEffect;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

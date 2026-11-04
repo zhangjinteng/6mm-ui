@@ -10,8 +10,8 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_7) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<AdminLoginShellProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<AdminLoginShellProps> & Readonly<{}>, {
-    accentColor: string;
     subtitle: string;
+    accentColor: string;
     accentRgb: string;
     brandLogo: string;
     brandLogoAlt: string;

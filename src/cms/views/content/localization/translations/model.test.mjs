@@ -339,3 +339,66 @@ test('failed save retains edited text and exposes a recoverable error', async ()
         v.cleanup()
     }
 })
+
+const settingsFixture = () => ({
+    space_id: '41', space_revision: '9', target_locales: ['en'], provider: 'google', api_version: 'v2',
+    credential_ref: 'database', credential_configured: false, api_key_mask: null,
+    supported: true, is_enabled: false, concurrency_limit: 3, request_timeout_seconds: 30, max_attempts: 3,
+})
+
+test('configuration accepts a password input, tests candidate with configuration scope, and saves it separately', async () => {
+    const calls = []
+    const v = mount({
+        getTranslationSettings: async () => settingsFixture(),
+        testTranslationConnection: async (...args) => { calls.push(['test', ...args]); return { connected: true } },
+        saveTranslationSettings: async (...args) => { calls.push(['save-config', ...args]); return settingsFixture() },
+    })
+    try {
+        await flush()
+        await v.button('翻译配置').props.onClick()
+        await flush()
+        assert.equal(v.button('测试连接').props.disabled, true)
+        const password = v.nodes().find(n => n.type === 'MmInput' && n.props.type === 'password')
+        assert.ok(password)
+        assert.equal(password.props.autocomplete, 'new-password')
+        assert.equal(password.props.modelValue, '')
+        password.props['onUpdate:modelValue'](' FAKE_CANDIDATE_KEY ')
+        await flush()
+        assert.equal(v.button('测试连接').props.disabled, false)
+        await v.button('测试连接').props.onClick()
+        assert.deepEqual(calls[0], ['test', '41', '9', 'FAKE_CANDIDATE_KEY'])
+        await v.button('保存配置').props.onClick()
+        await flush()
+        assert.equal(calls[1][2], 'FAKE_CANDIDATE_KEY')
+        assert.equal(calls[1][1].api_key, undefined)
+        await v.button('翻译配置').props.onClick()
+        await flush()
+        assert.equal(v.nodes().find(n => n.type === 'MmInput' && n.props.type === 'password').props.modelValue, '')
+    } finally { v.cleanup() }
+})
+
+test('existing key is masked, empty saves preserve it, and closing clears candidate input', async () => {
+    const calls = []
+    const v = mount({
+        getTranslationSettings: async () => ({ ...settingsFixture(), credential_configured: true, credential_source: 'database', api_key_mask: '••••1234' }),
+        saveTranslationSettings: async (...args) => { calls.push(args); return settingsFixture() },
+    })
+    try {
+        await flush()
+        await v.button('翻译配置').props.onClick()
+        await flush()
+        assert.ok(text(v.root).includes('数据库密钥：••••1234'))
+        await v.button('保存配置').props.onClick()
+        await flush()
+        assert.equal(calls[0][1], '')
+        await v.button('翻译配置').props.onClick()
+        await flush()
+        v.nodes().find(n => n.type === 'MmInput' && n.props.type === 'password').props['onUpdate:modelValue']('FAKE_DISCARDED_KEY')
+        await flush()
+        v.button('取消').props.onClick()
+        await flush()
+        await v.button('翻译配置').props.onClick()
+        await flush()
+        assert.equal(v.nodes().find(n => n.type === 'MmInput' && n.props.type === 'password').props.modelValue, '')
+    } finally { v.cleanup() }
+})

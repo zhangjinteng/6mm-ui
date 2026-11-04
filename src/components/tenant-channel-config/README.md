@@ -8,7 +8,7 @@ social section, loading/error states and saved/dirty footer for Agent.
 <MmTenantChannelSettings
   :load="getOwnTenantChannels"
   :save="saveOwnTenantChannels"
-  :can-edit="hasPermission(['whiteLabel:site:channel:save'])"
+  :can-edit="hasPermission(['whiteLabel:site:channel'])"
 />
 ```
 
@@ -26,6 +26,7 @@ The in-memory preview is available at `/tenant-channels` after `npm run dev`;
 `?readonly` exercises server-side read-only state. Preview saves never call business APIs.
 
 Source-only handoff: publish compatible PHP/UI versions and update both hosts together
-in a later release. This change does not alter dependency pins or lockfiles. Deploy Agent's
-channel-save permission migration after the existing site-menu migration; grant the new
-save action explicitly to editable non-owner roles. Existing view-only grants remain read-only.
+in a later release. This change does not alter dependency pins or lockfiles. Agent uses
+`whiteLabel:site:channel` for both reading and saving: accounts granted the channel page
+can edit their own tenant. The legacy `whiteLabel:site:channel:save` action is not required
+and does not independently grant access. Tenant isolation and transactional auditing remain enforced.

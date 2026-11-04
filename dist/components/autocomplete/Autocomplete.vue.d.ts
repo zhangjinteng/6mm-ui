@@ -7,24 +7,24 @@ type __VLS_Slots = {} & {
     option?: (props: typeof __VLS_21) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<AutocompleteProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    error: (error: Error) => any;
+    select: (option: AutocompleteOption) => any;
     blur: (event: FocusEvent) => any;
+    error: (error: Error) => any;
     focus: (event: FocusEvent) => any;
     "update:modelValue": (value: string) => any;
-    select: (option: AutocompleteOption) => any;
 }, string, import('vue').PublicProps, Readonly<AutocompleteProps> & Readonly<{
-    onError?: ((error: Error) => any) | undefined;
+    onSelect?: ((option: AutocompleteOption) => any) | undefined;
     onBlur?: ((event: FocusEvent) => any) | undefined;
+    onError?: ((error: Error) => any) | undefined;
     onFocus?: ((event: FocusEvent) => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
-    onSelect?: ((option: AutocompleteOption) => any) | undefined;
 }>, {
-    clearable: boolean;
     disabled: boolean;
-    modelValue: string;
-    readonly: boolean;
     size: import('../..').FormControlSize;
+    modelValue: string;
     status: import('../..').FormControlStatus;
+    clearable: boolean;
+    readonly: boolean;
     debounce: number;
     fetchSuggestions: import('./types').AutocompleteSource;
     labelKey: string;

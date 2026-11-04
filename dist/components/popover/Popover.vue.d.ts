@@ -29,23 +29,24 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     toggle: typeof toggle;
     updatePosition: typeof updatePosition;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    "update:modelValue": (value: boolean) => any;
     close: () => any;
     open: () => any;
+    "update:modelValue": (value: boolean) => any;
     "visible-change": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<PopoverProps> & Readonly<{
-    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
     onClose?: (() => any) | undefined;
     onOpen?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
-    modelValue: boolean;
     width: number | string;
     role: string;
+    closeOnEscape: boolean;
+    modelValue: boolean;
+    teleportTo: string | HTMLElement;
     closeDelay: number;
     closeOnClickOutside: boolean;
-    closeOnEscape: boolean;
     floatingClass: string;
     offset: number;
     openDelay: number;
@@ -53,7 +54,6 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     placement: import('../..').FloatingPlacement;
     showArrow: boolean;
     teleport: boolean;
-    teleportTo: string | HTMLElement;
     trigger: import('./types').PopoverTrigger;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

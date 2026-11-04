@@ -1,4 +1,4 @@
-import { a as e, n as t, t as n } from "./_plugin-vue_export-helper-BDMPCwNE.js";
+import { l as e, n as t, t as n } from "./_plugin-vue_export-helper-DsPr7-pr.js";
 import { Fragment as r, computed as i, createBlock as a, createCommentVNode as o, createElementBlock as s, createElementVNode as c, createSlots as l, createTextVNode as u, createVNode as d, defineComponent as f, inject as p, mergeModels as m, mergeProps as h, nextTick as g, normalizeClass as ee, normalizeStyle as _, onBeforeUnmount as te, onMounted as ne, openBlock as v, provide as y, ref as b, renderList as re, renderSlot as x, resolveDynamicComponent as S, shallowRef as C, toDisplayString as w, toRaw as ie, unref as T, useModel as ae, watch as oe, withCtx as E, withKeys as D, withModifiers as O } from "vue";
 import "element-plus/es/components/alert/style/css";
 import "element-plus/es/components/button/style/css";
@@ -1191,8 +1191,8 @@ var ln = class {
 		minHeight: { default: "280px" },
 		text: { default: "正在加载配置…" }
 	},
-	setup(e) {
-		let n = e, r = b(!1), i;
+	setup(t) {
+		let n = t, r = b(!1), i;
 		function o() {
 			i !== void 0 && clearTimeout(i), i = void 0;
 		}
@@ -1203,19 +1203,19 @@ var ln = class {
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), te(o), (n, i) => (v(), a(S(e.as), {
-			class: ee(["prediction-loading-region", { "is-loading": e.loading }]),
-			style: _({ "--prediction-loading-min-height": e.minHeight }),
-			"aria-busy": e.loading
+		}), te(o), (n, i) => (v(), a(S(t.as), {
+			class: ee(["prediction-loading-region", { "is-loading": t.loading }]),
+			style: _({ "--prediction-loading-min-height": t.minHeight }),
+			"aria-busy": t.loading
 		}, {
 			default: E(() => [c("div", {
-				class: ee(["prediction-loading-region__content", { "is-hidden": e.hideContent }]),
-				inert: e.loading || void 0,
-				"aria-hidden": e.hideContent || void 0
-			}, [x(n.$slots, "default", {}, void 0, !0)], 10, hn), d(T(t), {
+				class: ee(["prediction-loading-region__content", { "is-hidden": t.hideContent }]),
+				inert: t.loading || void 0,
+				"aria-hidden": t.hideContent || void 0
+			}, [x(n.$slots, "default", {}, void 0, !0)], 10, hn), d(T(e), {
 				visible: r.value,
 				size: "md",
-				text: e.text
+				text: t.text
 			}, null, 8, ["visible", "text"])]),
 			_: 3
 		}, 8, [
@@ -1403,8 +1403,8 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 		modelModifiers: {}
 	}),
 	emits: ["update:modelValue"],
-	setup(t) {
-		let n = t, r = ae(t, "modelValue"), a = i({
+	setup(e) {
+		let n = e, r = ae(e, "modelValue"), a = i({
 			get: () => n.percentage ? Ge(r.value[n.field]) : r.value[n.field],
 			set: (e) => {
 				let t = r.value[n.field], i = n.percentage ? Ke(e) : e;
@@ -1412,21 +1412,21 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			}
 		});
 		return (n, r) => (v(), s("div", {
-			class: ee(["prediction-constraint", { "is-compact": t.compact }]),
+			class: ee(["prediction-constraint", { "is-compact": e.compact }]),
 			role: "group",
-			"aria-label": t.title
+			"aria-label": e.title
 		}, [
-			c("div", On, [u(w(t.title), 1), d(yn, { label: t.title }, null, 8, ["label"])]),
+			c("div", On, [u(w(e.title), 1), d(yn, { label: e.title }, null, 8, ["label"])]),
 			d(En, {
-				"input-component": T(e),
-				step: t.percentage ? "1" : "0.01",
+				"input-component": T(t),
+				step: e.percentage ? "1" : "0.01",
 				modelValue: a.value,
 				"onUpdate:modelValue": r[0] ||= (e) => a.value = e,
-				"aria-label": t.title,
-				disabled: t.disabled
-			}, l({ _: 2 }, [t.percentage || t.unit ? {
+				"aria-label": e.title,
+				disabled: e.disabled
+			}, l({ _: 2 }, [e.percentage || e.unit ? {
 				name: "append",
-				fn: E(() => [u(w(t.percentage ? "%" : t.unit), 1)]),
+				fn: E(() => [u(w(e.percentage ? "%" : e.unit), 1)]),
 				key: "0"
 			} : void 0]), 1032, [
 				"input-component",
@@ -1435,7 +1435,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				"aria-label",
 				"disabled"
 			]),
-			t.description ? (v(), s("p", kn, w(t.description), 1)) : o("", !0)
+			e.description ? (v(), s("p", kn, w(e.description), 1)) : o("", !0)
 		], 10, Dn));
 	}
 }), [["__scopeId", "data-v-a22ded5a"]]), jn = { class: "fixed-room-controls" }, Mn = {
@@ -1587,8 +1587,8 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 		}
 	},
 	emits: ["success", "close"],
-	setup(t, { expose: n, emit: l }) {
-		let { predictionConfigurationDetail: f, predictionConfigurationList: p, predictionConfigurationSave: m } = pe().api, h = t, g = b(), _ = b(), ne = b(!1), y = b();
+	setup(e, { expose: n, emit: l }) {
+		let { predictionConfigurationDetail: f, predictionConfigurationList: p, predictionConfigurationSave: m } = pe().api, h = e, g = b(), _ = b(), ne = b(!1), y = b();
 		function x() {
 			_.value?.submit();
 		}
@@ -1724,9 +1724,9 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			saveConfig: x,
 			editingState: we,
 			setEnabled: Te
-		}), (n, i) => !t.inline || O.value ? (v(), a(S(t.inline ? "section" : T(P)), {
+		}), (n, i) => !e.inline || O.value ? (v(), a(S(e.inline ? "section" : T(P)), {
 			key: 0,
-			class: ee(["mm-ui", { "prediction-edit-inline": t.inline }]),
+			class: ee(["mm-ui", { "prediction-edit-inline": e.inline }]),
 			modelValue: O.value,
 			"onUpdate:modelValue": i[5] ||= (e) => O.value = e,
 			"close-on-click-modal": !1,
@@ -1745,22 +1745,22 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				d(gn, {
 					loading: M.value,
 					"hide-content": M.value && !F.value,
-					"min-height": t.inline ? "0px" : "280px",
+					"min-height": e.inline ? "0px" : "280px",
 					class: "prediction-edit"
 				}, {
 					default: E(() => [c("div", {
 						ref_key: "saveArea",
 						ref: y,
 						"data-config-save-area": "",
-						class: ee(["config-save-area", { "config-save-area--external": t.externalSave }])
+						class: ee(["config-save-area", { "config-save-area--external": e.externalSave }])
 					}, [O.value && R.value ? (v(), a(mn, {
 						key: 0,
 						ref_key: "writeRef",
 						ref: _,
-						"hide-button": t.externalSave,
-						"hide-success": t.externalSave,
-						"hide-pending-details": t.externalSave,
-						"hide-error": t.externalSave,
+						"hide-button": e.externalSave,
+						"hide-success": e.externalSave,
+						"hide-pending-details": e.externalSave,
+						"hide-error": e.externalSave,
 						action: "config.save",
 						target: z.value,
 						permission: "prediction_config:edit",
@@ -1790,7 +1790,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 							shadow: "never",
 							class: "room-config"
 						}, {
-							header: E(() => [c("div", Rn, [c("div", null, [c("h3", null, w(F.value.game_type === "UP_DOWN" ? "房间配置" : "周期配置"), 1), c("p", null, w(F.value.symbol) + " · " + w(F.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1)]), t.inline ? o("", !0) : (v(), a(T(de), {
+							header: E(() => [c("div", Rn, [c("div", null, [c("h3", null, w(F.value.game_type === "UP_DOWN" ? "房间配置" : "周期配置"), 1), c("p", null, w(F.value.symbol) + " · " + w(F.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1)]), e.inline ? o("", !0) : (v(), a(T(de), {
 								key: 0,
 								modelValue: F.value.enabled,
 								"onUpdate:modelValue": i[2] ||= (e) => F.value.enabled = e,
@@ -1823,7 +1823,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 							default: E(() => [d(T(se), { "label-position": "top" }, {
 								default: E(() => [c("div", Bn, [d(T(I), { label: "价格小数位" }, {
 									default: E(() => [d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: H.value,
 										"onUpdate:modelValue": i[3] ||= (e) => H.value = e,
 										min: "0",
@@ -1854,7 +1854,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 								class: "rule",
 								"data-room": n.duration_seconds
 							}, [
-								t.inline ? o("", !0) : (v(), s("div", Hn, [c("strong", null, w(T(Se)(n.duration_seconds, F.value.game_type)) + w(F.value.game_type === "UP_DOWN" ? "房间" : ""), 1)])),
+								e.inline ? o("", !0) : (v(), s("div", Hn, [c("strong", null, w(T(Se)(n.duration_seconds, F.value.game_type)) + w(F.value.game_type === "UP_DOWN" ? "房间" : ""), 1)])),
 								F.value.game_type === "UP_DOWN" ? (v(), a(T(j), {
 									key: 1,
 									shadow: "never",
@@ -1920,7 +1920,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 											content: "此房间允许的最低单笔下注额。商户可在总后台单笔范围内调整自己的最小额和最大额。"
 										})]),
 										default: E(() => [d(En, {
-											"input-component": T(e),
+											"input-component": T(t),
 											"aria-label": "单笔最小额",
 											unit: "USDT",
 											"model-value": n.minimum_stake.default_value,
@@ -1937,7 +1937,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 											content: "此房间允许的最高单笔下注额。修改生效后，对应房间的商户限额重置为总后台范围。"
 										})]),
 										default: E(() => [d(En, {
-											"input-component": T(e),
+											"input-component": T(t),
 											"aria-label": "单笔最大额",
 											unit: "USDT",
 											"model-value": n.maximum_stake.default_value,
@@ -1961,7 +1961,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 					"hide-content",
 					"min-height"
 				]),
-				N.value || !t.inline || we.value.dirty ? (v(), s("div", qn, [
+				N.value || !e.inline || we.value.dirty ? (v(), s("div", qn, [
 					we.value.dirty ? (v(), a(T(A), {
 						key: 0,
 						"data-config-discard": !0,
@@ -1979,7 +1979,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 						default: E(() => [...i[13] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : o("", !0),
-					t.inline ? o("", !0) : (v(), a(T(A), {
+					e.inline ? o("", !0) : (v(), a(T(A), {
 						key: 2,
 						onClick: i[4] ||= (e) => O.value = !1
 					}, {
@@ -2196,7 +2196,7 @@ var tr = {
 	"data-price-precision": ""
 }, Cr = { class: "parameter-card" }, wr = { class: "parameter-card" }, Tr = { class: "parameter-heading" }, Er = { class: "parameter-description" }, Dr = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
-	setup(t, { expose: n }) {
+	setup(e, { expose: n }) {
 		let { gridConfigSymbols: l, gridConfigCatalog: f, gridConfigCreation: p, gridConfigReceipt: m, gridConfigSite: h, saveGridConfig: g } = pe().grid, _ = ge(), ne = he(), y = (e) => ne.perms.includes("*") || ne.perms.includes(e), x = i(() => y("grid_config:read")), S = i(() => y("grid_config:save")), C = i(() => {
 			let e = String(ne.userInfo.id || "");
 			return /^[1-9]\d*$/.test(e) ? e : "";
@@ -2511,7 +2511,7 @@ var tr = {
 			confirmLeave: gt,
 			refresh: yt,
 			loading: V
-		}), (t, n) => (v(), s("section", tr, [
+		}), (e, n) => (v(), s("section", tr, [
 			Te.value ? (v(), a(T(k), {
 				key: 0,
 				title: Te.value,
@@ -2595,7 +2595,7 @@ var tr = {
 						default: E(() => [...n[21] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])])) : o("", !0),
-					d(T(e), {
+					d(T(t), {
 						modelValue: M.value,
 						"onUpdate:modelValue": n[1] ||= (e) => M.value = e,
 						clearable: "",
@@ -2686,7 +2686,7 @@ var tr = {
 									content: "每个格子覆盖的价格区间宽度，最多保留 8 位小数。数值越大，每格覆盖的价格范围越宽；保存时会根据最新标记价检查安全范围。"
 								})]),
 								default: E(() => [d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: P.value.layout.price_band_width,
 									"onUpdate:modelValue": n[3] ||= (e) => P.value.layout.price_band_width = e,
 									disabled: !Ve.value,
@@ -2708,7 +2708,7 @@ var tr = {
 									content: "每列格子覆盖的时间长度，可填 1 至 10 秒整数；全部列连同起始等待时间不能超过 120 秒。"
 								})]),
 								default: E(() => [d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: P.value.layout.column_duration_seconds,
 									"onUpdate:modelValue": n[4] ||= (e) => P.value.layout.column_duration_seconds = e,
 									disabled: !Ve.value,
@@ -2744,7 +2744,7 @@ var tr = {
 							}, {
 								default: E(() => [d(T(I), { label: "价格小数位" }, {
 									default: E(() => [d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: We.value,
 										"onUpdate:modelValue": n[6] ||= (e) => We.value = e,
 										min: "0",
@@ -2779,7 +2779,7 @@ var tr = {
 										content: "例如 97%：命中概率为 20% 时，计算赔率为 4.85x。"
 									})]),
 									default: E(() => [d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: L.value,
 										"onUpdate:modelValue": n[8] ||= (e) => L.value = e,
 										disabled: !Be.value,
@@ -2802,7 +2802,7 @@ var tr = {
 										content: "当前币种报价允许的最低倍率。"
 									})]),
 									default: E(() => [d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: P.value.min_multiplier,
 										"onUpdate:modelValue": n[9] ||= (e) => P.value.min_multiplier = e,
 										step: "0.01",
@@ -2826,7 +2826,7 @@ var tr = {
 										content: "当前币种报价允许的最高倍率。原型中超过此值的格子不可下注，不强制压低赔率；实际是否可下注以当前格子报价为准。"
 									})]),
 									default: E(() => [d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: P.value.max_multiplier,
 										"onUpdate:modelValue": n[10] ||= (e) => P.value.max_multiplier = e,
 										step: "0.01",
@@ -2855,7 +2855,7 @@ var tr = {
 							default: E(() => [d(T(I), { label: "单笔最小额（USDT）" }, {
 								label: E(() => [n[43] ||= u("单笔最小额（USDT）", -1), d(yn, { label: "单笔最小额" })]),
 								default: E(() => [d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: P.value.min_order_amount,
 									"onUpdate:modelValue": n[12] ||= (e) => P.value.min_order_amount = e,
 									disabled: !Be.value,
@@ -2874,7 +2874,7 @@ var tr = {
 							}), d(T(I), { label: "单笔最大额（USDT）" }, {
 								label: E(() => [n[45] ||= u("单笔最大额（USDT）", -1), d(yn, { label: "单笔最大额" })]),
 								default: E(() => [d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: P.value.max_order_amount,
 									"onUpdate:modelValue": n[13] ||= (e) => P.value.max_order_amount = e,
 									disabled: !Be.value,
@@ -3061,7 +3061,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 	class: "grid-config__parameters"
 }, Qr = { class: "parameter-card" }, $r = { class: "parameter-card" }, ei = { class: "parameter-heading" }, ti = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "GlobalGridConfig",
-	setup(t, { expose: n }) {
+	setup(e, { expose: n }) {
 		let l = pe().grid, f = l.globalTemplate, p = K(), m = ge(), h = [{
 			title: "赔率配置",
 			fields: Or.slice(0, 3)
@@ -3189,7 +3189,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 		}), te(G), _e(ve), n({
 			confirmLeave: ve,
 			refresh: he
-		}), (t, n) => (v(), s("section", Br, [
+		}), (e, n) => (v(), s("section", Br, [
 			z.value ? (v(), a(T(k), {
 				key: 0,
 				title: z.value,
@@ -3222,7 +3222,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			])) : o("", !0),
 			c("div", Hr, [c("aside", Ur, [
 				c("div", Wr, [n[13] ||= c("strong", null, "币种配置", -1), c("span", null, w(ae.value.length) + " 条", 1)]),
-				d(T(e), {
+				d(T(t), {
 					modelValue: ie.value,
 					"onUpdate:modelValue": n[2] ||= (e) => ie.value = e,
 					clearable: "",
@@ -3276,7 +3276,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 							default: E(() => [d(En, {
 								modelValue: N.value.price_band_width,
 								"onUpdate:modelValue": n[4] ||= (e) => N.value.price_band_width = e,
-								"input-component": T(e),
+								"input-component": T(t),
 								unit: "USDT",
 								disabled: H.value
 							}, null, 8, [
@@ -3289,7 +3289,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 							default: E(() => [d(En, {
 								modelValue: N.value.column_duration_seconds,
 								"onUpdate:modelValue": n[5] ||= (e) => N.value.column_duration_seconds = e,
-								"input-component": T(e),
+								"input-component": T(t),
 								unit: "秒",
 								min: "1",
 								max: "10",
@@ -3312,7 +3312,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 							default: E(() => [d(En, {
 								modelValue: N.value.price_decimals,
 								"onUpdate:modelValue": n[7] ||= (e) => N.value.price_decimals = e,
-								"input-component": T(e),
+								"input-component": T(t),
 								unit: "位",
 								min: "0",
 								max: "8",
@@ -3326,24 +3326,24 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 						})]),
 						_: 1
 					})]),
-					(v(), s(r, null, re(h, (t, i) => c("article", {
-						key: t.title,
+					(v(), s(r, null, re(h, (e, i) => c("article", {
+						key: e.title,
 						class: "parameter-card"
-					}, [c("header", ei, [c("h3", null, w(t.title), 1)]), d(T(se), {
+					}, [c("header", ei, [c("h3", null, w(e.title), 1)]), d(T(se), {
 						class: ee(["fields", i === 0 ? "odds-fields" : "limit-fields"]),
 						"label-position": "top",
 						onSubmit: n[9] ||= O(() => {}, ["prevent"])
 					}, {
-						default: E(() => [(v(!0), s(r, null, re(t.fields, ([t, n, r]) => (v(), a(T(I), {
-							key: t,
+						default: E(() => [(v(!0), s(r, null, re(e.fields, ([e, n, r]) => (v(), a(T(I), {
+							key: e,
 							label: n
 						}, {
 							default: E(() => [d(En, {
-								modelValue: M.value[t],
-								"onUpdate:modelValue": (e) => M.value[t] = e,
-								"input-component": T(e),
+								modelValue: M.value[e],
+								"onUpdate:modelValue": (t) => M.value[e] = t,
+								"input-component": T(t),
 								unit: r,
-								percentage: t === "target_rtp",
+								percentage: e === "target_rtp",
 								step: r === "x" ? "0.01" : "1",
 								disabled: H.value
 							}, null, 8, [
@@ -3400,7 +3400,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 	class: "config-heading-actions"
 }, xi = ["title", "aria-label"], Si = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
-	setup(t) {
+	setup(e) {
 		let { predictionConfigurationList: n } = pe().api, { symbols: l } = pe().api, f = ge(), p = he(), m = b(""), h = b(!1), _ = b([]), y = b("UP_DOWN"), x = b("UP_DOWN"), ie = pe().grid.globalTemplate ? ti : Dr, ae = C(), D = [
 			{
 				value: "UP_DOWN",
@@ -3585,7 +3585,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			I++, Ee++, De?.abort(), h.value = !1;
 		}, { flush: "sync" }), ne(je), te(() => {
 			I++, Ee++, De?.abort(), _e++, ve?.abort();
-		}), (t, n) => (v(), s("section", ni, [
+		}), (e, n) => (v(), s("section", ni, [
 			c("header", ri, [c("div", ii, [(v(), s(r, null, re(D, (e) => d(T(A), {
 				key: e.value,
 				type: x.value === e.value ? "primary" : void 0,
@@ -3650,7 +3650,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 				}, {
 					default: E(() => [
 						c("div", ui, [n[10] ||= c("strong", null, "币种配置", -1), c("span", null, w(q.value.length) + " 条", 1)]),
-						d(T(e), {
+						d(T(t), {
 							modelValue: M.value,
 							"onUpdate:modelValue": n[0] ||= (e) => M.value = e,
 							clearable: "",
@@ -4865,8 +4865,8 @@ var xo = {
 }, Bo = { class: "fields" }, Vo = { class: "parameter-card" }, Ho = { class: "fields odds-fields" }, Uo = { key: 0 }, Wo = { key: 1 }, Go = { class: "parameter-card" }, Ko = { class: "parameter-heading" }, qo = { class: "parameter-description" }, Jo = { class: "fields limit-fields" }, Yo = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
 	props: { actor: {} },
-	setup(t, { expose: n }) {
-		let { initializeGridSite: l, initializeGridMerchant: f, gridConfigSymbols: p, gridConfigCatalog: m, gridConfigReceipt: h, gridConfigSite: g, saveGridConfig: _ } = me().grid, ne = ge(), y = t, x = i(() => y.actor?.kind === "SITE"), S = () => vo(sessionStorage, y.actor), C = he(), ie = (e) => C.perms.includes("*") || C.perms.includes(e), ae = i(() => ie("prediction_config:lists") && (!x.value || C.userInfo.can_manage_prediction_config === !0 && y.actor?.operator_id === String(C.userInfo.id))), D = ae, O = i(() => {
+	setup(e, { expose: n }) {
+		let { initializeGridSite: l, initializeGridMerchant: f, gridConfigSymbols: p, gridConfigCatalog: m, gridConfigReceipt: h, gridConfigSite: g, saveGridConfig: _ } = me().grid, ne = ge(), y = e, x = i(() => y.actor?.kind === "SITE"), S = () => vo(sessionStorage, y.actor), C = he(), ie = (e) => C.perms.includes("*") || C.perms.includes(e), ae = i(() => ie("prediction_config:lists") && (!x.value || C.userInfo.can_manage_prediction_config === !0 && y.actor?.operator_id === String(C.userInfo.id))), D = ae, O = i(() => {
 			let e = String(C.userInfo.id || "");
 			return /^[1-9]\d*$/.test(e) ? e : "";
 		}), j = i(() => `${O.value}:${C.token ?? ""}:${y.actor?.kind ?? ""}:${y.actor?.tenant_id ?? ""}:${y.actor?.config_site_id ?? ""}`), M = b([]), N = b(""), P = b(""), se = b(""), I = b(null), L = b(null), R = b(""), z = b("通过预测网格配置页面保存配置"), B = b(!1), V = b(!1), H = b(!1), U = b(!1), fe = b(!1), W = b(""), G = b(""), K = b("info"), pe = b(null), ve = b(!1), ye = b(""), be = b(!1), xe = new _o(), Se = new _o(), Ce = new _o(), q, we = 0, Te = i(() => ae.value ? O.value ? "" : "无法确认当前操作人身份" : "当前账号没有预测网格配置查询权限"), Ee = i(() => M.value.find((e) => e.site_id === N.value)), De = i(() => x.value && Ee.value?.can_edit_limits === !0), Oe = b([]), ke = b(""), Ae = i(() => yo(Ee.value?.products ?? [], Oe.value, x.value)), je = i(() => {
@@ -5144,7 +5144,7 @@ var xo = {
 			confirmLeave: it,
 			refresh: ot,
 			loading: H
-		}), (t, n) => (v(), s("section", xo, [
+		}), (e, n) => (v(), s("section", xo, [
 			Te.value ? (v(), a(T(k), {
 				key: 0,
 				title: Te.value,
@@ -5227,7 +5227,7 @@ var xo = {
 						default: E(() => [...n[14] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])])) : o("", !0),
-					d(T(e), {
+					d(T(t), {
 						modelValue: se.value,
 						"onUpdate:modelValue": n[1] ||= (e) => se.value = e,
 						clearable: "",
@@ -5303,7 +5303,7 @@ var xo = {
 										content: "例如 97%：命中概率为 20% 时，计算赔率为 4.85x。"
 									})]),
 									d(En, {
-										"input-component": T(e),
+										"input-component": T(t),
 										modelValue: R.value,
 										"onUpdate:modelValue": n[3] ||= (e) => R.value = e,
 										disabled: !Le.value,
@@ -5320,7 +5320,7 @@ var xo = {
 									n[20] ||= c("small", null, "例如 97%：命中概率为 20% 时，计算赔率为 4.85x", -1)
 								]),
 								De.value ? (v(), s("label", Uo, [n[22] ||= c("span", null, "最低赔率", -1), d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: L.value.min_multiplier,
 									"onUpdate:modelValue": n[4] ||= (e) => L.value.min_multiplier = e,
 									disabled: !Le.value,
@@ -5335,7 +5335,7 @@ var xo = {
 									"disabled"
 								])])) : o("", !0),
 								De.value ? (v(), s("label", Wo, [n[24] ||= c("span", null, "最高赔率", -1), d(En, {
-									"input-component": T(e),
+									"input-component": T(t),
 									modelValue: L.value.max_multiplier,
 									"onUpdate:modelValue": n[5] ||= (e) => L.value.max_multiplier = e,
 									disabled: !Le.value,
@@ -5351,7 +5351,7 @@ var xo = {
 								])])) : o("", !0)
 							])]),
 							c("article", Go, [c("header", Ko, [n[26] ||= c("h3", null, "下注限制", -1), c("p", qo, w(I.value.symbol) + " 每个格子生成一笔独立订单", 1)]), c("div", Jo, [c("label", null, [c("span", null, [n[27] ||= u("最小下注金额", -1), d(yn, { label: "最小下注金额" })]), d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: L.value.min_order_amount,
 								"onUpdate:modelValue": n[6] ||= (e) => L.value.min_order_amount = e,
 								disabled: !Le.value,
@@ -5365,7 +5365,7 @@ var xo = {
 								"modelValue",
 								"disabled"
 							])]), c("label", null, [c("span", null, [n[29] ||= u("最大下注金额", -1), d(yn, { label: "最大下注金额" })]), d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: L.value.max_order_amount,
 								"onUpdate:modelValue": n[7] ||= (e) => L.value.max_order_amount = e,
 								disabled: !Le.value,
@@ -5475,8 +5475,8 @@ var xo = {
 }, Is = { class: "parameter-card" }, Ls = { class: "parameter-heading" }, Rs = { class: "field-description" }, zs = { class: "limit-fields" }, Bs = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "OwnerConfig",
 	props: { actor: {} },
-	setup(t, { expose: n }) {
-		let l = me().api, { siteDirectorySymbols: f } = l, p = ge(), m = t, h = he(), g = i(() => Ji(m.actor)), _ = i(() => !N.value || N.value.operator_id === m.actor.operator_id && N.value.agent_id === m.actor.agent_id && N.value.config_site_id === m.actor.config_site_id && N.value.kind === m.actor.kind);
+	setup(e, { expose: n }) {
+		let l = me().api, { siteDirectorySymbols: f } = l, p = ge(), m = e, h = he(), g = i(() => Ji(m.actor)), _ = i(() => !N.value || N.value.operator_id === m.actor.operator_id && N.value.agent_id === m.actor.agent_id && N.value.config_site_id === m.actor.config_site_id && N.value.kind === m.actor.kind);
 		function ne(e) {
 			return e.platform_enabled || g.value && (e.enabled || !!e.blocked_reason);
 		}
@@ -5649,11 +5649,11 @@ var xo = {
 				key: 2,
 				ref_key: "gridRef",
 				ref: _e,
-				actor: t.actor,
+				actor: e.actor,
 				class: "grid-mode"
 			}, null, 8, ["actor"])) : (v(), s("div", ns, [c("aside", rs, [
 				c("h3", null, [i[14] ||= u("交易对配置 ", -1), c("small", null, w(S.value.filter(ne).length) + " 条", 1)]),
-				d(T(e), {
+				d(T(t), {
 					modelValue: ae.value,
 					"onUpdate:modelValue": i[0] ||= (e) => ae.value = e,
 					placeholder: "搜索币种",
@@ -5692,7 +5692,7 @@ var xo = {
 				])])], 2))), 128))]),
 				!O.value && !j.value && !be.value.length ? (v(), s("p", us, "当前没有可用的交易对配置。")) : o("", !0)
 			]), c("main", ds, [
-				c("header", fs, [c("div", null, [c("h3", null, w(ie.value || "请选择交易对") + " · " + w(x.value === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1), c("p", null, w(t.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", ps, [pe.value ? (v(), s("span", ms, "有未保存修改")) : o("", !0), ce.value || N.value ? (v(), a(T(A), {
+				c("header", fs, [c("div", null, [c("h3", null, w(ie.value || "请选择交易对") + " · " + w(x.value === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1), c("p", null, w(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", ps, [pe.value ? (v(), s("span", ms, "有未保存修改")) : o("", !0), ce.value || N.value ? (v(), a(T(A), {
 					key: 1,
 					type: "primary",
 					loading: k.value,
@@ -5710,14 +5710,14 @@ var xo = {
 					g.value && !ce.value.platform_enabled ? (v(), s("p", ys, "上级已关闭此币种或房间；原配置已保留，当前不能交易。")) : o("", !0),
 					g.value ? o("", !0) : (v(), s("p", bs, "可关闭自己的币种或房间，并在平台范围内调整" + w(x.value === "UP_DOWN" ? "限额和目标返奖率，最高赔率使用平台配置" : "限额和赔率") + "。平台修改对应房间后，限额和赔率恢复平台值，您主动关闭的选择会保留。", 1)),
 					W.value ? o("", !0) : (v(), s("p", xs, "交易对已关闭；以下房间设置仍会保留。")),
-					c("article", Ss, [c("header", Cs, [i[16] ||= c("h4", null, "房间配置", -1), c("p", ws, w(ie.value) + " · " + w(t.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", Ts, [
+					c("article", Ss, [c("header", Cs, [i[16] ||= c("h4", null, "房间配置", -1), c("p", ws, w(ie.value) + " · " + w(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", Ts, [
 						i[17] ||= c("span", { class: "field-label" }, "支持周期", -1),
 						d(Ln, {
 							description: `${ie.value} · ${x.value === "UP_DOWN" ? "涨跌预测" : "自选预测"}`,
 							rooms: H.value,
 							selected: le.value,
 							disabled: !z.value || k.value || !!N.value || O.value,
-							context: `${t.actor.operator_id}:${t.actor.agent_id}:${t.actor.config_site_id}:${x.value}:${ie.value}:${B.value}`,
+							context: `${e.actor.operator_id}:${e.actor.agent_id}:${e.actor.config_site_id}:${x.value}:${ie.value}:${B.value}`,
 							onSelect: i[2] ||= (e) => le.value = e,
 							onChange: U
 						}, null, 8, [
@@ -5733,7 +5733,7 @@ var xo = {
 						V.value.platform_enabled ? o("", !0) : (v(), s("p", As, "平台已关闭此房间，暂不能开启。")),
 						c("article", js, [c("header", Ms, [c("h4", null, "赔率配置 · " + w(V.value.observation_seconds) + " 秒", 1), c("p", Ns, w(x.value === "UP_DOWN" ? "上涨/下跌赔率按资金池动态计算" : "下单时锁定当前周期固定赔率，上涨和下跌使用相同赔率。"), 1)]), x.value === "UP_DOWN" ? (v(), s("div", Ps, [d(T(I), { label: `目标返奖率（平台上限 ${T(Sn)(V.value.platform_target_payout_rate, 2)}%，且必须小于 100%）` }, {
 							default: E(() => [d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: V.value.target_payout_rate,
 								"onUpdate:modelValue": i[3] ||= (e) => V.value.target_payout_rate = e,
 								percentage: "",
@@ -5751,7 +5751,7 @@ var xo = {
 							_: 1
 						}, 8, ["label"]), o("", !0)])) : (v(), s("div", Fs, [d(T(I), { label: `固定赔率（平台上限 ${V.value.platform_fixed_odds}，且必须小于 2，含本金）` }, {
 							default: E(() => [d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: V.value.fixed_odds,
 								"onUpdate:modelValue": i[5] ||= (e) => V.value.fixed_odds = e,
 								step: "0.01",
@@ -5771,7 +5771,7 @@ var xo = {
 						}, 8, ["label"])]))]),
 						c("article", Is, [c("header", Ls, [c("h4", null, "下注限制 · " + w(V.value.observation_seconds) + " 秒", 1), c("p", Rs, "平台单笔范围：" + w(V.value.platform_minimum) + " ~ " + w(V.value.platform_maximum) + " USDT。变更不影响已受理订单。", 1)]), c("div", zs, [d(T(I), { label: "单笔最小额" }, {
 							default: E(() => [d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: V.value.minimum_stake,
 								"onUpdate:modelValue": i[6] ||= (e) => V.value.minimum_stake = e,
 								min: V.value.platform_minimum,
@@ -5792,7 +5792,7 @@ var xo = {
 							_: 1
 						}), d(T(I), { label: "单笔最大额" }, {
 							default: E(() => [d(En, {
-								"input-component": T(e),
+								"input-component": T(t),
 								modelValue: V.value.maximum_stake,
 								"onUpdate:modelValue": i[7] ||= (e) => V.value.maximum_stake = e,
 								min: V.value.minimum_stake,

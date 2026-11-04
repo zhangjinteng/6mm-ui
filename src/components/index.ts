@@ -1,4 +1,8 @@
 import type { Component } from "vue";
+import { MmTenantFeatureSettings } from "./tenant-feature-settings";
+export * from "./tenant-feature-settings";
+import { MmTenantBrandSettings } from "./tenant-brand-config";
+export * from "./tenant-brand-config";
 import { MmSocialChannels, MmTenantChannelSettings } from "./tenant-channel-config";
 export * from "./tenant-channel-config";
 import { MmAssetBalanceReport } from "./asset-balance-report";
@@ -280,6 +284,8 @@ export const components: InstallableComponent[] = [
   MmLoading,
   MmSocialChannels,
   MmTenantChannelSettings,
+  MmTenantBrandSettings,
+  MmTenantFeatureSettings,
   MmMenu,
   MmMenuItem,
   MmSubMenu,

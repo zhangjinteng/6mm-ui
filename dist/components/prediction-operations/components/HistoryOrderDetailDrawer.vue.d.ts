@@ -5,11 +5,11 @@ type __VLS_Props = {
     game: 'UP_DOWN' | 'HIGH_LOW';
 };
 declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    "update:modelValue": (value: boolean) => any;
     closed: () => any;
+    "update:modelValue": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
-    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
     onClosed?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }>, {}, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const _default: typeof __VLS_export;
 export default _default;

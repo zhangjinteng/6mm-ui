@@ -76,6 +76,9 @@ export interface TranslationSettings {
     api_version: string
     credential_ref: string
     credential_configured: boolean
+    credential_source?: 'database' | 'env'
+    api_key_mask?: string | null
+    credential_error?: string | null
     supported: boolean
     is_enabled: boolean
     concurrency_limit: number
@@ -123,14 +126,14 @@ const saveTranslations = (scope: TranslationScope, id: string, items: Translatio
     )
 const getTranslationSettings = (space_id: string, signal?: AbortSignal) =>
     request.get<TranslationSettings>({ url: `${base}/settings`, params: { space_id }, signal })
-const saveTranslationSettings = (settings: TranslationSettings) =>
+const saveTranslationSettings = (settings: TranslationSettings, api_key = '') =>
     request.post<TranslationSettings>(
-        { url: `${base}/saveSettings`, params: settings },
+        { url: `${base}/saveSettings`, params: { ...settings, api_key } },
         { isOpenRetry: false }
     )
-const testTranslationConnection = (space_id: string) =>
+const testTranslationConnection = (space_id: string, space_revision: string, api_key = '') =>
     request.post<{ connected: boolean }>(
-        { url: `${base}/testConnection`, params: { space_id } },
+        { url: `${base}/testConnection`, params: { space_id, space_revision, api_key } },
         { isOpenRetry: false }
     )
 const createTranslationJob = (

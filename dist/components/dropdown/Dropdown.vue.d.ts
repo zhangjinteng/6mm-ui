@@ -29,19 +29,19 @@ type __VLS_Slots = {} & {
     menu?: (props: typeof __VLS_27) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<DropdownProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    "update:modelValue": (value: MenuValue) => any;
     select: (item: DropdownItem) => any;
+    "update:modelValue": (value: MenuValue) => any;
     "visible-change": (value: boolean) => any;
     "update:visible": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<DropdownProps> & Readonly<{
-    "onUpdate:modelValue"?: ((value: MenuValue) => any) | undefined;
     onSelect?: ((item: DropdownItem) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: MenuValue) => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
     "onUpdate:visible"?: ((value: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
-    modelValue: MenuValue;
     width: number | string;
+    modelValue: MenuValue;
     visible: boolean;
     floatingClass: string;
     placement: import('../..').FloatingPlacement;

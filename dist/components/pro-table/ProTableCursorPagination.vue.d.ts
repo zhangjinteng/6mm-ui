@@ -14,8 +14,8 @@ declare const __VLS_base: import('vue').DefineComponent<ProTableCursorPagination
     onPrev?: (() => any) | undefined;
 }>, {
     disabled: boolean;
-    size: import('..').PaginationSize;
     loading: boolean;
+    size: import('..').PaginationSize;
     currentPage: number;
     pageSize: number;
     hasMore: boolean;

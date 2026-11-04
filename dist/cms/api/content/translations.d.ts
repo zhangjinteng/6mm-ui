@@ -79,6 +79,9 @@ export interface TranslationSettings {
     api_version: string;
     credential_ref: string;
     credential_configured: boolean;
+    credential_source?: 'database' | 'env';
+    api_key_mask?: string | null;
+    credential_error?: string | null;
     supported: boolean;
     is_enabled: boolean;
     concurrency_limit: number;
@@ -115,8 +118,8 @@ export declare function useTranslationsApi(): {
     getTranslationDetail: (scope: TranslationScope, id: string, signal?: AbortSignal) => Promise<TranslationDetail>;
     saveTranslations: (scope: TranslationScope, id: string, items: TranslationEdit[]) => Promise<TranslationDetail>;
     getTranslationSettings: (space_id: string, signal?: AbortSignal) => Promise<TranslationSettings>;
-    saveTranslationSettings: (settings: TranslationSettings) => Promise<TranslationSettings>;
-    testTranslationConnection: (space_id: string) => Promise<{
+    saveTranslationSettings: (settings: TranslationSettings, api_key?: string) => Promise<TranslationSettings>;
+    testTranslationConnection: (space_id: string, space_revision: string, api_key?: string) => Promise<{
         connected: boolean;
     }>;
     createTranslationJob: (scope: TranslationScope, options: {

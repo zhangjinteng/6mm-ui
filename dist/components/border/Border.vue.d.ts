@@ -4,10 +4,10 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_8) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<BorderProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<BorderProps> & Readonly<{}>, {
-    color: string;
-    background: string;
     width: number | string;
+    color: string;
     padding: number | string;
+    background: string;
     as: string;
     interactive: boolean;
     radius: import('./types').BorderRadius;

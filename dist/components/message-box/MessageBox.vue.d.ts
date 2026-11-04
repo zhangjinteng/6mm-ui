@@ -8,11 +8,11 @@ declare const __VLS_export: import('vue').DefineComponent<MessageBoxProps, {}, {
     onAction?: ((action: MessageBoxAction, value: string) => any) | undefined;
     "onUpdate:inputValue"?: ((value: string) => any) | undefined;
 }>, {
-    modelValue: boolean;
     type: import('./types').MessageBoxType;
-    message: string;
-    closeOnEscape: boolean;
     closeOnClickModal: boolean;
+    closeOnEscape: boolean;
+    modelValue: boolean;
+    message: string;
     inputValidator: import('./types').MessageBoxInputValidator;
     inputValue: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

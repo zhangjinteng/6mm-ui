@@ -19,29 +19,29 @@ type __VLS_Slots = {} & {
     footer?: (props: typeof __VLS_24) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<DrawerProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    "update:modelValue": (value: boolean) => any;
     close: (reason: DialogCloseReason) => any;
-    open: () => any;
     closed: () => any;
+    open: () => any;
     opened: () => any;
+    "update:modelValue": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<DrawerProps> & Readonly<{
-    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
     onClose?: ((reason: DialogCloseReason) => any) | undefined;
-    onOpen?: (() => any) | undefined;
     onClosed?: (() => any) | undefined;
+    onOpen?: (() => any) | undefined;
     onOpened?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
 }>, {
-    modelValue: boolean;
     size: number | string;
     title: string;
     mask: boolean;
-    closeOnEscape: boolean;
-    placement: import('./types').DrawerPlacement;
-    teleportTo: string | HTMLElement;
     beforeClose: import('..').DialogBeforeClose;
     closeOnClickModal: boolean;
+    closeOnEscape: boolean;
     lockScroll: boolean;
+    modelValue: boolean;
     showClose: boolean;
+    teleportTo: string | HTMLElement;
+    placement: import('./types').DrawerPlacement;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

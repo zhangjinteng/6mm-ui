@@ -1,4 +1,6 @@
 import { Component } from 'vue';
+export * from './tenant-feature-settings';
+export * from './tenant-brand-config';
 export * from './tenant-channel-config';
 export * from './asset-balance-report';
 export * from './platform-trade-summary-report';

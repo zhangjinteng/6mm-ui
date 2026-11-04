@@ -14,10 +14,10 @@ declare const __VLS_base: import('vue').DefineComponent<SegmentedProps, {}, {}, 
     "onUpdate:modelValue"?: ((value: SegmentedValue) => any) | undefined;
 }>, {
     name: string;
-    disabled: boolean;
-    modelValue: SegmentedValue;
-    size: import('./types').SegmentedSize;
     block: boolean;
+    disabled: boolean;
+    size: import('./types').SegmentedSize;
+    modelValue: SegmentedValue;
     options: Array<SegmentedOption | SegmentedValue>;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

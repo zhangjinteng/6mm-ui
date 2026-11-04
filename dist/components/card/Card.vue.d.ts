@@ -11,9 +11,9 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<CardProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<CardProps> & Readonly<{}>, {
     title: string;
+    subtitle: string;
     bordered: boolean;
     hoverable: boolean;
-    subtitle: string;
     shadow: import('./types').CardShadow;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

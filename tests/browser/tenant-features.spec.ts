@@ -1,0 +1,30 @@
+import { expect, test } from '@playwright/test'
+import { mkdirSync } from 'node:fs'
+
+test('full-page feature settings keep their footer visible and support keyboard, discard and save', async ({ page }) => {
+  const output = process.env.FEATURES_QA_OUTPUT || '/tmp/tenant-features-qa'
+  mkdirSync(output, { recursive: true })
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/tenant-features')
+  const toggle = page.getByRole('switch', { name: '交易排行' })
+  await expect(toggle).toHaveAttribute('aria-checked', 'true')
+  await page.screenshot({ path: output + '/agent-desktop.png', fullPage: true })
+  await toggle.focus(); await page.keyboard.press('Space')
+  await expect(toggle).toHaveAttribute('aria-checked', 'false')
+  await expect(page.getByRole('button', { name: '保存配置' })).toBeEnabled()
+  await page.getByRole('button', { name: '放弃修改' }).click()
+  await expect(toggle).toHaveAttribute('aria-checked', 'true')
+  await toggle.click(); await page.getByRole('button', { name: '保存配置' }).click()
+  await expect(page.getByRole('status')).toContainText('当前配置已保存')
+  await expect(toggle).toHaveAttribute('aria-checked', 'false')
+  await expect(page.getByRole('button', { name: '保存配置' })).toBeDisabled()
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.screenshot({ path: output + '/agent-mobile.png', fullPage: true })
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true)
+  const footer = await page.locator('.mm-tenant-feature-settings__footer').boundingBox()
+  expect(footer!.y + footer!.height).toBeLessThanOrEqual(844)
+  await page.goto('/tenant-features?readonly')
+  await expect(toggle).toBeDisabled()
+  await expect(page.getByRole('button', { name: '保存配置' })).toBeDisabled()
+  await expect(page.getByRole('status')).toContainText('只读模式')
+})

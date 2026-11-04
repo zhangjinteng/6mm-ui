@@ -6,30 +6,30 @@ type __VLS_Slots = {} & {
     option?: (props: typeof __VLS_13) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<SelectProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    error: (error: Error) => any;
     change: (value: SelectValue | SelectValue[]) => any;
-    clear: () => any;
+    error: (error: Error) => any;
     "update:modelValue": (value: SelectValue | SelectValue[]) => any;
+    clear: () => any;
     "visible-change": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<SelectProps> & Readonly<{
-    onError?: ((error: Error) => any) | undefined;
     onChange?: ((value: SelectValue | SelectValue[]) => any) | undefined;
-    onClear?: (() => any) | undefined;
+    onError?: ((error: Error) => any) | undefined;
     "onUpdate:modelValue"?: ((value: SelectValue | SelectValue[]) => any) | undefined;
+    onClear?: (() => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
-    clearable: boolean;
     disabled: boolean;
-    modelValue: SelectValue | SelectValue[];
-    readonly: boolean;
-    size: import('../..').FormControlSize;
-    status: import('../..').FormControlStatus;
     loading: boolean;
+    size: import('../..').FormControlSize;
+    modelValue: SelectValue | SelectValue[];
     multiple: boolean;
-    options: SelectOption[];
-    max: number;
+    status: import('../..').FormControlStatus;
+    clearable: boolean;
     filterable: boolean;
+    max: number;
     maxTagCount: number;
+    options: SelectOption[];
+    readonly: boolean;
     remoteMethod: import('./types').SelectRemoteMethod;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

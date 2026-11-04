@@ -379,16 +379,19 @@
                         <strong>Google Cloud Translation · Basic v2</strong
                         ><MmCheckbox
                             v-model="settings.is_enabled"
-                            :disabled="configSaving || !settings.credential_configured"
+                            :disabled="configSaving || testing || (!settings.credential_configured && !apiKey.trim())"
                             >开启自动翻译</MmCheckbox
                         >
                     </div>
                 </MmFormItem
                 >
-                <MmFormItem label="服务端密钥引用"
-                    ><MmInput :model-value="settings.credential_ref" readonly /><small
-                        v-if="!settings.credential_configured"
-                        >服务端尚未配置 GOOGLE_TRANSLATE_API_KEY，人工翻译仍可正常使用。</small
+                <MmFormItem label="Google API Key"
+                    ><MmInput v-model="apiKey" type="password" autocomplete="new-password"
+                        :disabled="configSaving || testing"
+                        :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'" />
+                    <small v-if="settings.api_key_mask">{{ settings.credential_source === 'database' ? '数据库密钥' : '环境配置密钥' }}：{{ settings.api_key_mask }}</small>
+                    <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_DECRYPT_FAILED'">数据库密钥无法解密，请检查两套后台的专用加密配置，或输入新密钥替换。</small>
+                    <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small
                     ></MmFormItem
                 >
                 <div class="config-grid">
@@ -421,7 +424,7 @@
                 ><MmButton
                     size="sm"
                     :loading="testing"
-                    :disabled="!settings?.credential_configured || configSaving || settingsLoading"
+                    :disabled="(!settings?.credential_configured && !apiKey.trim()) || configSaving || settingsLoading"
                     @click="testConnection"
                     >测试连接</MmButton
                 ><span class="footer-spacer" /><MmButton
@@ -504,7 +507,7 @@ import { useCmsRuntime } from "../../../../runtime"
 const { cancelTranslationJob, createTranslationJob, getTranslationDetail, getTranslationJob, getTranslationList, getTranslationMetadata, getTranslationSettings, saveTranslations, saveTranslationSettings, testTranslationConnection } = useTranslationsApi()
 const { hasPermission } = useCmsRuntime()
 
-import { computed, nextTick, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { onBeforeCmsLeave as onBeforeRouteLeave } from "../../../../runtime"
 import {
     MmAlert,
@@ -560,6 +563,7 @@ const focusedLocale = ref(''),
     editorBody = ref<HTMLElement>(),
     job = ref<TranslationJob | null>(null)
 const settingsOpen = ref(false),
+    apiKey = ref(''),
     settingsLoading = ref(false),
     settings = ref<TranslationSettings>(),
     settingsError = ref(''),
@@ -571,6 +575,7 @@ const jobOpen = ref(false),
     jobError = ref(''),
     submittingJob = ref(false)
 const discardOpen = ref(false)
+watch(settingsOpen, open => { if (!open) apiKey.value = '' })
 let pendingChange: (() => void) | undefined,
     listController: AbortController | undefined,
     detailController: AbortController | undefined,
@@ -847,6 +852,7 @@ async function openSettings() {
     settingsLoading.value = true
     settingsError.value = ''
     settings.value = undefined
+    apiKey.value = ''
     try {
         settings.value = await getTranslationSettings(spaceId.value, lifetime.signal)
     } catch (e) {
@@ -864,7 +870,8 @@ async function saveConfig() {
     configSaving.value = true
     settingsError.value = ''
     try {
-        await saveTranslationSettings(settings.value)
+        await saveTranslationSettings(settings.value, apiKey.value.trim())
+        apiKey.value = ''
         settingsOpen.value = false
         message.success('翻译配置已保存')
         await refresh()
@@ -875,11 +882,11 @@ async function saveConfig() {
     }
 }
 async function testConnection() {
-    if (!spaceId.value) return
+    if (!settings.value || testing.value || configSaving.value) return
     testing.value = true
     settingsError.value = ''
     try {
-        await testTranslationConnection(spaceId.value)
+        await testTranslationConnection(settings.value.space_id, settings.value.space_revision, apiKey.value.trim())
         message.success('Google Translate 连接成功')
     } catch (e) {
         settingsError.value = readableError(e)
@@ -978,6 +985,7 @@ onMounted(() => {
     void refresh()
 })
 onBeforeUnmount(() => {
+    apiKey.value = ''
     routeDecision?.(false)
     lifetime.abort()
     listController?.abort()

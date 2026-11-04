@@ -15,11 +15,11 @@ declare const __VLS_base: import('vue').DefineComponent<InputNumberProps, {}, {}
     "onUpdate:modelValue"?: ((value: number | null) => any) | undefined;
 }>, {
     disabled: boolean;
-    modelValue: number | null;
-    readonly: boolean;
     size: import('../..').FormControlSize;
+    modelValue: number | null;
     status: import('../..').FormControlStatus;
     max: number;
+    readonly: boolean;
     min: number;
     step: number;
     controls: boolean;

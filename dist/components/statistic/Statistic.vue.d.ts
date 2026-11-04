@@ -8,8 +8,8 @@ type __VLS_Slots = {} & {
     suffix?: (props: typeof __VLS_5) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<StatisticProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<StatisticProps> & Readonly<{}>, {
-    title: string;
     value: number | string;
+    title: string;
     prefix: string;
     suffix: string;
     precision: number;

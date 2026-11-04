@@ -157,11 +157,11 @@
                     :disabled="configSaving || testing"
                     aria-label="翻译目标语言"
             /></label>
-            <MmCheckbox
+            <TranslationEnabledToggle
                 v-model="settings.is_enabled"
-                :disabled="configSaving || testing || (!settings.credential_configured && !apiKey.trim())"
-                >开启自动翻译</MmCheckbox
-            >
+                :disabled="configSaving || testing"
+                :credential-ready="!!settings.credential_configured || !!apiKey.trim()"
+            />
             <div class="mm-translation-settings__credential">
                 <label>
                     Google API Key
@@ -227,7 +227,7 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { MmAlert } from '../alert'
 import { MmButton } from '../button'
-import { MmCheckbox } from '../checkbox'
+import TranslationEnabledToggle from '../translation-enabled-toggle/TranslationEnabledToggle.vue'
 import { MmDialog } from '../dialog'
 import { MmIcon } from '../icon'
 import { MmInput } from '../input'

@@ -32,6 +32,7 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     disabled: boolean;
     size: import('../..').FormControlSize;
     type: string;
+    status: import('../..').FormControlStatus;
     modelValue: string | number | null;
     autocomplete: string;
     clearable: boolean;
@@ -40,7 +41,6 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     readonly: boolean;
     showCount: boolean;
     showPassword: boolean;
-    status: import('../..').FormControlStatus;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

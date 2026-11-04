@@ -6,6 +6,7 @@ import { MmDialog } from '../dialog'
 import { MmIcon } from '../icon'
 import { MmLoading } from '../loading'
 import { MmSelect } from '../select'
+import { MmTenantCustomerServiceCard, type TenantCustomerServiceDetail } from '../tenant-customer-service'
 import { tenantFeatureCatalogue, type TenantFeatureSettingsDetail, type TenantFeatureSettingsProps } from './model'
 
 defineOptions({ name: 'MmTenantFeatureSettings' })
@@ -17,6 +18,8 @@ const copy = computed(() => english.value ? {
   title: 'Feature switches', description: 'Control the visibility of frontend entry points for the current site.',
   updated: 'Last updated', site: 'Site', frontend: 'Frontend features', hint: 'Turning off an entry point does not delete existing business data or history.',
   group: 'Growth & engagement', groupDescription: 'User participation, incentives and engagement entry points',
+  services: 'Services & content', servicesDescription: 'Customer support and service management for this white label',
+  serviceHint: 'Entry switches only hide frontend links. Customer service changes take effect immediately for all sites.',
   ranking: 'Trading ranking', rankingDescription: 'Show trading competition rankings, progress and reward tiers', path: 'Activities / Trading ranking',
   enabled: 'Enabled', disabled: 'Disabled', count: 'enabled', loading: 'Loading feature switches…',
   loadError: 'Could not load feature switches.', retry: 'Reload', discardReload: 'Discard and reload',
@@ -26,6 +29,8 @@ const copy = computed(() => english.value ? {
 } : {
   title: '功能开关', description: '控制当前站点前端功能入口的显示状态。', updated: '最近更新', site: '站点', frontend: '前端功能',
   hint: '关闭功能后仅隐藏对应前端入口，不影响已有业务数据和历史记录。', group: '运营增长', groupDescription: '用户参与、激励相关入口',
+  services: '服务与内容', servicesDescription: '当前白标的用户支持与服务管理',
+  serviceHint: '入口开关仅隐藏前端入口；6MM客服即时生效，并影响当前白标所有站点。',
   ranking: '交易排行', rankingDescription: '展示交易竞赛排名、进度和奖励档位', path: '活动 / 交易排行',
   enabled: '已启用', disabled: '已关闭', count: '已启用', loading: '正在读取功能开关…', loadError: '功能开关读取失败', retry: '重新加载',
   discardReload: '放弃并重新加载', saveError: '保存失败，修改已保留；如配置已被其他操作员修改，请放弃并重新加载后再保存。',
@@ -35,9 +40,11 @@ const copy = computed(() => english.value ? {
 const detail = ref<TenantFeatureSettingsDetail | null>(null)
 const enabled = ref(true), loading = ref(false), saving = ref(false), loadFailed = ref(false), saveError = ref('')
 const switchVisible = ref(false), pendingSiteId = ref('')
+const customerBusy = ref(false), customerState = ref<TenantCustomerServiceDetail | null>(null)
+const enabledCount = computed(() => Number(enabled.value) + Number(!!customerState.value?.enabled))
 let controller: AbortController | undefined, disposed = false, requestedSiteId: string | undefined
 const editable = computed(() => props.canEdit && detail.value?.can_edit !== false)
-const busy = computed(() => loading.value || saving.value)
+const busy = computed(() => loading.value || saving.value || customerBusy.value)
 const dirty = computed(() => detail.value !== null && enabled.value !== detail.value.features.trade_ranking)
 const siteOptions = computed(() => detail.value?.sites?.map(site => ({ label: `${site.site_name} · ${site.site_id}`, value: site.site_id })) ?? [])
 const updatedAt = computed(() => {
@@ -100,7 +107,7 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: saving, isBusy: busy })
       <MmLoading v-if="loading" :text="copy.loading" />
       <div v-else-if="loadFailed" class="mm-tenant-feature-settings__empty" role="alert"><p>{{ copy.loadError }}</p><MmButton @click="load(requestedSiteId)">{{ copy.retry }}</MmButton></div>
       <div v-else-if="detail" class="mm-tenant-feature-settings__content">
-        <div class="mm-tenant-feature-settings__summary"><div><h2>{{ copy.frontend }}</h2><p>{{ copy.hint }}</p></div><span class="mm-tenant-feature-settings__count">{{ enabled ? 1 : 0 }} / {{ tenantFeatureCatalogue.length }} {{ copy.count }}</span></div>
+        <div class="mm-tenant-feature-settings__summary"><div><h2>{{ copy.frontend }}</h2><p>{{ customerService ? copy.serviceHint : copy.hint }}</p></div><span class="mm-tenant-feature-settings__count">{{ enabledCount }} / {{ tenantFeatureCatalogue.length + (customerService ? 1 : 0) }} {{ copy.count }}</span></div>
         <label v-if="siteOptions.length > 1" class="mm-tenant-feature-settings__site"><span>{{ copy.site }}</span><MmSelect :model-value="detail.site_id" :options="siteOptions" :aria-label="copy.site" :disabled="busy" @update:model-value="selectSite(String($event))" /></label>
         <p v-else class="mm-tenant-feature-settings__site-context">{{ copy.site }}：{{ detail.site_name }} · {{ detail.site_id }}</p>
         <section class="mm-tenant-feature-settings__group" :aria-label="copy.group">
@@ -113,6 +120,13 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: saving, isBusy: busy })
                 <button type="button" class="mm-tenant-feature-settings__switch" role="switch" :aria-label="copy.ranking" :aria-checked="enabled" :disabled="busy || !editable" @click="toggle"><span /></button>
               </div>
             </article>
+          </div>
+        </section>
+        <section v-if="customerService" class="mm-tenant-feature-settings__group" :aria-label="copy.services">
+          <header><span class="mm-tenant-feature-settings__group-icon"><MmIcon name="layout-dashboard" :size="18" /></span><div><h3>{{ copy.services }}</h3><p>{{ copy.servicesDescription }}</p></div><span>{{ customerState?.enabled ? 1 : 0 }} / 1 {{ copy.count }}</span></header>
+          <div class="mm-tenant-feature-settings__grid">
+            <MmTenantCustomerServiceCard :transport="customerService" :can-edit="editable" :disabled="loading || saving"
+              @state-change="customerState = $event" @busy-change="customerBusy = $event" />
           </div>
         </section>
       </div>

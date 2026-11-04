@@ -23,12 +23,12 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {
     clearFeedback: typeof clearFeedback;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     success: (response: unknown) => any;
-    busy: (value: boolean) => any;
     pending: (value: boolean) => any;
+    busy: (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
     onSuccess?: ((response: unknown) => any) | undefined;
-    onBusy?: ((value: boolean) => any) | undefined;
     onPending?: ((value: boolean) => any) | undefined;
+    onBusy?: ((value: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
     label: string;

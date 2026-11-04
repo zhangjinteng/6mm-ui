@@ -371,11 +371,11 @@
                         aria-label="翻译目标语言"
                     />
                 </label>
-                <MmCheckbox
+                <TranslationEnabledToggle
                     v-model="settings.is_enabled"
-                    :disabled="configSaving || testing || (!settings.credential_configured && !apiKey.trim())"
-                    >开启自动翻译</MmCheckbox
-                >
+                    :disabled="configSaving || testing"
+                    :credential-ready="!!settings.credential_configured || !!apiKey.trim()"
+                />
                 <div class="mm-translation-settings__credential">
                     <label>
                         Google API Key
@@ -506,6 +506,7 @@
 
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
+import TranslationEnabledToggle from '../../../../../components/translation-enabled-toggle/TranslationEnabledToggle.vue'
 const { cancelTranslationJob, createTranslationJob, getTranslationDetail, getTranslationJob, getTranslationList, getTranslationMetadata, getTranslationSettings, saveTranslations, saveTranslationSettings, testTranslationConnection } = useTranslationsApi()
 const { hasPermission } = useCmsRuntime()
 
@@ -514,7 +515,6 @@ import { onBeforeCmsLeave as onBeforeRouteLeave } from "../../../../runtime"
 import {
     MmAlert,
     MmButton,
-    MmCheckbox,
     MmDialog,
     MmEmpty,
     MmFormItem,

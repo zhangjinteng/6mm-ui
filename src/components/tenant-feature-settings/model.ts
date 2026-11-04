@@ -1,3 +1,5 @@
+import type { TenantCustomerServiceTransport } from '../tenant-customer-service/model'
+
 export type TenantFeatureValues = { trade_ranking: boolean }
 export interface TenantFeatureSite { site_id: string; site_name: string }
 export interface TenantFeatureSettingsDetail extends TenantFeatureSite {
@@ -16,6 +18,7 @@ export interface TenantFeatureSettingsProps {
   canEdit?: boolean
   fullPage?: boolean
   formatUpdatedAt?: (value: string) => string
+  customerService?: TenantCustomerServiceTransport
 }
 
 // Only the implemented frontend-entry flag is exposed. Never add business entitlement codes here.

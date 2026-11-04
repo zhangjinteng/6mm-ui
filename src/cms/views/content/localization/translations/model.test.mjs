@@ -96,7 +96,7 @@ test('page compiles and uses installed 6mm components, not unsupported controls 
         'MmTabPane',
         'MmDialog',
         'MmInput',
-        'MmCheckbox'
+        'TranslationEnabledToggle'
     ])
         assert.match(source, new RegExp(`<${component}\\b`))
     assert.doesNotMatch(source, /v-html|MmSwitch|localStorage/)
@@ -233,6 +233,7 @@ function mount(overrides = {}) {
             if (name === 'vue') return { ...Vue, withDirectives: (vnode) => vnode }
             if (name.endsWith('/runtime')) return { useCmsRuntime: () => ({ hasPermission: () => true }), onBeforeCmsLeave() {} }
             if (name.endsWith('/index')) return ui
+            if (name.endsWith('/TranslationEnabledToggle.vue')) return ui.MmCheckbox
             if (name.endsWith('/api/content/translations')) return { useTranslationsApi: () => api }
             if (name === 'vue-router') return { onBeforeRouteLeave() {} }
             if (name === '@work-gpt/6mm-ui') return ui

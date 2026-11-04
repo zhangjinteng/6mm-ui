@@ -16,11 +16,11 @@ declare const __VLS_base: import('vue').DefineComponent<InputNumberProps, {}, {}
 }>, {
     disabled: boolean;
     size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     max: number;
     min: number;
     modelValue: number | null;
     readonly: boolean;
-    status: import('../..').FormControlStatus;
     controls: boolean;
     precision: number;
     step: number;

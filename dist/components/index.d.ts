@@ -1,4 +1,5 @@
 import { Component } from 'vue';
+export * from './tenant-customer-service';
 export * from './tenant-compliance-settings';
 export * from './tenant-seo-settings';
 export * from './tenant-feature-settings';

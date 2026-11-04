@@ -28,16 +28,16 @@ declare const __VLS_base: import('vue').DefineComponent<DatePickerProps, {}, {},
     disabled: boolean;
     size: import('../..').FormControlSize;
     type: import('./types').DatePickerType;
+    status: import('../..').FormControlStatus;
+    editable: boolean;
     disabledDate: (date: string) => boolean;
     max: string;
     min: string;
     modelValue: DatePickerValue;
     clearable: boolean;
     readonly: boolean;
-    status: import('../..').FormControlStatus;
     open: boolean;
     closeOnSelect: boolean;
-    editable: boolean;
     format: string;
     panelClass: string;
     panelCompact: boolean;

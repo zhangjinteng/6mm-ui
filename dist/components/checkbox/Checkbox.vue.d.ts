@@ -10,14 +10,14 @@ declare const __VLS_base: import('vue').DefineComponent<CheckboxProps, {}, {}, {
     onChange?: ((value: CheckboxValue, event: Event) => any) | undefined;
     "onUpdate:modelValue"?: ((value: CheckboxValue) => any) | undefined;
 }>, {
+    value: CheckboxValue;
     disabled: boolean;
     size: import('../..').FormControlSize;
-    value: CheckboxValue;
+    status: import('../..').FormControlStatus;
     modelValue: CheckboxValue;
     readonly: boolean;
-    status: import('../..').FormControlStatus;
-    falseValue: CheckboxValue;
     indeterminate: boolean;
+    falseValue: CheckboxValue;
     trueValue: CheckboxValue;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

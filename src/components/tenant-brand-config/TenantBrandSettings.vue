@@ -149,7 +149,7 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: saving })
       <div v-else-if="loadFailed" role="alert" class="mm-tenant-brand-settings__empty"><p>{{ copy.loadFailed }}</p><MmButton @click="load">{{ copy.reload }}</MmButton></div>
       <div v-else-if="detail" class="mm-tenant-brand-settings__content">
         <div class="mm-tenant-brand-settings__toolbar"><h3>{{ copy.titleDomains }}</h3>
-          <MmButton v-if="editable && selectedSite" variant="primary" size="sm" :disabled="busy || draft.length >= 20" @click="addDomain"><MmIcon name="plus" :size="14" />{{ copy.add }}</MmButton>
+          <MmButton v-if="editable && selectedSite" variant="primary" size="sm" :disabled="busy || draft.length >= 20" @click="addDomain"><template #icon><MmIcon name="plus" :size="14" /></template>{{ copy.add }}</MmButton>
         </div>
         <label v-if="detail.sites.length > 1" class="mm-tenant-brand-settings__site"><span>{{ copy.site }}</span>
           <MmSelect :model-value="selectedSiteId" :options="siteOptions" :aria-label="copy.site" :disabled="busy" @update:model-value="selectSite(String($event))" />
@@ -162,7 +162,7 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: saving })
             <legend class="mm-tenant-brand-settings__sr-only">{{ copy.titleDomains }}</legend>
             <div v-for="(row, index) in draft" :key="row.key" class="mm-tenant-brand-settings__row">
               <label class="mm-tenant-brand-settings__address"><span>{{ copy.address }}</span>
-                <MmInput v-model="row.domain" :aria-label="`${copy.address} ${index + 1}`" placeholder="trade.example.com" :maxlength="254" :readonly="row.existing || !editable" :disabled="busy || !editable">
+                <MmInput v-model="row.domain" :aria-label="`${copy.address} ${index + 1}`" placeholder="trade.example.com" :maxlength="254" :readonly="!editable" :disabled="busy || !editable">
                   <template #prefix><MmIcon name="globe" :size="15" /></template>
                 </MmInput>
               </label>

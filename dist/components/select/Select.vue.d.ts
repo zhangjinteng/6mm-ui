@@ -21,11 +21,11 @@ declare const __VLS_base: import('vue').DefineComponent<SelectProps, {}, {}, {},
     disabled: boolean;
     loading: boolean;
     size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     max: number;
     modelValue: SelectValue | SelectValue[];
     clearable: boolean;
     readonly: boolean;
-    status: import('../..').FormControlStatus;
     multiple: boolean;
     options: SelectOption[];
     filterable: boolean;

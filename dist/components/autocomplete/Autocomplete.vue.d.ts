@@ -21,10 +21,10 @@ declare const __VLS_base: import('vue').DefineComponent<AutocompleteProps, {}, {
 }>, {
     disabled: boolean;
     size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     modelValue: string;
     clearable: boolean;
     readonly: boolean;
-    status: import('../..').FormControlStatus;
     debounce: number;
     fetchSuggestions: import('./types').AutocompleteSource;
     labelKey: string;

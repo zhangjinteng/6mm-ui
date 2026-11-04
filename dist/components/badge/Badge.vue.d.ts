@@ -4,8 +4,8 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_1) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<BadgeProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<BadgeProps> & Readonly<{}>, {
-    type: import('./types').BadgeType;
     value: number | string;
+    type: import('./types').BadgeType;
     max: number;
     hidden: boolean;
     dot: boolean;

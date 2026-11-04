@@ -1,3 +1,4 @@
+import { TenantCustomerServiceTransport } from '../tenant-customer-service/model';
 export type TenantFeatureValues = {
     trade_ranking: boolean;
 };
@@ -28,6 +29,7 @@ export interface TenantFeatureSettingsProps {
     canEdit?: boolean;
     fullPage?: boolean;
     formatUpdatedAt?: (value: string) => string;
+    customerService?: TenantCustomerServiceTransport;
 }
 export declare const tenantFeatureCatalogue: readonly [{
     readonly code: "trade_ranking";

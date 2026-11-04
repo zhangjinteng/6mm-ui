@@ -1572,7 +1572,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	key: 0,
 	class: "rule-heading"
 }, Un = { class: "group-heading" }, Wn = { class: "group-heading" }, Gn = { class: "group-heading" }, Kn = { class: "two-fields" }, qn = {
-	key: 1,
+	key: 2,
 	class: "editor-footer"
 }, Jn = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "edit",
@@ -1742,6 +1742,13 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 					type: "error",
 					closable: !1
 				}, null, 8, ["title"])) : o("", !0),
+				e.externalSave && we.value.saveError ? (v(), a(T(k), {
+					key: 1,
+					title: we.value.saveError,
+					type: L.value ? "warning" : "error",
+					closable: !1,
+					"show-icon": ""
+				}, null, 8, ["title", "type"])) : o("", !0),
 				d(gn, {
 					loading: M.value,
 					"hide-content": M.value && !F.value,
@@ -1991,7 +1998,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			_: 1
 		}, 40, ["class", "modelValue"])) : o("", !0);
 	}
-}), [["__scopeId", "data-v-ff28b192"]]), Yn = { class: "guide-body" }, Xn = { class: "guide-example" }, Zn = { class: "guide-formulas" }, Qn = { class: "guide-footer" }, $n = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}), [["__scopeId", "data-v-b45a5b29"]]), Yn = { class: "guide-body" }, Xn = { class: "guide-example" }, Zn = { class: "guide-formulas" }, Qn = { class: "guide-footer" }, $n = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "GridGuide",
 	props: {
 		modelValue: {
@@ -3021,9 +3028,7 @@ function Ir(e) {
 	Mr(e, t), jr(typeof e.symbol == "string" && kr.test(e.symbol) && Nr(e.based_on_global_version)), jr(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id)), jr(typeof e.reason == "string" && e.reason.trim() && !e.reason.includes("\0") && new TextEncoder().encode(e.reason).length <= 500), Pr(e.changes);
 }
 function Lr(e, t, n, r) {
-	let i = Fr(e, e.symbol), a = Pr(t);
-	jr(r || !i.parameters || Or.some(([e]) => i.parameters[e] !== a[e]));
-	let o = {
+	let i = Fr(e, e.symbol), a = Pr(t), o = {
 		...r ? {
 			based_on_layout_version: i.layout?.version ?? "0",
 			layout: r
@@ -3068,13 +3073,13 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 		}, {
 			title: "下注限制",
 			fields: Or.slice(3)
-		}], g = (e) => p.context.permissions.includes("*") || p.context.permissions.includes(e), _ = i(() => p.context.operatorId), ne = i(() => !!p.context.identityKey && /^[1-9]\d*$/.test(_.value) && g("grid_config:read")), y = i(() => ne.value && g("grid_config:save")), x = b([]), S = b(""), ie = b(""), ae = i(() => x.value.filter((e) => e.symbol.includes(ie.value.trim().toUpperCase()))), D = C(null), j = () => ({
-			target_rtp: "",
-			min_multiplier: "",
-			max_multiplier: "",
-			min_order_amount: "",
-			max_order_amount: ""
-		}), M = b(j()), N = b({
+		}], g = (e) => p.context.permissions.includes("*") || p.context.permissions.includes(e), _ = i(() => p.context.operatorId), ne = i(() => !!p.context.identityKey && /^[1-9]\d*$/.test(_.value) && g("grid_config:read")), y = i(() => ne.value && g("grid_config:save")), x = b([]), S = b(""), ie = b(""), ae = i(() => x.value.filter((e) => e.symbol.includes(ie.value.trim().toUpperCase()))), D = C(null), j = {
+			target_rtp: "0.97",
+			min_multiplier: "1.02",
+			max_multiplier: "20",
+			min_order_amount: "1",
+			max_order_amount: "3000"
+		}, M = b({ ...j }), N = b({
 			price_band_width: "",
 			column_duration_seconds: "",
 			price_decimals: "3"
@@ -3082,7 +3087,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			price_band_width: e.layout?.price_band_width ?? "",
 			column_duration_seconds: e.layout?.column_duration_seconds ?? "",
 			price_decimals: String(e.layout?.price_decimals ?? 3)
-		}), V = i(() => !!D.value && (JSON.stringify(N.value) !== JSON.stringify(de(D.value)) || Or.some(([e]) => M.value[e] !== (D.value?.parameters?.[e] ?? "")))), H = i(() => !y.value || L.value || !!ue.value || B.value), U = 0, fe;
+		}), V = i(() => !!D.value && (JSON.stringify(N.value) !== JSON.stringify(de(D.value)) || Or.some(([e]) => M.value[e] !== (D.value?.parameters ?? j)[e]))), H = i(() => !y.value || L.value || !!ue.value || B.value), U = 0, fe;
 		function W() {
 			try {
 				let e = zr.pendingForActor(sessionStorage, _.value);
@@ -3100,7 +3105,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			try {
 				let n = Fr(await f.detail(e, fe.signal), e);
 				if (t !== U) return;
-				D.value = n, M.value = { ...n.parameters ?? j() }, N.value = de(n);
+				D.value = n, M.value = { ...n.parameters ?? j }, N.value = de(n);
 				let r = x.value.find((t) => t.symbol === e);
 				r && (r.configured = n.parameters !== null);
 			} catch {
@@ -3143,7 +3148,10 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 		}
 		function be() {
 			let e = D.value, t = de(e), n = {};
-			for (let r of ["price_band_width", "column_duration_seconds"]) (!e.layout || t[r] !== N.value[r]) && (n[r] = N.value[r]);
+			for (let r of ["price_band_width", "column_duration_seconds"]) {
+				if (!N.value[r].trim()) throw Error(r === "price_band_width" ? "请填写纵向格子区间" : "请填写横向格子区间");
+				(!e.layout || t[r] !== N.value[r]) && (n[r] = N.value[r]);
+			}
 			if (!e.layout || t.price_decimals !== N.value.price_decimals) {
 				if (!/^[0-8]$/.test(N.value.price_decimals)) throw Error("价格小数位须为 0～8 的整数");
 				n.price_decimals = Number(N.value.price_decimals);
@@ -3151,8 +3159,9 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			return Object.keys(n).length ? n : void 0;
 		}
 		async function xe() {
-			if (!(H.value || !D.value || !V.value)) {
+			if (!(H.value || !D.value)) {
 				try {
+					for (let [e, t] of Or) if (!M.value[e].trim()) throw Error("请填写" + t);
 					let e = Lr(D.value, M.value, Ft(), be()), t = zr.captureSaveReview(_.value, e);
 					ue.value = zr.persistReviewedCommand(sessionStorage, t, _.value, e);
 				} catch (e) {
@@ -3244,7 +3253,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			}), y.value ? (v(), a(T(A), {
 				key: 0,
 				type: "primary",
-				disabled: H.value || !V.value,
+				disabled: H.value || !D.value,
 				loading: L.value,
 				onClick: xe
 			}, {
@@ -3368,7 +3377,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			}, null, 8, ["modelValue"])
 		]));
 	}
-}), [["__scopeId", "data-v-b579c14c"]]), ni = { class: "prediction-page prediction-table-page mm-ui" }, ri = { class: "prediction-page__header" }, ii = {
+}), [["__scopeId", "data-v-552d0741"]]), ni = { class: "prediction-page prediction-table-page mm-ui" }, ri = { class: "prediction-page__header" }, ii = {
 	class: "game-tabs",
 	role: "group",
 	"aria-label": "选择预测玩法"
@@ -3420,7 +3429,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 		], O = b(""), j = i(() => nt(p.perms, "prediction_config:lists")), M = b(""), N = C(), P = i(() => N.value?.editingState), se = i(() => {
 			let e = P.value;
 			return !e || e.target !== O.value || e.actor !== String(p.userInfo.id || "") || !j.value || !nt(p.perms, "prediction_config:edit") || e.saving ? null : e.pending ? {
-				text: "未保存",
+				text: "结果待确认",
 				tone: "warning",
 				detail: e.saveError || "结果尚未确认，请核验原操作"
 			} : e.saveError ? {
@@ -3738,7 +3747,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 			}, null, 512)) : o("", !0)
 		]));
 	}
-}), [["__scopeId", "data-v-71ea0cb7"]]), Ci = 9223372036854775807n;
+}), [["__scopeId", "data-v-3a0f13bc"]]), Ci = 9223372036854775807n;
 function wi(e) {
 	return e == null ? "—" : typeof e == "object" ? JSON.stringify(e) : String(e);
 }

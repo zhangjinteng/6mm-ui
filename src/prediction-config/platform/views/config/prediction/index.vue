@@ -211,7 +211,7 @@ const saveFeedback = computed(() => {
     const state = editorState.value
     if (!state || state.target !== selectedKey.value || state.actor !== String(user.userInfo.id || '') ||
         !allowed.value || !hasPermission(user.perms, 'prediction_config:edit') || state.saving) return null
-    if (state.pending) return {text: '未保存', tone: 'warning', detail: state.saveError || '结果尚未确认，请核验原操作'}
+    if (state.pending) return {text: '结果待确认', tone: 'warning', detail: state.saveError || '结果尚未确认，请核验原操作'}
     if (state.saveError) return {text: '保存失败', tone: 'danger', detail: state.saveError}
     if (!state.ready) return null
     return state.dirty || state.isNew

@@ -66,7 +66,6 @@ function commandShape(value:unknown):asserts value is GlobalCommand {
 }
 export function globalCommand(snapshot:GlobalSnapshot,changes:unknown,id:string,layout?:Partial<LayoutFields>):GlobalCommand {
     const original=globalSnapshot(snapshot,snapshot.symbol), next=parameters(changes)
-    check(layout || !original.parameters || parameterFields.some(([key])=>original.parameters![key]!==next[key]))
     const cmd:GlobalCommand={...(layout ? {based_on_layout_version:original.layout?.version??'0',layout}:{}),symbol:original.symbol,based_on_global_version:original.global_version,client_request_id:id,reason:'更新新建站点的默认网格参数',changes:next}
     commandShape(cmd);return cmd
 }

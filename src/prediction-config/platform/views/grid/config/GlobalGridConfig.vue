@@ -23,7 +23,7 @@
                     <div><h2>{{ symbol }} · 预测网格</h2><p>平台模板</p></div>
                     <div class="config-heading__actions">
                         <el-button @click="guide=true">玩法说明</el-button>
-                        <el-button v-if="canSave" type="primary" :disabled="locked || !dirty" :loading="busy" @click="save">保存配置</el-button>
+                        <el-button v-if="canSave" type="primary" :disabled="locked || !snapshot" :loading="busy" @click="save">保存配置</el-button>
                     </div>
                 </header>
                 <PredictionLoadingRegion :loading="busy && !snapshot" :hide-content="busy && !snapshot" min-height="0px" class="grid-config__detail">
@@ -81,12 +81,13 @@ const canSave=computed(()=>canRead.value && can('grid_config:save'))
 const products=ref<Array<{symbol:string;configured:boolean}>>([]), symbol=ref(''), keyword=ref('')
 const filtered=computed(()=>products.value.filter(p=>p.symbol.includes(keyword.value.trim().toUpperCase())))
 const snapshot=shallowRef<GlobalSnapshot|null>(null)
-const empty=():Parameters=>({target_rtp:'',min_multiplier:'',max_multiplier:'',min_order_amount:'',max_order_amount:''})
-const draft=ref(empty()),layoutDraft=ref({price_band_width:'',column_duration_seconds:'',price_decimals:'3'})
+// Initial values match Grid's existing catalog defaults. They are a draft until saved.
+const defaults:Parameters={target_rtp:'0.97',min_multiplier:'1.02',max_multiplier:'20',min_order_amount:'1',max_order_amount:'3000'}
+const draft=ref({...defaults}),layoutDraft=ref({price_band_width:'',column_duration_seconds:'',price_decimals:'3'})
 const guide=ref(false),busy=ref(false),loadFailed=ref(false),message=ref(''),recoverable=ref(false),journalBlocked=ref(false)
 const pending=shallowRef<PendingCommand<GlobalCommand>|null>(null)
 const layoutValues=(v:GlobalSnapshot)=>({price_band_width:v.layout?.price_band_width??'',column_duration_seconds:v.layout?.column_duration_seconds??'',price_decimals:String(v.layout?.price_decimals??3)})
-const dirty=computed(()=>!!snapshot.value && (JSON.stringify(layoutDraft.value)!==JSON.stringify(layoutValues(snapshot.value)) || parameterFields.some(([k])=>draft.value[k] !== (snapshot.value?.parameters?.[k]??''))))
+const dirty=computed(()=>!!snapshot.value && (JSON.stringify(layoutDraft.value)!==JSON.stringify(layoutValues(snapshot.value)) || parameterFields.some(([k])=>draft.value[k] !== (snapshot.value?.parameters??defaults)[k])))
 const locked=computed(()=>!canSave.value || busy.value || !!pending.value || journalBlocked.value)
 let epoch=0,reader:AbortController|undefined
 function journal(){
@@ -102,7 +103,7 @@ async function detail(target:string){
     try{
         const data=globalSnapshot(await api.detail(target,reader!.signal),target)
         if(seq!==epoch)return
-        snapshot.value=data;draft.value={...(data.parameters??empty())};layoutDraft.value=layoutValues(data)
+        snapshot.value=data;draft.value={...(data.parameters??defaults)};layoutDraft.value=layoutValues(data)
         const row=products.value.find(p=>p.symbol===target);if(row)row.configured=data.parameters!==null
     }catch{if(seq===epoch){loadFailed.value=true;message.value='读取平台模板失败，请重试。'}}
     finally{if(seq===epoch)busy.value=false}
@@ -130,6 +131,7 @@ async function switchSymbol(target:string){if(target!==symbol.value && await con
 function layoutChanges():Partial<LayoutFields>|undefined{
     const src=snapshot.value!, initial=layoutValues(src), change:Partial<LayoutFields>={}
     for(const k of ['price_band_width','column_duration_seconds'] as const){
+        if(!layoutDraft.value[k].trim())throw Error(k==='price_band_width'?'请填写纵向格子区间':'请填写横向格子区间')
         if(!src.layout || initial[k]!==layoutDraft.value[k])change[k]=layoutDraft.value[k]
     }
     if(!src.layout || initial.price_decimals!==layoutDraft.value.price_decimals){
@@ -139,8 +141,11 @@ function layoutChanges():Partial<LayoutFields>|undefined{
     return Object.keys(change).length ? change : undefined
 }
 async function save(){
-    if(locked.value || !snapshot.value || !dirty.value)return
+    if(locked.value || !snapshot.value)return
     try{
+        for(const [key,label] of parameterFields){
+            if(!draft.value[key].trim())throw Error('请填写'+label)
+        }
         const command=globalCommand(snapshot.value,draft.value,secureRequestId(),layoutChanges())
         const review=globalJournal.captureSaveReview(operator.value,command)
         pending.value=globalJournal.persistReviewedCommand(sessionStorage,review,operator.value,command)

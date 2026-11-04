@@ -12,6 +12,7 @@
         @closed="emit('close')"
     >
         <el-alert v-if="error" :title="error" type="error" :closable="false" />
+        <el-alert v-if="externalSave && editingState.saveError" :title="editingState.saveError" :type="pending ? 'warning' : 'error'" :closable="false" show-icon />
         <PredictionLoadingRegion :loading="loading" :hide-content="loading && !model" :min-height="inline ? '0px' : '280px'" class="prediction-edit">
             <div ref="saveArea" data-config-save-area class="config-save-area" :class="{ 'config-save-area--external': externalSave }">
                 <write-panel

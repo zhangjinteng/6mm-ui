@@ -26,8 +26,8 @@ declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {},
     "onUpdate:autoRefreshSeconds"?: ((seconds: number) => any) | undefined;
     "onUpdate:visibleColumnKeys"?: ((keys: string[]) => any) | undefined;
 }>, {
-    columns: ProTableColumn<any>[];
     disabled: boolean;
+    columns: ProTableColumn<any>[];
     autoRefreshable: boolean;
     autoRefreshOptions: number[];
     autoRefreshSeconds: number;

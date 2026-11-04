@@ -4,8 +4,8 @@ type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_1) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<DividerProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<DividerProps> & Readonly<{}>, {
-    color: string;
     label: string;
+    color: string;
     dashed: boolean;
     direction: import('./types').DividerDirection;
     margin: number | string;

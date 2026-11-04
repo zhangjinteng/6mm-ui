@@ -18,8 +18,8 @@ declare const __VLS_base: import('vue').DefineComponent<ImageProps, ImageExpose,
 }>, {
     width: number | string;
     height: number | string;
-    alt: string;
     lazy: boolean;
+    alt: string;
     fit: import('./types').ImageFit;
     preview: boolean;
     previewSrcList: string[];

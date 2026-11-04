@@ -10,11 +10,11 @@ declare const __VLS_base: import('vue').DefineComponent<TagProps, {}, {}, {}, {}
 }, string, import('vue').PublicProps, Readonly<TagProps> & Readonly<{
     onClose?: ((event: MouseEvent) => any) | undefined;
 }>, {
-    size: import('./types').TagSize;
+    disabled: boolean;
     round: boolean;
+    size: import('./types').TagSize;
     type: import('./types').TagType;
     closable: boolean;
-    disabled: boolean;
     effect: import('./types').TagEffect;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

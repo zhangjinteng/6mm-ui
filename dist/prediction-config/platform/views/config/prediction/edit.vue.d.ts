@@ -27,11 +27,11 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {
     }>;
     setEnabled: typeof setEnabled;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    close: (...args: any[]) => void;
     success: (...args: any[]) => void;
+    close: (...args: any[]) => void;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
-    onClose?: ((...args: any[]) => any) | undefined;
     onSuccess?: ((...args: any[]) => any) | undefined;
+    onClose?: ((...args: any[]) => any) | undefined;
 }>, {
     inline: boolean;
     externalSave: boolean;

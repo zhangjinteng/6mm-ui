@@ -19,20 +19,19 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     blur: (event: FocusEvent) => any;
     change: (event: Event) => any;
     focus: (event: FocusEvent) => any;
-    clear: () => any;
     "update:modelValue": (value: string) => any;
+    clear: () => any;
 }, string, import('vue').PublicProps, Readonly<InputProps> & Readonly<{
     onInput?: ((event: Event) => any) | undefined;
     onBlur?: ((event: FocusEvent) => any) | undefined;
     onChange?: ((event: Event) => any) | undefined;
     onFocus?: ((event: FocusEvent) => any) | undefined;
-    onClear?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
+    onClear?: (() => any) | undefined;
 }>, {
+    disabled: boolean;
     size: import('../..').FormControlSize;
     type: string;
-    status: import('../..').FormControlStatus;
-    disabled: boolean;
     modelValue: string | number | null;
     autocomplete: string;
     clearable: boolean;
@@ -41,6 +40,7 @@ declare const __VLS_base: import('vue').DefineComponent<InputProps, {
     readonly: boolean;
     showCount: boolean;
     showPassword: boolean;
+    status: import('../..').FormControlStatus;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

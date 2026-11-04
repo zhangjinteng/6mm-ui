@@ -5,9 +5,9 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<IconProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<IconProps> & Readonly<{}>, {
     name: import('./icons').IconName;
-    color: string;
-    label: string;
     size: import('./types').IconSize;
+    label: string;
+    color: string;
     spin: boolean;
     strokeWidth: number;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

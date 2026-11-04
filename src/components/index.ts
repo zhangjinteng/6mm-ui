@@ -1,4 +1,6 @@
 import type { Component } from "vue";
+import { MmTenantComplianceSettings } from "./tenant-compliance-settings";
+export * from "./tenant-compliance-settings";
 import { MmTenantSeoSettings } from "./tenant-seo-settings";
 export * from "./tenant-seo-settings";
 import { MmTenantFeatureSettings } from "./tenant-feature-settings";
@@ -289,6 +291,7 @@ export const components: InstallableComponent[] = [
   MmTenantBrandSettings,
   MmTenantFeatureSettings,
   MmTenantSeoSettings,
+  MmTenantComplianceSettings,
   MmMenu,
   MmMenuItem,
   MmSubMenu,

@@ -14,9 +14,11 @@ import TenantChannelsPreview from "./TenantChannelsPreview.vue";
 import TenantBrandPreview from "./TenantBrandPreview.vue";
 import TenantFeaturesPreview from "./TenantFeaturesPreview.vue";
 import TenantSeoPreview from "./TenantSeoPreview.vue";
+import TenantCompliancePreview from "./TenantCompliancePreview.vue";
 
 const normalizedPath = window.location.pathname.replace(/\/+$/, "") || "/";
 const RootView =
+  normalizedPath === "/tenant-compliance" ? TenantCompliancePreview :
   normalizedPath === "/tenant-seo" ? TenantSeoPreview :
   normalizedPath === "/tenant-features" ? TenantFeaturesPreview :
   normalizedPath === "/tenant-brand" ? TenantBrandPreview :

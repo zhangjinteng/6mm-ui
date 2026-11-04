@@ -224,7 +224,7 @@ test('English passed by the parent is readonly and used as the actual translatio
 
 test('SEO edits the canonical platform settings rather than the site settings', async () => {
     const editor = readFileSync(new URL('./TenantSeoTranslations.vue', import.meta.url), 'utf8')
-    assert.match(editor, /subtitle="平台统一配置 · Google Cloud Translation Basic v2"/)
+    assert.match(editor, /settings\?\.configuration_scope === 'platform' \? '平台统一配置' : '当前内容空间共用'/)
     const { descriptor } = parse(editor)
     const script = compileScript(descriptor, { id: 'shared-translation-settings' }).content
     const javascript = ts.transpileModule(script, {

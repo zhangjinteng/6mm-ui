@@ -3,6 +3,7 @@ import { nextTick } from 'vue'
 import { describe, it, expect, vi } from 'vitest'
 import { MmSelect } from '../select'
 import Seo from './TenantSeoSettings.vue'
+import SeoTranslations from './TenantSeoTranslations.vue'
 import type { TenantSeoDetail, TenantSeoSettingsProps } from './model'
 const detail = (site_id = '10'): TenantSeoDetail => ({ tenant_id: '1', tenant_name: 'Alpha', site_id, site_name: 'Main', primary_domain: 'site.example',
   indexing_enabled: false, effective_indexing_enabled: false, blocking_reason: null, configured_locales: 1, total_locales: 20, updated_at: null,
@@ -19,6 +20,37 @@ function setup(extra: Partial<TenantSeoSettingsProps> = {}) {
   return { w, save, load }
 }
 describe('shared SEO page behavior', () => {
+  it('opens own-space translation settings from the header and refreshes targets without losing the SEO draft', async () => {
+    const settings = { space_id: '55', space_revision: '1', target_locales: ['en'], provider: 'google', api_version: 'v2',
+      credential_ref: 'database', credential_configured: true, credential_source: 'database' as const, api_key_mask: '••••1234',
+      supported: true, is_enabled: true, concurrency_limit: 3, request_timeout_seconds: 30, max_attempts: 3 }
+    const testConnection = vi.fn(async () => ({ connected: true }))
+    const saveSettings = vi.fn(async (input, _apiKey: string) => ({ ...input, space_revision: '2', target_locales: ['en', 'ja'] }))
+    const w = mount(SeoTranslations, { props: {
+      siteId: '10', readonly: false, editingLocale: 'zh-CN',
+      locales: [...detail().locales, { value: 'ja', label: '日本語' }], translations: detail().translations,
+      callbacks: { loadContext: async () => ({ available: true, reason: null, source_locale: 'zh-CN', settings }),
+        translate: vi.fn(), saveSettings, testConnection },
+    }, global: { stubs: { teleport: true } } })
+    await flushPromises()
+    expect(w.find('.mm-dialog__header-actions').text()).toContain('翻译配置')
+    await w.get('input[aria-label="zh-CN 首页标题"]').setValue('Unsaved SEO draft')
+    await button(w, '翻译配置').trigger('click'); await flushPromises()
+    expect(w.text()).toContain('当前内容空间共用')
+    expect(w.text()).toContain('••••1234')
+    const key = w.get('input[aria-label="Google API Key"]')
+    expect(key.attributes('type')).toBe('password')
+    await key.setValue('FAKE_SEO_CANDIDATE')
+    await button(w, '测试连接').trigger('click'); await flushPromises()
+    expect(testConnection).toHaveBeenCalledWith('55', '1', 'FAKE_SEO_CANDIDATE')
+    await button(w, '保存翻译配置').trigger('click'); await flushPromises()
+    expect(saveSettings.mock.calls[0][1]).toBe('FAKE_SEO_CANDIDATE')
+    expect(w.find('input[aria-label="ja 首页标题"]').exists()).toBe(true)
+    expect(w.get<HTMLInputElement>('input[aria-label="zh-CN 首页标题"]').element.value).toBe('Unsaved SEO draft')
+    await button(w, '翻译配置').trigger('click'); await flushPromises()
+    expect(w.get<HTMLInputElement>('input[aria-label="Google API Key"]').element.value).toBe('')
+    w.unmount()
+  })
   it('loads server values without inserting or autosaving', async () => {
     const { w, save } = setup(); await flushPromises()
     expect(w.find<HTMLInputElement>('input[aria-label="首页标题"]').element.value).toBe('Title')

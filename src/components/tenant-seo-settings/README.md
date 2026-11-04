@@ -4,7 +4,7 @@ Shared editor for per-site SEO: full page in Agent, embedded fixed-height dialog
 
 Hosts supply `load(signal, siteId?)`, `save({site_id, expected_version, ...draft})`, `translation.loadContext` and `translation.translate` callbacks. Identity is not selected by this component. Agent only receives server-owned enabled sites; dirty site changes require confirmation. Both host `canEdit` and server `can_edit` are enforced. Exposes `hasUnsavedChanges`, `isSaving`, `isBusy`, `requestClose` for host navigation/modal guards. No autosave/polling; errors preserve drafts and reads can be retried.
 
-Only Platform, with its existing `cms_translation:config` permission, supplies optional `translation.saveSettings` and `translation.testConnection`. Agent supplies neither and cannot edit platform-wide translation credentials/settings from SEO.
+Both hosts may supply optional `translation.saveSettings` and `translation.testConnection`. Platform retains its existing configuration permission and platform-wide scope. Agent uses SEO-authorized endpoints that reuse the CMS validation/encryption service and enforce the logged-in tenant's enabled site-space scope; it cannot edit platform-wide or other tenants' settings. The dialog distinguishes platform configuration from the current content space and clears candidate keys on close/save. Saving refreshes configured language rows without discarding the SEO draft.
 
 The component does not output website meta tags, robots.txt, canonical links, hreflang or sitemaps; it edits the existing backend configuration only. It uses 6mm tokens/components and native textarea inputs, so adding SEO does not make the root library require Element Plus.
 

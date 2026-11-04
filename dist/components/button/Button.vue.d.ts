@@ -12,14 +12,14 @@ declare const __VLS_base: import('vue').DefineComponent<ButtonProps, {}, {}, {},
 }, string, import('vue').PublicProps, Readonly<ButtonProps> & Readonly<{
     onClick?: ((event: MouseEvent) => any) | undefined;
 }>, {
-    loading: boolean;
-    size: import('./types').ButtonSize;
-    round: boolean;
     block: boolean;
     disabled: boolean;
     iconOnly: boolean;
+    loading: boolean;
     nativeType: import('./types').ButtonNativeType;
     plain: boolean;
+    round: boolean;
+    size: import('./types').ButtonSize;
     variant: import('./types').ButtonVariant;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

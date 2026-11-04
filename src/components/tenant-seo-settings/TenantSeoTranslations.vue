@@ -132,7 +132,7 @@
     <MmDialog
         v-model="settingsOpen"
         title="翻译配置"
-        subtitle="平台统一配置 · Google Cloud Translation Basic v2"
+        :subtitle="`${settings?.configuration_scope === 'platform' ? '平台统一配置' : '当前内容空间共用'} · Google Cloud Translation Basic v2`"
         width="560px"
         :close-on-click-modal="false"
         :before-close="() => !configSaving && !testing"

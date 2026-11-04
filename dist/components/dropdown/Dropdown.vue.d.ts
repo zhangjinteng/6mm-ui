@@ -13,7 +13,7 @@ declare var __VLS_12: {
         'aria-haspopup': "menu";
         onKeydown: typeof onTriggerKeydown;
         'aria-controls': string | undefined;
-        'aria-expanded': "false" | "true";
+        'aria-expanded': "true" | "false";
         'aria-describedby'?: undefined;
     };
 }, __VLS_15: {
@@ -39,10 +39,10 @@ declare const __VLS_base: import('vue').DefineComponent<DropdownProps, {}, {}, {
     "onVisible-change"?: ((value: boolean) => any) | undefined;
     "onUpdate:visible"?: ((value: boolean) => any) | undefined;
 }>, {
-    width: number | string;
-    visible: boolean;
     disabled: boolean;
+    width: number | string;
     modelValue: MenuValue;
+    visible: boolean;
     floatingClass: string;
     placement: import('../..').FloatingPlacement;
     teleport: boolean;

@@ -4,8 +4,8 @@ type __VLS_Slots = {} & {
     icon?: (props: typeof __VLS_7) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<LoadingProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<LoadingProps> & Readonly<{}>, {
-    fullscreen: boolean;
     size: import('./types').LoadingSize;
+    fullscreen: boolean;
     visible: boolean;
     backdrop: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

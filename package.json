@@ -1,6 +1,6 @@
 {
   "name": "@work-gpt/6mm-ui",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Vue 3 component library for 6MM products",
   "type": "module",
   "main": "./dist/index.js",
@@ -38,6 +38,7 @@
     "dev": "vite playground --config vite.config.ts",
     "typecheck": "vue-tsc --noEmit -p tsconfig.json",
     "test": "vitest",
+    "test:tenant-compliance": "node --import tsx --test src/components/tenant-compliance-settings/model.test.mjs && vitest run src/components/tenant-compliance-settings/compliance.test.ts",
     "test:tenant-seo": "node --test src/components/tenant-seo-settings/seo.behavior.test.mjs && vitest run src/components/tenant-seo-settings/seo.test.ts",
     "test:prediction-config": "node --import tsx --test src/prediction-config/**/*.test.mjs && vitest run src/prediction-config/runtime.test.ts",
     "test:cms": "node --import tsx --test src/cms/views/content/*.test.mjs src/cms/views/content/academy/courses/*.test.mjs src/cms/views/content/localization/translations/*.test.mjs && vitest run src/cms/*.test.ts",

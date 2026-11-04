@@ -30,8 +30,8 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {
     onBusy?: ((value: boolean) => any) | undefined;
     onPending?: ((value: boolean) => any) | undefined;
 }>, {
-    label: string;
     disabled: boolean;
+    label: string;
     blocked: boolean;
     newAllowed: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

@@ -29,7 +29,8 @@ export function assertOwnerConfig(value: unknown,actor: OwnerActor): asserts val
         ensure(actor.kind!=='SITE' || value.owner_revision==='0')
         ensure(actor.config_site_id!=='0' || value.site_revision==='0')
         ensure(typeof value.effective_enabled==='boolean' && typeof value.can_enable==='boolean' && ['', 'PARENT_CONSTRAINT_CHANGED'].includes(String(value.blocked_reason)))
-        ensure(value.can_enable===(value.blocked_reason==='' && value.platform_enabled))
+        ensure(value.symbol_available===undefined || typeof value.symbol_available==='boolean')
+        ensure(!value.can_enable || (value.blocked_reason==='' && value.symbol_available!==false))
     }
     const retained=scoped && value.blocked_reason==='PARENT_CONSTRAINT_CHANGED'
     ensure(typeof value.enabled==='boolean' && typeof value.platform_enabled==='boolean'); const up=value.game_type==='GAME_TYPE_UP_DOWN', seen=new Set<string>()
@@ -84,7 +85,8 @@ export function makeOwnerBody(value: OwnerConfig,actor: OwnerActor,rows: OwnerRo
     }
     ensure(typeof enabled==='boolean' && (enabled===value.enabled || !enabled || (scopedOwnerActor(actor)?value.can_enable:value.platform_enabled)),'PLATFORM_DISABLED')
     ensure(changes.length>0 || enabled!==value.enabled,'NO_CHANGES')
-    return {...(enabled!==value.enabled?{enabled}:{}),game_type:value.game_type==='GAME_TYPE_UP_DOWN'?'UP_DOWN':'HIGH_LOW',symbol:value.symbol,based_owner_revision:scopedOwnerActor(actor)?value.revision!:value.owner_revision,changes,client_request_id:key,reason}
+    if (actor.kind==='SITE' && enabled && !value.enabled) ensure(changes.length===0,'SEPARATE_ENABLE')
+    return {...(actor.kind==='SITE' && enabled && !value.enabled ? {based_on_public_version:value.public_version} : {}),...(enabled!==value.enabled?{enabled}:{}),game_type:value.game_type==='GAME_TYPE_UP_DOWN'?'UP_DOWN':'HIGH_LOW',symbol:value.symbol,based_owner_revision:scopedOwnerActor(actor)?value.revision!:value.owner_revision,changes,client_request_id:key,reason}
 }
 export class OwnerReadGate {
     private generation=0

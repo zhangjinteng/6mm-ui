@@ -15,6 +15,9 @@
                     <div v-for="item in filtered" :key="item.symbol" class="symbol-row" :class="{active:item.symbol===symbol}">
                         <button type="button" class="symbol-button" :disabled="busy || !!pending" @click="switchSymbol(item.symbol)"><SymbolDisplay :symbol="item.symbol" /></button>
                         <span class="symbol-unconfigured">{{ item.configured ? '已配置' : '待配置' }}</span>
+                        <el-switch :model-value="item.enabled" :disabled="locked || item.availability_version===undefined || (!item.enabled && !item.configured)"
+                            :data-config-enabled="item.symbol" :aria-label="item.symbol+' 网格币种开关'" :title="!item.configured && !item.enabled ? '请先保存模板参数' : '立即设置币种开放状态'"
+                            @change="setAvailability(item,$event)" />
                     </div>
                 </div>
             </aside>
@@ -23,7 +26,7 @@
                     <div><h2>{{ symbol }} · 预测网格</h2><p>平台模板</p></div>
                     <div class="config-heading__actions">
                         <el-button @click="guide=true">玩法说明</el-button>
-                        <el-button v-if="canSave" type="primary" :disabled="locked || !snapshot" :loading="busy" @click="save">保存配置</el-button>
+                        <el-button v-if="canSave" type="primary" :disabled="locked || !snapshot" :loading="busy" @click="save">仅保存参数</el-button>
                     </div>
                 </header>
                 <PredictionLoadingRegion :loading="busy && !snapshot" :hide-content="busy && !snapshot" min-height="0px" class="grid-config__detail">
@@ -60,7 +63,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
-import { ElAlert, ElButton, ElEmpty, ElForm, ElFormItem, ElMessageBox } from 'element-plus'
+import { ElAlert, ElButton, ElEmpty, ElForm, ElFormItem, ElMessageBox, ElSwitch } from 'element-plus'
 import { useConfigBeforeLeave, useConfigRuntime, useConfigSymbol, usePlatformConfigRuntime } from '../../../../runtime'
 import { MmInput } from '../../../../ui'
 import DecimalInput from '../../prediction/components/DecimalInput.vue'
@@ -78,7 +81,8 @@ const can=(p:string)=>runtime.context.permissions.includes('*') || runtime.conte
 const operator=computed(()=>runtime.context.operatorId)
 const canRead=computed(()=>!!runtime.context.identityKey && /^[1-9]\d*$/.test(operator.value) && can('grid_config:read'))
 const canSave=computed(()=>canRead.value && can('grid_config:save'))
-const products=ref<Array<{symbol:string;configured:boolean}>>([]), symbol=ref(''), keyword=ref('')
+type Product={symbol:string;configured:boolean;enabled?:boolean;availability_version?:string}
+const products=ref<Product[]>([]), symbol=ref(''), keyword=ref('')
 const filtered=computed(()=>products.value.filter(p=>p.symbol.includes(keyword.value.trim().toUpperCase())))
 const snapshot=shallowRef<GlobalSnapshot|null>(null)
 // Initial values match Grid's existing catalog defaults. They are a draft until saved.
@@ -104,7 +108,7 @@ async function detail(target:string){
         const data=globalSnapshot(await api.detail(target,reader!.signal),target)
         if(seq!==epoch)return
         snapshot.value=data;draft.value={...(data.parameters??defaults)};layoutDraft.value=layoutValues(data)
-        const row=products.value.find(p=>p.symbol===target);if(row)row.configured=data.parameters!==null
+        const row=products.value.find(p=>p.symbol===target);if(row)Object.assign(row,{configured:data.parameters!==null,enabled:data.enabled,availability_version:data.availability_version})
     }catch{if(seq===epoch){loadFailed.value=true;message.value='读取平台模板失败，请重试。'}}
     finally{if(seq===epoch)busy.value=false}
 }
@@ -115,8 +119,8 @@ async function refresh(){
     try{
         const [catalog,symbols]=await Promise.all([api.catalog(reader!.signal),grid.gridConfigSymbols(reader!.signal)])
         if(seq!==epoch)return
-        const statuses=new Map(catalog.products.map(p=>[p.symbol,p.configured]))
-        products.value=[...new Set([...symbols,...statuses.keys()])].filter(s=>/^[A-Z0-9]{2,32}$/.test(s)).map(s=>({symbol:s,configured:statuses.get(s)===true}))
+        const statuses=new Map(catalog.products.map(p=>[p.symbol,p]))
+        products.value=[...new Set([...symbols,...statuses.keys()])].filter(s=>/^[A-Z0-9]{2,32}$/.test(s)).map(s=>(statuses.get(s) ?? {symbol:s,configured:false}))
         const next=products.value.find(p=>p.symbol===symbol.value)??products.value[0]
         if(next)await detail(next.symbol)
     }catch{if(seq===epoch){loadFailed.value=true;message.value='读取平台币种目录失败，请重试。'}}
@@ -147,9 +151,20 @@ async function save(){
             if(!draft.value[key].trim())throw Error('请填写'+label)
         }
         const command=globalCommand(snapshot.value,draft.value,secureRequestId(),layoutChanges())
-        const review=globalJournal.captureSaveReview(operator.value,command)
-        pending.value=globalJournal.persistReviewedCommand(sessionStorage,review,operator.value,command)
+        persist(command)
     }catch(e){message.value=e instanceof Error?e.message:'请核对模板参数';return}
+    await submit('save')
+}
+function persist(command:GlobalCommand){
+    const review=globalJournal.captureSaveReview(operator.value,command)
+    pending.value=globalJournal.persistReviewedCommand(sessionStorage,review,operator.value,command)
+}
+async function setAvailability(item:Product,enabled:unknown){
+    if (locked.value || typeof enabled!=='boolean' || !item.availability_version || (!item.configured && enabled))return
+    try{
+        persist({action:'set_enabled',symbol:item.symbol,based_on_availability_version:item.availability_version,
+            client_request_id:secureRequestId(),reason:'通过总后台设置网格币种开关',enabled})
+    }catch(e){message.value=e instanceof Error?e.message:'无法保全开关操作';return}
     await submit('save')
 }
 async function submit(mode:'save'|'receipt'|'recover'){
@@ -160,12 +175,20 @@ async function submit(mode:'save'|'receipt'|'recover'){
         const result=await globalJournal.attemptPending(sessionStorage,original,mode,(route,cmd)=>route==='save'?api.save(cmd):api.receipt(cmd))
         if(seq!==epoch)return
         journal()
-        if(result.status==='success' || result.status==='rejected' && result.journalCleared){
+        if (original.command.action==='set_enabled' && result.status==='success' && products.value.length){
+            const row=products.value.find(p=>p.symbol===original.command.symbol)
+            const state={enabled:result.value.enabled,availability_version:result.value.availability_version}
+            if(row)Object.assign(row,state)
+            if(snapshot.value?.symbol===original.command.symbol)snapshot.value={...snapshot.value,...state}
+            message.value=''
+        }else if (result.status==='rejected' && result.journalCleared && products.value.length && original.command.action==='set_enabled'){
+            message.value=result.error instanceof Error ? result.error.message : '开关未生效，请重新读取币种配置。'
+        }else if(result.status==='success' || result.status==='rejected' && result.journalCleared){
             busy.value=false;snapshot.value=null;symbol.value=original.command.symbol;await refresh()
             if(result.status==='rejected')message.value='保存未生效，请核对最新配置后再提交。'
         }else{
             recoverable.value=mode==='receipt' && isUnconfirmedReceipt(result.error)
-            message.value='保存结果待确认，请先查询原操作回执。'
+            message.value=result.error instanceof Error ? '保存结果待确认：'+result.error.message+'。请先查询原操作回执。' : '保存结果待确认，请先查询原操作回执。'
         }
     }catch{if(seq===epoch)message.value='保存结果待确认，请先查询原操作回执。'}
     finally{if(seq===epoch)busy.value=false}

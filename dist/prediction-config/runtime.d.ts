@@ -1,5 +1,5 @@
 import { Component, InjectionKey, Ref } from 'vue';
-import { PredictionConfiguration, PredictionGameType, SavePredictionConfigurationPayload } from './platform/views/config/prediction/types';
+import { PredictionConfiguration, PredictionGameType, PlatformSettingsCommand } from './platform/views/config/prediction/types';
 import { Receipt } from './platform/views/prediction/submission';
 import { GameplayConfig, SaveBody, SaveResult } from './agent/api/prediction/types';
 import { OwnerModel, OwnerConfig, OwnerSaveBody, OwnerSaveResult } from './agent/api/prediction/owner-types';
@@ -54,7 +54,7 @@ export interface PlatformConfigAdapter {
         }, signal?: AbortSignal): Promise<{
             configuration: PredictionConfiguration;
         }>;
-        predictionConfigurationSave(body: SavePredictionConfigurationPayload): Promise<{
+        predictionConfigurationSave(body: PlatformSettingsCommand): Promise<{
             configuration: PredictionConfiguration;
             receipt: Receipt;
         }>;
@@ -66,6 +66,8 @@ export interface PlatformConfigAdapter {
                 products: Array<{
                     symbol: string;
                     configured: boolean;
+                    enabled?: boolean;
+                    availability_version?: string;
                 }>;
             }>;
             detail(symbol: string, signal?: AbortSignal): Promise<unknown>;

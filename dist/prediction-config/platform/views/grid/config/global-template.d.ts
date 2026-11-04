@@ -13,6 +13,8 @@ type Layout = LayoutFields & {
     column_count: string;
 };
 export type GlobalSnapshot = {
+    enabled?: boolean;
+    availability_version?: string;
     scope: 'GLOBAL';
     symbol: string;
     global_version: string;
@@ -20,7 +22,8 @@ export type GlobalSnapshot = {
     parameters: Parameters | null;
     layout: Layout | null;
 };
-export type GlobalCommand = {
+type ParameterCommand = {
+    action?: 'save_parameters';
     symbol: string;
     based_on_global_version: string;
     client_request_id: string;
@@ -29,18 +32,29 @@ export type GlobalCommand = {
     based_on_layout_version?: string;
     layout?: Partial<LayoutFields>;
 };
+type AvailabilityCommand = {
+    action: 'set_enabled';
+    symbol: string;
+    based_on_availability_version: string;
+    client_request_id: string;
+    reason: string;
+    enabled: boolean;
+};
+export type GlobalCommand = ParameterCommand | AvailabilityCommand;
 type GlobalResult = {
+    enabled?: boolean;
+    availability_version?: string;
     scope: 'GLOBAL';
     symbol: string;
     global_version: string;
     operation_id: string;
     operation_status: 'SUCCEEDED';
-    effective_from_ms: string;
+    effective_from_ms: string | null;
     changed: boolean;
     cache_state: 'PENDING' | 'DONE' | 'NOT_REQUIRED';
 };
 export declare function globalSnapshot(value: unknown, symbol: string): GlobalSnapshot;
-export declare function globalCommand(snapshot: GlobalSnapshot, changes: unknown, id: string, layout?: Partial<LayoutFields>): GlobalCommand;
+export declare function globalCommand(snapshot: GlobalSnapshot, changes: unknown, id: string, layout?: Partial<LayoutFields>): ParameterCommand;
 export declare const globalJournal: {
     readPending: (storage: import('./journal').PendingStorage) => PendingCommand<GlobalCommand> | null;
     persistPending: (storage: import('./journal').PendingStorage, operatorId: string, command: GlobalCommand) => PendingCommand<GlobalCommand>;

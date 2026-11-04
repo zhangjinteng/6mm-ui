@@ -1,5 +1,5 @@
 import { n as e, r as t, t as n } from "./_plugin-vue_export-helper-CPGXPSGF.js";
-import { Fragment as r, computed as i, createBlock as a, createCommentVNode as o, createElementBlock as s, createElementVNode as c, createSlots as l, createTextVNode as u, createVNode as d, defineComponent as f, inject as p, mergeModels as m, mergeProps as h, nextTick as g, normalizeClass as ee, normalizeStyle as _, onBeforeUnmount as te, onMounted as ne, openBlock as v, provide as y, ref as b, renderList as re, renderSlot as x, resolveDynamicComponent as S, shallowRef as C, toDisplayString as w, toRaw as ie, unref as T, useModel as ae, watch as oe, withCtx as E, withKeys as D, withModifiers as O } from "vue";
+import { Fragment as r, computed as i, createBlock as a, createCommentVNode as o, createElementBlock as s, createElementVNode as c, createSlots as l, createTextVNode as u, createVNode as d, defineComponent as f, inject as ee, mergeModels as p, mergeProps as m, nextTick as h, normalizeClass as te, normalizeStyle as g, onBeforeUnmount as ne, onMounted as re, openBlock as _, provide as ie, ref as v, renderList as ae, renderSlot as y, resolveDynamicComponent as b, shallowRef as x, toDisplayString as S, toRaw as C, unref as w, useModel as oe, watch as se, withCtx as T, withKeys as E, withModifiers as D } from "vue";
 import "element-plus/es/components/alert/style/css";
 import "element-plus/es/components/button/style/css";
 import "element-plus/es/components/card/style/css";
@@ -17,29 +17,29 @@ import "element-plus/es/components/popover/style/css";
 import "element-plus/es/components/select/style/css";
 import "element-plus/es/components/switch/style/css";
 import "element-plus/es/components/tag/style/css";
-import { ElAlert as k, ElButton as A, ElCard as j, ElConfigProvider as M, ElDialog as N, ElDrawer as P, ElEmpty as F, ElForm as se, ElFormItem as I, ElIcon as L, ElInput as R, ElMessage as z, ElMessageBox as ce, ElOption as le, ElPopover as B, ElSelect as ue, ElSwitch as de, ElTag as V, useFormDisabled as H } from "element-plus";
+import { ElAlert as O, ElButton as k, ElCard as A, ElConfigProvider as j, ElDialog as M, ElDrawer as N, ElEmpty as P, ElForm as ce, ElFormItem as F, ElIcon as I, ElInput as L, ElMessage as R, ElMessageBox as z, ElOption as le, ElPopover as B, ElSelect as ue, ElSwitch as de, ElTag as V, useFormDisabled as H } from "element-plus";
 import { QuestionFilled as U } from "@element-plus/icons-vue";
-import fe from "element-plus/es/locale/lang/en";
-import W from "element-plus/es/locale/lang/zh-cn";
+import W from "element-plus/es/locale/lang/en";
+import G from "element-plus/es/locale/lang/zh-cn";
 //#region src/prediction-config/runtime.ts
-var G = Symbol("MmPredictionGameConfig");
-function K() {
-	let e = p(G);
+var K = Symbol("MmPredictionGameConfig");
+function q() {
+	let e = ee(K);
 	if (!e) throw Error("Prediction configuration runtime is missing");
 	return e;
 }
-function pe() {
-	let { adapter: e } = K();
+function fe() {
+	let { adapter: e } = q();
 	if (e.role !== "platform") throw Error("Platform configuration adapter required");
 	return e;
 }
-function me() {
-	let { adapter: e } = K();
+function pe() {
+	let { adapter: e } = q();
 	if (e.role !== "agent") throw Error("Agent configuration adapter required");
 	return e;
 }
-function he() {
-	let e = K();
+function me() {
+	let e = q();
 	return {
 		get userInfo() {
 			return {
@@ -55,14 +55,14 @@ function he() {
 		}
 	};
 }
-function ge() {
-	return K().symbolComponent;
+function he() {
+	return q().symbolComponent;
 }
-function _e(e) {
-	K().registerBeforeLeave?.(e);
+function ge(e) {
+	q().registerBeforeLeave?.(e);
 }
-function ve() {
-	let e = K();
+function _e() {
+	let e = q();
 	return {
 		locale: i(() => e.locale),
 		t: (t) => e.translate?.(t) ?? t,
@@ -71,14 +71,14 @@ function ve() {
 }
 //#endregion
 //#region src/prediction-config/platform/views/prediction/format.ts
-var ye = 9223372036854775807n;
-function be(e, t = ye, n = !0) {
+var ve = 9223372036854775807n;
+function ye(e, t = ve, n = !0) {
 	return typeof e == "string" && /^(0|[1-9]\d*)$/.test(e) && BigInt(e) <= t && (n || e !== "0");
 }
-function xe(e) {
-	return e == null ? "未提供" : be(e, 8640000000000000n) ? new Date(Number(e)).toLocaleString("zh-CN", { hour12: !1 }) : `${String(e)}（无法显示时间）`;
+function be(e) {
+	return e == null ? "未提供" : ye(e, 8640000000000000n) ? new Date(Number(e)).toLocaleString("zh-CN", { hour12: !1 }) : `${String(e)}（无法显示时间）`;
 }
-function Se(e, t = "UP_DOWN") {
+function xe(e, t = "UP_DOWN") {
 	let n = {
 		35: "5",
 		40: "10",
@@ -88,56 +88,56 @@ function Se(e, t = "UP_DOWN") {
 	};
 	return t === "UP_DOWN" ? n[e] ? `${n[e]}秒` : `历史周期${e}秒` : `${e}秒`;
 }
-function Ce(e) {
+function Se(e) {
 	return e instanceof Error || e && typeof e == "object" && "message" in e && typeof e.message == "string" ? e.message : "暂时无法获取确定结果，请稍后刷新或核验原操作";
 }
 //#endregion
 //#region src/prediction-config/platform/views/config/prediction/form.ts
-var q = /^(?:0|[1-9]\d*)(?:\.\d+)?$/, we = /^[1-9]\d*$/, Te = /^\d+$/, Ee = [
+var J = /^(?:0|[1-9]\d*)(?:\.\d+)?$/, Y = /^[1-9]\d*$/, Ce = /^\d+$/, we = [
 	"35",
 	"40",
 	"45",
 	"60",
 	"90"
-], De = [
+], Te = [
 	"5",
 	"10",
 	"15",
 	"30",
 	"60"
-], Oe = (e) => {
+], Ee = (e) => {
 	if (e === "GAME_TYPE_UP_DOWN") return "UP_DOWN";
 	if (e === "GAME_TYPE_HIGH_LOW") return "HIGH_LOW";
 	throw Error(`不支持的预测玩法类型：${e || "空"}`);
-}, ke = (e) => ({
+}, De = (e) => ({
 	default_value: e.default_value,
 	minimum_value: e.minimum_value,
 	maximum_value: e.maximum_value,
 	agent_editable: e.agent_editable
-}), Ae = (e) => ({
+}), Oe = (e) => ({
 	default_value: e.default_value,
 	minimum_value: e.minimum_value,
 	maximum_value: e.maximum_value,
 	agent_editable: e.agent_editable
-}), je = (e) => {
+}), ke = (e) => {
 	let t = {
 		enabled_by_default: e.enabled_by_default,
 		display_order: e.display_order,
-		minimum_stake: ke(e.minimum_stake),
-		maximum_stake: ke(e.maximum_stake),
+		minimum_stake: De(e.minimum_stake),
+		maximum_stake: De(e.maximum_stake),
 		retired: e.retired
 	};
 	return e.stake_tier_id && (t.stake_tier_id = e.stake_tier_id), t;
-}, Me = (e, t) => {
+}, Ae = (e, t) => {
 	let n = e.stake_tiers ?? [], r = n.find((e) => !e.retired) ?? n[0], i = e[t] ?? r?.[t];
 	if (!i) throw Error(`周期 ${e.duration_seconds || "--"} 秒缺少${t === "minimum_stake" ? "最低" : "最高"}下注限制配置，请刷新后重试`);
 	return i;
-}, Ne = (e) => {
+}, je = (e) => {
 	let t = {
 		duration_seconds: e.duration_seconds,
 		enabled_by_default: e.enabled_by_default,
-		minimum_stake: ke(Me(e, "minimum_stake")),
-		maximum_stake: ke(Me(e, "maximum_stake")),
+		minimum_stake: De(Ae(e, "minimum_stake")),
+		maximum_stake: De(Ae(e, "maximum_stake")),
 		settlement_display_seconds: e.settlement_display_seconds,
 		price_rule: {
 			max_age_milliseconds: e.price_rule.max_age_milliseconds,
@@ -145,19 +145,19 @@ var q = /^(?:0|[1-9]\d*)(?:\.\d+)?$/, we = /^[1-9]\d*$/, Te = /^\d+$/, Ee = [
 			price_decimals: e.price_rule.price_decimals === void 0 ? 3 : e.price_rule.price_decimals
 		}
 	};
-	e.market_id && (t.market_id = e.market_id), e.bet_open_seconds && (t.bet_open_seconds = Ae(e.bet_open_seconds)), e.target_payout_rate && (t.target_payout_rate = ke(e.target_payout_rate)), e.minimum_odds && (t.minimum_odds = {
+	e.market_id && (t.market_id = e.market_id), e.bet_open_seconds && (t.bet_open_seconds = Oe(e.bet_open_seconds)), e.target_payout_rate && (t.target_payout_rate = De(e.target_payout_rate)), e.minimum_odds && (t.minimum_odds = {
 		default_value: "1",
 		minimum_value: "1",
 		maximum_value: "1",
 		agent_editable: !1
-	}), e.maximum_odds && (t.maximum_odds = ke(e.maximum_odds)), e.fixed_odds && (t.fixed_odds = ke(e.fixed_odds));
+	}), e.maximum_odds && (t.maximum_odds = De(e.maximum_odds)), e.fixed_odds && (t.fixed_odds = De(e.fixed_odds));
 	let n = e.stake_tiers ?? [];
-	return n.length > 0 && (t.stake_tiers = n.map(je)), t;
+	return n.length > 0 && (t.stake_tiers = n.map(ke)), t;
 };
-function Pe(e) {
-	let t = e.rules.map(Ne);
+function Me(e) {
+	let t = e.rules.map(je);
 	if (new Set(t.map((e) => e.duration_seconds)).size !== t.length) throw Error("自选周期重复");
-	return De.map((e) => {
+	return Te.map((e) => {
 		let n = t.find((t) => t.duration_seconds === e);
 		if (n) return n;
 		let r = e === "60" ? "5000" : "3000";
@@ -187,22 +187,22 @@ function Pe(e) {
 		};
 	});
 }
-function Fe(e) {
+function Ne(e) {
 	let t = e.rules[0];
 	if (!t) throw Error("当前配置没有可编辑周期");
 	return {
-		game_type: Oe(t.game_type),
+		game_type: Ee(t.game_type),
 		symbol: t.symbol,
 		based_on_template_version: e.template_version,
-		enabled: Ye(e),
-		rules: (t.game_type === "GAME_TYPE_HIGH_LOW" ? Pe(e) : e.rules.map(Ne)).map((t) => ({
+		enabled: qe(e),
+		rules: (t.game_type === "GAME_TYPE_HIGH_LOW" ? Me(e) : e.rules.map(je)).map((t) => ({
 			...t,
-			enabled_by_default: Je(e) || t.enabled_by_default
+			enabled_by_default: Ke(e) || t.enabled_by_default
 		}))
 	};
 }
-function Ie(e, t, n) {
-	e = ze(e);
+function Pe(e, t, n) {
+	e = Le(e);
 	let r = structuredClone(e.rules);
 	if (e.game_type === "UP_DOWN") for (let [t, n] of r.entries()) {
 		let r = e.rules[t], i = n.stake_tiers?.find((e) => !e.retired);
@@ -220,34 +220,34 @@ function Ie(e, t, n) {
 		}
 	};
 }
-function Le(e, t = e.is_new === !0) {
-	e = ze(e);
+function Fe(e, t = e.is_new === !0) {
+	e = Le(e);
 	let n = [];
-	e.symbol || n.push("交易对不能为空"), be(e.based_on_template_version) || n.push("配置版本无效"), e.rules.length === 0 && n.push("至少保留一个周期"), e.game_type === "UP_DOWN" && [...e.rules.map((e) => e.duration_seconds)].sort().join(",") !== Ee.join(",") && n.push("涨跌配置必须包含5、10、15、30、60秒五个固定房间"), e.game_type === "HIGH_LOW" && [...e.rules.map((e) => e.duration_seconds)].sort().join(",") !== [...De].sort().join(",") && n.push("自选配置必须包含5、10、15、30、60秒五个固定房间"), new Set(e.rules.map((e) => e.price_rule.price_decimals)).size > 1 && n.push("同一币种各周期的价格小数位必须一致");
+	e.symbol || n.push("交易对不能为空"), ye(e.based_on_template_version) || n.push("配置版本无效"), e.rules.length === 0 && n.push("至少保留一个周期"), e.game_type === "UP_DOWN" && [...e.rules.map((e) => e.duration_seconds)].sort().join(",") !== we.join(",") && n.push("涨跌配置必须包含5、10、15、30、60秒五个固定房间"), e.game_type === "HIGH_LOW" && [...e.rules.map((e) => e.duration_seconds)].sort().join(",") !== [...Te].sort().join(",") && n.push("自选配置必须包含5、10、15、30、60秒五个固定房间"), new Set(e.rules.map((e) => e.price_rule.price_decimals)).size > 1 && n.push("同一币种各周期的价格小数位必须一致");
 	let r = /* @__PURE__ */ new Set();
 	return e.rules.forEach((i) => {
 		let a = `${i.duration_seconds || "--"} 秒周期`;
-		we.test(i.duration_seconds) || n.push(`${a}的周期必须是正整数`), r.has(i.duration_seconds) && n.push(`周期 ${i.duration_seconds} 秒重复`), r.add(i.duration_seconds);
+		Y.test(i.duration_seconds) || n.push(`${a}的周期必须是正整数`), r.has(i.duration_seconds) && n.push(`周期 ${i.duration_seconds} 秒重复`), r.add(i.duration_seconds);
 		let o = i.price_rule.price_decimals;
-		o !== void 0 && (typeof o != "number" || !Number.isInteger(o) || o < 0 || o > 8) && n.push("价格小数位必须是0～8的整数"), Be(i.settlement_display_seconds, `${a}的结算展示时间`, n), Be(i.price_rule.max_age_milliseconds, `${a}的行情最大年龄`, n), Be(i.price_rule.late_arrival_grace_milliseconds, `${a}的行情延迟宽限`, n), He(i.minimum_stake, a, "最低下注额", n), He(i.maximum_stake, a, "最高下注额", n);
+		o !== void 0 && (typeof o != "number" || !Number.isInteger(o) || o < 0 || o > 8) && n.push("价格小数位必须是0～8的整数"), Re(i.settlement_display_seconds, `${a}的结算展示时间`, n), Re(i.price_rule.max_age_milliseconds, `${a}的行情最大年龄`, n), Re(i.price_rule.late_arrival_grace_milliseconds, `${a}的行情延迟宽限`, n), Be(i.minimum_stake, a, "最低下注额", n), Be(i.maximum_stake, a, "最高下注额", n);
 		let s = i.minimum_stake?.default_value, c = i.maximum_stake?.default_value, l = /^(0|[1-9]\d{0,17})(\.\d{1,18})?$/;
-		typeof s != "string" || typeof c != "string" || !l.test(s) || !l.test(c) || Ue(s, "0") <= 0 || Ue(c, "0") <= 0 ? n.push(`${a}的单笔限额必须为正数，整数及小数最多18位`) : Ue(s, c) > 0 && n.push(`${a}的最小额不能大于最大额`), e.game_type === "UP_DOWN" ? (((e, t) => !!e && e.agent_editable === !1 && [
+		typeof s != "string" || typeof c != "string" || !l.test(s) || !l.test(c) || Ve(s, "0") <= 0 || Ve(c, "0") <= 0 ? n.push(`${a}的单笔限额必须为正数，整数及小数最多18位`) : Ve(s, c) > 0 && n.push(`${a}的最小额不能大于最大额`), e.game_type === "UP_DOWN" ? (((e, t) => !!e && e.agent_editable === !1 && [
 			e.minimum_value,
 			e.default_value,
 			e.maximum_value
-		].every((e) => typeof e == "string" && q.test(e) && Ue(e, t) === 0))(i.bet_open_seconds, "30") || n.push("下注开放固定30秒且不可由代理调整"), (!t && !i.market_id || i.stake_tiers?.filter((e) => !e.retired).length !== 1) && n.push("房间配置不完整，请重新加载"), i.stake_tiers?.filter((e) => !e.retired).forEach((e) => {
+		].every((e) => typeof e == "string" && J.test(e) && Ve(e, t) === 0))(i.bet_open_seconds, "30") || n.push("下注开放固定30秒且不可由代理调整"), (!t && !i.market_id || i.stake_tiers?.filter((e) => !e.retired).length !== 1) && n.push("房间配置不完整，请重新加载"), i.stake_tiers?.filter((e) => !e.retired).forEach((e) => {
 			!t && !e.stake_tier_id && n.push("房间标识无效");
 		}), [
 			i.target_payout_rate,
 			i.minimum_odds,
 			i.maximum_odds
-		].some((e) => e?.agent_editable !== !1) && n.push("返奖率和赔率不能由代理调整"), Ve(i.bet_open_seconds, a, "下注开放时间", n), He(i.target_payout_rate, a, "目标返奖率", n), typeof i.target_payout_rate?.default_value == "string" && q.test(i.target_payout_rate.default_value) && Ue(i.target_payout_rate.default_value, "1") >= 0 && n.push(`${a}的目标返奖率必须小于 100%`), He(i.minimum_odds, a, "最低赔率", n), He(i.maximum_odds, a, "最高赔率", n), i.stake_tiers?.length || n.push(`${a}的房间配置不完整`), i.stake_tiers?.forEach((e, t) => {
+		].some((e) => e?.agent_editable !== !1) && n.push("返奖率和赔率不能由代理调整"), ze(i.bet_open_seconds, a, "下注开放时间", n), Be(i.target_payout_rate, a, "目标返奖率", n), typeof i.target_payout_rate?.default_value == "string" && J.test(i.target_payout_rate.default_value) && Ve(i.target_payout_rate.default_value, "1") >= 0 && n.push(`${a}的目标返奖率必须小于 100%`), Be(i.minimum_odds, a, "最低赔率", n), Be(i.maximum_odds, a, "最高赔率", n), i.stake_tiers?.length || n.push(`${a}的房间配置不完整`), i.stake_tiers?.forEach((e, t) => {
 			let r = `${a}历史设置 ${t + 1}`;
-			He(e.minimum_stake, r, "最低下注额", n), He(e.maximum_stake, r, "最高下注额", n);
-		})) : (He(i.fixed_odds, a, "固定赔率", n), typeof i.fixed_odds?.default_value == "string" && q.test(i.fixed_odds.default_value) && Ue(i.fixed_odds.default_value, "2") >= 0 && n.push(`${a}的固定赔率必须小于 2`));
+			Be(e.minimum_stake, r, "最低下注额", n), Be(e.maximum_stake, r, "最高下注额", n);
+		})) : (Be(i.fixed_odds, a, "固定赔率", n), typeof i.fixed_odds?.default_value == "string" && J.test(i.fixed_odds.default_value) && Ve(i.fixed_odds.default_value, "2") >= 0 && n.push(`${a}的固定赔率必须小于 2`));
 	}), [...new Set(n)];
 }
-function Re(e, t, n) {
+function Ie(e, t, n) {
 	if (e.length <= 3) return e.join("；");
 	let r = (e) => t === "UP_DOWN" ? String(Number(e) - 30) : e, i = `${n} 秒周期`, a = e.filter((e) => e.startsWith(i)), o = [...new Set(e.flatMap((e) => {
 		let t = /^(\d+) 秒周期/.exec(e);
@@ -255,7 +255,7 @@ function Re(e, t, n) {
 	}))], s = [...e.filter((e) => !/^\d+ 秒周期/.test(e)).slice(0, 1), ...a.slice(0, 2)];
 	return a.length > 2 && s.push(`${r(n)} 秒周期还有 ${a.length - 2} 项需检查`), o.length && s.push(`请补全 ${o.map(r).join("、")} 秒周期参数`), s.join("；").slice(0, 180);
 }
-function ze(e) {
+function Le(e) {
 	if (!e.is_new) return e;
 	let t = structuredClone(e);
 	for (let e of t.rules) {
@@ -265,10 +265,10 @@ function ze(e) {
 	}
 	return t;
 }
-function Be(e, t, n) {
-	be(e) || n.push(`${t}必须是非负整数`);
+function Re(e, t, n) {
+	ye(e) || n.push(`${t}必须是非负整数`);
 }
-function Ve(e, t, n, r) {
+function ze(e, t, n, r) {
 	if (!e) {
 		r.push(`${t}缺少${n}`);
 		return;
@@ -277,13 +277,13 @@ function Ve(e, t, n, r) {
 		e.minimum_value,
 		e.default_value,
 		e.maximum_value
-	].some((e) => typeof e != "string" || !Te.test(e))) {
+	].some((e) => typeof e != "string" || !Ce.test(e))) {
 		r.push(`${t}的${n}必须是非负整数`);
 		return;
 	}
-	(Ue(e.minimum_value, e.default_value) > 0 || Ue(e.default_value, e.maximum_value) > 0) && r.push(`${t}的${n}默认值必须处于上下限之间`);
+	(Ve(e.minimum_value, e.default_value) > 0 || Ve(e.default_value, e.maximum_value) > 0) && r.push(`${t}的${n}默认值必须处于上下限之间`);
 }
-function He(e, t, n, r) {
+function Be(e, t, n, r) {
 	if (!e) {
 		r.push(`${t}缺少${n}`);
 		return;
@@ -292,33 +292,33 @@ function He(e, t, n, r) {
 		e.minimum_value,
 		e.default_value,
 		e.maximum_value
-	].some((e) => typeof e != "string" || !q.test(e))) {
+	].some((e) => typeof e != "string" || !J.test(e))) {
 		r.push(`${t}的${n}必须是非负十进制字符串`);
 		return;
 	}
-	(Ue(e.minimum_value, e.default_value) > 0 || Ue(e.default_value, e.maximum_value) > 0) && r.push(`${t}的${n}默认值必须处于上下限之间`);
+	(Ve(e.minimum_value, e.default_value) > 0 || Ve(e.default_value, e.maximum_value) > 0) && r.push(`${t}的${n}默认值必须处于上下限之间`);
 }
-function Ue(e, t) {
+function Ve(e, t) {
 	let [n, r = ""] = e.split("."), [i, a = ""] = t.split("."), o = n.replace(/^0+(?=\d)/, ""), s = i.replace(/^0+(?=\d)/, "");
 	if (o.length !== s.length) return o.length > s.length ? 1 : -1;
 	if (o !== s) return o > s ? 1 : -1;
 	let c = Math.max(r.length, a.length), l = r.padEnd(c, "0"), u = a.padEnd(c, "0");
 	return l === u ? 0 : l > u ? 1 : -1;
 }
-function We(e, t) {
-	if (!q.test(e)) return e;
+function He(e, t) {
+	if (!J.test(e)) return e;
 	let [n, r = ""] = e.split("."), i = n + r, a = n.length + t;
 	return (a <= 0 ? "0." + "0".repeat(-a) + i : a >= i.length ? i + "0".repeat(a - i.length) : i.slice(0, a) + "." + i.slice(a)).replace(/^0+(?=\d)/, "");
 }
-var Ge = (e) => We(e, 2), Ke = (e) => We(e, -2);
-function qe(e, t, n) {
+var Ue = (e) => He(e, 2), We = (e) => He(e, -2);
+function Ge(e, t, n) {
 	e[t].default_value = n;
 	for (let t of ["minimum_stake", "maximum_stake"]) e[t].minimum_value = e.minimum_stake.default_value, e[t].maximum_value = e.maximum_stake.default_value;
 }
-var Je = (e) => e.symbol_enabled === void 0 && !e.rules.some((e) => e.enabled_by_default), Ye = (e) => e.symbol_enabled ?? e.rules.some((e) => e.enabled), Xe = (e) => e.rules.filter((t) => Je(e) || t.enabled_by_default).map((e) => e.duration_seconds);
+var Ke = (e) => e.symbol_enabled === void 0 && !e.rules.some((e) => e.enabled_by_default), qe = (e) => e.symbol_enabled ?? e.rules.some((e) => e.enabled), Je = (e) => e.rules.filter((t) => Ke(e) || t.enabled_by_default).map((e) => e.duration_seconds);
 //#endregion
 //#region src/prediction-config/platform/views/grid/config/directory.ts
-function Ze(e, t) {
+function Ye(e, t) {
 	let n = /* @__PURE__ */ new Map();
 	for (let t of e) n.set(t.symbol, {
 		...t,
@@ -332,9 +332,9 @@ function Ze(e, t) {
 			configured: !1
 		});
 	}
-	return Qe([...n.values()], t);
+	return Xe([...n.values()], t);
 }
-function Qe(e, t, n = (e) => !!e.enabled) {
+function Xe(e, t, n = (e) => !!e.enabled) {
 	let r = /* @__PURE__ */ new Map();
 	for (let e of t) {
 		let t = e.trim().toUpperCase();
@@ -343,79 +343,8 @@ function Qe(e, t, n = (e) => !!e.enabled) {
 	return [...e].sort((e, t) => Number(n(t)) - Number(n(e)) || (r.get(e.symbol) ?? 2 ** 53 - 1) - (r.get(t.symbol) ?? 2 ** 53 - 1) || e.symbol.localeCompare(t.symbol));
 }
 //#endregion
-//#region src/prediction-config/platform/views/config/prediction/creation.ts
-var $e = (e = !1) => ({
-	default_value: "",
-	minimum_value: "",
-	maximum_value: "",
-	agent_editable: e
-});
-function et(e, t, n) {
-	return {
-		is_new: !0,
-		game_type: e,
-		symbol: t,
-		based_on_template_version: n,
-		enabled: !1,
-		rules: (e === "UP_DOWN" ? Ee : De).map((t) => ({
-			duration_seconds: t,
-			enabled_by_default: !0,
-			minimum_stake: $e(!0),
-			maximum_stake: $e(!0),
-			settlement_display_seconds: "10",
-			price_rule: {
-				max_age_milliseconds: "5000",
-				late_arrival_grace_milliseconds: "500",
-				price_decimals: 3
-			},
-			...e === "UP_DOWN" ? {
-				bet_open_seconds: {
-					default_value: "30",
-					minimum_value: "30",
-					maximum_value: "30",
-					agent_editable: !1
-				},
-				target_payout_rate: $e(),
-				minimum_odds: {
-					default_value: "1",
-					minimum_value: "1",
-					maximum_value: "1",
-					agent_editable: !1
-				},
-				maximum_odds: $e(),
-				stake_tiers: [{
-					enabled_by_default: !0,
-					display_order: 1,
-					minimum_stake: $e(!0),
-					maximum_stake: $e(!0),
-					retired: !1
-				}]
-			} : { fixed_odds: $e(!0) }
-		}))
-	};
-}
-function tt(e, t, n) {
-	let r = e?.configurations;
-	if (!Array.isArray(r)) throw Error("配置列表格式异常，请重新加载");
-	let i = "0", a, o = /* @__PURE__ */ new Set();
-	for (let e of r) {
-		if (!e || e.scope !== "CONFIG_SCOPE_PLATFORM" || typeof e.template_version != "string" || !/^[1-9]\d*$/.test(e.template_version) || BigInt(e.template_version) > 9223372036854775807n || !Array.isArray(e.rules) || !e.rules.length) throw Error("配置列表格式异常，请重新加载");
-		if (i !== "0" && i !== e.template_version) throw Error("配置版本不一致，请重新加载");
-		i = e.template_version;
-		let r = e.rules[0];
-		if (!r || !["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(r.game_type) || !/^[A-Z0-9]{2,32}$/.test(r.symbol) || e.rules.some((e) => !e || e.symbol !== r.symbol || e.game_type !== r.game_type)) throw Error("配置列表格式异常，请重新加载");
-		let s = `${r.game_type}:${r.symbol}`;
-		if (o.has(s)) throw Error("配置列表重复，请重新加载");
-		o.add(s), r.game_type === `GAME_TYPE_${t}` && r.symbol === n && (a = e);
-	}
-	return {
-		version: i,
-		existing: a
-	};
-}
-//#endregion
 //#region src/prediction-config/platform/views/prediction/query.ts
-var nt = (e, t) => e.includes("*") || e.includes(t), rt = {
+var Ze = (e, t) => e.includes("*") || e.includes(t), Qe = {
 	direction: ["UP", "DOWN"],
 	order_source: ["PLAYER", "MARKET_MAKER"],
 	business_status: [
@@ -451,20 +380,28 @@ var nt = (e, t) => e.includes("*") || e.includes(t), rt = {
 	],
 	sort_direction: ["ASC", "DESC"]
 };
-rt.result, rt.sort_direction;
+Qe.result, Qe.sort_direction;
+//#endregion
+//#region src/prediction-config/submission-outcome.ts
+function $e(e, t) {
+	if (!e || typeof e != "object") return;
+	let n = e, r = [n.control?.submission_outcome, n.detail?.control?.submission_outcome];
+	if (r.includes("UNVERIFIED") || n.client_request_id !== void 0 && n.client_request_id !== t) return "unverified";
+	if (r.includes("REJECTED")) return n.client_request_id === t ? "rejected" : "unverified";
+}
 //#endregion
 //#region src/prediction-config/platform/views/grid/config/journal.ts
-var it = /^[1-9]\d*$/;
-function at(e) {
+var et = /^[1-9]\d*$/;
+function tt(e) {
 	return !!e && typeof e == "object" && !Array.isArray(e);
 }
-function ot(e, t) {
+function nt(e, t) {
 	if (!e) throw Error(t);
 }
-function st(e, t) {
-	ot(Object.keys(e).length === t.length && t.every((t) => Object.hasOwn(e, t)), "PENDING_CORRUPT");
+function rt(e, t) {
+	nt(Object.keys(e).length === t.length && t.every((t) => Object.hasOwn(e, t)), "PENDING_CORRUPT");
 }
-function ct(e, t, n) {
+function it(e, t, n) {
 	function r(e) {
 		if (e && typeof e == "object") {
 			Object.freeze(e);
@@ -478,21 +415,21 @@ function ct(e, t, n) {
 	function a(n) {
 		let i = n.getItem(e);
 		if (i === null) return null;
-		ot(i.length <= 32768, "PENDING_CORRUPT");
+		nt(i.length <= 32768, "PENDING_CORRUPT");
 		let a;
 		try {
 			a = JSON.parse(i);
 		} catch {
 			throw Error("PENDING_CORRUPT");
 		}
-		return ot(at(a), "PENDING_CORRUPT"), st(a, [
+		return nt(tt(a), "PENDING_CORRUPT"), rt(a, [
 			"schema",
 			"operator_id",
 			"command"
-		]), ot(a.schema === 1 && typeof a.operator_id == "string" && it.test(a.operator_id), "PENDING_CORRUPT"), t(a.command), r(a);
+		]), nt(a.schema === 1 && typeof a.operator_id == "string" && et.test(a.operator_id), "PENDING_CORRUPT"), t(a.command), r(a);
 	}
 	function o(n, r, o) {
-		ot(it.test(r), "IDENTITY_UNCONFIRMED"), ot(a(n) === null, "PENDING_EXISTS"), t(o);
+		nt(et.test(r), "IDENTITY_UNCONFIRMED"), nt(a(n) === null, "PENDING_EXISTS"), t(o);
 		let s = {
 			schema: 1,
 			operator_id: r,
@@ -500,16 +437,16 @@ function ct(e, t, n) {
 		};
 		n.setItem(e, JSON.stringify(s));
 		let c = a(n);
-		return ot(i(c, s), "PERSISTENCE_UNAVAILABLE"), c;
+		return nt(i(c, s), "PERSISTENCE_UNAVAILABLE"), c;
 	}
 	function s(e, n) {
-		return ot(it.test(e), "IDENTITY_UNCONFIRMED"), t(n), r({
+		return nt(et.test(e), "IDENTITY_UNCONFIRMED"), t(n), r({
 			operator_id: e,
 			command: structuredClone(n)
 		});
 	}
 	function c(e, n, r, i) {
-		return t(n.command), t(i), ot(n.operator_id === r && JSON.stringify(n.command) === JSON.stringify(i), "STALE_CONFIRMATION"), o(e, n.operator_id, n.command);
+		return t(n.command), t(i), nt(n.operator_id === r && JSON.stringify(n.command) === JSON.stringify(i), "STALE_CONFIRMATION"), o(e, n.operator_id, n.command);
 	}
 	function l(e, t) {
 		let n = a(e);
@@ -522,7 +459,7 @@ function ct(e, t, n) {
 		} : { status: "none" };
 	}
 	async function u(t, r, o, s) {
-		ot(i(a(t), r), "PENDING_CHANGED");
+		nt(i(a(t), r), "PENDING_CHANGED");
 		try {
 			let c = await s(o === "recover" ? "save" : o, structuredClone(r.command));
 			return n(c, r) ? (i(a(t), r) && t.removeItem(e), {
@@ -533,7 +470,7 @@ function ct(e, t, n) {
 				error: /* @__PURE__ */ Error("INVALID_RECEIPT")
 			};
 		} catch (n) {
-			if ((at(n) ? n.operation_status : void 0) === "FAILED" && (o === "save" || o === "recover" && at(n) && n.error_code === "VERSION_CONFLICT")) {
+			if ((tt(n) ? n.operation_status : void 0) === "FAILED" && (o === "save" || o === "recover" && tt(n) && n.error_code === "VERSION_CONFLICT")) {
 				let o = i(a(t), r);
 				return o && t.removeItem(e), {
 					status: "rejected",
@@ -558,7 +495,7 @@ function ct(e, t, n) {
 }
 //#endregion
 //#region src/prediction-config/grid-parameters.ts
-var lt = [
+var at = [
 	"parameters_available",
 	"parameter_source",
 	"stored_parameters",
@@ -567,18 +504,18 @@ var lt = [
 	"default_global_parameters_source",
 	"default_min_multiplier",
 	"default_max_multiplier"
-], ut = [
+], ot = [
 	"target_rtp",
 	"min_multiplier",
 	"max_multiplier",
 	"min_order_amount",
 	"max_order_amount"
-], dt = (e) => !!e && typeof e == "object" && !Array.isArray(e), ft = (e) => {
+], st = (e) => !!e && typeof e == "object" && !Array.isArray(e), ct = (e) => {
 	if (!e) throw Error("INVALID_GRID_CONFIGURATION");
-}, pt = (e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e) && (e.length < 19 || e.length === 19 && e <= "9223372036854775807");
-function mt(e) {
+}, lt = (e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e) && (e.length < 19 || e.length === 19 && e <= "9223372036854775807");
+function ut(e) {
 	if (e === null) return null;
-	ft(dt(e) && Object.keys(e).length === 3 && e.kind === "GLOBAL" && pt(e.version) && typeof e.effective_from_ms == "string" && /^[0-9]+$/.test(e.effective_from_ms));
+	ct(st(e) && Object.keys(e).length === 3 && e.kind === "GLOBAL" && lt(e.version) && typeof e.effective_from_ms == "string" && /^[0-9]+$/.test(e.effective_from_ms));
 	let t = e;
 	return {
 		kind: "GLOBAL",
@@ -586,18 +523,18 @@ function mt(e) {
 		effective_from_ms: t.effective_from_ms
 	};
 }
-function ht(e, t) {
-	if (!lt.some((t) => t in e)) return;
-	if (ft(lt.every((t) => t in e)), e.parameters_available === !1) throw Error("CONFIG_PARAMETERS_UNAVAILABLE");
-	ft(e.parameters_available === !0 && [
+function dt(e, t) {
+	if (!at.some((t) => t in e)) return;
+	if (ct(at.every((t) => t in e)), e.parameters_available === !1) throw Error("CONFIG_PARAMETERS_UNAVAILABLE");
+	ct(e.parameters_available === !0 && [
 		"GLOBAL",
 		"SITE",
 		"MERCHANT"
-	].includes(String(e.parameter_source)) && ["GLOBAL", "SITE"].includes(String(e.default_parameter_source))), ft(dt(e.stored_parameters) && Object.keys(e.stored_parameters).length === 5 && ut.every((t) => t in e.stored_parameters));
-	let n = e.stored_parameters, r = Object.fromEntries(ut.map((e) => [e, n[e] === null ? null : t(n[e])]));
-	ft(Object.values(r).every((t) => e.parameter_source === "GLOBAL" ? t === null : t !== null));
-	let i = mt(e.global_parameters_source), a = mt(e.default_global_parameters_source);
-	return ft(e.parameter_source === "GLOBAL" == (i !== null) && e.default_parameter_source === "GLOBAL" == (a !== null)), ft(!i || !a || i.version === a.version), {
+	].includes(String(e.parameter_source)) && ["GLOBAL", "SITE"].includes(String(e.default_parameter_source))), ct(st(e.stored_parameters) && Object.keys(e.stored_parameters).length === 5 && ot.every((t) => t in e.stored_parameters));
+	let n = e.stored_parameters, r = Object.fromEntries(ot.map((e) => [e, n[e] === null ? null : t(n[e])]));
+	ct(Object.values(r).every((t) => e.parameter_source === "GLOBAL" ? t === null : t !== null));
+	let i = ut(e.global_parameters_source), a = ut(e.default_global_parameters_source);
+	return ct(e.parameter_source === "GLOBAL" == (i !== null) && e.default_parameter_source === "GLOBAL" == (a !== null)), ct(!i || !a || i.version === a.version), {
 		parameters_available: !0,
 		parameter_source: e.parameter_source,
 		stored_parameters: r,
@@ -608,16 +545,16 @@ function ht(e, t) {
 		default_max_multiplier: t(e.default_max_multiplier)
 	};
 }
-function gt(e) {
+function ft(e) {
 	return e.global_parameters_source?.version ?? e.default_global_parameters_source?.version;
 }
 //#endregion
 //#region src/prediction-config/platform/views/grid/config/model.ts
-function _t(e, t = !0) {
+function pt(e, t = !0) {
 	let n = structuredClone(e);
 	return t && n.layout?.editable && n.layout.price_decimals == null && (n.layout.price_decimals = 3), n;
 }
-var vt = "grid.config.pending.v1", yt = /^(0|[1-9]\d*)(?:\.(\d+))?$/, bt = /^[1-9]\d*$/, xt = /^[A-Z0-9]{2,32}$/, St = [
+var mt = "grid.config.pending.v1", ht = /^(0|[1-9]\d*)(?:\.(\d+))?$/, gt = /^[1-9]\d*$/, _t = /^[A-Z0-9]{2,32}$/, vt = [
 	"site_id",
 	"symbol",
 	"based_on_layout_version",
@@ -625,7 +562,7 @@ var vt = "grid.config.pending.v1", yt = /^(0|[1-9]\d*)(?:\.(\d+))?$/, bt = /^[1-
 	"client_request_id",
 	"reason",
 	"changes"
-], Ct = [
+], yt = [
 	"config_id",
 	"requested_agent_id",
 	"agent_id",
@@ -638,15 +575,15 @@ var vt = "grid.config.pending.v1", yt = /^(0|[1-9]\d*)(?:\.(\d+))?$/, bt = /^[1-
 	"default_target_rtp",
 	"default_min_order_amount",
 	"default_max_order_amount"
-], wt = [
+], bt = [
 	"based_on_config_id",
 	"based_on_default_version",
 	"based_on_default_resolution_epoch"
-], Tt = [
+], xt = [
 	"price_band_width",
 	"column_duration_seconds",
 	"price_decimals"
-], Et = [
+], St = [
 	"enabled",
 	"target_rtp",
 	"min_multiplier",
@@ -654,85 +591,85 @@ var vt = "grid.config.pending.v1", yt = /^(0|[1-9]\d*)(?:\.(\d+))?$/, bt = /^[1-
 	"min_order_amount",
 	"max_order_amount"
 ];
-function Dt(e) {
+function Ct(e) {
 	return !!e && typeof e == "object" && !Array.isArray(e);
 }
-function J(e, t = "INVALID_GRID_CONFIGURATION") {
+function X(e, t = "INVALID_GRID_CONFIGURATION") {
 	if (!e) throw Error(t);
 }
-function Ot(e, t) {
-	J(Object.keys(e).length === t.length && Object.keys(e).every((e) => t.includes(e)), "PENDING_CORRUPT");
+function wt(e, t) {
+	X(Object.keys(e).length === t.length && Object.keys(e).every((e) => t.includes(e)), "PENDING_CORRUPT");
 }
-function kt(e, t) {
-	J(typeof e == "string" && e.length <= 128 && yt.test(e), "INVALID_DECIMAL");
+function Tt(e, t) {
+	X(typeof e == "string" && e.length <= 128 && ht.test(e), "INVALID_DECIMAL");
 	let [n, r = ""] = e.split("."), i = n.replace(/^0+(?=\d)/, ""), a = r.replace(/0+$/, "");
-	return J(t === void 0 || a.length <= t, "INVALID_DECIMAL"), a ? i + "." + a : i;
+	return X(t === void 0 || a.length <= t, "INVALID_DECIMAL"), a ? i + "." + a : i;
 }
-function At(e) {
-	let [t, n = ""] = kt(e).split(".");
+function Et(e) {
+	let [t, n = ""] = Tt(e).split(".");
 	return {
 		whole: t,
 		fraction: n
 	};
 }
-function jt(e, t) {
-	let n = At(e), r = At(t);
+function Dt(e, t) {
+	let n = Et(e), r = Et(t);
 	if (n.whole.length !== r.whole.length) return n.whole.length > r.whole.length ? 1 : -1;
 	if (n.whole !== r.whole) return n.whole > r.whole ? 1 : -1;
 	let i = Math.max(n.fraction.length, r.fraction.length), a = n.fraction.padEnd(i, "0"), o = r.fraction.padEnd(i, "0");
 	return a === o ? 0 : a > o ? 1 : -1;
 }
-function Mt(e, t) {
-	let { whole: n, fraction: r } = At(e), i = n + r, a = n.length + t, o;
+function Ot(e, t) {
+	let { whole: n, fraction: r } = Et(e), i = n + r, a = n.length + t, o;
 	o = a <= 0 ? "0." + "0".repeat(-a) + i : a >= i.length ? i + "0".repeat(a - i.length) : i.slice(0, a) + "." + i.slice(a);
 	let [s, c = ""] = o.split("."), l = s.replace(/^0+(?=\d)/, "") || "0", u = c.replace(/0+$/, "");
 	return u ? l + "." + u : l;
 }
-function Nt(e) {
-	let t = kt(e);
-	return J(jt(t, "0") > 0 && jt(t, "1") <= 0, "INVALID_RTP"), Mt(t, 2);
+function kt(e) {
+	let t = Tt(e);
+	return X(Dt(t, "0") > 0 && Dt(t, "1") <= 0, "INVALID_RTP"), Ot(t, 2);
 }
-function Pt(e) {
-	let t = kt(e);
-	return J(jt(t, "0") > 0 && jt(t, "100") < 0, "INVALID_RTP"), Mt(t, -2);
+function At(e) {
+	let t = Tt(e);
+	return X(Dt(t, "0") > 0 && Dt(t, "100") < 0, "INVALID_RTP"), Ot(t, -2);
 }
-function Ft(e = globalThis.crypto) {
-	J(e && typeof e.getRandomValues == "function", "SECURE_RANDOM_UNAVAILABLE");
+function jt(e = globalThis.crypto) {
+	X(e && typeof e.getRandomValues == "function", "SECURE_RANDOM_UNAVAILABLE");
 	let t = e.getRandomValues(/* @__PURE__ */ new Uint8Array(16));
-	J(t instanceof Uint8Array && t.length === 16, "SECURE_RANDOM_UNAVAILABLE"), t[6] = t[6] & 15 | 64, t[8] = t[8] & 63 | 128;
+	X(t instanceof Uint8Array && t.length === 16, "SECURE_RANDOM_UNAVAILABLE"), t[6] = t[6] & 15 | 64, t[8] = t[8] & 63 | 128;
 	let n = [...t].map((e) => e.toString(16).padStart(2, "0")).join("");
 	return `${n.slice(0, 8)}-${n.slice(8, 12)}-${n.slice(12, 16)}-${n.slice(16, 20)}-${n.slice(20)}`;
 }
-function It(e) {
-	return J(typeof e == "string" && bt.test(e) && jt(e, "25") <= 0, "INVALID_LAYOUT_DURATION"), e;
+function Mt(e) {
+	return X(typeof e == "string" && gt.test(e) && Dt(e, "25") <= 0, "INVALID_LAYOUT_DURATION"), e;
 }
-function Lt(e) {
-	let t = It(e);
-	return J(jt(t, "10") <= 0, "INVALID_LAYOUT_DURATION"), t;
+function Nt(e) {
+	let t = Mt(e);
+	return X(Dt(t, "10") <= 0, "INVALID_LAYOUT_DURATION"), t;
 }
-function Rt(e, t) {
-	let n = kt(e, t);
-	return J(jt(n, "0") > 0, "INVALID_LAYOUT_WIDTH"), n;
+function Pt(e, t) {
+	let n = Tt(e, t);
+	return X(Dt(n, "0") > 0, "INVALID_LAYOUT_WIDTH"), n;
 }
-function zt(e) {
+function Ft(e) {
 	if (typeof e != "string") return !1;
 	let t = /^(?:0|[1-9]\d*)\.(\d+)$/.exec(e)?.[1];
 	return t !== void 0 && t.length > 8;
 }
+function It(e) {
+	return X(e === null || typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 18, "INVALID_LAYOUT_PRECISION"), e;
+}
+function Lt(e) {
+	return X(typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 8, "INVALID_LAYOUT_PRECISION"), e;
+}
+function Rt(e, t) {
+	t != null && X((Tt(e).split(".")[1] ?? "").length <= t, "INVALID_LAYOUT_PRECISION");
+}
+function zt(e, t) {
+	X(5 + (Number(e) + 1) * Number(t) <= 120, "INVALID_LAYOUT_HORIZON");
+}
 function Bt(e) {
-	return J(e === null || typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 18, "INVALID_LAYOUT_PRECISION"), e;
-}
-function Vt(e) {
-	return J(typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 8, "INVALID_LAYOUT_PRECISION"), e;
-}
-function Ht(e, t) {
-	t != null && J((kt(e).split(".")[1] ?? "").length <= t, "INVALID_LAYOUT_PRECISION");
-}
-function Ut(e, t) {
-	J(5 + (Number(e) + 1) * Number(t) <= 120, "INVALID_LAYOUT_HORIZON");
-}
-function Wt(e) {
-	return J(Dt(e), "INVALID_GRID_LAYOUT"), Ot(e, [
+	return X(Ct(e), "INVALID_GRID_LAYOUT"), wt(e, [
 		"row_count",
 		"column_count",
 		"column_duration_seconds",
@@ -741,26 +678,26 @@ function Wt(e) {
 		"editable",
 		"affected_site_ids",
 		..."price_decimals" in e ? ["price_decimals"] : []
-	]), J([
+	]), X([
 		e.row_count,
 		e.column_count,
 		e.column_duration_seconds
-	].every((e) => typeof e == "string" && e.length <= 128 && bt.test(e)), "INVALID_GRID_LAYOUT"), J(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_LAYOUT"), J(typeof e.editable == "boolean", "INVALID_GRID_LAYOUT"), J(Array.isArray(e.affected_site_ids) && e.affected_site_ids.every((e) => typeof e == "string" && e.length > 0 && e.length <= 64 && e.trim() === e), "INVALID_GRID_LAYOUT"), J(new Set(e.affected_site_ids).size === e.affected_site_ids.length && (!e.editable || e.affected_site_ids.length > 0), "INVALID_GRID_LAYOUT"), {
+	].every((e) => typeof e == "string" && e.length <= 128 && gt.test(e)), "INVALID_GRID_LAYOUT"), X(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_LAYOUT"), X(typeof e.editable == "boolean", "INVALID_GRID_LAYOUT"), X(Array.isArray(e.affected_site_ids) && e.affected_site_ids.every((e) => typeof e == "string" && e.length > 0 && e.length <= 64 && e.trim() === e), "INVALID_GRID_LAYOUT"), X(new Set(e.affected_site_ids).size === e.affected_site_ids.length && (!e.editable || e.affected_site_ids.length > 0), "INVALID_GRID_LAYOUT"), {
 		row_count: e.row_count,
 		column_count: e.column_count,
 		column_duration_seconds: e.column_duration_seconds,
-		price_band_width: Rt(e.price_band_width),
-		..."price_decimals" in e ? { price_decimals: Bt(e.price_decimals) } : {},
+		price_band_width: Pt(e.price_band_width),
+		..."price_decimals" in e ? { price_decimals: It(e.price_decimals) } : {},
 		effective_from_ms: e.effective_from_ms,
 		editable: e.editable,
 		affected_site_ids: [...e.affected_site_ids]
 	};
 }
-function Gt(e, t, n = !1) {
-	return !!(n && e.layout?.editable && t.layout && Tt.some((n) => e.layout[n] !== t.layout[n]));
+function Vt(e, t, n = !1) {
+	return !!(n && e.layout?.editable && t.layout && xt.some((n) => e.layout[n] !== t.layout[n]));
 }
-function Kt(e) {
-	J(Dt(e), "INVALID_GRID_CONFIGURATION"), Ot(e, [
+function Ht(e) {
+	X(Ct(e), "INVALID_GRID_CONFIGURATION"), wt(e, [
 		"site_id",
 		"symbol",
 		"layout_version",
@@ -773,9 +710,10 @@ function Kt(e) {
 		"min_order_amount",
 		"max_order_amount",
 		..."layout" in e ? ["layout"] : [],
-		..."config_id" in e ? Ct : [],
-		...lt.filter((t) => t in e)
-	]), J(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "INVALID_GRID_CONFIGURATION"), J(typeof e.symbol == "string" && xt.test(e.symbol), "INVALID_GRID_CONFIGURATION"), J([e.layout_version, e.site_version].every((e) => typeof e == "string" && bt.test(e)), "INVALID_GRID_CONFIGURATION"), J(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_CONFIGURATION"), J(typeof e.enabled == "boolean", "INVALID_GRID_CONFIGURATION");
+		..."config_id" in e ? yt : [],
+		...at.filter((t) => t in e),
+		..."availability_version" in e ? ["availability_version"] : []
+	]), X(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "INVALID_GRID_CONFIGURATION"), X(typeof e.symbol == "string" && _t.test(e.symbol), "INVALID_GRID_CONFIGURATION"), X([e.layout_version, e.site_version].every((e) => typeof e == "string" && gt.test(e)), "INVALID_GRID_CONFIGURATION"), X(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_CONFIGURATION"), X(typeof e.enabled == "boolean", "INVALID_GRID_CONFIGURATION");
 	let t = {
 		site_id: e.site_id,
 		symbol: e.symbol,
@@ -783,60 +721,61 @@ function Kt(e) {
 		site_version: e.site_version,
 		effective_from_ms: e.effective_from_ms,
 		enabled: e.enabled,
-		target_rtp: kt(e.target_rtp),
-		min_multiplier: kt(e.min_multiplier, 2),
-		max_multiplier: kt(e.max_multiplier, 2),
-		min_order_amount: kt(e.min_order_amount, 8),
-		max_order_amount: kt(e.max_order_amount, 8)
+		target_rtp: Tt(e.target_rtp),
+		min_multiplier: Tt(e.min_multiplier, 2),
+		max_multiplier: Tt(e.max_multiplier, 2),
+		min_order_amount: Tt(e.min_order_amount, 8),
+		max_order_amount: Tt(e.max_order_amount, 8)
 	};
-	if (J(jt(t.target_rtp, "0") > 0 && jt(t.target_rtp, "1") <= 0, "INVALID_GRID_CONFIGURATION"), J(jt(t.min_multiplier, "1") >= 0 && jt(t.max_multiplier, t.min_multiplier) >= 0, "INVALID_GRID_CONFIGURATION"), J(jt(t.min_order_amount, "0") > 0 && jt(t.max_order_amount, t.min_order_amount) >= 0, "INVALID_GRID_CONFIGURATION"), "config_id" in e) {
+	if (X(Dt(t.target_rtp, "0") > 0 && Dt(t.target_rtp, "1") <= 0, "INVALID_GRID_CONFIGURATION"), X(Dt(t.min_multiplier, "1") >= 0 && Dt(t.max_multiplier, t.min_multiplier) >= 0, "INVALID_GRID_CONFIGURATION"), X(Dt(t.min_order_amount, "0") > 0 && Dt(t.max_order_amount, t.min_order_amount) >= 0, "INVALID_GRID_CONFIGURATION"), "config_id" in e) {
 		for (let n of [
 			"config_id",
 			"default_config_id",
 			"default_version",
 			"default_resolution_epoch"
-		]) J(typeof e[n] == "string" && bt.test(e[n]) && jt(e[n], "9223372036854775807") <= 0), t[n] = e[n];
-		J(typeof e.requested_agent_id == "string" && /^(0|[1-9][0-9]*)$/.test(e.requested_agent_id) && jt(e.requested_agent_id, "9223372036854775807") <= 0), J(e.agent_id === null || e.agent_id === e.requested_agent_id && e.agent_id !== "0"), t.requested_agent_id = e.requested_agent_id, t.agent_id = e.agent_id;
+		]) X(typeof e[n] == "string" && gt.test(e[n]) && Dt(e[n], "9223372036854775807") <= 0), t[n] = e[n];
+		X(typeof e.requested_agent_id == "string" && /^(0|[1-9][0-9]*)$/.test(e.requested_agent_id) && Dt(e.requested_agent_id, "9223372036854775807") <= 0), X(e.agent_id === null || e.agent_id === e.requested_agent_id && e.agent_id !== "0"), t.requested_agent_id = e.requested_agent_id, t.agent_id = e.agent_id;
 		for (let n of [
 			"inherited",
 			"default_enabled",
 			"effective_enabled"
-		]) J(typeof e[n] == "boolean"), t[n] = e[n];
+		]) X(typeof e[n] == "boolean"), t[n] = e[n];
 		for (let n of [
 			"default_target_rtp",
 			"default_min_order_amount",
 			"default_max_order_amount"
-		]) t[n] = kt(e[n]);
+		]) t[n] = Tt(e[n]);
 	}
-	return Object.assign(t, ht(e, kt)), "layout" in e && (t.layout = Wt(e.layout)), t;
+	return "availability_version" in e && (X(typeof e.availability_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.availability_version) && Dt(e.availability_version, "9223372036854775807") <= 0), t.availability_version = e.availability_version), Object.assign(t, dt(e, Tt)), "layout" in e && (t.layout = Bt(e.layout)), t;
 }
-function qt(e, t, n) {
-	let r = Kt(e);
-	return J(r.site_id === t && r.symbol === n, "INVALID_GRID_TARGET"), r;
+function Ut(e, t, n) {
+	let r = Ht(e);
+	return X(r.site_id === t && r.symbol === n, "INVALID_GRID_TARGET"), r;
 }
-function Jt(e, t, n, r, i, a = !1) {
-	if (Dt(e) && e.site_version === "0") return Yt(e, t, n, r, i, a);
-	let o = Dt(e) && Dt(e.layout) ? e.layout.price_band_width : void 0, s = Dt(t) && Dt(t.layout) ? t.layout.price_band_width : void 0;
-	J(o === s || !zt(s), "INVALID_LAYOUT_PRECISION");
-	let c = Kt(e), l = Kt(t);
-	J(c.site_id === l.site_id && c.symbol === l.symbol, "INVALID_GRID_TARGET"), J(typeof n == "string" && n.length <= 500 && n.trim().length > 0 && !n.includes("\0"), "INVALID_REASON"), J(typeof r == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(r), "INVALID_REQUEST_ID"), J(c.config_id && c.default_version && c.default_resolution_epoch, "CONFIG_IDENTITY_REQUIRED"), J(Ct.every((e) => c[e] === l[e]), "INVALID_GRID_TARGET"), J(JSON.stringify(ht(c, kt)) === JSON.stringify(ht(l, kt)), "INVALID_GRID_TARGET");
+function Wt(e, t, n, r, i, a = !1) {
+	if (Ct(e) && e.site_version === "0") return Gt(e, t, n, r, i, a);
+	let o = Ct(e) && Ct(e.layout) ? e.layout.price_band_width : void 0, s = Ct(t) && Ct(t.layout) ? t.layout.price_band_width : void 0;
+	X(o === s || !Ft(s), "INVALID_LAYOUT_PRECISION");
+	let c = Ht(e), l = Ht(t);
+	X(c.site_id === l.site_id && c.symbol === l.symbol, "INVALID_GRID_TARGET"), X(typeof n == "string" && n.length <= 500 && n.trim().length > 0 && !n.includes("\0"), "INVALID_REASON"), X(typeof r == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(r), "INVALID_REQUEST_ID"), X(c.config_id && c.default_version && c.default_resolution_epoch, "CONFIG_IDENTITY_REQUIRED"), X(yt.every((e) => c[e] === l[e]), "INVALID_GRID_TARGET"), X(JSON.stringify(dt(c, Tt)) === JSON.stringify(dt(l, Tt)), "INVALID_GRID_TARGET");
 	let u = {};
-	for (let e of Et) c[e] !== l[e] && (u[e] = l[e]);
-	for (let e of Tt) c.layout?.[e] !== l.layout?.[e] && (J(a && c.layout?.editable && l.layout, "FIELD_FORBIDDEN"), u[e] = l.layout[e]);
-	if (c.requested_agent_id !== "0" && !(u.enabled === !1 && Object.keys(u).length === 1) && (J(!l.enabled || c.default_enabled, "PLATFORM_LIMIT"), J(jt(l.target_rtp, c.default_target_rtp) <= 0 && jt(l.min_order_amount, c.default_min_order_amount) >= 0 && jt(l.max_order_amount, c.default_max_order_amount) <= 0, "PLATFORM_LIMIT")), Tt.some((e) => e in u)) {
+	for (let e of St) c[e] !== l[e] && (u[e] = l[e]);
+	for (let e of xt) c.layout?.[e] !== l.layout?.[e] && (X(a && c.layout?.editable && l.layout, "FIELD_FORBIDDEN"), u[e] = l.layout[e]);
+	if (c.requested_agent_id !== "0" && !(u.enabled === !1 && Object.keys(u).length === 1) && (X(!l.enabled || c.default_enabled, "PLATFORM_LIMIT"), X(Dt(l.target_rtp, c.default_target_rtp) <= 0 && Dt(l.min_order_amount, c.default_min_order_amount) >= 0 && Dt(l.max_order_amount, c.default_max_order_amount) <= 0, "PLATFORM_LIMIT")), xt.some((e) => e in u)) {
 		let e = c.layout;
-		"price_decimals" in u && Vt(u.price_decimals), Ht(l.layout.price_band_width, l.layout.price_decimals), Rt(u.price_band_width ?? e.price_band_width, 18), "column_duration_seconds" in u && Lt(u.column_duration_seconds);
-		let t = It(u.column_duration_seconds ?? e.column_duration_seconds);
-		J(jt(e.row_count, "10000") <= 0 && jt(e.column_count, "10000") <= 0 && Number(e.row_count) * Number(e.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), Ut(e.column_count, t);
+		"price_decimals" in u && Lt(u.price_decimals), Rt(l.layout.price_band_width, l.layout.price_decimals), Pt(u.price_band_width ?? e.price_band_width, 18), "column_duration_seconds" in u && Nt(u.column_duration_seconds);
+		let t = Mt(u.column_duration_seconds ?? e.column_duration_seconds);
+		X(Dt(e.row_count, "10000") <= 0 && Dt(e.column_count, "10000") <= 0 && Number(e.row_count) * Number(e.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), zt(e.column_count, t);
 	}
 	if (!i && ("min_multiplier" in u || "max_multiplier" in u)) throw Error("FIELD_FORBIDDEN");
-	return J(Object.keys(u).length > 0, "EMPTY_CHANGES"), {
+	return X(Object.keys(u).length > 0, "EMPTY_CHANGES"), {
 		site_id: c.site_id,
 		symbol: c.symbol,
 		based_on_layout_version: c.layout_version,
 		based_on_site_version: c.site_version,
 		based_on_config_id: c.config_id,
-		...gt(c) ? { based_on_global_version: gt(c) } : {},
+		...c.requested_agent_id === "0" && u.enabled === !0 && c.availability_version !== void 0 ? { based_on_availability_version: c.availability_version } : {},
+		...ft(c) ? { based_on_global_version: ft(c) } : {},
 		based_on_default_version: c.default_version,
 		based_on_default_resolution_epoch: c.default_resolution_epoch,
 		client_request_id: r,
@@ -844,27 +783,27 @@ function Jt(e, t, n, r, i, a = !1) {
 		changes: u
 	};
 }
-function Yt(e, t, n, r, i, a) {
-	J(i && a && Dt(t) && e.site_id === t.site_id && e.symbol === t.symbol, "INVALID_GRID_TARGET"), J(e.layout_version === t.layout_version && t.site_version === "0", "INVALID_GRID_TARGET"), e.layout_version === "0" && Dt(t.layout) && J(!zt(t.layout.price_band_width), "INVALID_LAYOUT_PRECISION");
-	let o = Kt({
+function Gt(e, t, n, r, i, a) {
+	X(i && a && Ct(t) && e.site_id === t.site_id && e.symbol === t.symbol, "INVALID_GRID_TARGET"), X(e.layout_version === t.layout_version && t.site_version === "0", "INVALID_GRID_TARGET"), e.layout_version === "0" && Ct(t.layout) && X(!Ft(t.layout.price_band_width), "INVALID_LAYOUT_PRECISION");
+	let o = Ht({
 		...t,
 		enabled: !1,
 		site_version: "1",
 		layout_version: e.layout_version === "0" ? "1" : e.layout_version
 	}), s = { enabled: !1 };
-	for (let e of Et) e !== "enabled" && (s[e] = o[e]);
+	for (let e of St) e !== "enabled" && (s[e] = o[e]);
 	let c = [
 		"row_count",
 		"column_count",
-		...Tt
+		...xt
 	];
 	if (e.layout_version === "0") {
-		J(o.layout, "INVALID_GRID_LAYOUT"), Lt(o.layout.column_duration_seconds);
+		X(o.layout, "INVALID_GRID_LAYOUT"), Nt(o.layout.column_duration_seconds);
 		for (let e of c) e === "price_decimals" && o.layout.price_decimals == null || (s[e] = o.layout[e]);
-		Ht(o.layout.price_band_width, o.layout.price_decimals);
+		Rt(o.layout.price_band_width, o.layout.price_decimals);
 	} else {
 		let t = e.layout;
-		J(Dt(t) && o.layout && c.every((e) => t[e] === o.layout[e]), "FIELD_FORBIDDEN");
+		X(Ct(t) && o.layout && c.every((e) => t[e] === o.layout[e]), "FIELD_FORBIDDEN");
 	}
 	let l = {
 		site_id: o.site_id,
@@ -875,55 +814,56 @@ function Yt(e, t, n, r, i, a) {
 		reason: n,
 		changes: s
 	};
-	return Xt(l), l;
+	return Kt(l), l;
 }
-function Xt(e) {
-	if (J(Dt(e), "PENDING_CORRUPT"), Ot(e, [
-		...St,
-		..."based_on_config_id" in e ? wt : [],
-		..."based_on_global_version" in e ? ["based_on_global_version"] : []
-	]), "based_on_global_version" in e && J(typeof e.based_on_global_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_global_version) && jt(e.based_on_global_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), "based_on_config_id" in e) for (let t of wt) J(typeof e[t] == "string" && bt.test(e[t]) && jt(e[t], "9223372036854775807") <= 0, "PENDING_CORRUPT");
-	J(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "PENDING_CORRUPT"), J(typeof e.symbol == "string" && xt.test(e.symbol), "PENDING_CORRUPT");
+function Kt(e) {
+	if (X(Ct(e), "PENDING_CORRUPT"), wt(e, [
+		...vt,
+		..."based_on_config_id" in e ? bt : [],
+		..."based_on_global_version" in e ? ["based_on_global_version"] : [],
+		..."based_on_availability_version" in e ? ["based_on_availability_version"] : []
+	]), "based_on_availability_version" in e && X(typeof e.based_on_availability_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_availability_version) && Dt(e.based_on_availability_version, "9223372036854775807") <= 0 && Ct(e.changes) && e.changes.enabled === !0, "PENDING_CORRUPT"), "based_on_global_version" in e && X(typeof e.based_on_global_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_global_version) && Dt(e.based_on_global_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), "based_on_config_id" in e) for (let t of bt) X(typeof e[t] == "string" && gt.test(e[t]) && Dt(e[t], "9223372036854775807") <= 0, "PENDING_CORRUPT");
+	X(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "PENDING_CORRUPT"), X(typeof e.symbol == "string" && _t.test(e.symbol), "PENDING_CORRUPT");
 	let t = e.based_on_site_version === "0";
-	J(typeof e.based_on_layout_version == "string" && (bt.test(e.based_on_layout_version) || t && e.based_on_layout_version === "0"), "PENDING_CORRUPT"), J(typeof e.based_on_site_version == "string" && (t || bt.test(e.based_on_site_version)), "PENDING_CORRUPT"), J(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id), "PENDING_CORRUPT"), J(typeof e.reason == "string" && e.reason.length <= 500 && e.reason.trim().length > 0 && !e.reason.includes("\0"), "PENDING_CORRUPT");
+	X(typeof e.based_on_layout_version == "string" && (gt.test(e.based_on_layout_version) || t && e.based_on_layout_version === "0"), "PENDING_CORRUPT"), X(typeof e.based_on_site_version == "string" && (t || gt.test(e.based_on_site_version)), "PENDING_CORRUPT"), X(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id), "PENDING_CORRUPT"), X(typeof e.reason == "string" && e.reason.length <= 500 && e.reason.trim().length > 0 && !e.reason.includes("\0"), "PENDING_CORRUPT");
 	let n = [
-		...Et,
-		...Tt,
+		...St,
+		...xt,
 		...t ? ["row_count", "column_count"] : []
 	];
-	J(Dt(e.changes) && Object.keys(e.changes).length > 0 && Object.keys(e.changes).every((e) => n.includes(e)), "PENDING_CORRUPT");
-	for (let [t, n] of Object.entries(e.changes)) t === "enabled" ? J(typeof n == "boolean", "PENDING_CORRUPT") : t === "row_count" || t === "column_count" ? J(typeof n == "string" && /^[1-9]\d{0,4}$/.test(n), "INVALID_GRID_LAYOUT") : t === "price_decimals" ? Vt(n) : t === "price_band_width" ? Rt(n, 18) : t === "column_duration_seconds" ? It(n) : kt(n, t.includes("order_amount") ? 8 : t.includes("multiplier") ? 2 : void 0);
+	X(Ct(e.changes) && Object.keys(e.changes).length > 0 && Object.keys(e.changes).every((e) => n.includes(e)), "PENDING_CORRUPT");
+	for (let [t, n] of Object.entries(e.changes)) t === "enabled" ? X(typeof n == "boolean", "PENDING_CORRUPT") : t === "row_count" || t === "column_count" ? X(typeof n == "string" && /^[1-9]\d{0,4}$/.test(n), "INVALID_GRID_LAYOUT") : t === "price_decimals" ? Lt(n) : t === "price_band_width" ? Pt(n, 18) : t === "column_duration_seconds" ? Mt(n) : Tt(n, t.includes("order_amount") ? 8 : t.includes("multiplier") ? 2 : void 0);
 	if (t) {
-		J(!("based_on_config_id" in e) && e.changes.enabled === !1, "PENDING_CORRUPT");
+		X(!("based_on_config_id" in e) && e.changes.enabled === !1, "PENDING_CORRUPT");
 		let t = e.based_on_layout_version === "0";
-		if (Ot(e.changes, [...Et, ...t ? [
+		if (wt(e.changes, [...St, ...t ? [
 			"row_count",
 			"column_count",
-			...Tt.filter((t) => t !== "price_decimals" || Object.prototype.hasOwnProperty.call(e.changes, t))
-		] : []]), Kt({
-			...Object.fromEntries(Et.map((t) => [t, e.changes[t]])),
+			...xt.filter((t) => t !== "price_decimals" || Object.prototype.hasOwnProperty.call(e.changes, t))
+		] : []]), Ht({
+			...Object.fromEntries(St.map((t) => [t, e.changes[t]])),
 			site_id: e.site_id,
 			symbol: e.symbol,
 			site_version: "1",
 			layout_version: "1",
 			effective_from_ms: "0"
-		}), J(jt(e.based_on_layout_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), t) {
+		}), X(Dt(e.based_on_layout_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), t) {
 			let t = e.changes;
-			J(Number(t.row_count) * Number(t.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), Rt(t.price_band_width, 8), Ut(t.column_count, t.column_duration_seconds);
+			X(Number(t.row_count) * Number(t.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), Pt(t.price_band_width, 8), zt(t.column_count, t.column_duration_seconds);
 		}
 	}
 }
-function Zt(e, t) {
-	return Dt(e) ? e.operation_status === "SUCCEEDED" && typeof e.operation_id == "string" && bt.test(e.operation_id) && e.site_id === t.command.site_id && e.symbol === t.command.symbol && typeof e.layout_version == "string" && bt.test(e.layout_version) && typeof e.site_version == "string" && bt.test(e.site_version) && typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms) && typeof e.changed == "boolean" && [
+function qt(e, t) {
+	return Ct(e) ? e.operation_status === "SUCCEEDED" && typeof e.operation_id == "string" && gt.test(e.operation_id) && e.site_id === t.command.site_id && e.symbol === t.command.symbol && typeof e.layout_version == "string" && gt.test(e.layout_version) && typeof e.site_version == "string" && gt.test(e.site_version) && typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms) && typeof e.changed == "boolean" && [
 		"PENDING",
 		"DONE",
 		"NOT_REQUIRED"
 	].includes(String(e.cache_state)) : !1;
 }
-function Qt(e) {
-	return Dt(e) && e.error_code === "RECEIPT_UNCONFIRMED" && e.operation_status === "UNKNOWN";
+function Jt(e) {
+	return Ct(e) && e.error_code === "RECEIPT_UNCONFIRMED" && e.operation_status === "UNKNOWN";
 }
-var { readPending: $t, persistPending: en, captureSaveReview: tn, persistReviewedCommand: nn, pendingForActor: rn, attemptPending: an } = ct(vt, Xt, Zt), on = class {
+var { readPending: Yt, persistPending: Xt, captureSaveReview: Zt, persistReviewedCommand: Qt, pendingForActor: $t, attemptPending: en } = it(mt, Kt, qt), tn = class {
 	generation = 0;
 	controller;
 	next(e) {
@@ -937,23 +877,29 @@ var { readPending: $t, persistPending: en, captureSaveReview: tn, persistReviewe
 	close() {
 		this.generation++, this.controller?.abort();
 	}
-}, sn = { "config.save": [
+}, nn = [
 	"game_type",
 	"symbol",
-	"based_on_template_version",
-	"platform_template"
-] };
-function cn(e, t) {
+	"based_on_template_version"
+], rn = {
+	"config.save": [...nn, "platform_template"],
+	"config.availability": [
+		...nn,
+		"action",
+		"enabled"
+	]
+};
+function an(e, t) {
 	let n = t;
 	return e === "routing.prepare" || e === "routing.cancel" ? n?.change?.receipt : e === "routing.commit" ? n?.binding?.receipt : n?.receipt;
 }
-var ln = class {
+var on = class {
 	busy = !1;
 	key;
 	storage;
 	action;
 	constructor(e, t, n, r) {
-		if (!t || !sn[n] || !r) throw Error("无法确认当前操作上下文");
+		if (!t || !rn[n] || !r) throw Error("无法确认当前操作上下文");
 		this.storage = e, this.action = n, this.key = `prediction:pending:${encodeURIComponent(t)}:${n}:${encodeURIComponent(r)}`;
 	}
 	read() {
@@ -965,31 +911,35 @@ var ln = class {
 	}
 	validate(e) {
 		let t = [
-			...sn[this.action],
+			...rn[this.action],
 			"reason",
-			"client_request_id"
+			"client_request_id",
+			...this.action === "config.save" && e.action === "save_parameters" ? ["action"] : []
 		];
 		if (Object.keys(e).some((e) => !t.includes(e)) || typeof e.reason != "string" || !e.reason.trim() || e.reason.length > 500 || typeof e.client_request_id != "string" || !e.client_request_id || e.client_request_id.length > 128) throw Error("操作记录字段无效");
-		if (sn[this.action].some((t) => !Object.hasOwn(e, t))) throw Error("操作记录缺少必要字段");
+		if (rn[this.action].some((t) => !Object.hasOwn(e, t))) throw Error("操作记录缺少必要字段");
 		let n = (t) => typeof e[t] == "string" && !!e[t].trim() && e[t].length <= 128;
-		if (this.action === "config.save") {
+		if (!["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) || !n("symbol") || typeof e.based_on_template_version != "string" || !/^(0|[1-9]\d*)$/.test(e.based_on_template_version)) throw Error("配置操作记录无效");
+		if (this.action === "config.availability") {
+			if (e.action !== "set_enabled" || typeof e.enabled != "boolean") throw Error("开关操作记录无效");
+		} else if (this.action === "config.save") {
 			let t = e.platform_template;
-			if (!["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) || !n("symbol") || !t || typeof t.enabled != "boolean" || !Array.isArray(t.rules)) throw Error("配置操作记录无效");
+			if (!["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) || !n("symbol") || !t || (e.action === "save_parameters" ? Object.hasOwn(t, "enabled") : typeof t.enabled != "boolean") || !Array.isArray(t.rules)) throw Error("配置操作记录无效");
 			let r = {
 				game_type: e.game_type,
 				symbol: e.symbol,
 				based_on_template_version: e.based_on_template_version,
-				enabled: t.enabled,
+				enabled: t.enabled ?? !1,
 				rules: structuredClone(t.rules)
 			};
 			if (r.game_type === "UP_DOWN") for (let e of r.rules) {
 				let t = e.stake_tiers?.find((e) => !e.retired);
 				t && (e.minimum_stake ??= t.minimum_stake, e.maximum_stake ??= t.maximum_stake);
 			}
-			if (Le(r, t.enabled === !1 && r.rules.every((e) => e.market_id === void 0 && (e.stake_tiers ?? []).every((e) => e.stake_tier_id === void 0))).length) throw Error("配置操作记录无效");
+			if (Fe(r, t.enabled !== !0 && r.rules.every((e) => e.market_id === void 0 && (e.stake_tiers ?? []).every((e) => e.stake_tier_id === void 0))).length) throw Error("配置操作记录无效");
 		}
 	}
-	begin(e, t = Ft()) {
+	begin(e, t = jt()) {
 		if (this.read()) throw Error("上次操作结果尚未确定，请先核验原操作");
 		let n = JSON.parse(JSON.stringify({
 			...e,
@@ -1016,31 +966,31 @@ var ln = class {
 		this.busy = !0;
 		try {
 			t.state = "submitting", t.attempted = !0, t.attemptGeneration = r, this.storage.setItem(this.key, JSON.stringify(t));
-			let n = await e(structuredClone(t.body)), i = cn(this.action, n);
+			let n = await e(structuredClone(t.body)), i = an(this.action, n);
 			if (typeof i?.operation_id != "string" || !i.operation_id || i.client_request_id !== t.body.client_request_id || i.result !== "OPERATION_RESULT_SUCCEEDED") throw Error("未收到可核验的成功回执");
 			return this.ownsStoredIntent(t) && this.storage.removeItem(this.key), n;
 		} catch (e) {
 			let r = e, i = this.read();
 			if (!i || JSON.stringify(i.body) !== JSON.stringify(t.body)) throw e;
-			let a = i.attemptGeneration !== t.attemptGeneration || r.control?.submission_outcome === "UNVERIFIED" || r.detail?.control?.submission_outcome === "UNVERIFIED";
-			throw this.action === "config.save" && r.error_code === "ERROR_CODE_MARK_PRICE_UNAVAILABLE" && !a || !(n || a) && [
+			let a = $e(e, t.body.client_request_id), o = i.attemptGeneration === t.attemptGeneration, s = !n && a !== "unverified", c = this.action === "config.save" && r?.error_code === "ERROR_CODE_MARK_PRICE_UNAVAILABLE", l = s && (c || [
 				"ERROR_CODE_INVALID_ARGUMENT",
 				"ERROR_CODE_NOT_FOUND",
 				"ERROR_CODE_CONFLICT",
 				"ERROR_CODE_PERMISSION_DENIED",
 				"ERROR_CODE_UNAUTHENTICATED"
-			].includes(r.error_code || "") ? this.storage.removeItem(this.key) : (i.state = "unverified", this.storage.setItem(this.key, JSON.stringify(i))), e;
+			].includes(r?.error_code || ""));
+			throw o && (a === "rejected" || l) ? this.storage.removeItem(this.key) : (i.state = "unverified", this.storage.setItem(this.key, JSON.stringify(i))), e;
 		} finally {
 			this.busy = !1;
 		}
 	}
-}, un = ["data-action"], dn = {
+}, sn = ["data-action"], cn = {
 	key: 2,
 	class: "pending-summary"
-}, fn = { key: 0 }, pn = {
+}, ln = { key: 0 }, un = {
 	key: 5,
 	role: "status"
-}, mn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, dn = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "WritePanel",
 	props: {
 		action: {},
@@ -1073,113 +1023,184 @@ var ln = class {
 		"busy"
 	],
 	setup(e, { expose: t, emit: n }) {
-		let r = e, c = n, l = he(), f = i(() => nt(l.perms, r.permission)), p = b(""), m = b(""), h = b(""), g = b(!1), ee = b(null), _ = b(""), ne = i(() => !!((ee.value || r.newAllowed) && (m.value && !r.hideError || ee.value && !r.hidePendingDetails || !ee.value && !r.automaticReason || f.value && !r.hideButton || h.value && !r.hideSuccess))), y, re = 0;
-		oe(g, (e) => c("busy", e), { flush: "sync" });
-		function x() {
+		let r = e, c = n, l = me(), f = i(() => Ze(l.perms, r.permission)), ee = v(""), p = v(""), m = v(""), h = v(!1), te = v(null), g = v(""), re = i(() => !!((te.value || r.newAllowed) && (p.value && !r.hideError || te.value && !r.hidePendingDetails || !te.value && !r.automaticReason || f.value && !r.hideButton || m.value && !r.hideSuccess))), ie, ae = 0;
+		se(h, (e) => c("busy", e), { flush: "sync" });
+		function y() {
 			try {
-				ee.value = y?.read() ?? null, c("pending", !!ee.value);
+				te.value = ie?.read() ?? null, c("pending", !!te.value);
 			} catch (e) {
-				_.value = Ce(e), m.value = _.value;
+				g.value = Se(e), p.value = g.value;
 			}
 		}
-		oe(() => [
+		se(() => [
 			r.action,
 			r.target,
 			String(l.userInfo.id || "")
 		], () => {
-			if (re++, g.value = !1, p.value = "", m.value = "", h.value = "", _.value = "", ee.value = null, c("pending", !1), y = void 0, r.target) try {
-				y = new ln(sessionStorage, String(l.userInfo.id || ""), r.action, r.target), x();
+			if (ae++, h.value = !1, ee.value = "", p.value = "", m.value = "", g.value = "", te.value = null, c("pending", !1), ie = void 0, r.target) try {
+				ie = new on(sessionStorage, String(l.userInfo.id || ""), r.action, r.target), y();
 			} catch (e) {
-				_.value = Ce(e), m.value = _.value;
+				g.value = Se(e), p.value = g.value;
 			}
 		}, {
 			immediate: !0,
 			flush: "sync"
 		});
-		async function S() {
-			if (g.value || r.blocked || !f.value || !y || _.value) return;
-			let e = y, t = re, n = String(l.userInfo.id || ""), i = r.action, a = r.target, o = r.send, s = () => t === re && y === e && n === String(l.userInfo.id || "") && i === r.action && a === r.target;
-			m.value = "", h.value = "";
+		async function b() {
+			if (h.value || r.blocked || !f.value || !ie || g.value) return;
+			let e = ie, t = ae, n = String(l.userInfo.id || ""), i = r.action, a = r.target, o = r.send, s = () => t === ae && ie === e && n === String(l.userInfo.id || "") && i === r.action && a === r.target;
+			p.value = "", m.value = "";
 			try {
-				if (!ee.value) {
+				if (!te.value) {
 					if (r.disabled || !r.newAllowed) return;
-					let t = r.automaticReason?.trim() || p.value.trim();
+					let t = r.automaticReason?.trim() || ee.value.trim();
 					if (!t) throw Error("请填写操作原因");
 					e.begin({
 						...r.payload(),
 						reason: t
-					}), x();
+					}), y();
 				}
-				g.value = !0;
+				h.value = !0;
 				let t = await e.attempt(o);
 				if (!s()) return;
-				h.value = "操作已确认成功", p.value = "", c("success", t);
+				m.value = "操作已确认成功", ee.value = "", c("success", t);
 			} catch (e) {
-				s() && (m.value = Ce(e));
+				s() && (p.value = Se(e));
 			} finally {
-				s() && (g.value = !1, x());
+				s() && (h.value = !1, y());
 			}
 		}
-		te(() => {
-			re++, c("busy", !1);
+		ne(() => {
+			ae++, c("busy", !1);
 		});
-		function C() {
-			g.value || ee.value || (h.value = "", _.value || (m.value = ""));
+		function x() {
+			h.value || te.value || (m.value = "", g.value || (p.value = ""));
 		}
 		return t({
-			submit: S,
-			success: h,
-			error: m,
-			clearFeedback: C
-		}), (t, n) => ne.value ? (v(), s("section", {
+			submit: b,
+			success: m,
+			error: p,
+			clearFeedback: x
+		}), (t, n) => re.value ? (_(), s("section", {
 			key: 0,
 			class: "prediction-write",
 			"data-action": e.action
 		}, [
-			m.value && !e.hideError ? (v(), a(T(k), {
+			p.value && !e.hideError ? (_(), a(w(O), {
 				key: 0,
-				title: m.value,
+				title: p.value,
 				type: "error",
 				closable: !1,
 				"show-icon": ""
 			}, null, 8, ["title"])) : o("", !0),
-			ee.value && !e.hidePendingDetails ? (v(), a(T(k), {
+			te.value && !e.hidePendingDetails ? (_(), a(w(O), {
 				key: 1,
 				title: "上次操作结果尚未确定。核验将使用原操作内容，不会重复创建新的操作。",
 				type: "warning",
 				closable: !1
 			})) : o("", !0),
-			ee.value && !e.hidePendingDetails ? (v(), s("div", dn, [u(" 操作号：" + w(ee.value.body.client_request_id), 1), e.automaticReason ? o("", !0) : (v(), s("span", fn, " · 原因：" + w(ee.value.body.reason), 1))])) : !ee.value && !e.automaticReason ? (v(), a(T(I), {
+			te.value && !e.hidePendingDetails ? (_(), s("div", cn, [u(" 操作号：" + S(te.value.body.client_request_id), 1), e.automaticReason ? o("", !0) : (_(), s("span", ln, " · 原因：" + S(te.value.body.reason), 1))])) : !te.value && !e.automaticReason ? (_(), a(w(F), {
 				key: 3,
 				label: "操作原因",
 				required: ""
 			}, {
-				default: E(() => [d(T(R), {
-					modelValue: p.value,
-					"onUpdate:modelValue": n[0] ||= (e) => p.value = e,
+				default: T(() => [d(w(L), {
+					modelValue: ee.value,
+					"onUpdate:modelValue": n[0] ||= (e) => ee.value = e,
 					type: "textarea",
 					rows: 2,
 					maxlength: "500",
 					"show-word-limit": "",
 					placeholder: "请说明本次调整原因",
-					disabled: g.value || e.disabled
+					disabled: h.value || e.disabled
 				}, null, 8, ["modelValue", "disabled"])]),
 				_: 1
 			})) : o("", !0),
-			f.value && !e.hideButton ? (v(), a(T(A), {
+			f.value && !e.hideButton ? (_(), a(w(k), {
 				key: 4,
 				type: "primary",
-				loading: g.value,
-				disabled: g.value || e.blocked || !ee.value && e.disabled || !!_.value,
-				onClick: S
+				loading: h.value,
+				disabled: h.value || e.blocked || !te.value && e.disabled || !!g.value,
+				onClick: b
 			}, {
-				default: E(() => [u(w(ee.value ? "核验原操作" : e.label), 1)]),
+				default: T(() => [u(S(te.value ? "核验原操作" : e.label), 1)]),
 				_: 1
 			}, 8, ["loading", "disabled"])) : o("", !0),
-			h.value && !e.hideSuccess ? (v(), s("p", pn, w(h.value), 1)) : o("", !0)
-		], 8, un)) : o("", !0);
+			m.value && !e.hideSuccess ? (_(), s("p", un, S(m.value), 1)) : o("", !0)
+		], 8, sn)) : o("", !0);
 	}
-}), [["__scopeId", "data-v-e2bd32a3"]]), hn = ["inert", "aria-hidden"], gn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}), [["__scopeId", "data-v-e2bd32a3"]]), fn = (e = !1) => ({
+	default_value: "",
+	minimum_value: "",
+	maximum_value: "",
+	agent_editable: e
+});
+function pn(e, t, n) {
+	return {
+		is_new: !0,
+		game_type: e,
+		symbol: t,
+		based_on_template_version: n,
+		enabled: !1,
+		rules: (e === "UP_DOWN" ? we : Te).map((t) => ({
+			duration_seconds: t,
+			enabled_by_default: !0,
+			minimum_stake: fn(!0),
+			maximum_stake: fn(!0),
+			settlement_display_seconds: "10",
+			price_rule: {
+				max_age_milliseconds: "5000",
+				late_arrival_grace_milliseconds: "500",
+				price_decimals: 3
+			},
+			...e === "UP_DOWN" ? {
+				bet_open_seconds: {
+					default_value: "30",
+					minimum_value: "30",
+					maximum_value: "30",
+					agent_editable: !1
+				},
+				target_payout_rate: fn(),
+				minimum_odds: {
+					default_value: "1",
+					minimum_value: "1",
+					maximum_value: "1",
+					agent_editable: !1
+				},
+				maximum_odds: fn(),
+				stake_tiers: [{
+					enabled_by_default: !0,
+					display_order: 1,
+					minimum_stake: fn(!0),
+					maximum_stake: fn(!0),
+					retired: !1
+				}]
+			} : { fixed_odds: fn(!0) }
+		}))
+	};
+}
+function mn(e, t, n) {
+	let r = e?.configurations;
+	if (!Array.isArray(r)) throw Error("配置列表格式异常，请重新加载");
+	let i = "0", a, o = /* @__PURE__ */ new Set();
+	for (let e of r) {
+		if (!e || e.scope !== "CONFIG_SCOPE_PLATFORM" || typeof e.template_version != "string" || !/^[1-9]\d*$/.test(e.template_version) || BigInt(e.template_version) > 9223372036854775807n || !Array.isArray(e.rules) || !e.rules.length) throw Error("配置列表格式异常，请重新加载");
+		if (i !== "0" && i !== e.template_version) throw Error("配置版本不一致，请重新加载");
+		i = e.template_version;
+		let r = e.rules[0];
+		if (!r || !["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(r.game_type) || !/^[A-Z0-9]{2,32}$/.test(r.symbol) || e.rules.some((e) => !e || e.symbol !== r.symbol || e.game_type !== r.game_type)) throw Error("配置列表格式异常，请重新加载");
+		let s = `${r.game_type}:${r.symbol}`;
+		if (o.has(s)) throw Error("配置列表重复，请重新加载");
+		o.add(s), r.game_type === `GAME_TYPE_${t}` && r.symbol === n && (a = e);
+	}
+	return {
+		version: i,
+		existing: a
+	};
+}
+//#endregion
+//#region src/prediction-config/platform/views/prediction/components/PredictionLoadingRegion.vue?vue&type=script&setup=true&lang.ts
+var hn = ["inert", "aria-hidden"], gn = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "PredictionLoadingRegion",
 	props: {
 		as: { default: "div" },
@@ -1192,27 +1213,27 @@ var ln = class {
 		text: { default: "正在加载配置…" }
 	},
 	setup(t) {
-		let n = t, r = b(!1), i;
+		let n = t, r = v(!1), i;
 		function o() {
 			i !== void 0 && clearTimeout(i), i = void 0;
 		}
-		return oe(() => n.loading, (e) => {
+		return se(() => n.loading, (e) => {
 			o(), r.value = !1, e && (i = setTimeout(() => {
 				i = void 0, r.value = n.loading;
 			}, 150));
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), te(o), (n, i) => (v(), a(S(t.as), {
-			class: ee(["prediction-loading-region", { "is-loading": t.loading }]),
-			style: _({ "--prediction-loading-min-height": t.minHeight }),
+		}), ne(o), (n, i) => (_(), a(b(t.as), {
+			class: te(["prediction-loading-region", { "is-loading": t.loading }]),
+			style: g({ "--prediction-loading-min-height": t.minHeight }),
 			"aria-busy": t.loading
 		}, {
-			default: E(() => [c("div", {
-				class: ee(["prediction-loading-region__content", { "is-hidden": t.hideContent }]),
+			default: T(() => [c("div", {
+				class: te(["prediction-loading-region__content", { "is-hidden": t.hideContent }]),
 				inert: t.loading || void 0,
 				"aria-hidden": t.hideContent || void 0
-			}, [x(n.$slots, "default", {}, void 0, !0)], 10, hn), d(T(e), {
+			}, [y(n.$slots, "default", {}, void 0, !0)], 10, hn), d(w(e), {
 				visible: r.value,
 				size: "md",
 				text: t.text
@@ -1231,7 +1252,7 @@ var ln = class {
 		content: {}
 	},
 	setup(e) {
-		let t = e, n = b(!1), r = {
+		let t = e, n = v(!1), r = {
 			下注开放时长: "场次开放后保持可下注的时间；倒计时结束立即封盘，不再接受新订单。本版固定为 30 秒。",
 			目标返奖率: "例如 90% 表示平台按 90% 的理论返奖水平计算赔率。",
 			最低赔率: "当前最低赔率用于接单校验，低于下限时无法受理；最终倍率以封盘为准。",
@@ -1244,7 +1265,7 @@ var ln = class {
 			周期: "用户选择的预测时长。不同周期独立配置；变更只影响新订单，历史订单保留原周期快照。",
 			房间启用: "保存后控制当前房间是否接受本站新订单，已受理订单仍按原规则结算。"
 		}, s = i(() => t.content ?? r[t.label] ?? "");
-		return (t, r) => s.value ? (v(), a(T(B), {
+		return (t, r) => s.value ? (_(), a(w(B), {
 			key: 0,
 			visible: n.value,
 			"onUpdate:visible": r[2] ||= (e) => n.value = e,
@@ -1253,18 +1274,18 @@ var ln = class {
 			width: 300,
 			title: e.label
 		}, {
-			reference: E(() => [c("button", {
+			reference: T(() => [c("button", {
 				type: "button",
 				class: "prediction-help-button",
 				"aria-label": `${e.label}说明`,
 				"aria-expanded": n.value,
-				onClick: r[0] ||= O(() => {}, ["stop"]),
-				onKeydown: r[1] ||= D(O((e) => n.value = !1, ["prevent"]), ["esc"])
-			}, [d(T(L), null, {
-				default: E(() => [d(T(U))]),
+				onClick: r[0] ||= D(() => {}, ["stop"]),
+				onKeydown: r[1] ||= E(D((e) => n.value = !1, ["prevent"]), ["esc"])
+			}, [d(w(I), null, {
+				default: T(() => [d(w(U))]),
 				_: 1
 			})], 40, vn)]),
-			default: E(() => [c("p", _n, w(s.value), 1)]),
+			default: T(() => [c("p", _n, S(s.value), 1)]),
 			_: 1
 		}, 8, ["visible", "title"])) : o("", !0);
 	}
@@ -1286,8 +1307,8 @@ function xn(e, t, n, r = "0", i) {
 	d < l && (d = l), u !== void 0 && d > u && (d = u);
 	let f = d.toString().padStart(o + 1, "0");
 	if (!o) return f;
-	let p = f.slice(-o).replace(/0+$/, "");
-	return f.slice(0, -o) + (p ? "." + p : "");
+	let ee = f.slice(-o).replace(/0+$/, "");
+	return f.slice(0, -o) + (ee ? "." + ee : "");
 }
 function Sn(e, t) {
 	if (!/^(0|[1-9][0-9]*)(?:\.[0-9]*)?$/.test(e)) return e;
@@ -1317,36 +1338,36 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	},
 	emits: ["update:modelValue", "input"],
 	setup(e, { emit: t }) {
-		let n = e, r = R, o = t, s = H(), d = b(n.percentage ? Sn(n.modelValue, 2) : n.modelValue);
-		oe(() => [n.modelValue, n.percentage], () => {
+		let n = e, r = L, o = t, s = H(), d = v(n.percentage ? Sn(n.modelValue, 2) : n.modelValue);
+		se(() => [n.modelValue, n.percentage], () => {
 			n.percentage && Sn(d.value, -2) === n.modelValue || (d.value = n.percentage ? Sn(n.modelValue, 2) : n.modelValue);
 		});
-		let f = (e) => xn(d.value, n.step, e, n.min, n.max), p = i(() => f(1)), m = i(() => f(-1));
-		function g(e) {
+		let f = (e) => xn(d.value, n.step, e, n.min, n.max), ee = i(() => f(1)), p = i(() => f(-1));
+		function h(e) {
 			if (s.value) return;
 			d.value = e;
 			let t = n.percentage ? Sn(e, -2) : e;
 			o("update:modelValue", t), o("input", t);
 		}
-		function ee(e) {
+		function te(e) {
 			if (s.value) return;
 			let t = f(e);
-			t !== null && t !== d.value && g(t);
+			t !== null && t !== d.value && h(t);
 		}
-		return (t, n) => (v(), a(S(e.inputComponent || T(r)), h({ class: "prediction-decimal-input" }, t.$attrs, {
+		return (t, n) => (_(), a(b(e.inputComponent || w(r)), m({ class: "prediction-decimal-input" }, t.$attrs, {
 			modelValue: d.value,
-			disabled: T(s),
+			disabled: w(s),
 			inputmode: t.$attrs.inputmode || "decimal",
-			"onUpdate:modelValue": g,
-			onKeydown: [n[4] ||= D(O((e) => ee(1), ["prevent"]), ["up"]), n[5] ||= D(O((e) => ee(-1), ["prevent"]), ["down"])]
+			"onUpdate:modelValue": h,
+			onKeydown: [n[4] ||= E(D((e) => te(1), ["prevent"]), ["up"]), n[5] ||= E(D((e) => te(-1), ["prevent"]), ["down"])]
 		}), l({
-			suffix: E(() => [c("span", Cn, [c("button", {
+			suffix: T(() => [c("span", Cn, [c("button", {
 				type: "button",
 				tabindex: "-1",
 				"aria-label": "增加数值",
-				disabled: T(s) || p.value === null || p.value === d.value,
-				onMousedown: n[0] ||= O(() => {}, ["prevent"]),
-				onClick: n[1] ||= (e) => ee(1)
+				disabled: w(s) || ee.value === null || ee.value === d.value,
+				onMousedown: n[0] ||= D(() => {}, ["prevent"]),
+				onClick: n[1] ||= (e) => te(1)
 			}, [...n[6] ||= [c("svg", {
 				viewBox: "0 0 12 12",
 				"aria-hidden": "true"
@@ -1354,9 +1375,9 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				type: "button",
 				tabindex: "-1",
 				"aria-label": "减少数值",
-				disabled: T(s) || m.value === null || m.value === d.value,
-				onMousedown: n[2] ||= O(() => {}, ["prevent"]),
-				onClick: n[3] ||= (e) => ee(-1)
+				disabled: w(s) || p.value === null || p.value === d.value,
+				onMousedown: n[2] ||= D(() => {}, ["prevent"]),
+				onClick: n[3] ||= (e) => te(-1)
 			}, [...n[7] ||= [c("svg", {
 				viewBox: "0 0 12 12",
 				"aria-hidden": "true"
@@ -1364,7 +1385,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			_: 2
 		}, [e.unit || t.$slots.append ? {
 			name: "append",
-			fn: E(() => [x(t.$slots, "append", {}, () => [u(w(e.unit), 1)], !0)]),
+			fn: T(() => [y(t.$slots, "append", {}, () => [u(S(e.unit), 1)], !0)]),
 			key: "0"
 		} : void 0]), 1040, [
 			"modelValue",
@@ -1377,7 +1398,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	class: "constraint-description"
 }, An = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "constraint-editor",
-	props: /*@__PURE__*/ m({
+	props: /*@__PURE__*/ p({
 		title: {},
 		description: {},
 		disabled: {
@@ -1404,21 +1425,21 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	}),
 	emits: ["update:modelValue"],
 	setup(e) {
-		let n = e, r = ae(e, "modelValue"), a = i({
-			get: () => n.percentage ? Ge(r.value[n.field]) : r.value[n.field],
+		let n = e, r = oe(e, "modelValue"), a = i({
+			get: () => n.percentage ? Ue(r.value[n.field]) : r.value[n.field],
 			set: (e) => {
-				let t = r.value[n.field], i = n.percentage ? Ke(e) : e;
+				let t = r.value[n.field], i = n.percentage ? We(e) : e;
 				n.field === "default_value" && r.value.maximum_value === t && (n.agentLocked && r.value.minimum_value === t && (r.value.minimum_value = i), r.value.maximum_value = i), r.value[n.field] = i;
 			}
 		});
-		return (n, r) => (v(), s("div", {
-			class: ee(["prediction-constraint", { "is-compact": e.compact }]),
+		return (n, r) => (_(), s("div", {
+			class: te(["prediction-constraint", { "is-compact": e.compact }]),
 			role: "group",
 			"aria-label": e.title
 		}, [
-			c("div", On, [u(w(e.title), 1), d(yn, { label: e.title }, null, 8, ["label"])]),
+			c("div", On, [u(S(e.title), 1), d(yn, { label: e.title }, null, 8, ["label"])]),
 			d(En, {
-				"input-component": T(t),
+				"input-component": w(t),
 				step: e.percentage ? "1" : "0.01",
 				modelValue: a.value,
 				"onUpdate:modelValue": r[0] ||= (e) => a.value = e,
@@ -1426,7 +1447,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				disabled: e.disabled
 			}, l({ _: 2 }, [e.percentage || e.unit ? {
 				name: "append",
-				fn: E(() => [u(w(e.percentage ? "%" : e.unit), 1)]),
+				fn: T(() => [u(S(e.percentage ? "%" : e.unit), 1)]),
 				key: "0"
 			} : void 0]), 1032, [
 				"input-component",
@@ -1435,7 +1456,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				"aria-label",
 				"disabled"
 			]),
-			e.description ? (v(), s("p", kn, w(e.description), 1)) : o("", !0)
+			e.description ? (_(), s("p", kn, S(e.description), 1)) : o("", !0)
 		], 10, Dn));
 	}
 }), [["__scopeId", "data-v-a22ded5a"]]), jn = { class: "fixed-room-controls" }, Mn = {
@@ -1465,99 +1486,99 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	},
 	emits: ["select", "change"],
 	setup(e, { emit: t }) {
-		let n = e, l = t, f = i(() => n.rooms.filter((e) => e.present)), p = i(() => n.rooms.filter((e) => !e.present && e.allowed)), m = b(""), h = b(), g = b(""), _ = b("");
-		function te() {
-			m.value = "", h.value = void 0, g.value = "";
+		let n = e, l = t, f = i(() => n.rooms.filter((e) => e.present)), ee = i(() => n.rooms.filter((e) => !e.present && e.allowed)), p = v(""), m = v(), h = v(""), g = v("");
+		function ne() {
+			p.value = "", m.value = void 0, h.value = "";
 		}
-		function ne(e) {
-			n.disabled || !e.present || (_.value = n.context, h.value = e, m.value = "remove");
+		function re(e) {
+			n.disabled || !e.present || (g.value = n.context, m.value = e, p.value = "remove");
+		}
+		function ie() {
+			n.disabled || !ee.value.length || (g.value = n.context, h.value = ee.value[0].key, p.value = "add");
 		}
 		function y() {
-			n.disabled || !p.value.length || (_.value = n.context, g.value = p.value[0].key, m.value = "add");
+			return !n.disabled && g.value === n.context;
+		}
+		function b() {
+			let e = m.value?.key;
+			p.value === "remove" && y() && n.rooms.some((t) => t.key === e && t.present) && l("change", e, !1), ne();
 		}
 		function x() {
-			return !n.disabled && _.value === n.context;
+			p.value === "add" && y() && ee.value.some((e) => e.key === h.value) && l("change", h.value, !0), ne();
 		}
-		function S() {
-			let e = h.value?.key;
-			m.value === "remove" && x() && n.rooms.some((t) => t.key === e && t.present) && l("change", e, !1), te();
-		}
-		function C() {
-			m.value === "add" && x() && p.value.some((e) => e.key === g.value) && l("change", g.value, !0), te();
-		}
-		return oe(() => n.context, te, { flush: "sync" }), (t, n) => (v(), s("div", jn, [
-			c("div", Mn, [(v(!0), s(r, null, re(f.value, (t) => (v(), s("span", {
+		return se(() => n.context, ne, { flush: "sync" }), (t, n) => (_(), s("div", jn, [
+			c("div", Mn, [(_(!0), s(r, null, ae(f.value, (t) => (_(), s("span", {
 				key: t.key,
-				class: ee(["room-tag", { active: e.selected === t.key }])
+				class: te(["room-tag", { active: e.selected === t.key }])
 			}, [c("button", {
 				type: "button",
 				"data-room-choice": t.key,
 				"aria-pressed": e.selected === t.key,
 				onClick: (e) => l("select", t.key)
-			}, w(t.label), 9, Nn), c("button", {
+			}, S(t.label), 9, Nn), c("button", {
 				type: "button",
 				class: "room-remove",
 				"data-room-remove": t.key,
 				"aria-label": `删除${t.label}房间`,
 				disabled: e.disabled,
-				onClick: (e) => ne(t)
-			}, "×", 8, Pn)], 2))), 128)), d(T(A), {
+				onClick: (e) => re(t)
+			}, "×", 8, Pn)], 2))), 128)), d(w(k), {
 				class: "room-add",
 				"data-room-add": !0,
-				disabled: e.disabled || !p.value.length,
-				onClick: y
+				disabled: e.disabled || !ee.value.length,
+				onClick: ie
 			}, {
-				default: E(() => [...n[1] ||= [u("＋ 新增周期", -1)]]),
+				default: T(() => [...n[1] ||= [u("＋ 新增周期", -1)]]),
 				_: 1
 			}, 8, ["disabled"])]),
-			f.value.length ? o("", !0) : (v(), s("p", Fn, "暂无房间，可从固定周期中新增。保存后生效。")),
-			m.value ? (v(), a(T(N), {
+			f.value.length ? o("", !0) : (_(), s("p", Fn, "暂无房间，可从固定周期中新增。保存后生效。")),
+			p.value ? (_(), a(w(M), {
 				key: 1,
 				"model-value": !0,
-				title: m.value === "remove" ? "确认删除周期？" : "新增周期",
+				title: p.value === "remove" ? "确认删除周期？" : "新增周期",
 				width: "460px",
 				"append-to-body": "",
 				class: "prediction-room-dialog mm-ui",
 				"close-on-click-modal": !1,
-				"onUpdate:modelValue": te
+				"onUpdate:modelValue": ne
 			}, {
-				footer: E(() => [d(T(A), {
+				footer: T(() => [d(w(k), {
 					"data-room-cancel": !0,
-					onClick: te
+					onClick: ne
 				}, {
-					default: E(() => [...n[5] ||= [u("取消", -1)]]),
+					default: T(() => [...n[5] ||= [u("取消", -1)]]),
 					_: 1
-				}), m.value === "remove" ? (v(), a(T(A), {
+				}), p.value === "remove" ? (_(), a(w(k), {
 					key: 0,
 					type: "danger",
 					"data-room-confirm": !0,
 					disabled: e.disabled,
-					onClick: S
+					onClick: b
 				}, {
-					default: E(() => [...n[6] ||= [u("确认删除", -1)]]),
+					default: T(() => [...n[6] ||= [u("确认删除", -1)]]),
 					_: 1
-				}, 8, ["disabled"])) : (v(), a(T(A), {
+				}, 8, ["disabled"])) : (_(), a(w(k), {
 					key: 1,
 					type: "primary",
 					"data-room-add-confirm": !0,
-					disabled: e.disabled || !g.value,
-					onClick: C
+					disabled: e.disabled || !h.value,
+					onClick: x
 				}, {
-					default: E(() => [...n[7] ||= [u("确认新增", -1)]]),
+					default: T(() => [...n[7] ||= [u("确认新增", -1)]]),
 					_: 1
 				}, 8, ["disabled"]))]),
-				default: E(() => [m.value === "remove" ? (v(), s(r, { key: 0 }, [
-					c("p", In, w(e.description) + " · " + w(h.value?.label), 1),
+				default: T(() => [p.value === "remove" ? (_(), s(r, { key: 0 }, [
+					c("p", In, S(e.description) + " · " + S(m.value?.label), 1),
 					n[2] ||= c("p", { class: "dialog-description" }, "删除后该房间将从当前配置中移除，点击保存配置后停止生效。", -1),
 					n[3] ||= c("p", { class: "dialog-note" }, "该操作不会影响已创建订单，历史订单仍保留原配置快照。后续可从固定周期中重新添加。", -1)
-				], 64)) : (v(), s(r, { key: 1 }, [n[4] ||= c("label", { class: "dialog-label" }, "预测周期", -1), d(T(ue), {
-					modelValue: g.value,
-					"onUpdate:modelValue": n[0] ||= (e) => g.value = e,
+				], 64)) : (_(), s(r, { key: 1 }, [n[4] ||= c("label", { class: "dialog-label" }, "预测周期", -1), d(w(ue), {
+					modelValue: h.value,
+					"onUpdate:modelValue": n[0] ||= (e) => h.value = e,
 					placeholder: "请选择周期",
 					style: { width: "100%" },
 					disabled: e.disabled
 				}, {
-					default: E(() => [(v(!0), s(r, null, re(p.value, (e) => (v(), a(T(le), {
+					default: T(() => [(_(!0), s(r, null, ae(ee.value, (e) => (_(), a(w(le), {
 						key: e.key,
 						value: e.key,
 						label: e.label
@@ -1588,23 +1609,23 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	},
 	emits: ["success", "close"],
 	setup(e, { expose: n, emit: l }) {
-		let { predictionConfigurationDetail: f, predictionConfigurationList: p, predictionConfigurationSave: m } = pe().api, h = e, g = b(), _ = b(), ne = b(!1), y = b();
-		function x() {
-			_.value?.submit();
+		let { predictionConfigurationDetail: f, predictionConfigurationList: ee, predictionConfigurationSave: p } = fe().api, m = e, h = v(), g = v(), re = v(!1), ie = v();
+		function y() {
+			g.value?.submit();
 		}
-		function C() {
-			y.value?.scrollIntoView({
+		function x() {
+			ie.value?.scrollIntoView({
 				behavior: "smooth",
 				block: "start"
 			});
 		}
-		let ae = l, D = he(), O = b(!1), M = b(!1), N = b(""), F = b(), L = b(!1), R = i(() => nt(D.perms, "prediction_config:edit")), z = b(""), ce = b("UP_DOWN"), le = b(""), B = i({
-			get: () => F.value?.rules[0]?.price_rule.price_decimals ?? void 0,
+		let oe = l, E = me(), D = v(!1), j = v(!1), M = v(""), P = v(), I = v(!1), L = i(() => Ze(E.perms, "prediction_config:edit")), R = v(""), z = v("UP_DOWN"), le = v(""), B = i({
+			get: () => P.value?.rules[0]?.price_rule.price_decimals ?? void 0,
 			set: (e) => {
-				if (!(!F.value || !R.value || !we.value.ready || L.value || ne.value)) for (let t of F.value.rules) t.price_rule.price_decimals = e ?? null;
+				if (!(!P.value || !L.value || !Y.value.ready || I.value || re.value)) for (let t of P.value.rules) t.price_rule.price_decimals = e ?? null;
 			}
-		}), ue = b("");
-		oe(B, (e) => {
+		}), ue = v("");
+		se(B, (e) => {
 			Number.isNaN(e) || (ue.value = e == null ? "" : String(e));
 		}, {
 			immediate: !0,
@@ -1613,172 +1634,191 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 		let H = i({
 			get: () => ue.value,
 			set: (e) => {
-				!F.value || !R.value || !we.value.ready || L.value || ne.value || (ue.value = e, B.value = e === "" ? void 0 : /^[0-8]$/.test(e) ? Number(e) : NaN);
+				!P.value || !L.value || !Y.value.ready || I.value || re.value || (ue.value = e, B.value = e === "" ? void 0 : /^[0-8]$/.test(e) ? Number(e) : NaN);
 			}
-		}), U = b(!1), fe = i(() => F.value?.game_type === "UP_DOWN" ? [...F.value.rules].sort((e, t) => Ee.indexOf(e.duration_seconds) - Ee.indexOf(t.duration_seconds)) : F.value?.rules ?? []), W = i(() => fe.value.filter((e) => e.enabled_by_default)), G = i(() => fe.value.map((e) => ({
+		}), U = v(!1), W = i(() => P.value?.game_type === "UP_DOWN" ? [...P.value.rules].sort((e, t) => we.indexOf(e.duration_seconds) - we.indexOf(t.duration_seconds)) : P.value?.rules ?? []), G = i(() => W.value.filter((e) => e.enabled_by_default)), K = i(() => W.value.map((e) => ({
 			key: e.duration_seconds,
-			label: Se(e.duration_seconds, F.value?.game_type),
+			label: xe(e.duration_seconds, P.value?.game_type),
 			present: e.enabled_by_default,
 			allowed: !0
-		}))), K = i(() => h.inline ? g.value?.enabled_by_default ? [g.value] : [] : W.value);
-		function me(e) {
-			g.value = W.value.find((t) => t.duration_seconds === e);
+		}))), q = i(() => m.inline ? h.value?.enabled_by_default ? [h.value] : [] : G.value);
+		function pe(e) {
+			h.value = G.value.find((t) => t.duration_seconds === e);
 		}
-		function ge(e, t) {
-			if (!R.value || !we.value.ready || L.value || ne.value) return;
-			let n = fe.value.find((t) => t.duration_seconds === e);
-			!n || n.enabled_by_default === t || (n.enabled_by_default = t, g.value = t ? n : W.value[0]);
+		function he(e, t) {
+			if (!L.value || !Y.value.ready || I.value || re.value) return;
+			let n = W.value.find((t) => t.duration_seconds === e);
+			!n || n.enabled_by_default === t || (n.enabled_by_default = t, h.value = t ? n : G.value[0]);
 		}
-		let _e = b(0), ve = b(0), ye = b(""), be = b(""), xe, q = i(() => String(D.userInfo.id || "")), we = i(() => ({
-			target: z.value,
-			generation: _e.value,
-			actor: ye.value,
-			enabled: F.value?.enabled,
-			roomDurations: W.value.map((e) => e.duration_seconds),
-			loading: M.value,
-			pending: L.value,
-			saving: ne.value,
-			saveError: _.value?.error || "",
-			isNew: !!F.value?.is_new,
-			dirty: !!(F.value && be.value && JSON.stringify(F.value) !== be.value),
-			ready: !!(F.value && !M.value && !N.value && ve.value === _e.value && ye.value === q.value && `${F.value.game_type}:${F.value.symbol}` === z.value)
+		let ge = v(0), _e = v(0), ve = v(""), ye = v(""), be, J = i(() => String(E.userInfo.id || "")), Y = i(() => ({
+			target: R.value,
+			generation: ge.value,
+			actor: ve.value,
+			enabled: P.value?.enabled,
+			roomDurations: G.value.map((e) => e.duration_seconds),
+			loading: j.value,
+			pending: I.value,
+			saving: re.value,
+			saveError: g.value?.error || "",
+			isNew: !!P.value?.is_new,
+			dirty: !!(P.value && ye.value && JSON.stringify(P.value) !== ye.value),
+			ready: !!(P.value && !j.value && !M.value && _e.value === ge.value && ve.value === J.value && `${P.value.game_type}:${P.value.symbol}` === R.value)
 		}));
-		oe(F, () => {
-			h.externalSave && !M.value && _.value?.clearFeedback();
+		se(P, () => {
+			m.externalSave && !j.value && g.value?.clearFeedback();
 		}, {
 			deep: !0,
 			flush: "sync"
 		});
-		function Te(e, t, n, r) {
-			return typeof r != "boolean" || !F.value || F.value.is_new || !we.value.ready || !R.value || !nt(D.perms, "prediction_config:lists") || L.value || ne.value || e !== z.value || t !== _e.value || n !== q.value ? !1 : (F.value.enabled = r, !0);
+		function Ce(e, t) {
+			let n = P.value;
+			if (!n || !ye.value || n.based_on_template_version !== e || !Y.value.ready) return;
+			let r = JSON.parse(ye.value);
+			n.based_on_template_version = r.based_on_template_version = t.template_version, t.rules[0]?.game_type === "GAME_TYPE_" + n.game_type && t.rules[0].symbol === n.symbol && (n.enabled = r.enabled = t.symbol_enabled), ye.value = JSON.stringify(r);
 		}
-		oe(() => [
-			q.value,
-			nt(D.perms, "prediction_config:lists"),
-			R.value
+		se(() => [
+			J.value,
+			Ze(E.perms, "prediction_config:lists"),
+			L.value
 		], () => {
-			_e.value++, xe?.abort(), M.value = !1;
+			ge.value++, be?.abort(), j.value = !1;
 		}, { flush: "sync" });
-		function De(e, t) {
-			if (!e.rules.length || e.rules.some((e) => e.game_type !== `GAME_TYPE_${ce.value}` || e.symbol !== le.value)) throw Error("返回配置与当前币种或玩法不匹配，请重新加载");
-			let n = g.value?.duration_seconds;
-			F.value = Fe(e), U.value = !1, be.value = JSON.stringify(F.value), ve.value = t, ye.value = q.value, g.value = W.value.find((e) => e.duration_seconds === n) || W.value[0];
+		function Te(e, t) {
+			if (!e.rules.length || e.rules.some((e) => e.game_type !== `GAME_TYPE_${z.value}` || e.symbol !== le.value)) throw Error("返回配置与当前币种或玩法不匹配，请重新加载");
+			let n = h.value?.duration_seconds;
+			P.value = Ne(e), U.value = !1, ye.value = JSON.stringify(P.value), _e.value = t, ve.value = J.value, h.value = G.value.find((e) => e.duration_seconds === n) || G.value[0];
 		}
-		async function Oe() {
-			if (!nt(D.perms, "prediction_config:lists")) return;
-			xe?.abort(), xe = new AbortController();
-			let e = ++_e.value, t = ce.value, n = le.value;
-			M.value = !0, N.value = "";
+		async function Ee() {
+			if (!Ze(E.perms, "prediction_config:lists")) return;
+			be?.abort(), be = new AbortController();
+			let e = ++ge.value, t = z.value, n = le.value;
+			j.value = !0, M.value = "";
 			try {
 				if (U.value) {
-					if (!R.value) throw Error("没有配置新增权限");
-					let r = await p({}, xe.signal);
-					if (e !== _e.value) return;
-					let i = tt(r, t, n);
-					return i.existing ? De(i.existing, e) : (F.value = et(t, n, i.version), be.value = JSON.stringify(F.value), ve.value = e, ye.value = q.value, g.value = W.value[0]), e;
+					if (!L.value) throw Error("没有配置新增权限");
+					let r = await ee({}, be.signal);
+					if (e !== ge.value) return;
+					let i = mn(r, t, n);
+					return i.existing ? Te(i.existing, e) : (P.value = pn(t, n, i.version), ye.value = JSON.stringify(P.value), _e.value = e, ve.value = J.value, h.value = G.value[0]), e;
 				}
 				let r = await f({
 					game_type: t,
 					symbol: n
-				}, xe.signal);
-				if (e === _e.value) return De(r.configuration, e), e;
+				}, be.signal);
+				if (e === ge.value) return Te(r.configuration, e), e;
 			} catch (t) {
-				e === _e.value && (N.value = Ce(t));
+				e === ge.value && (M.value = Se(t));
 			} finally {
-				e === _e.value && (M.value = !1);
+				e === ge.value && (j.value = !1);
 			}
 		}
-		async function ke(e, t, n, r = !1) {
-			if (ce.value = e, le.value = t, z.value = `${e}:${t}`, U.value = r, F.value = void 0, be.value = "", g.value = void 0, L.value = !1, O.value = !0, n && nt(D.perms, "prediction_config:lists")) {
-				xe?.abort();
-				let e = ++_e.value;
-				M.value = !1, N.value = "";
+		async function De(e, t, n, r = !1) {
+			if (z.value = e, le.value = t, R.value = `${e}:${t}`, U.value = r, P.value = void 0, ye.value = "", h.value = void 0, I.value = !1, D.value = !0, n && Ze(E.perms, "prediction_config:lists")) {
+				be?.abort();
+				let e = ++ge.value;
+				j.value = !1, M.value = "";
 				try {
-					return De(n, e), e;
+					return Te(n, e), e;
 				} catch (e) {
-					N.value = Ce(e);
+					M.value = Se(e);
 					return;
 				}
 			}
-			return await Oe();
+			return await Ee();
 		}
-		function Ae() {
-			if (!F.value) throw Error("请先加载配置");
-			let e = Le(ie(F.value));
-			if (e.length) throw Error(Re(e, F.value.game_type, g.value?.duration_seconds || F.value.rules[0]?.duration_seconds || ""));
-			let { client_request_id: t, reason: n, ...r } = Ie(ie(F.value), "", "");
-			return r;
+		function Oe() {
+			if (!P.value) throw Error("请先加载配置");
+			let e = Fe(C(P.value));
+			if (e.length) throw Error(Ie(e, P.value.game_type, h.value?.duration_seconds || P.value.rules[0]?.duration_seconds || ""));
+			let { client_request_id: t, reason: n, ...r } = Pe(C(P.value), "", "");
+			return m.inline ? {
+				...r,
+				action: "save_parameters",
+				platform_template: { rules: r.platform_template.rules }
+			} : r;
 		}
-		let je = (e) => m(e);
-		function Me() {
-			U.value = !1, ae("success"), Oe();
+		async function ke(e) {
+			let t = await p(e), n = t.configuration;
+			if (!n?.rules?.length || n.rules.some((t) => t.symbol !== e.symbol || t.game_type !== "GAME_TYPE_" + e.game_type) || !/^[1-9]\d*$/.test(n.template_version)) throw Error("保存回执与当前币种或玩法不符，请核验原操作");
+			return {
+				...t,
+				priorVersion: e.based_on_template_version
+			};
 		}
-		async function Ne() {
-			M.value || L.value || ne.value || await Oe();
+		function Ae(e) {
+			let { configuration: t, priorVersion: n } = e;
+			if (P.value && BigInt(P.value.based_on_template_version) > BigInt(t.template_version)) {
+				Ee();
+				return;
+			}
+			Te(t, ge.value), oe("success", t, n);
 		}
-		return te(() => {
-			_e.value++, xe?.abort();
+		async function je() {
+			j.value || I.value || re.value || await Ee();
+		}
+		return ne(() => {
+			ge.value++, be?.abort();
 		}), n({
-			open: ke,
-			focusSave: C,
-			saveConfig: x,
-			editingState: we,
-			setEnabled: Te
-		}), (n, i) => !e.inline || O.value ? (v(), a(S(e.inline ? "section" : T(P)), {
+			open: De,
+			focusSave: x,
+			saveConfig: y,
+			editingState: Y,
+			appliedSwitch: Ce
+		}), (n, i) => !e.inline || D.value ? (_(), a(b(e.inline ? "section" : w(N)), {
 			key: 0,
-			class: ee(["mm-ui", { "prediction-edit-inline": e.inline }]),
-			modelValue: O.value,
-			"onUpdate:modelValue": i[5] ||= (e) => O.value = e,
+			class: te(["mm-ui", { "prediction-edit-inline": e.inline }]),
+			modelValue: D.value,
+			"onUpdate:modelValue": i[5] ||= (e) => D.value = e,
 			"close-on-click-modal": !1,
 			"destroy-on-close": "",
 			size: "min(1080px,96vw)",
 			title: "玩法配置",
-			onClosed: i[6] ||= (e) => ae("close")
+			onClosed: i[6] ||= (e) => oe("close")
 		}, {
-			default: E(() => [
-				N.value ? (v(), a(T(k), {
+			default: T(() => [
+				M.value ? (_(), a(w(O), {
 					key: 0,
-					title: N.value,
+					title: M.value,
 					type: "error",
 					closable: !1
 				}, null, 8, ["title"])) : o("", !0),
-				e.externalSave && we.value.saveError ? (v(), a(T(k), {
+				e.externalSave && Y.value.saveError ? (_(), a(w(O), {
 					key: 1,
-					title: we.value.saveError,
-					type: L.value ? "warning" : "error",
+					title: Y.value.saveError,
+					type: I.value ? "warning" : "error",
 					closable: !1,
 					"show-icon": ""
 				}, null, 8, ["title", "type"])) : o("", !0),
 				d(gn, {
-					loading: M.value,
-					"hide-content": M.value && !F.value,
+					loading: j.value,
+					"hide-content": j.value && !P.value,
 					"min-height": e.inline ? "0px" : "280px",
 					class: "prediction-edit"
 				}, {
-					default: E(() => [c("div", {
+					default: T(() => [c("div", {
 						ref_key: "saveArea",
-						ref: y,
+						ref: ie,
 						"data-config-save-area": "",
-						class: ee(["config-save-area", { "config-save-area--external": e.externalSave }])
-					}, [O.value && R.value ? (v(), a(mn, {
+						class: te(["config-save-area", { "config-save-area--external": e.externalSave }])
+					}, [D.value && L.value ? (_(), a(dn, {
 						key: 0,
 						ref_key: "writeRef",
-						ref: _,
+						ref: g,
 						"hide-button": e.externalSave,
 						"hide-success": e.externalSave,
 						"hide-pending-details": e.externalSave,
 						"hide-error": e.externalSave,
 						action: "config.save",
-						target: z.value,
+						target: R.value,
 						permission: "prediction_config:edit",
 						label: "保存配置",
 						"automatic-reason": "通过总后台玩法配置页面保存配置",
-						disabled: M.value || !we.value.ready,
-						payload: Ae,
-						send: je,
-						onPending: i[0] ||= (e) => L.value = e,
-						onBusy: i[1] ||= (e) => ne.value = e,
-						onSuccess: Me
+						disabled: j.value || !Y.value.ready,
+						payload: Oe,
+						send: ke,
+						onPending: i[0] ||= (e) => I.value = e,
+						onBusy: i[1] ||= (e) => re.value = e,
+						onSuccess: Ae
 					}, null, 8, [
 						"hide-button",
 						"hide-success",
@@ -1786,33 +1826,33 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 						"hide-error",
 						"target",
 						"disabled"
-					])) : o("", !0)], 2), F.value ? (v(), s(r, { key: 0 }, [
-						F.value.is_new ? (v(), a(T(k), {
+					])) : o("", !0)], 2), P.value ? (_(), s(r, { key: 0 }, [
+						P.value.is_new ? (_(), a(w(O), {
 							key: 0,
 							title: "首次配置需填写全部五个周期的必填参数；保存后币种保持关闭。",
 							type: "info",
 							closable: !1
 						})) : o("", !0),
-						d(T(j), {
+						d(w(A), {
 							shadow: "never",
 							class: "room-config"
 						}, {
-							header: E(() => [c("div", Rn, [c("div", null, [c("h3", null, w(F.value.game_type === "UP_DOWN" ? "房间配置" : "周期配置"), 1), c("p", null, w(F.value.symbol) + " · " + w(F.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1)]), e.inline ? o("", !0) : (v(), a(T(de), {
+							header: T(() => [c("div", Rn, [c("div", null, [c("h3", null, S(P.value.game_type === "UP_DOWN" ? "房间配置" : "周期配置"), 1), c("p", null, S(P.value.symbol) + " · " + S(P.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1)]), e.inline ? o("", !0) : (_(), a(w(de), {
 								key: 0,
-								modelValue: F.value.enabled,
-								"onUpdate:modelValue": i[2] ||= (e) => F.value.enabled = e,
-								disabled: !R.value || L.value || F.value.is_new,
+								modelValue: P.value.enabled,
+								"onUpdate:modelValue": i[2] ||= (e) => P.value.enabled = e,
+								disabled: !L.value || I.value || P.value.is_new,
 								"active-text": "开放",
 								"inactive-text": "停用"
 							}, null, 8, ["modelValue", "disabled"]))])]),
-							default: E(() => [c("div", zn, w(F.value.game_type === "UP_DOWN" ? "支持房间" : "支持周期"), 1), d(Ln, {
-								description: `${F.value.symbol} · ${F.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"}`,
-								rooms: G.value,
-								selected: g.value?.duration_seconds || "",
-								disabled: !R.value || !we.value.ready || L.value || ne.value,
-								context: `${q.value}:${z.value}:${_e.value}`,
-								onSelect: me,
-								onChange: ge
+							default: T(() => [c("div", zn, S(P.value.game_type === "UP_DOWN" ? "支持房间" : "支持周期"), 1), d(Ln, {
+								description: `${P.value.symbol} · ${P.value.game_type === "UP_DOWN" ? "涨跌预测" : "自选预测"}`,
+								rooms: K.value,
+								selected: h.value?.duration_seconds || "",
+								disabled: !L.value || !Y.value.ready || I.value || re.value,
+								context: `${J.value}:${R.value}:${ge.value}`,
+								onSelect: pe,
+								onChange: he
 							}, null, 8, [
 								"description",
 								"rooms",
@@ -1822,15 +1862,15 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 							])]),
 							_: 1
 						}),
-						d(T(j), {
+						d(w(A), {
 							shadow: "never",
 							class: "config-group"
 						}, {
-							header: E(() => [...i[7] ||= [c("div", { class: "group-heading" }, [c("div", null, [c("h3", null, "价格精度"), c("p", null, "同一币种全部周期共用，变更只影响后续新场次或订单。")])], -1)]]),
-							default: E(() => [d(T(se), { "label-position": "top" }, {
-								default: E(() => [c("div", Bn, [d(T(I), { label: "价格小数位" }, {
-									default: E(() => [d(En, {
-										"input-component": T(t),
+							header: T(() => [...i[7] ||= [c("div", { class: "group-heading" }, [c("div", null, [c("h3", null, "价格精度"), c("p", null, "同一币种全部周期共用，变更只影响后续新场次或订单。")])], -1)]]),
+							default: T(() => [d(w(ce), { "label-position": "top" }, {
+								default: T(() => [c("div", Bn, [d(w(F), { label: "价格小数位" }, {
+									default: T(() => [d(En, {
+										"input-component": w(t),
 										modelValue: H.value,
 										"onUpdate:modelValue": i[3] ||= (e) => H.value = e,
 										min: "0",
@@ -1840,7 +1880,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 										inputmode: "numeric",
 										placeholder: "请输入 0～8 的整数",
 										"aria-label": "价格小数位",
-										disabled: !R.value || !we.value.ready || L.value || ne.value
+										disabled: !L.value || !Y.value.ready || I.value || re.value
 									}, null, 8, [
 										"input-component",
 										"modelValue",
@@ -1852,39 +1892,39 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 							}), i[8] ||= c("p", { class: "group-note" }, "可设置 0～8 位，未配置时默认填入 3 位，保存后生效。按所选位数截断，不四舍五入；0 表示整数，旧订单保留原规则。", -1)]),
 							_: 1
 						}),
-						d(T(se), {
+						d(w(ce), {
 							"label-position": "top",
-							disabled: !R.value || L.value
+							disabled: !L.value || I.value
 						}, {
-							default: E(() => [(v(!0), s(r, null, re(K.value, (n, l) => (v(), s("section", {
+							default: T(() => [(_(!0), s(r, null, ae(q.value, (n, l) => (_(), s("section", {
 								key: n.market_id || l,
 								class: "rule",
 								"data-room": n.duration_seconds
 							}, [
-								e.inline ? o("", !0) : (v(), s("div", Hn, [c("strong", null, w(T(Se)(n.duration_seconds, F.value.game_type)) + w(F.value.game_type === "UP_DOWN" ? "房间" : ""), 1)])),
-								F.value.game_type === "UP_DOWN" ? (v(), a(T(j), {
+								e.inline ? o("", !0) : (_(), s("div", Hn, [c("strong", null, S(w(xe)(n.duration_seconds, P.value.game_type)) + S(P.value.game_type === "UP_DOWN" ? "房间" : ""), 1)])),
+								P.value.game_type === "UP_DOWN" ? (_(), a(w(A), {
 									key: 1,
 									shadow: "never",
 									class: "config-group round-time-summary"
 								}, {
-									header: E(() => [c("div", Un, [c("div", null, [c("h3", null, " 场次时间 · " + w(T(Se)(n.duration_seconds, F.value.game_type)) + "房间 ", 1), i[9] ||= c("p", null, "每个场次的下注开放时间固定为 30 秒", -1)]), d(T(V), { size: "small" }, {
-										default: E(() => [u(w(T(Se)(n.duration_seconds, F.value.game_type)), 1)]),
+									header: T(() => [c("div", Un, [c("div", null, [c("h3", null, " 场次时间 · " + S(w(xe)(n.duration_seconds, P.value.game_type)) + "房间 ", 1), i[9] ||= c("p", null, "每个场次的下注开放时间固定为 30 秒", -1)]), d(w(V), { size: "small" }, {
+										default: T(() => [u(S(w(xe)(n.duration_seconds, P.value.game_type)), 1)]),
 										_: 2
 									}, 1024)])]),
 									_: 2
 								}, 1024)) : o("", !0),
-								d(T(j), {
+								d(w(A), {
 									shadow: "never",
 									class: "config-group"
 								}, {
-									header: E(() => [c("div", Wn, [c("div", null, [c("h3", null, " 赔率配置 · " + w(T(Se)(n.duration_seconds, F.value.game_type)), 1), c("p", null, w(F.value.game_type === "UP_DOWN" ? "上涨赔率 = 1 + 目标返奖率 × 下跌池 ÷（上涨池＋本次下注）；下跌赔率反向计算。下注期间为预计倍率，封盘后锁定最终倍率。" : "用户下单时按当前周期固定赔率锁定，订单存储赔率快照"), 1)]), d(T(V), {
+									header: T(() => [c("div", Wn, [c("div", null, [c("h3", null, " 赔率配置 · " + S(w(xe)(n.duration_seconds, P.value.game_type)), 1), c("p", null, S(P.value.game_type === "UP_DOWN" ? "上涨赔率 = 1 + 目标返奖率 × 下跌池 ÷（上涨池＋本次下注）；下跌赔率反向计算。下注期间为预计倍率，封盘后锁定最终倍率。" : "用户下单时按当前周期固定赔率锁定，订单存储赔率快照"), 1)]), d(w(V), {
 										size: "small",
 										effect: "plain"
 									}, {
-										default: E(() => [u(w(F.value.game_type === "UP_DOWN" ? "动态赔率" : "固定赔率"), 1)]),
+										default: T(() => [u(S(P.value.game_type === "UP_DOWN" ? "动态赔率" : "固定赔率"), 1)]),
 										_: 1
 									})])]),
-									default: E(() => [c("div", { class: ee(["odds-fields", { "one-field": F.value.game_type === "HIGH_LOW" }]) }, [F.value.game_type === "HIGH_LOW" && n.fixed_odds ? (v(), a(An, {
+									default: T(() => [c("div", { class: te(["odds-fields", { "one-field": P.value.game_type === "HIGH_LOW" }]) }, [P.value.game_type === "HIGH_LOW" && n.fixed_odds ? (_(), a(An, {
 										key: 0,
 										modelValue: n.fixed_odds,
 										"onUpdate:modelValue": (e) => n.fixed_odds = e,
@@ -1892,7 +1932,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 										unit: "x",
 										title: "固定赔率",
 										description: "上涨和下跌使用相同赔率，且必须小于 2"
-									}, null, 8, ["modelValue", "onUpdate:modelValue"])) : o("", !0), F.value.game_type === "UP_DOWN" ? (v(), s(r, { key: 1 }, [n.target_payout_rate ? (v(), a(An, {
+									}, null, 8, ["modelValue", "onUpdate:modelValue"])) : o("", !0), P.value.game_type === "UP_DOWN" ? (_(), s(r, { key: 1 }, [n.target_payout_rate ? (_(), a(An, {
 										key: 0,
 										modelValue: n.target_payout_rate,
 										"onUpdate:modelValue": (e) => n.target_payout_rate = e,
@@ -1901,7 +1941,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 										percentage: "",
 										title: "目标返奖率",
 										description: "例如 90%：按对方资金池的 90% 计算可分配收益，且必须小于 100%"
-									}, null, 8, ["modelValue", "onUpdate:modelValue"])) : o("", !0), n.maximum_odds ? (v(), a(An, {
+									}, null, 8, ["modelValue", "onUpdate:modelValue"])) : o("", !0), n.maximum_odds ? (_(), a(An, {
 										key: 1,
 										modelValue: n.maximum_odds,
 										"onUpdate:modelValue": (e) => n.maximum_odds = e,
@@ -1913,42 +1953,42 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 									}, null, 8, ["modelValue", "onUpdate:modelValue"])) : o("", !0)], 64)) : o("", !0)], 2)]),
 									_: 2
 								}, 1024),
-								d(T(j), {
+								d(w(A), {
 									shadow: "never",
 									class: "config-group"
 								}, {
-									header: E(() => [c("div", Gn, [c("div", null, [c("h3", null, " 下注限制 · " + w(T(Se)(n.duration_seconds, F.value.game_type)), 1), c("p", null, w(F.value.symbol) + " 当前" + w(F.value.game_type === "UP_DOWN" ? "房间" : "周期") + "的单笔下注范围 ", 1)]), d(T(V), { size: "small" }, {
-										default: E(() => [u(w(T(Se)(n.duration_seconds, F.value.game_type)), 1)]),
+									header: T(() => [c("div", Gn, [c("div", null, [c("h3", null, " 下注限制 · " + S(w(xe)(n.duration_seconds, P.value.game_type)), 1), c("p", null, S(P.value.symbol) + " 当前" + S(P.value.game_type === "UP_DOWN" ? "房间" : "周期") + "的单笔下注范围 ", 1)]), d(w(V), { size: "small" }, {
+										default: T(() => [u(S(w(xe)(n.duration_seconds, P.value.game_type)), 1)]),
 										_: 2
 									}, 1024)])]),
-									default: E(() => [c("div", Kn, [d(T(I), { label: "单笔最小额（USDT）" }, {
-										label: E(() => [i[10] ||= u("单笔最小额（USDT）", -1), d(yn, {
+									default: T(() => [c("div", Kn, [d(w(F), { label: "单笔最小额（USDT）" }, {
+										label: T(() => [i[10] ||= u("单笔最小额（USDT）", -1), d(yn, {
 											label: "单笔最小额",
 											content: "此房间允许的最低单笔下注额。商户可在总后台单笔范围内调整自己的最小额和最大额。"
 										})]),
-										default: E(() => [d(En, {
-											"input-component": T(t),
+										default: T(() => [d(En, {
+											"input-component": w(t),
 											"aria-label": "单笔最小额",
 											unit: "USDT",
 											"model-value": n.minimum_stake.default_value,
-											"onUpdate:modelValue": (e) => T(qe)(n, "minimum_stake", e)
+											"onUpdate:modelValue": (e) => w(Ge)(n, "minimum_stake", e)
 										}, null, 8, [
 											"input-component",
 											"model-value",
 											"onUpdate:modelValue"
 										])]),
 										_: 2
-									}, 1024), d(T(I), { label: "单笔最大额（USDT）" }, {
-										label: E(() => [i[11] ||= u("单笔最大额（USDT）", -1), d(yn, {
+									}, 1024), d(w(F), { label: "单笔最大额（USDT）" }, {
+										label: T(() => [i[11] ||= u("单笔最大额（USDT）", -1), d(yn, {
 											label: "单笔最大额",
 											content: "此房间允许的最高单笔下注额。修改生效后，对应房间的商户限额重置为总后台范围。"
 										})]),
-										default: E(() => [d(En, {
-											"input-component": T(t),
+										default: T(() => [d(En, {
+											"input-component": w(t),
 											"aria-label": "单笔最大额",
 											unit: "USDT",
 											"model-value": n.maximum_stake.default_value,
-											"onUpdate:modelValue": (e) => T(qe)(n, "maximum_stake", e)
+											"onUpdate:modelValue": (e) => w(Ge)(n, "maximum_stake", e)
 										}, null, 8, [
 											"input-component",
 											"model-value",
@@ -1968,29 +2008,29 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 					"hide-content",
 					"min-height"
 				]),
-				N.value || !e.inline || we.value.dirty ? (v(), s("div", qn, [
-					we.value.dirty ? (v(), a(T(A), {
+				M.value || !e.inline || Y.value.dirty ? (_(), s("div", qn, [
+					Y.value.dirty ? (_(), a(w(k), {
 						key: 0,
 						"data-config-discard": !0,
-						disabled: M.value || L.value || ne.value,
-						onClick: Ne
+						disabled: j.value || I.value || re.value,
+						onClick: je
 					}, {
-						default: E(() => [...i[12] ||= [u("放弃修改并重新加载", -1)]]),
+						default: T(() => [...i[12] ||= [u("放弃修改并重新加载", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : o("", !0),
-					N.value ? (v(), a(T(A), {
+					M.value ? (_(), a(w(k), {
 						key: 1,
-						disabled: M.value,
-						onClick: Oe
+						disabled: j.value,
+						onClick: Ee
 					}, {
-						default: E(() => [...i[13] ||= [u("重试", -1)]]),
+						default: T(() => [...i[13] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : o("", !0),
-					e.inline ? o("", !0) : (v(), a(T(A), {
+					e.inline ? o("", !0) : (_(), a(w(k), {
 						key: 2,
-						onClick: i[4] ||= (e) => O.value = !1
+						onClick: i[4] ||= (e) => D.value = !1
 					}, {
-						default: E(() => [...i[14] ||= [u("关闭", -1)]]),
+						default: T(() => [...i[14] ||= [u("关闭", -1)]]),
 						_: 1
 					}))
 				])) : o("", !0)
@@ -1998,7 +2038,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			_: 1
 		}, 40, ["class", "modelValue"])) : o("", !0);
 	}
-}), [["__scopeId", "data-v-b45a5b29"]]), Yn = { class: "guide-body" }, Xn = { class: "guide-example" }, Zn = { class: "guide-formulas" }, Qn = { class: "guide-footer" }, $n = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}), [["__scopeId", "data-v-07bf6313"]]), Yn = { class: "guide-body" }, Xn = { class: "guide-example" }, Zn = { class: "guide-formulas" }, Qn = { class: "guide-footer" }, $n = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "GridGuide",
 	props: {
 		modelValue: {
@@ -2009,7 +2049,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 	},
 	emits: ["update:modelValue"],
 	setup(e) {
-		let t = ae(e, "modelValue"), n = [
+		let t = oe(e, "modelValue"), n = [
 			{
 				title: "① 计算短期波动率",
 				expression: "rₖ = ln(Pₖ ÷ Pₖ₋₁)\nσ = √[ Σ(rₖ − r̄)² ÷ (M − 1) ]",
@@ -2036,7 +2076,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 				explanation: "Σp结束 是格子有效期结束后仍然从未进入格子的概率；用 100% 减去它，就是该格子的命中概率。"
 			}
 		];
-		return (e, i) => (v(), a(T(N), {
+		return (e, i) => (_(), a(w(M), {
 			modelValue: t.value,
 			"onUpdate:modelValue": i[1] ||= (e) => t.value = e,
 			title: "预测网格玩法说明",
@@ -2045,15 +2085,15 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 			"append-to-body": "",
 			"destroy-on-close": ""
 		}, {
-			header: E(() => [...i[2] ||= [c("h2", { class: "guide-title" }, "预测网格玩法说明", -1), c("p", { class: "guide-subtitle" }, "用一个例子看懂格子、命中概率和赔率", -1)]]),
-			footer: E(() => [c("div", Qn, [i[24] ||= c("span", null, "核心规则：有效时间内，连续有效价格进入或穿过对应价格范围一次，即为命中。", -1), d(T(A), {
+			header: T(() => [...i[2] ||= [c("h2", { class: "guide-title" }, "预测网格玩法说明", -1), c("p", { class: "guide-subtitle" }, "用一个例子看懂格子、命中概率和赔率", -1)]]),
+			footer: T(() => [c("div", Qn, [i[24] ||= c("span", null, "核心规则：有效时间内，连续有效价格进入或穿过对应价格范围一次，即为命中。", -1), d(w(k), {
 				type: "primary",
 				onClick: i[0] ||= (e) => t.value = !1
 			}, {
-				default: E(() => [...i[23] ||= [u("我知道了", -1)]]),
+				default: T(() => [...i[23] ||= [u("我知道了", -1)]]),
 				_: 1
 			})])]),
-			default: E(() => [c("div", Yn, [
+			default: T(() => [c("div", Yn, [
 				i[18] ||= c("div", { class: "guide-metrics" }, [
 					c("article", null, [
 						c("span", null, "示例网格大小"),
@@ -2083,16 +2123,16 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 					c("article", Xn, [
 						i[9] ||= c("h4", null, "举例", -1),
 						i[10] ||= c("p", null, "买入格子：BTC 65,010～65,020 · 10:00:04～10:00:06", -1),
-						c("p", null, [d(T(V), { type: "success" }, {
-							default: E(() => [...i[3] ||= [u("命中", -1)]]),
+						c("p", null, [d(w(V), { type: "success" }, {
+							default: T(() => [...i[3] ||= [u("命中", -1)]]),
 							_: 1
 						}), i[4] ||= u(" 10:00:05 价格到达 65,015，进入了格子价格范围。", -1)]),
-						c("p", null, [d(T(V), { type: "success" }, {
-							default: E(() => [...i[5] ||= [u("命中", -1)]]),
+						c("p", null, [d(w(V), { type: "success" }, {
+							default: T(() => [...i[5] ||= [u("命中", -1)]]),
 							_: 1
 						}), i[6] ||= u(" 连续有效行情从 65,005 到达 65,025，线段中间穿过了这个格子，也算碰到。", -1)]),
-						c("p", null, [d(T(V), { type: "danger" }, {
-							default: E(() => [...i[7] ||= [u("未命中", -1)]]),
+						c("p", null, [d(w(V), { type: "danger" }, {
+							default: T(() => [...i[7] ||= [u("未命中", -1)]]),
 							_: 1
 						}), i[8] ||= u(" 这 2 秒内价格始终没有进入或穿过 65,010～65,020。", -1)])
 					]),
@@ -2106,10 +2146,10 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 						c("li", null, [c("strong", null, "逐步推演"), u("：把可能价格切成 100 个位置，当前价格所在位置从 100% 开始。每 500ms 按正态分布把概率扩散到下一批价格位置；2 秒共计算 4 步。")]),
 						c("li", null, [c("strong", null, "收集命中"), u("：某一步进入或穿过目标价格范围，就把这部分概率记为命中；已经命中的部分不重复计算。")])
 					], -1),
-					c("article", Zn, [i[13] ||= c("h4", null, [u("原型计算公式示例 "), c("small", null, "时间单位统一为 500ms")], -1), (v(), s(r, null, re(n, (e) => c("div", { key: e.title }, [
-						c("h4", null, w(e.title), 1),
-						c("pre", null, w(e.expression), 1),
-						c("p", null, w(e.explanation), 1)
+					c("article", Zn, [i[13] ||= c("h4", null, [u("原型计算公式示例 "), c("small", null, "时间单位统一为 500ms")], -1), (_(), s(r, null, ae(n, (e) => c("div", { key: e.title }, [
+						c("h4", null, S(e.title), 1),
+						c("pre", null, S(e.expression), 1),
+						c("p", null, S(e.explanation), 1)
 					])), 64))]),
 					i[16] ||= c("article", { class: "guide-example" }, [
 						c("h4", null, "具体例子"),
@@ -2139,7 +2179,7 @@ var Cn = { class: "decimal-step-controls" }, wn = ["disabled"], Tn = ["disabled"
 //#endregion
 //#region src/prediction-config/platform/views/grid/config/creation.ts
 function er(e, t) {
-	let n = e, r = (e) => typeof e == "string" && /^(0|[1-9]\d{0,18})$/.test(e) && jt(e, "9223372036854775807") <= 0;
+	let n = e, r = (e) => typeof e == "string" && /^(0|[1-9]\d{0,18})$/.test(e) && Dt(e, "9223372036854775807") <= 0;
 	if (!n || n.symbol !== t || !/^[A-Z0-9]{2,32}$/.test(t) || !r(n.site_id) || n.site_id === "0" || !r(n.layout_version)) throw Error("INVALID_GRID_TARGET");
 	let i = n.layout_version === "0";
 	if (i !== (n.layout === null)) throw Error("INVALID_GRID_LAYOUT");
@@ -2151,7 +2191,7 @@ function er(e, t) {
 		effective_from_ms: "0",
 		editable: !0,
 		affected_site_ids: [n.site_id]
-	} : Wt({
+	} : Bt({
 		...n.layout,
 		effective_from_ms: "0",
 		editable: !1,
@@ -2204,50 +2244,50 @@ var tr = {
 }, Cr = { class: "parameter-card" }, wr = { class: "parameter-card" }, Tr = { class: "parameter-heading" }, Er = { class: "parameter-description" }, Dr = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
 	setup(e, { expose: n }) {
-		let { gridConfigSymbols: l, gridConfigCatalog: f, gridConfigCreation: p, gridConfigReceipt: m, gridConfigSite: h, saveGridConfig: g } = pe().grid, _ = ge(), ne = he(), y = (e) => ne.perms.includes("*") || ne.perms.includes(e), x = i(() => y("grid_config:read")), S = i(() => y("grid_config:save")), C = i(() => {
-			let e = String(ne.userInfo.id || "");
+		let { gridConfigSymbols: l, gridConfigCatalog: f, gridConfigCreation: ee, gridConfigReceipt: p, gridConfigSite: m, saveGridConfig: h } = fe().grid, g = he(), re = me(), ie = (e) => re.perms.includes("*") || re.perms.includes(e), y = i(() => ie("grid_config:read")), b = i(() => ie("grid_config:save")), x = i(() => {
+			let e = String(re.userInfo.id || "");
 			return /^[1-9]\d*$/.test(e) ? e : "";
-		}), ae = b([]), D = b(""), j = b(""), M = b(""), N = b(null), P = b(null), L = b(""), R = b("通过预测网格配置页面保存配置"), z = b(!1), B = b(!1), V = b(!1), H = b(!1), U = b(!1), fe = b(""), W = b(""), G = b("info"), K = b(null), me = b(!1), ve = b(""), ye = b(!1), be = new on(), Se = new on(), Ce = new on(), q, we = 0, Te = i(() => x.value ? C.value ? "" : "无法确认当前操作人身份" : "当前账号没有预测网格配置查询权限"), Ee = i(() => ae.value.find((e) => e.site_id === D.value)), De = b([]), Oe = b(""), ke = i(() => Ze(Ee.value?.products ?? [], De.value)), Ae = i(() => {
-			let e = M.value.trim().toUpperCase();
-			return ke.value.filter((t) => !e || t.symbol.includes(e));
-		}), je = i(() => N.value?.site_version === "0"), Me = i(() => x.value && S.value && !!C.value && B.value && !Oe.value && !V.value && !K.value && !me.value && !U.value);
-		function Ne(e) {
-			if (!e || !P.value) return !1;
-			if (je.value) return JSON.stringify(e) !== JSON.stringify(P.value) || L.value !== "";
+		}), oe = v([]), E = v(""), A = v(""), j = v(""), M = v(null), N = v(null), I = v(""), L = v("通过预测网格配置页面保存配置"), R = v(!1), B = v(!1), V = v(!1), H = v(!1), U = v(!1), W = v(""), G = v(""), K = v("info"), q = v(null), pe = v(!1), _e = v(""), ve = v(!1), ye = new tn(), xe = new tn(), Se = new tn(), J, Y = 0, Ce = i(() => y.value ? x.value ? "" : "无法确认当前操作人身份" : "当前账号没有预测网格配置查询权限"), we = i(() => oe.value.find((e) => e.site_id === E.value)), Te = v([]), Ee = v(""), De = i(() => Ye(we.value?.products ?? [], Te.value)), Oe = i(() => {
+			let e = j.value.trim().toUpperCase();
+			return De.value.filter((t) => !e || t.symbol.includes(e));
+		}), ke = i(() => M.value?.site_version === "0"), Ae = i(() => y.value && b.value && !!x.value && B.value && !Ee.value && !V.value && !q.value && !pe.value && !U.value);
+		function je(e) {
+			if (!e || !N.value) return !1;
+			if (ke.value) return JSON.stringify(e) !== JSON.stringify(N.value) || I.value !== "";
 			try {
-				return Gt(e, P.value, !0) || Nt(e.target_rtp) !== L.value || [
+				return Vt(e, N.value, !0) || kt(e.target_rtp) !== I.value || [
 					"enabled",
 					"min_multiplier",
 					"max_multiplier",
 					"min_order_amount",
 					"max_order_amount"
-				].some((t) => e[t] !== P.value[t]);
+				].some((t) => e[t] !== N.value[t]);
 			} catch {
 				return !0;
 			}
 		}
-		let Pe = i(() => Ne(N.value)), Fe = i(() => Ne(N.value ? _t(ie(N.value), S.value) : null)), Ie = i(() => K.value ? K.value.operator_id === C.value ? "bound" : "foreign" : "none"), Le = i(() => Ie.value === "bound" ? K.value : null), Re = i(() => Ie.value === "foreign"), ze = i(() => Fe.value || !!K.value || U.value), Be = i(() => x.value && S.value && (je.value || !!Ee.value?.can_edit) && !!C.value && !!N.value && !K.value && !me.value && !H.value && !U.value), Ve = i(() => Be.value && !!N.value?.layout?.editable), He = i({
+		let Me = i(() => je(M.value)), Ne = i(() => je(M.value ? pt(C(M.value), b.value) : null)), Pe = i(() => q.value ? q.value.operator_id === x.value ? "bound" : "foreign" : "none"), Fe = i(() => Pe.value === "bound" ? q.value : null), Ie = i(() => Pe.value === "foreign"), Le = i(() => Ne.value || !!q.value || U.value), Re = i(() => y.value && b.value && (ke.value || !!we.value?.can_edit) && !!x.value && !!M.value && !q.value && !pe.value && !H.value && !U.value), ze = i(() => Re.value && !!M.value?.layout?.editable), Be = i({
 			get: () => {
-				let e = P.value?.layout?.price_decimals;
+				let e = N.value?.layout?.price_decimals;
 				return e != null && (e <= 8 || Number.isNaN(e)) ? e : void 0;
 			},
 			set: (e) => {
-				!Ve.value || !P.value?.layout || (P.value.layout.price_decimals = e ?? null, dt());
+				!ze.value || !N.value?.layout || (N.value.layout.price_decimals = e ?? null, lt());
 			}
-		}), Ue = b("");
-		oe(He, (e) => {
-			Number.isNaN(e) || (Ue.value = e == null ? "" : String(e));
+		}), Ve = v("");
+		se(Be, (e) => {
+			Number.isNaN(e) || (Ve.value = e == null ? "" : String(e));
 		}, {
 			immediate: !0,
 			flush: "sync"
 		});
-		let We = i({
-			get: () => Ue.value,
+		let He = i({
+			get: () => Ve.value,
 			set: (e) => {
-				Ve.value && (Ue.value = e, He.value = e === "" ? void 0 : /^[0-8]$/.test(e) ? Number(e) : NaN);
+				ze.value && (Ve.value = e, Be.value = e === "" ? void 0 : /^[0-8]$/.test(e) ? Number(e) : NaN);
 			}
-		}), Ge = i(() => !!Ve.value && !!P.value?.layout && N.value?.layout?.price_band_width !== P.value.layout.price_band_width && zt(P.value.layout.price_band_width)), Ke = i(() => Be.value && (je.value || !!Ee.value?.can_edit_limits)), qe = i(() => !!Le.value && x.value && S.value && (Le.value.command.based_on_site_version === "0" || ae.value.some((e) => e.site_id === Le.value.command.site_id && e.can_edit && e.products.some((e) => e.symbol === Le.value.command.symbol)))), Je = i(() => qe.value && B.value && !V.value && !H.value && !U.value && !me.value && !ye.value && ve.value === JSON.stringify(Le.value));
-		function Ye(e) {
+		}), Ue = i(() => !!ze.value && !!N.value?.layout && M.value?.layout?.price_band_width !== N.value.layout.price_band_width && Ft(N.value.layout.price_band_width)), We = i(() => Re.value && (ke.value || !!we.value?.can_edit_limits)), Ge = i(() => !!Fe.value && y.value && b.value && (Fe.value.command.based_on_site_version === "0" || oe.value.some((e) => e.site_id === Fe.value.command.site_id && e.can_edit && e.products.some((e) => e.symbol === Fe.value.command.symbol)))), Ke = i(() => Ge.value && B.value && !V.value && !H.value && !U.value && !pe.value && !ve.value && _e.value === JSON.stringify(Fe.value));
+		function qe(e) {
 			let t = e;
 			return {
 				INVALID_LAYOUT: "网格区间超出允许范围，请检查价格区间和每列时长后重试",
@@ -2266,11 +2306,11 @@ var tr = {
 				EMPTY_CHANGES: "配置没有实际变化，无需保存"
 			}[t?.error_code || t?.message || ""] || [t?.message || "预测网格配置请求失败", t?.error_code].filter(Boolean).join(" · ");
 		}
-		let Xe = i(() => {
-			let e = [N.value?.effective_from_ms, N.value?.layout?.effective_from_ms].filter((e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e)).reduce((e, t) => BigInt(e) > BigInt(t) ? e : t, "0");
-			return e === "0" ? "未提供" : xe(e);
+		let Je = i(() => {
+			let e = [M.value?.effective_from_ms, M.value?.layout?.effective_from_ms].filter((e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e)).reduce((e, t) => BigInt(e) > BigInt(t) ? e : t, "0");
+			return e === "0" ? "未提供" : be(e);
 		});
-		function Qe(e) {
+		function Xe(e) {
 			if (!e || !Array.isArray(e.sites)) throw Error("币种目录返回格式不正确");
 			let t = /* @__PURE__ */ new Set();
 			for (let n of e.sites) {
@@ -2284,107 +2324,107 @@ var tr = {
 			}
 			return e.sites;
 		}
-		function $e() {
+		function Ze() {
 			try {
-				let e = rn(sessionStorage, C.value);
-				K.value = e.pending ?? null, me.value = !1;
+				let e = $t(sessionStorage, x.value);
+				q.value = e.pending ?? null, pe.value = !1;
 			} catch {
-				me.value = !0, K.value = null;
+				pe.value = !0, q.value = null;
 			}
 		}
-		function et() {
-			return `${C.value}:${D.value}:${j.value}`;
+		function Qe() {
+			return `${x.value}:${E.value}:${A.value}`;
 		}
-		function tt() {
-			Se.close(), N.value = null, P.value = null, L.value = "", R.value = "通过预测网格配置页面保存配置", H.value = !1;
+		function $e() {
+			xe.close(), M.value = null, N.value = null, I.value = "", L.value = "通过预测网格配置页面保存配置", H.value = !1;
 		}
-		async function nt(e) {
-			if (be.close(), Ce.close(), ve.value = "", B.value = !1, tt(), ae.value = [], De.value = [], Oe.value = "", D.value = "", j.value = "", M.value = "", fe.value = "", W.value = "", $e(), Te.value || me.value) return;
-			let t = be.next(C.value);
+		async function et(e) {
+			if (ye.close(), Se.close(), _e.value = "", B.value = !1, $e(), oe.value = [], Te.value = [], Ee.value = "", E.value = "", A.value = "", j.value = "", W.value = "", G.value = "", Ze(), Ce.value || pe.value) return;
+			let t = ye.next(x.value);
 			V.value = !0;
 			try {
 				let [n, r] = await Promise.allSettled([f(t.signal), l(t.signal)]);
-				if (!t.current(C.value)) return;
-				if (r.status === "fulfilled" && Array.isArray(r.value) && r.value.every((e) => typeof e == "string") ? De.value = r.value : Oe.value = "通用币种目录暂不可用，当前仅显示已授权的网格配置。", n.status === "rejected") throw n.reason;
-				ae.value = Qe(n.value), B.value = !0;
-				let i = Le.value ?? (e ? { command: e } : null), a = i && (i.command.based_on_site_version === "0" || ae.value.some((e) => e.site_id === i.command.site_id)) ? i.command.site_id : ae.value[0]?.site_id || "";
-				D.value = a;
-				let o = ae.value.find((e) => e.site_id === a), s = i && i.command.site_id === a && (i.command.based_on_site_version === "0" || o?.products.some((e) => e.symbol === i.command.symbol)) ? i.command.symbol : ke.value.find((e) => e.configured)?.symbol || "";
-				j.value = s, s && o?.products.some((e) => e.symbol === s) && (q = st());
+				if (!t.current(x.value)) return;
+				if (r.status === "fulfilled" && Array.isArray(r.value) && r.value.every((e) => typeof e == "string") ? Te.value = r.value : Ee.value = "通用币种目录暂不可用，当前仅显示已授权的网格配置。", n.status === "rejected") throw n.reason;
+				oe.value = Xe(n.value), B.value = !0;
+				let i = Fe.value ?? (e ? { command: e } : null), a = i && (i.command.based_on_site_version === "0" || oe.value.some((e) => e.site_id === i.command.site_id)) ? i.command.site_id : oe.value[0]?.site_id || "";
+				E.value = a;
+				let o = oe.value.find((e) => e.site_id === a), s = i && i.command.site_id === a && (i.command.based_on_site_version === "0" || o?.products.some((e) => e.symbol === i.command.symbol)) ? i.command.symbol : De.value.find((e) => e.configured)?.symbol || "";
+				A.value = s, s && o?.products.some((e) => e.symbol === s) && (J = at());
 			} catch (e) {
-				t.current(C.value) && (fe.value = Ye(e));
+				t.current(x.value) && (W.value = qe(e));
 			} finally {
-				t.current(C.value) && (V.value = !1);
+				t.current(x.value) && (V.value = !1);
 			}
 		}
-		function rt(e) {
-			ze.value || (tt(), D.value = e, j.value = ke.value.find((e) => e.configured)?.symbol || "", j.value && (q = st()));
+		function tt(e) {
+			Le.value || ($e(), E.value = e, A.value = De.value.find((e) => e.configured)?.symbol || "", A.value && (J = at()));
 		}
-		function it(e) {
-			if (e === j.value && (N.value || H.value) || ze.value) return;
-			let t = ke.value.find((t) => t.symbol === e);
-			!t || !t.configured && !Me.value || (tt(), fe.value = "", j.value = e, q = t.configured ? st() : at());
+		function nt(e) {
+			if (e === A.value && (M.value || H.value) || Le.value) return;
+			let t = De.value.find((t) => t.symbol === e);
+			!t || !t.configured && !Ae.value || ($e(), W.value = "", A.value = e, J = t.configured ? at() : rt());
+		}
+		async function rt() {
+			if ($e(), !Ae.value || !A.value) return;
+			let e = A.value, t = xe.next(Qe());
+			H.value = !0;
+			try {
+				let n = await ee(e, t.signal);
+				if (!t.current(Qe()) || !b.value) return;
+				let r = er(n, e);
+				M.value = r, N.value = pt(r, b.value), H.value = !1, E.value = r.site_id;
+			} catch (e) {
+				t.current(Qe()) && (W.value = qe(e));
+			} finally {
+				t.current(Qe()) && (H.value = !1);
+			}
+		}
+		function it() {
+			!ke.value || q.value || U.value || ($e(), A.value = "", G.value = "");
 		}
 		async function at() {
-			if (tt(), !Me.value || !j.value) return;
-			let e = j.value, t = Se.next(et());
+			if ($e(), !y.value || !E.value || !A.value) return;
+			let e = E.value, t = A.value, n = Qe(), r = xe.next(n);
 			H.value = !0;
 			try {
-				let n = await p(e, t.signal);
-				if (!t.current(et()) || !S.value) return;
-				let r = er(n, e);
-				N.value = r, P.value = _t(r, S.value), H.value = !1, D.value = r.site_id;
+				let n = await m(e, t, r.signal);
+				if (!r.current(Qe())) return;
+				let i = Ut(n, e, t);
+				M.value = i, N.value = pt(i, b.value), I.value = kt(i.target_rtp);
 			} catch (e) {
-				t.current(et()) && (fe.value = Ye(e));
+				r.current(Qe()) && (W.value = qe(e));
 			} finally {
-				t.current(et()) && (H.value = !1);
+				r.current(Qe()) && (H.value = !1);
 			}
 		}
-		function ot() {
-			!je.value || K.value || U.value || (tt(), j.value = "", W.value = "");
+		function ot(e) {
+			return e.symbol === A.value && N.value ? N.value.enabled : e.enabled;
 		}
-		async function st() {
-			if (tt(), !x.value || !D.value || !j.value) return;
-			let e = D.value, t = j.value, n = et(), r = Se.next(n);
-			H.value = !0;
-			try {
-				let n = await h(e, t, r.signal);
-				if (!r.current(et())) return;
-				let i = qt(n, e, t);
-				N.value = i, P.value = _t(i, S.value), L.value = Nt(i.target_rtp);
-			} catch (e) {
-				r.current(et()) && (fe.value = Ye(e));
-			} finally {
-				r.current(et()) && (H.value = !1);
-			}
+		function st(e) {
+			return !we.value?.products.some((t) => t.symbol === e.symbol) || !b.value || !we.value?.can_edit || H.value || U.value || !!q.value || pe.value || Ne.value && e.symbol !== A.value;
 		}
-		function ct(e) {
-			return e.symbol === j.value && P.value ? P.value.enabled : e.enabled;
+		async function ct(e, t) {
+			typeof t != "boolean" || st(e) || (e.symbol !== A.value && (nt(e.symbol), await J), N.value && N.value.symbol === e.symbol && !st(e) && (N.value.enabled = t, lt()));
 		}
-		function lt(e) {
-			return !Ee.value?.products.some((t) => t.symbol === e.symbol) || !S.value || !Ee.value?.can_edit || H.value || U.value || !!K.value || me.value || Fe.value && e.symbol !== j.value;
+		function lt() {
+			G.value = "";
 		}
-		async function ut(e, t) {
-			typeof t != "boolean" || lt(e) || (e.symbol !== j.value && (it(e.symbol), await q), P.value && P.value.symbol === e.symbol && !lt(e) && (P.value.enabled = t, dt()));
-		}
-		function dt() {
-			W.value = "";
-		}
-		async function ft() {
-			if (!Be.value || !N.value || !P.value || !C.value) return;
+		async function ut() {
+			if (!Re.value || !M.value || !N.value || !x.value) return;
 			let e;
 			try {
-				e = Jt(N.value, {
-					...P.value,
-					target_rtp: Pt(L.value)
-				}, R.value, Ft(), je.value || !!Ee.value?.can_edit_limits, !0);
+				e = Wt(M.value, {
+					...N.value,
+					target_rtp: At(I.value)
+				}, L.value, jt(), ke.value || !!we.value?.can_edit_limits, !0);
 			} catch (e) {
-				G.value = "warning", W.value = Ye(e);
+				K.value = "warning", G.value = qe(e);
 				return;
 			}
-			let t = tn(C.value, e), n = vt(), r = "price_band_width" in e.changes || "column_duration_seconds" in e.changes || "price_decimals" in e.changes, i = je.value ? " 首次创建后保持关闭。" : r ? ` 公共网格区间修改将影响站点：${N.value.layout.affected_site_ids.join("、")}。` : "";
+			let t = Zt(x.value, e), n = gt(), r = "price_band_width" in e.changes || "column_duration_seconds" in e.changes || "price_decimals" in e.changes, i = ke.value ? " 首次创建后保持关闭。" : r ? ` 公共网格区间修改将影响站点：${M.value.layout.affected_site_ids.join("、")}。` : "";
 			try {
-				await ce.confirm(`确认保存 ${e.site_id} / ${e.symbol} 的 ${Object.keys(e.changes).length} 项修改？${i}`, "确认预测网格配置", {
+				await z.confirm(`确认保存 ${e.site_id} / ${e.symbol} 的 ${Object.keys(e.changes).length} 项修改？${i}`, "确认预测网格配置", {
 					type: "warning",
 					confirmButtonText: "确认保存",
 					cancelButtonText: "取消"
@@ -2392,42 +2432,42 @@ var tr = {
 			} catch {
 				return;
 			}
-			if ($e(), !Be.value || !N.value || !P.value || n !== vt()) {
-				G.value = "warning", W.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+			if (Ze(), !Re.value || !M.value || !N.value || n !== gt()) {
+				K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 				return;
 			}
 			let a;
 			try {
-				a = Jt(N.value, {
-					...P.value,
-					target_rtp: Pt(L.value)
-				}, R.value, t.command.client_request_id, je.value || !!Ee.value?.can_edit_limits, !0);
+				a = Wt(M.value, {
+					...N.value,
+					target_rtp: At(I.value)
+				}, L.value, t.command.client_request_id, ke.value || !!we.value?.can_edit_limits, !0);
 			} catch {
-				G.value = "warning", W.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+				K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 				return;
 			}
 			let o;
 			try {
-				o = nn(sessionStorage, t, C.value, a), $e();
+				o = Qt(sessionStorage, t, x.value, a), Ze();
 			} catch (e) {
 				if (e?.message === "STALE_CONFIRMATION") {
-					G.value = "warning", W.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+					K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 					return;
 				}
-				me.value = !0;
+				pe.value = !0;
 				return;
 			}
-			ht(o, "save");
+			mt(o, "save");
 		}
-		async function pt() {
-			$e(), !(!Le.value || !qe.value || U.value || ye.value) && ht(Le.value, "receipt");
+		async function dt() {
+			Ze(), !(!Fe.value || !Ge.value || U.value || ve.value) && mt(Fe.value, "receipt");
 		}
-		async function mt() {
-			if ($e(), !Je.value || !Le.value) return;
-			let e = Le.value;
-			ye.value = !0;
+		async function ft() {
+			if (Ze(), !Ke.value || !Fe.value) return;
+			let e = Fe.value;
+			ve.value = !0;
 			try {
-				await ce.confirm(`确认恢复 ${e.command.site_id} / ${e.command.symbol} 的原请求 ${e.command.client_request_id}？将沿用原编号和原参数；已提交则返回原回执，尚未提交则保存原配置，不使用当前页面的新修改。`, "恢复原配置请求", {
+				await z.confirm(`确认恢复 ${e.command.site_id} / ${e.command.symbol} 的原请求 ${e.command.client_request_id}？将沿用原编号和原参数；已提交则返回原回执，尚未提交则保存原配置，不使用当前页面的新修改。`, "恢复原配置请求", {
 					type: "warning",
 					confirmButtonText: "确认恢复",
 					cancelButtonText: "取消"
@@ -2435,139 +2475,139 @@ var tr = {
 			} catch {
 				return;
 			} finally {
-				ye.value = !1;
+				ve.value = !1;
 			}
-			if ($e(), !Je.value || JSON.stringify(e) !== JSON.stringify(Le.value)) {
-				G.value = "warning", W.value = "确认期间账号、权限或原请求已变化，本次恢复已取消，请重新查询原操作回执";
+			if (Ze(), !Ke.value || JSON.stringify(e) !== JSON.stringify(Fe.value)) {
+				K.value = "warning", G.value = "确认期间账号、权限或原请求已变化，本次恢复已取消，请重新查询原操作回执";
 				return;
 			}
-			await ht(e, "recover");
+			await mt(e, "recover");
 		}
-		async function ht(e, t) {
-			let n = ++we, r = et(), i = Ce.next(r);
-			U.value = !0, ve.value = "", W.value = "";
+		async function mt(e, t) {
+			let n = ++Y, r = Qe(), i = Se.next(r);
+			U.value = !0, _e.value = "", G.value = "";
 			try {
-				let n = await an(sessionStorage, e, t, (e, t) => e === "save" ? g(t) : m(t));
-				if (!i.current(et())) return;
-				if ($e(), n.status === "success") {
-					let e = C.value;
-					R.value = "通过预测网格配置页面保存配置", U.value = !1, await nt(), e === C.value && (G.value = "warning", W.value = fe.value ? "配置已保存；最新配置刷新失败，请手动刷新" : "");
-				} else if (t === "recover" && n.status === "rejected" && n.error?.error_code === "VERSION_CONFLICT") if (!n.journalCleared || K.value || me.value) G.value = "warning", W.value = "旧请求已明确拒绝，但本机待确认记录已变化，请重新核对当前记录";
+				let n = await en(sessionStorage, e, t, (e, t) => e === "save" ? h(t) : p(t));
+				if (!i.current(Qe())) return;
+				if (Ze(), n.status === "success") {
+					let e = x.value;
+					L.value = "通过预测网格配置页面保存配置", U.value = !1, await et(), e === x.value && (K.value = "warning", G.value = W.value ? "配置已保存；最新配置刷新失败，请手动刷新" : "");
+				} else if (t === "recover" && n.status === "rejected" && n.error?.error_code === "VERSION_CONFLICT") if (!n.journalCleared || q.value || pe.value) K.value = "warning", G.value = "旧请求已明确拒绝，但本机待确认记录已变化，请重新核对当前记录";
 				else {
-					let t = C.value;
-					if (await nt(e.command), D.value && j.value && q && await q, t === C.value) {
-						G.value = "warning";
-						let t = D.value === e.command.site_id && j.value === e.command.symbol && ae.value.some((t) => t.site_id === e.command.site_id && t.products.some((t) => t.symbol === e.command.symbol));
-						W.value = "旧请求未生效，配置版本已变化；已清除旧待确认记录。" + (t ? fe.value || !N.value ? "最新配置刷新失败，请手动刷新" : "请以当前配置为准" : `原目标当前不可见（${e.command.site_id} / ${e.command.symbol}），请核对权限和配置`);
+					let t = x.value;
+					if (await et(e.command), E.value && A.value && J && await J, t === x.value) {
+						K.value = "warning";
+						let t = E.value === e.command.site_id && A.value === e.command.symbol && oe.value.some((t) => t.site_id === e.command.site_id && t.products.some((t) => t.symbol === e.command.symbol));
+						G.value = "旧请求未生效，配置版本已变化；已清除旧待确认记录。" + (t ? W.value || !M.value ? "最新配置刷新失败，请手动刷新" : "请以当前配置为准" : `原目标当前不可见（${e.command.site_id} / ${e.command.symbol}），请核对权限和配置`);
 					}
 				}
-				else G.value = n.status === "unknown" ? "warning" : "info", t === "receipt" && Qt(n.error) && JSON.stringify(Le.value) === JSON.stringify(e) ? (ve.value = JSON.stringify(e), W.value = "未找到原操作回执，可使用原编号和原参数恢复请求") : t === "recover" ? W.value = "恢复尚未确认，原请求已保留，请重新查询原操作回执 · " + Ye(n.error) : W.value = n.status === "unknown" ? "原操作结果仍待确认，请使用原请求查询回执" : "保存已明确拒绝，可修正后重新提交 · " + Ye(n.error);
+				else K.value = n.status === "unknown" ? "warning" : "info", t === "receipt" && Jt(n.error) && JSON.stringify(Fe.value) === JSON.stringify(e) ? (_e.value = JSON.stringify(e), G.value = "未找到原操作回执，可使用原编号和原参数恢复请求") : t === "recover" ? G.value = "恢复尚未确认，原请求已保留，请重新查询原操作回执 · " + qe(n.error) : G.value = n.status === "unknown" ? "原操作结果仍待确认，请使用原请求查询回执" : "保存已明确拒绝，可修正后重新提交 · " + qe(n.error);
 			} catch (e) {
-				i.current(et()) && ($e(), G.value = "warning", W.value = "原操作结果仍待确认 · " + Ye(e));
+				i.current(Qe()) && (Ze(), K.value = "warning", G.value = "原操作结果仍待确认 · " + qe(e));
 			} finally {
-				n === we && (U.value = !1, $e());
+				n === Y && (U.value = !1, Ze());
 			}
 		}
-		async function gt() {
-			if (!ze.value) return !0;
+		async function ht() {
+			if (!Le.value) return !0;
 			try {
-				return await ce.confirm("当前有未保存修改或待确认操作，离开不会删除原记录。仍要离开吗？", "离开预测网格配置", { type: "warning" }), !0;
+				return await z.confirm("当前有未保存修改或待确认操作，离开不会删除原记录。仍要离开吗？", "离开预测网格配置", { type: "warning" }), !0;
 			} catch {
 				return !1;
 			}
 		}
-		function vt() {
+		function gt() {
 			return JSON.stringify({
-				operator: C.value,
-				site: D.value,
-				symbol: j.value,
-				snapshot: N.value,
-				draft: P.value,
-				rtp: L.value,
-				reason: R.value
+				operator: x.value,
+				site: E.value,
+				symbol: A.value,
+				snapshot: M.value,
+				draft: N.value,
+				rtp: I.value,
+				reason: L.value
 			});
 		}
-		async function yt() {
+		async function _t() {
 			if (!U.value) {
-				if (Fe.value) {
-					let e = vt();
+				if (Ne.value) {
+					let e = gt();
 					try {
-						await ce.confirm("刷新会丢弃当前未保存修改，仍要刷新吗？", "刷新预测网格配置", { type: "warning" });
+						await z.confirm("刷新会丢弃当前未保存修改，仍要刷新吗？", "刷新预测网格配置", { type: "warning" });
 					} catch {
 						return;
 					}
-					if (U.value || e !== vt()) {
-						G.value = "warning", W.value = "确认期间编辑状态已变化，本次刷新已取消";
+					if (U.value || e !== gt()) {
+						K.value = "warning", G.value = "确认期间编辑状态已变化，本次刷新已取消";
 						return;
 					}
 				}
-				await nt();
+				await et();
 			}
 		}
-		function bt(e) {
-			ze.value && (e.preventDefault(), e.returnValue = "");
+		function vt(e) {
+			Le.value && (e.preventDefault(), e.returnValue = "");
 		}
-		return oe(() => [
-			C.value,
+		return se(() => [
 			x.value,
-			S.value
-		], () => nt(), { immediate: !0 }), _e(gt), window.addEventListener("beforeunload", bt), te(() => {
-			ve.value = "", B.value = !1, be.close(), Se.close(), Ce.close(), window.removeEventListener("beforeunload", bt);
+			y.value,
+			b.value
+		], () => et(), { immediate: !0 }), ge(ht), window.addEventListener("beforeunload", vt), ne(() => {
+			_e.value = "", B.value = !1, ye.close(), xe.close(), Se.close(), window.removeEventListener("beforeunload", vt);
 		}), n({
-			hasBlockingWork: ze,
-			confirmLeave: gt,
-			refresh: yt,
+			hasBlockingWork: Le,
+			confirmLeave: ht,
+			refresh: _t,
 			loading: V
-		}), (e, n) => (v(), s("section", tr, [
-			Te.value ? (v(), a(T(k), {
+		}), (e, n) => (_(), s("section", tr, [
+			Ce.value ? (_(), a(w(O), {
 				key: 0,
-				title: Te.value,
+				title: Ce.value,
 				type: "warning",
 				closable: !1
-			}, null, 8, ["title"])) : me.value ? (v(), a(T(k), {
+			}, null, 8, ["title"])) : pe.value ? (_(), a(w(O), {
 				key: 1,
 				title: "本机保存的待确认操作记录已损坏或不可用，请停止操作并联系管理员核验",
 				type: "error",
 				closable: !1
-			})) : Re.value ? (v(), a(T(k), {
+			})) : Ie.value ? (_(), a(w(O), {
 				key: 2,
 				title: "检测到其他账号尚未确认的预测网格配置操作，当前账号不可覆盖，请切回原账号查询回执",
 				type: "error",
 				closable: !1
 			})) : o("", !0),
-			fe.value ? (v(), s("div", nr, [d(T(k), {
-				title: fe.value,
+			W.value ? (_(), s("div", nr, [d(w(O), {
+				title: W.value,
 				type: "error",
 				closable: !1
-			}, null, 8, ["title"]), d(T(A), {
+			}, null, 8, ["title"]), d(w(k), {
 				loading: V.value || H.value,
-				disabled: U.value || !!K.value,
-				onClick: yt
+				disabled: U.value || !!q.value,
+				onClick: _t
 			}, {
-				default: E(() => [...n[16] ||= [u("重试", -1)]]),
+				default: T(() => [...n[16] ||= [u("重试", -1)]]),
 				_: 1
 			}, 8, ["loading", "disabled"])])) : o("", !0),
-			W.value ? (v(), a(T(k), {
+			G.value ? (_(), a(w(O), {
 				key: 4,
-				title: W.value,
-				type: G.value,
+				title: G.value,
+				type: K.value,
 				closable: !1
 			}, null, 8, ["title", "type"])) : o("", !0),
-			Le.value ? (v(), s("div", rr, [c("div", null, [n[17] ||= c("strong", null, "原配置操作结果待确认", -1), c("small", null, w(Le.value.command.site_id) + " · " + w(Le.value.command.symbol) + " · " + w(Le.value.command.client_request_id), 1)]), c("div", ir, [d(T(A), {
+			Fe.value ? (_(), s("div", rr, [c("div", null, [n[17] ||= c("strong", null, "原配置操作结果待确认", -1), c("small", null, S(Fe.value.command.site_id) + " · " + S(Fe.value.command.symbol) + " · " + S(Fe.value.command.client_request_id), 1)]), c("div", ir, [d(w(k), {
 				type: "warning",
 				loading: U.value,
-				disabled: !qe.value || ye.value,
-				onClick: pt
+				disabled: !Ge.value || ve.value,
+				onClick: dt
 			}, {
-				default: E(() => [...n[18] ||= [u("查询原操作回执", -1)]]),
+				default: T(() => [...n[18] ||= [u("查询原操作回执", -1)]]),
 				_: 1
-			}, 8, ["loading", "disabled"]), Je.value || ye.value ? (v(), a(T(A), {
+			}, 8, ["loading", "disabled"]), Ke.value || ve.value ? (_(), a(w(k), {
 				key: 0,
 				type: "warning",
-				disabled: !Je.value,
-				onClick: mt
+				disabled: !Ke.value,
+				onClick: ft
 			}, {
-				default: E(() => [...n[19] ||= [u("恢复原请求", -1)]]),
+				default: T(() => [...n[19] ||= [u("恢复原请求", -1)]]),
 				_: 1
 			}, 8, ["disabled"])) : o("", !0)])])) : o("", !0),
 			d(gn, {
@@ -2576,157 +2616,157 @@ var tr = {
 				"min-height": "0px",
 				class: "grid-loading-workspace"
 			}, {
-				default: E(() => [c("div", ar, [c("aside", or, [
-					c("div", sr, [n[20] ||= c("strong", null, "币种配置", -1), c("span", null, w(Ae.value.length) + " 条", 1)]),
-					ae.value.length > 1 ? (v(), a(T(ue), {
+				default: T(() => [c("div", ar, [c("aside", or, [
+					c("div", sr, [n[20] ||= c("strong", null, "币种配置", -1), c("span", null, S(Oe.value.length) + " 条", 1)]),
+					oe.value.length > 1 ? (_(), a(w(ue), {
 						key: 0,
-						modelValue: D.value,
-						"onUpdate:modelValue": n[0] ||= (e) => D.value = e,
+						modelValue: E.value,
+						"onUpdate:modelValue": n[0] ||= (e) => E.value = e,
 						"aria-label": "选择站点",
-						disabled: ze.value,
-						onChange: rt
+						disabled: Le.value,
+						onChange: tt
 					}, {
-						default: E(() => [(v(!0), s(r, null, re(ae.value, (e) => (v(), a(T(le), {
+						default: T(() => [(_(!0), s(r, null, ae(oe.value, (e) => (_(), a(w(le), {
 							key: e.site_id,
 							label: e.site_id,
 							value: e.site_id
 						}, null, 8, ["label", "value"]))), 128))]),
 						_: 1
 					}, 8, ["modelValue", "disabled"])) : o("", !0),
-					Oe.value ? (v(), s("p", cr, [u(w(Oe.value), 1), d(T(A), {
+					Ee.value ? (_(), s("p", cr, [u(S(Ee.value), 1), d(w(k), {
 						link: "",
 						type: "primary",
-						disabled: ze.value,
-						onClick: yt
+						disabled: Le.value,
+						onClick: _t
 					}, {
-						default: E(() => [...n[21] ||= [u("重试", -1)]]),
+						default: T(() => [...n[21] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])])) : o("", !0),
-					d(T(t), {
-						modelValue: M.value,
-						"onUpdate:modelValue": n[1] ||= (e) => M.value = e,
+					d(w(t), {
+						modelValue: j.value,
+						"onUpdate:modelValue": n[1] ||= (e) => j.value = e,
 						clearable: "",
 						placeholder: "搜索交易对",
 						"aria-label": "搜索交易对"
 					}, null, 8, ["modelValue"]),
-					c("div", lr, [(v(!0), s(r, null, re(Ae.value, (e) => (v(), s("div", {
+					c("div", lr, [(_(!0), s(r, null, ae(Oe.value, (e) => (_(), s("div", {
 						key: e.symbol,
-						class: ee(["symbol-row", { active: e.symbol === j.value }])
+						class: te(["symbol-row", { active: e.symbol === A.value }])
 					}, [
 						c("button", {
 							type: "button",
 							class: "symbol-button",
-							disabled: !e.configured && !Me.value || ze.value && e.symbol !== j.value,
-							onClick: (t) => it(e.symbol)
-						}, [d(T(_), { symbol: e.symbol }, null, 8, ["symbol"])], 8, ur),
-						e.configured ? (v(), a(T(de), {
+							disabled: !e.configured && !Ae.value || Le.value && e.symbol !== A.value,
+							onClick: (t) => nt(e.symbol)
+						}, [d(w(g), { symbol: e.symbol }, null, 8, ["symbol"])], 8, ur),
+						e.configured ? (_(), a(w(de), {
 							key: 1,
-							"model-value": ct(e),
-							disabled: lt(e),
+							"model-value": ot(e),
+							disabled: st(e),
 							"aria-label": `${e.symbol} 开放配置`,
-							onChange: (t) => ut(e, t)
+							onChange: (t) => ct(e, t)
 						}, null, 8, [
 							"model-value",
 							"disabled",
 							"aria-label",
 							"onChange"
-						])) : (v(), s("span", dr, "未配置")),
-						e.symbol === j.value && Pe.value ? (v(), s("small", fr, "未保存")) : o("", !0)
-					], 2))), 128)), !V.value && Ee.value && !Ae.value.length ? (v(), a(T(F), {
+						])) : (_(), s("span", dr, "未配置")),
+						e.symbol === A.value && Me.value ? (_(), s("small", fr, "未保存")) : o("", !0)
+					], 2))), 128)), !V.value && we.value && !Oe.value.length ? (_(), a(w(P), {
 						key: 0,
 						description: "当前站点没有已授权的预测网格产品",
 						"image-size": 56
 					})) : o("", !0)])
-				]), c("main", pr, [N.value && P.value ? (v(), s("header", mr, [c("div", null, [
-					c("h2", null, w(N.value.symbol) + " · 预测网格", 1),
-					c("p", hr, "更新时间 " + w(Xe.value), 1),
-					je.value || ae.value.length > 1 ? (v(), s("p", gr, "当前站点：" + w(N.value.site_id), 1)) : o("", !0)
+				]), c("main", pr, [M.value && N.value ? (_(), s("header", mr, [c("div", null, [
+					c("h2", null, S(M.value.symbol) + " · 预测网格", 1),
+					c("p", hr, "更新时间 " + S(Je.value), 1),
+					ke.value || oe.value.length > 1 ? (_(), s("p", gr, "当前站点：" + S(M.value.site_id), 1)) : o("", !0)
 				]), c("div", _r, [
-					je.value ? (v(), a(T(A), {
+					ke.value ? (_(), a(w(k), {
 						key: 0,
-						disabled: !!K.value || U.value,
-						onClick: ot
+						disabled: !!q.value || U.value,
+						onClick: it
 					}, {
-						default: E(() => [...n[22] ||= [u("取消新增", -1)]]),
+						default: T(() => [...n[22] ||= [u("取消新增", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : o("", !0),
-					d(T(A), { onClick: n[2] ||= (e) => z.value = !0 }, {
-						default: E(() => [...n[23] ||= [u("玩法说明", -1)]]),
+					d(w(k), { onClick: n[2] ||= (e) => R.value = !0 }, {
+						default: T(() => [...n[23] ||= [u("玩法说明", -1)]]),
 						_: 1
 					}),
-					S.value ? (v(), a(T(A), {
+					b.value ? (_(), a(w(k), {
 						key: 1,
 						type: "primary",
 						loading: U.value,
-						disabled: !Be.value || !Pe.value || Ge.value,
-						onClick: ft
+						disabled: !Re.value || !Me.value || Ue.value,
+						onClick: ut
 					}, {
-						default: E(() => [...n[24] ||= [u("保存配置", -1)]]),
+						default: T(() => [...n[24] ||= [u("保存配置", -1)]]),
 						_: 1
 					}, 8, ["loading", "disabled"])) : o("", !0)
 				])])) : o("", !0), d(gn, {
 					loading: H.value && !V.value,
-					"hide-content": H.value && !N.value,
+					"hide-content": H.value && !M.value,
 					"min-height": "0px",
 					class: "grid-config__detail"
 				}, {
-					default: E(() => [!V.value && !H.value && !N.value && !j.value && !fe.value ? (v(), a(T(F), {
+					default: T(() => [!V.value && !H.value && !M.value && !A.value && !W.value ? (_(), a(w(P), {
 						key: 0,
-						description: Me.value ? "请选择币种填写配置，首次保存后保持关闭" : "当前账号暂无已配置的产品"
-					}, null, 8, ["description"])) : !V.value && !H.value && !fe.value && Ee.value && !j.value ? (v(), a(T(F), {
+						description: Ae.value ? "请选择币种填写配置，首次保存后保持关闭" : "当前账号暂无已配置的产品"
+					}, null, 8, ["description"])) : !V.value && !H.value && !W.value && we.value && !A.value ? (_(), a(w(P), {
 						key: 1,
 						description: "请选择交易对查看配置"
-					})) : N.value && P.value ? (v(), s(r, { key: 2 }, [je.value ? (v(), a(T(k), {
+					})) : M.value && N.value ? (_(), s(r, { key: 2 }, [ke.value ? (_(), a(w(O), {
 						key: 0,
 						title: "请填写参数后保存，首次保存后保持关闭；确认配置后再单独开启。",
 						type: "info",
 						closable: !1
 					})) : o("", !0), c("div", vr, [
-						c("article", yr, [n[29] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "网格区间配置"), c("p", { class: "parameter-description" }, "网格区间由平台按币种统一设置，修改后自动用于该币种下的商户交易。")], -1), P.value.layout ? (v(), s(r, { key: 0 }, [d(T(se), {
+						c("article", yr, [n[29] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "网格区间配置"), c("p", { class: "parameter-description" }, "网格区间由平台按币种统一设置，修改后自动用于该币种下的商户交易。")], -1), N.value.layout ? (_(), s(r, { key: 0 }, [d(w(ce), {
 							"label-position": "top",
 							class: "fields limit-fields",
-							onSubmit: n[5] ||= O(() => {}, ["prevent"])
+							onSubmit: n[5] ||= D(() => {}, ["prevent"])
 						}, {
-							default: E(() => [d(T(I), { label: "纵向格子区间（USDT）" }, {
-								label: E(() => [n[25] ||= u("纵向格子区间（USDT）", -1), d(yn, {
+							default: T(() => [d(w(F), { label: "纵向格子区间（USDT）" }, {
+								label: T(() => [n[25] ||= u("纵向格子区间（USDT）", -1), d(yn, {
 									label: "纵向格子区间",
 									content: "每个格子覆盖的价格区间宽度，最多保留 8 位小数。数值越大，每格覆盖的价格范围越宽；保存时会根据最新标记价检查安全范围。"
 								})]),
-								default: E(() => [d(En, {
-									"input-component": T(t),
-									modelValue: P.value.layout.price_band_width,
-									"onUpdate:modelValue": n[3] ||= (e) => P.value.layout.price_band_width = e,
-									disabled: !Ve.value,
+								default: T(() => [d(En, {
+									"input-component": w(t),
+									modelValue: N.value.layout.price_band_width,
+									"onUpdate:modelValue": n[3] ||= (e) => N.value.layout.price_band_width = e,
+									disabled: !ze.value,
 									inputmode: "decimal",
 									"aria-label": "纵向格子区间",
-									onInput: dt
+									onInput: lt
 								}, {
-									append: E(() => [...n[26] ||= [u("USDT", -1)]]),
+									append: T(() => [...n[26] ||= [u("USDT", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
 									"modelValue",
 									"disabled"
-								]), Ge.value ? (v(), s("small", br, "精度不规范，最多保留 8 位小数")) : o("", !0)]),
+								]), Ue.value ? (_(), s("small", br, "精度不规范，最多保留 8 位小数")) : o("", !0)]),
 								_: 1
-							}), d(T(I), { label: "横向格子区间（秒）" }, {
-								label: E(() => [n[27] ||= u("横向格子区间（秒）", -1), d(yn, {
+							}), d(w(F), { label: "横向格子区间（秒）" }, {
+								label: T(() => [n[27] ||= u("横向格子区间（秒）", -1), d(yn, {
 									label: "横向格子区间",
 									content: "每列格子覆盖的时间长度，可填 1 至 10 秒整数；全部列连同起始等待时间不能超过 120 秒。"
 								})]),
-								default: E(() => [d(En, {
-									"input-component": T(t),
-									modelValue: P.value.layout.column_duration_seconds,
-									"onUpdate:modelValue": n[4] ||= (e) => P.value.layout.column_duration_seconds = e,
-									disabled: !Ve.value,
+								default: T(() => [d(En, {
+									"input-component": w(t),
+									modelValue: N.value.layout.column_duration_seconds,
+									"onUpdate:modelValue": n[4] ||= (e) => N.value.layout.column_duration_seconds = e,
+									disabled: !ze.value,
 									inputmode: "numeric",
 									min: "1",
 									max: "10",
 									step: "1",
 									"aria-label": "横向格子区间",
-									onInput: dt
+									onInput: lt
 								}, {
-									append: E(() => [...n[28] ||= [u("秒", -1)]]),
+									append: T(() => [...n[28] ||= [u("秒", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
@@ -2736,32 +2776,32 @@ var tr = {
 								_: 1
 							})]),
 							_: 1
-						}), N.value.layout?.editable ? o("", !0) : (v(), s("p", xr, w(je.value ? "该币种已有公共网格区间，首次创建将直接沿用。" : "当前账号无法修改该币种全部受影响站点的公共网格区间，仅可查看。"), 1))], 64)) : (v(), a(T(k), {
+						}), M.value.layout?.editable ? o("", !0) : (_(), s("p", xr, S(ke.value ? "该币种已有公共网格区间，首次创建将直接沿用。" : "当前账号无法修改该币种全部受影响站点的公共网格区间，仅可查看。"), 1))], 64)) : (_(), a(w(O), {
 							key: 1,
 							title: "当前接口未返回网格区间，请刷新后重试；暂不支持编辑网格区间。",
 							type: "info",
 							closable: !1
 						}))]),
-						P.value.layout ? (v(), s("article", Sr, [
+						N.value.layout ? (_(), s("article", Sr, [
 							n[30] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "价格精度"), c("p", { class: "parameter-description" }, "由平台按币种统一设置，保存后用于后续新订单。")], -1),
-							d(T(se), {
+							d(w(ce), {
 								"label-position": "top",
 								class: "fields odds-fields",
-								onSubmit: n[7] ||= O(() => {}, ["prevent"])
+								onSubmit: n[7] ||= D(() => {}, ["prevent"])
 							}, {
-								default: E(() => [d(T(I), { label: "价格小数位" }, {
-									default: E(() => [d(En, {
-										"input-component": T(t),
-										modelValue: We.value,
-										"onUpdate:modelValue": n[6] ||= (e) => We.value = e,
+								default: T(() => [d(w(F), { label: "价格小数位" }, {
+									default: T(() => [d(En, {
+										"input-component": w(t),
+										modelValue: He.value,
+										"onUpdate:modelValue": n[6] ||= (e) => He.value = e,
 										min: "0",
 										max: "8",
 										step: "1",
 										unit: "位",
 										inputmode: "numeric",
 										"aria-label": "价格小数位",
-										disabled: !Ve.value,
-										placeholder: (N.value.layout?.price_decimals ?? 0) > 8 ? `当前 ${N.value.layout.price_decimals} 位` : "请输入 0～8 的整数"
+										disabled: !ze.value,
+										placeholder: (M.value.layout?.price_decimals ?? 0) > 8 ? `当前 ${M.value.layout.price_decimals} 位` : "请输入 0～8 的整数"
 									}, null, 8, [
 										"input-component",
 										"modelValue",
@@ -2774,27 +2814,27 @@ var tr = {
 							}),
 							n[31] ||= c("p", { class: "precision-note" }, "可设置 0～8 位，未配置时默认填入 3 位，保存后生效。按所选位数截断，不四舍五入；0 表示整数，旧订单保留原规则。", -1)
 						])) : o("", !0),
-						c("article", Cr, [n[41] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "赔率配置"), c("p", { class: "parameter-description" }, "命中概率由标记价、实时波动率及格子的价格和时间边界计算；格子赔率 = 目标返奖率 ÷ 命中概率")], -1), d(T(se), {
+						c("article", Cr, [n[41] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "赔率配置"), c("p", { class: "parameter-description" }, "命中概率由标记价、实时波动率及格子的价格和时间边界计算；格子赔率 = 目标返奖率 ÷ 命中概率")], -1), d(w(ce), {
 							"label-position": "top",
 							class: "fields odds-fields",
-							onSubmit: n[11] ||= O(() => {}, ["prevent"])
+							onSubmit: n[11] ||= D(() => {}, ["prevent"])
 						}, {
-							default: E(() => [
-								d(T(I), { label: "目标返奖率" }, {
-									label: E(() => [n[32] ||= u("目标返奖率", -1), d(yn, {
+							default: T(() => [
+								d(w(F), { label: "目标返奖率" }, {
+									label: T(() => [n[32] ||= u("目标返奖率", -1), d(yn, {
 										label: "目标返奖率",
 										content: "例如 97%：命中概率为 20% 时，计算赔率为 4.85x。"
 									})]),
-									default: E(() => [d(En, {
-										"input-component": T(t),
-										modelValue: L.value,
-										"onUpdate:modelValue": n[8] ||= (e) => L.value = e,
-										disabled: !Be.value,
+									default: T(() => [d(En, {
+										"input-component": w(t),
+										modelValue: I.value,
+										"onUpdate:modelValue": n[8] ||= (e) => I.value = e,
+										disabled: !Re.value,
 										inputmode: "decimal",
 										"aria-label": "目标返奖率",
-										onInput: dt
+										onInput: lt
 									}, {
-										append: E(() => [...n[33] ||= [u("%", -1)]]),
+										append: T(() => [...n[33] ||= [u("%", -1)]]),
 										_: 1
 									}, 8, [
 										"input-component",
@@ -2803,22 +2843,22 @@ var tr = {
 									]), n[34] ||= c("small", null, "例如 97%：命中概率为 20% 时，计算赔率为 4.85x", -1)]),
 									_: 1
 								}),
-								d(T(I), { label: "最低赔率" }, {
-									label: E(() => [n[35] ||= u("最低赔率", -1), d(yn, {
+								d(w(F), { label: "最低赔率" }, {
+									label: T(() => [n[35] ||= u("最低赔率", -1), d(yn, {
 										label: "最低赔率",
 										content: "当前币种报价允许的最低倍率。"
 									})]),
-									default: E(() => [d(En, {
-										"input-component": T(t),
-										modelValue: P.value.min_multiplier,
-										"onUpdate:modelValue": n[9] ||= (e) => P.value.min_multiplier = e,
+									default: T(() => [d(En, {
+										"input-component": w(t),
+										modelValue: N.value.min_multiplier,
+										"onUpdate:modelValue": n[9] ||= (e) => N.value.min_multiplier = e,
 										step: "0.01",
-										disabled: !Ke.value,
+										disabled: !We.value,
 										inputmode: "decimal",
 										"aria-label": "最低赔率",
-										onInput: dt
+										onInput: lt
 									}, {
-										append: E(() => [...n[36] ||= [u("x", -1)]]),
+										append: T(() => [...n[36] ||= [u("x", -1)]]),
 										_: 1
 									}, 8, [
 										"input-component",
@@ -2827,22 +2867,22 @@ var tr = {
 									]), n[37] ||= c("small", null, "计算赔率不会低于此值", -1)]),
 									_: 1
 								}),
-								d(T(I), { label: "最高赔率" }, {
-									label: E(() => [n[38] ||= u("最高赔率", -1), d(yn, {
+								d(w(F), { label: "最高赔率" }, {
+									label: T(() => [n[38] ||= u("最高赔率", -1), d(yn, {
 										label: "最高赔率",
 										content: "当前币种报价允许的最高倍率。原型中超过此值的格子不可下注，不强制压低赔率；实际是否可下注以当前格子报价为准。"
 									})]),
-									default: E(() => [d(En, {
-										"input-component": T(t),
-										modelValue: P.value.max_multiplier,
-										"onUpdate:modelValue": n[10] ||= (e) => P.value.max_multiplier = e,
+									default: T(() => [d(En, {
+										"input-component": w(t),
+										modelValue: N.value.max_multiplier,
+										"onUpdate:modelValue": n[10] ||= (e) => N.value.max_multiplier = e,
 										step: "0.01",
-										disabled: !Ke.value,
+										disabled: !We.value,
 										inputmode: "decimal",
 										"aria-label": "最高赔率",
-										onInput: dt
+										onInput: lt
 									}, {
-										append: E(() => [...n[39] ||= [u("x", -1)]]),
+										append: T(() => [...n[39] ||= [u("x", -1)]]),
 										_: 1
 									}, 8, [
 										"input-component",
@@ -2854,23 +2894,23 @@ var tr = {
 							]),
 							_: 1
 						})]),
-						c("article", wr, [c("header", Tr, [n[42] ||= c("h3", null, "下注限制", -1), c("p", Er, w(N.value.symbol) + " 每个格子生成一笔独立订单，限制作用于该币种全部网格订单", 1)]), d(T(se), {
+						c("article", wr, [c("header", Tr, [n[42] ||= c("h3", null, "下注限制", -1), c("p", Er, S(M.value.symbol) + " 每个格子生成一笔独立订单，限制作用于该币种全部网格订单", 1)]), d(w(ce), {
 							"label-position": "top",
 							class: "fields limit-fields",
-							onSubmit: n[14] ||= O(() => {}, ["prevent"])
+							onSubmit: n[14] ||= D(() => {}, ["prevent"])
 						}, {
-							default: E(() => [d(T(I), { label: "单笔最小额（USDT）" }, {
-								label: E(() => [n[43] ||= u("单笔最小额（USDT）", -1), d(yn, { label: "单笔最小额" })]),
-								default: E(() => [d(En, {
-									"input-component": T(t),
-									modelValue: P.value.min_order_amount,
-									"onUpdate:modelValue": n[12] ||= (e) => P.value.min_order_amount = e,
-									disabled: !Be.value,
+							default: T(() => [d(w(F), { label: "单笔最小额（USDT）" }, {
+								label: T(() => [n[43] ||= u("单笔最小额（USDT）", -1), d(yn, { label: "单笔最小额" })]),
+								default: T(() => [d(En, {
+									"input-component": w(t),
+									modelValue: N.value.min_order_amount,
+									"onUpdate:modelValue": n[12] ||= (e) => N.value.min_order_amount = e,
+									disabled: !Re.value,
 									inputmode: "decimal",
 									"aria-label": "单笔最小额",
-									onInput: dt
+									onInput: lt
 								}, {
-									append: E(() => [...n[44] ||= [u("USDT", -1)]]),
+									append: T(() => [...n[44] ||= [u("USDT", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
@@ -2878,18 +2918,18 @@ var tr = {
 									"disabled"
 								])]),
 								_: 1
-							}), d(T(I), { label: "单笔最大额（USDT）" }, {
-								label: E(() => [n[45] ||= u("单笔最大额（USDT）", -1), d(yn, { label: "单笔最大额" })]),
-								default: E(() => [d(En, {
-									"input-component": T(t),
-									modelValue: P.value.max_order_amount,
-									"onUpdate:modelValue": n[13] ||= (e) => P.value.max_order_amount = e,
-									disabled: !Be.value,
+							}), d(w(F), { label: "单笔最大额（USDT）" }, {
+								label: T(() => [n[45] ||= u("单笔最大额（USDT）", -1), d(yn, { label: "单笔最大额" })]),
+								default: T(() => [d(En, {
+									"input-component": w(t),
+									modelValue: N.value.max_order_amount,
+									"onUpdate:modelValue": n[13] ||= (e) => N.value.max_order_amount = e,
+									disabled: !Re.value,
 									inputmode: "decimal",
 									"aria-label": "单笔最大额",
-									onInput: dt
+									onInput: lt
 								}, {
-									append: E(() => [...n[46] ||= [u("USDT", -1)]]),
+									append: T(() => [...n[46] ||= [u("USDT", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
@@ -2900,7 +2940,7 @@ var tr = {
 							})]),
 							_: 1
 						})]),
-						S.value ? o("", !0) : (v(), a(T(k), {
+						b.value ? o("", !0) : (_(), a(w(O), {
 							key: 1,
 							title: "当前账号只有预测网格配置查看权限",
 							type: "info",
@@ -2912,8 +2952,8 @@ var tr = {
 				_: 1
 			}, 8, ["loading", "hide-content"]),
 			d($n, {
-				modelValue: z.value,
-				"onUpdate:modelValue": n[15] ||= (e) => z.value = e
+				modelValue: R.value,
+				"onUpdate:modelValue": n[15] ||= (e) => R.value = e
 			}, null, 8, ["modelValue"])
 		]));
 	}
@@ -2956,8 +2996,8 @@ function Nr(e) {
 function Pr(e) {
 	Mr(e, Or.map(([e]) => e));
 	let t = {};
-	for (let [n] of Or) t[n] = kt(e[n], n.includes("multiplier") ? 2 : n.includes("amount") ? 8 : void 0);
-	jr(jt(t.target_rtp, "0") > 0 && jt(t.target_rtp, "1") < 0), jr(jt(t.min_multiplier, "1") >= 0 && jt(t.max_multiplier, t.min_multiplier) >= 0), jr(jt(t.min_order_amount, "0") > 0 && jt(t.max_order_amount, t.min_order_amount) >= 0);
+	for (let [n] of Or) t[n] = Tt(e[n], n.includes("multiplier") ? 2 : n.includes("amount") ? 8 : void 0);
+	jr(Dt(t.target_rtp, "0") > 0 && Dt(t.target_rtp, "1") < 0), jr(Dt(t.min_multiplier, "1") >= 0 && Dt(t.max_multiplier, t.min_multiplier) >= 0), jr(Dt(t.min_order_amount, "0") > 0 && Dt(t.max_order_amount, t.min_order_amount) >= 0);
 	let n = (e, t) => {
 		let [n, r = ""] = e.split(".");
 		return BigInt(n + r.padEnd(t, "0"));
@@ -2965,15 +3005,23 @@ function Pr(e) {
 	return jr(n(t.max_order_amount, 8) * n(t.max_multiplier, 2) <= 9223372036854775807n * 100n), t;
 }
 function Fr(e, t) {
+	jr(Ar(e));
+	let n = "availability_version" in e || "enabled" in e;
 	Mr(e, [
 		"scope",
 		"symbol",
 		"global_version",
 		"effective_from_ms",
 		"parameters",
-		"layout"
-	]), jr(e.scope === "GLOBAL" && e.symbol === t && kr.test(t) && Nr(e.global_version));
-	let n = null;
+		"layout",
+		...n ? ["availability_version", "enabled"] : []
+	]), n && jr(typeof e.enabled == "boolean" && Nr(e.availability_version));
+	let r = n ? {
+		enabled: e.enabled,
+		availability_version: e.availability_version
+	} : {};
+	jr(e.scope === "GLOBAL" && e.symbol === t && kr.test(t) && Nr(e.global_version));
+	let i = null;
 	if (e.layout !== null) {
 		let t = e.layout;
 		Mr(t, [
@@ -2983,38 +3031,53 @@ function Fr(e, t) {
 			"column_duration_seconds",
 			"price_band_width",
 			"price_decimals"
-		]), jr(Nr(t.version) && t.version !== "0" && typeof t.row_count == "string" && typeof t.column_count == "string" && typeof t.column_duration_seconds == "string"), jr(t.price_decimals === null || typeof t.price_decimals == "number" && Number.isInteger(t.price_decimals) && t.price_decimals >= 0 && t.price_decimals <= 18), n = {
+		]), jr(Nr(t.version) && t.version !== "0" && typeof t.row_count == "string" && typeof t.column_count == "string" && typeof t.column_duration_seconds == "string"), jr(t.price_decimals === null || typeof t.price_decimals == "number" && Number.isInteger(t.price_decimals) && t.price_decimals >= 0 && t.price_decimals <= 18), i = {
 			version: t.version,
 			row_count: t.row_count,
 			column_count: t.column_count,
 			column_duration_seconds: t.column_duration_seconds,
-			price_band_width: kt(t.price_band_width),
+			price_band_width: Tt(t.price_band_width),
 			price_decimals: t.price_decimals
 		};
 	}
 	return e.global_version === "0" ? (jr(e.parameters === null && e.effective_from_ms === null), {
+		...r,
 		scope: "GLOBAL",
 		symbol: t,
 		global_version: "0",
 		effective_from_ms: null,
 		parameters: null,
-		layout: n
-	}) : (jr(Nr(e.effective_from_ms) && e.effective_from_ms !== "0" && n !== null), {
+		layout: i
+	}) : (jr(Nr(e.effective_from_ms) && e.effective_from_ms !== "0" && i !== null), {
+		...r,
 		scope: "GLOBAL",
 		symbol: t,
 		global_version: e.global_version,
 		effective_from_ms: e.effective_from_ms,
 		parameters: Pr(e.parameters),
-		layout: n
+		layout: i
 	});
 }
 function Ir(e) {
+	if (jr(Ar(e) && typeof e.symbol == "string" && kr.test(e.symbol)), jr(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id)), jr(typeof e.reason == "string" && e.reason.trim() && !e.reason.includes("\0") && new TextEncoder().encode(e.reason).length <= 500), e.action === "set_enabled") {
+		Mr(e, [
+			"action",
+			"symbol",
+			"based_on_availability_version",
+			"client_request_id",
+			"reason",
+			"enabled"
+		]), jr(typeof e.enabled == "boolean" && Nr(e.based_on_availability_version));
+		return;
+	}
+	jr(e.action === void 0 || e.action === "save_parameters");
 	let t = [
 		"symbol",
 		"based_on_global_version",
 		"client_request_id",
 		"reason",
-		"changes"
+		"changes",
+		..."action" in e ? ["action"] : []
 	];
 	if (Ar(e) && "layout" in e) {
 		t.push("layout", "based_on_layout_version"), jr(Nr(e.based_on_layout_version) && Ar(e.layout));
@@ -3023,12 +3086,13 @@ function Ir(e) {
 			"price_band_width",
 			"column_duration_seconds",
 			"price_decimals"
-		].includes(e))), e.based_on_layout_version === "0" && jr(n.length === 3), "price_decimals" in e.layout && jr(typeof e.layout.price_decimals == "number" && Number.isInteger(e.layout.price_decimals) && e.layout.price_decimals >= 0 && e.layout.price_decimals <= 8), "column_duration_seconds" in e.layout && jr(typeof e.layout.column_duration_seconds == "string" && /^(?:[1-9]|10)$/.test(e.layout.column_duration_seconds)), "price_band_width" in e.layout && jr(jt(kt(e.layout.price_band_width, 8), "0") > 0);
+		].includes(e))), e.based_on_layout_version === "0" && jr(n.length === 3), "price_decimals" in e.layout && jr(typeof e.layout.price_decimals == "number" && Number.isInteger(e.layout.price_decimals) && e.layout.price_decimals >= 0 && e.layout.price_decimals <= 8), "column_duration_seconds" in e.layout && jr(typeof e.layout.column_duration_seconds == "string" && /^(?:[1-9]|10)$/.test(e.layout.column_duration_seconds)), "price_band_width" in e.layout && jr(Dt(Tt(e.layout.price_band_width, 8), "0") > 0);
 	}
-	Mr(e, t), jr(typeof e.symbol == "string" && kr.test(e.symbol) && Nr(e.based_on_global_version)), jr(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id)), jr(typeof e.reason == "string" && e.reason.trim() && !e.reason.includes("\0") && new TextEncoder().encode(e.reason).length <= 500), Pr(e.changes);
+	Mr(e, t), jr(Nr(e.based_on_global_version)), Pr(e.changes);
 }
 function Lr(e, t, n, r) {
 	let i = Fr(e, e.symbol), a = Pr(t), o = {
+		action: "save_parameters",
 		...r ? {
 			based_on_layout_version: i.layout?.version ?? "0",
 			layout: r
@@ -3042,7 +3106,13 @@ function Lr(e, t, n, r) {
 	return Ir(o), o;
 }
 function Rr(e, t) {
-	if (!Ar(e) || e.scope !== "GLOBAL" || e.symbol !== t.command.symbol || e.operation_status !== "SUCCEEDED" || !Nr(e.operation_id) || e.operation_id === "0" || !Nr(e.effective_from_ms) || typeof e.changed != "boolean" || !Nr(e.global_version)) return !1;
+	if (!Ar(e) || e.scope !== "GLOBAL" || e.symbol !== t.command.symbol || e.operation_status !== "SUCCEEDED" || !Nr(e.operation_id) || e.operation_id === "0" || typeof e.changed != "boolean" || !Nr(e.global_version)) return !1;
+	if (t.command.action === "set_enabled") return e.enabled !== t.command.enabled || !Nr(e.availability_version) || !(Nr(e.effective_from_ms) || !e.changed && e.effective_from_ms === null) ? !1 : BigInt(e.availability_version) - BigInt(t.command.based_on_availability_version) === (e.changed ? 1n : 0n) && [
+		"PENDING",
+		"DONE",
+		"NOT_REQUIRED"
+	].includes(String(e.cache_state));
+	if (!Nr(e.effective_from_ms)) return !1;
 	let n = BigInt(e.global_version) - BigInt(t.command.based_on_global_version);
 	if (n < 0n || n > 1n) return !1;
 	let r = 0n;
@@ -3052,7 +3122,7 @@ function Rr(e, t) {
 		"NOT_REQUIRED"
 	].includes(String(e.cache_state)) : e.cache_state === "NOT_REQUIRED");
 }
-var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
+var zr = it("grid.config.global.pending.v1", Ir, Rr), Br = {
 	class: "grid-config mm-ui",
 	"data-grid-config": "platform"
 }, Vr = {
@@ -3067,242 +3137,294 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 }, Qr = { class: "parameter-card" }, $r = { class: "parameter-card" }, ei = { class: "parameter-heading" }, ti = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "GlobalGridConfig",
 	setup(e, { expose: n }) {
-		let l = pe().grid, f = l.globalTemplate, p = K(), m = ge(), h = [{
+		let l = fe().grid, f = l.globalTemplate, ee = q(), p = he(), m = [{
 			title: "赔率配置",
 			fields: Or.slice(0, 3)
 		}, {
 			title: "下注限制",
 			fields: Or.slice(3)
-		}], g = (e) => p.context.permissions.includes("*") || p.context.permissions.includes(e), _ = i(() => p.context.operatorId), ne = i(() => !!p.context.identityKey && /^[1-9]\d*$/.test(_.value) && g("grid_config:read")), y = i(() => ne.value && g("grid_config:save")), x = b([]), S = b(""), ie = b(""), ae = i(() => x.value.filter((e) => e.symbol.includes(ie.value.trim().toUpperCase()))), D = C(null), j = {
+		}], h = (e) => ee.context.permissions.includes("*") || ee.context.permissions.includes(e), g = i(() => ee.context.operatorId), re = i(() => !!ee.context.identityKey && /^[1-9]\d*$/.test(g.value) && h("grid_config:read")), ie = i(() => re.value && h("grid_config:save")), y = v([]), b = v(""), C = v(""), oe = i(() => y.value.filter((e) => e.symbol.includes(C.value.trim().toUpperCase()))), E = x(null), A = {
 			target_rtp: "0.97",
 			min_multiplier: "1.02",
 			max_multiplier: "20",
 			min_order_amount: "1",
 			max_order_amount: "3000"
-		}, M = b({ ...j }), N = b({
+		}, j = v({ ...A }), M = v({
 			price_band_width: "",
 			column_duration_seconds: "",
 			price_decimals: "3"
-		}), P = b(!1), L = b(!1), R = b(!1), z = b(""), le = b(!1), B = b(!1), ue = C(null), de = (e) => ({
+		}), N = v(!1), I = v(!1), L = v(!1), R = v(""), le = v(!1), B = v(!1), ue = x(null), V = (e) => ({
 			price_band_width: e.layout?.price_band_width ?? "",
 			column_duration_seconds: e.layout?.column_duration_seconds ?? "",
 			price_decimals: String(e.layout?.price_decimals ?? 3)
-		}), V = i(() => !!D.value && (JSON.stringify(N.value) !== JSON.stringify(de(D.value)) || Or.some(([e]) => M.value[e] !== (D.value?.parameters ?? j)[e]))), H = i(() => !y.value || L.value || !!ue.value || B.value), U = 0, fe;
-		function W() {
+		}), H = i(() => !!E.value && (JSON.stringify(M.value) !== JSON.stringify(V(E.value)) || Or.some(([e]) => j.value[e] !== (E.value?.parameters ?? A)[e]))), U = i(() => !ie.value || I.value || !!ue.value || B.value), W = 0, G;
+		function K() {
 			try {
-				let e = zr.pendingForActor(sessionStorage, _.value);
-				ue.value = e.pending ?? null, B.value = e.status === "foreign", B.value && (z.value = "请切回原账号核对尚未确认的模板操作。");
+				let e = zr.pendingForActor(sessionStorage, g.value);
+				ue.value = e.pending ?? null, B.value = e.status === "foreign", B.value && (R.value = "请切回原账号核对尚未确认的模板操作。");
 			} catch {
-				ue.value = null, B.value = !0, z.value = "无法读取待确认操作，请先核对原请求。";
+				ue.value = null, B.value = !0, R.value = "无法读取待确认操作，请先核对原请求。";
 			}
 		}
-		function G() {
-			return U++, fe?.abort(), fe = new AbortController(), U;
+		function pe() {
+			return W++, G?.abort(), G = new AbortController(), W;
 		}
 		async function me(e) {
-			let t = G();
-			L.value = !0, R.value = !1, z.value = "", S.value = e, D.value = null;
+			let t = pe();
+			I.value = !0, L.value = !1, R.value = "", b.value = e, E.value = null;
 			try {
-				let n = Fr(await f.detail(e, fe.signal), e);
-				if (t !== U) return;
-				D.value = n, M.value = { ...n.parameters ?? j }, N.value = de(n);
-				let r = x.value.find((t) => t.symbol === e);
-				r && (r.configured = n.parameters !== null);
+				let n = Fr(await f.detail(e, G.signal), e);
+				if (t !== W) return;
+				E.value = n, j.value = { ...n.parameters ?? A }, M.value = V(n);
+				let r = y.value.find((t) => t.symbol === e);
+				r && Object.assign(r, {
+					configured: n.parameters !== null,
+					enabled: n.enabled,
+					availability_version: n.availability_version
+				});
 			} catch {
-				t === U && (R.value = !0, z.value = "读取平台模板失败，请重试。");
+				t === W && (L.value = !0, R.value = "读取平台模板失败，请重试。");
 			} finally {
-				t === U && (L.value = !1);
+				t === W && (I.value = !1);
 			}
 		}
-		async function he() {
-			if (!ne.value || V.value || L.value || (W(), ue.value || B.value)) return;
-			let e = G();
-			L.value = !0, z.value = "", R.value = !1;
+		async function _e() {
+			if (!re.value || H.value || I.value || (K(), ue.value || B.value)) return;
+			let e = pe();
+			I.value = !0, R.value = "", L.value = !1;
 			try {
-				let [t, n] = await Promise.all([f.catalog(fe.signal), l.gridConfigSymbols(fe.signal)]);
-				if (e !== U) return;
-				let r = new Map(t.products.map((e) => [e.symbol, e.configured]));
-				x.value = [.../* @__PURE__ */ new Set([...n, ...r.keys()])].filter((e) => /^[A-Z0-9]{2,32}$/.test(e)).map((e) => ({
+				let [t, n] = await Promise.all([f.catalog(G.signal), l.gridConfigSymbols(G.signal)]);
+				if (e !== W) return;
+				let r = new Map(t.products.map((e) => [e.symbol, e]));
+				y.value = [.../* @__PURE__ */ new Set([...n, ...r.keys()])].filter((e) => /^[A-Z0-9]{2,32}$/.test(e)).map((e) => r.get(e) ?? {
 					symbol: e,
-					configured: r.get(e) === !0
-				}));
-				let i = x.value.find((e) => e.symbol === S.value) ?? x.value[0];
+					configured: !1
+				});
+				let i = y.value.find((e) => e.symbol === b.value) ?? y.value[0];
 				i && await me(i.symbol);
 			} catch {
-				e === U && (R.value = !0, z.value = "读取平台币种目录失败，请重试。");
+				e === W && (L.value = !0, R.value = "读取平台币种目录失败，请重试。");
 			} finally {
-				e === U && (L.value = !1);
+				e === W && (I.value = !1);
 			}
 		}
 		async function ve() {
-			if (L.value || ue.value) return !1;
-			if (!V.value) return !0;
+			if (I.value || ue.value) return !1;
+			if (!H.value) return !0;
 			try {
-				return await ce.confirm("放弃未保存的配置？", "离开配置"), !0;
+				return await z.confirm("放弃未保存的配置？", "离开配置"), !0;
 			} catch {
 				return !1;
 			}
 		}
 		async function ye(e) {
-			e !== S.value && await ve() && await me(e);
+			e !== b.value && await ve() && await me(e);
 		}
 		function be() {
-			let e = D.value, t = de(e), n = {};
+			let e = E.value, t = V(e), n = {};
 			for (let r of ["price_band_width", "column_duration_seconds"]) {
-				if (!N.value[r].trim()) throw Error(r === "price_band_width" ? "请填写纵向格子区间" : "请填写横向格子区间");
-				(!e.layout || t[r] !== N.value[r]) && (n[r] = N.value[r]);
+				if (!M.value[r].trim()) throw Error(r === "price_band_width" ? "请填写纵向格子区间" : "请填写横向格子区间");
+				(!e.layout || t[r] !== M.value[r]) && (n[r] = M.value[r]);
 			}
-			if (!e.layout || t.price_decimals !== N.value.price_decimals) {
-				if (!/^[0-8]$/.test(N.value.price_decimals)) throw Error("价格小数位须为 0～8 的整数");
-				n.price_decimals = Number(N.value.price_decimals);
+			if (!e.layout || t.price_decimals !== M.value.price_decimals) {
+				if (!/^[0-8]$/.test(M.value.price_decimals)) throw Error("价格小数位须为 0～8 的整数");
+				n.price_decimals = Number(M.value.price_decimals);
 			}
 			return Object.keys(n).length ? n : void 0;
 		}
 		async function xe() {
-			if (!(H.value || !D.value)) {
+			if (!(U.value || !E.value)) {
 				try {
-					for (let [e, t] of Or) if (!M.value[e].trim()) throw Error("请填写" + t);
-					let e = Lr(D.value, M.value, Ft(), be()), t = zr.captureSaveReview(_.value, e);
-					ue.value = zr.persistReviewedCommand(sessionStorage, t, _.value, e);
+					for (let [e, t] of Or) if (!j.value[e].trim()) throw Error("请填写" + t);
+					Se(Lr(E.value, j.value, jt(), be()));
 				} catch (e) {
-					z.value = e instanceof Error ? e.message : "请核对模板参数";
+					R.value = e instanceof Error ? e.message : "请核对模板参数";
 					return;
 				}
-				await Se("save");
+				await Y("save");
 			}
 		}
-		async function Se(e) {
-			if (W(), L.value || !ue.value || B.value || !y.value) return;
-			let t = ue.value, n = U;
-			L.value = !0, le.value = !1;
+		function Se(e) {
+			let t = zr.captureSaveReview(g.value, e);
+			ue.value = zr.persistReviewedCommand(sessionStorage, t, g.value, e);
+		}
+		async function J(e, t) {
+			if (!(U.value || typeof t != "boolean" || !e.availability_version || !e.configured && t)) {
+				try {
+					Se({
+						action: "set_enabled",
+						symbol: e.symbol,
+						based_on_availability_version: e.availability_version,
+						client_request_id: jt(),
+						reason: "通过总后台设置网格币种开关",
+						enabled: t
+					});
+				} catch (e) {
+					R.value = e instanceof Error ? e.message : "无法保全开关操作";
+					return;
+				}
+				await Y("save");
+			}
+		}
+		async function Y(e) {
+			if (K(), I.value || !ue.value || B.value || !ie.value) return;
+			let t = ue.value, n = W;
+			I.value = !0, le.value = !1;
 			try {
 				let r = await zr.attemptPending(sessionStorage, t, e, (e, t) => e === "save" ? f.save(t) : f.receipt(t));
-				if (n !== U) return;
-				W(), r.status === "success" || r.status === "rejected" && r.journalCleared ? (L.value = !1, D.value = null, S.value = t.command.symbol, await he(), r.status === "rejected" && (z.value = "保存未生效，请核对最新配置后再提交。")) : (le.value = e === "receipt" && Qt(r.error), z.value = "保存结果待确认，请先查询原操作回执。");
+				if (n !== W) return;
+				if (K(), t.command.action === "set_enabled" && r.status === "success" && y.value.length) {
+					let e = y.value.find((e) => e.symbol === t.command.symbol), n = {
+						enabled: r.value.enabled,
+						availability_version: r.value.availability_version
+					};
+					e && Object.assign(e, n), E.value?.symbol === t.command.symbol && (E.value = {
+						...E.value,
+						...n
+					}), R.value = "";
+				} else r.status === "rejected" && r.journalCleared && y.value.length && t.command.action === "set_enabled" ? R.value = r.error instanceof Error ? r.error.message : "开关未生效，请重新读取币种配置。" : r.status === "success" || r.status === "rejected" && r.journalCleared ? (I.value = !1, E.value = null, b.value = t.command.symbol, await _e(), r.status === "rejected" && (R.value = "保存未生效，请核对最新配置后再提交。")) : (le.value = e === "receipt" && Jt(r.error), R.value = r.error instanceof Error ? "保存结果待确认：" + r.error.message + "。请先查询原操作回执。" : "保存结果待确认，请先查询原操作回执。");
 			} catch {
-				n === U && (z.value = "保存结果待确认，请先查询原操作回执。");
+				n === W && (R.value = "保存结果待确认，请先查询原操作回执。");
 			} finally {
-				n === U && (L.value = !1);
+				n === W && (I.value = !1);
 			}
 		}
-		return oe(() => [
-			_.value,
-			p.context.identityKey,
-			ne.value,
-			y.value
+		return se(() => [
+			g.value,
+			ee.context.identityKey,
+			re.value,
+			ie.value
 		], () => {
-			G(), L.value = !1, D.value = null, x.value = [], S.value = "", z.value = "", ue.value = null, B.value = !1, ne.value && he();
+			pe(), I.value = !1, E.value = null, y.value = [], b.value = "", R.value = "", ue.value = null, B.value = !1, re.value && _e();
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), te(G), _e(ve), n({
+		}), ne(pe), ge(ve), n({
 			confirmLeave: ve,
-			refresh: he
-		}), (e, n) => (v(), s("section", Br, [
-			z.value ? (v(), a(T(k), {
+			refresh: _e
+		}), (e, n) => (_(), s("section", Br, [
+			R.value ? (_(), a(w(O), {
 				key: 0,
-				title: z.value,
+				title: R.value,
 				type: "warning",
 				closable: !1
 			}, null, 8, ["title"])) : o("", !0),
-			ne.value ? o("", !0) : (v(), a(T(k), {
+			re.value ? o("", !0) : (_(), a(w(O), {
 				key: 1,
 				title: "当前账号没有预测网格配置查询权限",
 				type: "warning",
 				closable: !1
 			})),
-			ue.value ? (v(), s("div", Vr, [
-				c("strong", null, w(ue.value.command.symbol) + " 配置结果待确认", 1),
-				d(T(A), {
-					disabled: L.value || !y.value,
-					onClick: n[0] ||= (e) => Se("receipt")
+			ue.value ? (_(), s("div", Vr, [
+				c("strong", null, S(ue.value.command.symbol) + " 配置结果待确认", 1),
+				d(w(k), {
+					disabled: I.value || !ie.value,
+					onClick: n[0] ||= (e) => Y("receipt")
 				}, {
-					default: E(() => [...n[11] ||= [u("查询原操作回执", -1)]]),
+					default: T(() => [...n[11] ||= [u("查询原操作回执", -1)]]),
 					_: 1
 				}, 8, ["disabled"]),
-				le.value ? (v(), a(T(A), {
+				le.value ? (_(), a(w(k), {
 					key: 0,
-					disabled: L.value || !y.value,
-					onClick: n[1] ||= (e) => Se("recover")
+					disabled: I.value || !ie.value,
+					onClick: n[1] ||= (e) => Y("recover")
 				}, {
-					default: E(() => [...n[12] ||= [u("恢复原请求", -1)]]),
+					default: T(() => [...n[12] ||= [u("恢复原请求", -1)]]),
 					_: 1
 				}, 8, ["disabled"])) : o("", !0)
 			])) : o("", !0),
 			c("div", Hr, [c("aside", Ur, [
-				c("div", Wr, [n[13] ||= c("strong", null, "币种配置", -1), c("span", null, w(ae.value.length) + " 条", 1)]),
-				d(T(t), {
-					modelValue: ie.value,
-					"onUpdate:modelValue": n[2] ||= (e) => ie.value = e,
+				c("div", Wr, [n[13] ||= c("strong", null, "币种配置", -1), c("span", null, S(oe.value.length) + " 条", 1)]),
+				d(w(t), {
+					modelValue: C.value,
+					"onUpdate:modelValue": n[2] ||= (e) => C.value = e,
 					clearable: "",
 					placeholder: "搜索交易对",
 					"aria-label": "搜索交易对"
 				}, null, 8, ["modelValue"]),
-				c("div", Gr, [(v(!0), s(r, null, re(ae.value, (e) => (v(), s("div", {
+				c("div", Gr, [(_(!0), s(r, null, ae(oe.value, (e) => (_(), s("div", {
 					key: e.symbol,
-					class: ee(["symbol-row", { active: e.symbol === S.value }])
-				}, [c("button", {
-					type: "button",
-					class: "symbol-button",
-					disabled: L.value || !!ue.value,
-					onClick: (t) => ye(e.symbol)
-				}, [d(T(m), { symbol: e.symbol }, null, 8, ["symbol"])], 8, Kr), c("span", qr, w(e.configured ? "已配置" : "待配置"), 1)], 2))), 128))])
-			]), c("main", Jr, [S.value ? (v(), s("header", Yr, [c("div", null, [c("h2", null, w(S.value) + " · 预测网格", 1), n[14] ||= c("p", null, "平台模板", -1)]), c("div", Xr, [d(T(A), { onClick: n[3] ||= (e) => P.value = !0 }, {
-				default: E(() => [...n[15] ||= [u("玩法说明", -1)]]),
+					class: te(["symbol-row", { active: e.symbol === b.value }])
+				}, [
+					c("button", {
+						type: "button",
+						class: "symbol-button",
+						disabled: I.value || !!ue.value,
+						onClick: (t) => ye(e.symbol)
+					}, [d(w(p), { symbol: e.symbol }, null, 8, ["symbol"])], 8, Kr),
+					c("span", qr, S(e.configured ? "已配置" : "待配置"), 1),
+					d(w(de), {
+						"model-value": e.enabled,
+						disabled: U.value || e.availability_version === void 0 || !e.enabled && !e.configured,
+						"data-config-enabled": e.symbol,
+						"aria-label": e.symbol + " 网格币种开关",
+						title: !e.configured && !e.enabled ? "请先保存模板参数" : "立即设置币种开放状态",
+						onChange: (t) => J(e, t)
+					}, null, 8, [
+						"model-value",
+						"disabled",
+						"data-config-enabled",
+						"aria-label",
+						"title",
+						"onChange"
+					])
+				], 2))), 128))])
+			]), c("main", Jr, [b.value ? (_(), s("header", Yr, [c("div", null, [c("h2", null, S(b.value) + " · 预测网格", 1), n[14] ||= c("p", null, "平台模板", -1)]), c("div", Xr, [d(w(k), { onClick: n[3] ||= (e) => N.value = !0 }, {
+				default: T(() => [...n[15] ||= [u("玩法说明", -1)]]),
 				_: 1
-			}), y.value ? (v(), a(T(A), {
+			}), ie.value ? (_(), a(w(k), {
 				key: 0,
 				type: "primary",
-				disabled: H.value || !D.value,
-				loading: L.value,
+				disabled: U.value || !E.value,
+				loading: I.value,
 				onClick: xe
 			}, {
-				default: E(() => [...n[16] ||= [u("保存配置", -1)]]),
+				default: T(() => [...n[16] ||= [u("仅保存参数", -1)]]),
 				_: 1
 			}, 8, ["disabled", "loading"])) : o("", !0)])])) : o("", !0), d(gn, {
-				loading: L.value && !D.value,
-				"hide-content": L.value && !D.value,
+				loading: I.value && !E.value,
+				"hide-content": I.value && !E.value,
 				"min-height": "0px",
 				class: "grid-config__detail"
 			}, {
-				default: E(() => [R.value ? (v(), a(T(A), {
+				default: T(() => [L.value ? (_(), a(w(k), {
 					key: 0,
-					disabled: L.value,
-					onClick: he
+					disabled: I.value,
+					onClick: _e
 				}, {
-					default: E(() => [...n[17] ||= [u("重新加载", -1)]]),
+					default: T(() => [...n[17] ||= [u("重新加载", -1)]]),
 					_: 1
-				}, 8, ["disabled"])) : !D.value && !L.value ? (v(), a(T(F), {
+				}, 8, ["disabled"])) : !E.value && !I.value ? (_(), a(w(P), {
 					key: 1,
 					description: "请选择交易对查看配置"
-				})) : o("", !0), D.value ? (v(), s("div", Zr, [
-					c("article", Qr, [n[18] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "网格区间配置"), c("p", { class: "parameter-description" }, "该币种的网格区间由平台统一设置。")], -1), d(T(se), {
+				})) : o("", !0), E.value ? (_(), s("div", Zr, [
+					c("article", Qr, [n[18] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "网格区间配置"), c("p", { class: "parameter-description" }, "该币种的网格区间由平台统一设置。")], -1), d(w(ce), {
 						class: "fields limit-fields",
 						"label-position": "top",
-						onSubmit: n[6] ||= O(() => {}, ["prevent"])
+						onSubmit: n[6] ||= D(() => {}, ["prevent"])
 					}, {
-						default: E(() => [d(T(I), { label: "纵向格子区间" }, {
-							default: E(() => [d(En, {
-								modelValue: N.value.price_band_width,
-								"onUpdate:modelValue": n[4] ||= (e) => N.value.price_band_width = e,
-								"input-component": T(t),
+						default: T(() => [d(w(F), { label: "纵向格子区间" }, {
+							default: T(() => [d(En, {
+								modelValue: M.value.price_band_width,
+								"onUpdate:modelValue": n[4] ||= (e) => M.value.price_band_width = e,
+								"input-component": w(t),
 								unit: "USDT",
-								disabled: H.value
+								disabled: U.value
 							}, null, 8, [
 								"modelValue",
 								"input-component",
 								"disabled"
 							])]),
 							_: 1
-						}), d(T(I), { label: "横向格子区间" }, {
-							default: E(() => [d(En, {
-								modelValue: N.value.column_duration_seconds,
-								"onUpdate:modelValue": n[5] ||= (e) => N.value.column_duration_seconds = e,
-								"input-component": T(t),
+						}), d(w(F), { label: "横向格子区间" }, {
+							default: T(() => [d(En, {
+								modelValue: M.value.column_duration_seconds,
+								"onUpdate:modelValue": n[5] ||= (e) => M.value.column_duration_seconds = e,
+								"input-component": w(t),
 								unit: "秒",
 								min: "1",
 								max: "10",
-								disabled: H.value
+								disabled: U.value
 							}, null, 8, [
 								"modelValue",
 								"input-component",
@@ -3312,20 +3434,20 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 						})]),
 						_: 1
 					})]),
-					c("article", $r, [n[19] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "价格精度")], -1), d(T(se), {
+					c("article", $r, [n[19] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "价格精度")], -1), d(w(ce), {
 						class: "fields limit-fields",
 						"label-position": "top",
-						onSubmit: n[8] ||= O(() => {}, ["prevent"])
+						onSubmit: n[8] ||= D(() => {}, ["prevent"])
 					}, {
-						default: E(() => [d(T(I), { label: "价格小数位" }, {
-							default: E(() => [d(En, {
-								modelValue: N.value.price_decimals,
-								"onUpdate:modelValue": n[7] ||= (e) => N.value.price_decimals = e,
-								"input-component": T(t),
+						default: T(() => [d(w(F), { label: "价格小数位" }, {
+							default: T(() => [d(En, {
+								modelValue: M.value.price_decimals,
+								"onUpdate:modelValue": n[7] ||= (e) => M.value.price_decimals = e,
+								"input-component": w(t),
 								unit: "位",
 								min: "0",
 								max: "8",
-								disabled: H.value
+								disabled: U.value
 							}, null, 8, [
 								"modelValue",
 								"input-component",
@@ -3335,26 +3457,26 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 						})]),
 						_: 1
 					})]),
-					(v(), s(r, null, re(h, (e, i) => c("article", {
+					(_(), s(r, null, ae(m, (e, i) => c("article", {
 						key: e.title,
 						class: "parameter-card"
-					}, [c("header", ei, [c("h3", null, w(e.title), 1)]), d(T(se), {
-						class: ee(["fields", i === 0 ? "odds-fields" : "limit-fields"]),
+					}, [c("header", ei, [c("h3", null, S(e.title), 1)]), d(w(ce), {
+						class: te(["fields", i === 0 ? "odds-fields" : "limit-fields"]),
 						"label-position": "top",
-						onSubmit: n[9] ||= O(() => {}, ["prevent"])
+						onSubmit: n[9] ||= D(() => {}, ["prevent"])
 					}, {
-						default: E(() => [(v(!0), s(r, null, re(e.fields, ([e, n, r]) => (v(), a(T(I), {
+						default: T(() => [(_(!0), s(r, null, ae(e.fields, ([e, n, r]) => (_(), a(w(F), {
 							key: e,
 							label: n
 						}, {
-							default: E(() => [d(En, {
-								modelValue: M.value[e],
-								"onUpdate:modelValue": (t) => M.value[e] = t,
-								"input-component": T(t),
+							default: T(() => [d(En, {
+								modelValue: j.value[e],
+								"onUpdate:modelValue": (t) => j.value[e] = t,
+								"input-component": w(t),
 								unit: r,
 								percentage: e === "target_rtp",
 								step: r === "x" ? "0.01" : "1",
-								disabled: H.value
+								disabled: U.value
 							}, null, 8, [
 								"modelValue",
 								"onUpdate:modelValue",
@@ -3372,12 +3494,12 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 				_: 1
 			}, 8, ["loading", "hide-content"])])]),
 			d($n, {
-				modelValue: P.value,
-				"onUpdate:modelValue": n[10] ||= (e) => P.value = e
+				modelValue: N.value,
+				"onUpdate:modelValue": n[10] ||= (e) => N.value = e
 			}, null, 8, ["modelValue"])
 		]));
 	}
-}), [["__scopeId", "data-v-552d0741"]]), ni = { class: "prediction-page prediction-table-page mm-ui" }, ri = { class: "prediction-page__header" }, ii = {
+}), [["__scopeId", "data-v-9dad56d4"]]), ni = { class: "prediction-page prediction-table-page mm-ui" }, ri = { class: "prediction-page__header" }, ii = {
 	class: "game-tabs",
 	role: "group",
 	"aria-label": "选择预测玩法"
@@ -3390,8 +3512,8 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 	"stroke-linecap": "round",
 	"stroke-linejoin": "round",
 	"aria-hidden": "true"
-}, oi = { class: "game-choice-content" }, si = { key: 0 }, ci = {
-	key: 1,
+}, oi = { class: "game-choice-content" }, si = { key: 1 }, ci = {
+	key: 2,
 	class: "catalog-error"
 }, li = { class: "prediction-page__workspace" }, ui = { class: "symbol-panel__heading" }, di = { class: "symbol-panel__list" }, fi = [
 	"aria-pressed",
@@ -3410,7 +3532,7 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 }, xi = ["title", "aria-label"], Si = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
 	setup(e) {
-		let { predictionConfigurationList: n } = pe().api, { symbols: l } = pe().api, f = ge(), p = he(), m = b(""), h = b(!1), _ = b([]), y = b("UP_DOWN"), x = b("UP_DOWN"), ie = pe().grid.globalTemplate ? ti : Dr, ae = C(), D = [
+		let { predictionConfigurationList: n, predictionConfigurationSave: l } = fe().api, { symbols: f } = fe().api, ee = he(), p = me(), m = v(""), g = v(!1), ie = v([]), y = v("UP_DOWN"), C = v("UP_DOWN"), oe = fe().grid.globalTemplate ? ti : Dr, E = x(), D = [
 			{
 				value: "UP_DOWN",
 				label: "涨跌预测",
@@ -3426,9 +3548,13 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 				label: "预测网格",
 				description: "纵轴为价格区间、横轴为时间区间，一格生成一笔订单"
 			}
-		], O = b(""), j = i(() => nt(p.perms, "prediction_config:lists")), M = b(""), N = C(), P = i(() => N.value?.editingState), se = i(() => {
-			let e = P.value;
-			return !e || e.target !== O.value || e.actor !== String(p.userInfo.id || "") || !j.value || !nt(p.perms, "prediction_config:edit") || e.saving ? null : e.pending ? {
+		], A = v(""), j = i(() => Ze(p.perms, "prediction_config:lists")), M = v(""), N = x(), ce = i(() => N.value?.editingState), F = i(() => {
+			let e = ce.value;
+			return !e || e.target !== A.value || e.actor !== String(p.userInfo.id || "") || !j.value || !Ze(p.perms, "prediction_config:edit") || e.saving ? null : z.value ? {
+				text: "开关待核验",
+				tone: "warning",
+				detail: L.value?.error || "请使用原请求核验开关结果"
+			} : e.pending ? {
 				text: "结果待确认",
 				tone: "warning",
 				detail: e.saveError || "结果尚未确认，请核验原操作"
@@ -3445,53 +3571,74 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 				tone: "success",
 				detail: ""
 			} : null;
-		}), I = 0, L = (e) => O.value === e.row_key && P.value?.target === e.row_key ? P.value.enabled ?? e.enabled : e.enabled;
-		function R(e) {
-			return nt(p.perms, "prediction_config:edit") ? P.value?.pending ? "请先核验待确认的操作" : h.value || P.value?.loading ? "正在加载配置" : O.value !== e.row_key && P.value?.dirty ? "请先处理当前未保存修改" : O.value === e.row_key && !P.value?.ready ? "请重新加载当前配置" : "修改后需保存配置" : "没有配置修改权限";
+		}), I = 0, L = x(), z = v(!1), le = v(!1), B;
+		function ue() {
+			if (!B) throw Error("请选择要调整的币种");
+			return B;
 		}
-		function ce(e) {
-			let t = P.value;
-			return !j.value || !nt(p.perms, "prediction_config:edit") || !e.editable || h.value || !t || t.loading || t.pending || (O.value === e.row_key ? !t.ready || t.target !== e.row_key : t.dirty);
+		function H(e) {
+			return !j.value || !Ze(p.perms, "prediction_config:edit") || !e.configured || g.value || z.value || le.value || !!(ce.value?.saving || ce.value?.pending);
 		}
-		async function le(e, t) {
-			if (typeof t != "boolean" || ce(e)) return;
-			let n = String(p.userInfo.id || ""), r = P.value?.generation;
-			if (O.value !== e.row_key) {
-				let t = await Ae(e);
-				if (await g(), !t || t.selection !== I) return;
-				r = t.detail;
-			}
-			r === void 0 || O.value !== e.row_key || ce(e) || N.value?.setEnabled(e.row_key, r, n, t);
+		function U(e) {
+			return z.value ? "请先核验原操作" : H(e) ? "当前不可操作" : "立即设置该币种所有周期的开放状态";
 		}
-		let B = (e) => e === "GAME_TYPE_UP_DOWN" ? "UP_DOWN" : e === "GAME_TYPE_HIGH_LOW" ? "HIGH_LOW" : null, ue = (e) => e === "UP_DOWN" ? "涨跌预测" : e === "HIGH_LOW" ? "自选预测" : "--", H = xe, U = i(() => _.value.map((e, t) => {
-			let n = e.rules[0], r = B(n?.game_type) || y.value || null, i = n?.symbol || "";
+		function W(e, t) {
+			typeof t != "boolean" || !e.game_type || H(e) || (B = {
+				action: "set_enabled",
+				game_type: e.game_type,
+				symbol: e.symbol,
+				based_on_template_version: e.template_version,
+				enabled: t
+			}, L.value?.submit());
+		}
+		async function G(e) {
+			let t = await l(e), n = t.configuration;
+			if (!n?.rules?.length || n.rules.some((t) => t.game_type !== "GAME_TYPE_" + e.game_type || t.symbol !== e.symbol) || n.symbol_enabled !== e.enabled || !/^[1-9]\d*$/.test(n.template_version)) throw Error("开关回执与当前操作不符，请核验原操作");
+			return {
+				...t,
+				priorVersion: e.based_on_template_version
+			};
+		}
+		function K(e) {
+			let { configuration: t, priorVersion: n } = e;
+			q(t, n), N.value?.appliedSwitch(n, t);
+		}
+		function q(e, t) {
+			let n = e.rules[0], r = !1, i = ie.value.map((i) => i.rules[0]?.symbol === n.symbol && i.rules[0].game_type === n.game_type ? (r = !0, BigInt(i.template_version) > BigInt(e.template_version) ? i : e) : i.template_version === t ? {
+				...i,
+				template_version: e.template_version
+			} : i);
+			!r && n.game_type === "GAME_TYPE_" + y.value && i.push(e), ie.value = i;
+		}
+		let pe = (e) => e === "GAME_TYPE_UP_DOWN" ? "UP_DOWN" : e === "GAME_TYPE_HIGH_LOW" ? "HIGH_LOW" : null, ge = (e) => e === "UP_DOWN" ? "涨跌预测" : e === "HIGH_LOW" ? "自选预测" : "--", _e = be, ve = i(() => ie.value.map((e, t) => {
+			let n = e.rules[0], r = pe(n?.game_type) || y.value || null, i = n?.symbol || "";
 			return {
 				row_key: r && i ? `${r}:${i}` : `empty:${t}`,
 				configuration: e,
 				game_type: r,
 				symbol: i,
-				enabled: Ye(e),
+				enabled: qe(e),
 				configured: e.rules.length > 0,
 				editable: !!(r && i && e.rules.length > 0),
 				rule_count: e.rules.length,
 				template_version: e.template_version,
 				effective_version: e.effective_version,
-				updated_at: H(e.updated_at_ms)
+				updated_at: _e(e.updated_at_ms)
 			};
 		}).sort((e, t) => e.game_type === t.game_type ? e.symbol.localeCompare(t.symbol) : (e.game_type || "").localeCompare(t.game_type || "")));
-		function fe(e) {
-			let t = e.row_key === P.value?.target && P.value?.ready ? P.value.roomDurations : e.configuration ? Xe(e.configuration) : void 0;
-			return t ? t.map((t) => Se(t, e.game_type || void 0)).join(" · ") || "暂无房间" : e.directory_label;
+		function ye(e) {
+			let t = e.row_key === ce.value?.target && ce.value?.ready ? ce.value.roomDurations : e.configuration ? Je(e.configuration) : void 0;
+			return t ? t.map((t) => xe(t, e.game_type || void 0)).join(" · ") || "暂无房间" : e.directory_label;
 		}
-		let W = b([]), G = b(!1), K = b(""), me = (e) => e.trim().toUpperCase(), _e = 0, ve;
-		async function ye() {
+		let J = v([]), Y = v(!1), Ce = v(""), we = (e) => e.trim().toUpperCase(), Te = 0, Ee;
+		async function De() {
 			if (!j.value) return;
-			ve?.abort(), ve = new AbortController();
-			let e = ++_e;
-			G.value = !0, K.value = "";
+			Ee?.abort(), Ee = new AbortController();
+			let e = ++Te;
+			Y.value = !0, Ce.value = "";
 			try {
-				let t = await l(ve.signal);
-				if (e !== _e) return;
+				let t = await f(Ee.signal);
+				if (e !== Te) return;
 				if (!Array.isArray(t)) throw Error("币种目录返回格式不正确");
 				let n = /* @__PURE__ */ new Map();
 				for (let e of t) {
@@ -3502,117 +3649,117 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 						quote_asset: ""
 					};
 					if (typeof t.symbol != "string" || !t.symbol.trim()) continue;
-					let r = me(t.symbol);
+					let r = we(t.symbol);
 					n.has(r) || n.set(r, {
 						symbol: r,
 						base_asset: typeof t.base_asset == "string" ? t.base_asset : "",
 						quote_asset: typeof t.quote_asset == "string" ? t.quote_asset : ""
 					});
 				}
-				W.value = [...n.values()];
+				J.value = [...n.values()];
 			} catch (t) {
-				e === _e && (K.value = Ce(t));
+				e === Te && (Ce.value = Se(t));
 			} finally {
-				e === _e && (G.value = !1);
+				e === Te && (Y.value = !1);
 			}
 		}
-		let be = i(() => {
-			let e = [...U.value], t = new Set(e.filter((e) => e.game_type === y.value).map((e) => me(e.symbol)));
-			for (let n of W.value) t.has(n.symbol) || e.push({
+		let Oe = i(() => {
+			let e = [...ve.value], t = new Set(e.filter((e) => e.game_type === y.value).map((e) => we(e.symbol)));
+			for (let n of J.value) t.has(n.symbol) || e.push({
 				row_key: `${y.value}:${n.symbol}`,
 				configuration: null,
 				game_type: y.value,
 				symbol: n.symbol,
 				enabled: !1,
 				configured: !1,
-				editable: nt(p.perms, "prediction_config:edit") && !K.value,
+				editable: Ze(p.perms, "prediction_config:edit") && !Ce.value,
 				rule_count: 0,
 				template_version: "未配置",
 				effective_version: "未配置",
 				updated_at: "未提供",
 				directory_label: [n.base_asset, n.quote_asset].filter(Boolean).join(" / ") || "点击填写配置"
 			});
-			return Qe(e, W.value.map((e) => e.symbol));
-		}), q = i(() => {
+			return Xe(e, J.value.map((e) => e.symbol));
+		}), ke = i(() => {
 			let e = M.value.trim().toUpperCase();
-			return be.value.filter((t) => (!y.value || t.game_type === y.value) && (!e || t.symbol.includes(e)));
-		}), we = i(() => be.value.find((e) => e.row_key === O.value)), Te = i(() => (h.value || G.value) && !we.value), Ee = 0, De, Oe = async () => {
-			if (!nt(p.perms, "prediction_config:lists")) {
+			return Oe.value.filter((t) => (!y.value || t.game_type === y.value) && (!e || t.symbol.includes(e)));
+		}), Ae = i(() => Oe.value.find((e) => e.row_key === A.value)), je = i(() => (g.value || Y.value) && !Ae.value), Me = 0, Ne, Pe = async () => {
+			if (!Ze(p.perms, "prediction_config:lists")) {
 				m.value = "没有玩法配置查询权限";
 				return;
 			}
-			m.value = "", De?.abort(), De = new AbortController();
-			let e = ++Ee, t = String(p.userInfo.id || "");
-			h.value = !0;
+			m.value = "", Ne?.abort(), Ne = new AbortController();
+			let e = ++Me, t = String(p.userInfo.id || "");
+			g.value = !0;
 			try {
-				let r = await n({ game_type: y.value || void 0 }, De.signal);
-				if (e !== Ee || t !== String(p.userInfo.id || "") || !j.value) return;
+				let r = await n({ game_type: y.value || void 0 }, Ne.signal);
+				if (e !== Me || t !== String(p.userInfo.id || "") || !j.value) return;
 				if (!Array.isArray(r.configurations)) throw Error("配置列表格式异常，请重新加载");
-				if (_.value = r.configurations, !be.value.some((e) => e.row_key === O.value && e.editable)) {
-					let e = be.value.find((e) => e.configured && e.editable && e.game_type === y.value);
-					e ? await Ae(e, !0) : O.value = "";
+				if (ie.value = r.configurations, !Oe.value.some((e) => e.row_key === A.value && e.editable)) {
+					let e = Oe.value.find((e) => e.configured && e.editable && e.game_type === y.value);
+					e ? await Ie(e, !0) : A.value = "";
 				}
 			} catch (t) {
-				e === Ee && (m.value = Ce(t), _.value = []);
+				e === Me && (m.value = Se(t), ie.value = []);
 			} finally {
-				e === Ee && (h.value = !1);
+				e === Me && (g.value = !1);
 			}
-		}, ke = async (e) => {
-			if (x.value !== e && !(x.value === "GRID" && ae.value && !await ae.value.confirmLeave())) {
-				if (x.value !== "GRID" && (P.value?.dirty || P.value?.pending)) {
-					z.warning("请先处理当前未保存修改或待确认操作");
+		}, Fe = async (e) => {
+			if (!(C.value === e || le.value || z.value) && !(C.value === "GRID" && E.value && !await E.value.confirmLeave())) {
+				if (C.value !== "GRID" && (ce.value?.dirty || ce.value?.pending)) {
+					R.warning("请先处理当前未保存修改或待确认操作");
 					return;
 				}
-				if (I++, x.value = e, e === "GRID") {
-					O.value = "";
+				if (I++, C.value = e, e === "GRID") {
+					A.value = "";
 					return;
 				}
-				y.value = e, O.value = "", M.value = "", _.value = [], Oe(), W.value.length || ye();
+				y.value = e, A.value = "", M.value = "", ie.value = [], Pe(), J.value.length || De();
 			}
-		}, Ae = async (e, t = !1) => {
-			if (P.value?.saving) {
-				z.warning("请先处理当前未保存修改或待确认操作");
+		}, Ie = async (e, t = !1) => {
+			if (!t && (ce.value?.saving || ce.value?.pending || ce.value?.dirty || le.value || z.value)) {
+				R.warning("请先处理当前未保存修改或待确认操作");
 				return;
 			}
 			let n = String(p.userInfo.id || ""), r = ++I;
-			if (!(!j.value || !e.editable || h.value && !t || m.value || !e.game_type || !e.symbol || O.value === e.row_key) && (O.value = e.row_key, await g(), !(r !== I || O.value !== e.row_key || n !== String(p.userInfo.id || "") || !j.value))) return {
+			if (!(!j.value || !e.editable || g.value && !t || m.value || !e.game_type || !e.symbol || A.value === e.row_key) && (A.value = e.row_key, await h(), !(r !== I || A.value !== e.row_key || n !== String(p.userInfo.id || "") || !j.value))) return {
 				selection: r,
 				detail: await N.value?.open(e.game_type, e.symbol, t ? e.configuration ?? void 0 : void 0, !e.configured)
 			};
-		}, je = () => {
-			if (x.value === "GRID") {
-				ae.value?.refresh();
+		}, Le = () => {
+			if (C.value === "GRID") {
+				E.value?.refresh();
 				return;
 			}
-			I++, Oe(), ye();
+			I++, Pe(), De();
 		};
-		return oe(() => [
+		return se(() => [
 			p.userInfo.id,
 			j.value,
-			nt(p.perms, "prediction_config:edit")
+			Ze(p.perms, "prediction_config:edit")
 		], () => {
-			I++, Ee++, De?.abort(), h.value = !1;
-		}, { flush: "sync" }), ne(je), te(() => {
-			I++, Ee++, De?.abort(), _e++, ve?.abort();
-		}), (e, n) => (v(), s("section", ni, [
-			c("header", ri, [c("div", ii, [(v(), s(r, null, re(D, (e) => d(T(A), {
+			I++, Me++, Ne?.abort(), g.value = !1;
+		}, { flush: "sync" }), re(Le), ne(() => {
+			I++, Me++, Ne?.abort(), Te++, Ee?.abort();
+		}), (e, n) => (_(), s("section", ni, [
+			c("header", ri, [c("div", ii, [(_(), s(r, null, ae(D, (e) => d(w(k), {
 				key: e.value,
-				type: x.value === e.value ? "primary" : void 0,
-				"aria-pressed": x.value === e.value,
+				type: C.value === e.value ? "primary" : void 0,
+				"aria-pressed": C.value === e.value,
 				"aria-label": e.label,
-				onClick: (t) => ke(e.value)
+				onClick: (t) => Fe(e.value)
 			}, {
-				default: E(() => [(v(), s("svg", ai, [e.value === "UP_DOWN" ? (v(), s(r, { key: 0 }, [n[2] ||= c("circle", {
+				default: T(() => [(_(), s("svg", ai, [e.value === "UP_DOWN" ? (_(), s(r, { key: 0 }, [n[4] ||= c("circle", {
 					cx: "12",
 					cy: "12",
 					r: "10"
-				}, null, -1), n[3] ||= c("path", { d: "m16 12-4-4-4 4M12 16V8" }, null, -1)], 64)) : e.value === "HIGH_LOW" ? (v(), s(r, { key: 1 }, [n[4] ||= c("path", { d: "m9 9 5 12 1.8-5.2L21 14Z" }, null, -1), n[5] ||= c("path", { d: "M7.2 2.2 8 5.1M5.1 8l-2.9-.8M14 4.1 12 6M6 12l-1.9 2" }, null, -1)], 64)) : (v(), s(r, { key: 2 }, [n[6] ||= c("rect", {
+				}, null, -1), n[5] ||= c("path", { d: "m16 12-4-4-4 4M12 16V8" }, null, -1)], 64)) : e.value === "HIGH_LOW" ? (_(), s(r, { key: 1 }, [n[6] ||= c("path", { d: "m9 9 5 12 1.8-5.2L21 14Z" }, null, -1), n[7] ||= c("path", { d: "M7.2 2.2 8 5.1M5.1 8l-2.9-.8M14 4.1 12 6M6 12l-1.9 2" }, null, -1)], 64)) : (_(), s(r, { key: 2 }, [n[8] ||= c("rect", {
 					x: "3",
 					y: "3",
 					width: "18",
 					height: "18",
 					rx: "2"
-				}, null, -1), n[7] ||= c("path", { d: "M9 3v18M15 3v18M3 9h18M3 15h18" }, null, -1)], 64))])), c("span", oi, [c("strong", null, w(e.label), 1), c("small", null, w(e.description), 1)])]),
+				}, null, -1), n[9] ||= c("path", { d: "M9 3v18M15 3v18M3 9h18M3 15h18" }, null, -1)], 64))])), c("span", oi, [c("strong", null, S(e.label), 1), c("small", null, S(e.description), 1)])]),
 				_: 2
 			}, 1032, [
 				"type",
@@ -3620,82 +3767,99 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 				"aria-label",
 				"onClick"
 			])), 64))])]),
-			x.value !== "GRID" && m.value ? (v(), s("div", si, [d(T(k), {
+			j.value ? (_(), a(dn, {
+				key: 0,
+				ref_key: "switchPanel",
+				ref: L,
+				action: "config.availability",
+				target: "platform",
+				permission: "prediction_config:edit",
+				"automatic-reason": "通过总后台设置币种全周期开关",
+				payload: ue,
+				send: G,
+				"hide-button": !!Ae.value || !z.value,
+				"hide-success": "",
+				"hide-pending-details": "",
+				onPending: n[0] ||= (e) => z.value = e,
+				onBusy: n[1] ||= (e) => le.value = e,
+				onSuccess: K
+			}, null, 8, ["hide-button"])) : o("", !0),
+			C.value !== "GRID" && m.value ? (_(), s("div", si, [d(w(O), {
 				title: m.value,
 				type: "error",
 				closable: !1
-			}, null, 8, ["title"]), d(T(A), {
-				loading: h.value,
-				onClick: je
+			}, null, 8, ["title"]), d(w(k), {
+				loading: g.value,
+				onClick: Le
 			}, {
-				default: E(() => [...n[8] ||= [u("重试", -1)]]),
+				default: T(() => [...n[10] ||= [u("重试", -1)]]),
 				_: 1
 			}, 8, ["loading"])])) : o("", !0),
-			x.value !== "GRID" && K.value ? (v(), s("div", ci, [d(T(k), {
-				title: `币种目录加载失败：${K.value}`,
+			C.value !== "GRID" && Ce.value ? (_(), s("div", ci, [d(w(O), {
+				title: `币种目录加载失败：${Ce.value}`,
 				type: "warning",
 				closable: !1
-			}, null, 8, ["title"]), d(T(A), {
+			}, null, 8, ["title"]), d(w(k), {
 				"aria-label": "重试币种目录",
-				loading: G.value,
-				onClick: ye
+				loading: Y.value,
+				onClick: De
 			}, {
-				default: E(() => [...n[9] ||= [u("重试币种目录", -1)]]),
+				default: T(() => [...n[11] ||= [u("重试币种目录", -1)]]),
 				_: 1
 			}, 8, ["loading"])])) : o("", !0),
-			x.value !== "GRID" && j.value ? (v(), a(gn, {
-				key: 2,
+			C.value !== "GRID" && j.value ? (_(), a(gn, {
+				key: 3,
 				class: "prediction-page__loading-workspace",
-				loading: Te.value,
-				"hide-content": Te.value,
+				loading: je.value,
+				"hide-content": je.value,
 				"min-height": "0px"
 			}, {
-				default: E(() => [c("div", li, [d(gn, {
+				default: T(() => [c("div", li, [d(gn, {
 					as: "aside",
-					loading: (h.value || G.value) && !Te.value,
+					loading: (g.value || Y.value) && !je.value,
 					"min-height": "0px",
 					class: "symbol-panel",
 					"aria-label": "交易对配置列表"
 				}, {
-					default: E(() => [
-						c("div", ui, [n[10] ||= c("strong", null, "币种配置", -1), c("span", null, w(q.value.length) + " 条", 1)]),
-						d(T(t), {
+					default: T(() => [
+						c("div", ui, [n[12] ||= c("strong", null, "币种配置", -1), c("span", null, S(ke.value.length) + " 条", 1)]),
+						d(w(t), {
 							modelValue: M.value,
-							"onUpdate:modelValue": n[0] ||= (e) => M.value = e,
+							"onUpdate:modelValue": n[2] ||= (e) => M.value = e,
 							clearable: "",
 							placeholder: "搜索交易对",
 							"aria-label": "搜索交易对"
 						}, null, 8, ["modelValue"]),
-						c("div", di, [(v(!0), s(r, null, re(q.value, (e) => (v(), s("div", {
+						c("div", di, [(_(!0), s(r, null, ae(ke.value, (e) => (_(), s("div", {
 							key: e.row_key,
-							class: ee(["symbol-row", { "is-active": O.value === e.row_key }])
+							class: te(["symbol-row", { "is-active": A.value === e.row_key }])
 						}, [
 							c("button", {
 								type: "button",
 								class: "symbol-choice",
-								"aria-pressed": O.value === e.row_key,
+								"aria-pressed": A.value === e.row_key,
 								"data-config-symbol": e.symbol,
-								disabled: !e.editable || h.value || !!m.value,
-								onClick: (t) => Ae(e)
-							}, [c("span", pi, [d(T(f), { symbol: e.symbol }, null, 8, ["symbol"]), e.configured ? o("", !0) : (v(), a(T(V), {
+								disabled: !e.editable || g.value || !!m.value,
+								onClick: (t) => Ie(e)
+							}, [c("span", pi, [d(w(ee), { symbol: e.symbol }, null, 8, ["symbol"]), e.configured ? o("", !0) : (_(), a(w(V), {
 								key: 0,
 								size: "small",
 								type: "info"
 							}, {
-								default: E(() => [...n[11] ||= [u("待首次配置", -1)]]),
+								default: T(() => [...n[13] ||= [u("待首次配置", -1)]]),
 								_: 1
 							}))]), c("span", {
 								class: "symbol-choice__periods",
-								title: fe(e)
-							}, w(fe(e)), 9, mi)], 8, fi),
-							e.configured ? (v(), a(T(de), {
+								title: ye(e)
+							}, S(ye(e)), 9, mi)], 8, fi),
+							e.configured ? (_(), a(w(de), {
 								key: 0,
 								"data-config-enabled": e.symbol,
 								"aria-label": `${e.symbol} 开放配置`,
-								"model-value": L(e),
-								disabled: ce(e),
-								title: R(e),
-								onChange: (t) => le(e, t)
+								"model-value": e.enabled,
+								disabled: H(e),
+								title: U(e),
+								onChange: (t) => W(e, t)
 							}, null, 8, [
 								"data-config-enabled",
 								"aria-label",
@@ -3704,58 +3868,58 @@ var zr = ct("grid.config.global.pending.v1", Ir, Rr), Br = {
 								"title",
 								"onChange"
 							])) : o("", !0),
-							O.value === e.row_key && P.value?.dirty ? (v(), s("span", hi, "未保存")) : o("", !0)
-						], 2))), 128)), !h.value && !G.value && !m.value && !K.value && !q.value.length ? (v(), a(T(F), {
+							A.value === e.row_key && ce.value?.dirty ? (_(), s("span", hi, "未保存")) : o("", !0)
+						], 2))), 128)), !g.value && !Y.value && !m.value && !Ce.value && !ke.value.length ? (_(), a(w(P), {
 							key: 0,
 							description: "暂无符合条件的交易对",
 							"image-size": 56
 						})) : o("", !0)])
 					]),
 					_: 1
-				}, 8, ["loading"]), c("main", gi, [we.value ? (v(), s("div", _i, [c("div", null, [c("h2", null, [u(w(we.value.symbol) + " ", 1), c("span", vi, " · " + w(ue(we.value.game_type)), 1)]), c("p", yi, "更新时间 " + w(we.value.updated_at), 1)]), T(nt)(T(p).perms, "prediction_config:edit") ? (v(), s("div", bi, [se.value ? (v(), s("span", {
+				}, 8, ["loading"]), c("main", gi, [Ae.value ? (_(), s("div", _i, [c("div", null, [c("h2", null, [u(S(Ae.value.symbol) + " ", 1), c("span", vi, " · " + S(ge(Ae.value.game_type)), 1)]), c("p", yi, "更新时间 " + S(Ae.value.updated_at), 1)]), w(Ze)(w(p).perms, "prediction_config:edit") ? (_(), s("div", bi, [F.value ? (_(), s("span", {
 					key: 0,
 					"data-config-save-feedback": "",
-					class: ee(["config-save-feedback", `config-save-feedback--${se.value.tone}`]),
+					class: te(["config-save-feedback", `config-save-feedback--${F.value.tone}`]),
 					role: "status",
-					title: se.value.detail || void 0,
-					"aria-label": se.value.detail ? `${se.value.text}：${se.value.detail}` : void 0
-				}, w(se.value.text), 11, xi)) : o("", !0), d(T(A), {
+					title: F.value.detail || void 0,
+					"aria-label": F.value.detail ? `${F.value.text}：${F.value.detail}` : void 0
+				}, S(F.value.text), 11, xi)) : o("", !0), d(w(k), {
 					type: "primary",
-					loading: P.value?.saving,
-					disabled: !P.value || P.value.saving || !P.value.pending && !P.value.ready,
-					onClick: n[1] ||= (e) => N.value?.saveConfig()
+					loading: ce.value?.saving || le.value,
+					disabled: le.value || !z.value && (!ce.value || ce.value.saving || !ce.value.pending && !ce.value.ready),
+					onClick: n[3] ||= (e) => z.value ? L.value?.submit() : N.value?.saveConfig()
 				}, {
-					default: E(() => [u(w(P.value?.pending ? "核验原操作" : "保存配置"), 1)]),
+					default: T(() => [u(S(z.value || ce.value?.pending ? "核验原操作" : "仅保存参数"), 1)]),
 					_: 1
-				}, 8, ["loading", "disabled"])])) : o("", !0)])) : o("", !0), O.value ? (v(), a(Jn, {
+				}, 8, ["loading", "disabled"])])) : o("", !0)])) : o("", !0), A.value ? (_(), a(Jn, {
 					key: 1,
 					ref_key: "editRef",
 					ref: N,
 					inline: "",
 					"external-save": "",
-					onSuccess: Oe
-				}, null, 512)) : !h.value && !G.value && !m.value ? (v(), a(T(F), {
+					onSuccess: q
+				}, null, 512)) : !g.value && !Y.value && !m.value ? (_(), a(w(P), {
 					key: 2,
 					description: "请选择交易对查看配置"
 				})) : o("", !0)])])]),
 				_: 1
-			}, 8, ["loading", "hide-content"])) : x.value === "GRID" ? (v(), a(S(T(ie)), {
-				key: 3,
+			}, 8, ["loading", "hide-content"])) : C.value === "GRID" ? (_(), a(b(w(oe)), {
+				key: 4,
 				ref_key: "gridRef",
-				ref: ae,
+				ref: E,
 				class: "grid-mode"
 			}, null, 512)) : o("", !0)
 		]));
 	}
-}), [["__scopeId", "data-v-3a0f13bc"]]), Ci = 9223372036854775807n;
+}), [["__scopeId", "data-v-42ea0cb5"]]), Ci = 9223372036854775807n;
 function wi(e) {
 	return e == null ? "—" : typeof e == "object" ? JSON.stringify(e) : String(e);
 }
-function Y(e, t = !1) {
+function Z(e, t = !1) {
 	return typeof e == "string" && /^(0|[1-9][0-9]*)$/.test(e) && e.length <= 19 && BigInt(e) <= Ci && (!t || e !== "0");
 }
 function Ti(e) {
-	return typeof e == "number" ? Number.isSafeInteger(e) && e > 0 ? String(e) : null : Y(e, !0) ? e : null;
+	return typeof e == "number" ? Number.isSafeInteger(e) && e > 0 ? String(e) : null : Z(e, !0) ? e : null;
 }
 function Ei(e) {
 	return typeof e == "string" && e.length <= 256 && /^(0|[1-9][0-9]*)(\.[0-9]+)?$/.test(e);
@@ -3766,81 +3930,81 @@ function Di(e, t) {
 	return s === c ? 0 : s > c ? 1 : -1;
 }
 function Oi(e) {
-	if (!Y(e) || BigInt(e) > 8640000000000000n) return e == null ? "—" : wi(e);
+	if (!Z(e) || BigInt(e) > 8640000000000000n) return e == null ? "—" : wi(e);
 	let t = new Date(Number(e));
 	return Number.isNaN(t.getTime()) ? wi(e) : t.toLocaleString();
 }
-function X(e, t = 64, n = !1) {
+function ki(e, t = 64, n = !1) {
 	return typeof e == "string" && e.length > 0 && [...e].length <= t && e.trim() === e && !/[\u0000-\u001f\u007f]/.test(e) && (!n || /^[A-Z0-9][A-Z0-9._-]*$/.test(e));
 }
 //#endregion
 //#region src/prediction-config/agent/utils/decimal.ts
-var ki = /^([+-]?)(\d*)(?:\.(\d*))?$/, Ai = /^([+-]?)(\d*\.?\d+)[eE]([+-]?\d+)$/, ji = 1e3;
-function Mi(e) {
+var Ai = /^([+-]?)(\d*)(?:\.(\d*))?$/, ji = /^([+-]?)(\d*\.?\d+)[eE]([+-]?\d+)$/, Mi = 1e3;
+function Ni(e) {
 	if (!/[eE]/.test(e)) return e;
-	let t = e.match(Ai);
+	let t = e.match(ji);
 	if (!t) return null;
 	let [, n, r, i] = t, a = Number(i);
-	if (!Number.isSafeInteger(a) || Math.abs(a) > ji) return null;
+	if (!Number.isSafeInteger(a) || Math.abs(a) > Mi) return null;
 	let [o = "", s = ""] = r.split("."), c = `${o}${s}`, l = o.length + a;
 	return l <= 0 ? `${n}0.${"0".repeat(Math.abs(l))}${c}` : l >= c.length ? `${n}${c}${"0".repeat(l - c.length)}` : `${n}${c.slice(0, l)}.${c.slice(l)}`;
 }
-function Ni(e) {
+function Pi(e) {
 	if (e == null || e === "") return null;
-	let t = Mi(String(e).trim().replace(/,/g, ""));
+	let t = Ni(String(e).trim().replace(/,/g, ""));
 	if (t == null) return null;
-	let n = t.match(ki);
+	let n = t.match(Ai);
 	if (!n || !n[2] && !n[3]) return null;
 	let [, r, i = "", a = ""] = n, o = i.replace(/^0+(?=\d)/, "") || "0", s = a.replace(/0+$/, ""), c = s ? `${o}.${s}` : o;
 	return /^0(?:\.0*)?$/.test(c) ? "0" : r === "-" ? `-${c}` : c;
 }
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/site-model.ts
-var Pi = (e) => e.stored.game_type === "GAME_TYPE_HIGH_LOW" ? "HIGH_LOW" : "UP_DOWN", Fi = [
+var Fi = (e) => e.stored.game_type === "GAME_TYPE_HIGH_LOW" ? "HIGH_LOW" : "UP_DOWN", Ii = [
 	"35",
 	"40",
 	"45",
 	"60",
 	"90"
-], Z = (e) => !!e && typeof e == "object" && !Array.isArray(e);
+], Li = (e) => !!e && typeof e == "object" && !Array.isArray(e);
 function Q(e, t = "INVALID_SITE_CONFIGURATION") {
 	if (!e) throw Error(t);
 }
-function Ii(e) {
+function Ri(e) {
 	if (e && typeof e == "object") {
 		Object.freeze(e);
-		for (let t of Object.values(e)) Ii(t);
+		for (let t of Object.values(e)) Ri(t);
 	}
 	return e;
 }
-function Li(e = globalThis.crypto) {
+function zi(e = globalThis.crypto) {
 	Q(e && typeof e.getRandomValues == "function", "SECURE_RANDOM_UNAVAILABLE");
 	let t = e.getRandomValues(/* @__PURE__ */ new Uint8Array(16));
 	Q(t instanceof Uint8Array && t.length === 16, "SECURE_RANDOM_UNAVAILABLE"), t[6] = t[6] & 15 | 64, t[8] = t[8] & 63 | 128;
 	let n = [...t].map((e) => e.toString(16).padStart(2, "0")).join("");
 	return `${n.slice(0, 8)}-${n.slice(8, 12)}-${n.slice(12, 16)}-${n.slice(16, 20)}-${n.slice(20)}`;
 }
-function Ri(e) {
-	Q(Z(e) && Ti(e.operator_id) === e.operator_id && Ti(e.agent_id) === e.agent_id, "IDENTITY_UNCONFIRMED");
-}
-function zi(e) {
-	Q(Z(e)), Ri(e.actor), Q(Array.isArray(e.sites) && e.sites.length <= 100);
-	let t = /* @__PURE__ */ new Set();
-	for (let n of e.sites) {
-		Q(Z(n) && X(n.site_id, 128) && !t.has(n.site_id) && Array.isArray(n.games)), t.add(n.site_id), Q(n.games.length > 0 && n.games.length <= 2);
-		let e = /* @__PURE__ */ new Set();
-		for (let t of n.games) Q(Z(t) && ["UP_DOWN", "HIGH_LOW"].includes(String(t.game_type)) && !e.has(t.game_type) && Array.isArray(t.symbols) && t.symbols.length <= 100 && t.symbols.every((e) => X(e, 64, !0)) && new Set(t.symbols).size === t.symbols.length), e.add(t.game_type);
-	}
-}
-function Bi(e, t) {
-	Q(Object.keys(e).every((e) => t.includes(e)));
+function Bi(e) {
+	Q(Li(e) && Ti(e.operator_id) === e.operator_id && Ti(e.agent_id) === e.agent_id, "IDENTITY_UNCONFIRMED");
 }
 function Vi(e) {
-	Q(Z(e) && X(e.site_id, 128) && ["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(String(e.game_type)) && X(e.symbol, 64, !0)), Q(Y(e.version, !0) && Y(e.based_on_public_version, !0) && typeof e.enabled == "boolean" && Array.isArray(e.overrides));
+	Q(Li(e)), Bi(e.actor), Q(Array.isArray(e.sites) && e.sites.length <= 100);
+	let t = /* @__PURE__ */ new Set();
+	for (let n of e.sites) {
+		Q(Li(n) && ki(n.site_id, 128) && !t.has(n.site_id) && Array.isArray(n.games)), t.add(n.site_id), Q(n.games.length > 0 && n.games.length <= 2);
+		let e = /* @__PURE__ */ new Set();
+		for (let t of n.games) Q(Li(t) && ["UP_DOWN", "HIGH_LOW"].includes(String(t.game_type)) && !e.has(t.game_type) && Array.isArray(t.symbols) && t.symbols.length <= 100 && t.symbols.every((e) => ki(e, 64, !0)) && new Set(t.symbols).size === t.symbols.length), e.add(t.game_type);
+	}
+}
+function Hi(e, t) {
+	Q(Object.keys(e).every((e) => t.includes(e)));
+}
+function Ui(e) {
+	Q(Li(e) && ki(e.site_id, 128) && ["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(String(e.game_type)) && ki(e.symbol, 64, !0)), Q(Z(e.version, !0) && Z(e.based_on_public_version, !0) && typeof e.enabled == "boolean" && Array.isArray(e.overrides));
 	let t = e.game_type === "GAME_TYPE_UP_DOWN";
 	Q(e.overrides.length <= (t ? 5 : 100) && new Set(e.overrides.map((e) => e.duration_seconds)).size === e.overrides.length);
 	for (let n of e.overrides) {
-		Q(Z(n)), Bi(n, [
+		Q(Li(n)), Hi(n, [
 			"game_type",
 			"symbol",
 			"duration_seconds",
@@ -3851,27 +4015,27 @@ function Vi(e) {
 				"minimum_stake",
 				"maximum_stake"
 			]
-		]), Q(n.game_type === e.game_type && n.symbol === e.symbol && (t ? Fi.includes(String(n.duration_seconds)) : Y(n.duration_seconds, !0))), Q(!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean"), Q(Array.isArray(n.stake_tiers) && n.stake_tiers.length <= +!!t), t || Ui(n);
-		for (let e of n.stake_tiers) Q(Z(e)), Bi(e, [
+		]), Q(n.game_type === e.game_type && n.symbol === e.symbol && (t ? Ii.includes(String(n.duration_seconds)) : Z(n.duration_seconds, !0))), Q(!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean"), Q(Array.isArray(n.stake_tiers) && n.stake_tiers.length <= +!!t), t || Gi(n);
+		for (let e of n.stake_tiers) Q(Li(e)), Hi(e, [
 			"stake_tier_id",
 			"enabled",
 			"maximum_stake"
-		]), Q(X(e.stake_tier_id) && (!Object.hasOwn(e, "enabled") || typeof e.enabled == "boolean") && (!Object.hasOwn(e, "maximum_stake") || Ei(e.maximum_stake)));
+		]), Q(ki(e.stake_tier_id) && (!Object.hasOwn(e, "enabled") || typeof e.enabled == "boolean") && (!Object.hasOwn(e, "maximum_stake") || Ei(e.maximum_stake)));
 	}
 }
-function Hi(e, t, n, r) {
-	Q(Z(e)), Vi(e.stored);
+function Wi(e, t, n, r) {
+	Q(Li(e)), Ui(e.stored);
 	let i = e.stored, a = e.effective;
-	Q(i.site_id === t && i.symbol === n && Z(a) && (!r || i.game_type === "GAME_TYPE_" + r));
+	Q(i.site_id === t && i.symbol === n && Li(a) && (!r || i.game_type === "GAME_TYPE_" + r));
 	let o = i.game_type === "GAME_TYPE_UP_DOWN";
-	Q(a.site_id === t && a.symbol === n && a.game_type === i.game_type), Q(Y(a.public_version, !0) && a.site_version === i.version && a.based_on_public_version === i.based_on_public_version && typeof a.enabled == "boolean"), Q(Array.isArray(a.rules) && (o ? a.rules.length === 5 : a.rules.length > 0 && a.rules.length <= 100) && new Set(a.rules.map((e) => e.duration_seconds)).size === a.rules.length);
+	Q(a.site_id === t && a.symbol === n && a.game_type === i.game_type), Q(Z(a.public_version, !0) && a.site_version === i.version && a.based_on_public_version === i.based_on_public_version && typeof a.enabled == "boolean"), Q(Array.isArray(a.rules) && (o ? a.rules.length === 5 : a.rules.length > 0 && a.rules.length <= 100) && new Set(a.rules.map((e) => e.duration_seconds)).size === a.rules.length);
 	let s = a.rules;
 	for (let e of s) {
-		if (Q(Z(e) && e.game_type === i.game_type && e.symbol === n && (o ? Fi.includes(String(e.duration_seconds)) : Y(e.duration_seconds, !0)) && typeof e.enabled == "boolean"), Q(Array.isArray(e.stake_tiers)), !o) {
-			Q(e.stake_tiers.length === 0), Ui(e, !0);
+		if (Q(Li(e) && e.game_type === i.game_type && e.symbol === n && (o ? Ii.includes(String(e.duration_seconds)) : Z(e.duration_seconds, !0)) && typeof e.enabled == "boolean"), Q(Array.isArray(e.stake_tiers)), !o) {
+			Q(e.stake_tiers.length === 0), Gi(e, !0);
 			continue;
 		}
-		Q(e.bet_open_seconds === "30"), Q(e.stake_tiers.every((e) => Z(e) && X(e.stake_tier_id) && typeof e.enabled == "boolean" && typeof e.retired == "boolean"));
+		Q(e.bet_open_seconds === "30"), Q(e.stake_tiers.every((e) => Li(e) && ki(e.stake_tier_id) && typeof e.enabled == "boolean" && typeof e.retired == "boolean"));
 		let t = e.stake_tiers.filter((e) => !e.retired);
 		Q(t.length === 1 && t[0].minimum_stake === "1" && Ei(t[0].maximum_stake));
 		let r = i.overrides.find((t) => t.duration_seconds === e.duration_seconds);
@@ -3879,7 +4043,7 @@ function Hi(e, t, n, r) {
 	}
 	a.public_version === i.based_on_public_version && Q(i.overrides.every((e) => s.some((t) => t.duration_seconds === e.duration_seconds))), Q(Array.isArray(e.adjustments));
 }
-function Ui(e, t = !1) {
+function Gi(e, t = !1) {
 	for (let n of [
 		"fixed_odds",
 		"minimum_stake",
@@ -3887,8 +4051,8 @@ function Ui(e, t = !1) {
 	]) (t || Object.hasOwn(e, n)) && Q(Ei(e[n]) && Di(e[n], n === "fixed_odds" ? "1" : "0") > 0);
 	e.minimum_stake !== void 0 && e.maximum_stake !== void 0 && Q(Di(e.minimum_stake, e.maximum_stake) <= 0);
 }
-function Wi(e) {
-	return Hi(e, e.stored.site_id, e.stored.symbol), Pi(e) === "HIGH_LOW" ? [...e.effective.rules].sort((e, t) => BigInt(e.duration_seconds) < BigInt(t.duration_seconds) ? -1 : 1).map((t) => {
+function Ki(e) {
+	return Wi(e, e.stored.site_id, e.stored.symbol), Fi(e) === "HIGH_LOW" ? [...e.effective.rules].sort((e, t) => BigInt(e.duration_seconds) < BigInt(t.duration_seconds) ? -1 : 1).map((t) => {
 		let n = e.stored.overrides.find((e) => e.duration_seconds === t.duration_seconds);
 		return {
 			duration_seconds: t.duration_seconds,
@@ -3905,7 +4069,7 @@ function Wi(e) {
 			inherited_enabled: n?.enabled === void 0,
 			editable: !0
 		};
-	}) : Fi.map((t) => {
+	}) : Ii.map((t) => {
 		let n = e.effective.rules.find((e) => e.duration_seconds === t), r = n.stake_tiers.find((e) => !e.retired), i = e.stored.overrides.find((e) => e.duration_seconds === t), a = i?.stake_tiers[0];
 		return {
 			duration_seconds: t,
@@ -3920,15 +4084,15 @@ function Wi(e) {
 		};
 	});
 }
-function Gi(e, t, n, r, i) {
-	let a = Wi(e);
-	Q(typeof n == "boolean" && X(r, 500) && X(i, 128), "INVALID_REASON"), Q(t.length === a.length && new Set(t.map((e) => e.duration_seconds)).size === a.length);
-	let o = Pi(e), s = a.map((n) => {
+function qi(e, t, n, r, i) {
+	let a = Ki(e);
+	Q(typeof n == "boolean" && ki(r, 500) && ki(i, 128), "INVALID_REASON"), Q(t.length === a.length && new Set(t.map((e) => e.duration_seconds)).size === a.length);
+	let o = Fi(e), s = a.map((n) => {
 		let r = t.find((e) => e.duration_seconds === n.duration_seconds);
 		Q(r && r.stake_tier_id === n.stake_tier_id && typeof r.enabled == "boolean");
 		let i = e.stored.overrides.find((e) => e.duration_seconds === n.duration_seconds);
 		if (o === "HIGH_LOW") {
-			Ui(r, !0), Q(Di(r.fixed_odds, "2") < 0, "INVALID_ODDS");
+			Gi(r, !0), Q(Di(r.fixed_odds, "2") < 0, "INVALID_ODDS");
 			let e = { duration_seconds: n.duration_seconds };
 			i ? i.enabled !== void 0 && (e.enabled = i.enabled) : e.enabled = r.enabled, r.enabled !== n.enabled && (e.enabled = r.enabled);
 			for (let t of [
@@ -3946,7 +4110,7 @@ function Gi(e, t, n, r, i) {
 		};
 		return r.enabled !== n.enabled && (s.enabled = r.enabled, a.enabled = r.enabled), r.maximum_stake !== n.maximum_stake && (a.maximum_stake = r.maximum_stake), s;
 	});
-	return Ii({
+	return Ri({
 		site_id: e.stored.site_id,
 		game_type: o,
 		symbol: e.stored.symbol,
@@ -3958,7 +4122,7 @@ function Gi(e, t, n, r, i) {
 		overrides: s
 	});
 }
-var Ki = class {
+var Ji = class {
 	generation = 0;
 	next(e) {
 		let t = ++this.generation, n = JSON.stringify(e);
@@ -3970,51 +4134,51 @@ var Ki = class {
 };
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/owner-model.ts
-function qi(e) {
+function Yi(e) {
 	return e.stake_tiers.find((e) => !e.retired);
 }
-function Ji(e) {
+function Xi(e) {
 	return e?.kind !== void 0 || e?.config_site_id !== void 0;
 }
-function Yi(e) {
-	return Y(e?.operator_id, !0) ? Ji(e) ? Y(e.config_site_id) ? e.kind === "SITE" ? e.agent_id === "0" && Y(e.config_site_id, !0) : e.kind === "MERCHANT" && Y(e.agent_id, !0) && e.operator_id === e.agent_id : !1 : e.operator_id === e.agent_id : !1;
+function Zi(e) {
+	return Z(e?.operator_id, !0) ? Xi(e) ? Z(e.config_site_id) ? e.kind === "SITE" ? e.agent_id === "0" && Z(e.config_site_id, !0) : e.kind === "MERCHANT" && Z(e.agent_id, !0) && e.operator_id === e.agent_id : !1 : e.operator_id === e.agent_id : !1;
 }
-var Xi = (e) => typeof e == "string" && /^(0|[1-9][0-9]{0,17})(\.[0-9]{1,18})?$/.test(e) && Di(e, "0") > 0;
-function Zi(e, t, n, r) {
+var Qi = (e) => typeof e == "string" && /^(0|[1-9][0-9]{0,17})(\.[0-9]{1,18})?$/.test(e) && Di(e, "0") > 0;
+function $i(e, t, n, r) {
 	return [
 		e,
 		t,
 		n,
 		r
-	].every(Xi) && Di(e, n) <= 0 && Di(n, r) <= 0 && Di(r, t) <= 0;
+	].every(Qi) && Di(e, n) <= 0 && Di(n, r) <= 0 && Di(r, t) <= 0;
 }
-function Qi(e, t) {
-	Q(Yi(t), "IDENTITY_UNCONFIRMED"), Q(Z(e) && e.owner_agent_id === t.agent_id && ["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(String(e.game_type)) && X(e.symbol, 64, !0), "INVALID_OWNER_CONFIGURATION"), Q(Y(e.public_version, !0) && Y(e.owner_revision) && Array.isArray(e.rules) && e.rules.length > 0 && e.rules.length <= 100);
-	let n = Ji(t);
-	Q(e.config_model === "SCOPED_OWNER_V1" === n, "CONFIGURATION_MODEL_MISMATCH"), n && (Q(e.config_site_id === t.config_site_id && Y(e.revision, !0) && Y(e.site_revision), "IDENTITY_UNCONFIRMED"), Q(e.revision === (t.kind === "SITE" ? e.site_revision : e.owner_revision)), Q(t.kind !== "SITE" || e.owner_revision === "0"), Q(t.config_site_id !== "0" || e.site_revision === "0"), Q(typeof e.effective_enabled == "boolean" && typeof e.can_enable == "boolean" && ["", "PARENT_CONSTRAINT_CHANGED"].includes(String(e.blocked_reason))), Q(e.can_enable === (e.blocked_reason === "" && e.platform_enabled)));
+function ea(e, t) {
+	Q(Zi(t), "IDENTITY_UNCONFIRMED"), Q(Li(e) && e.owner_agent_id === t.agent_id && ["GAME_TYPE_UP_DOWN", "GAME_TYPE_HIGH_LOW"].includes(String(e.game_type)) && ki(e.symbol, 64, !0), "INVALID_OWNER_CONFIGURATION"), Q(Z(e.public_version, !0) && Z(e.owner_revision) && Array.isArray(e.rules) && e.rules.length > 0 && e.rules.length <= 100);
+	let n = Xi(t);
+	Q(e.config_model === "SCOPED_OWNER_V1" === n, "CONFIGURATION_MODEL_MISMATCH"), n && (Q(e.config_site_id === t.config_site_id && Z(e.revision, !0) && Z(e.site_revision), "IDENTITY_UNCONFIRMED"), Q(e.revision === (t.kind === "SITE" ? e.site_revision : e.owner_revision)), Q(t.kind !== "SITE" || e.owner_revision === "0"), Q(t.config_site_id !== "0" || e.site_revision === "0"), Q(typeof e.effective_enabled == "boolean" && typeof e.can_enable == "boolean" && ["", "PARENT_CONSTRAINT_CHANGED"].includes(String(e.blocked_reason))), Q(e.symbol_available === void 0 || typeof e.symbol_available == "boolean"), Q(!e.can_enable || e.blocked_reason === "" && e.symbol_available !== !1));
 	let r = n && e.blocked_reason === "PARENT_CONSTRAINT_CHANGED";
 	Q(typeof e.enabled == "boolean" && typeof e.platform_enabled == "boolean");
 	let i = e.game_type === "GAME_TYPE_UP_DOWN", a = /* @__PURE__ */ new Set();
 	i && Q(e.rules.length === 5);
 	for (let t of e.rules) {
-		Q(Z(t) && Z(t.rule) && Y(t.rule_epoch, !0) && typeof t.custom == "boolean");
+		Q(Li(t) && Li(t.rule) && Z(t.rule_epoch, !0) && typeof t.custom == "boolean");
 		let n = t.rule;
-		Q(typeof t.platform_enabled == "boolean" && typeof t.owner_enabled == "boolean" && n.enabled === (!r && e.enabled && t.platform_enabled && t.owner_enabled)), Q(i ? Xi(t.platform_target_payout_rate) && Xi(t.platform_maximum_odds) && t.platform_fixed_odds === "" && Xi(n.target_payout_rate) && Xi(n.maximum_odds) && (r || Di(n.target_payout_rate, t.platform_target_payout_rate) <= 0) && Di(n.target_payout_rate, "1") <= 0 && (r || Di(n.maximum_odds, t.platform_maximum_odds) <= 0) && Di(n.maximum_odds, "1") >= 0 : Xi(t.platform_fixed_odds) && t.platform_target_payout_rate === "" && t.platform_maximum_odds === "" && Xi(n.fixed_odds) && Di(n.fixed_odds, "1") > 0 && (r || Di(n.fixed_odds, t.platform_fixed_odds) <= 0)), Q(n.game_type === e.game_type && n.symbol === e.symbol && Y(n.duration_seconds, !0) && !a.has(n.duration_seconds) && typeof n.enabled == "boolean" && Array.isArray(n.stake_tiers)), a.add(n.duration_seconds);
+		Q(typeof t.platform_enabled == "boolean" && typeof t.owner_enabled == "boolean" && n.enabled === (!r && e.enabled && t.platform_enabled && t.owner_enabled)), Q(i ? Qi(t.platform_target_payout_rate) && Qi(t.platform_maximum_odds) && t.platform_fixed_odds === "" && Qi(n.target_payout_rate) && Qi(n.maximum_odds) && (r || Di(n.target_payout_rate, t.platform_target_payout_rate) <= 0) && Di(n.target_payout_rate, "1") <= 0 && (r || Di(n.maximum_odds, t.platform_maximum_odds) <= 0) && Di(n.maximum_odds, "1") >= 0 : Qi(t.platform_fixed_odds) && t.platform_target_payout_rate === "" && t.platform_maximum_odds === "" && Qi(n.fixed_odds) && Di(n.fixed_odds, "1") > 0 && (r || Di(n.fixed_odds, t.platform_fixed_odds) <= 0)), Q(n.game_type === e.game_type && n.symbol === e.symbol && Z(n.duration_seconds, !0) && !a.has(n.duration_seconds) && typeof n.enabled == "boolean" && Array.isArray(n.stake_tiers)), a.add(n.duration_seconds);
 		let o = n;
 		if (i) {
-			Q(Fi.includes(n.duration_seconds) && n.bet_open_seconds === "30");
-			let e = /* @__PURE__ */ new Set(), t = n.stake_tiers.filter((t) => (Q(Z(t) && X(t.stake_tier_id) && !e.has(t.stake_tier_id) && typeof t.retired == "boolean" && typeof t.enabled == "boolean"), e.add(t.stake_tier_id), !t.retired));
-			Q(t.length === 1), o = t[0], Q(Z(o) && X(o.stake_tier_id) && typeof o.enabled == "boolean" && o.retired === !1), Q(Ei(n.target_payout_rate) && Ei(n.minimum_odds) && Ei(n.maximum_odds));
+			Q(Ii.includes(n.duration_seconds) && n.bet_open_seconds === "30");
+			let e = /* @__PURE__ */ new Set(), t = n.stake_tiers.filter((t) => (Q(Li(t) && ki(t.stake_tier_id) && !e.has(t.stake_tier_id) && typeof t.retired == "boolean" && typeof t.enabled == "boolean"), e.add(t.stake_tier_id), !t.retired));
+			Q(t.length === 1), o = t[0], Q(Li(o) && ki(o.stake_tier_id) && typeof o.enabled == "boolean" && o.retired === !1), Q(Ei(n.target_payout_rate) && Ei(n.minimum_odds) && Ei(n.maximum_odds));
 		} else Q(n.stake_tiers.length === 0 && Ei(n.fixed_odds));
-		Q(Xi(t.platform_minimum_stake) && Xi(t.platform_maximum_stake) && Xi(o.minimum_stake) && Xi(o.maximum_stake) && Di(o.minimum_stake, o.maximum_stake) <= 0), Q(r || Zi(t.platform_minimum_stake, t.platform_maximum_stake, o.minimum_stake, o.maximum_stake));
+		Q(Qi(t.platform_minimum_stake) && Qi(t.platform_maximum_stake) && Qi(o.minimum_stake) && Qi(o.maximum_stake) && Di(o.minimum_stake, o.maximum_stake) <= 0), Q(r || $i(t.platform_minimum_stake, t.platform_maximum_stake, o.minimum_stake, o.maximum_stake));
 	}
 	n && Q(e.effective_enabled === e.rules.some((e) => e.rule.enabled));
 }
-function $i(e, t) {
-	Qi(e, t);
+function ta(e, t) {
+	ea(e, t);
 	let n = e.game_type === "GAME_TYPE_UP_DOWN";
 	return e.rules.map((e) => {
-		let t = e.rule, r = n ? qi(t) : t;
+		let t = e.rule, r = n ? Yi(t) : t;
 		return {
 			owner_enabled: e.owner_enabled,
 			platform_enabled: e.platform_enabled,
@@ -4027,22 +4191,22 @@ function $i(e, t) {
 			platform_fixed_odds: e.platform_fixed_odds,
 			duration_seconds: t.duration_seconds,
 			observation_seconds: n ? String(BigInt(t.duration_seconds) - 30n) : t.duration_seconds,
-			stake_tier_id: n ? qi(t).stake_tier_id : "",
+			stake_tier_id: n ? Yi(t).stake_tier_id : "",
 			based_rule_epoch: e.rule_epoch,
 			minimum_stake: r.minimum_stake,
 			maximum_stake: r.maximum_stake,
 			platform_minimum: e.platform_minimum_stake,
 			platform_maximum: e.platform_maximum_stake,
-			enabled: t.enabled && (!n || qi(t).enabled),
+			enabled: t.enabled && (!n || Yi(t).enabled),
 			odds: n ? `${t.minimum_odds} ~ ${t.maximum_odds}` : t.fixed_odds,
 			custom: e.custom
 		};
 	});
 }
-function ea(e, t, n, r, i, a = e.enabled) {
-	let o = $i(e, t);
+function na(e, t, n, r, i, a = e.enabled) {
+	let o = ta(e, t);
 	Q(n.length === o.length && new Set(n.map((e) => e.duration_seconds)).size === o.length);
-	let s = Ji(t) && e.enabled && a === !1 && o.every((e) => {
+	let s = Xi(t) && e.enabled && a === !1 && o.every((e) => {
 		let t = n.find((t) => t.duration_seconds === e.duration_seconds);
 		return t && [
 			"stake_tier_id",
@@ -4055,13 +4219,13 @@ function ea(e, t, n, r, i, a = e.enabled) {
 			"fixed_odds"
 		].every((n) => t[n] === e[n]);
 	});
-	Q(X(r, 500) && X(i, 128), "INVALID_REASON");
+	Q(ki(r, 500) && ki(i, 128), "INVALID_REASON");
 	let c = [];
 	for (let t of o) {
 		let r = n.find((e) => e.duration_seconds === t.duration_seconds);
-		Q(r && r.stake_tier_id === t.stake_tier_id && r.based_rule_epoch === t.based_rule_epoch && (s || Zi(t.platform_minimum, t.platform_maximum, r.minimum_stake, r.maximum_stake)), "INVALID_LIMITS"), Q(typeof r.owner_enabled == "boolean" && (r.owner_enabled === t.owner_enabled || !r.owner_enabled || t.platform_enabled), "PLATFORM_DISABLED");
+		Q(r && r.stake_tier_id === t.stake_tier_id && r.based_rule_epoch === t.based_rule_epoch && (s || $i(t.platform_minimum, t.platform_maximum, r.minimum_stake, r.maximum_stake)), "INVALID_LIMITS"), Q(typeof r.owner_enabled == "boolean" && (r.owner_enabled === t.owner_enabled || !r.owner_enabled || t.platform_enabled), "PLATFORM_DISABLED");
 		let i = e.game_type === "GAME_TYPE_UP_DOWN", a = i ? ["target_payout_rate", "maximum_odds"] : ["fixed_odds"];
-		for (let e of a) Q(Xi(r[e]) && (s || Di(r[e], t[`platform_${e}`]) <= 0), "INVALID_ODDS");
+		for (let e of a) Q(Qi(r[e]) && (s || Di(r[e], t[`platform_${e}`]) <= 0), "INVALID_ODDS");
 		Q(i ? Di(r.target_payout_rate, "1") < 0 && Di(r.maximum_odds, "1") >= 0 : Di(r.fixed_odds, "1") > 0 && Di(r.fixed_odds, "2") < 0, "INVALID_ODDS");
 		let o = Di(r.minimum_stake, t.minimum_stake) !== 0 || Di(r.maximum_stake, t.maximum_stake) !== 0, l = a.some((e) => Di(r[e], t[e]) !== 0), u = r.owner_enabled !== t.owner_enabled;
 		if (o || l || u) {
@@ -4069,24 +4233,25 @@ function ea(e, t, n, r, i, a = e.enabled) {
 				duration_seconds: t.duration_seconds,
 				stake_tier_id: t.stake_tier_id,
 				based_rule_epoch: t.based_rule_epoch,
-				minimum_stake: Ni(r.minimum_stake),
-				maximum_stake: Ni(r.maximum_stake)
+				minimum_stake: Pi(r.minimum_stake),
+				maximum_stake: Pi(r.maximum_stake)
 			};
-			if (u && (e.enabled = r.owner_enabled), l) for (let t of a) e[t] = Ni(r[t]);
+			if (u && (e.enabled = r.owner_enabled), l) for (let t of a) e[t] = Pi(r[t]);
 			c.push(e);
 		}
 	}
-	return Q(typeof a == "boolean" && (a === e.enabled || !a || (Ji(t) ? e.can_enable : e.platform_enabled)), "PLATFORM_DISABLED"), Q(c.length > 0 || a !== e.enabled, "NO_CHANGES"), {
+	return Q(typeof a == "boolean" && (a === e.enabled || !a || (Xi(t) ? e.can_enable : e.platform_enabled)), "PLATFORM_DISABLED"), Q(c.length > 0 || a !== e.enabled, "NO_CHANGES"), t.kind === "SITE" && a && !e.enabled && Q(c.length === 0, "SEPARATE_ENABLE"), {
+		...t.kind === "SITE" && a && !e.enabled ? { based_on_public_version: e.public_version } : {},
 		...a === e.enabled ? {} : { enabled: a },
 		game_type: e.game_type === "GAME_TYPE_UP_DOWN" ? "UP_DOWN" : "HIGH_LOW",
 		symbol: e.symbol,
-		based_owner_revision: Ji(t) ? e.revision : e.owner_revision,
+		based_owner_revision: Xi(t) ? e.revision : e.owner_revision,
 		changes: c,
 		client_request_id: i,
 		reason: r
 	};
 }
-var ta = class {
+var ra = class {
 	generation = 0;
 	begin(e, t, n) {
 		return {
@@ -4105,30 +4270,30 @@ var ta = class {
 	current(e, t, n, r) {
 		return e.generation === this.generation && e.operator === t.operator_id && e.owner === t.agent_id && e.site === t.config_site_id && e.kind === t.kind && e.game === n && e.symbol === r;
 	}
-}, na = [
+}, ia = [
 	"35",
 	"40",
 	"45",
 	"60",
 	"90"
-], ra = "prediction.agent.pending.v1", ia = (e) => !!e && typeof e == "object" && !Array.isArray(e);
-function aa(e, t = "INVALID_CONFIGURATION") {
+], aa = "prediction.agent.pending.v1", oa = (e) => !!e && typeof e == "object" && !Array.isArray(e);
+function sa(e, t = "INVALID_CONFIGURATION") {
 	if (!e) throw Error(t);
 }
-function oa(e) {
-	aa(ia(e)), aa(e.scope === "CONFIG_SCOPE_AGENT" && Ti(e.agent_id) === e.agent_id), aa(Y(e.template_version) && Y(e.agent_version) && X(e.effective_version, 256) && Y(e.updated_at_ms)), aa(Array.isArray(e.rules) && e.rules.length === 5);
+function ca(e) {
+	sa(oa(e)), sa(e.scope === "CONFIG_SCOPE_AGENT" && Ti(e.agent_id) === e.agent_id), sa(Z(e.template_version) && Z(e.agent_version) && ki(e.effective_version, 256) && Z(e.updated_at_ms)), sa(Array.isArray(e.rules) && e.rules.length === 5);
 	let t = e.rules, n = t[0]?.symbol;
-	aa(X(n, 64, !0)), aa(new Set(t.map((e) => e.duration_seconds)).size === 5);
-	for (let e of t) aa(ia(e) && e.game_type === "GAME_TYPE_UP_DOWN" && e.symbol === n && na.includes(e.duration_seconds) && typeof e.enabled == "boolean"), aa(Array.isArray(e.stake_tiers) && e.stake_tiers.every((e) => ia(e) && X(e.stake_tier_id) && typeof e.enabled == "boolean" && typeof e.retired == "boolean"));
-}
-function sa(e) {
-	return oa(e), e.rules[0].symbol;
-}
-function ca(e, t) {
-	aa(Object.keys(e).length === t.length && Object.keys(e).every((e) => t.includes(e)), "PENDING_CORRUPT");
+	sa(ki(n, 64, !0)), sa(new Set(t.map((e) => e.duration_seconds)).size === 5);
+	for (let e of t) sa(oa(e) && e.game_type === "GAME_TYPE_UP_DOWN" && e.symbol === n && ia.includes(e.duration_seconds) && typeof e.enabled == "boolean"), sa(Array.isArray(e.stake_tiers) && e.stake_tiers.every((e) => oa(e) && ki(e.stake_tier_id) && typeof e.enabled == "boolean" && typeof e.retired == "boolean"));
 }
 function la(e) {
-	aa(ia(e), "PENDING_CORRUPT"), ca(e, [
+	return ca(e), e.rules[0].symbol;
+}
+function ua(e, t) {
+	sa(Object.keys(e).length === t.length && Object.keys(e).every((e) => t.includes(e)), "PENDING_CORRUPT");
+}
+function da(e) {
+	sa(oa(e), "PENDING_CORRUPT"), ua(e, [
 		"client_request_id",
 		"reason",
 		"based_on_template_version",
@@ -4136,61 +4301,61 @@ function la(e) {
 		"game_type",
 		"symbol",
 		"agent_override"
-	]), aa(X(e.client_request_id, 128) && X(e.reason, 500) && Y(e.based_on_template_version) && Y(e.based_on_agent_version) && e.game_type === "UP_DOWN" && X(e.symbol, 64, !0), "PENDING_CORRUPT");
+	]), sa(ki(e.client_request_id, 128) && ki(e.reason, 500) && Z(e.based_on_template_version) && Z(e.based_on_agent_version) && e.game_type === "UP_DOWN" && ki(e.symbol, 64, !0), "PENDING_CORRUPT");
 	let t = e.agent_override;
-	aa(ia(t), "PENDING_CORRUPT"), ca(t, ["enabled", "overrides"]), aa(typeof t.enabled == "boolean" && Array.isArray(t.overrides) && t.overrides.length === 5, "PENDING_CORRUPT");
+	sa(oa(t), "PENDING_CORRUPT"), ua(t, ["enabled", "overrides"]), sa(typeof t.enabled == "boolean" && Array.isArray(t.overrides) && t.overrides.length === 5, "PENDING_CORRUPT");
 	let n = t.overrides;
-	aa(new Set(n.map((e) => e.duration_seconds)).size === 5, "PENDING_CORRUPT");
+	sa(new Set(n.map((e) => e.duration_seconds)).size === 5, "PENDING_CORRUPT");
 	for (let e of n) {
-		aa(ia(e), "PENDING_CORRUPT"), ca(e, [
+		sa(oa(e), "PENDING_CORRUPT"), ua(e, [
 			"duration_seconds",
 			"enabled",
 			"stake_tiers"
-		]), aa(na.includes(e.duration_seconds) && typeof e.enabled == "boolean" && Array.isArray(e.stake_tiers) && e.stake_tiers.length === 1, "PENDING_CORRUPT");
+		]), sa(ia.includes(e.duration_seconds) && typeof e.enabled == "boolean" && Array.isArray(e.stake_tiers) && e.stake_tiers.length === 1, "PENDING_CORRUPT");
 		let t = e.stake_tiers[0];
-		aa(ia(t), "PENDING_CORRUPT"), ca(t, [
+		sa(oa(t), "PENDING_CORRUPT"), ua(t, [
 			"stake_tier_id",
 			"enabled",
 			"maximum_stake"
-		]), aa(X(t.stake_tier_id) && t.enabled === e.enabled && Ei(t.maximum_stake) && Di(t.maximum_stake, "1") >= 0, "PENDING_CORRUPT");
+		]), sa(ki(t.stake_tier_id) && t.enabled === e.enabled && Ei(t.maximum_stake) && Di(t.maximum_stake, "1") >= 0, "PENDING_CORRUPT");
 	}
-	aa(t.enabled === n.some((e) => e.enabled), "PENDING_CORRUPT");
+	sa(t.enabled === n.some((e) => e.enabled), "PENDING_CORRUPT");
 }
-function ua(e) {
+function fa(e) {
 	if (e && typeof e == "object") {
 		Object.freeze(e);
-		for (let t of Object.values(e)) ua(t);
+		for (let t of Object.values(e)) fa(t);
 	}
 	return e;
 }
-function da(e) {
-	let t = e.getItem(ra);
+function pa(e) {
+	let t = e.getItem(aa);
 	if (t === null) return null;
-	aa(t.length <= 32768, "PENDING_CORRUPT");
+	sa(t.length <= 32768, "PENDING_CORRUPT");
 	let n;
 	try {
 		n = JSON.parse(t);
 	} catch {
 		throw Error("PENDING_CORRUPT");
 	}
-	return aa(ia(n), "PENDING_CORRUPT"), ca(n, [
+	return sa(oa(n), "PENDING_CORRUPT"), ua(n, [
 		"schema",
 		"operator_id",
 		"agent_id",
 		"body",
 		"attempted",
 		"attempt"
-	]), aa(n.schema === 1 && Ti(n.operator_id) === n.operator_id && Ti(n.agent_id) === n.agent_id && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), la(n.body), ua(n);
+	]), sa(n.schema === 1 && Ti(n.operator_id) === n.operator_id && Ti(n.agent_id) === n.agent_id && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), da(n.body), fa(n);
 }
-var fa = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && JSON.stringify(e.body) === JSON.stringify(t.body);
-function pa(e, t) {
-	fa(da(e), t) && e.removeItem(ra);
+var ma = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && JSON.stringify(e.body) === JSON.stringify(t.body);
+function ha(e, t) {
+	ma(pa(e), t) && e.removeItem(aa);
 }
-function ma(e, t, n, r) {
+function ga(e, t, n, r) {
 	try {
-		aa(ia(e) && ia(e.receipt)), oa(e.configuration), aa(e.configuration.agent_id === r && e.configuration.rules[0].symbol === t.symbol);
+		sa(oa(e) && oa(e.receipt)), ca(e.configuration), sa(e.configuration.agent_id === r && e.configuration.rules[0].symbol === t.symbol);
 		let i = e.receipt;
-		return aa([
+		return sa([
 			"operation_id",
 			"operator_id",
 			"client_request_id",
@@ -4207,42 +4372,42 @@ function ma(e, t, n, r) {
 			"completed_at_ms",
 			"source_service",
 			"trace_id"
-		].every((e) => typeof i[e] == "string")), aa(X(i.operation_id, 256) && X(i.trace_id, 256) && Y(i.created_at_ms) && Y(i.completed_at_ms)), aa(i.client_request_id === t.client_request_id && i.operator_id === n && i.source_service === "agent_admin" && i.result === "OPERATION_RESULT_SUCCEEDED" && i.reason === t.reason), !0;
+		].every((e) => typeof i[e] == "string")), sa(ki(i.operation_id, 256) && ki(i.trace_id, 256) && Z(i.created_at_ms) && Z(i.completed_at_ms)), sa(i.client_request_id === t.client_request_id && i.operator_id === n && i.source_service === "agent_admin" && i.result === "OPERATION_RESULT_SUCCEEDED" && i.reason === t.reason), !0;
 	} catch {
 		return !1;
 	}
 }
-function ha(e) {
-	return ia(e) ? [
+function _a(e) {
+	return oa(e) ? [
 		"INVALID_ARGUMENT",
 		"UNAUTHENTICATED",
 		"PERMISSION_DENIED",
 		"NOT_FOUND",
 		"CONFLICT"
-	].includes(String(e.error_code)) ? !0 : ia(e.response) && [
+	].includes(String(e.error_code)) ? !0 : oa(e.response) && [
 		401,
 		403,
 		422
 	].includes(Number(e.response.status)) : !1;
 }
-var ga = /* @__PURE__ */ new WeakMap();
-function _a(e, t, n) {
-	let r = ga.get(e);
-	if (r) return aa(fa(r.pending, t), "PENDING_EXISTS"), r.promise;
-	let i = da(e);
-	aa(fa(i, t), "PENDING_CHANGED");
+var va = /* @__PURE__ */ new WeakMap();
+function ya(e, t, n) {
+	let r = va.get(e);
+	if (r) return sa(ma(r.pending, t), "PENDING_EXISTS"), r.promise;
+	let i = pa(e);
+	sa(ma(i, t), "PENDING_CHANGED");
 	let a = i.attempted, o = i.attempt + 1;
-	aa(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(ra, JSON.stringify({
+	sa(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(aa, JSON.stringify({
 		...i,
 		attempted: !0,
 		attempt: o
 	}));
-	let s = da(e);
-	aa(s?.attempt === o && fa(s, t), "PERSISTENCE_UNAVAILABLE");
+	let s = pa(e);
+	sa(s?.attempt === o && ma(s, t), "PERSISTENCE_UNAVAILABLE");
 	let c = Promise.resolve().then(async () => {
 		try {
 			let r = await n(t.body);
-			return fa(da(e), t) ? ma(r, t.body, t.operator_id, t.agent_id) ? (pa(e, t), {
+			return ma(pa(e), t) ? ga(r, t.body, t.operator_id, t.agent_id) ? (ha(e, t), {
 				status: "success",
 				value: r
 			}) : {
@@ -4253,13 +4418,13 @@ function _a(e, t, n) {
 				error: null
 			};
 		} catch (n) {
-			let r = da(e);
-			if (!fa(r, t)) return {
+			let r = pa(e);
+			if (!ma(r, t)) return {
 				status: "superseded",
 				error: n
 			};
-			let i = ia(n) && n.client_request_id !== void 0 && n.client_request_id !== t.body.client_request_id;
-			return !a && r.attempt === o && !i && ha(n) ? (pa(e, t), {
+			let i = oa(n) && n.client_request_id !== void 0 && n.client_request_id !== t.body.client_request_id;
+			return !a && r.attempt === o && !i && _a(n) ? (ha(e, t), {
 				status: "rejected",
 				error: n
 			}) : {
@@ -4268,32 +4433,32 @@ function _a(e, t, n) {
 			};
 		}
 	}).finally(() => {
-		ga.get(e)?.promise === c && ga.delete(e);
+		va.get(e)?.promise === c && va.delete(e);
 	});
-	return ga.set(e, {
+	return va.set(e, {
 		pending: t,
 		promise: c
 	}), c;
 }
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/owner-mutation.ts
-function va(e) {
-	Q(Yi(e), "IDENTITY_UNCONFIRMED");
+function ba(e) {
+	Q(Zi(e), "IDENTITY_UNCONFIRMED");
 }
-var ya = "prediction.owner.pending.v1";
-function ba(e, t, n = []) {
+var xa = "prediction.owner.pending.v1";
+function Sa(e, t, n = []) {
 	Q(t.every((t) => Object.hasOwn(e, t)) && Object.keys(e).every((e) => t.includes(e) || n.includes(e)), "PENDING_CORRUPT");
 }
-function xa(e) {
-	Q(Z(e), "PENDING_CORRUPT"), ba(e, [
+function Ca(e) {
+	Q(Li(e), "PENDING_CORRUPT"), Sa(e, [
 		"game_type",
 		"symbol",
 		"based_owner_revision",
 		"changes",
 		"client_request_id",
 		"reason"
-	], ["enabled"]), Q(e.enabled === void 0 || typeof e.enabled == "boolean", "PENDING_CORRUPT"), Q(["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) && X(e.symbol, 64, !0) && X(e.client_request_id, 128) && X(e.reason, 500) && Y(e.based_owner_revision), "PENDING_CORRUPT"), Q(Array.isArray(e.changes) && (e.changes.length > 0 || e.enabled !== void 0) && e.changes.length <= 100 && new Set(e.changes.map((e) => e.duration_seconds)).size === e.changes.length, "PENDING_CORRUPT");
-	for (let t of e.changes) Q(Z(t)), ba(t, [
+	], ["enabled", "based_on_public_version"]), Q(e.based_on_public_version === void 0 || e.enabled === !0 && Z(e.based_on_public_version, !0), "PENDING_CORRUPT"), Q(e.enabled === void 0 || typeof e.enabled == "boolean", "PENDING_CORRUPT"), Q(["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) && ki(e.symbol, 64, !0) && ki(e.client_request_id, 128) && ki(e.reason, 500) && Z(e.based_owner_revision), "PENDING_CORRUPT"), Q(Array.isArray(e.changes) && (e.changes.length > 0 || e.enabled !== void 0) && e.changes.length <= 100 && new Set(e.changes.map((e) => e.duration_seconds)).size === e.changes.length, "PENDING_CORRUPT");
+	for (let t of e.changes) Q(Li(t)), Sa(t, [
 		"duration_seconds",
 		"stake_tier_id",
 		"based_rule_epoch",
@@ -4304,10 +4469,10 @@ function xa(e) {
 		"target_payout_rate",
 		"maximum_odds",
 		"fixed_odds"
-	]), Q(t.enabled === void 0 || typeof t.enabled == "boolean", "PENDING_CORRUPT"), e.game_type === "UP_DOWN" ? (Q(t.fixed_odds === void 0, "PENDING_CORRUPT"), (t.target_payout_rate !== void 0 || t.maximum_odds !== void 0) && Q(Xi(t.target_payout_rate) && Di(t.target_payout_rate, "1") <= 0 && Xi(t.maximum_odds) && Di(t.maximum_odds, "1") >= 0, "PENDING_CORRUPT")) : (Q(t.target_payout_rate === void 0 && t.maximum_odds === void 0, "PENDING_CORRUPT"), t.fixed_odds !== void 0 && Q(Xi(t.fixed_odds) && Di(t.fixed_odds, "1") > 0, "PENDING_CORRUPT")), Q(Y(t.duration_seconds, !0) && Y(t.based_rule_epoch, !0) && (e.game_type === "UP_DOWN" ? Fi.includes(t.duration_seconds) && X(t.stake_tier_id) : t.stake_tier_id === ""), "PENDING_CORRUPT"), Q(Xi(t.minimum_stake) && Xi(t.maximum_stake) && Di(t.minimum_stake, t.maximum_stake) <= 0, "PENDING_CORRUPT");
+	]), Q(t.enabled === void 0 || typeof t.enabled == "boolean", "PENDING_CORRUPT"), e.game_type === "UP_DOWN" ? (Q(t.fixed_odds === void 0, "PENDING_CORRUPT"), (t.target_payout_rate !== void 0 || t.maximum_odds !== void 0) && Q(Qi(t.target_payout_rate) && Di(t.target_payout_rate, "1") <= 0 && Qi(t.maximum_odds) && Di(t.maximum_odds, "1") >= 0, "PENDING_CORRUPT")) : (Q(t.target_payout_rate === void 0 && t.maximum_odds === void 0, "PENDING_CORRUPT"), t.fixed_odds !== void 0 && Q(Qi(t.fixed_odds) && Di(t.fixed_odds, "1") > 0, "PENDING_CORRUPT")), Q(Z(t.duration_seconds, !0) && Z(t.based_rule_epoch, !0) && (e.game_type === "UP_DOWN" ? Ii.includes(t.duration_seconds) && ki(t.stake_tier_id) : t.stake_tier_id === ""), "PENDING_CORRUPT"), Q(Qi(t.minimum_stake) && Qi(t.maximum_stake) && Di(t.minimum_stake, t.maximum_stake) <= 0, "PENDING_CORRUPT");
 }
-function Sa(e) {
-	let t = e.getItem(ya);
+function wa(e) {
+	let t = e.getItem(xa);
 	if (t === null) return null;
 	Q(t.length <= 32768, "PENDING_CORRUPT");
 	let n;
@@ -4316,23 +4481,23 @@ function Sa(e) {
 	} catch {
 		throw Error("PENDING_CORRUPT");
 	}
-	return Q(Z(n)), ba(n, [
+	return Q(Li(n)), Sa(n, [
 		"schema",
 		"operator_id",
 		"agent_id",
 		"body",
 		"attempted",
 		"attempt"
-	], ["config_site_id", "kind"]), va(n), Q(n.schema === (Ji(n) ? "scoped-owner-v1" : "owner-v1") && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), xa(n.body), Ii(n);
+	], ["config_site_id", "kind"]), ba(n), Q(n.schema === (Xi(n) ? "scoped-owner-v1" : "owner-v1") && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), Ca(n.body), Ri(n);
 }
-var Ca = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && e.config_site_id === t.config_site_id && e.kind === t.kind && e.schema === t.schema && JSON.stringify(e.body) === JSON.stringify(t.body);
-function wa(e, t, n) {
-	va(t), xa(n), Q(Sa(e) === null, "PENDING_EXISTS");
+var Ta = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && e.config_site_id === t.config_site_id && e.kind === t.kind && e.schema === t.schema && JSON.stringify(e.body) === JSON.stringify(t.body);
+function Ea(e, t, n) {
+	ba(t), Ca(n), Q(wa(e) === null, "PENDING_EXISTS");
 	let r = {
-		schema: Ji(t) ? "scoped-owner-v1" : "owner-v1",
+		schema: Xi(t) ? "scoped-owner-v1" : "owner-v1",
 		operator_id: t.operator_id,
 		agent_id: t.agent_id,
-		...Ji(t) ? {
+		...Xi(t) ? {
 			config_site_id: t.config_site_id,
 			kind: t.kind
 		} : {},
@@ -4340,15 +4505,15 @@ function wa(e, t, n) {
 		attempted: !1,
 		attempt: 0
 	};
-	return e.setItem(ya, JSON.stringify(r)), Q(Ca(Sa(e), r), "PERSISTENCE_UNAVAILABLE"), Ii(r);
+	return e.setItem(xa, JSON.stringify(r)), Q(Ta(wa(e), r), "PERSISTENCE_UNAVAILABLE"), Ri(r);
 }
-function Ta(e, t) {
-	Ca(Sa(e), t) && e.removeItem(ya);
+function Da(e, t) {
+	Ta(wa(e), t) && e.removeItem(xa);
 }
-function Ea(e, t) {
+function Oa(e, t) {
 	try {
-		if (Ji(t)) return Da(e, t);
-		Q(Z(e) && Z(e.receipt)), Qi(e.configuration, t);
+		if (Xi(t)) return ka(e, t);
+		Q(Li(e) && Li(e.receipt)), ea(e.configuration, t);
 		let n = t.body, r = e.configuration, i = e.receipt;
 		Q(r.symbol === n.symbol && r.game_type === "GAME_TYPE_" + n.game_type && BigInt(r.owner_revision) === BigInt(n.based_owner_revision) + 1n), n.enabled !== void 0 && Q(r.enabled === n.enabled);
 		for (let e of n.changes) {
@@ -4359,7 +4524,7 @@ function Ea(e, t) {
 				"maximum_odds",
 				"fixed_odds"
 			]) e[n] !== void 0 && Q(Di(t.rule[n], e[n]) === 0);
-			let i = n.game_type === "UP_DOWN" ? qi(t.rule) : t.rule;
+			let i = n.game_type === "UP_DOWN" ? Yi(t.rule) : t.rule;
 			Q(("stake_tier_id" in i ? i.stake_tier_id : "") === e.stake_tier_id && Di(i.minimum_stake, e.minimum_stake) === 0 && Di(i.maximum_stake, e.maximum_stake) === 0);
 		}
 		return Q([
@@ -4379,24 +4544,24 @@ function Ea(e, t) {
 			"completed_at_ms",
 			"source_service",
 			"trace_id"
-		].every((e) => typeof i[e] == "string")), Q(X(i.operation_id, 256) && X(i.trace_id, 256) && X(i.target_id, 256) && Y(i.created_at_ms) && Y(i.completed_at_ms)), Q(i.operator_id === t.operator_id && i.client_request_id === n.client_request_id && i.reason === n.reason && i.source_service === "agent_admin"), Q(i.result === "OPERATION_RESULT_SUCCEEDED" && i.error_code === "" && i.action === "ADMIN_ACTION_OWNER_CONFIG_PUBLISH" && i.capability === "prediction.owner.config.publish" && i.target_type === "owner_config"), !0;
+		].every((e) => typeof i[e] == "string")), Q(ki(i.operation_id, 256) && ki(i.trace_id, 256) && ki(i.target_id, 256) && Z(i.created_at_ms) && Z(i.completed_at_ms)), Q(i.operator_id === t.operator_id && i.client_request_id === n.client_request_id && i.reason === n.reason && i.source_service === "agent_admin"), Q(i.result === "OPERATION_RESULT_SUCCEEDED" && i.error_code === "" && i.action === "ADMIN_ACTION_OWNER_CONFIG_PUBLISH" && i.capability === "prediction.owner.config.publish" && i.target_type === "owner_config"), !0;
 	} catch {
 		return !1;
 	}
 }
-function Da(e, t) {
-	Q(Z(e) && Z(e.stored) && Z(e.receipt));
+function ka(e, t) {
+	Q(Li(e) && Li(e.stored) && Li(e.receipt));
 	let n = e.stored, r = e.receipt, i = t.body;
-	Q(Z(n.key) && n.key.configSiteId === t.config_site_id && n.key.ownerAgentId === t.agent_id && n.key.gameType === i.game_type && n.key.symbol === i.symbol), Q(Y(n.revision, !0) && BigInt(n.revision) === BigInt(i.based_owner_revision) + 1n && Y(n.basedPublicVersion, !0) && Y(n.basedSiteRevision)), Q(n.basedSiteRevision === "0" == (t.kind === "SITE" || t.config_site_id === "0")), Q(typeof n.disabled == "boolean" && (i.enabled === void 0 || n.disabled === !i.enabled)), Q(Array.isArray(n.overrides) && n.overrides.length > 0 && n.overrides.length <= 100);
+	Q(Li(n.key) && n.key.configSiteId === t.config_site_id && n.key.ownerAgentId === t.agent_id && n.key.gameType === i.game_type && n.key.symbol === i.symbol), Q(Z(n.revision, !0) && BigInt(n.revision) === BigInt(i.based_owner_revision) + 1n && Z(n.basedPublicVersion, !0) && Z(n.basedSiteRevision)), i.based_on_public_version !== void 0 && Q(n.basedPublicVersion === i.based_on_public_version), Q(n.basedSiteRevision === "0" == (t.kind === "SITE" || t.config_site_id === "0")), Q(typeof n.disabled == "boolean" && (i.enabled === void 0 || n.disabled === !i.enabled)), Q(Array.isArray(n.overrides) && n.overrides.length > 0 && n.overrides.length <= 100);
 	let a = /* @__PURE__ */ new Map();
 	for (let e of n.overrides) {
-		Q(Z(e) && Z(e.key) && e.key.gameType === i.game_type && e.key.symbol === i.symbol && Number.isSafeInteger(e.key.durationSeconds) && Number(e.key.durationSeconds) > 0);
+		Q(Li(e) && Li(e.key) && e.key.gameType === i.game_type && e.key.symbol === i.symbol && Number.isSafeInteger(e.key.durationSeconds) && Number(e.key.durationSeconds) > 0);
 		let t = String(e.key.durationSeconds);
-		Q(!a.has(t) && typeof e.enabled == "boolean" && Y(e.basedRuleEpoch, !0) && Z(e.bounds) && Z(e.odds)), Q(Xi(e.bounds.minimum) && Xi(e.bounds.maximum) && Di(e.bounds.minimum, e.bounds.maximum) <= 0), i.game_type === "UP_DOWN" ? Q(Fi.includes(t) && X(e.stakeTierId) && Xi(e.odds.targetPayoutRate) && Di(e.odds.targetPayoutRate, "1") <= 0 && Xi(e.odds.maximumOdds) && Di(e.odds.maximumOdds, "1") >= 0 && e.odds.fixedOdds === void 0) : Q(e.stakeTierId === "" && Xi(e.odds.fixedOdds) && Di(e.odds.fixedOdds, "1") > 0 && e.odds.targetPayoutRate === void 0 && e.odds.maximumOdds === void 0), a.set(t, e);
+		Q(!a.has(t) && typeof e.enabled == "boolean" && Z(e.basedRuleEpoch, !0) && Li(e.bounds) && Li(e.odds)), Q(Qi(e.bounds.minimum) && Qi(e.bounds.maximum) && Di(e.bounds.minimum, e.bounds.maximum) <= 0), i.game_type === "UP_DOWN" ? Q(Ii.includes(t) && ki(e.stakeTierId) && Qi(e.odds.targetPayoutRate) && Di(e.odds.targetPayoutRate, "1") <= 0 && Qi(e.odds.maximumOdds) && Di(e.odds.maximumOdds, "1") >= 0 && e.odds.fixedOdds === void 0) : Q(e.stakeTierId === "" && Qi(e.odds.fixedOdds) && Di(e.odds.fixedOdds, "1") > 0 && e.odds.targetPayoutRate === void 0 && e.odds.maximumOdds === void 0), a.set(t, e);
 	}
 	for (let e of i.changes) {
 		let t = a.get(e.duration_seconds);
-		Q(t && Z(t.bounds) && Z(t.odds) && t.stakeTierId === e.stake_tier_id && t.basedRuleEpoch === e.based_rule_epoch && (e.enabled === void 0 || t.enabled === e.enabled)), Q(Di(String(t.bounds.minimum), e.minimum_stake) === 0 && Di(String(t.bounds.maximum), e.maximum_stake) === 0);
+		Q(t && Li(t.bounds) && Li(t.odds) && t.stakeTierId === e.stake_tier_id && t.basedRuleEpoch === e.based_rule_epoch && (e.enabled === void 0 || t.enabled === e.enabled)), Q(Di(String(t.bounds.minimum), e.minimum_stake) === 0 && Di(String(t.bounds.maximum), e.maximum_stake) === 0);
 		for (let [n, r] of [
 			["target_payout_rate", "targetPayoutRate"],
 			["maximum_odds", "maximumOdds"],
@@ -4420,28 +4585,28 @@ function Da(e, t) {
 		"completed_at_ms",
 		"source_service",
 		"trace_id"
-	].every((e) => typeof r[e] == "string")), Q(X(r.operation_id, 256) && X(r.trace_id, 256) && typeof r.target_id == "string" && /^[a-f0-9]{64}$/.test(r.target_id) && Y(r.created_at_ms) && Y(r.completed_at_ms)), Q(r.operator_id === t.operator_id && r.client_request_id === i.client_request_id && r.reason === i.reason && r.source_service === "agent_admin"), Q(r.result === "OPERATION_RESULT_SUCCEEDED" && r.error_code === "" && r.action === "ADMIN_ACTION_SCOPED_CONFIG_PUBLISH" && r.target_type === "scoped_owner_config" && r.capability === "prediction." + (t.kind === "SITE" ? "site" : "owner") + ".config.publish");
-	let o = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(r.after_json), (e) => e.charCodeAt(0)))), s = (e) => Array.isArray(e) ? e.map(s) : Z(e) ? Object.fromEntries(Object.keys(e).sort().map((t) => [t, s(e[t])])) : e;
+	].every((e) => typeof r[e] == "string")), Q(ki(r.operation_id, 256) && ki(r.trace_id, 256) && typeof r.target_id == "string" && /^[a-f0-9]{64}$/.test(r.target_id) && Z(r.created_at_ms) && Z(r.completed_at_ms)), Q(r.operator_id === t.operator_id && r.client_request_id === i.client_request_id && r.reason === i.reason && r.source_service === "agent_admin"), Q(r.result === "OPERATION_RESULT_SUCCEEDED" && r.error_code === "" && r.action === "ADMIN_ACTION_SCOPED_CONFIG_PUBLISH" && r.target_type === "scoped_owner_config" && r.capability === "prediction." + (t.kind === "SITE" ? "site" : "owner") + ".config.publish");
+	let o = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(r.after_json), (e) => e.charCodeAt(0)))), s = (e) => Array.isArray(e) ? e.map(s) : Li(e) ? Object.fromEntries(Object.keys(e).sort().map((t) => [t, s(e[t])])) : e;
 	return Q(JSON.stringify(s(o)) === JSON.stringify(s(n))), !0;
 }
-var Oa = /* @__PURE__ */ new WeakMap();
-function ka(e, t, n) {
-	let r = Oa.get(e);
-	if (r) return Q(Ca(r.pending, t), "PENDING_EXISTS"), r.promise;
-	let i = Sa(e);
-	Q(Ca(i, t), "PENDING_CHANGED");
+var Aa = /* @__PURE__ */ new WeakMap();
+function ja(e, t, n) {
+	let r = Aa.get(e);
+	if (r) return Q(Ta(r.pending, t), "PENDING_EXISTS"), r.promise;
+	let i = wa(e);
+	Q(Ta(i, t), "PENDING_CHANGED");
 	let a = i.attempted, o = i.attempt + 1;
-	Q(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(ya, JSON.stringify({
+	Q(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(xa, JSON.stringify({
 		...i,
 		attempted: !0,
 		attempt: o
 	}));
-	let s = Sa(e);
-	Q(s?.attempt === o && Ca(s, t), "PERSISTENCE_UNAVAILABLE");
+	let s = wa(e);
+	Q(s?.attempt === o && Ta(s, t), "PERSISTENCE_UNAVAILABLE");
 	let c = Promise.resolve().then(async () => {
 		try {
 			let r = await n(t.body);
-			return Ca(Sa(e), t) ? Ea(r, t) ? (Ta(e, t), {
+			return Ta(wa(e), t) ? Oa(r, t) ? (Da(e, t), {
 				status: "success",
 				value: r
 			}) : {
@@ -4452,13 +4617,13 @@ function ka(e, t, n) {
 				error: null
 			};
 		} catch (n) {
-			let r = Sa(e);
-			if (!Ca(r, t)) return {
+			let r = wa(e);
+			if (!Ta(r, t)) return {
 				status: "superseded",
 				error: n
 			};
-			let i = Z(n) && n.client_request_id !== void 0 && n.client_request_id !== t.body.client_request_id;
-			return !a && r.attempt === o && !i && ha(n) ? (Ta(e, t), {
+			let i = $e(n, t.body.client_request_id), s = !a && i !== "unverified" && _a(n);
+			return r.attempt === o && (i === "rejected" || s) ? (Da(e, t), {
 				status: "rejected",
 				error: n
 			}) : {
@@ -4467,15 +4632,15 @@ function ka(e, t, n) {
 			};
 		}
 	}).finally(() => {
-		Oa.get(e)?.promise === c && Oa.delete(e);
+		Aa.get(e)?.promise === c && Aa.delete(e);
 	});
-	return Oa.set(e, {
+	return Aa.set(e, {
 		pending: t,
 		promise: c
 	}), c;
 }
-async function Aa(e, t, n, r) {
-	let i = await ka(e, t, n);
+async function Ma(e, t, n, r) {
+	let i = await ja(e, t, n);
 	if (i.status !== "success") return i;
 	try {
 		return {
@@ -4493,7 +4658,7 @@ async function Aa(e, t, n, r) {
 }
 //#endregion
 //#region src/prediction-config/agent/views/grid/config/model.ts
-var ja = "grid.config.pending.v1", Ma = /^(0|[1-9]\d*)(?:\.(\d+))?$/, Na = /^[1-9]\d*$/, Pa = /^[A-Z0-9]{2,32}$/, Fa = [
+var Na = "grid.config.pending.v1", Pa = /^(0|[1-9]\d*)(?:\.(\d+))?$/, Fa = /^[1-9]\d*$/, Ia = /^[A-Z0-9]{2,32}$/, La = [
 	"site_id",
 	"symbol",
 	"based_on_layout_version",
@@ -4501,7 +4666,7 @@ var ja = "grid.config.pending.v1", Ma = /^(0|[1-9]\d*)(?:\.(\d+))?$/, Na = /^[1-
 	"client_request_id",
 	"reason",
 	"changes"
-], Ia = [
+], Ra = [
 	"config_id",
 	"requested_agent_id",
 	"agent_id",
@@ -4514,15 +4679,15 @@ var ja = "grid.config.pending.v1", Ma = /^(0|[1-9]\d*)(?:\.(\d+))?$/, Na = /^[1-
 	"default_target_rtp",
 	"default_min_order_amount",
 	"default_max_order_amount"
-], La = [
+], za = [
 	"based_on_config_id",
 	"based_on_default_version",
 	"based_on_default_resolution_epoch"
-], Ra = [
+], Ba = [
 	"price_band_width",
 	"column_duration_seconds",
 	"price_decimals"
-], za = [
+], Va = [
 	"enabled",
 	"target_rtp",
 	"min_multiplier",
@@ -4530,76 +4695,76 @@ var ja = "grid.config.pending.v1", Ma = /^(0|[1-9]\d*)(?:\.(\d+))?$/, Na = /^[1-
 	"min_order_amount",
 	"max_order_amount"
 ];
-function Ba(e) {
+function Ha(e) {
 	return !!e && typeof e == "object" && !Array.isArray(e);
 }
 function $(e, t = "INVALID_GRID_CONFIGURATION") {
 	if (!e) throw Error(t);
 }
-function Va(e, t) {
+function Ua(e, t) {
 	$(Object.keys(e).length === t.length && Object.keys(e).every((e) => t.includes(e)), "PENDING_CORRUPT");
 }
-function Ha(e, t) {
-	$(typeof e == "string" && e.length <= 128 && Ma.test(e), "INVALID_DECIMAL");
+function Wa(e, t) {
+	$(typeof e == "string" && e.length <= 128 && Pa.test(e), "INVALID_DECIMAL");
 	let [n, r = ""] = e.split("."), i = n.replace(/^0+(?=\d)/, ""), a = r.replace(/0+$/, "");
 	return $(t === void 0 || a.length <= t, "INVALID_DECIMAL"), a ? i + "." + a : i;
 }
-function Ua(e) {
-	let [t, n = ""] = Ha(e).split(".");
+function Ga(e) {
+	let [t, n = ""] = Wa(e).split(".");
 	return {
 		whole: t,
 		fraction: n
 	};
 }
-function Wa(e, t) {
-	let n = Ua(e), r = Ua(t);
+function Ka(e, t) {
+	let n = Ga(e), r = Ga(t);
 	if (n.whole.length !== r.whole.length) return n.whole.length > r.whole.length ? 1 : -1;
 	if (n.whole !== r.whole) return n.whole > r.whole ? 1 : -1;
 	let i = Math.max(n.fraction.length, r.fraction.length), a = n.fraction.padEnd(i, "0"), o = r.fraction.padEnd(i, "0");
 	return a === o ? 0 : a > o ? 1 : -1;
 }
-function Ga(e, t) {
-	let { whole: n, fraction: r } = Ua(e), i = n + r, a = n.length + t, o;
+function qa(e, t) {
+	let { whole: n, fraction: r } = Ga(e), i = n + r, a = n.length + t, o;
 	o = a <= 0 ? "0." + "0".repeat(-a) + i : a >= i.length ? i + "0".repeat(a - i.length) : i.slice(0, a) + "." + i.slice(a);
 	let [s, c = ""] = o.split("."), l = s.replace(/^0+(?=\d)/, "") || "0", u = c.replace(/0+$/, "");
 	return u ? l + "." + u : l;
 }
-function Ka(e) {
-	let t = Ha(e);
-	return $(Wa(t, "0") > 0 && Wa(t, "1") <= 0, "INVALID_RTP"), Ga(t, 2);
+function Ja(e) {
+	let t = Wa(e);
+	return $(Ka(t, "0") > 0 && Ka(t, "1") <= 0, "INVALID_RTP"), qa(t, 2);
 }
-function qa(e) {
-	let t = Ha(e);
-	return $(Wa(t, "0") > 0 && Wa(t, "100") < 0, "INVALID_RTP"), Ga(t, -2);
+function Ya(e) {
+	let t = Wa(e);
+	return $(Ka(t, "0") > 0 && Ka(t, "100") < 0, "INVALID_RTP"), qa(t, -2);
 }
-function Ja(e = globalThis.crypto) {
+function Xa(e = globalThis.crypto) {
 	$(e && typeof e.getRandomValues == "function", "SECURE_RANDOM_UNAVAILABLE");
 	let t = e.getRandomValues(/* @__PURE__ */ new Uint8Array(16));
 	$(t instanceof Uint8Array && t.length === 16, "SECURE_RANDOM_UNAVAILABLE"), t[6] = t[6] & 15 | 64, t[8] = t[8] & 63 | 128;
 	let n = [...t].map((e) => e.toString(16).padStart(2, "0")).join("");
 	return `${n.slice(0, 8)}-${n.slice(8, 12)}-${n.slice(12, 16)}-${n.slice(16, 20)}-${n.slice(20)}`;
 }
-function Ya(e) {
-	return $(typeof e == "string" && Na.test(e) && Wa(e, "25") <= 0, "INVALID_LAYOUT_DURATION"), e;
-}
-function Xa(e, t) {
-	let n = Ha(e, t);
-	return $(Wa(n, "0") > 0, "INVALID_LAYOUT_WIDTH"), n;
-}
 function Za(e) {
+	return $(typeof e == "string" && Fa.test(e) && Ka(e, "25") <= 0, "INVALID_LAYOUT_DURATION"), e;
+}
+function Qa(e, t) {
+	let n = Wa(e, t);
+	return $(Ka(n, "0") > 0, "INVALID_LAYOUT_WIDTH"), n;
+}
+function $a(e) {
 	return $(e === null || typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 18, "INVALID_LAYOUT_PRECISION"), e;
 }
-function Qa(e) {
+function eo(e) {
 	return $(typeof e == "number" && Number.isInteger(e) && e >= 0 && e <= 8, "INVALID_LAYOUT_PRECISION"), e;
 }
-function $a(e, t) {
-	t != null && $((Ha(e).split(".")[1] ?? "").length <= t, "INVALID_LAYOUT_PRECISION");
+function to(e, t) {
+	t != null && $((Wa(e).split(".")[1] ?? "").length <= t, "INVALID_LAYOUT_PRECISION");
 }
-function eo(e, t) {
+function no(e, t) {
 	$(5 + (Number(e) + 1) * Number(t) <= 30, "INVALID_LAYOUT_HORIZON");
 }
-function to(e) {
-	return $(Ba(e), "INVALID_GRID_LAYOUT"), Va(e, [
+function ro(e) {
+	return $(Ha(e), "INVALID_GRID_LAYOUT"), Ua(e, [
 		"row_count",
 		"column_count",
 		"column_duration_seconds",
@@ -4612,19 +4777,19 @@ function to(e) {
 		e.row_count,
 		e.column_count,
 		e.column_duration_seconds
-	].every((e) => typeof e == "string" && e.length <= 128 && Na.test(e)), "INVALID_GRID_LAYOUT"), $(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_LAYOUT"), $(typeof e.editable == "boolean", "INVALID_GRID_LAYOUT"), $(Array.isArray(e.affected_site_ids) && e.affected_site_ids.every((e) => typeof e == "string" && e.length > 0 && e.length <= 64 && e.trim() === e), "INVALID_GRID_LAYOUT"), $(new Set(e.affected_site_ids).size === e.affected_site_ids.length && (!e.editable || e.affected_site_ids.length > 0), "INVALID_GRID_LAYOUT"), {
+	].every((e) => typeof e == "string" && e.length <= 128 && Fa.test(e)), "INVALID_GRID_LAYOUT"), $(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_LAYOUT"), $(typeof e.editable == "boolean", "INVALID_GRID_LAYOUT"), $(Array.isArray(e.affected_site_ids) && e.affected_site_ids.every((e) => typeof e == "string" && e.length > 0 && e.length <= 64 && e.trim() === e), "INVALID_GRID_LAYOUT"), $(new Set(e.affected_site_ids).size === e.affected_site_ids.length && (!e.editable || e.affected_site_ids.length > 0), "INVALID_GRID_LAYOUT"), {
 		row_count: e.row_count,
 		column_count: e.column_count,
 		column_duration_seconds: e.column_duration_seconds,
-		price_band_width: Xa(e.price_band_width),
-		..."price_decimals" in e ? { price_decimals: Za(e.price_decimals) } : {},
+		price_band_width: Qa(e.price_band_width),
+		..."price_decimals" in e ? { price_decimals: $a(e.price_decimals) } : {},
 		effective_from_ms: e.effective_from_ms,
 		editable: e.editable,
 		affected_site_ids: [...e.affected_site_ids]
 	};
 }
-function no(e) {
-	$(Ba(e), "INVALID_GRID_CONFIGURATION"), Va(e, [
+function io(e) {
+	$(Ha(e), "INVALID_GRID_CONFIGURATION"), Ua(e, [
 		"site_id",
 		"symbol",
 		"layout_version",
@@ -4637,9 +4802,10 @@ function no(e) {
 		"min_order_amount",
 		"max_order_amount",
 		..."layout" in e ? ["layout"] : [],
-		..."config_id" in e ? Ia : [],
-		...lt.filter((t) => t in e)
-	]), $(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "INVALID_GRID_CONFIGURATION"), $(typeof e.symbol == "string" && Pa.test(e.symbol), "INVALID_GRID_CONFIGURATION"), $([e.layout_version, e.site_version].every((e) => typeof e == "string" && Na.test(e)), "INVALID_GRID_CONFIGURATION"), $(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_CONFIGURATION"), $(typeof e.enabled == "boolean", "INVALID_GRID_CONFIGURATION");
+		..."config_id" in e ? Ra : [],
+		...at.filter((t) => t in e),
+		..."availability_version" in e ? ["availability_version"] : []
+	]), $(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "INVALID_GRID_CONFIGURATION"), $(typeof e.symbol == "string" && Ia.test(e.symbol), "INVALID_GRID_CONFIGURATION"), $([e.layout_version, e.site_version].every((e) => typeof e == "string" && Fa.test(e)), "INVALID_GRID_CONFIGURATION"), $(typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms), "INVALID_GRID_CONFIGURATION"), $(typeof e.enabled == "boolean", "INVALID_GRID_CONFIGURATION");
 	let t = {
 		site_id: e.site_id,
 		symbol: e.symbol,
@@ -4647,20 +4813,20 @@ function no(e) {
 		site_version: e.site_version,
 		effective_from_ms: e.effective_from_ms,
 		enabled: e.enabled,
-		target_rtp: Ha(e.target_rtp),
-		min_multiplier: Ha(e.min_multiplier, 2),
-		max_multiplier: Ha(e.max_multiplier, 2),
-		min_order_amount: Ha(e.min_order_amount, 8),
-		max_order_amount: Ha(e.max_order_amount, 8)
+		target_rtp: Wa(e.target_rtp),
+		min_multiplier: Wa(e.min_multiplier, 2),
+		max_multiplier: Wa(e.max_multiplier, 2),
+		min_order_amount: Wa(e.min_order_amount, 8),
+		max_order_amount: Wa(e.max_order_amount, 8)
 	};
-	if ($(Wa(t.target_rtp, "0") > 0 && Wa(t.target_rtp, "1") <= 0, "INVALID_GRID_CONFIGURATION"), $(Wa(t.min_multiplier, "1") >= 0 && Wa(t.max_multiplier, t.min_multiplier) >= 0, "INVALID_GRID_CONFIGURATION"), $(Wa(t.min_order_amount, "0") > 0 && Wa(t.max_order_amount, t.min_order_amount) >= 0, "INVALID_GRID_CONFIGURATION"), "config_id" in e) {
+	if ($(Ka(t.target_rtp, "0") > 0 && Ka(t.target_rtp, "1") <= 0, "INVALID_GRID_CONFIGURATION"), $(Ka(t.min_multiplier, "1") >= 0 && Ka(t.max_multiplier, t.min_multiplier) >= 0, "INVALID_GRID_CONFIGURATION"), $(Ka(t.min_order_amount, "0") > 0 && Ka(t.max_order_amount, t.min_order_amount) >= 0, "INVALID_GRID_CONFIGURATION"), "config_id" in e) {
 		for (let n of [
 			"config_id",
 			"default_config_id",
 			"default_version",
 			"default_resolution_epoch"
-		]) $(typeof e[n] == "string" && Na.test(e[n]) && Wa(e[n], "9223372036854775807") <= 0), t[n] = e[n];
-		$(typeof e.requested_agent_id == "string" && /^(0|[1-9][0-9]*)$/.test(e.requested_agent_id) && Wa(e.requested_agent_id, "9223372036854775807") <= 0), $(e.agent_id === null || e.agent_id === e.requested_agent_id && e.agent_id !== "0"), t.requested_agent_id = e.requested_agent_id, t.agent_id = e.agent_id;
+		]) $(typeof e[n] == "string" && Fa.test(e[n]) && Ka(e[n], "9223372036854775807") <= 0), t[n] = e[n];
+		$(typeof e.requested_agent_id == "string" && /^(0|[1-9][0-9]*)$/.test(e.requested_agent_id) && Ka(e.requested_agent_id, "9223372036854775807") <= 0), $(e.agent_id === null || e.agent_id === e.requested_agent_id && e.agent_id !== "0"), t.requested_agent_id = e.requested_agent_id, t.agent_id = e.agent_id;
 		for (let n of [
 			"inherited",
 			"default_enabled",
@@ -4670,25 +4836,25 @@ function no(e) {
 			"default_target_rtp",
 			"default_min_order_amount",
 			"default_max_order_amount"
-		]) t[n] = Ha(e[n]);
+		]) t[n] = Wa(e[n]);
 	}
-	return Object.assign(t, ht(e, Ha)), "layout" in e && (t.layout = to(e.layout)), t;
+	return "availability_version" in e && ($(typeof e.availability_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.availability_version) && Ka(e.availability_version, "9223372036854775807") <= 0), t.availability_version = e.availability_version), Object.assign(t, dt(e, Wa)), "layout" in e && (t.layout = ro(e.layout)), t;
 }
-function ro(e, t, n) {
-	let r = no(e);
+function ao(e, t, n) {
+	let r = io(e);
 	return $(r.site_id === t && r.symbol === n, "INVALID_GRID_TARGET"), r;
 }
-function io(e, t, n, r, i, a = !1) {
-	let o = no(e), s = no(t);
-	$(o.site_id === s.site_id && o.symbol === s.symbol, "INVALID_GRID_TARGET"), $(typeof n == "string" && n.length <= 500 && n.trim().length > 0 && !n.includes("\0"), "INVALID_REASON"), $(typeof r == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(r), "INVALID_REQUEST_ID"), $(o.config_id && o.default_version && o.default_resolution_epoch, "CONFIG_IDENTITY_REQUIRED"), $(Ia.every((e) => o[e] === s[e]), "INVALID_GRID_TARGET"), $(JSON.stringify(ht(o, Ha)) === JSON.stringify(ht(s, Ha)), "INVALID_GRID_TARGET");
+function oo(e, t, n, r, i, a = !1) {
+	let o = io(e), s = io(t);
+	$(o.site_id === s.site_id && o.symbol === s.symbol, "INVALID_GRID_TARGET"), $(typeof n == "string" && n.length <= 500 && n.trim().length > 0 && !n.includes("\0"), "INVALID_REASON"), $(typeof r == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(r), "INVALID_REQUEST_ID"), $(o.config_id && o.default_version && o.default_resolution_epoch, "CONFIG_IDENTITY_REQUIRED"), $(Ra.every((e) => o[e] === s[e]), "INVALID_GRID_TARGET"), $(JSON.stringify(dt(o, Wa)) === JSON.stringify(dt(s, Wa)), "INVALID_GRID_TARGET");
 	let c = {};
-	for (let e of za) o[e] !== s[e] && (c[e] = s[e]);
-	for (let e of Ra) o.layout?.[e] !== s.layout?.[e] && ($(a && o.layout?.editable && s.layout, "FIELD_FORBIDDEN"), c[e] = s.layout[e]);
-	if (o.requested_agent_id !== "0" && !(c.enabled === !1 && Object.keys(c).length === 1) && ($(!s.enabled || o.default_enabled, "PLATFORM_LIMIT"), $(Wa(s.target_rtp, o.default_target_rtp) <= 0 && Wa(s.min_order_amount, o.default_min_order_amount) >= 0 && Wa(s.max_order_amount, o.default_max_order_amount) <= 0, "PLATFORM_LIMIT")), Ra.some((e) => e in c)) {
+	for (let e of Va) o[e] !== s[e] && (c[e] = s[e]);
+	for (let e of Ba) o.layout?.[e] !== s.layout?.[e] && ($(a && o.layout?.editable && s.layout, "FIELD_FORBIDDEN"), c[e] = s.layout[e]);
+	if (o.requested_agent_id !== "0" && !(c.enabled === !1 && Object.keys(c).length === 1) && ($(!s.enabled || o.default_enabled, "PLATFORM_LIMIT"), $(Ka(s.target_rtp, o.default_target_rtp) <= 0 && Ka(s.min_order_amount, o.default_min_order_amount) >= 0 && Ka(s.max_order_amount, o.default_max_order_amount) <= 0, "PLATFORM_LIMIT")), Ba.some((e) => e in c)) {
 		let e = o.layout;
-		"price_decimals" in c && Qa(c.price_decimals), $a(s.layout.price_band_width, s.layout.price_decimals), Xa(c.price_band_width ?? e.price_band_width, 18);
-		let t = Ya(c.column_duration_seconds ?? e.column_duration_seconds);
-		$(Wa(e.row_count, "10000") <= 0 && Wa(e.column_count, "10000") <= 0 && Number(e.row_count) * Number(e.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), eo(e.column_count, t);
+		"price_decimals" in c && eo(c.price_decimals), to(s.layout.price_band_width, s.layout.price_decimals), Qa(c.price_band_width ?? e.price_band_width, 18);
+		let t = Za(c.column_duration_seconds ?? e.column_duration_seconds);
+		$(Ka(e.row_count, "10000") <= 0 && Ka(e.column_count, "10000") <= 0 && Number(e.row_count) * Number(e.column_count) <= 1e4, "INVALID_GRID_LAYOUT"), no(e.column_count, t);
 	}
 	if (!i && ("min_multiplier" in c || "max_multiplier" in c)) throw Error("FIELD_FORBIDDEN");
 	return $(Object.keys(c).length > 0, "EMPTY_CHANGES"), {
@@ -4697,7 +4863,8 @@ function io(e, t, n, r, i, a = !1) {
 		based_on_layout_version: o.layout_version,
 		based_on_site_version: o.site_version,
 		based_on_config_id: o.config_id,
-		...gt(o) ? { based_on_global_version: gt(o) } : {},
+		...o.requested_agent_id === "0" && c.enabled === !0 && o.availability_version !== void 0 ? { based_on_availability_version: o.availability_version } : {},
+		...ft(o) ? { based_on_global_version: ft(o) } : {},
 		based_on_default_version: o.default_version,
 		based_on_default_resolution_epoch: o.default_resolution_epoch,
 		client_request_id: r,
@@ -4705,27 +4872,28 @@ function io(e, t, n, r, i, a = !1) {
 		changes: c
 	};
 }
-function ao(e) {
-	if ($(Ba(e), "PENDING_CORRUPT"), Va(e, [
-		...Fa,
-		..."based_on_config_id" in e ? La : [],
-		..."based_on_global_version" in e ? ["based_on_global_version"] : []
-	]), "based_on_global_version" in e && $(typeof e.based_on_global_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_global_version) && Wa(e.based_on_global_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), "based_on_config_id" in e) for (let t of La) $(typeof e[t] == "string" && Na.test(e[t]) && Wa(e[t], "9223372036854775807") <= 0, "PENDING_CORRUPT");
-	$(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "PENDING_CORRUPT"), $(typeof e.symbol == "string" && Pa.test(e.symbol), "PENDING_CORRUPT"), $(typeof e.based_on_layout_version == "string" && Na.test(e.based_on_layout_version), "PENDING_CORRUPT"), $(typeof e.based_on_site_version == "string" && Na.test(e.based_on_site_version), "PENDING_CORRUPT"), $(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id), "PENDING_CORRUPT"), $(typeof e.reason == "string" && e.reason.length <= 500 && e.reason.trim().length > 0 && !e.reason.includes("\0"), "PENDING_CORRUPT"), $(Ba(e.changes) && Object.keys(e.changes).length > 0 && Object.keys(e.changes).every((e) => [...za, ...Ra].includes(e)), "PENDING_CORRUPT");
-	for (let [t, n] of Object.entries(e.changes)) t === "enabled" ? $(typeof n == "boolean", "PENDING_CORRUPT") : t === "price_decimals" ? Qa(n) : t === "price_band_width" ? Xa(n, 18) : t === "column_duration_seconds" ? Ya(n) : Ha(n, t.includes("order_amount") ? 8 : t.includes("multiplier") ? 2 : void 0);
+function so(e) {
+	if ($(Ha(e), "PENDING_CORRUPT"), Ua(e, [
+		...La,
+		..."based_on_config_id" in e ? za : [],
+		..."based_on_global_version" in e ? ["based_on_global_version"] : [],
+		..."based_on_availability_version" in e ? ["based_on_availability_version"] : []
+	]), "based_on_availability_version" in e && $(typeof e.based_on_availability_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_availability_version) && Ka(e.based_on_availability_version, "9223372036854775807") <= 0 && Ha(e.changes) && e.changes.enabled === !0, "PENDING_CORRUPT"), "based_on_global_version" in e && $(typeof e.based_on_global_version == "string" && /^(0|[1-9][0-9]*)$/.test(e.based_on_global_version) && Ka(e.based_on_global_version, "9223372036854775807") <= 0, "PENDING_CORRUPT"), "based_on_config_id" in e) for (let t of za) $(typeof e[t] == "string" && Fa.test(e[t]) && Ka(e[t], "9223372036854775807") <= 0, "PENDING_CORRUPT");
+	$(typeof e.site_id == "string" && e.site_id.length > 0 && e.site_id.length <= 64 && e.site_id.trim() === e.site_id, "PENDING_CORRUPT"), $(typeof e.symbol == "string" && Ia.test(e.symbol), "PENDING_CORRUPT"), $(typeof e.based_on_layout_version == "string" && Fa.test(e.based_on_layout_version), "PENDING_CORRUPT"), $(typeof e.based_on_site_version == "string" && Fa.test(e.based_on_site_version), "PENDING_CORRUPT"), $(typeof e.client_request_id == "string" && /^[A-Za-z0-9_-]{8,64}$/.test(e.client_request_id), "PENDING_CORRUPT"), $(typeof e.reason == "string" && e.reason.length <= 500 && e.reason.trim().length > 0 && !e.reason.includes("\0"), "PENDING_CORRUPT"), $(Ha(e.changes) && Object.keys(e.changes).length > 0 && Object.keys(e.changes).every((e) => [...Va, ...Ba].includes(e)), "PENDING_CORRUPT");
+	for (let [t, n] of Object.entries(e.changes)) t === "enabled" ? $(typeof n == "boolean", "PENDING_CORRUPT") : t === "price_decimals" ? eo(n) : t === "price_band_width" ? Qa(n, 18) : t === "column_duration_seconds" ? Za(n) : Wa(n, t.includes("order_amount") ? 8 : t.includes("multiplier") ? 2 : void 0);
 }
-function oo(e) {
+function co(e) {
 	if (e && typeof e == "object") {
 		Object.freeze(e);
-		for (let t of Object.values(e)) oo(t);
+		for (let t of Object.values(e)) co(t);
 	}
 	return e;
 }
-function so(e, t) {
+function lo(e, t) {
 	return !!e && JSON.stringify(e) === JSON.stringify(t);
 }
-function co(e) {
-	let t = e.getItem(ja);
+function uo(e) {
+	let t = e.getItem(Na);
 	if (t === null) return null;
 	$(t.length <= 32768, "PENDING_CORRUPT");
 	let n;
@@ -4734,34 +4902,34 @@ function co(e) {
 	} catch {
 		throw Error("PENDING_CORRUPT");
 	}
-	return $(Ba(n), "PENDING_CORRUPT"), Va(n, [
+	return $(Ha(n), "PENDING_CORRUPT"), Ua(n, [
 		"schema",
 		"operator_id",
 		"command"
-	]), $(n.schema === 1 && typeof n.operator_id == "string" && Na.test(n.operator_id), "PENDING_CORRUPT"), ao(n.command), oo(n);
+	]), $(n.schema === 1 && typeof n.operator_id == "string" && Fa.test(n.operator_id), "PENDING_CORRUPT"), so(n.command), co(n);
 }
-function lo(e, t, n) {
-	$(Na.test(t), "IDENTITY_UNCONFIRMED"), $(co(e) === null, "PENDING_EXISTS"), ao(n);
+function fo(e, t, n) {
+	$(Fa.test(t), "IDENTITY_UNCONFIRMED"), $(uo(e) === null, "PENDING_EXISTS"), so(n);
 	let r = {
 		schema: 1,
 		operator_id: t,
 		command: JSON.parse(JSON.stringify(n))
 	};
-	e.setItem(ja, JSON.stringify(r));
-	let i = co(e);
-	return $(so(i, r), "PERSISTENCE_UNAVAILABLE"), i;
+	e.setItem(Na, JSON.stringify(r));
+	let i = uo(e);
+	return $(lo(i, r), "PERSISTENCE_UNAVAILABLE"), i;
 }
-function uo(e, t) {
-	return $(Na.test(e), "IDENTITY_UNCONFIRMED"), ao(t), oo({
+function po(e, t) {
+	return $(Fa.test(e), "IDENTITY_UNCONFIRMED"), so(t), co({
 		operator_id: e,
 		command: structuredClone(t)
 	});
 }
-function fo(e, t, n, r) {
-	return ao(t.command), ao(r), $(t.operator_id === n && JSON.stringify(t.command) === JSON.stringify(r), "STALE_CONFIRMATION"), lo(e, t.operator_id, t.command);
+function mo(e, t, n, r) {
+	return so(t.command), so(r), $(t.operator_id === n && JSON.stringify(t.command) === JSON.stringify(r), "STALE_CONFIRMATION"), fo(e, t.operator_id, t.command);
 }
-function po(e, t) {
-	let n = co(e);
+function ho(e, t) {
+	let n = uo(e);
 	return n ? n.operator_id === t ? {
 		status: "bound",
 		pending: n
@@ -4770,21 +4938,21 @@ function po(e, t) {
 		pending: n
 	} : { status: "none" };
 }
-function mo(e, t) {
-	return Ba(e) ? e.operation_status === "SUCCEEDED" && typeof e.operation_id == "string" && Na.test(e.operation_id) && e.site_id === t.command.site_id && e.symbol === t.command.symbol && typeof e.layout_version == "string" && Na.test(e.layout_version) && typeof e.site_version == "string" && Na.test(e.site_version) && typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms) && typeof e.changed == "boolean" && [
+function go(e, t) {
+	return Ha(e) ? e.operation_status === "SUCCEEDED" && typeof e.operation_id == "string" && Fa.test(e.operation_id) && e.site_id === t.command.site_id && e.symbol === t.command.symbol && typeof e.layout_version == "string" && Fa.test(e.layout_version) && typeof e.site_version == "string" && Fa.test(e.site_version) && typeof e.effective_from_ms == "string" && /^\d+$/.test(e.effective_from_ms) && typeof e.changed == "boolean" && [
 		"PENDING",
 		"DONE",
 		"NOT_REQUIRED"
 	].includes(String(e.cache_state)) : !1;
 }
-function ho(e) {
-	return Ba(e) && e.error_code === "RECEIPT_UNCONFIRMED" && e.operation_status === "UNKNOWN";
+function _o(e) {
+	return Ha(e) && e.error_code === "RECEIPT_UNCONFIRMED" && e.operation_status === "UNKNOWN";
 }
-async function go(e, t, n, r) {
-	$(so(co(e), t), "PENDING_CHANGED");
+async function vo(e, t, n, r) {
+	$(lo(uo(e), t), "PENDING_CHANGED");
 	try {
 		let i = await r(n === "recover" ? "save" : n, structuredClone(t.command));
-		return mo(i, t) ? (so(co(e), t) && e.removeItem(ja), {
+		return go(i, t) ? (lo(uo(e), t) && e.removeItem(Na), {
 			status: "success",
 			value: i
 		}) : {
@@ -4792,9 +4960,9 @@ async function go(e, t, n, r) {
 			error: /* @__PURE__ */ Error("INVALID_RECEIPT")
 		};
 	} catch (r) {
-		if ((Ba(r) ? r.operation_status : void 0) === "FAILED" && (n === "save" || n === "recover" && Ba(r) && r.error_code === "VERSION_CONFLICT")) {
-			let n = so(co(e), t);
-			return n && e.removeItem(ja), {
+		if ((Ha(r) ? r.operation_status : void 0) === "FAILED" && (n === "save" || n === "recover" && Ha(r) && r.error_code === "VERSION_CONFLICT")) {
+			let n = lo(uo(e), t);
+			return n && e.removeItem(Na), {
 				status: "rejected",
 				error: r,
 				journalCleared: n
@@ -4806,7 +4974,7 @@ async function go(e, t, n, r) {
 		};
 	}
 }
-var _o = class {
+var yo = class {
 	generation = 0;
 	controller;
 	next(e) {
@@ -4823,7 +4991,7 @@ var _o = class {
 };
 //#endregion
 //#region src/prediction-config/agent/views/grid/config/pending-scope.ts
-function vo(e, t) {
+function bo(e, t) {
 	if (t?.kind !== "SITE") return e;
 	if (t.agent_id !== "0" || !/^[1-9][0-9]*$/.test(t.operator_id) || !/^[1-9][0-9]*$/.test(t.tenant_id ?? "")) throw Error("INVALID_GRID_ACTOR");
 	let n = `white-label:${t.tenant_id}:${t.operator_id}:`;
@@ -4835,13 +5003,13 @@ function vo(e, t) {
 }
 //#endregion
 //#region src/prediction-config/agent/views/grid/config/directory.ts
-function yo(e, t, n = !1) {
-	return bo(e.filter((e) => n || e.default_enabled).map((e) => ({
+function xo(e, t, n = !1) {
+	return So(e.filter((e) => n || e.default_enabled).map((e) => ({
 		...e,
 		configured: !0
 	})), t);
 }
-function bo(e, t, n = (e) => !!e.enabled) {
+function So(e, t, n = (e) => !!e.enabled) {
 	let r = /* @__PURE__ */ new Map();
 	for (let e of t) {
 		let t = e.trim().toUpperCase();
@@ -4851,51 +5019,51 @@ function bo(e, t, n = (e) => !!e.enabled) {
 }
 //#endregion
 //#region src/prediction-config/agent/views/grid/config/index.vue?vue&type=script&setup=true&lang.ts
-var xo = {
+var Co = {
 	class: "grid-config",
 	"data-grid-config": "agent"
-}, So = { key: 3 }, Co = {
+}, wo = { key: 3 }, To = {
 	key: 5,
 	class: "pending-bar"
-}, wo = { class: "pending-actions" }, To = { class: "grid-layout" }, Eo = { class: "symbol-panel" }, Do = { class: "panel-heading" }, Oo = {
+}, Eo = { class: "pending-actions" }, Do = { class: "grid-layout" }, Oo = { class: "symbol-panel" }, ko = { class: "panel-heading" }, Ao = {
 	key: 1,
 	class: "directory-error",
 	role: "alert"
-}, ko = { class: "symbol-list" }, Ao = ["disabled", "onClick"], jo = {
+}, jo = { class: "symbol-list" }, Mo = ["disabled", "onClick"], No = {
 	key: 0,
 	class: "symbol-unconfigured"
-}, Mo = { key: 2 }, No = { class: "config-panel" }, Po = { class: "config-heading" }, Fo = { "data-config-updated-at": "" }, Io = { key: 0 }, Lo = { class: "config-heading__actions" }, Ro = {
+}, Po = { key: 2 }, Fo = { class: "config-panel" }, Io = { class: "config-heading" }, Lo = { "data-config-updated-at": "" }, Ro = { key: 0 }, zo = { class: "config-heading__actions" }, Bo = {
 	key: 0,
 	class: "parameter-description"
-}, zo = {
+}, Vo = {
 	key: 0,
 	class: "parameter-card",
 	"data-price-precision": ""
-}, Bo = { class: "fields" }, Vo = { class: "parameter-card" }, Ho = { class: "fields odds-fields" }, Uo = { key: 0 }, Wo = { key: 1 }, Go = { class: "parameter-card" }, Ko = { class: "parameter-heading" }, qo = { class: "parameter-description" }, Jo = { class: "fields limit-fields" }, Yo = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Ho = { class: "fields" }, Uo = { class: "parameter-card" }, Wo = { class: "fields odds-fields" }, Go = { key: 0 }, Ko = { key: 1 }, qo = { class: "parameter-card" }, Jo = { class: "parameter-heading" }, Yo = { class: "parameter-description" }, Xo = { class: "fields limit-fields" }, Zo = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "index",
 	props: { actor: {} },
 	setup(e, { expose: n }) {
-		let { initializeGridSite: l, initializeGridMerchant: f, gridConfigSymbols: p, gridConfigCatalog: m, gridConfigReceipt: h, gridConfigSite: g, saveGridConfig: _ } = me().grid, ne = ge(), y = e, x = i(() => y.actor?.kind === "SITE"), S = () => vo(sessionStorage, y.actor), C = he(), ie = (e) => C.perms.includes("*") || C.perms.includes(e), ae = i(() => ie("prediction_config:lists") && (!x.value || C.userInfo.can_manage_prediction_config === !0 && y.actor?.operator_id === String(C.userInfo.id))), D = ae, O = i(() => {
-			let e = String(C.userInfo.id || "");
+		let { initializeGridSite: l, initializeGridMerchant: f, gridConfigSymbols: ee, gridConfigCatalog: p, gridConfigReceipt: m, gridConfigSite: h, saveGridConfig: g } = pe().grid, re = he(), ie = e, y = i(() => ie.actor?.kind === "SITE"), b = () => bo(sessionStorage, ie.actor), x = me(), C = (e) => x.perms.includes("*") || x.perms.includes(e), oe = i(() => C("prediction_config:lists") && (!y.value || x.userInfo.can_manage_prediction_config === !0 && ie.actor?.operator_id === String(x.userInfo.id))), E = oe, D = i(() => {
+			let e = String(x.userInfo.id || "");
 			return /^[1-9]\d*$/.test(e) ? e : "";
-		}), j = i(() => `${O.value}:${C.token ?? ""}:${y.actor?.kind ?? ""}:${y.actor?.tenant_id ?? ""}:${y.actor?.config_site_id ?? ""}`), M = b([]), N = b(""), P = b(""), se = b(""), I = b(null), L = b(null), R = b(""), z = b("通过预测网格配置页面保存配置"), B = b(!1), V = b(!1), H = b(!1), U = b(!1), fe = b(!1), W = b(""), G = b(""), K = b("info"), pe = b(null), ve = b(!1), ye = b(""), be = b(!1), xe = new _o(), Se = new _o(), Ce = new _o(), q, we = 0, Te = i(() => ae.value ? O.value ? "" : "无法确认当前操作人身份" : "当前账号没有预测网格配置查询权限"), Ee = i(() => M.value.find((e) => e.site_id === N.value)), De = i(() => x.value && Ee.value?.can_edit_limits === !0), Oe = b([]), ke = b(""), Ae = i(() => yo(Ee.value?.products ?? [], Oe.value, x.value)), je = i(() => {
-			let e = se.value.trim().toUpperCase();
-			return Ae.value.filter((t) => !e || t.symbol.includes(e));
-		}), Me = i(() => {
-			if (!I.value || !L.value) return !1;
+		}), A = i(() => `${D.value}:${x.token ?? ""}:${ie.actor?.kind ?? ""}:${ie.actor?.tenant_id ?? ""}:${ie.actor?.config_site_id ?? ""}`), j = v([]), M = v(""), N = v(""), ce = v(""), F = v(null), I = v(null), L = v(""), R = v("通过预测网格配置页面保存配置"), B = v(!1), V = v(!1), H = v(!1), U = v(!1), W = v(!1), G = v(""), K = v(""), q = v("info"), fe = v(null), _e = v(!1), ve = v(""), ye = v(!1), be = new yo(), xe = new yo(), Se = new yo(), J, Y = 0, Ce = i(() => oe.value ? D.value ? "" : "无法确认当前操作人身份" : "当前账号没有预测网格配置查询权限"), we = i(() => j.value.find((e) => e.site_id === M.value)), Te = i(() => y.value && we.value?.can_edit_limits === !0), Ee = v([]), De = v(""), Oe = i(() => xo(we.value?.products ?? [], Ee.value, y.value)), ke = i(() => {
+			let e = ce.value.trim().toUpperCase();
+			return Oe.value.filter((t) => !e || t.symbol.includes(e));
+		}), Ae = i(() => {
+			if (!F.value || !I.value) return !1;
 			try {
-				return Ka(I.value.target_rtp) !== R.value || [
+				return Ja(F.value.target_rtp) !== L.value || [
 					"enabled",
 					"min_multiplier",
 					"max_multiplier",
 					"min_order_amount",
 					"max_order_amount"
-				].some((e) => I.value[e] !== L.value[e]);
+				].some((e) => F.value[e] !== I.value[e]);
 			} catch {
 				return !0;
 			}
-		}), Ne = i(() => pe.value ? pe.value.operator_id === O.value ? "bound" : "foreign" : "none"), Pe = i(() => Ne.value === "bound" ? pe.value : null), Fe = i(() => Ne.value === "foreign"), Ie = i(() => Me.value || !!pe.value || fe.value), Le = i(() => ae.value && D.value && !!Ee.value?.can_edit && !!O.value && !!I.value && !pe.value && !ve.value && !U.value && !fe.value), Re = i(() => !!Pe.value && ae.value && D.value && M.value.some((e) => e.site_id === Pe.value.command.site_id && e.can_edit)), ze = i(() => Re.value && V.value && !H.value && !U.value && !fe.value && !ve.value && !be.value && ye.value === JSON.stringify(Pe.value));
-		function Be(e) {
+		}), je = i(() => fe.value ? fe.value.operator_id === D.value ? "bound" : "foreign" : "none"), Me = i(() => je.value === "bound" ? fe.value : null), Ne = i(() => je.value === "foreign"), Pe = i(() => Ae.value || !!fe.value || W.value), Fe = i(() => oe.value && E.value && !!we.value?.can_edit && !!D.value && !!F.value && !fe.value && !_e.value && !U.value && !W.value), Ie = i(() => !!Me.value && oe.value && E.value && j.value.some((e) => e.site_id === Me.value.command.site_id && e.can_edit)), Le = i(() => Ie.value && V.value && !H.value && !U.value && !W.value && !_e.value && !ye.value && ve.value === JSON.stringify(Me.value));
+		function Re(e) {
 			let t = e;
 			return {
 				INVALID_LAYOUT: "网格区间超出允许范围，请检查价格区间和每列时长后重试",
@@ -4912,11 +5080,11 @@ var xo = {
 				EMPTY_CHANGES: "配置没有实际变化，无需保存"
 			}[t?.error_code || t?.message || ""] || [t?.message || "预测网格配置请求失败", t?.error_code].filter(Boolean).join(" · ");
 		}
-		let Ve = i(() => {
-			let e = [I.value?.effective_from_ms, I.value?.layout?.effective_from_ms].filter((e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e)).reduce((e, t) => BigInt(e) > BigInt(t) ? e : t, "0");
+		let ze = i(() => {
+			let e = [F.value?.effective_from_ms, F.value?.layout?.effective_from_ms].filter((e) => typeof e == "string" && /^[1-9][0-9]*$/.test(e)).reduce((e, t) => BigInt(e) > BigInt(t) ? e : t, "0");
 			return e === "0" ? "未提供" : Oi(e);
 		});
-		function He(e) {
+		function Be(e) {
 			if (!e || !Array.isArray(e.sites)) throw Error("币种目录返回格式不正确");
 			let t = /* @__PURE__ */ new Set();
 			for (let n of e.sites) {
@@ -4928,98 +5096,98 @@ var xo = {
 					e.add(t.symbol);
 				}
 			}
-			return e.sites.filter((e) => !x.value || e.site_id === y.actor?.config_site_id).map((e) => ({
+			return e.sites.filter((e) => !y.value || e.site_id === ie.actor?.config_site_id).map((e) => ({
 				...e,
-				products: e.products.filter((e) => x.value || e.default_enabled)
+				products: e.products.filter((e) => y.value || e.default_enabled)
 			}));
 		}
-		function Ue() {
+		function Ve() {
 			try {
-				let e = po(S(), O.value);
-				pe.value = e.pending ?? null, ve.value = !1;
+				let e = ho(b(), D.value);
+				fe.value = e.pending ?? null, _e.value = !1;
 			} catch {
-				ve.value = !0, pe.value = null;
+				_e.value = !0, fe.value = null;
 			}
 		}
-		function We() {
-			return `${j.value}:${N.value}:${P.value}`;
+		function He() {
+			return `${A.value}:${M.value}:${N.value}`;
 		}
-		function Ge() {
-			Se.close(), I.value = null, L.value = null, R.value = "", z.value = "通过预测网格配置页面保存配置", U.value = !1;
+		function Ue() {
+			xe.close(), F.value = null, I.value = null, L.value = "", R.value = "通过预测网格配置页面保存配置", U.value = !1;
 		}
-		async function Ke(e) {
-			if (V.value = !1, xe.close(), Ce.close(), ye.value = "", Ge(), M.value = [], Oe.value = [], ke.value = "", N.value = "", P.value = "", se.value = "", W.value = "", G.value = "", Ue(), Te.value || ve.value) return;
-			let t = xe.next(j.value);
+		async function We(e) {
+			if (V.value = !1, be.close(), Se.close(), ve.value = "", Ue(), j.value = [], Ee.value = [], De.value = "", M.value = "", N.value = "", ce.value = "", G.value = "", K.value = "", Ve(), Ce.value || _e.value) return;
+			let t = be.next(A.value);
 			H.value = !0;
 			try {
-				if (x.value) {
-					if (!l || !y.actor?.config_site_id) throw Error("SITE_UNAVAILABLE");
-					Pe.value || await l(y.actor.config_site_id, t.signal);
+				if (y.value) {
+					if (!l || !ie.actor?.config_site_id) throw Error("SITE_UNAVAILABLE");
+					Me.value || await l(ie.actor.config_site_id, t.signal);
 				} else await f(t.signal);
-				if (!t.current(j.value)) return;
-				let [n, r] = await Promise.allSettled([m(t.signal), p(t.signal)]);
-				if (!t.current(j.value)) return;
-				if (r.status === "fulfilled" && Array.isArray(r.value) && r.value.every((e) => typeof e == "string") ? Oe.value = r.value : ke.value = "通用币种目录暂不可用，当前仅显示已授权的网格配置。", n.status === "rejected") throw n.reason;
-				M.value = He(n.value), V.value = !0;
-				let i = Pe.value ?? (e ? { command: e } : null), a = i && M.value.some((e) => e.site_id === i.command.site_id) ? i.command.site_id : M.value[0]?.site_id || "";
-				N.value = a;
-				let o = M.value.find((e) => e.site_id === a), s = i && i.command.site_id === a && o?.products.some((e) => e.symbol === i.command.symbol) ? i.command.symbol : Ae.value.find((e) => e.configured)?.symbol || "";
-				P.value = s, s && (q = Ye());
+				if (!t.current(A.value)) return;
+				let [n, r] = await Promise.allSettled([p(t.signal), ee(t.signal)]);
+				if (!t.current(A.value)) return;
+				if (r.status === "fulfilled" && Array.isArray(r.value) && r.value.every((e) => typeof e == "string") ? Ee.value = r.value : De.value = "通用币种目录暂不可用，当前仅显示已授权的网格配置。", n.status === "rejected") throw n.reason;
+				j.value = Be(n.value), V.value = !0;
+				let i = Me.value ?? (e ? { command: e } : null), a = i && j.value.some((e) => e.site_id === i.command.site_id) ? i.command.site_id : j.value[0]?.site_id || "";
+				M.value = a;
+				let o = j.value.find((e) => e.site_id === a), s = i && i.command.site_id === a && o?.products.some((e) => e.symbol === i.command.symbol) ? i.command.symbol : Oe.value.find((e) => e.configured)?.symbol || "";
+				N.value = s, s && (J = qe());
 			} catch (e) {
-				t.current(j.value) && (W.value = Be(e));
+				t.current(A.value) && (G.value = Re(e));
 			} finally {
-				t.current(j.value) && (H.value = !1);
+				t.current(A.value) && (H.value = !1);
 			}
 		}
-		function qe(e) {
-			Ie.value || (Ge(), N.value = e, P.value = Ae.value.find((e) => e.configured)?.symbol || "", P.value && (q = Ye()));
+		function Ge(e) {
+			Pe.value || (Ue(), M.value = e, N.value = Oe.value.find((e) => e.configured)?.symbol || "", N.value && (J = qe()));
 		}
-		function Je(e) {
-			e === P.value || Ie.value || !Ee.value?.products.some((t) => t.symbol === e) || (Ge(), P.value = e, q = Ye());
+		function Ke(e) {
+			e === N.value || Pe.value || !we.value?.products.some((t) => t.symbol === e) || (Ue(), N.value = e, J = qe());
 		}
-		async function Ye() {
-			if (Ge(), !ae.value || !N.value || !P.value) return;
-			let e = N.value, t = P.value, n = We(), r = Se.next(n);
+		async function qe() {
+			if (Ue(), !oe.value || !M.value || !N.value) return;
+			let e = M.value, t = N.value, n = He(), r = xe.next(n);
 			U.value = !0;
 			try {
-				let n = await g(e, t, r.signal);
-				if (!r.current(We())) return;
-				let i = ro(n, e, t);
-				if (x.value && i.requested_agent_id !== "0") throw Error("CONFIG_IDENTITY_REQUIRED");
-				I.value = i, L.value = structuredClone(i), R.value = Ka(i.target_rtp);
+				let n = await h(e, t, r.signal);
+				if (!r.current(He())) return;
+				let i = ao(n, e, t);
+				if (y.value && i.requested_agent_id !== "0") throw Error("CONFIG_IDENTITY_REQUIRED");
+				F.value = i, I.value = structuredClone(i), L.value = Ja(i.target_rtp);
 			} catch (e) {
-				r.current(We()) && (W.value = Be(e));
+				r.current(He()) && (G.value = Re(e));
 			} finally {
-				r.current(We()) && (U.value = !1);
+				r.current(He()) && (U.value = !1);
 			}
 		}
-		function Xe(e) {
-			return e.symbol === P.value && L.value ? L.value.enabled && (x.value || L.value.default_enabled !== !1) : e.enabled;
+		function Je(e) {
+			return e.symbol === N.value && I.value ? I.value.enabled && (y.value || I.value.default_enabled !== !1) : e.enabled;
 		}
-		function Ze(e) {
-			return !x.value && e.symbol === P.value && I.value?.default_enabled === !1 || !Ee.value?.products.some((t) => t.symbol === e.symbol) || !D.value || !Ee.value?.can_edit || U.value || fe.value || !!pe.value || ve.value || Me.value && e.symbol !== P.value;
+		function Ye(e) {
+			return !y.value && e.symbol === N.value && F.value?.default_enabled === !1 || !we.value?.products.some((t) => t.symbol === e.symbol) || !E.value || !we.value?.can_edit || U.value || W.value || !!fe.value || _e.value || Ae.value && e.symbol !== N.value;
 		}
-		async function Qe(e, t) {
-			typeof t != "boolean" || Ze(e) || (e.symbol !== P.value && (Je(e.symbol), await q), L.value && L.value.symbol === e.symbol && !Ze(e) && (L.value.enabled = t, $e()));
+		async function Xe(e, t) {
+			typeof t != "boolean" || Ye(e) || (e.symbol !== N.value && (Ke(e.symbol), await J), I.value && I.value.symbol === e.symbol && !Ye(e) && (I.value.enabled = t, Ze()));
 		}
-		function $e() {
-			G.value = "";
+		function Ze() {
+			K.value = "";
 		}
-		async function et() {
-			if (!Le.value || !I.value || !L.value || !O.value) return;
+		async function Qe() {
+			if (!Fe.value || !F.value || !I.value || !D.value) return;
 			let e;
 			try {
-				e = io(I.value, {
-					...L.value,
-					target_rtp: qa(R.value)
-				}, z.value, Ja(), De.value, !1);
+				e = oo(F.value, {
+					...I.value,
+					target_rtp: Ya(L.value)
+				}, R.value, Xa(), Te.value, !1);
 			} catch (e) {
-				K.value = "warning", G.value = Be(e);
+				q.value = "warning", K.value = Re(e);
 				return;
 			}
-			let t = uo(O.value, e);
+			let t = po(D.value, e);
 			try {
-				await ce.confirm(`确认保存 ${e.site_id} / ${e.symbol} 的 ${Object.keys(e.changes).length} 项修改？`, "确认预测网格配置", {
+				await z.confirm(`确认保存 ${e.site_id} / ${e.symbol} 的 ${Object.keys(e.changes).length} 项修改？`, "确认预测网格配置", {
 					type: "warning",
 					confirmButtonText: "确认保存",
 					cancelButtonText: "取消"
@@ -5027,42 +5195,42 @@ var xo = {
 			} catch {
 				return;
 			}
-			if (Ue(), !Le.value || !I.value || !L.value) {
-				K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+			if (Ve(), !Fe.value || !F.value || !I.value) {
+				q.value = "warning", K.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 				return;
 			}
 			let n;
 			try {
-				n = io(I.value, {
-					...L.value,
-					target_rtp: qa(R.value)
-				}, z.value, t.command.client_request_id, De.value, !1);
+				n = oo(F.value, {
+					...I.value,
+					target_rtp: Ya(L.value)
+				}, R.value, t.command.client_request_id, Te.value, !1);
 			} catch {
-				K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+				q.value = "warning", K.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 				return;
 			}
 			let r;
 			try {
-				r = fo(S(), t, O.value, n), Ue();
+				r = mo(b(), t, D.value, n), Ve();
 			} catch (e) {
 				if (e?.message === "STALE_CONFIRMATION") {
-					K.value = "warning", G.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
+					q.value = "warning", K.value = "确认期间账号、目标或编辑状态已变化，本次保存已取消";
 					return;
 				}
-				ve.value = !0;
+				_e.value = !0;
 				return;
 			}
-			rt(r, "save");
+			tt(r, "save");
 		}
-		async function tt() {
-			Ue(), !(!Pe.value || !Re.value || fe.value || be.value) && rt(Pe.value, "receipt");
+		async function $e() {
+			Ve(), !(!Me.value || !Ie.value || W.value || ye.value) && tt(Me.value, "receipt");
 		}
-		async function nt() {
-			if (Ue(), !ze.value || !Pe.value) return;
-			let e = Pe.value;
-			be.value = !0;
+		async function et() {
+			if (Ve(), !Le.value || !Me.value) return;
+			let e = Me.value;
+			ye.value = !0;
 			try {
-				await ce.confirm(`确认恢复 ${e.command.site_id} / ${e.command.symbol} 的原请求 ${e.command.client_request_id}？将沿用原编号和原参数；已提交则返回原回执，尚未提交则保存原配置，不使用当前页面的新修改。`, "恢复原配置请求", {
+				await z.confirm(`确认恢复 ${e.command.site_id} / ${e.command.symbol} 的原请求 ${e.command.client_request_id}？将沿用原编号和原参数；已提交则返回原回执，尚未提交则保存原配置，不使用当前页面的新修改。`, "恢复原配置请求", {
 					type: "warning",
 					confirmButtonText: "确认恢复",
 					cancelButtonText: "取消"
@@ -5070,139 +5238,139 @@ var xo = {
 			} catch {
 				return;
 			} finally {
-				be.value = !1;
+				ye.value = !1;
 			}
-			if (Ue(), !ze.value || JSON.stringify(e) !== JSON.stringify(Pe.value)) {
-				K.value = "warning", G.value = "确认期间账号、权限或原请求已变化，本次恢复已取消，请重新查询原操作回执";
+			if (Ve(), !Le.value || JSON.stringify(e) !== JSON.stringify(Me.value)) {
+				q.value = "warning", K.value = "确认期间账号、权限或原请求已变化，本次恢复已取消，请重新查询原操作回执";
 				return;
 			}
-			await rt(e, "recover");
+			await tt(e, "recover");
 		}
-		async function rt(e, t) {
-			let n = ++we, r = We(), i = Ce.next(r);
-			fe.value = !0, ye.value = "", G.value = "";
+		async function tt(e, t) {
+			let n = ++Y, r = He(), i = Se.next(r);
+			W.value = !0, ve.value = "", K.value = "";
 			try {
-				let n = await go(S(), e, t, (e, t) => e === "save" ? _(t) : h(t));
-				if (!i.current(We())) return;
-				if (Ue(), n.status === "success") {
-					let e = O.value;
-					z.value = "通过预测网格配置页面保存配置", fe.value = !1, await Ke(), e === O.value && (K.value = "warning", G.value = W.value ? "配置已保存；最新配置刷新失败，请手动刷新" : "");
-				} else if (t === "recover" && n.status === "rejected" && n.error?.error_code === "VERSION_CONFLICT") if (!n.journalCleared || pe.value || ve.value) K.value = "warning", G.value = "旧请求已明确拒绝，但本机待确认记录已变化，请重新核对当前记录";
+				let n = await vo(b(), e, t, (e, t) => e === "save" ? g(t) : m(t));
+				if (!i.current(He())) return;
+				if (Ve(), n.status === "success") {
+					let e = D.value;
+					R.value = "通过预测网格配置页面保存配置", W.value = !1, await We(), e === D.value && (q.value = "warning", K.value = G.value ? "配置已保存；最新配置刷新失败，请手动刷新" : "");
+				} else if (t === "recover" && n.status === "rejected" && n.error?.error_code === "VERSION_CONFLICT") if (!n.journalCleared || fe.value || _e.value) q.value = "warning", K.value = "旧请求已明确拒绝，但本机待确认记录已变化，请重新核对当前记录";
 				else {
-					let t = O.value;
-					if (await Ke(e.command), N.value && P.value && q && await q, t === O.value) {
-						K.value = "warning";
-						let t = N.value === e.command.site_id && P.value === e.command.symbol && M.value.some((t) => t.site_id === e.command.site_id && t.products.some((t) => t.symbol === e.command.symbol));
-						G.value = "旧请求未生效，配置版本已变化；已清除旧待确认记录。" + (t ? W.value || !I.value ? "最新配置刷新失败，请手动刷新" : "请以当前配置为准" : `原目标当前不可见（${e.command.site_id} / ${e.command.symbol}），请核对权限和配置`);
+					let t = D.value;
+					if (await We(e.command), M.value && N.value && J && await J, t === D.value) {
+						q.value = "warning";
+						let t = M.value === e.command.site_id && N.value === e.command.symbol && j.value.some((t) => t.site_id === e.command.site_id && t.products.some((t) => t.symbol === e.command.symbol));
+						K.value = "旧请求未生效，配置版本已变化；已清除旧待确认记录。" + (t ? G.value || !F.value ? "最新配置刷新失败，请手动刷新" : "请以当前配置为准" : `原目标当前不可见（${e.command.site_id} / ${e.command.symbol}），请核对权限和配置`);
 					}
 				}
-				else K.value = n.status === "unknown" ? "warning" : "info", t === "receipt" && ho(n.error) && JSON.stringify(Pe.value) === JSON.stringify(e) ? (ye.value = JSON.stringify(e), G.value = "未找到原操作回执，可使用原编号和原参数恢复请求") : t === "recover" ? G.value = "恢复尚未确认，原请求已保留，请重新查询原操作回执 · " + Be(n.error) : G.value = n.status === "unknown" ? "原操作结果仍待确认，请使用原请求查询回执" : "保存已明确拒绝，可修正后重新提交 · " + Be(n.error);
+				else q.value = n.status === "unknown" ? "warning" : "info", t === "receipt" && _o(n.error) && JSON.stringify(Me.value) === JSON.stringify(e) ? (ve.value = JSON.stringify(e), K.value = "未找到原操作回执，可使用原编号和原参数恢复请求") : t === "recover" ? K.value = "恢复尚未确认，原请求已保留，请重新查询原操作回执 · " + Re(n.error) : K.value = n.status === "unknown" ? "原操作结果仍待确认，请使用原请求查询回执" : "保存已明确拒绝，可修正后重新提交 · " + Re(n.error);
 			} catch (e) {
-				i.current(We()) && (Ue(), K.value = "warning", G.value = "原操作结果仍待确认 · " + Be(e));
+				i.current(He()) && (Ve(), q.value = "warning", K.value = "原操作结果仍待确认 · " + Re(e));
 			} finally {
-				n === we && (fe.value = !1, Ue());
+				n === Y && (W.value = !1, Ve());
 			}
 		}
-		async function it() {
-			if (!Ie.value) return !0;
+		async function nt() {
+			if (!Pe.value) return !0;
 			try {
-				return await ce.confirm("当前有未保存修改或待确认操作，离开不会删除原记录。仍要离开吗？", "离开预测网格配置", { type: "warning" }), !0;
+				return await z.confirm("当前有未保存修改或待确认操作，离开不会删除原记录。仍要离开吗？", "离开预测网格配置", { type: "warning" }), !0;
 			} catch {
 				return !1;
 			}
 		}
-		function at() {
+		function rt() {
 			return JSON.stringify({
-				operator: O.value,
-				site: N.value,
-				symbol: P.value,
-				snapshot: I.value,
-				draft: L.value,
-				rtp: R.value,
-				reason: z.value
+				operator: D.value,
+				site: M.value,
+				symbol: N.value,
+				snapshot: F.value,
+				draft: I.value,
+				rtp: L.value,
+				reason: R.value
 			});
 		}
-		async function ot() {
-			if (!fe.value) {
-				if (Me.value) {
-					let e = at();
+		async function it() {
+			if (!W.value) {
+				if (Ae.value) {
+					let e = rt();
 					try {
-						await ce.confirm("刷新会丢弃当前未保存修改，仍要刷新吗？", "刷新预测网格配置", { type: "warning" });
+						await z.confirm("刷新会丢弃当前未保存修改，仍要刷新吗？", "刷新预测网格配置", { type: "warning" });
 					} catch {
 						return;
 					}
-					if (fe.value || e !== at()) {
-						K.value = "warning", G.value = "确认期间编辑状态已变化，本次刷新已取消";
+					if (W.value || e !== rt()) {
+						q.value = "warning", K.value = "确认期间编辑状态已变化，本次刷新已取消";
 						return;
 					}
 				}
-				await Ke();
+				await We();
 			}
 		}
-		function st(e) {
-			Ie.value && (e.preventDefault(), e.returnValue = "");
+		function at(e) {
+			Pe.value && (e.preventDefault(), e.returnValue = "");
 		}
-		return oe(() => [
-			j.value,
-			ae.value,
-			D.value
-		], () => Ke(), { immediate: !0 }), _e(it), window.addEventListener("beforeunload", st), te(() => {
-			ye.value = "", V.value = !1, xe.close(), Se.close(), Ce.close(), window.removeEventListener("beforeunload", st);
+		return se(() => [
+			A.value,
+			oe.value,
+			E.value
+		], () => We(), { immediate: !0 }), ge(nt), window.addEventListener("beforeunload", at), ne(() => {
+			ve.value = "", V.value = !1, be.close(), xe.close(), Se.close(), window.removeEventListener("beforeunload", at);
 		}), n({
-			hasBlockingWork: Ie,
-			confirmLeave: it,
-			refresh: ot,
+			hasBlockingWork: Pe,
+			confirmLeave: nt,
+			refresh: it,
 			loading: H
-		}), (e, n) => (v(), s("section", xo, [
-			Te.value ? (v(), a(T(k), {
+		}), (e, n) => (_(), s("section", Co, [
+			Ce.value ? (_(), a(w(O), {
 				key: 0,
-				title: Te.value,
+				title: Ce.value,
 				type: "warning",
 				closable: !1
-			}, null, 8, ["title"])) : ve.value ? (v(), a(T(k), {
+			}, null, 8, ["title"])) : _e.value ? (_(), a(w(O), {
 				key: 1,
 				title: "本机保存的待确认操作记录已损坏或不可用，请停止操作并联系管理员核验",
 				type: "error",
 				closable: !1
-			})) : Fe.value ? (v(), a(T(k), {
+			})) : Ne.value ? (_(), a(w(O), {
 				key: 2,
 				title: "检测到其他账号尚未确认的预测网格配置操作，当前账号不可覆盖，请切回原账号查询回执",
 				type: "error",
 				closable: !1
 			})) : o("", !0),
-			W.value ? (v(), s("div", So, [d(T(k), {
-				title: W.value,
+			G.value ? (_(), s("div", wo, [d(w(O), {
+				title: G.value,
 				type: "error",
 				closable: !1
-			}, null, 8, ["title"]), d(T(A), {
+			}, null, 8, ["title"]), d(w(k), {
 				loading: H.value || U.value,
-				disabled: fe.value || !!pe.value,
-				onClick: ot
+				disabled: W.value || !!fe.value,
+				onClick: it
 			}, {
-				default: E(() => [...n[9] ||= [u("重试", -1)]]),
+				default: T(() => [...n[9] ||= [u("重试", -1)]]),
 				_: 1
 			}, 8, ["loading", "disabled"])])) : o("", !0),
-			G.value ? (v(), a(T(k), {
+			K.value ? (_(), a(w(O), {
 				key: 4,
-				title: G.value,
-				type: K.value,
+				title: K.value,
+				type: q.value,
 				closable: !1
 			}, null, 8, ["title", "type"])) : o("", !0),
-			Pe.value ? (v(), s("div", Co, [c("div", null, [n[10] ||= c("strong", null, "原配置操作结果待确认", -1), c("small", null, w(Pe.value.command.site_id) + " · " + w(Pe.value.command.symbol) + " · " + w(Pe.value.command.client_request_id), 1)]), c("div", wo, [d(T(A), {
+			Me.value ? (_(), s("div", To, [c("div", null, [n[10] ||= c("strong", null, "原配置操作结果待确认", -1), c("small", null, S(Me.value.command.site_id) + " · " + S(Me.value.command.symbol) + " · " + S(Me.value.command.client_request_id), 1)]), c("div", Eo, [d(w(k), {
 				type: "warning",
-				loading: fe.value,
-				disabled: !Re.value || be.value,
-				onClick: tt
+				loading: W.value,
+				disabled: !Ie.value || ye.value,
+				onClick: $e
 			}, {
-				default: E(() => [...n[11] ||= [u("查询原操作回执", -1)]]),
+				default: T(() => [...n[11] ||= [u("查询原操作回执", -1)]]),
 				_: 1
-			}, 8, ["loading", "disabled"]), ze.value || be.value ? (v(), a(T(A), {
+			}, 8, ["loading", "disabled"]), Le.value || ye.value ? (_(), a(w(k), {
 				key: 0,
 				type: "warning",
-				disabled: !ze.value,
-				onClick: nt
+				disabled: !Le.value,
+				onClick: et
 			}, {
-				default: E(() => [...n[12] ||= [u("恢复原请求", -1)]]),
+				default: T(() => [...n[12] ||= [u("恢复原请求", -1)]]),
 				_: 1
 			}, 8, ["disabled"])) : o("", !0)])])) : o("", !0),
 			d(gn, {
@@ -5210,116 +5378,116 @@ var xo = {
 				"min-height": "0px",
 				class: "grid-loading-region"
 			}, {
-				default: E(() => [c("div", To, [c("aside", Eo, [
-					c("div", Do, [n[13] ||= c("strong", null, "交易对配置", -1), c("span", null, w(je.value.length) + " 条", 1)]),
-					M.value.length > 1 ? (v(), a(T(ue), {
+				default: T(() => [c("div", Do, [c("aside", Oo, [
+					c("div", ko, [n[13] ||= c("strong", null, "交易对配置", -1), c("span", null, S(ke.value.length) + " 条", 1)]),
+					j.value.length > 1 ? (_(), a(w(ue), {
 						key: 0,
-						modelValue: N.value,
-						"onUpdate:modelValue": n[0] ||= (e) => N.value = e,
+						modelValue: M.value,
+						"onUpdate:modelValue": n[0] ||= (e) => M.value = e,
 						"aria-label": "选择站点",
-						disabled: Ie.value,
-						onChange: qe
+						disabled: Pe.value,
+						onChange: Ge
 					}, {
-						default: E(() => [(v(!0), s(r, null, re(M.value, (e) => (v(), a(T(le), {
+						default: T(() => [(_(!0), s(r, null, ae(j.value, (e) => (_(), a(w(le), {
 							key: e.site_id,
 							label: e.site_id,
 							value: e.site_id
 						}, null, 8, ["label", "value"]))), 128))]),
 						_: 1
 					}, 8, ["modelValue", "disabled"])) : o("", !0),
-					ke.value ? (v(), s("p", Oo, [u(w(ke.value), 1), d(T(A), {
+					De.value ? (_(), s("p", Ao, [u(S(De.value), 1), d(w(k), {
 						link: "",
 						type: "primary",
-						disabled: Ie.value,
-						onClick: ot
+						disabled: Pe.value,
+						onClick: it
 					}, {
-						default: E(() => [...n[14] ||= [u("重试", -1)]]),
+						default: T(() => [...n[14] ||= [u("重试", -1)]]),
 						_: 1
 					}, 8, ["disabled"])])) : o("", !0),
-					d(T(t), {
-						modelValue: se.value,
-						"onUpdate:modelValue": n[1] ||= (e) => se.value = e,
+					d(w(t), {
+						modelValue: ce.value,
+						"onUpdate:modelValue": n[1] ||= (e) => ce.value = e,
 						clearable: "",
 						placeholder: "搜索交易对",
 						"aria-label": "搜索交易对"
 					}, null, 8, ["modelValue"]),
-					c("div", ko, [(v(!0), s(r, null, re(je.value, (e) => (v(), s("div", {
+					c("div", jo, [(_(!0), s(r, null, ae(ke.value, (e) => (_(), s("div", {
 						key: e.symbol,
-						class: ee(["symbol-row", { active: e.symbol === P.value }])
+						class: te(["symbol-row", { active: e.symbol === N.value }])
 					}, [
 						c("button", {
 							type: "button",
 							class: "symbol-button",
-							disabled: !e.configured || Ie.value && e.symbol !== P.value,
-							onClick: (t) => Je(e.symbol)
-						}, [d(T(ne), { symbol: e.symbol }, null, 8, ["symbol"])], 8, Ao),
-						e.configured ? (v(), a(T(de), {
+							disabled: !e.configured || Pe.value && e.symbol !== N.value,
+							onClick: (t) => Ke(e.symbol)
+						}, [d(w(re), { symbol: e.symbol }, null, 8, ["symbol"])], 8, Mo),
+						e.configured ? (_(), a(w(de), {
 							key: 1,
-							"model-value": Xe(e),
-							disabled: Ze(e),
+							"model-value": Je(e),
+							disabled: Ye(e),
 							"aria-label": `${e.symbol} 开放配置`,
-							onChange: (t) => Qe(e, t)
+							onChange: (t) => Xe(e, t)
 						}, null, 8, [
 							"model-value",
 							"disabled",
 							"aria-label",
 							"onChange"
-						])) : (v(), s("span", jo, "未配置")),
-						e.symbol === P.value && Me.value ? (v(), s("small", Mo, "未保存")) : o("", !0)
-					], 2))), 128)), !H.value && Ee.value && !je.value.length ? (v(), a(T(F), {
+						])) : (_(), s("span", No, "未配置")),
+						e.symbol === N.value && Ae.value ? (_(), s("small", Po, "未保存")) : o("", !0)
+					], 2))), 128)), !H.value && we.value && !ke.value.length ? (_(), a(w(P), {
 						key: 0,
 						description: "当前站点没有已授权的预测网格产品",
 						"image-size": 56
 					})) : o("", !0)])
-				]), c("main", No, [!H.value && !M.value.length && !W.value ? (v(), a(T(F), {
+				]), c("main", Fo, [!H.value && !j.value.length && !G.value ? (_(), a(w(P), {
 					key: 0,
 					description: "当前账号暂无授权站点"
-				})) : Ee.value && !P.value ? (v(), a(T(F), {
+				})) : we.value && !N.value ? (_(), a(w(P), {
 					key: 1,
 					description: "请选择交易对查看配置"
-				})) : I.value && L.value ? (v(), s(r, { key: 2 }, [
-					c("header", Po, [c("div", null, [
-						c("h2", null, w(I.value.symbol) + " · 预测网格", 1),
-						c("p", Fo, "更新时间 " + w(Ve.value), 1),
-						M.value.length > 1 ? (v(), s("p", Io, "当前站点：" + w(I.value.site_id), 1)) : o("", !0)
-					]), c("div", Lo, [d(T(A), { onClick: n[2] ||= (e) => B.value = !0 }, {
-						default: E(() => [...n[15] ||= [u("玩法说明", -1)]]),
+				})) : F.value && I.value ? (_(), s(r, { key: 2 }, [
+					c("header", Io, [c("div", null, [
+						c("h2", null, S(F.value.symbol) + " · 预测网格", 1),
+						c("p", Lo, "更新时间 " + S(ze.value), 1),
+						j.value.length > 1 ? (_(), s("p", Ro, "当前站点：" + S(F.value.site_id), 1)) : o("", !0)
+					]), c("div", zo, [d(w(k), { onClick: n[2] ||= (e) => B.value = !0 }, {
+						default: T(() => [...n[15] ||= [u("玩法说明", -1)]]),
 						_: 1
-					}), T(D) ? (v(), a(T(A), {
+					}), w(E) ? (_(), a(w(k), {
 						key: 0,
 						type: "primary",
-						loading: fe.value,
-						disabled: !Le.value || !Me.value,
-						onClick: et
+						loading: W.value,
+						disabled: !Fe.value || !Ae.value,
+						onClick: Qe
 					}, {
-						default: E(() => [...n[16] ||= [u("保存配置", -1)]]),
+						default: T(() => [...n[16] ||= [u("保存配置", -1)]]),
 						_: 1
 					}, 8, ["loading", "disabled"])) : o("", !0)])]),
-					I.value.requested_agent_id === "0" ? o("", !0) : (v(), s("p", Ro, w(I.value.inherited ? "当前继承所属站点配置" : "当前使用商户配置") + "；已有商户配置保持不变。平台返奖率上限 " + w(I.value.default_target_rtp ? `${T(Ka)(I.value.default_target_rtp)}%` : "—") + "，单笔范围 " + w(I.value.default_min_order_amount) + " ~ " + w(I.value.default_max_order_amount) + " USDT。", 1)),
-					!x.value && I.value.default_enabled === !1 ? (v(), a(T(k), {
+					F.value.requested_agent_id === "0" ? o("", !0) : (_(), s("p", Bo, S(F.value.inherited ? "当前继承所属站点配置" : "当前使用商户配置") + "；已有商户配置保持不变。平台返奖率上限 " + S(F.value.default_target_rtp ? `${w(Ja)(F.value.default_target_rtp)}%` : "—") + "，单笔范围 " + S(F.value.default_min_order_amount) + " ~ " + S(F.value.default_max_order_amount) + " USDT。", 1)),
+					!y.value && F.value.default_enabled === !1 ? (_(), a(w(O), {
 						key: 1,
 						title: "平台已关闭此币种，商户不能开启",
 						type: "info",
 						closable: !1
 					})) : o("", !0),
 					d(gn, { loading: U.value }, {
-						default: E(() => [
-							I.value.layout ? (v(), s("article", zo, [n[17] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "价格精度"), c("p", { class: "parameter-description" }, "由总后台统一设置，此处只读")], -1), c("div", Bo, [c("label", null, [c("span", null, "价格小数位：" + w(I.value.layout.price_decimals == null ? "未设置（沿用原规则）" : `${I.value.layout.price_decimals} 位`), 1)])])])) : o("", !0),
-							c("article", Vo, [n[25] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "赔率配置"), c("p", { class: "parameter-description" }, "格子赔率按目标返奖率与命中概率动态计算")], -1), c("div", Ho, [
+						default: T(() => [
+							F.value.layout ? (_(), s("article", Vo, [n[17] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "价格精度"), c("p", { class: "parameter-description" }, "由总后台统一设置，此处只读")], -1), c("div", Ho, [c("label", null, [c("span", null, "价格小数位：" + S(F.value.layout.price_decimals == null ? "未设置（沿用原规则）" : `${F.value.layout.price_decimals} 位`), 1)])])])) : o("", !0),
+							c("article", Uo, [n[25] ||= c("header", { class: "parameter-heading" }, [c("h3", null, "赔率配置"), c("p", { class: "parameter-description" }, "格子赔率按目标返奖率与命中概率动态计算")], -1), c("div", Wo, [
 								c("label", null, [
 									c("span", null, [n[18] ||= u("目标返奖率", -1), d(yn, {
 										label: "目标返奖率",
 										content: "例如 97%：命中概率为 20% 时，计算赔率为 4.85x。"
 									})]),
 									d(En, {
-										"input-component": T(t),
-										modelValue: R.value,
-										"onUpdate:modelValue": n[3] ||= (e) => R.value = e,
-										disabled: !Le.value,
+										"input-component": w(t),
+										modelValue: L.value,
+										"onUpdate:modelValue": n[3] ||= (e) => L.value = e,
+										disabled: !Fe.value,
 										inputmode: "decimal",
-										onInput: $e
+										onInput: Ze
 									}, {
-										append: E(() => [...n[19] ||= [u("%", -1)]]),
+										append: T(() => [...n[19] ||= [u("%", -1)]]),
 										_: 1
 									}, 8, [
 										"input-component",
@@ -5328,30 +5496,30 @@ var xo = {
 									]),
 									n[20] ||= c("small", null, "例如 97%：命中概率为 20% 时，计算赔率为 4.85x", -1)
 								]),
-								De.value ? (v(), s("label", Uo, [n[22] ||= c("span", null, "最低赔率", -1), d(En, {
-									"input-component": T(t),
-									modelValue: L.value.min_multiplier,
-									"onUpdate:modelValue": n[4] ||= (e) => L.value.min_multiplier = e,
-									disabled: !Le.value,
+								Te.value ? (_(), s("label", Go, [n[22] ||= c("span", null, "最低赔率", -1), d(En, {
+									"input-component": w(t),
+									modelValue: I.value.min_multiplier,
+									"onUpdate:modelValue": n[4] ||= (e) => I.value.min_multiplier = e,
+									disabled: !Fe.value,
 									inputmode: "decimal",
-									onInput: $e
+									onInput: Ze
 								}, {
-									append: E(() => [...n[21] ||= [u("x", -1)]]),
+									append: T(() => [...n[21] ||= [u("x", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
 									"modelValue",
 									"disabled"
 								])])) : o("", !0),
-								De.value ? (v(), s("label", Wo, [n[24] ||= c("span", null, "最高赔率", -1), d(En, {
-									"input-component": T(t),
-									modelValue: L.value.max_multiplier,
-									"onUpdate:modelValue": n[5] ||= (e) => L.value.max_multiplier = e,
-									disabled: !Le.value,
+								Te.value ? (_(), s("label", Ko, [n[24] ||= c("span", null, "最高赔率", -1), d(En, {
+									"input-component": w(t),
+									modelValue: I.value.max_multiplier,
+									"onUpdate:modelValue": n[5] ||= (e) => I.value.max_multiplier = e,
+									disabled: !Fe.value,
 									inputmode: "decimal",
-									onInput: $e
+									onInput: Ze
 								}, {
-									append: E(() => [...n[23] ||= [u("x", -1)]]),
+									append: T(() => [...n[23] ||= [u("x", -1)]]),
 									_: 1
 								}, 8, [
 									"input-component",
@@ -5359,36 +5527,36 @@ var xo = {
 									"disabled"
 								])])) : o("", !0)
 							])]),
-							c("article", Go, [c("header", Ko, [n[26] ||= c("h3", null, "下注限制", -1), c("p", qo, w(I.value.symbol) + " 每个格子生成一笔独立订单", 1)]), c("div", Jo, [c("label", null, [c("span", null, [n[27] ||= u("最小下注金额", -1), d(yn, { label: "最小下注金额" })]), d(En, {
-								"input-component": T(t),
-								modelValue: L.value.min_order_amount,
-								"onUpdate:modelValue": n[6] ||= (e) => L.value.min_order_amount = e,
-								disabled: !Le.value,
+							c("article", qo, [c("header", Jo, [n[26] ||= c("h3", null, "下注限制", -1), c("p", Yo, S(F.value.symbol) + " 每个格子生成一笔独立订单", 1)]), c("div", Xo, [c("label", null, [c("span", null, [n[27] ||= u("最小下注金额", -1), d(yn, { label: "最小下注金额" })]), d(En, {
+								"input-component": w(t),
+								modelValue: I.value.min_order_amount,
+								"onUpdate:modelValue": n[6] ||= (e) => I.value.min_order_amount = e,
+								disabled: !Fe.value,
 								inputmode: "decimal",
-								onInput: $e
+								onInput: Ze
 							}, {
-								append: E(() => [...n[28] ||= [u("USDT", -1)]]),
+								append: T(() => [...n[28] ||= [u("USDT", -1)]]),
 								_: 1
 							}, 8, [
 								"input-component",
 								"modelValue",
 								"disabled"
 							])]), c("label", null, [c("span", null, [n[29] ||= u("最大下注金额", -1), d(yn, { label: "最大下注金额" })]), d(En, {
-								"input-component": T(t),
-								modelValue: L.value.max_order_amount,
-								"onUpdate:modelValue": n[7] ||= (e) => L.value.max_order_amount = e,
-								disabled: !Le.value,
+								"input-component": w(t),
+								modelValue: I.value.max_order_amount,
+								"onUpdate:modelValue": n[7] ||= (e) => I.value.max_order_amount = e,
+								disabled: !Fe.value,
 								inputmode: "decimal",
-								onInput: $e
+								onInput: Ze
 							}, {
-								append: E(() => [...n[30] ||= [u("USDT", -1)]]),
+								append: T(() => [...n[30] ||= [u("USDT", -1)]]),
 								_: 1
 							}, 8, [
 								"input-component",
 								"modelValue",
 								"disabled"
 							])])])]),
-							T(D) ? o("", !0) : (v(), a(T(k), {
+							w(E) ? o("", !0) : (_(), a(w(O), {
 								key: 1,
 								title: "当前账号只有预测网格配置查看权限",
 								type: "info",
@@ -5406,13 +5574,13 @@ var xo = {
 			}, null, 8, ["modelValue"])
 		]));
 	}
-}), [["__scopeId", "data-v-2768af6f"]]), Xo = {
+}), [["__scopeId", "data-v-2768af6f"]]), Qo = {
 	class: "prediction-config prediction-table-page",
 	"data-prediction-page": "OWNER_CONFIG"
-}, Zo = {
+}, $o = {
 	class: "game-tabs",
 	"aria-label": "选择预测玩法"
-}, Qo = {
+}, es = {
 	class: "game-choice-icon",
 	viewBox: "0 0 24 24",
 	fill: "none",
@@ -5421,75 +5589,75 @@ var xo = {
 	"stroke-linecap": "round",
 	"stroke-linejoin": "round",
 	"aria-hidden": "true"
-}, $o = { class: "game-choice-content" }, es = {
+}, ts = { class: "game-choice-content" }, ns = {
 	key: 0,
 	role: "alert"
-}, ts = {
+}, rs = {
 	key: 1,
 	role: "alert"
-}, ns = {
+}, is = {
 	key: 3,
 	class: "config-layout"
-}, rs = {
+}, as = {
 	class: "symbol-directory",
 	"aria-label": "交易对配置"
-}, is = {
+}, os = {
 	key: 0,
 	role: "status"
-}, as = {
+}, ss = {
 	key: 1,
 	class: "catalog-error",
 	role: "alert"
-}, os = { class: "symbol-list" }, ss = [
+}, cs = { class: "symbol-list" }, ls = [
 	"aria-pressed",
 	"disabled",
 	"onClick"
-], cs = ["title"], ls = { class: "symbol-all-control" }, us = { key: 2 }, ds = { class: "config-content" }, fs = { class: "config-title" }, ps = { class: "config-title-actions" }, ms = {
+], us = ["title"], ds = { class: "symbol-all-control" }, fs = { key: 2 }, ps = { class: "config-content" }, ms = { class: "config-title" }, hs = { class: "config-title-actions" }, gs = {
 	key: 0,
 	class: "draft-label"
-}, hs = {
-	key: 0,
-	role: "alert"
-}, gs = {
-	key: 1,
-	role: "status"
 }, _s = {
 	key: 0,
-	class: "config-note"
+	role: "alert"
 }, vs = {
+	key: 1,
+	role: "status"
+}, ys = {
+	key: 0,
+	class: "config-note"
+}, bs = {
 	key: 1,
 	class: "config-note",
 	role: "alert"
-}, ys = {
+}, xs = {
 	key: 2,
 	class: "config-note"
-}, bs = {
+}, Ss = {
 	key: 3,
 	class: "config-note"
-}, xs = {
+}, Cs = {
 	key: 4,
 	class: "config-note"
-}, Ss = { class: "parameter-card room-config" }, Cs = { class: "parameter-heading" }, ws = { class: "field-description" }, Ts = { class: "room-config-body" }, Es = { class: "parameter-cards" }, Ds = {
+}, ws = { class: "parameter-card room-config" }, Ts = { class: "parameter-heading" }, Es = { class: "field-description" }, Ds = { class: "room-config-body" }, Os = { class: "parameter-cards" }, ks = {
 	class: "parameter-card",
 	"data-price-precision": !0
-}, Os = { class: "room-config-body" }, ks = { class: "field-label" }, As = {
+}, As = { class: "room-config-body" }, js = { class: "field-label" }, Ms = {
 	key: 0,
 	class: "config-note"
-}, js = { class: "parameter-card" }, Ms = { class: "parameter-heading" }, Ns = { class: "field-description" }, Ps = {
+}, Ns = { class: "parameter-card" }, Ps = { class: "parameter-heading" }, Fs = { class: "field-description" }, Is = {
 	key: 0,
 	class: "limit-fields odds-fields"
-}, Fs = {
+}, Ls = {
 	key: 1,
 	class: "limit-fields"
-}, Is = { class: "parameter-card" }, Ls = { class: "parameter-heading" }, Rs = { class: "field-description" }, zs = { class: "limit-fields" }, Bs = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Rs = { class: "parameter-card" }, zs = { class: "parameter-heading" }, Bs = { class: "field-description" }, Vs = { class: "limit-fields" }, Hs = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "OwnerConfig",
 	props: { actor: {} },
 	setup(e, { expose: n }) {
-		let l = me().api, { siteDirectorySymbols: f } = l, p = ge(), m = e, h = he(), g = i(() => Ji(m.actor)), _ = i(() => !N.value || N.value.operator_id === m.actor.operator_id && N.value.agent_id === m.actor.agent_id && N.value.config_site_id === m.actor.config_site_id && N.value.kind === m.actor.kind);
-		function ne(e) {
-			return e.platform_enabled || g.value && (e.enabled || !!e.blocked_reason);
+		let l = pe().api, { siteDirectorySymbols: f } = l, ee = he(), p = e, m = me(), h = i(() => Xi(p.actor)), g = i(() => !M.value || M.value.operator_id === p.actor.operator_id && M.value.agent_id === p.actor.agent_id && M.value.config_site_id === p.actor.config_site_id && M.value.kind === p.actor.kind);
+		function re(e) {
+			return e.symbol_available ?? (e.platform_enabled || p.actor.kind !== "SITE" && h.value && (e.enabled || !!e.blocked_reason));
 		}
-		let y = [
+		let ie = [
 			{
 				key: "UP_DOWN",
 				label: "涨跌预测",
@@ -5505,146 +5673,146 @@ var xo = {
 				label: "预测网格",
 				description: "按时间格与价格区间展示网格预测规则"
 			}
-		], x = b("UP_DOWN"), S = C([]), ie = b(""), ae = b(""), D = b([]), O = b(!1), k = b(!1), j = b(""), M = b(""), N = C(null), P = b(!1), F = b(!1), se = new ta(), L = !0, R = () => L && Yi(m.actor) && Ti(h.userInfo.id) === m.actor.operator_id && h.userInfo.can_manage_prediction_config === !0 && (h.perms.includes("*") || h.perms.includes("prediction_config:lists")), z = i(() => R() && !P.value && !F.value), ce = i(() => S.value.find((e) => e.symbol === ie.value)), le = b("35"), B = b(0), ue = i(() => D.value.filter((e) => e.owner_enabled && (g.value || e.platform_enabled))), V = i(() => ue.value.find((e) => e.duration_seconds === le.value)), H = i(() => D.value.map((e) => ({
+		], y = v("UP_DOWN"), b = x([]), C = v(""), oe = v(""), E = v([]), D = v(!1), O = v(!1), A = v(""), j = v(""), M = x(null), N = v(!1), P = v(!1), ce = new ra(), I = !0, L = () => I && Zi(p.actor) && Ti(m.userInfo.id) === p.actor.operator_id && m.userInfo.can_manage_prediction_config === !0 && (m.perms.includes("*") || m.perms.includes("prediction_config:lists")), R = i(() => L() && !N.value && !P.value), z = i(() => b.value.find((e) => e.symbol === C.value && re(e))), le = v("35"), B = v(0), ue = i(() => E.value.filter((e) => e.owner_enabled && (h.value || e.platform_enabled))), V = i(() => ue.value.find((e) => e.duration_seconds === le.value)), H = i(() => E.value.map((e) => ({
 			key: e.duration_seconds,
 			label: `${e.observation_seconds}秒`,
-			present: e.owner_enabled && (g.value || e.platform_enabled),
+			present: e.owner_enabled && (h.value || e.platform_enabled),
 			allowed: e.platform_enabled
 		})));
 		function U(e, t) {
-			if (!z.value || k.value || N.value || O.value) return;
-			let n = D.value.find((t) => t.duration_seconds === e);
+			if (!R.value || O.value || M.value || D.value) return;
+			let n = E.value.find((t) => t.duration_seconds === e);
 			!n || n.owner_enabled === t || t && !n.platform_enabled || (n.owner_enabled = t, le.value = t ? e : ue.value[0]?.duration_seconds ?? "");
 		}
-		function fe(e) {
-			let t = e.symbol === ie.value ? ue.value.map((e) => e.observation_seconds) : e.rules.filter((e) => e.owner_enabled && (g.value || e.platform_enabled)).map((e) => x.value === "UP_DOWN" ? String(BigInt(e.rule.duration_seconds) - 30n) : e.rule.duration_seconds);
+		function W(e) {
+			let t = e.symbol === C.value ? ue.value.map((e) => e.observation_seconds) : e.rules.filter((e) => e.owner_enabled && (h.value || e.platform_enabled)).map((e) => y.value === "UP_DOWN" ? String(BigInt(e.rule.duration_seconds) - 30n) : e.rule.duration_seconds);
 			return t.length ? t.map((e) => `${e}秒`).join(" · ") : "暂无房间";
 		}
-		let W = b(!0), G = () => JSON.stringify([W.value, D.value.map((e) => [
+		let G = v(!0), K = () => JSON.stringify([G.value, E.value.map((e) => [
 			e.minimum_stake,
 			e.maximum_stake,
 			e.owner_enabled,
 			e.target_payout_rate,
 			e.maximum_odds,
 			e.fixed_odds
-		])]), K = b(""), pe = i(() => G() !== K.value), _e = C(), ve = i(() => k.value || pe.value || !!N.value || x.value === "GRID" && !!_e.value?.hasBlockingWork);
-		n({ hasBlockingWork: ve });
-		let ye = b([]), be = i(() => bo(S.value.filter(ne), ye.value, (e) => e.platform_enabled && e.enabled).filter((e) => e.symbol.includes(ae.value.trim().toUpperCase())));
-		function xe() {
+		])]), q = v(""), fe = i(() => K() !== q.value), ge = x(), _e = i(() => O.value || fe.value || !!M.value || y.value === "GRID" && !!ge.value?.hasBlockingWork);
+		n({ hasBlockingWork: _e });
+		let ve = v([]), ye = i(() => So(b.value.filter(re), ve.value, (e) => e.platform_enabled && e.enabled).filter((e) => e.symbol.includes(oe.value.trim().toUpperCase())));
+		function be() {
 			try {
-				N.value = Sa(localStorage), P.value = ["prediction.agent.pending.v1", "prediction.site.pending.v1"].some((e) => localStorage.getItem(e) !== null), F.value = !1;
+				M.value = wa(localStorage), N.value = ["prediction.agent.pending.v1", "prediction.site.pending.v1"].some((e) => localStorage.getItem(e) !== null), P.value = !1;
 			} catch {
-				F.value = !0;
+				P.value = !0;
 			}
 		}
-		function Se() {
-			B.value++, D.value = ce.value ? $i(ce.value, m.actor) : [], W.value = ce.value?.enabled ?? !0, ue.value.some((e) => e.duration_seconds === le.value) || (le.value = ue.value[0]?.duration_seconds ?? ""), K.value = G();
+		function xe() {
+			B.value++, E.value = z.value ? ta(z.value, p.actor) : [], G.value = z.value?.enabled ?? !0, ue.value.some((e) => e.duration_seconds === le.value) || (le.value = ue.value[0]?.duration_seconds ?? ""), q.value = K();
 		}
-		function Ce(e) {
-			ve.value || (ie.value = e, M.value = "", Se());
+		function Se(e) {
+			_e.value || (C.value = e, j.value = "", xe());
 		}
-		function q(e) {
-			ve.value || (x.value = e, De());
+		function J(e) {
+			_e.value || (y.value = e, Te());
+		}
+		function Y(e) {
+			if (p.actor.kind !== "SITE") return l.ownerConfigurations(e);
+			if (!l.scopedSiteConfigurations) throw Error("SITE_UNAVAILABLE");
+			return l.scopedSiteConfigurations(p.actor.config_site_id, e);
+		}
+		function Ce(e, t) {
+			if (p.actor.kind !== "SITE") return l.ownerConfiguration(e, t);
+			if (!l.scopedSiteConfiguration) throw Error("SITE_UNAVAILABLE");
+			return l.scopedSiteConfiguration(p.actor.config_site_id, e, t);
 		}
 		function we(e) {
-			if (m.actor.kind !== "SITE") return l.ownerConfigurations(e);
-			if (!l.scopedSiteConfigurations) throw Error("SITE_UNAVAILABLE");
-			return l.scopedSiteConfigurations(m.actor.config_site_id, e);
-		}
-		function Te(e, t) {
-			if (m.actor.kind !== "SITE") return l.ownerConfiguration(e, t);
-			if (!l.scopedSiteConfiguration) throw Error("SITE_UNAVAILABLE");
-			return l.scopedSiteConfiguration(m.actor.config_site_id, e, t);
-		}
-		function Ee(e) {
-			if (m.actor.kind !== "SITE") return l.saveOwnerConfiguration(e);
+			if (p.actor.kind !== "SITE") return l.saveOwnerConfiguration(e);
 			if (!l.saveScopedSiteConfiguration) throw Error("SITE_UNAVAILABLE");
-			return l.saveScopedSiteConfiguration(m.actor.config_site_id, e);
+			return l.saveScopedSiteConfiguration(p.actor.config_site_id, e);
 		}
-		async function De() {
-			let e = x.value, t = se.begin(m.actor, e, "");
-			if (S.value = [], ie.value = "", Se(), j.value = "", O.value = !1, !(!R() || e === "GRID")) {
-				O.value = !0;
+		async function Te() {
+			let e = y.value, t = ce.begin(p.actor, e, "");
+			if (b.value = [], C.value = "", xe(), A.value = "", D.value = !1, !(!L() || e === "GRID")) {
+				D.value = !0;
 				try {
-					let [n, r] = await Promise.all([we(e), f()]);
-					if (!se.current(t, m.actor, x.value, "") || !R()) return;
+					let [n, r] = await Promise.all([Y(e), f()]);
+					if (!ce.current(t, p.actor, y.value, "") || !L()) return;
 					if (!Array.isArray(n.items) || new Set(n.items.map((e) => e.symbol)).size !== n.items.length) throw Error("INVALID_CATALOG");
-					for (let t of n.items) if (Qi(t, m.actor), t.game_type !== "GAME_TYPE_" + e) throw Error("WRONG_GAME");
+					for (let t of n.items) if (ea(t, p.actor), t.game_type !== "GAME_TYPE_" + e) throw Error("WRONG_GAME");
 					if (!Array.isArray(r) || !r.every((e) => typeof e == "string")) throw Error("INVALID_SYMBOL_DIRECTORY");
-					ye.value = r, S.value = n.items, ie.value = be.value[0]?.symbol ?? "", Se();
+					ve.value = r, b.value = n.items, C.value = ye.value[0]?.symbol ?? "", xe();
 				} catch {
-					se.current(t, m.actor, x.value, "") && R() && (j.value = "配置加载失败，请重试。");
+					ce.current(t, p.actor, y.value, "") && L() && (A.value = "配置加载失败，请重试。");
 				} finally {
-					se.current(t, m.actor, x.value, "") && (O.value = !1);
+					ce.current(t, p.actor, y.value, "") && (D.value = !1);
 				}
 			}
 		}
-		async function Oe() {
-			if (xe(), !z.value || k.value) return;
-			let e = x.value, t = ie.value;
+		async function Ee() {
+			if (be(), !R.value || O.value) return;
+			let e = y.value, t = C.value;
 			try {
-				if (!N.value) {
-					if (!ce.value) return;
-					N.value = wa(localStorage, m.actor, ea(ce.value, m.actor, D.value, "通过玩法配置页面保存配置", Li(), W.value));
+				if (!M.value) {
+					if (!z.value) return;
+					M.value = Ea(localStorage, p.actor, na(z.value, p.actor, E.value, "通过玩法配置页面保存配置", zi(), G.value));
 				}
-				let n = N.value;
-				if (!_.value) return;
-				k.value = !0, M.value = "";
-				let r = await Aa(localStorage, n, (e) => {
-					if (!R() || !_.value) throw Error("IDENTITY_CHANGED");
-					return Ee(e);
+				let n = M.value;
+				if (!g.value) return;
+				O.value = !0, j.value = "";
+				let r = await Ma(localStorage, n, (e) => {
+					if (!L() || !g.value) throw Error("IDENTITY_CHANGED");
+					return we(e);
 				}, async (e) => {
-					if (!R()) throw Error("IDENTITY_CHANGED");
-					let t = await Te(e.game_type, e.symbol);
-					if (Qi(t.configuration, m.actor), t.configuration.symbol !== e.symbol || t.configuration.game_type !== "GAME_TYPE_" + e.game_type) throw Error("WRONG_CONFIGURATION");
+					if (!L()) throw Error("IDENTITY_CHANGED");
+					let t = await Ce(e.game_type, e.symbol);
+					if (ea(t.configuration, p.actor), t.configuration.symbol !== e.symbol || t.configuration.game_type !== "GAME_TYPE_" + e.game_type) throw Error("WRONG_CONFIGURATION");
 					return t.configuration;
 				});
-				if (!R() || x.value !== e || ie.value !== t) return;
-				xe(), r.status === "success" ? (M.value = r.refreshFailed ? "保存已成功，配置刷新失败，请重新打开页面查看；无需再次保存。" : "配置已保存并生效。", r.latest && r.latest.symbol === ie.value && r.latest.game_type === "GAME_TYPE_" + x.value ? (S.value = S.value.map((e) => e.symbol === ie.value ? r.latest : e), Se()) : (S.value = [], ie.value = "", Se(), j.value = "保存已确认，请重试读取最新配置。")) : (M.value = r.status === "rejected" ? "保存未通过，请重新读取配置后调整。" : "暂未确认保存结果，请稍后使用原请求确认。", r.status === "rejected" && (j.value = "保存被拒绝，请读取最新配置后修改。"));
+				if (!L() || y.value !== e || C.value !== t) return;
+				be(), r.status === "success" ? (j.value = r.refreshFailed ? "保存已成功，配置刷新失败，请重新打开页面查看；无需再次保存。" : "配置已保存并生效。", r.latest && r.latest.symbol === C.value && r.latest.game_type === "GAME_TYPE_" + y.value ? (b.value = b.value.map((e) => e.symbol === C.value ? r.latest : e), xe()) : (b.value = [], C.value = "", xe(), A.value = "保存已确认，请重试读取最新配置。")) : (j.value = r.status === "rejected" ? "保存未通过，请重新读取配置后调整。" : "暂未确认保存结果，请稍后使用原请求确认。", r.status === "rejected" && (A.value = "保存被拒绝，请读取最新配置后修改。"));
 			} catch (e) {
-				M.value = e instanceof Error && e.message === "NO_CHANGES" ? "配置没有变化。" : "无法保存，请检查金额、赔率范围及待确认请求。";
+				j.value = e instanceof Error && e.message === "SEPARATE_ENABLE" ? "请先关闭币种开关并保存参数，再单独开启币种。" : e instanceof Error && e.message === "NO_CHANGES" ? "配置没有变化。" : "无法保存，请检查金额、赔率范围及待确认请求。";
 			} finally {
-				k.value = !1;
+				O.value = !1;
 			}
 		}
-		xe();
+		be();
 		try {
-			m.actor.kind === "SITE" && co(vo(sessionStorage, m.actor)) && (x.value = "GRID");
+			p.actor.kind === "SITE" && uo(bo(sessionStorage, p.actor)) && (y.value = "GRID");
 		} catch {
-			F.value = !0;
+			P.value = !0;
 		}
-		return De(), oe(() => [
-			h.userInfo.id,
-			h.token,
-			h.userInfo.can_manage_prediction_config,
-			h.perms.join("|"),
-			m.actor.operator_id,
-			m.actor.agent_id,
-			m.actor.config_site_id,
-			m.actor.kind
+		return Te(), se(() => [
+			m.userInfo.id,
+			m.token,
+			m.userInfo.can_manage_prediction_config,
+			m.perms.join("|"),
+			p.actor.operator_id,
+			p.actor.agent_id,
+			p.actor.config_site_id,
+			p.actor.kind
 		], () => {
-			se.close(), S.value = [], D.value = [], K.value = "[]", ie.value = "", M.value = "", xe();
-		}, { flush: "sync" }), te(() => {
-			L = !1, se.close();
-		}), (n, i) => (v(), s("section", Xo, [
-			c("nav", Zo, [(v(!0), s(r, null, re(T(y), (e) => (v(), a(T(A), {
+			ce.close(), b.value = [], E.value = [], q.value = "[]", C.value = "", j.value = "", be();
+		}, { flush: "sync" }), ne(() => {
+			I = !1, ce.close();
+		}), (n, i) => (_(), s("section", Qo, [
+			c("nav", $o, [(_(!0), s(r, null, ae(w(ie), (e) => (_(), a(w(k), {
 				key: e.key,
-				type: x.value === e.key ? "primary" : void 0,
-				"aria-pressed": x.value === e.key,
-				disabled: ve.value,
-				onClick: (t) => q(e.key)
+				type: y.value === e.key ? "primary" : void 0,
+				"aria-pressed": y.value === e.key,
+				disabled: _e.value,
+				onClick: (t) => J(e.key)
 			}, {
-				default: E(() => [(v(), s("svg", Qo, [e.key === "UP_DOWN" ? (v(), s(r, { key: 0 }, [i[8] ||= c("circle", {
+				default: T(() => [(_(), s("svg", es, [e.key === "UP_DOWN" ? (_(), s(r, { key: 0 }, [i[8] ||= c("circle", {
 					cx: "12",
 					cy: "12",
 					r: "10"
-				}, null, -1), i[9] ||= c("path", { d: "m16 12-4-4-4 4M12 16V8" }, null, -1)], 64)) : e.key === "HIGH_LOW" ? (v(), s(r, { key: 1 }, [i[10] ||= c("path", { d: "m9 9 5 12 1.8-5.2L21 14Z" }, null, -1), i[11] ||= c("path", { d: "M7.2 2.2 8 5.1M5.1 8l-2.9-.8M14 4.1 12 6M6 12l-1.9 2" }, null, -1)], 64)) : (v(), s(r, { key: 2 }, [i[12] ||= c("rect", {
+				}, null, -1), i[9] ||= c("path", { d: "m16 12-4-4-4 4M12 16V8" }, null, -1)], 64)) : e.key === "HIGH_LOW" ? (_(), s(r, { key: 1 }, [i[10] ||= c("path", { d: "m9 9 5 12 1.8-5.2L21 14Z" }, null, -1), i[11] ||= c("path", { d: "M7.2 2.2 8 5.1M5.1 8l-2.9-.8M14 4.1 12 6M6 12l-1.9 2" }, null, -1)], 64)) : (_(), s(r, { key: 2 }, [i[12] ||= c("rect", {
 					x: "3",
 					y: "3",
 					width: "18",
 					height: "18",
 					rx: "2"
-				}, null, -1), i[13] ||= c("path", { d: "M9 3v18M15 3v18M3 9h18M3 15h18" }, null, -1)], 64))])), c("span", $o, [c("strong", null, w(e.label), 1), c("small", null, w(e.description), 1)])]),
+				}, null, -1), i[13] ||= c("path", { d: "M9 3v18M15 3v18M3 9h18M3 15h18" }, null, -1)], 64))])), c("span", ts, [c("strong", null, S(e.label), 1), c("small", null, S(e.description), 1)])]),
 				_: 2
 			}, 1032, [
 				"type",
@@ -5652,81 +5820,81 @@ var xo = {
 				"disabled",
 				"onClick"
 			]))), 128))]),
-			P.value ? (v(), s("p", es, "发现旧配置模式尚未确认的请求，已保留原请求。请联系管理员核对原操作回执后完成迁移，当前暂停新配置保存。")) : o("", !0),
-			F.value ? (v(), s("p", ts, "无法读取或保全待确认请求，当前暂停配置保存。")) : o("", !0),
-			x.value === "GRID" ? (v(), a(Yo, {
+			N.value ? (_(), s("p", ns, "发现旧配置模式尚未确认的请求，已保留原请求。请联系管理员核对原操作回执后完成迁移，当前暂停新配置保存。")) : o("", !0),
+			P.value ? (_(), s("p", rs, "无法读取或保全待确认请求，当前暂停配置保存。")) : o("", !0),
+			y.value === "GRID" ? (_(), a(Zo, {
 				key: 2,
 				ref_key: "gridRef",
-				ref: _e,
+				ref: ge,
 				actor: e.actor,
 				class: "grid-mode"
-			}, null, 8, ["actor"])) : (v(), s("div", ns, [c("aside", rs, [
-				c("h3", null, [i[14] ||= u("交易对配置 ", -1), c("small", null, w(S.value.filter(ne).length) + " 条", 1)]),
-				d(T(t), {
-					modelValue: ae.value,
-					"onUpdate:modelValue": i[0] ||= (e) => ae.value = e,
+			}, null, 8, ["actor"])) : (_(), s("div", is, [c("aside", as, [
+				c("h3", null, [i[14] ||= u("交易对配置 ", -1), c("small", null, S(b.value.filter(re).length) + " 条", 1)]),
+				d(w(t), {
+					modelValue: oe.value,
+					"onUpdate:modelValue": i[0] ||= (e) => oe.value = e,
 					placeholder: "搜索币种",
 					"aria-label": "搜索币种",
 					clearable: ""
 				}, null, 8, ["modelValue"]),
-				O.value ? (v(), s("p", is, "正在加载配置…")) : o("", !0),
-				j.value ? (v(), s("div", as, [u(w(j.value) + " ", 1), d(T(A), {
+				D.value ? (_(), s("p", os, "正在加载配置…")) : o("", !0),
+				A.value ? (_(), s("div", ss, [u(S(A.value) + " ", 1), d(w(k), {
 					size: "small",
-					disabled: k.value || !!N.value || O.value,
-					onClick: De
+					disabled: O.value || !!M.value || D.value,
+					onClick: Te
 				}, {
-					default: E(() => [...i[15] ||= [u("读取最新配置（放弃未保存修改）", -1)]]),
+					default: T(() => [...i[15] ||= [u("读取最新配置（放弃未保存修改）", -1)]]),
 					_: 1
 				}, 8, ["disabled"])])) : o("", !0),
-				c("div", os, [(v(!0), s(r, null, re(be.value, (e) => (v(), s("div", {
+				c("div", cs, [(_(!0), s(r, null, ae(ye.value, (e) => (_(), s("div", {
 					key: e.symbol,
-					class: ee(["symbol-entry", { selected: e.symbol === ie.value }])
+					class: te(["symbol-entry", { selected: e.symbol === C.value }])
 				}, [c("button", {
 					class: "symbol-option",
-					"aria-pressed": e.symbol === ie.value,
-					disabled: ve.value,
-					onClick: (t) => Ce(e.symbol)
-				}, [d(T(p), { symbol: e.symbol }, null, 8, ["symbol"]), c("span", {
+					"aria-pressed": e.symbol === C.value,
+					disabled: _e.value,
+					onClick: (t) => Se(e.symbol)
+				}, [d(w(ee), { symbol: e.symbol }, null, 8, ["symbol"]), c("span", {
 					class: "symbol-status",
-					title: fe(e)
-				}, w(fe(e)), 9, cs)], 8, ss), c("div", ls, [d(T(de), {
-					"aria-label": e.symbol === ie.value ? "币种开关" : `${e.symbol} 币种开关`,
-					modelValue: e.symbol === ie.value ? W.value : e.enabled,
-					disabled: e.symbol !== ie.value || !z.value || k.value || !!N.value || (g.value ? !W.value && !e.can_enable : !e.platform_enabled),
-					"onUpdate:modelValue": i[1] ||= (e) => W.value = !!e
+					title: W(e)
+				}, S(W(e)), 9, us)], 8, ls), c("div", ds, [d(w(de), {
+					"aria-label": e.symbol === C.value ? "币种开关" : `${e.symbol} 币种开关`,
+					modelValue: e.symbol === C.value ? G.value : e.enabled,
+					disabled: e.symbol !== C.value || !R.value || O.value || !!M.value || (h.value ? !G.value && !e.can_enable : !e.platform_enabled),
+					"onUpdate:modelValue": i[1] ||= (e) => G.value = !!e
 				}, null, 8, [
 					"aria-label",
 					"modelValue",
 					"disabled"
 				])])], 2))), 128))]),
-				!O.value && !j.value && !be.value.length ? (v(), s("p", us, "当前没有可用的交易对配置。")) : o("", !0)
-			]), c("main", ds, [
-				c("header", fs, [c("div", null, [c("h3", null, w(ie.value || "请选择交易对") + " · " + w(x.value === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1), c("p", null, w(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", ps, [pe.value ? (v(), s("span", ms, "有未保存修改")) : o("", !0), ce.value || N.value ? (v(), a(T(A), {
+				!D.value && !A.value && !ye.value.length ? (_(), s("p", fs, "当前没有可用的交易对配置。")) : o("", !0)
+			]), c("main", ps, [
+				c("header", ms, [c("div", null, [c("h3", null, S(C.value || "请选择交易对") + " · " + S(y.value === "UP_DOWN" ? "涨跌预测" : "自选预测"), 1), c("p", null, S(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", hs, [fe.value ? (_(), s("span", gs, "有未保存修改")) : o("", !0), z.value || M.value ? (_(), a(w(k), {
 					key: 1,
 					type: "primary",
-					loading: k.value,
-					disabled: !z.value || k.value || !N.value && !pe.value || !!N.value && !_.value,
-					onClick: Oe
+					loading: O.value,
+					disabled: !R.value || O.value || !M.value && !fe.value || !!M.value && !g.value,
+					onClick: Ee
 				}, {
-					default: E(() => [u(w(N.value ? "确认原保存结果" : "保存配置"), 1)]),
+					default: T(() => [u(S(M.value ? "确认原保存结果" : "保存配置"), 1)]),
 					_: 1
 				}, 8, ["loading", "disabled"])) : o("", !0)])]),
-				N.value ? (v(), s("p", hs, "存在待确认操作（" + w(N.value.body.symbol) + "），请使用原请求确认结果。" + w(_.value ? "" : "该操作属于另一个账号或站点，需切回原范围处理。"), 1)) : o("", !0),
-				M.value ? (v(), s("p", gs, w(M.value), 1)) : o("", !0),
-				ce.value ? (v(), s(r, { key: 2 }, [
-					g.value ? (v(), s("p", _s, "已保存的开关、限额和赔率保持独立；上级默认值只用于新建配置，当前配置仍受上级启停和限额约束。")) : o("", !0),
-					ce.value.blocked_reason ? (v(), s("p", vs, "上级限制已变化，原配置已保留。请调整超出范围的参数后保存；也可以先关闭币种。")) : o("", !0),
-					g.value && !ce.value.platform_enabled ? (v(), s("p", ys, "上级已关闭此币种或房间；原配置已保留，当前不能交易。")) : o("", !0),
-					g.value ? o("", !0) : (v(), s("p", bs, "可关闭自己的币种或房间，并在平台范围内调整" + w(x.value === "UP_DOWN" ? "限额和目标返奖率，最高赔率使用平台配置" : "限额和赔率") + "。平台修改对应房间后，限额和赔率恢复平台值，您主动关闭的选择会保留。", 1)),
-					W.value ? o("", !0) : (v(), s("p", xs, "交易对已关闭；以下房间设置仍会保留。")),
-					c("article", Ss, [c("header", Cs, [i[16] ||= c("h4", null, "房间配置", -1), c("p", ws, w(ie.value) + " · " + w(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", Ts, [
+				M.value ? (_(), s("p", _s, "存在待确认操作（" + S(M.value.body.symbol) + "），请使用原请求确认结果。" + S(g.value ? "" : "该操作属于另一个账号或站点，需切回原范围处理。"), 1)) : o("", !0),
+				j.value ? (_(), s("p", vs, S(j.value), 1)) : o("", !0),
+				z.value ? (_(), s(r, { key: 2 }, [
+					h.value ? (_(), s("p", ys, "已保存的开关、限额和赔率保持独立；上级默认值只用于新建配置，当前配置仍受上级启停和限额约束。")) : o("", !0),
+					z.value.blocked_reason ? (_(), s("p", bs, "上级限制已变化，原配置已保留。请调整超出范围的参数后保存；也可以先关闭币种。")) : o("", !0),
+					h.value && !z.value.platform_enabled ? (_(), s("p", xs, "上级已关闭此币种或房间；原配置已保留，当前不能交易。")) : o("", !0),
+					h.value ? o("", !0) : (_(), s("p", Ss, "可关闭自己的币种或房间，并在平台范围内调整" + S(y.value === "UP_DOWN" ? "限额和目标返奖率，最高赔率使用平台配置" : "限额和赔率") + "。平台修改对应房间后，限额和赔率恢复平台值，您主动关闭的选择会保留。", 1)),
+					G.value ? o("", !0) : (_(), s("p", Cs, "交易对已关闭；以下房间设置仍会保留。")),
+					c("article", ws, [c("header", Ts, [i[16] ||= c("h4", null, "房间配置", -1), c("p", Es, S(C.value) + " · " + S(e.actor.kind === "SITE" ? "当前白标生效" : "当前商户生效"), 1)]), c("div", Ds, [
 						i[17] ||= c("span", { class: "field-label" }, "支持周期", -1),
 						d(Ln, {
-							description: `${ie.value} · ${x.value === "UP_DOWN" ? "涨跌预测" : "自选预测"}`,
+							description: `${C.value} · ${y.value === "UP_DOWN" ? "涨跌预测" : "自选预测"}`,
 							rooms: H.value,
 							selected: le.value,
-							disabled: !z.value || k.value || !!N.value || O.value,
-							context: `${e.actor.operator_id}:${e.actor.agent_id}:${e.actor.config_site_id}:${x.value}:${ie.value}:${B.value}`,
+							disabled: !R.value || O.value || !!M.value || D.value,
+							context: `${e.actor.operator_id}:${e.actor.agent_id}:${e.actor.config_site_id}:${y.value}:${C.value}:${B.value}`,
 							onSelect: i[2] ||= (e) => le.value = e,
 							onChange: U
 						}, null, 8, [
@@ -5738,17 +5906,17 @@ var xo = {
 						]),
 						i[18] ||= c("p", { class: "config-note" }, "变更只影响新订单，历史订单保留原配置快照。", -1)
 					])]),
-					c("div", Es, [c("article", Ds, [i[20] ||= c("header", { class: "parameter-heading" }, [c("h4", null, "价格精度"), c("p", { class: "field-description" }, "由平台统一设置，此处只读")], -1), c("div", Os, [c("p", ks, "价格小数位：" + w(ce.value.rules[0]?.rule.price_rule?.price_decimals === void 0 ? "未设置（沿用原规则）" : `${ce.value.rules[0].rule.price_rule.price_decimals} 位`), 1), i[19] ||= c("p", { class: "config-note" }, "按所选位数截断，不四舍五入；旧订单保留原规则。", -1)])]), V.value ? (v(), s(r, { key: 0 }, [
-						V.value.platform_enabled ? o("", !0) : (v(), s("p", As, "平台已关闭此房间，暂不能开启。")),
-						c("article", js, [c("header", Ms, [c("h4", null, "赔率配置 · " + w(V.value.observation_seconds) + " 秒", 1), c("p", Ns, w(x.value === "UP_DOWN" ? "上涨/下跌赔率按资金池动态计算" : "下单时锁定当前周期固定赔率，上涨和下跌使用相同赔率。"), 1)]), x.value === "UP_DOWN" ? (v(), s("div", Ps, [d(T(I), { label: `目标返奖率（平台上限 ${T(Sn)(V.value.platform_target_payout_rate, 2)}%，且必须小于 100%）` }, {
-							default: E(() => [d(En, {
-								"input-component": T(t),
+					c("div", Os, [c("article", ks, [i[20] ||= c("header", { class: "parameter-heading" }, [c("h4", null, "价格精度"), c("p", { class: "field-description" }, "由平台统一设置，此处只读")], -1), c("div", As, [c("p", js, "价格小数位：" + S(z.value.rules[0]?.rule.price_rule?.price_decimals === void 0 ? "未设置（沿用原规则）" : `${z.value.rules[0].rule.price_rule.price_decimals} 位`), 1), i[19] ||= c("p", { class: "config-note" }, "按所选位数截断，不四舍五入；旧订单保留原规则。", -1)])]), V.value ? (_(), s(r, { key: 0 }, [
+						V.value.platform_enabled ? o("", !0) : (_(), s("p", Ms, "平台已关闭此房间，暂不能开启。")),
+						c("article", Ns, [c("header", Ps, [c("h4", null, "赔率配置 · " + S(V.value.observation_seconds) + " 秒", 1), c("p", Fs, S(y.value === "UP_DOWN" ? "上涨/下跌赔率按资金池动态计算" : "下单时锁定当前周期固定赔率，上涨和下跌使用相同赔率。"), 1)]), y.value === "UP_DOWN" ? (_(), s("div", Is, [d(w(F), { label: `目标返奖率（平台上限 ${w(Sn)(V.value.platform_target_payout_rate, 2)}%，且必须小于 100%）` }, {
+							default: T(() => [d(En, {
+								"input-component": w(t),
 								modelValue: V.value.target_payout_rate,
 								"onUpdate:modelValue": i[3] ||= (e) => V.value.target_payout_rate = e,
 								percentage: "",
 								unit: "%",
-								max: T(Sn)(V.value.platform_target_payout_rate, 2),
-								disabled: !z.value || k.value || !!N.value,
+								max: w(Sn)(V.value.platform_target_payout_rate, 2),
+								disabled: !R.value || O.value || !!M.value,
 								"aria-label": `${V.value.observation_seconds}秒目标返奖率`
 							}, null, 8, [
 								"input-component",
@@ -5758,16 +5926,16 @@ var xo = {
 								"aria-label"
 							])]),
 							_: 1
-						}, 8, ["label"]), o("", !0)])) : (v(), s("div", Fs, [d(T(I), { label: `固定赔率（平台上限 ${V.value.platform_fixed_odds}，且必须小于 2，含本金）` }, {
-							default: E(() => [d(En, {
-								"input-component": T(t),
+						}, 8, ["label"]), o("", !0)])) : (_(), s("div", Ls, [d(w(F), { label: `固定赔率（平台上限 ${V.value.platform_fixed_odds}，且必须小于 2，含本金）` }, {
+							default: T(() => [d(En, {
+								"input-component": w(t),
 								modelValue: V.value.fixed_odds,
 								"onUpdate:modelValue": i[5] ||= (e) => V.value.fixed_odds = e,
 								step: "0.01",
 								min: "1.01",
 								max: V.value.platform_fixed_odds,
 								unit: "x",
-								disabled: !z.value || k.value || !!N.value,
+								disabled: !R.value || O.value || !!M.value,
 								"aria-label": `${V.value.observation_seconds}秒固定赔率`
 							}, null, 8, [
 								"input-component",
@@ -5778,17 +5946,17 @@ var xo = {
 							])]),
 							_: 1
 						}, 8, ["label"])]))]),
-						c("article", Is, [c("header", Ls, [c("h4", null, "下注限制 · " + w(V.value.observation_seconds) + " 秒", 1), c("p", Rs, "平台单笔范围：" + w(V.value.platform_minimum) + " ~ " + w(V.value.platform_maximum) + " USDT。变更不影响已受理订单。", 1)]), c("div", zs, [d(T(I), { label: "单笔最小额" }, {
-							default: E(() => [d(En, {
-								"input-component": T(t),
+						c("article", Rs, [c("header", zs, [c("h4", null, "下注限制 · " + S(V.value.observation_seconds) + " 秒", 1), c("p", Bs, "平台单笔范围：" + S(V.value.platform_minimum) + " ~ " + S(V.value.platform_maximum) + " USDT。变更不影响已受理订单。", 1)]), c("div", Vs, [d(w(F), { label: "单笔最小额" }, {
+							default: T(() => [d(En, {
+								"input-component": w(t),
 								modelValue: V.value.minimum_stake,
 								"onUpdate:modelValue": i[6] ||= (e) => V.value.minimum_stake = e,
 								min: V.value.platform_minimum,
 								max: V.value.maximum_stake,
-								disabled: !z.value || k.value || !!N.value,
+								disabled: !R.value || O.value || !!M.value,
 								"aria-label": `${V.value.observation_seconds}秒单笔最小额`
 							}, {
-								append: E(() => [...i[21] ||= [u("USDT", -1)]]),
+								append: T(() => [...i[21] ||= [u("USDT", -1)]]),
 								_: 1
 							}, 8, [
 								"input-component",
@@ -5799,17 +5967,17 @@ var xo = {
 								"aria-label"
 							])]),
 							_: 1
-						}), d(T(I), { label: "单笔最大额" }, {
-							default: E(() => [d(En, {
-								"input-component": T(t),
+						}), d(w(F), { label: "单笔最大额" }, {
+							default: T(() => [d(En, {
+								"input-component": w(t),
 								modelValue: V.value.maximum_stake,
 								"onUpdate:modelValue": i[7] ||= (e) => V.value.maximum_stake = e,
 								min: V.value.minimum_stake,
 								max: V.value.platform_maximum,
-								disabled: !z.value || k.value || !!N.value,
+								disabled: !R.value || O.value || !!M.value,
 								"aria-label": `${V.value.observation_seconds}秒单笔最大额`
 							}, {
-								append: E(() => [...i[22] ||= [u("USDT", -1)]]),
+								append: T(() => [...i[22] ||= [u("USDT", -1)]]),
 								_: 1
 							}, 8, [
 								"input-component",
@@ -5826,7 +5994,7 @@ var xo = {
 			])]))
 		]));
 	}
-}), [["__scopeId", "data-v-62b028ac"]]), Vs = class {
+}), [["__scopeId", "data-v-ae1538c1"]]), Us = class {
 	generation = 0;
 	controller;
 	next() {
@@ -5844,27 +6012,27 @@ var xo = {
 "order_no order_id debit_ledger_id settlement_ledger_id agent_id user_id home_site_id order_source game_type symbol market_id direction settlement_asset stake estimated_net_profit estimated_return final_net_profit final_return business_status fund_status unknown_from result config_version created_at_ms accepted_at_ms expire_at_ms result_at_ms settled_at_ms round_id duration_seconds open_price result_price funds_transaction_id agent_profit client_request_id order_version".split(" "), "agent_id round_id generation_id market_id symbol duration_seconds room_code status result cancel_reason config_version settlement_asset pool_share up_pool down_pool locked_up_pool locked_down_pool up_odds down_odds start_price end_price bet_open_at_ms bet_close_at_ms observe_end_at_ms display_end_at_ms draw_at_ms result_at_ms settled_at_ms participant_count order_count total_stake total_return platform_revenue truncation_tail agent_profit player_stake market_maker_stake player_order_count market_maker_order_count".split(" ");
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/site-directory.ts
-function Hs(e) {
+function Ws(e) {
 	if (typeof e != "string" || !/^[A-Z0-9][A-Z0-9._-]{0,63}$/.test(e)) throw Error("INVALID_SYMBOL_DIRECTORY");
 	return e;
 }
-function Us(e, t) {
+function Gs(e, t) {
 	let n = e?.configurations;
 	if (!Array.isArray(n)) throw Error("INVALID_SYMBOL_DIRECTORY");
 	return [...new Set(n.flatMap((e) => {
 		if (!Array.isArray(e?.rules) || !e.rules.length) throw Error("INVALID_SYMBOL_DIRECTORY");
 		return e.rules.flatMap((e) => {
 			if (e.game_type !== `GAME_TYPE_${t}` || typeof e.enabled_by_default != "boolean") throw Error("INVALID_SYMBOL_DIRECTORY");
-			let n = Hs(e.symbol);
+			let n = Ws(e.symbol);
 			return e.enabled_by_default ? [n] : [];
 		});
 	}))];
 }
-function Ws(e, t, n, r = []) {
-	let i = new Set(e.map(Hs)), a = new Set(t.map(Hs));
-	n.forEach(Hs);
-	let o = [...i].filter((e) => a.has(e)), s = new Set(r.map(Hs));
-	return bo([...o].map((e) => ({
+function Ks(e, t, n, r = []) {
+	let i = new Set(e.map(Ws)), a = new Set(t.map(Ws));
+	n.forEach(Ws);
+	let o = [...i].filter((e) => a.has(e)), s = new Set(r.map(Ws));
+	return So([...o].map((e) => ({
 		symbol: e,
 		allowed: i.has(e),
 		publicConfigured: a.has(e)
@@ -5872,12 +6040,12 @@ function Ws(e, t, n, r = []) {
 }
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/site-mutation.ts
-var Gs = "prediction.site.pending.v1";
-function Ks(e, t, n = []) {
+var qs = "prediction.site.pending.v1";
+function Js(e, t, n = []) {
 	Q(t.every((t) => Object.hasOwn(e, t)) && Object.keys(e).every((e) => t.includes(e) || n.includes(e)), "PENDING_CORRUPT");
 }
-function qs(e) {
-	Q(Z(e), "PENDING_CORRUPT"), Ks(e, [
+function Ys(e) {
+	Q(Li(e), "PENDING_CORRUPT"), Js(e, [
 		"site_id",
 		"game_type",
 		"symbol",
@@ -5887,26 +6055,26 @@ function qs(e) {
 		"based_on_site_version",
 		"enabled",
 		"overrides"
-	]), Q(X(e.site_id, 128) && ["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) && X(e.symbol, 64, !0) && X(e.client_request_id, 128) && X(e.reason, 500), "PENDING_CORRUPT"), Q(Y(e.based_on_public_version, !0) && Y(e.based_on_site_version, !0) && typeof e.enabled == "boolean" && Array.isArray(e.overrides), "PENDING_CORRUPT");
+	]), Q(ki(e.site_id, 128) && ["UP_DOWN", "HIGH_LOW"].includes(String(e.game_type)) && ki(e.symbol, 64, !0) && ki(e.client_request_id, 128) && ki(e.reason, 500), "PENDING_CORRUPT"), Q(Z(e.based_on_public_version, !0) && Z(e.based_on_site_version, !0) && typeof e.enabled == "boolean" && Array.isArray(e.overrides), "PENDING_CORRUPT");
 	let t = e.game_type === "UP_DOWN";
 	Q((t ? e.overrides.length === 5 : e.overrides.length > 0 && e.overrides.length <= 100) && new Set(e.overrides.map((e) => e.duration_seconds)).size === e.overrides.length, "PENDING_CORRUPT");
 	for (let n of e.overrides) {
-		if (Q(Z(n)), !t) {
-			Ks(n, ["duration_seconds"], [
+		if (Q(Li(n)), !t) {
+			Js(n, ["duration_seconds"], [
 				"enabled",
 				"fixed_odds",
 				"minimum_stake",
 				"maximum_stake"
-			]), Q(Y(n.duration_seconds, !0) && (!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean"), "PENDING_CORRUPT"), Ui(n);
+			]), Q(Z(n.duration_seconds, !0) && (!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean"), "PENDING_CORRUPT"), Gi(n);
 			continue;
 		}
-		Ks(n, ["duration_seconds", "stake_tiers"], ["enabled"]), Q(Fi.includes(String(n.duration_seconds)) && (!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean") && Array.isArray(n.stake_tiers) && n.stake_tiers.length === 1, "PENDING_CORRUPT");
+		Js(n, ["duration_seconds", "stake_tiers"], ["enabled"]), Q(Ii.includes(String(n.duration_seconds)) && (!Object.hasOwn(n, "enabled") || typeof n.enabled == "boolean") && Array.isArray(n.stake_tiers) && n.stake_tiers.length === 1, "PENDING_CORRUPT");
 		let e = n.stake_tiers[0];
-		Q(Z(e)), Ks(e, ["stake_tier_id"], ["enabled", "maximum_stake"]), Q(X(e.stake_tier_id) && (!Object.hasOwn(e, "enabled") || typeof e.enabled == "boolean"), "PENDING_CORRUPT"), Q(!Object.hasOwn(e, "maximum_stake") || Ei(e.maximum_stake) && Di(e.maximum_stake, "1") >= 0, "PENDING_CORRUPT");
+		Q(Li(e)), Js(e, ["stake_tier_id"], ["enabled", "maximum_stake"]), Q(ki(e.stake_tier_id) && (!Object.hasOwn(e, "enabled") || typeof e.enabled == "boolean"), "PENDING_CORRUPT"), Q(!Object.hasOwn(e, "maximum_stake") || Ei(e.maximum_stake) && Di(e.maximum_stake, "1") >= 0, "PENDING_CORRUPT");
 	}
 }
-function Js(e) {
-	let t = e.getItem(Gs);
+function Xs(e) {
+	let t = e.getItem(qs);
 	if (t === null) return null;
 	Q(t.length <= 32768, "PENDING_CORRUPT");
 	let n;
@@ -5915,18 +6083,18 @@ function Js(e) {
 	} catch {
 		throw Error("PENDING_CORRUPT");
 	}
-	return Q(Z(n)), Ks(n, [
+	return Q(Li(n)), Js(n, [
 		"schema",
 		"operator_id",
 		"agent_id",
 		"body",
 		"attempted",
 		"attempt"
-	]), Ri(n), Q(n.schema === "site-v1" && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), qs(n.body), Ii(n);
+	]), Bi(n), Q(n.schema === "site-v1" && typeof n.attempted == "boolean" && Number.isSafeInteger(n.attempt) && Number(n.attempt) >= 0 && n.attempted === Number(n.attempt) > 0, "PENDING_CORRUPT"), Ys(n.body), Ri(n);
 }
-var Ys = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && JSON.stringify(e.body) === JSON.stringify(t.body);
-function Xs(e, t, n) {
-	Ri(t), qs(n), Q(Js(e) === null, "PENDING_EXISTS");
+var Zs = (e, t) => !!e && e.operator_id === t.operator_id && e.agent_id === t.agent_id && JSON.stringify(e.body) === JSON.stringify(t.body);
+function Qs(e, t, n) {
+	Bi(t), Ys(n), Q(Xs(e) === null, "PENDING_EXISTS");
 	let r = {
 		schema: "site-v1",
 		...t,
@@ -5934,14 +6102,14 @@ function Xs(e, t, n) {
 		attempted: !1,
 		attempt: 0
 	};
-	return e.setItem(Gs, JSON.stringify(r)), Q(Ys(Js(e), r), "PERSISTENCE_UNAVAILABLE"), Ii(r);
+	return e.setItem(qs, JSON.stringify(r)), Q(Zs(Xs(e), r), "PERSISTENCE_UNAVAILABLE"), Ri(r);
 }
-function Zs(e, t) {
-	Ys(Js(e), t) && e.removeItem(Gs);
+function $s(e, t) {
+	Zs(Xs(e), t) && e.removeItem(qs);
 }
-function Qs(e, t) {
+function ec(e, t) {
 	try {
-		Q(Z(e) && Z(e.receipt)), Vi(e.stored);
+		Q(Li(e) && Li(e.receipt)), Ui(e.stored);
 		let n = t.body, r = e.stored, i = e.receipt;
 		return Q(r.site_id === n.site_id && r.symbol === n.symbol && r.game_type === "GAME_TYPE_" + n.game_type && r.based_on_public_version === n.based_on_public_version && r.enabled === n.enabled), Q(BigInt(r.version) === BigInt(n.based_on_site_version) + 1n), Q([
 			"operation_id",
@@ -5960,29 +6128,29 @@ function Qs(e, t) {
 			"completed_at_ms",
 			"source_service",
 			"trace_id"
-		].every((e) => typeof i[e] == "string")), Q(X(i.operation_id, 256) && X(i.trace_id, 256) && X(i.target_id, 256) && Y(i.created_at_ms) && Y(i.completed_at_ms)), Q(i.operator_id === t.operator_id && i.client_request_id === n.client_request_id && i.reason === n.reason && i.source_service === "agent_admin"), Q(i.result === "OPERATION_RESULT_SUCCEEDED" && i.error_code === "" && i.action === "ADMIN_ACTION_SITE_CONFIG_PUBLISH" && i.capability === "prediction.site.config.publish" && i.target_type === "site_config"), !0;
+		].every((e) => typeof i[e] == "string")), Q(ki(i.operation_id, 256) && ki(i.trace_id, 256) && ki(i.target_id, 256) && Z(i.created_at_ms) && Z(i.completed_at_ms)), Q(i.operator_id === t.operator_id && i.client_request_id === n.client_request_id && i.reason === n.reason && i.source_service === "agent_admin"), Q(i.result === "OPERATION_RESULT_SUCCEEDED" && i.error_code === "" && i.action === "ADMIN_ACTION_SITE_CONFIG_PUBLISH" && i.capability === "prediction.site.config.publish" && i.target_type === "site_config"), !0;
 	} catch {
 		return !1;
 	}
 }
-var $s = /* @__PURE__ */ new WeakMap();
-function ec(e, t, n) {
-	let r = $s.get(e);
-	if (r) return Q(Ys(r.pending, t), "PENDING_EXISTS"), r.promise;
-	let i = Js(e);
-	Q(Ys(i, t), "PENDING_CHANGED");
+var tc = /* @__PURE__ */ new WeakMap();
+function nc(e, t, n) {
+	let r = tc.get(e);
+	if (r) return Q(Zs(r.pending, t), "PENDING_EXISTS"), r.promise;
+	let i = Xs(e);
+	Q(Zs(i, t), "PENDING_CHANGED");
 	let a = i.attempted, o = i.attempt + 1;
-	Q(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(Gs, JSON.stringify({
+	Q(Number.isSafeInteger(o), "ATTEMPT_LIMIT"), e.setItem(qs, JSON.stringify({
 		...i,
 		attempted: !0,
 		attempt: o
 	}));
-	let s = Js(e);
-	Q(s?.attempt === o && Ys(s, t), "PERSISTENCE_UNAVAILABLE");
+	let s = Xs(e);
+	Q(s?.attempt === o && Zs(s, t), "PERSISTENCE_UNAVAILABLE");
 	let c = Promise.resolve().then(async () => {
 		try {
 			let r = await n(t.body);
-			return Ys(Js(e), t) ? Qs(r, t) ? (Zs(e, t), {
+			return Zs(Xs(e), t) ? ec(r, t) ? ($s(e, t), {
 				status: "success",
 				value: r
 			}) : {
@@ -5993,13 +6161,13 @@ function ec(e, t, n) {
 				error: null
 			};
 		} catch (n) {
-			let r = Js(e);
-			if (!Ys(r, t)) return {
+			let r = Xs(e);
+			if (!Zs(r, t)) return {
 				status: "superseded",
 				error: n
 			};
-			let i = Z(n) && n.client_request_id !== void 0 && n.client_request_id !== t.body.client_request_id;
-			return !a && r.attempt === o && !i && ha(n) ? (Zs(e, t), {
+			let i = Li(n) && n.client_request_id !== void 0 && n.client_request_id !== t.body.client_request_id;
+			return !a && r.attempt === o && !i && _a(n) ? ($s(e, t), {
 				status: "rejected",
 				error: n
 			}) : {
@@ -6008,15 +6176,15 @@ function ec(e, t, n) {
 			};
 		}
 	}).finally(() => {
-		$s.get(e)?.promise === c && $s.delete(e);
+		tc.get(e)?.promise === c && tc.delete(e);
 	});
-	return $s.set(e, {
+	return tc.set(e, {
 		pending: t,
 		promise: c
 	}), c;
 }
-async function tc(e, t, n, r) {
-	let i = await ec(e, t, n);
+async function rc(e, t, n, r) {
+	let i = await nc(e, t, n);
 	if (i.status !== "success") return i;
 	try {
 		return {
@@ -6034,169 +6202,169 @@ async function tc(e, t, n, r) {
 }
 //#endregion
 //#region src/prediction-config/agent/views/prediction/game-config/SiteConfig.vue?vue&type=script&setup=true&lang.ts
-var nc = {
+var ic = {
 	class: "prediction-config prediction-table-page",
 	"data-prediction-page": "GAME_CONFIG"
-}, rc = {
+}, ac = {
 	class: "game-tabs",
 	"aria-label": "选择预测玩法"
-}, ic = {
+}, oc = {
 	key: 1,
 	role: "alert"
-}, ac = {
+}, sc = {
 	key: 2,
 	class: "config-layout"
-}, oc = ["aria-label"], sc = {
+}, cc = ["aria-label"], lc = {
 	key: 0,
 	class: "catalog-error",
 	role: "alert"
-}, cc = {
+}, uc = {
 	key: 1,
 	role: "status"
-}, lc = {
+}, dc = {
 	key: 2,
 	class: "catalog-error",
 	role: "alert"
-}, uc = {
+}, fc = {
 	key: 3,
 	role: "status"
-}, dc = { class: "symbol-list" }, fc = [
+}, pc = { class: "symbol-list" }, mc = [
 	"data-symbol",
 	"aria-pressed",
 	"disabled",
 	"onClick"
-], pc = {
+], hc = {
 	key: 0,
-	class: "symbol-status"
-}, mc = {
-	key: 1,
-	class: "symbol-status"
-}, hc = {
-	key: 2,
 	class: "symbol-status"
 }, gc = {
-	key: 3,
+	key: 1,
 	class: "symbol-status"
 }, _c = {
-	key: 4,
+	key: 2,
 	class: "symbol-status"
 }, vc = {
+	key: 3,
+	class: "symbol-status"
+}, yc = {
+	key: 4,
+	class: "symbol-status"
+}, bc = {
 	key: 5,
 	class: "draft-label"
-}, yc = {
+}, xc = {
 	key: 0,
 	class: "symbol-all-control"
-}, bc = { class: "config-content" }, xc = { class: "config-title" }, Sc = { class: "config-title-actions" }, Cc = {
+}, Sc = { class: "config-content" }, Cc = { class: "config-title" }, wc = { class: "config-title-actions" }, Tc = {
 	key: 0,
 	class: "draft-label",
 	"data-dirty": "true"
-}, wc = {
+}, Ec = {
 	key: 0,
 	role: "status"
-}, Tc = {
+}, Dc = {
 	key: 1,
 	role: "alert"
-}, Ec = {
+}, Oc = {
 	key: 2,
 	role: "alert"
-}, Dc = { key: 3 }, Oc = { key: 1 }, kc = { key: 0 }, Ac = { key: 1 }, jc = { key: 1 }, Mc = {
+}, kc = { key: 3 }, Ac = { key: 1 }, jc = { key: 0 }, Mc = { key: 1 }, Nc = { key: 1 }, Pc = {
 	key: 7,
 	role: "status"
-}, Nc = { key: 0 }, Pc = { key: 1 }, Fc = { key: 2 }, Ic = ["aria-label"], Lc = [
+}, Fc = { key: 0 }, Ic = { key: 1 }, Lc = { key: 2 }, Rc = ["aria-label"], zc = [
 	"data-room",
 	"aria-pressed",
 	"onClick"
-], Rc = { class: "room-heading" }, zc = { class: "room-switch" }, Bc = { key: 0 }, Vc = { class: "parameter-cards" }, Hc = {
+], Bc = { class: "room-heading" }, Vc = { class: "room-switch" }, Hc = { key: 0 }, Uc = { class: "parameter-cards" }, Wc = {
 	key: 0,
 	class: "parameter-card"
-}, Uc = { class: "parameter-facts" }, Wc = { class: "read-only-label" }, Gc = {
+}, Gc = { class: "parameter-facts" }, Kc = { class: "read-only-label" }, qc = {
 	key: 1,
 	class: "parameter-card"
-}, Kc = { class: "parameter-facts" }, qc = { "data-field": "fixed_odds" }, Jc = { class: "read-only-label" }, Yc = { class: "parameter-card" }, Xc = { class: "limit-fields" }, Zc = { key: 0 }, Qc = { key: 1 }, $c = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Jc = { class: "parameter-facts" }, Yc = { "data-field": "fixed_odds" }, Xc = { class: "read-only-label" }, Zc = { class: "parameter-card" }, Qc = { class: "limit-fields" }, $c = { key: 0 }, el = { key: 1 }, tl = /*#__PURE__*/ n(/* @__PURE__ */ f({
 	__name: "SiteConfig",
 	setup(e) {
-		let { siteDirectorySymbols: t, configurations: n, siteConfigurationTargets: l, siteConfiguration: f, saveSiteConfiguration: p, saveConfiguration: m, configuration: h } = me().api, g = ge(), { t: _, te: ne, locale: y } = ve(), x = he(), S = new Vs(), ie = new Vs(), ae = new Vs(), D = new Vs(), O = new Ki(), j = b("UP_DOWN"), N = C(), P = i(() => j.value === "HIGH_LOW" ? "HIGH_LOW" : "UP_DOWN"), F = i(() => y.value === "en-US" ? fe : W), se = (e) => x.perms.includes("*") || x.perms.includes(e), I = i(() => se("prediction_config:lists")), L = I, ce = i(() => Ti(x.userInfo.id)), B = b(null), V = b([]), H = b(""), U = b(""), G = b(""), K = i(() => V.value.find((e) => e.site_id === H.value)?.games.find((e) => e.game_type === P.value)?.symbols ?? []), pe = b([]), _e = b([]), ye = b(""), be = i(() => Ws(K.value, _e.value, pe.value, Object.keys(Se.value).filter((e) => ut(e) && (lt(e) ?? 0) > 0))), xe = i(() => be.value.map((e) => e.symbol).filter((e) => e.toLowerCase().includes(G.value.toLowerCase()))), Se = b({}), Ce = b({}), q = b(null), we = b([]), Te = b(!1), Ee = b("35"), De = b("通过商户玩法配置页面保存配置"), Oe = b(""), ke = b(!1), Ae = b(!1), je = b(""), Me = b(!1), Ne = b(!1), Pe = b(""), Fe = b(""), Ie = b(!1), Le = b(!1), Re = C(null), ze = C(null), Be = C(null), Ve, He, Ue = 0, We = i(() => y.value === "en-US" ? "Enabled" : "启用交易对"), Ge = i(() => Re.value && B.value && Re.value.operator_id === B.value.operator_id && Re.value.agent_id === B.value.agent_id && Re.value.body.site_id === H.value && Re.value.body.game_type === P.value && Re.value.body.symbol === U.value ? Re.value : null), Ke = b(null), qe = i(() => ze.value && Ke.value && ze.value.operator_id === ce.value && ze.value.operator_id === Ke.value.operator_id && ze.value.agent_id === Ke.value.agent_id), Je = i(() => I.value && L.value && B.value?.operator_id === ce.value && !!q.value && (P.value === "UP_DOWN" ? we.value.length === 5 : we.value.length > 0) && !Pe.value && !Re.value && !ze.value && !Le.value && !Ne.value && !Me.value), Ye = i(() => we.value.find((e) => e.duration_seconds === Ee.value)), Xe = i(() => q.value?.effective.rules.find((e) => e.duration_seconds === Ee.value)), Ze = () => JSON.stringify({
-			enabled: Te.value,
-			rows: we.value.map((e) => ({
+		let { siteDirectorySymbols: t, configurations: n, siteConfigurationTargets: l, siteConfiguration: f, saveSiteConfiguration: ee, saveConfiguration: p, configuration: m } = pe().api, h = he(), { t: g, te: re, locale: ie } = _e(), y = me(), b = new Us(), C = new Us(), oe = new Us(), E = new Us(), D = new Ji(), A = v("UP_DOWN"), M = x(), N = i(() => A.value === "HIGH_LOW" ? "HIGH_LOW" : "UP_DOWN"), P = i(() => ie.value === "en-US" ? W : G), ce = (e) => y.perms.includes("*") || y.perms.includes(e), F = i(() => ce("prediction_config:lists")), I = F, z = i(() => Ti(y.userInfo.id)), B = v(null), V = v([]), H = v(""), U = v(""), K = v(""), q = i(() => V.value.find((e) => e.site_id === H.value)?.games.find((e) => e.game_type === N.value)?.symbols ?? []), fe = v([]), ge = v([]), ve = v(""), ye = i(() => Ks(q.value, ge.value, fe.value, Object.keys(xe.value).filter((e) => ct(e) && (st(e) ?? 0) > 0))), be = i(() => ye.value.map((e) => e.symbol).filter((e) => e.toLowerCase().includes(K.value.toLowerCase()))), xe = v({}), Se = v({}), J = v(null), Y = v([]), Ce = v(!1), we = v("35"), Te = v("通过商户玩法配置页面保存配置"), Ee = v(""), De = v(!1), Oe = v(!1), ke = v(""), Ae = v(!1), je = v(!1), Me = v(""), Ne = v(""), Pe = v(!1), Fe = v(!1), Ie = x(null), Le = x(null), Re = x(null), ze, Be, Ve = 0, He = i(() => ie.value === "en-US" ? "Enabled" : "启用交易对"), Ue = i(() => Ie.value && B.value && Ie.value.operator_id === B.value.operator_id && Ie.value.agent_id === B.value.agent_id && Ie.value.body.site_id === H.value && Ie.value.body.game_type === N.value && Ie.value.body.symbol === U.value ? Ie.value : null), We = v(null), Ge = i(() => Le.value && We.value && Le.value.operator_id === z.value && Le.value.operator_id === We.value.operator_id && Le.value.agent_id === We.value.agent_id), Ke = i(() => F.value && I.value && B.value?.operator_id === z.value && !!J.value && (N.value === "UP_DOWN" ? Y.value.length === 5 : Y.value.length > 0) && !Me.value && !Ie.value && !Le.value && !Fe.value && !je.value && !Ae.value), qe = i(() => Y.value.find((e) => e.duration_seconds === we.value)), Je = i(() => J.value?.effective.rules.find((e) => e.duration_seconds === we.value)), Ye = () => JSON.stringify({
+			enabled: Ce.value,
+			rows: Y.value.map((e) => ({
 				duration: e.duration_seconds,
 				enabled: e.enabled,
 				maximum: e.maximum_stake,
 				minimum: e.minimum_stake,
 				odds: e.fixed_odds
 			})),
-			reason: De.value
-		}), Qe = i(() => !!q.value && !!Oe.value && Ze() !== Oe.value);
-		function $e() {
+			reason: Te.value
+		}), Xe = i(() => !!J.value && !!Ee.value && Ye() !== Ee.value);
+		function Ze() {
 			return B.value ? {
 				...B.value,
 				site_id: H.value,
-				game_type: P.value,
+				game_type: N.value,
 				symbol: U.value,
-				public_version: q.value?.effective.public_version ?? "",
-				site_version: q.value?.stored.version ?? ""
+				public_version: J.value?.effective.public_version ?? "",
+				site_version: J.value?.stored.version ?? ""
 			} : null;
 		}
+		function Qe() {
+			Fe.value = !1;
+			try {
+				Ie.value = Xs(sessionStorage);
+			} catch {
+				Fe.value = !0;
+			}
+			try {
+				Le.value = pa(sessionStorage);
+			} catch {
+				Fe.value = !0;
+			}
+		}
+		function $e() {
+			D.close(), Ne.value = "", Re.value = null, ze?.abort(), je.value = !1;
+		}
 		function et() {
-			Le.value = !1;
-			try {
-				Re.value = Js(sessionStorage);
-			} catch {
-				Le.value = !0;
-			}
-			try {
-				ze.value = da(sessionStorage);
-			} catch {
-				Le.value = !0;
-			}
+			$e(), E.close(), J.value = null, Y.value = [], Ee.value = "", Te.value = "通过商户玩法配置页面保存配置", Me.value = "", Pe.value = !1, Ae.value = !1, Qe();
 		}
-		function tt() {
-			O.close(), Fe.value = "", Be.value = null, Ve?.abort(), Ne.value = !1;
+		function tt(e) {
+			Wi(e, H.value, U.value, N.value), J.value = e, Y.value = Ki(e), Ce.value = e.stored.enabled, xe.value[U.value] = e, Se.value[U.value] = "configured", Te.value = "通过商户玩法配置页面保存配置", Ee.value = Ye(), Qe();
 		}
-		function nt() {
-			tt(), D.close(), q.value = null, we.value = [], Oe.value = "", De.value = "通过商户玩法配置页面保存配置", Pe.value = "", Ie.value = !1, Me.value = !1, et();
-		}
-		function rt(e) {
-			Hi(e, H.value, U.value, P.value), q.value = e, we.value = Wi(e), Te.value = e.stored.enabled, Se.value[U.value] = e, Ce.value[U.value] = "configured", De.value = "通过商户玩法配置页面保存配置", Oe.value = Ze(), et();
-		}
-		function it(e) {
+		function nt(e) {
 			let t = e?.error_code;
-			return t === "NOT_FOUND" ? "该交易对尚未配置，请联系管理员完成初始配置。" : t === "UNAVAILABLE" ? "站点配置暂不可用，请稍后刷新。" : t === "PERMISSION_DENIED" ? "当前账号无权访问该站点配置。" : _("predictionPages.loadFailed");
+			return t === "NOT_FOUND" ? "该交易对尚未配置，请联系管理员完成初始配置。" : t === "UNAVAILABLE" ? "站点配置暂不可用，请稍后刷新。" : t === "PERMISSION_DENIED" ? "当前账号无权访问该站点配置。" : g("predictionPages.loadFailed");
 		}
-		async function at() {
-			nt(), ae.close(), He = void 0, Ae.value = !1;
-			let e = ie.next(), t = ce.value, n = x.token;
-			if (B.value = null, Ke.value = null, S.close(), ot(), V.value = [], pe.value = [], _e.value = [], ye.value = "", H.value = "", U.value = "", Se.value = {}, Ce.value = {}, je.value = "", ke.value = !1, !(!I.value || !t)) {
-				ke.value = !0;
+		async function rt() {
+			et(), oe.close(), Be = void 0, Oe.value = !1;
+			let e = C.next(), t = z.value, n = y.token;
+			if (B.value = null, We.value = null, b.close(), it(), V.value = [], fe.value = [], ge.value = [], ve.value = "", H.value = "", U.value = "", xe.value = {}, Se.value = {}, ke.value = "", De.value = !1, !(!F.value || !t)) {
+				De.value = !0;
 				try {
 					let r = await l(e.signal);
-					if (!e.current() || ce.value !== t || x.token !== n) return;
-					if (zi(r), r.actor.operator_id !== t) throw Error("IDENTITY_UNCONFIRMED");
-					B.value = r.actor, V.value = r.sites, Re.value?.operator_id === t && Re.value.agent_id === r.actor.agent_id && (j.value = Re.value.body.game_type);
-					let i = Re.value?.operator_id === t ? r.sites.find((e) => e.site_id === Re.value?.body.site_id)?.site_id : void 0;
+					if (!e.current() || z.value !== t || y.token !== n) return;
+					if (Vi(r), r.actor.operator_id !== t) throw Error("IDENTITY_UNCONFIRMED");
+					B.value = r.actor, V.value = r.sites, Ie.value?.operator_id === t && Ie.value.agent_id === r.actor.agent_id && (A.value = Ie.value.body.game_type);
+					let i = Ie.value?.operator_id === t ? r.sites.find((e) => e.site_id === Ie.value?.body.site_id)?.site_id : void 0;
 					(i || r.sites.length === 1) && (H.value = i ?? r.sites[0].site_id);
 				} catch (t) {
-					e.current() && (je.value = it(t));
+					e.current() && (ke.value = nt(t));
 				} finally {
-					e.current() && (ke.value = !1);
+					e.current() && (De.value = !1);
 				}
 			}
 		}
-		async function ot() {
-			let e = S.next(), t = ze.value, n = ce.value, r = x.token;
-			if (!(!t || t.operator_id !== n || !I.value)) try {
-				let i = await h(t.body.symbol, e.signal);
-				if (!e.current() || ce.value !== n || x.token !== r) return;
-				sa(i.configuration) === t.body.symbol && i.configuration.agent_id === t.agent_id && (Ke.value = {
+		async function it() {
+			let e = b.next(), t = Le.value, n = z.value, r = y.token;
+			if (!(!t || t.operator_id !== n || !F.value)) try {
+				let i = await m(t.body.symbol, e.signal);
+				if (!e.current() || z.value !== n || y.token !== r) return;
+				la(i.configuration) === t.body.symbol && i.configuration.agent_id === t.agent_id && (We.value = {
 					operator_id: t.operator_id,
 					agent_id: t.agent_id
 				});
 			} catch {}
 		}
-		async function st() {
-			nt();
-			let e = ae.next(), r = H.value, i = JSON.stringify(B.value), a = x.token, o = P.value, s = [...K.value];
-			if (He = void 0, Se.value = {}, Ce.value = {}, pe.value = [], _e.value = [], ye.value = "", Ae.value = !1, j.value === "GRID" || !B.value || !r || !I.value) return;
-			let c = () => e.current() && j.value !== "GRID" && I.value && x.token === a && H.value === r && P.value === o && i === JSON.stringify(B.value), l = /* @__PURE__ */ new Map(), u = {
+		async function at() {
+			et();
+			let e = oe.next(), r = H.value, i = JSON.stringify(B.value), a = y.token, o = N.value, s = [...q.value];
+			if (Be = void 0, xe.value = {}, Se.value = {}, fe.value = [], ge.value = [], ve.value = "", Oe.value = !1, A.value === "GRID" || !B.value || !r || !F.value) return;
+			let c = () => e.current() && A.value !== "GRID" && F.value && y.token === a && H.value === r && N.value === o && i === JSON.stringify(B.value), l = /* @__PURE__ */ new Map(), u = {
 				current: c,
 				requests: l,
 				read(t) {
@@ -6205,305 +6373,305 @@ var nc = {
 						site_id: r,
 						game_type: o,
 						symbol: t
-					}, e.signal).then((e) => (Hi(e, r, t, o), e)), l.set(t, n)), n;
+					}, e.signal).then((e) => (Wi(e, r, t, o), e)), l.set(t, n)), n;
 				}
 			};
-			He = u;
-			for (let e of s) Ce.value[e] = "loading";
-			let d = Re.value?.body.game_type === o && Re.value.body.site_id === r ? Re.value.body.symbol : U.value, p = s.includes(d) ? d : s[0] ?? "", m = Re.value?.body.game_type === o && Re.value.body.site_id === r && s.includes(Re.value.body.symbol);
-			U.value = m ? p : "", m && ct(!0), Ae.value = !0;
-			let h = Promise.allSettled([t(e.signal).then((e) => {
-				Ws([], [], e), c() && (pe.value = e);
+			Be = u;
+			for (let e of s) Se.value[e] = "loading";
+			let d = Ie.value?.body.game_type === o && Ie.value.body.site_id === r ? Ie.value.body.symbol : U.value, ee = s.includes(d) ? d : s[0] ?? "", p = Ie.value?.body.game_type === o && Ie.value.body.site_id === r && s.includes(Ie.value.body.symbol);
+			U.value = p ? ee : "", p && ot(!0), Oe.value = !0;
+			let m = Promise.allSettled([t(e.signal).then((e) => {
+				Ks([], [], e), c() && (fe.value = e);
 			}), n(e.signal, o).then((e) => {
-				let t = Us(e, o);
-				if (c() && (_e.value = t, !m)) {
-					let e = s.filter((e) => t.includes(e)), n = e.includes(p) ? p : e[0] ?? "";
-					U.value === n ? ct(!0) : U.value = n;
+				let t = Gs(e, o);
+				if (c() && (ge.value = t, !p)) {
+					let e = s.filter((e) => t.includes(e)), n = e.includes(ee) ? ee : e[0] ?? "";
+					U.value === n ? ot(!0) : U.value = n;
 				}
 			})]).then((e) => {
-				c() && e.some((e) => e.status === "rejected") && (ye.value = "平台币种目录未完整加载，请重试。");
-			}), g = s.filter((e) => e !== p);
-			await Promise.all([h, ...Array.from({ length: Math.min(3, g.length) }, async () => {
-				for (; c() && g.length;) {
-					let e = g.shift();
-					if (Ce.value[e] !== "loading") continue;
+				c() && e.some((e) => e.status === "rejected") && (ve.value = "平台币种目录未完整加载，请重试。");
+			}), h = s.filter((e) => e !== ee);
+			await Promise.all([m, ...Array.from({ length: Math.min(3, h.length) }, async () => {
+				for (; c() && h.length;) {
+					let e = h.shift();
+					if (Se.value[e] !== "loading") continue;
 					let t = u.read(e);
 					try {
 						let n = await t;
 						if (!c() || l.get(e) !== t) continue;
-						Se.value[e] = n, Ce.value[e] = "configured";
+						xe.value[e] = n, Se.value[e] = "configured";
 					} catch (n) {
 						if (!c() || l.get(e) !== t) continue;
-						Ce.value[e] = n?.error_code === "NOT_FOUND" ? "unconfigured" : "unavailable", l.delete(e);
+						Se.value[e] = n?.error_code === "NOT_FOUND" ? "unconfigured" : "unavailable", l.delete(e);
 					}
 				}
-			})]), c() && (Ae.value = !1);
+			})]), c() && (Oe.value = !1);
 		}
-		async function ct(e = !1) {
-			nt();
-			let t = D.next(), n = {
+		async function ot(e = !1) {
+			et();
+			let t = E.next(), n = {
 				site_id: H.value,
-				game_type: P.value,
+				game_type: N.value,
 				symbol: U.value
-			}, r = JSON.stringify(B.value), i = He;
-			if (Ee.value = "35", j.value === "GRID" || !I.value || !B.value || !n.site_id || !K.value.includes(n.symbol)) return;
-			Me.value = !0, e || i?.requests.delete(n.symbol);
+			}, r = JSON.stringify(B.value), i = Be;
+			if (we.value = "35", A.value === "GRID" || !F.value || !B.value || !n.site_id || !q.value.includes(n.symbol)) return;
+			Ae.value = !0, e || i?.requests.delete(n.symbol);
 			let a = e && i?.current() ? i.read(n.symbol) : f(n, t.signal);
 			try {
 				let e = await a;
-				if (i?.current() && i.requests.get(n.symbol) === a && (Se.value[n.symbol] = e, Ce.value[n.symbol] = "configured"), !t.current() || r !== JSON.stringify(B.value) || n.site_id !== H.value || n.game_type !== P.value || n.symbol !== U.value) return;
-				rt(e), Ee.value = we.value[0]?.duration_seconds ?? "";
+				if (i?.current() && i.requests.get(n.symbol) === a && (xe.value[n.symbol] = e, Se.value[n.symbol] = "configured"), !t.current() || r !== JSON.stringify(B.value) || n.site_id !== H.value || n.game_type !== N.value || n.symbol !== U.value) return;
+				tt(e), we.value = Y.value[0]?.duration_seconds ?? "";
 			} catch (e) {
-				if (i?.current() && i.requests.get(n.symbol) === a && (Ce.value[n.symbol] = e?.error_code === "NOT_FOUND" ? "unconfigured" : "unavailable", i.requests.delete(n.symbol)), !t.current()) return;
-				Ie.value = e?.error_code === "NOT_FOUND", Ce.value[n.symbol] = Ie.value ? "unconfigured" : "unavailable", Pe.value = it(e);
+				if (i?.current() && i.requests.get(n.symbol) === a && (Se.value[n.symbol] = e?.error_code === "NOT_FOUND" ? "unconfigured" : "unavailable", i.requests.delete(n.symbol)), !t.current()) return;
+				Pe.value = e?.error_code === "NOT_FOUND", Se.value[n.symbol] = Pe.value ? "unconfigured" : "unavailable", Me.value = nt(e);
 			} finally {
-				t.current() && i?.requests.get(n.symbol) === a && i.requests.delete(n.symbol), t.current() && (Me.value = !1);
+				t.current() && i?.requests.get(n.symbol) === a && i.requests.delete(n.symbol), t.current() && (Ae.value = !1);
 			}
 		}
+		function st(e) {
+			let t = e === U.value ? J.value : xe.value[e];
+			return t ? e === U.value && (N.value === "UP_DOWN" ? Y.value.length === 5 : Y.value.length > 0) ? Ce.value ? Y.value.filter((e) => e.enabled).length : 0 : t.effective.rules.filter((e) => e.enabled && (N.value === "HIGH_LOW" || e.stake_tiers.some((e) => !e.retired && e.enabled))).length : null;
+		}
+		function ct(e) {
+			return e === U.value && J.value ? Ce.value : xe.value[e]?.stored.enabled ?? !1;
+		}
 		function lt(e) {
-			let t = e === U.value ? q.value : Se.value[e];
-			return t ? e === U.value && (P.value === "UP_DOWN" ? we.value.length === 5 : we.value.length > 0) ? Te.value ? we.value.filter((e) => e.enabled).length : 0 : t.effective.rules.filter((e) => e.enabled && (P.value === "HIGH_LOW" || e.stake_tiers.some((e) => !e.retired && e.enabled))).length : null;
+			return !Ke.value || Se.value[e] !== "configured" || e !== U.value && Xe.value;
 		}
 		function ut(e) {
-			return e === U.value && q.value ? Te.value : Se.value[e]?.stored.enabled ?? !1;
-		}
-		function dt(e) {
-			return !Je.value || Ce.value[e] !== "configured" || e !== U.value && Qe.value;
-		}
-		function ft(e) {
-			if (K.value.includes(e)) {
-				if (e !== U.value && (Qe.value || Ne.value || Re.value)) {
-					z.warning("请先处理当前未保存修改或待确认操作");
+			if (q.value.includes(e)) {
+				if (e !== U.value && (Xe.value || je.value || Ie.value)) {
+					R.warning("请先处理当前未保存修改或待确认操作");
 					return;
 				}
 				U.value = e;
 			}
 		}
-		async function pt(e, t) {
-			if (typeof t != "boolean" || dt(e)) return;
+		async function dt(e, t) {
+			if (typeof t != "boolean" || lt(e)) return;
 			let n = JSON.stringify(B.value), r = H.value;
 			e !== U.value && (U.value = e);
-			let i = Ue;
-			if (Me.value) {
-				let t = He?.requests.get(e);
+			let i = Ve;
+			if (Ae.value) {
+				let t = Be?.requests.get(e);
 				if (t) try {
 					await t;
 				} catch {
 					return;
 				}
 			}
-			i !== Ue || n !== JSON.stringify(B.value) || r !== H.value || U.value !== e || !Je.value || (tt(), Te.value = t);
+			i !== Ve || n !== JSON.stringify(B.value) || r !== H.value || U.value !== e || !Ke.value || ($e(), Ce.value = t);
 		}
-		function mt() {
-			B.value && H.value && U.value ? ct() : at();
+		function ft() {
+			B.value && H.value && U.value ? ot() : rt();
 		}
-		async function ht(e) {
-			if (j.value !== e && !(j.value === "GRID" && N.value && !await N.value.confirmLeave())) {
-				if (j.value !== "GRID" && (Qe.value || Re.value || ze.value)) {
-					z.warning("请先处理当前未保存修改或待确认操作");
+		async function pt(e) {
+			if (A.value !== e && !(A.value === "GRID" && M.value && !await M.value.confirmLeave())) {
+				if (A.value !== "GRID" && (Xe.value || Ie.value || Le.value)) {
+					R.warning("请先处理当前未保存修改或待确认操作");
 					return;
 				}
-				j.value = e, G.value = "", nt(), U.value = "", st();
+				A.value = e, K.value = "", et(), U.value = "", at();
 			}
 		}
-		async function gt() {
-			let e = $e();
-			if (!Je.value || !q.value || !B.value || !e) return;
+		async function mt() {
+			let e = Ze();
+			if (!Ke.value || !J.value || !B.value || !e) return;
 			let t;
 			try {
-				t = Gi(q.value, we.value, Te.value, De.value, Li());
+				t = qi(J.value, Y.value, Ce.value, Te.value, zi());
 			} catch {
-				Fe.value = _("predictionPages.invalidSave");
+				Ne.value = g("predictionPages.invalidSave");
 				return;
 			}
-			if (!O.next(e).current($e()) || !I.value || !L.value) return;
+			if (!D.next(e).current(Ze()) || !F.value || !I.value) return;
 			let n;
 			try {
-				n = Xs(sessionStorage, B.value, t), et();
+				n = Qs(sessionStorage, B.value, t), Qe();
 			} catch {
-				Le.value = !0;
+				Fe.value = !0;
 				return;
 			}
-			await vt(n);
+			await gt(n);
 		}
-		function _t() {
-			et(), Ge.value && I.value && L.value && !Ne.value && !Le.value && vt(Ge.value);
+		function ht() {
+			Qe(), Ue.value && F.value && I.value && !je.value && !Fe.value && gt(Ue.value);
 		}
-		async function vt(e) {
-			let t = $e();
+		async function gt(e) {
+			let t = Ze();
 			if (!t) return;
-			let n = O.next(t), r = new AbortController();
-			Ve = r;
-			let i = () => n.current($e()) && I.value && L.value;
-			Ne.value = !0, Fe.value = "", Be.value = null;
+			let n = D.next(t), r = new AbortController();
+			ze = r;
+			let i = () => n.current(Ze()) && F.value && I.value;
+			je.value = !0, Ne.value = "", Re.value = null;
 			try {
-				let t = await tc(sessionStorage, e, (e) => p(e, r.signal), async (e) => {
+				let t = await rc(sessionStorage, e, (e) => ee(e, r.signal), async (e) => {
 					let t = await f({
 						site_id: e.site_id,
 						game_type: e.game_type,
 						symbol: e.symbol
 					}, r.signal);
-					return Hi(t, e.site_id, e.symbol, e.game_type), t;
+					return Wi(t, e.site_id, e.symbol, e.game_type), t;
 				});
 				if (!i()) return;
-				et(), t.status === "success" ? (Be.value = t.value.receipt, t.latest ? (rt(t.latest), Pe.value = "", Fe.value = _("predictionPages.saved")) : (q.value = null, we.value = [], Oe.value = "", Pe.value = "已保存，刷新失败。请刷新查看当前配置。", Fe.value = "已保存，刷新失败")) : t.status !== "superseded" && (Fe.value = _("predictionPages." + (t.status === "unknown" ? "pending" : "rejected")) + " · " + wi(t.error?.error_code));
+				Qe(), t.status === "success" ? (Re.value = t.value.receipt, t.latest ? (tt(t.latest), Me.value = "", Ne.value = g("predictionPages.saved")) : (J.value = null, Y.value = [], Ee.value = "", Me.value = "已保存，刷新失败。请刷新查看当前配置。", Ne.value = "已保存，刷新失败")) : t.status !== "superseded" && (Ne.value = g("predictionPages." + (t.status === "unknown" ? "pending" : "rejected")) + " · " + wi(t.error?.error_code));
 			} catch {
-				i() && (et(), Fe.value = _("predictionPages.pending"));
+				i() && (Qe(), Ne.value = g("predictionPages.pending"));
 			} finally {
-				Ve === r && (Ne.value = !1);
+				ze === r && (je.value = !1);
 			}
 		}
-		async function yt() {
-			if (et(), !ze.value || !qe.value || !I.value || !L.value || Ne.value || Le.value) return;
-			let e = ze.value, t = x.token, n = Ue, r = new AbortController(), i = () => n === Ue && t === x.token && qe.value && I.value && L.value;
-			Ve = r, Ne.value = !0;
+		async function _t() {
+			if (Qe(), !Le.value || !Ge.value || !F.value || !I.value || je.value || Fe.value) return;
+			let e = Le.value, t = y.token, n = Ve, r = new AbortController(), i = () => n === Ve && t === y.token && Ge.value && F.value && I.value;
+			ze = r, je.value = !0;
 			try {
-				let t = await _a(sessionStorage, e, (e) => m(e, r.signal));
+				let t = await ya(sessionStorage, e, (e) => p(e, r.signal));
 				if (!i()) return;
-				et(), Fe.value = t.status === "success" ? "旧版原请求已确认成功。站点设置请单独查看。" : _("predictionPages.pending");
+				Qe(), Ne.value = t.status === "success" ? "旧版原请求已确认成功。站点设置请单独查看。" : g("predictionPages.pending");
 			} catch {
-				i() && (et(), Fe.value = _("predictionPages.pending"));
+				i() && (Qe(), Ne.value = g("predictionPages.pending"));
 			} finally {
-				Ve === r && (Ne.value = !1);
+				ze === r && (je.value = !1);
 			}
+		}
+		function vt(e) {
+			let t = N.value === "UP_DOWN" ? BigInt(e.observation_seconds) : BigInt(e.duration_seconds);
+			return N.value === "HIGH_LOW" && t >= 60n && t % 60n == 0n ? `${t / 60n}分钟` : `${t}秒`;
+		}
+		function yt(e) {
+			let t = e === U.value ? J.value : xe.value[e];
+			return t ? Ki(t).map(vt).join(" · ") : "";
 		}
 		function bt(e) {
-			let t = P.value === "UP_DOWN" ? BigInt(e.observation_seconds) : BigInt(e.duration_seconds);
-			return P.value === "HIGH_LOW" && t >= 60n && t % 60n == 0n ? `${t / 60n}分钟` : `${t}秒`;
+			return typeof e == "string" || typeof e == "boolean" ? wi(e) : g("predictionPages.notProvided");
 		}
-		function xt(e) {
-			let t = e === U.value ? q.value : Se.value[e];
-			return t ? Wi(t).map(bt).join(" · ") : "";
-		}
-		function St(e) {
-			return typeof e == "string" || typeof e == "boolean" ? wi(e) : _("predictionPages.notProvided");
-		}
-		function Ct(e, t) {
-			let n = St(t);
+		function xt(e, t) {
+			let n = bt(t);
 			if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return n;
 			if (e !== "target_payout_rate") return n + "x";
 			let [r, i = ""] = n.split("."), a = r + i, o = r.length + 2;
 			return (o >= a.length ? a + "0".repeat(o - a.length) : a.slice(0, o) + "." + a.slice(o)).replace(/^0+(?=\d)/, "") + "%";
 		}
-		let wt = (e) => ne("predictionPages.fields." + e) ? _("predictionPages.fields." + e) : e;
-		return oe(H, () => {
-			Ue++, U.value = "", st();
-		}, { flush: "sync" }), oe(U, () => {
-			Ue++, ct(!0);
-		}, { flush: "sync" }), oe(() => [
-			x.userInfo.id,
-			x.token,
-			I.value,
-			L.value
+		let St = (e) => re("predictionPages.fields." + e) ? g("predictionPages.fields." + e) : e;
+		return se(H, () => {
+			Ve++, U.value = "", at();
+		}, { flush: "sync" }), se(U, () => {
+			Ve++, ot(!0);
+		}, { flush: "sync" }), se(() => [
+			y.userInfo.id,
+			y.token,
+			F.value,
+			I.value
 		], () => {
-			Ue++, tt(), ie.close(), ae.close(), D.close(), S.close(), at();
+			Ve++, $e(), C.close(), oe.close(), E.close(), b.close(), rt();
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), te(() => {
-			Ue++, tt(), ie.close(), ae.close(), D.close(), S.close();
-		}), (e, t) => (v(), a(T(M), { locale: F.value }, {
-			default: E(() => [c("section", nc, [c("nav", rc, [
-				d(T(A), {
-					type: j.value === "UP_DOWN" ? "primary" : void 0,
-					"aria-pressed": j.value === "UP_DOWN",
-					onClick: t[0] ||= (e) => ht("UP_DOWN")
+		}), ne(() => {
+			Ve++, $e(), C.close(), oe.close(), E.close(), b.close();
+		}), (e, t) => (_(), a(w(j), { locale: P.value }, {
+			default: T(() => [c("section", ic, [c("nav", ac, [
+				d(w(k), {
+					type: A.value === "UP_DOWN" ? "primary" : void 0,
+					"aria-pressed": A.value === "UP_DOWN",
+					onClick: t[0] ||= (e) => pt("UP_DOWN")
 				}, {
-					default: E(() => [...t[8] ||= [u("涨跌预测", -1), c("small", null, "按系统场次预测结算价格相对开盘价格上涨或下跌", -1)]]),
+					default: T(() => [...t[8] ||= [u("涨跌预测", -1), c("small", null, "按系统场次预测结算价格相对开盘价格上涨或下跌", -1)]]),
 					_: 1
 				}, 8, ["type", "aria-pressed"]),
-				d(T(A), {
-					type: j.value === "HIGH_LOW" ? "primary" : void 0,
-					"aria-pressed": j.value === "HIGH_LOW",
-					onClick: t[1] ||= (e) => ht("HIGH_LOW")
+				d(w(k), {
+					type: A.value === "HIGH_LOW" ? "primary" : void 0,
+					"aria-pressed": A.value === "HIGH_LOW",
+					onClick: t[1] ||= (e) => pt("HIGH_LOW")
 				}, {
-					default: E(() => [...t[9] ||= [u("自选预测", -1), c("small", null, "用户自主选择方向和预测周期，生成独立预测订单", -1)]]),
+					default: T(() => [...t[9] ||= [u("自选预测", -1), c("small", null, "用户自主选择方向和预测周期，生成独立预测订单", -1)]]),
 					_: 1
 				}, 8, ["type", "aria-pressed"]),
-				d(T(A), {
-					type: j.value === "GRID" ? "primary" : void 0,
-					"aria-pressed": j.value === "GRID",
-					onClick: t[2] ||= (e) => ht("GRID")
+				d(w(k), {
+					type: A.value === "GRID" ? "primary" : void 0,
+					"aria-pressed": A.value === "GRID",
+					onClick: t[2] ||= (e) => pt("GRID")
 				}, {
-					default: E(() => [...t[10] ||= [u("预测网格", -1), c("small", null, "按时间格与价格区间展示网格预测规则", -1)]]),
+					default: T(() => [...t[10] ||= [u("预测网格", -1), c("small", null, "按时间格与价格区间展示网格预测规则", -1)]]),
 					_: 1
 				}, 8, ["type", "aria-pressed"])
-			]), j.value === "GRID" ? (v(), a(Yo, {
+			]), A.value === "GRID" ? (_(), a(Zo, {
 				key: 1,
 				ref_key: "gridRef",
-				ref: N
-			}, null, 512)) : (v(), s(r, { key: 0 }, [V.value.length > 1 ? (v(), a(T(ue), {
+				ref: M
+			}, null, 512)) : (_(), s(r, { key: 0 }, [V.value.length > 1 ? (_(), a(w(ue), {
 				key: 0,
 				modelValue: H.value,
 				"onUpdate:modelValue": t[3] ||= (e) => H.value = e,
 				placeholder: "请选择配置站点",
 				"aria-label": "配置站点",
-				disabled: Ne.value || Qe.value || !!Re.value || !!ze.value
+				disabled: je.value || Xe.value || !!Ie.value || !!Le.value
 			}, {
-				default: E(() => [(v(!0), s(r, null, re(V.value, (e, t) => (v(), a(T(le), {
+				default: T(() => [(_(!0), s(r, null, ae(V.value, (e, t) => (_(), a(w(le), {
 					key: e.site_id,
 					label: `站点配置 ${t + 1}`,
 					value: e.site_id
 				}, null, 8, ["label", "value"]))), 128))]),
 				_: 1
-			}, 8, ["modelValue", "disabled"])) : o("", !0), I.value ? (v(), s("div", ac, [c("aside", {
+			}, 8, ["modelValue", "disabled"])) : o("", !0), F.value ? (_(), s("div", sc, [c("aside", {
 				class: "symbol-directory",
-				"aria-label": T(_)("predictionPages.symbolDirectory")
+				"aria-label": w(g)("predictionPages.symbolDirectory")
 			}, [
-				c("h3", null, [t[11] ||= u("交易对配置 ", -1), c("small", null, w(be.value.length) + " 条", 1)]),
-				d(T(R), {
-					modelValue: G.value,
-					"onUpdate:modelValue": t[4] ||= (e) => G.value = e,
+				c("h3", null, [t[11] ||= u("交易对配置 ", -1), c("small", null, S(ye.value.length) + " 条", 1)]),
+				d(w(L), {
+					modelValue: K.value,
+					"onUpdate:modelValue": t[4] ||= (e) => K.value = e,
 					clearable: "",
-					"aria-label": T(_)("predictionPages.searchSymbol"),
-					placeholder: T(_)("predictionPages.searchSymbol")
+					"aria-label": w(g)("predictionPages.searchSymbol"),
+					placeholder: w(g)("predictionPages.searchSymbol")
 				}, null, 8, [
 					"modelValue",
 					"aria-label",
 					"placeholder"
 				]),
-				ye.value ? (v(), s("p", sc, [u(w(ye.value), 1), d(T(A), {
+				ve.value ? (_(), s("p", lc, [u(S(ve.value), 1), d(w(k), {
 					size: "small",
-					disabled: Qe.value || Ne.value || !!Re.value || Ae.value,
-					onClick: st
-				}, {
-					default: E(() => [...t[12] ||= [u("重试币种目录", -1)]]),
-					_: 1
-				}, 8, ["disabled"])])) : o("", !0),
-				ke.value || Ae.value ? (v(), s("p", cc, w(T(_)("predictionPages.loading")), 1)) : o("", !0),
-				je.value ? (v(), s("div", lc, [c("p", null, w(je.value), 1), d(T(A), {
-					"data-action": "retry-catalog",
-					size: "small",
-					disabled: ke.value,
+					disabled: Xe.value || je.value || !!Ie.value || Oe.value,
 					onClick: at
 				}, {
-					default: E(() => [u(w(T(_)("predictionPages.retry")), 1)]),
+					default: T(() => [...t[12] ||= [u("重试币种目录", -1)]]),
 					_: 1
 				}, 8, ["disabled"])])) : o("", !0),
-				!ke.value && !je.value && !xe.value.length ? (v(), s("p", uc, w(V.value.length ? H.value ? K.value.length ? "没有匹配的交易对。" : "当前站点尚未开放此玩法的交易对配置。" : "请选择配置站点。" : "当前账号暂无预测配置站点授权，请联系管理员配置后刷新。"), 1)) : o("", !0),
-				c("div", dc, [(v(!0), s(r, null, re(xe.value, (e) => (v(), s("div", {
+				De.value || Oe.value ? (_(), s("p", uc, S(w(g)("predictionPages.loading")), 1)) : o("", !0),
+				ke.value ? (_(), s("div", dc, [c("p", null, S(ke.value), 1), d(w(k), {
+					"data-action": "retry-catalog",
+					size: "small",
+					disabled: De.value,
+					onClick: rt
+				}, {
+					default: T(() => [u(S(w(g)("predictionPages.retry")), 1)]),
+					_: 1
+				}, 8, ["disabled"])])) : o("", !0),
+				!De.value && !ke.value && !be.value.length ? (_(), s("p", fc, S(V.value.length ? H.value ? q.value.length ? "没有匹配的交易对。" : "当前站点尚未开放此玩法的交易对配置。" : "请选择配置站点。" : "当前账号暂无预测配置站点授权，请联系管理员配置后刷新。"), 1)) : o("", !0),
+				c("div", pc, [(_(!0), s(r, null, ae(be.value, (e) => (_(), s("div", {
 					key: e,
-					class: ee(["symbol-entry", { selected: e === U.value }])
+					class: te(["symbol-entry", { selected: e === U.value }])
 				}, [c("button", {
 					type: "button",
 					class: "symbol-option",
 					"data-symbol": e,
 					"aria-pressed": e === U.value,
-					disabled: !K.value.includes(e),
-					onClick: (t) => ft(e)
+					disabled: !q.value.includes(e),
+					onClick: (t) => ut(e)
 				}, [
-					d(T(g), { symbol: e }, null, 8, ["symbol"]),
-					K.value.includes(e) ? Ce.value[e] === "loading" ? (v(), s("span", mc, w(T(_)("predictionPages.loading")), 1)) : Ce.value[e] === "unconfigured" ? (v(), s("span", hc, w(T(_)("predictionPages.unconfigured")), 1)) : lt(e) === null ? (v(), s("span", gc, w(T(_)("predictionPages.unavailableConfig")), 1)) : (v(), s("span", _c, w(xt(e)), 1)) : (v(), s("span", pc, w(_e.value.includes(e) ? "未开放配置" : "未配置"), 1)),
-					e === U.value && Qe.value ? (v(), s("span", vc, w(T(_)("predictionPages.unsaved")), 1)) : o("", !0)
-				], 8, fc), Ce.value[e] === "configured" ? (v(), s("div", yc, [d(T(de), {
+					d(w(h), { symbol: e }, null, 8, ["symbol"]),
+					q.value.includes(e) ? Se.value[e] === "loading" ? (_(), s("span", gc, S(w(g)("predictionPages.loading")), 1)) : Se.value[e] === "unconfigured" ? (_(), s("span", _c, S(w(g)("predictionPages.unconfigured")), 1)) : st(e) === null ? (_(), s("span", vc, S(w(g)("predictionPages.unavailableConfig")), 1)) : (_(), s("span", yc, S(yt(e)), 1)) : (_(), s("span", hc, S(ge.value.includes(e) ? "未开放配置" : "未配置"), 1)),
+					e === U.value && Xe.value ? (_(), s("span", bc, S(w(g)("predictionPages.unsaved")), 1)) : o("", !0)
+				], 8, mc), Se.value[e] === "configured" ? (_(), s("div", xc, [d(w(de), {
 					"inline-prompt": "",
 					"active-text": "开放",
 					"inactive-text": "停用",
 					"data-symbol-enabled": e,
-					"aria-label": `${e} ${We.value}`,
-					"model-value": ut(e),
-					disabled: dt(e),
-					onChange: (t) => pt(e, t)
+					"aria-label": `${e} ${He.value}`,
+					"model-value": ct(e),
+					disabled: lt(e),
+					onChange: (t) => dt(e, t)
 				}, null, 8, [
 					"data-symbol-enabled",
 					"aria-label",
@@ -6511,190 +6679,190 @@ var nc = {
 					"disabled",
 					"onChange"
 				])])) : o("", !0)], 2))), 128))])
-			], 8, oc), c("main", bc, [
-				c("header", xc, [c("div", null, [c("h3", null, w(U.value || T(_)("predictionPages.selectSymbol")) + " · " + w(T(_)("predictionPages.games." + P.value)), 1), t[13] ||= c("p", null, "当前商户生效", -1)]), c("div", Sc, [Qe.value ? (v(), s("span", Cc, w(T(_)("predictionPages.unsaved")), 1)) : o("", !0), T(L) ? (v(), a(T(A), {
+			], 8, cc), c("main", Sc, [
+				c("header", Cc, [c("div", null, [c("h3", null, S(U.value || w(g)("predictionPages.selectSymbol")) + " · " + S(w(g)("predictionPages.games." + N.value)), 1), t[13] ||= c("p", null, "当前商户生效", -1)]), c("div", wc, [Xe.value ? (_(), s("span", Tc, S(w(g)("predictionPages.unsaved")), 1)) : o("", !0), w(I) ? (_(), a(w(k), {
 					key: 1,
 					"data-action": "save",
 					type: "primary",
-					loading: Ne.value,
-					disabled: !Je.value,
-					onClick: gt
-				}, {
-					default: E(() => [...t[14] ||= [u("保存配置", -1)]]),
-					_: 1
-				}, 8, ["loading", "disabled"])) : o("", !0)])]),
-				Me.value ? (v(), s("p", wc, w(T(_)("predictionPages.loading")), 1)) : o("", !0),
-				Pe.value ? (v(), s("p", Tc, [u(w(Pe.value), 1), I.value ? (v(), a(T(A), {
-					key: 0,
-					disabled: Me.value || ke.value || Ne.value || Qe.value || !!Re.value || !!ze.value,
+					loading: je.value,
+					disabled: !Ke.value,
 					onClick: mt
 				}, {
-					default: E(() => [...t[15] ||= [u("重试", -1)]]),
+					default: T(() => [...t[14] ||= [u("保存配置", -1)]]),
+					_: 1
+				}, 8, ["loading", "disabled"])) : o("", !0)])]),
+				Ae.value ? (_(), s("p", Ec, S(w(g)("predictionPages.loading")), 1)) : o("", !0),
+				Me.value ? (_(), s("p", Dc, [u(S(Me.value), 1), F.value ? (_(), a(w(k), {
+					key: 0,
+					disabled: Ae.value || De.value || je.value || Xe.value || !!Ie.value || !!Le.value,
+					onClick: ft
+				}, {
+					default: T(() => [...t[15] ||= [u("重试", -1)]]),
 					_: 1
 				}, 8, ["disabled"])) : o("", !0)])) : o("", !0),
-				ce.value ? o("", !0) : (v(), s("p", Ec, w(T(_)("predictionPages.identityError")), 1)),
-				Ie.value ? (v(), s("p", Dc, "该交易对尚未配置，请联系管理员完成初始配置后刷新。")) : o("", !0),
-				ze.value ? (v(), a(T(k), {
+				z.value ? o("", !0) : (_(), s("p", Oc, S(w(g)("predictionPages.identityError")), 1)),
+				Pe.value ? (_(), s("p", kc, "该交易对尚未配置，请联系管理员完成初始配置后刷新。")) : o("", !0),
+				Le.value ? (_(), a(w(O), {
 					key: 4,
 					type: "warning",
 					closable: !1,
 					title: "存在旧版代理配置待确认请求"
 				}, {
-					default: E(() => [
+					default: T(() => [
 						t[17] ||= c("p", null, "旧请求按原协议恢复，不会转换为站点保存。", -1),
-						c("p", null, w(ze.value.body.symbol) + " · " + w(ze.value.body.client_request_id), 1),
-						qe.value ? (v(), a(T(A), {
+						c("p", null, S(Le.value.body.symbol) + " · " + S(Le.value.body.client_request_id), 1),
+						Ge.value ? (_(), a(w(k), {
 							key: 0,
-							disabled: Ne.value || !T(L) || Le.value,
-							onClick: yt
+							disabled: je.value || !w(I) || Fe.value,
+							onClick: _t
 						}, {
-							default: E(() => [...t[16] ||= [u("确认旧版原请求", -1)]]),
+							default: T(() => [...t[16] ||= [u("确认旧版原请求", -1)]]),
 							_: 1
-						}, 8, ["disabled"])) : (v(), s("p", Oc, "请使用原操作账号恢复该请求。"))
+						}, 8, ["disabled"])) : (_(), s("p", Ac, "请使用原操作账号恢复该请求。"))
 					]),
 					_: 1
 				})) : o("", !0),
-				Le.value ? (v(), a(T(k), {
+				Fe.value ? (_(), a(w(O), {
 					key: 5,
 					type: "error",
 					closable: !1,
-					title: T(_)("predictionPages.storageError")
-				}, null, 8, ["title"])) : Re.value ? (v(), a(T(k), {
+					title: w(g)("predictionPages.storageError")
+				}, null, 8, ["title"])) : Ie.value ? (_(), a(w(O), {
 					key: 6,
 					type: "warning",
 					closable: !1,
-					title: T(_)("predictionPages.pending")
+					title: w(g)("predictionPages.pending")
 				}, {
-					default: E(() => [Ge.value ? (v(), s(r, { key: 0 }, [
-						c("p", null, [u(w(T(_)("predictionPages.fields.client_request_id")) + ": ", 1), c("code", null, w(Ge.value.body.client_request_id), 1)]),
-						c("p", null, w(Ge.value.body.symbol) + " · 站点 " + w(Ge.value.body.site_id) + " · 公共版本 " + w(Ge.value.body.based_on_public_version) + " / 站点版本 " + w(Ge.value.body.based_on_site_version), 1),
-						c("ul", null, [(v(!0), s(r, null, re(Ge.value.body.overrides, (e) => (v(), s("li", { key: e.duration_seconds }, [
-							u(w(e.duration_seconds) + "s · " + w(e.enabled === void 0 ? "继承原设置" : e.enabled ? T(_)("predictionPages.on") : T(_)("predictionPages.off")) + " · " + w(e.maximum_stake ?? e.stake_tiers?.[0]?.maximum_stake ?? "继承平台设置"), 1),
-							e.fixed_odds === void 0 ? o("", !0) : (v(), s("span", kc, " · 固定赔率 " + w(e.fixed_odds) + "x", 1)),
-							e.minimum_stake === void 0 ? o("", !0) : (v(), s("span", Ac, " · 最小下注金额 " + w(e.minimum_stake) + " USDT", 1))
+					default: T(() => [Ue.value ? (_(), s(r, { key: 0 }, [
+						c("p", null, [u(S(w(g)("predictionPages.fields.client_request_id")) + ": ", 1), c("code", null, S(Ue.value.body.client_request_id), 1)]),
+						c("p", null, S(Ue.value.body.symbol) + " · 站点 " + S(Ue.value.body.site_id) + " · 公共版本 " + S(Ue.value.body.based_on_public_version) + " / 站点版本 " + S(Ue.value.body.based_on_site_version), 1),
+						c("ul", null, [(_(!0), s(r, null, ae(Ue.value.body.overrides, (e) => (_(), s("li", { key: e.duration_seconds }, [
+							u(S(e.duration_seconds) + "s · " + S(e.enabled === void 0 ? "继承原设置" : e.enabled ? w(g)("predictionPages.on") : w(g)("predictionPages.off")) + " · " + S(e.maximum_stake ?? e.stake_tiers?.[0]?.maximum_stake ?? "继承平台设置"), 1),
+							e.fixed_odds === void 0 ? o("", !0) : (_(), s("span", jc, " · 固定赔率 " + S(e.fixed_odds) + "x", 1)),
+							e.minimum_stake === void 0 ? o("", !0) : (_(), s("span", Mc, " · 最小下注金额 " + S(e.minimum_stake) + " USDT", 1))
 						]))), 128))]),
-						T(L) ? (v(), a(T(A), {
+						w(I) ? (_(), a(w(k), {
 							key: 0,
-							disabled: Ne.value,
+							disabled: je.value,
 							"data-action": "replay",
-							onClick: _t
+							onClick: ht
 						}, {
-							default: E(() => [u(w(T(_)("predictionPages.confirmOriginal")), 1)]),
+							default: T(() => [u(S(w(g)("predictionPages.confirmOriginal")), 1)]),
 							_: 1
 						}, 8, ["disabled"])) : o("", !0)
-					], 64)) : (v(), s("p", jc, w(T(_)("predictionPages.otherPending")), 1))]),
+					], 64)) : (_(), s("p", Nc, S(w(g)("predictionPages.otherPending")), 1))]),
 					_: 1
 				}, 8, ["title"])) : o("", !0),
-				Fe.value ? (v(), s("p", Mc, w(Fe.value), 1)) : o("", !0),
-				q.value ? (v(), s(r, { key: 8 }, [
-					Te.value ? o("", !0) : (v(), s("p", Nc, "交易对已关闭；以下房间设置仍会保留。")),
-					q.value.adjustments.length ? (v(), s("p", Pc, "部分保存值受当前公共配置调整，编辑框保留原设置；实际生效金额见下方。")) : o("", !0),
-					T(L) ? o("", !0) : (v(), s("p", Fc, w(T(_)("predictionPages.readOnlyConfig")), 1)),
+				Ne.value ? (_(), s("p", Pc, S(Ne.value), 1)) : o("", !0),
+				J.value ? (_(), s(r, { key: 8 }, [
+					Ce.value ? o("", !0) : (_(), s("p", Fc, "交易对已关闭；以下房间设置仍会保留。")),
+					J.value.adjustments.length ? (_(), s("p", Ic, "部分保存值受当前公共配置调整，编辑框保留原设置；实际生效金额见下方。")) : o("", !0),
+					w(I) ? o("", !0) : (_(), s("p", Lc, S(w(g)("predictionPages.readOnlyConfig")), 1)),
 					c("nav", {
 						class: "room-tabs",
-						"aria-label": P.value === "UP_DOWN" ? T(_)("predictionPages.observationRoom") : "支持周期"
-					}, [(v(!0), s(r, null, re(we.value, (e) => (v(), s("button", {
+						"aria-label": N.value === "UP_DOWN" ? w(g)("predictionPages.observationRoom") : "支持周期"
+					}, [(_(!0), s(r, null, ae(Y.value, (e) => (_(), s("button", {
 						key: e.duration_seconds,
 						type: "button",
 						"data-room": e.duration_seconds,
-						"aria-pressed": Ee.value === e.duration_seconds,
-						class: ee({ active: Ee.value === e.duration_seconds }),
-						onClick: (t) => Ee.value = e.duration_seconds
-					}, w(bt(e)), 11, Lc))), 128))], 8, Ic),
-					Ye.value && Xe.value ? (v(), s(r, { key: 3 }, [
-						c("div", Rc, [c("div", null, [c("h3", null, w(bt(Ye.value)) + " · " + w(P.value === "UP_DOWN" ? T(_)("predictionPages.observationRoom") : "支持周期"), 1)]), c("label", zc, [u(w(T(_)("predictionPages.roomEnabled")), 1), d(T(de), {
-							modelValue: Ye.value.enabled,
-							"onUpdate:modelValue": t[5] ||= (e) => Ye.value.enabled = e,
+						"aria-pressed": we.value === e.duration_seconds,
+						class: te({ active: we.value === e.duration_seconds }),
+						onClick: (t) => we.value = e.duration_seconds
+					}, S(vt(e)), 11, zc))), 128))], 8, Rc),
+					qe.value && Je.value ? (_(), s(r, { key: 3 }, [
+						c("div", Bc, [c("div", null, [c("h3", null, S(vt(qe.value)) + " · " + S(N.value === "UP_DOWN" ? w(g)("predictionPages.observationRoom") : "支持周期"), 1)]), c("label", Vc, [u(S(w(g)("predictionPages.roomEnabled")), 1), d(w(de), {
+							modelValue: qe.value.enabled,
+							"onUpdate:modelValue": t[5] ||= (e) => qe.value.enabled = e,
 							"data-field": "enabled",
-							"aria-label": T(_)("predictionPages.roomEnabled"),
-							disabled: !Je.value,
-							onChange: tt
+							"aria-label": w(g)("predictionPages.roomEnabled"),
+							disabled: !Ke.value,
+							onChange: $e
 						}, null, 8, [
 							"modelValue",
 							"aria-label",
 							"disabled"
 						])])]),
-						Ye.value.inherited_enabled ? (v(), s("p", Bc, "房间开关包含继承设置；未修改时保留继承状态。")) : o("", !0),
-						c("div", Vc, [
-							P.value === "UP_DOWN" ? (v(), s("article", Hc, [
-								c("h4", null, w(T(_)("predictionPages.oddsSettings")), 1),
+						qe.value.inherited_enabled ? (_(), s("p", Hc, "房间开关包含继承设置；未修改时保留继承状态。")) : o("", !0),
+						c("div", Uc, [
+							N.value === "UP_DOWN" ? (_(), s("article", Wc, [
+								c("h4", null, S(w(g)("predictionPages.oddsSettings")), 1),
 								t[18] ||= c("p", { class: "field-description" }, "上涨赔率 = 1 + 目标返奖率 × 下跌池 ÷（上涨池＋本次下注）；下跌赔率反向计算。下注期间为预计倍率，封盘后锁定最终倍率。", -1),
-								c("dl", Uc, [(v(), s(r, null, re(["target_payout_rate", "maximum_odds"], (e) => c("div", { key: e }, [c("dt", null, [u(w(wt(e)), 1), d(yn, { label: wt(e) }, null, 8, ["label"])]), c("dd", null, w(Ct(e, Xe.value[e])), 1)])), 64))]),
-								c("span", Wc, w(T(_)("predictionPages.readOnly")), 1)
+								c("dl", Gc, [(_(), s(r, null, ae(["target_payout_rate", "maximum_odds"], (e) => c("div", { key: e }, [c("dt", null, [u(S(St(e)), 1), d(yn, { label: St(e) }, null, 8, ["label"])]), c("dd", null, S(xt(e, Je.value[e])), 1)])), 64))]),
+								c("span", Kc, S(w(g)("predictionPages.readOnly")), 1)
 							])) : o("", !0),
-							P.value === "HIGH_LOW" ? (v(), s("article", Gc, [
-								c("h4", null, "赔率配置 · " + w(bt(Ye.value)), 1),
+							N.value === "HIGH_LOW" ? (_(), s("article", qc, [
+								c("h4", null, "赔率配置 · " + S(vt(qe.value)), 1),
 								t[20] ||= c("p", { class: "field-description" }, "用户下单时按当前周期固定赔率锁定，订单存储赔率快照；上涨和下跌使用相同赔率。", -1),
-								c("dl", Kc, [c("div", null, [c("dt", null, [t[19] ||= u("当前生效固定赔率", -1), d(yn, { label: "固定赔率" })]), c("dd", qc, w(Ct("fixed_odds", Xe.value.fixed_odds)), 1)])]),
-								c("span", Jc, w(T(_)("predictionPages.readOnly")), 1)
+								c("dl", Jc, [c("div", null, [c("dt", null, [t[19] ||= u("当前生效固定赔率", -1), d(yn, { label: "固定赔率" })]), c("dd", Yc, S(xt("fixed_odds", Je.value.fixed_odds)), 1)])]),
+								c("span", Xc, S(w(g)("predictionPages.readOnly")), 1)
 							])) : o("", !0),
-							c("article", Yc, [
-								c("h4", null, w(T(_)("predictionPages.stakeLimits")) + " · " + w(bt(Ye.value)), 1),
+							c("article", Zc, [
+								c("h4", null, S(w(g)("predictionPages.stakeLimits")) + " · " + S(vt(qe.value)), 1),
 								t[22] ||= c("p", { class: "field-description" }, "不同周期独立保存下注限制，变更不影响已受理订单。", -1),
-								c("div", Xc, [P.value === "UP_DOWN" ? (v(), s("dl", Zc, [c("dt", null, [u(w(T(_)("predictionPages.fields.minimum_stake")), 1), d(yn, {
+								c("div", Qc, [N.value === "UP_DOWN" ? (_(), s("dl", $c, [c("dt", null, [u(S(w(g)("predictionPages.fields.minimum_stake")), 1), d(yn, {
 									label: "单笔最小额",
 									content: "用户创建一笔预测订单时允许输入的最低下注金额。本版涨跌预测固定为 1 USDT，由平台统一维护。"
-								})]), c("dd", null, w(St(Xe.value.stake_tiers?.find((e) => e.stake_tier_id === Ye.value?.stake_tier_id)?.minimum_stake)), 1)])) : (v(), s("div", Qc, [c("label", null, [u(w(T(_)("predictionPages.fields.minimum_stake")), 1), d(yn, { label: "单笔最小额" })]), d(T(R), {
-									modelValue: Ye.value.minimum_stake,
-									"onUpdate:modelValue": t[6] ||= (e) => Ye.value.minimum_stake = e,
+								})]), c("dd", null, S(bt(Je.value.stake_tiers?.find((e) => e.stake_tier_id === qe.value?.stake_tier_id)?.minimum_stake)), 1)])) : (_(), s("div", el, [c("label", null, [u(S(w(g)("predictionPages.fields.minimum_stake")), 1), d(yn, { label: "单笔最小额" })]), d(w(L), {
+									modelValue: qe.value.minimum_stake,
+									"onUpdate:modelValue": t[6] ||= (e) => qe.value.minimum_stake = e,
 									"data-field": "minimum_stake",
-									"aria-label": T(_)("predictionPages.fields.minimum_stake"),
-									disabled: !Je.value,
-									onInput: tt
+									"aria-label": w(g)("predictionPages.fields.minimum_stake"),
+									disabled: !Ke.value,
+									onInput: $e
 								}, {
-									append: E(() => [...t[21] ||= [u("USDT", -1)]]),
+									append: T(() => [...t[21] ||= [u("USDT", -1)]]),
 									_: 1
 								}, 8, [
 									"modelValue",
 									"aria-label",
 									"disabled"
 								])])), c("div", null, [
-									c("label", null, [u(w(T(_)("predictionPages.fields.maximum_stake")), 1), d(yn, { label: "单笔最大额" })]),
-									d(T(R), {
-										modelValue: Ye.value.maximum_stake,
-										"onUpdate:modelValue": t[7] ||= (e) => Ye.value.maximum_stake = e,
+									c("label", null, [u(S(w(g)("predictionPages.fields.maximum_stake")), 1), d(yn, { label: "单笔最大额" })]),
+									d(w(L), {
+										modelValue: qe.value.maximum_stake,
+										"onUpdate:modelValue": t[7] ||= (e) => qe.value.maximum_stake = e,
 										"data-field": "maximum_stake",
-										"aria-label": T(_)("predictionPages.fields.maximum_stake"),
-										disabled: !Je.value || !Ye.value.editable,
-										onInput: tt
+										"aria-label": w(g)("predictionPages.fields.maximum_stake"),
+										disabled: !Ke.value || !qe.value.editable,
+										onInput: $e
 									}, null, 8, [
 										"modelValue",
 										"aria-label",
 										"disabled"
 									]),
-									c("small", null, "当前生效：" + w(Ye.value.effective_maximum) + "；可填写更高限额，最终由平台范围校验。", 1)
+									c("small", null, "当前生效：" + S(qe.value.effective_maximum) + "；可填写更高限额，最终由平台范围校验。", 1)
 								])])
 							])
 						])
 					], 64)) : o("", !0)
 				], 64)) : o("", !0)
-			])])) : (v(), s("p", ic, w(T(_)("predictionPages.noPermission")), 1))], 64))])]),
+			])])) : (_(), s("p", oc, S(w(g)("predictionPages.noPermission")), 1))], 64))])]),
 			_: 1
 		}, 8, ["locale"]));
 	}
-}), [["__scopeId", "data-v-3a0bcf9c"]]), el = {
+}), [["__scopeId", "data-v-3a0bcf9c"]]), nl = {
 	key: 0,
 	role: "alert"
-}, tl = {
+}, rl = {
 	key: 1,
 	role: "status"
-}, nl = {
+}, il = {
 	key: 2,
 	role: "alert"
-}, rl = {
+}, al = {
 	key: 5,
 	role: "alert"
-}, il = /* @__PURE__ */ f({
+}, ol = /* @__PURE__ */ f({
 	__name: "index",
 	setup(e) {
-		let t = me().api, n = he(), r = C(null), o = b(!1), c = b(""), l = i(() => n.userInfo.can_manage_prediction_config === !0 && (n.perms.includes("*") || n.perms.includes("prediction_config:lists")) && Ti(n.userInfo.id) !== null), f = i(() => `${n.userInfo.id}:${n.token}`), p = 0, m;
-		async function h() {
-			let e = ++p, i = f.value;
-			if (m?.abort(), r.value = null, c.value = "", o.value = !1, !l.value) return;
-			m = new AbortController(), o.value = !0;
-			let a = () => e === p && i === f.value && l.value;
+		let t = pe().api, n = me(), r = x(null), o = v(!1), c = v(""), l = i(() => n.userInfo.can_manage_prediction_config === !0 && (n.perms.includes("*") || n.perms.includes("prediction_config:lists")) && Ti(n.userInfo.id) !== null), f = i(() => `${n.userInfo.id}:${n.token}`), ee = 0, p;
+		async function m() {
+			let e = ++ee, i = f.value;
+			if (p?.abort(), r.value = null, c.value = "", o.value = !1, !l.value) return;
+			p = new AbortController(), o.value = !0;
+			let a = () => e === ee && i === f.value && l.value;
 			try {
-				let e = await t.ownerConfigurationModel(m.signal);
+				let e = await t.ownerConfigurationModel(p.signal);
 				if (!a()) return;
 				if (e.actor?.operator_id !== Ti(n.userInfo.id) || ![
 					"AGENT_V1",
@@ -6704,11 +6872,11 @@ var nc = {
 				].includes(e.config_model)) throw Error("INVALID_MODEL");
 				if (e.config_model === "SCOPED_OWNER_V1" && e.actor.kind === "SITE") {
 					let n = e.actor;
-					if (n.agent_id !== "0" || !Y(n.tenant_id, !0) || !Array.isArray(n.site_ids) || n.site_ids.length !== 1 || !Y(n.site_ids[0], !0)) throw Error("INVALID_SITES");
-					let i = Sa(localStorage), o = i?.operator_id === n.operator_id && i.kind === "SITE" ? i.config_site_id : void 0, s = co(vo(sessionStorage, n))?.command.site_id, c = n.site_ids[0];
+					if (n.agent_id !== "0" || !Z(n.tenant_id, !0) || !Array.isArray(n.site_ids) || n.site_ids.length !== 1 || !Z(n.site_ids[0], !0)) throw Error("INVALID_SITES");
+					let i = wa(localStorage), o = i?.operator_id === n.operator_id && i.kind === "SITE" ? i.config_site_id : void 0, s = uo(bo(sessionStorage, n))?.command.site_id, c = n.site_ids[0];
 					if (o && o !== c || s && s !== c || !t.initializeSiteConfigurations) throw Error("SITE_UNAVAILABLE");
 					if (!o && !s) {
-						let e = await t.initializeSiteConfigurations(c, m.signal);
+						let e = await t.initializeSiteConfigurations(c, p.signal);
 						if (!a()) return;
 						if (!Number.isSafeInteger(e.created) || e.created < 0) throw Error("INVALID_INITIALIZATION");
 					}
@@ -6724,10 +6892,10 @@ var nc = {
 					};
 					return;
 				}
-				if (!Yi(e.actor) || e.config_model === "SCOPED_OWNER_V1" !== Ji(e.actor)) throw Error("INVALID_MODEL");
+				if (!Zi(e.actor) || e.config_model === "SCOPED_OWNER_V1" !== Xi(e.actor)) throw Error("INVALID_MODEL");
 				if (e.config_model === "SCOPED_OWNER_V1") {
 					if (!t.initializeOwnerConfigurations) throw Error("INITIALIZATION_UNAVAILABLE");
-					let e = await t.initializeOwnerConfigurations(m.signal);
+					let e = await t.initializeOwnerConfigurations(p.signal);
 					if (!a()) return;
 					if (!Number.isSafeInteger(e.created) || e.created < 0) throw Error("INVALID_INITIALIZATION");
 				}
@@ -6735,31 +6903,31 @@ var nc = {
 			} catch {
 				a() && (c.value = "无法加载当前账号的配置，请重试。");
 			} finally {
-				e === p && (o.value = !1);
+				e === ee && (o.value = !1);
 			}
 		}
-		return oe(() => [f.value, l.value], () => {
-			h();
+		return se(() => [f.value, l.value], () => {
+			m();
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), te(() => {
-			p++, m?.abort();
-		}), (e, t) => l.value ? o.value ? (v(), s("p", tl, "正在读取配置…")) : c.value ? (v(), s("div", nl, [u(w(c.value) + " ", 1), d(T(A), { onClick: t[0] ||= (e) => h() }, {
-			default: E(() => [...t[1] ||= [u("重试", -1)]]),
+		}), ne(() => {
+			ee++, p?.abort();
+		}), (e, t) => l.value ? o.value ? (_(), s("p", rl, "正在读取配置…")) : c.value ? (_(), s("div", il, [u(S(c.value) + " ", 1), d(w(k), { onClick: t[0] ||= (e) => m() }, {
+			default: T(() => [...t[1] ||= [u("重试", -1)]]),
 			_: 1
-		})])) : r.value?.config_model === "OWNER_V1" || r.value?.config_model === "SCOPED_OWNER_V1" ? (v(), a(Bs, {
+		})])) : r.value?.config_model === "OWNER_V1" || r.value?.config_model === "SCOPED_OWNER_V1" ? (_(), a(Hs, {
 			key: `${f.value}:${r.value.actor.config_site_id ?? ""}`,
 			actor: r.value.actor
-		}, null, 8, ["actor"])) : r.value?.config_model === "SITE_V1" ? (v(), a($c, { key: f.value })) : (v(), s("p", rl, "当前配置模式尚未接入此页面，请联系管理员确认切换；原有未确认请求保持原样。")) : (v(), s("p", el, "当前账号无权管理预测配置。商户端仅代理商主账号可管理；白标账号需有所属站点的玩法配置权限。"));
+		}, null, 8, ["actor"])) : r.value?.config_model === "SITE_V1" ? (_(), a(tl, { key: f.value })) : (_(), s("p", al, "当前配置模式尚未接入此页面，请联系管理员确认切换；原有未确认请求保持原样。")) : (_(), s("p", nl, "当前账号无权管理预测配置。商户端仅代理商主账号可管理；白标账号需有所属站点的玩法配置权限。"));
 	}
-}), al = {
+}), sl = {
 	class: "mm-prediction-game-config mm-ui",
 	"data-mm-component": "prediction-game-config"
-}, ol = {
+}, cl = {
 	key: 0,
 	role: "alert"
-}, sl = /* @__PURE__ */ f({
+}, ll = /* @__PURE__ */ f({
 	name: "MmPredictionGameConfig",
 	__name: "MmPredictionGameConfig",
 	props: {
@@ -6773,7 +6941,7 @@ var nc = {
 	},
 	setup(e) {
 		let t = e;
-		y(G, {
+		ie(K, {
 			get context() {
 				return t.context;
 			},
@@ -6791,10 +6959,10 @@ var nc = {
 			registerBeforeLeave: (e) => t.registerBeforeLeave?.(e)
 		});
 		let n = i(() => `${t.adapter.role}:${t.context.operatorId}:${t.context.identityKey}`), r = i(() => /^[1-9]\d*$/.test(t.context.operatorId) && !!t.context.identityKey);
-		return (t, i) => (v(), s("section", al, [r.value ? (v(), a(S(e.adapter.role === "platform" ? Si : il), { key: n.value })) : (v(), s("p", ol, "无法确认当前操作人身份"))]));
+		return (t, i) => (_(), s("section", sl, [r.value ? (_(), a(b(e.adapter.role === "platform" ? Si : ol), { key: n.value })) : (_(), s("p", cl, "无法确认当前操作人身份"))]));
 	}
 });
 //#endregion
-export { sl as MmPredictionGameConfig };
+export { ll as MmPredictionGameConfig };
 
 //# sourceMappingURL=prediction-config.js.map

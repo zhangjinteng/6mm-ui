@@ -5,7 +5,7 @@ type __VLS_Props = {
 };
 declare function saveConfig(): void;
 declare function focusSave(): void;
-declare function setEnabled(expectedTarget: string, generation: number, expectedActor: string, value: boolean): boolean;
+declare function appliedSwitch(priorVersion: string, configuration: PredictionConfiguration): void;
 declare function open(value: PredictionGameType, pair: string, initial?: PredictionConfiguration, create?: boolean): Promise<number | undefined>;
 declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {
     open: typeof open;
@@ -25,7 +25,7 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {
         dirty: boolean;
         ready: boolean;
     }>;
-    setEnabled: typeof setEnabled;
+    appliedSwitch: typeof appliedSwitch;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     success: (...args: any[]) => void;
     close: (...args: any[]) => void;

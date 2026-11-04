@@ -11,6 +11,7 @@ export interface GridLayout {
     affected_site_ids: string[]
 }
 export interface GridSnapshot extends Partial<GridParameterMetadata> {
+    availability_version?: string
     config_id?: string
     requested_agent_id?: string
     agent_id?: string | null
@@ -37,6 +38,7 @@ export interface GridSnapshot extends Partial<GridParameterMetadata> {
     max_order_amount: string
 }
 export interface GridCommand {
+    based_on_availability_version?: string
     based_on_global_version?: string
     based_on_config_id?: string
     based_on_default_version?: string
@@ -213,7 +215,7 @@ export function hasLayoutChanges(source: GridSnapshot, draft: GridSnapshot, allo
 export function normalizeSnapshot(value: unknown): GridSnapshot {
     requireValid(object(value), 'INVALID_GRID_CONFIGURATION')
     const required = ['site_id', 'symbol', 'layout_version', 'site_version', 'effective_from_ms', 'enabled', 'target_rtp', 'min_multiplier', 'max_multiplier', 'min_order_amount', 'max_order_amount']
-    exactKeys(value, [...required, ...('layout' in value ? ['layout'] : []), ...('config_id' in value ? identityKeys : []), ...gridParameterKeys.filter(key=>key in value)])
+    exactKeys(value, [...required, ...('layout' in value ? ['layout'] : []), ...('config_id' in value ? identityKeys : []), ...gridParameterKeys.filter(key=>key in value), ...('availability_version' in value ? ['availability_version'] : [])])
     requireValid(typeof value.site_id === 'string' && value.site_id.length > 0 && value.site_id.length <= 64 && value.site_id.trim() === value.site_id, 'INVALID_GRID_CONFIGURATION')
     requireValid(typeof value.symbol === 'string' && symbolPattern.test(value.symbol), 'INVALID_GRID_CONFIGURATION')
     requireValid([value.layout_version, value.site_version].every(item => typeof item === 'string' && positiveIntegerPattern.test(item)), 'INVALID_GRID_CONFIGURATION')
@@ -245,6 +247,10 @@ export function normalizeSnapshot(value: unknown): GridSnapshot {
         result.requested_agent_id=value.requested_agent_id;result.agent_id=value.agent_id as string|null
         for (const key of ['inherited','default_enabled','effective_enabled'] as const) { requireValid(typeof value[key]==='boolean');result[key]=value[key] as boolean }
         for (const key of ['default_target_rtp','default_min_order_amount','default_max_order_amount'] as const) result[key]=canonicalDecimal(value[key])
+    }
+    if ('availability_version' in value) {
+        requireValid(typeof value.availability_version==='string' && /^(0|[1-9][0-9]*)$/.test(value.availability_version) && compareDecimal(value.availability_version,'9223372036854775807')<=0)
+        result.availability_version=value.availability_version
     }
     Object.assign(result, gridParameters(value, canonicalDecimal))
     if ('layout' in value) result.layout = normalizeLayout(value.layout)
@@ -300,6 +306,7 @@ export function makeCommand(sourceValue: unknown, draftValue: unknown, reason: s
         based_on_layout_version: source.layout_version,
         based_on_site_version: source.site_version,
         based_on_config_id: source.config_id,
+        ...(source.requested_agent_id==='0' && changes.enabled===true && source.availability_version!==undefined ? {based_on_availability_version:source.availability_version} : {}),
         ...(gridGlobalVersion(source) ? {based_on_global_version:gridGlobalVersion(source)} : {}),
         based_on_default_version: source.default_version,
         based_on_default_resolution_epoch: source.default_resolution_epoch,
@@ -335,7 +342,8 @@ function makeCreationCommand(source: Record<string, unknown>, draftValue: unknow
 }
 function commandShape(value: unknown): asserts value is GridCommand {
     requireValid(object(value), 'PENDING_CORRUPT')
-    exactKeys(value, [...commandKeys, ...('based_on_config_id' in value ? commandIdentityKeys : []), ...('based_on_global_version' in value ? ['based_on_global_version'] : [])])
+    exactKeys(value, [...commandKeys, ...('based_on_config_id' in value ? commandIdentityKeys : []), ...('based_on_global_version' in value ? ['based_on_global_version'] : []), ...('based_on_availability_version' in value ? ['based_on_availability_version'] : [])])
+    if ('based_on_availability_version' in value) requireValid(typeof value.based_on_availability_version==='string' && /^(0|[1-9][0-9]*)$/.test(value.based_on_availability_version) && compareDecimal(value.based_on_availability_version,'9223372036854775807')<=0 && object(value.changes) && value.changes.enabled===true,'PENDING_CORRUPT')
     if ('based_on_global_version' in value) requireValid(typeof value.based_on_global_version==='string' && /^(0|[1-9][0-9]*)$/.test(value.based_on_global_version) && compareDecimal(value.based_on_global_version,'9223372036854775807')<=0, 'PENDING_CORRUPT')
     if ('based_on_config_id' in value) for (const key of commandIdentityKeys) requireValid(typeof value[key] === 'string' && positiveIntegerPattern.test(value[key] as string) && compareDecimal(value[key] as string,'9223372036854775807') <= 0, 'PENDING_CORRUPT')
     requireValid(typeof value.site_id === 'string' && value.site_id.length > 0 && value.site_id.length <= 64 && value.site_id.trim() === value.site_id, 'PENDING_CORRUPT')

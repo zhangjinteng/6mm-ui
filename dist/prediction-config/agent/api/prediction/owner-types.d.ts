@@ -26,6 +26,7 @@ export type OwnerLimitChange = {
     fixed_odds?: string;
 };
 export type OwnerConfig = {
+    symbol_available?: boolean;
     config_model?: 'SCOPED_OWNER_V1';
     config_site_id?: string;
     revision?: string;
@@ -54,6 +55,7 @@ export type OwnerConfig = {
     }>;
 };
 export type OwnerSaveBody = {
+    based_on_public_version?: string;
     enabled?: boolean;
     game_type: SiteGame;
     symbol: string;

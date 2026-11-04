@@ -10,6 +10,7 @@ export interface GridLayout {
     affected_site_ids: string[];
 }
 export interface GridSnapshot extends Partial<GridParameterMetadata> {
+    availability_version?: string;
     config_id?: string;
     requested_agent_id?: string;
     agent_id?: string | null;
@@ -36,6 +37,7 @@ export interface GridSnapshot extends Partial<GridParameterMetadata> {
     max_order_amount: string;
 }
 export interface GridCommand {
+    based_on_availability_version?: string;
     based_on_global_version?: string;
     based_on_config_id?: string;
     based_on_default_version?: string;

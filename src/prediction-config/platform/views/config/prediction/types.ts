@@ -132,3 +132,8 @@ export interface PredictionRpcError {
     detail?: Record<string, unknown>
     request_id?: string
 }
+
+type PlatformWriteIdentity = Omit<SavePredictionConfigurationPayload, 'platform_template'>
+export type PlatformSettingsCommand = SavePredictionConfigurationPayload
+    | (PlatformWriteIdentity & { action: 'set_enabled'; enabled: boolean })
+    | (PlatformWriteIdentity & { action: 'save_parameters'; platform_template: { rules: PlatformRulePayload[] } })

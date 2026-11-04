@@ -1,3 +1,4 @@
+import { submissionOutcome } from '../../../submission-outcome'
 import { validatePredictionModel } from '../config/prediction/form'
 import { secureRequestId } from '../grid/config/model'
 import type { PredictionEditModel } from '../config/prediction/types'
@@ -17,7 +18,11 @@ export interface PendingWrite {
     attemptGeneration?: number
 }
 type StoragePort = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>
-const fields: Record<string, string[]> = { 'config.save': ['game_type','symbol','based_on_template_version','platform_template'] }
+const common = ['game_type','symbol','based_on_template_version']
+const fields: Record<string, string[]> = {
+    'config.save': [...common, 'platform_template'],
+    'config.availability': [...common, 'action', 'enabled']
+}
 export function unwrapEnvelope<T>(value: unknown): T {
     const r = value as { code?: number; data?: unknown; msg?: string }
     if (!r || typeof r.code !== 'number') throw Error('服务响应格式异常')
@@ -76,7 +81,8 @@ export class SubmissionJournal {
         return p
     }
     private validate(body: Record<string, unknown>) {
-        const allowed = [...fields[this.action], 'reason', 'client_request_id']
+        const required = fields[this.action]
+        const allowed = [...required, 'reason', 'client_request_id', ...(this.action === 'config.save' && body.action === 'save_parameters' ? ['action'] : [])]
         if (
             Object.keys(body).some((k) => !allowed.includes(k)) ||
             typeof body.reason !== 'string' ||
@@ -93,13 +99,17 @@ export class SubmissionJournal {
             typeof body[key] === 'string' &&
             Boolean((body[key] as string).trim()) &&
             (body[key] as string).length <= 128
-        if (this.action === 'config.save') {
+        if (!['UP_DOWN','HIGH_LOW'].includes(String(body.game_type)) || !text('symbol') ||
+            typeof body.based_on_template_version !== 'string' || !/^(0|[1-9]\d*)$/.test(body.based_on_template_version)) throw Error('配置操作记录无效')
+        if (this.action === 'config.availability') {
+            if (body.action !== 'set_enabled' || typeof body.enabled !== 'boolean') throw Error('开关操作记录无效')
+        } else if (this.action === 'config.save') {
             const template = body.platform_template as { enabled?: unknown; rules?: unknown }
             if (
                 !['UP_DOWN', 'HIGH_LOW'].includes(String(body.game_type)) ||
                 !text('symbol') ||
                 !template ||
-                typeof template.enabled !== 'boolean' ||
+                (body.action === 'save_parameters' ? Object.hasOwn(template, 'enabled') : typeof template.enabled !== 'boolean') ||
                 !Array.isArray(template.rules)
             )
                 throw Error('配置操作记录无效')
@@ -107,7 +117,7 @@ export class SubmissionJournal {
                 game_type: body.game_type,
                 symbol: body.symbol,
                 based_on_template_version: body.based_on_template_version,
-                enabled: template.enabled,
+                enabled: template.enabled ?? false,
                 rules: structuredClone(template.rules)
             } as PredictionEditModel
             // 校验副本补齐页面虚拟字段，原请求体保持不变以便 UNKNOWN 原号重试。
@@ -122,7 +132,7 @@ export class SubmissionJournal {
             }
             // New closed configurations ask the service to generate every identity.
             // Validate the frozen body as-is; never rebuild it during receipt recovery.
-            const newIdentifiers = template.enabled === false && model.rules.every(rule =>
+            const newIdentifiers = template.enabled !== true && model.rules.every(rule =>
                 rule.market_id === undefined && (rule.stake_tiers ?? []).every(tier => tier.stake_tier_id === undefined))
             if (validatePredictionModel(model, newIdentifiers).length) throw Error('配置操作记录无效')
         }
@@ -172,32 +182,21 @@ export class SubmissionJournal {
             if (this.ownsStoredIntent(p)) this.storage.removeItem(this.key)
             return response
         } catch (error) {
-            const e = error as {
-                error_code?: string
-                control?: { submission_outcome?: string }
-                detail?: { control?: { submission_outcome?: string } }
-            }
+            const e = error as { error_code?: string } | null
             const current = this.read()
             if (!current || JSON.stringify(current.body) !== JSON.stringify(p.body)) throw error
-            const explicitlyUnverified =
-                current.attemptGeneration !== p.attemptGeneration ||
-                e.control?.submission_outcome === 'UNVERIFIED' ||
-                e.detail?.control?.submission_outcome === 'UNVERIFIED'
-            // Config saves return this error only after a failed operation receipt is
-            // recorded (including replay). It is a terminal rejection, not a timeout.
-            const marketRejected = this.action === 'config.save' &&
-                e.error_code === 'ERROR_CODE_MARK_PRICE_UNAVAILABLE' && !explicitlyUnverified
-            const unverified = previouslyAttempted || explicitlyUnverified
-            if (marketRejected || (
-                !unverified &&
-                [
+            const outcome = submissionOutcome(error, p.body.client_request_id)
+            const currentAttempt = current.attemptGeneration === p.attemptGeneration
+            const firstResponse = !previouslyAttempted && outcome !== 'unverified'
+            const marketRejected = this.action === 'config.save' && e?.error_code === 'ERROR_CODE_MARK_PRICE_UNAVAILABLE'
+            const firstRejection = firstResponse && (marketRejected || [
                     'ERROR_CODE_INVALID_ARGUMENT',
                     'ERROR_CODE_NOT_FOUND',
                     'ERROR_CODE_CONFLICT',
                     'ERROR_CODE_PERMISSION_DENIED',
                     'ERROR_CODE_UNAUTHENTICATED'
-                ].includes(e.error_code || '')
-            ))
+                ].includes(e?.error_code || ''))
+            if (currentAttempt && (outcome === 'rejected' || firstRejection))
                 this.storage.removeItem(this.key)
             else {
                 current.state = 'unverified'

@@ -94,14 +94,14 @@ const props=defineProps<{actor:OwnerActor}>(),user=useUserStore()
 const maximumOddsEditingEnabled=false
 const scoped=computed(()=>scopedOwnerActor(props.actor))
 const pendingActorMatches=computed(()=>!pending.value||(pending.value.operator_id===props.actor.operator_id&&pending.value.agent_id===props.actor.agent_id&&pending.value.config_site_id===props.actor.config_site_id&&pending.value.kind===props.actor.kind))
-function visibleConfig(item:OwnerConfig){return item.platform_enabled || (scoped.value && (item.enabled || !!item.blocked_reason))}
+function visibleConfig(item:OwnerConfig){return item.symbol_available ?? (item.platform_enabled || (props.actor.kind!=='SITE' && scoped.value && (item.enabled || !!item.blocked_reason)))}
 const allTabs=[{key:'UP_DOWN',label:'涨跌预测',description:'按系统场次预测结算价格相对开盘价格上涨或下跌'},{key:'HIGH_LOW',label:'自选预测',description:'用户自主选择方向和预测周期，生成独立预测订单'},{key:'GRID',label:'预测网格',description:'按时间格与价格区间展示网格预测规则'}] as const
 const tabs=allTabs
 const mode=ref<SiteGame|'GRID'>('UP_DOWN'),items=shallowRef<OwnerConfig[]>([]),symbol=ref(''),search=ref(''),rows=ref<OwnerRow[]>([]),loading=ref(false),busy=ref(false),loadError=ref(''),message=ref(''),pending=shallowRef<OwnerPending|null>(null),legacyBlocked=ref(false),storageError=ref(false)
 const gate=new OwnerReadGate();let mounted=true
 const current=()=>mounted&&canManageOwnerConfig(props.actor)&&identity(user.userInfo.id)===props.actor.operator_id&&user.userInfo.can_manage_prediction_config===true&&(user.perms.includes('*')||user.perms.includes('prediction_config:lists'))
 const editable=computed(()=>current()&&!legacyBlocked.value&&!storageError.value)
-const selected=computed(()=>items.value.find(i=>i.symbol===symbol.value))
+const selected=computed(()=>items.value.find(i=>i.symbol===symbol.value && visibleConfig(i)))
 const selectedRoom=ref('35'),roomGeneration=ref(0)
 const presentRows=computed(()=>rows.value.filter(row=>row.owner_enabled&&(scoped.value||row.platform_enabled)))
 const activeRow=computed(()=>presentRows.value.find(row=>row.duration_seconds===selectedRoom.value))
@@ -171,7 +171,7 @@ async function save(){
             if(result.latest && result.latest.symbol===symbol.value && result.latest.game_type==='GAME_TYPE_'+mode.value){items.value=items.value.map(i=>i.symbol===symbol.value?result.latest!:i);project()}
             else {items.value=[];symbol.value='';project();loadError.value='保存已确认，请重试读取最新配置。'}
         }else {message.value=result.status==='rejected'?'保存未通过，请重新读取配置后调整。':'暂未确认保存结果，请稍后使用原请求确认。';if(result.status==='rejected')loadError.value='保存被拒绝，请读取最新配置后修改。'}
-    }catch(error){message.value=error instanceof Error&&error.message==='NO_CHANGES'?'配置没有变化。':'无法保存，请检查金额、赔率范围及待确认请求。'}
+    }catch(error){message.value=error instanceof Error&&error.message==='SEPARATE_ENABLE'?'请先关闭币种开关并保存参数，再单独开启币种。':error instanceof Error&&error.message==='NO_CHANGES'?'配置没有变化。':'无法保存，请检查金额、赔率范围及待确认请求。'}
     finally{busy.value=false}
 }
 readPending();

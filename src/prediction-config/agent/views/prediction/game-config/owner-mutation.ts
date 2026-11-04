@@ -1,3 +1,4 @@
+import { submissionOutcome } from '../../../../submission-outcome'
 import type { OwnerActor, OwnerConfig, OwnerSaveBody, OwnerSaveResult } from '../../../api/prediction/owner-types'
 import { canManageOwnerConfig, scopedOwnerActor, money, assertOwnerConfig, ownerTier } from './owner-model'
 import { compareDecimal, decimal, integer, text } from '../shared/format'
@@ -10,7 +11,7 @@ function keys(value: Record<string, unknown>, required: string[], optional: stri
     ensure(required.every(k => Object.hasOwn(value, k)) && Object.keys(value).every(k => required.includes(k) || optional.includes(k)), 'PENDING_CORRUPT')
 }
 function bodyShape(value: unknown): asserts value is OwnerSaveBody {
-    ensure(object(value),'PENDING_CORRUPT'); keys(value,['game_type','symbol','based_owner_revision','changes','client_request_id','reason'],['enabled']);ensure(value.enabled===undefined || typeof value.enabled==='boolean','PENDING_CORRUPT')
+    ensure(object(value),'PENDING_CORRUPT'); keys(value,['game_type','symbol','based_owner_revision','changes','client_request_id','reason'],['enabled','based_on_public_version']);ensure(value.based_on_public_version===undefined || (value.enabled===true && integer(value.based_on_public_version,true)),'PENDING_CORRUPT');ensure(value.enabled===undefined || typeof value.enabled==='boolean','PENDING_CORRUPT')
     ensure(['UP_DOWN','HIGH_LOW'].includes(String(value.game_type)) && text(value.symbol,64,true) && text(value.client_request_id,128) && text(value.reason,500) && integer(value.based_owner_revision),'PENDING_CORRUPT')
     ensure(Array.isArray(value.changes) && (value.changes.length>0 || value.enabled!==undefined) && value.changes.length<=100 && new Set(value.changes.map(r=>r.duration_seconds)).size===value.changes.length,'PENDING_CORRUPT')
     for(const row of value.changes) {
@@ -71,6 +72,7 @@ function validScopedSuccess(value: unknown,pending: OwnerPending): boolean {
     const saved=value.stored,receipt=value.receipt,body=pending.body
     ensure(object(saved.key) && saved.key.configSiteId===pending.config_site_id && saved.key.ownerAgentId===pending.agent_id && saved.key.gameType===body.game_type && saved.key.symbol===body.symbol)
     ensure(integer(saved.revision,true) && BigInt(saved.revision)===BigInt(body.based_owner_revision)+1n && integer(saved.basedPublicVersion,true) && integer(saved.basedSiteRevision))
+    if (body.based_on_public_version!==undefined) ensure(saved.basedPublicVersion===body.based_on_public_version)
     ensure((saved.basedSiteRevision==='0')===(pending.kind==='SITE'||pending.config_site_id==='0'))
     ensure(typeof saved.disabled==='boolean' && (body.enabled===undefined || saved.disabled===!body.enabled))
     ensure(Array.isArray(saved.overrides) && saved.overrides.length>0 && saved.overrides.length<=100)
@@ -119,8 +121,12 @@ export function dispatchOwnerPending(storage: PendingStorage, pending: OwnerPend
         } catch (error) {
             const current = readOwnerPending(storage)
             if (!same(current, pending)) return {status: 'superseded', error}
-            const wrongKey = object(error) && error.client_request_id !== undefined && error.client_request_id !== pending.body.client_request_id
-            if (!hadAttempt && current!.attempt === attempt && !wrongKey && isDeterminate(error)) { clear(storage, pending); return {status: 'rejected', error} }
+            const outcome = submissionOutcome(error, pending.body.client_request_id)
+            const firstRejection = !hadAttempt && outcome !== 'unverified' && isDeterminate(error)
+            if (current!.attempt === attempt && (outcome === 'rejected' || firstRejection)) {
+                clear(storage, pending)
+                return {status: 'rejected', error}
+            }
             return {status: 'unknown', error}
         }
     }).finally(() => { if (active.get(storage)?.promise === promise) active.delete(storage) })

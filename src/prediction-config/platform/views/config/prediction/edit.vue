@@ -233,7 +233,7 @@ import type {
     PredictionEditModel,
     PredictionGameType,
     PlatformRuleInput,
-    SavePredictionConfigurationPayload,
+    PlatformSettingsCommand,
     PredictionConfiguration
 } from './types'
 const props = withDefaults(defineProps<{ inline?: boolean; externalSave?: boolean }>(), { inline: false, externalSave: false })
@@ -326,27 +326,18 @@ const editingState = computed(() => ({
 watch(model, () => {
     if (props.externalSave && !loading.value) writeRef.value?.clearFeedback()
 }, { deep: true, flush: 'sync' })
-function setEnabled(
-    expectedTarget: string,
-    generation: number,
-    expectedActor: string,
-    value: boolean
-) {
-    if (
-        typeof value !== 'boolean' ||
-        !model.value ||
-        model.value.is_new ||
-        !editingState.value.ready ||
-        !editable.value ||
-        !hasPermission(user.perms, 'prediction_config:lists') ||
-        (pending.value || saving.value) ||
-        expectedTarget !== target.value ||
-        generation !== sequence.value ||
-        expectedActor !== actor.value
-    )
-        return false
-    model.value.enabled = value
-    return true
+// A confirmed switch can advance the shared version while another symbol or room has a draft.
+function appliedSwitch(priorVersion: string, configuration: PredictionConfiguration) {
+    const current = model.value
+    if (!current || !baseline.value || current.based_on_template_version !== priorVersion ||
+        !editingState.value.ready) return
+    const initial: PredictionEditModel = JSON.parse(baseline.value)
+    current.based_on_template_version = initial.based_on_template_version = configuration.template_version
+    if (configuration.rules[0]?.game_type === 'GAME_TYPE_' + current.game_type &&
+        configuration.rules[0].symbol === current.symbol) {
+        current.enabled = initial.enabled = configuration.symbol_enabled!
+    }
+    baseline.value = JSON.stringify(initial)
 }
 watch(
     () => [actor.value, hasPermission(user.perms, 'prediction_config:lists'), editable.value],
@@ -441,14 +432,26 @@ function payload() {
     const errors = validatePredictionModel(toRaw(model.value))
     if (errors.length) throw Error(summarizePredictionValidationErrors(errors, model.value.game_type, selectedRule.value?.duration_seconds || model.value.rules[0]?.duration_seconds || ''))
     const { client_request_id, reason, ...body } = createSavePayload(toRaw(model.value), '', '')
-    return body
+    if (!props.inline) return body
+    return { ...body, action: 'save_parameters', platform_template: { rules: body.platform_template.rules } }
 }
-const send = (body: Record<string, unknown>) =>
-    predictionConfigurationSave(body as unknown as SavePredictionConfigurationPayload)
-function saved() {
-    creating.value = false
-    emit('success')
-    void reload()
+async function send(body: Record<string, unknown>) {
+    const response=await predictionConfigurationSave(body as unknown as PlatformSettingsCommand)
+    const configuration=response.configuration
+    if (!configuration?.rules?.length || configuration.rules.some(rule=>rule.symbol!==body.symbol ||
+        rule.game_type!=='GAME_TYPE_'+body.game_type) || !/^[1-9]\d*$/.test(configuration.template_version)) {
+        throw Error('保存回执与当前币种或玩法不符，请核验原操作')
+    }
+    return {...response,priorVersion:body.based_on_template_version}
+}
+function saved(response: unknown) {
+    const {configuration,priorVersion}=response as {configuration:PredictionConfiguration;priorVersion:string}
+    if (model.value && BigInt(model.value.based_on_template_version)>BigInt(configuration.template_version)) {
+        void reload()
+        return
+    }
+    applyConfiguration(configuration,sequence.value)
+    emit('success',configuration,priorVersion)
 }
 async function discardChanges() {
     if (loading.value || pending.value || saving.value) return
@@ -458,7 +461,7 @@ onBeforeUnmount(() => {
     sequence.value++
     controller?.abort()
 })
-defineExpose({ open, focusSave, saveConfig, editingState, setEnabled })
+defineExpose({ open, focusSave, saveConfig, editingState, appliedSwitch })
 </script>
 <style scoped>
 .prediction-edit {

@@ -16,6 +16,10 @@
                 >
             </div>
         </header>
+        <WritePanel v-if="allowed" ref="switchPanel" action="config.availability" target="platform" permission="prediction_config:edit"
+            automatic-reason="通过总后台设置币种全周期开关" :payload="switchPayload" :send="sendSwitch"
+            :hide-button="!!selectedRow || !switchPending" hide-success hide-pending-details
+            @pending="switchPending=$event" @busy="switchBusy=$event" @success="switched" />
         <div v-if="uiMode !== 'GRID' && error"><el-alert :title="error" type="error" :closable="false" /><el-button :loading="loading" @click="refresh">重试</el-button></div>
         <div v-if="uiMode !== 'GRID' && catalogError" class="catalog-error">
             <el-alert
@@ -78,7 +82,7 @@
                             v-if="row.configured"
                             :data-config-enabled="row.symbol"
                             :aria-label="`${row.symbol} 开放配置`"
-                            :model-value="displayEnabled(row)"
+                            :model-value="row.enabled"
                             :disabled="switchDisabled(row)"
                             :title="switchHint(row)"
                             @change="changeEnabled(row, $event)"
@@ -117,10 +121,10 @@
                         >{{ saveFeedback.text }}</span>
                         <el-button
                             type="primary"
-                            :loading="editorState?.saving"
-                            :disabled="!editorState || editorState.saving || (!editorState.pending && !editorState.ready)"
-                            @click="editRef?.saveConfig()"
-                            >{{ editorState?.pending ? '核验原操作' : '保存配置' }}</el-button
+                            :loading="editorState?.saving || switchBusy"
+                            :disabled="switchBusy || (!switchPending && (!editorState || editorState.saving || (!editorState.pending && !editorState.ready)))"
+                            @click="switchPending ? switchPanel?.submit() : editRef?.saveConfig()"
+                            >{{ switchPending || editorState?.pending ? '核验原操作' : '仅保存参数' }}</el-button
                         >
                     </div>
                 </div>
@@ -129,7 +133,7 @@
                     ref="editRef"
                     inline
                     external-save
-                    @success="loadConfigurations"
+                    @success="updateSavedRow"
                 />
                 <el-empty v-else-if="!loading && !catalogLoading && !error" description="请选择交易对查看配置" />
             </main>
@@ -143,7 +147,7 @@
 import { ElButton, ElAlert, ElTag, ElSwitch, ElEmpty } from 'element-plus'
 
 import { usePlatformConfigRuntime } from '../../../../runtime'
-const { predictionConfigurationList } = usePlatformConfigRuntime().api
+const { predictionConfigurationList, predictionConfigurationSave } = usePlatformConfigRuntime().api
 const { symbols: readSymbols } = usePlatformConfigRuntime().api
 
 import { MmInput } from '../../../../ui'
@@ -151,6 +155,8 @@ import { configurationEnabled, configuredRoomDurations } from './form'
 import { sortConfigSymbols } from '../../grid/config/directory'
 import { computed, ref, shallowRef, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 import { ElMessage } from 'element-plus'
+import WritePanel from '../../prediction/components/WritePanel.vue'
+import type { PlatformSettingsCommand } from './types'
 import PredictionEdit from './edit.vue'
 import PredictionLoadingRegion from '../../prediction/components/PredictionLoadingRegion.vue'
 import GridConfig from '../../grid/config/index.vue'
@@ -211,6 +217,7 @@ const saveFeedback = computed(() => {
     const state = editorState.value
     if (!state || state.target !== selectedKey.value || state.actor !== String(user.userInfo.id || '') ||
         !allowed.value || !hasPermission(user.perms, 'prediction_config:edit') || state.saving) return null
+    if (switchPending.value) return {text:'开关待核验',tone:'warning',detail:switchPanel.value?.error || '请使用原请求核验开关结果'}
     if (state.pending) return {text: '结果待确认', tone: 'warning', detail: state.saveError || '结果尚未确认，请核验原操作'}
     if (state.saveError) return {text: '保存失败', tone: 'danger', detail: state.saveError}
     if (!state.ready) return null
@@ -219,49 +226,51 @@ const saveFeedback = computed(() => {
         : {text: '已保存', tone: 'success', detail: ''}
 })
 let selectionSequence = 0
-const displayEnabled = (row: PredictionRow) =>
-    selectedKey.value === row.row_key && editorState.value?.target === row.row_key
-        ? (editorState.value.enabled ?? row.enabled)
-        : row.enabled
-function switchHint(row: PredictionRow) {
-    if (!hasPermission(user.perms, 'prediction_config:edit')) return '没有配置修改权限'
-    if (editorState.value?.pending) return '请先核验待确认的操作'
-    if (loading.value || editorState.value?.loading) return '正在加载配置'
-    if (selectedKey.value !== row.row_key && editorState.value?.dirty)
-        return '请先处理当前未保存修改'
-    if (selectedKey.value === row.row_key && !editorState.value?.ready) return '请重新加载当前配置'
-    return '修改后需保存配置'
+const switchPanel = shallowRef<InstanceType<typeof WritePanel>>()
+const switchPending = ref(false), switchBusy = ref(false)
+let intent: Record<string, unknown> | undefined
+function switchPayload() {
+    if (!intent) throw Error('请选择要调整的币种')
+    return intent
 }
 function switchDisabled(row: PredictionRow) {
-    const state = editorState.value
-    return (
-        !allowed.value ||
-        !hasPermission(user.perms, 'prediction_config:edit') ||
-        !row.editable ||
-        loading.value ||
-        !state ||
-        state.loading ||
-        state.pending ||
-        (selectedKey.value === row.row_key
-            ? !state.ready || state.target !== row.row_key
-            : state.dirty)
-    )
+    return !allowed.value || !hasPermission(user.perms, 'prediction_config:edit') || !row.configured ||
+        loading.value || switchPending.value || switchBusy.value || Boolean(editorState.value?.saving || editorState.value?.pending)
 }
-async function changeEnabled(row: PredictionRow, value: string | number | boolean) {
-    if (typeof value !== 'boolean' || switchDisabled(row)) return
-    const actor = String(user.userInfo.id || '')
-    let generation = editorState.value?.generation
-    if (selectedKey.value !== row.row_key) {
-        const opened = await openEdit(row)
-        // The persistent WritePanel must first restore this target's original pending operation.
-        await nextTick()
-        if (!opened || opened.selection !== selectionSequence) return
-        generation = opened.detail
-    }
-    if (generation === undefined || selectedKey.value !== row.row_key || switchDisabled(row)) return
-    editRef.value?.setEnabled(row.row_key, generation, actor, value)
+function switchHint(row: PredictionRow) {
+    if (switchPending.value) return '请先核验原操作'
+    return switchDisabled(row) ? '当前不可操作' : '立即设置该币种所有周期的开放状态'
 }
-
+function changeEnabled(row: PredictionRow, enabled: unknown) {
+    if (typeof enabled !== 'boolean' || !row.game_type || switchDisabled(row)) return
+    intent = { action:'set_enabled', game_type:row.game_type, symbol:row.symbol, based_on_template_version:row.template_version, enabled }
+    void switchPanel.value?.submit()
+}
+async function sendSwitch(body: Record<string, unknown>) {
+    const response = await predictionConfigurationSave(body as unknown as PlatformSettingsCommand)
+    const c = response.configuration
+    if (!c?.rules?.length || c.rules.some(rule => rule.game_type !== 'GAME_TYPE_' + body.game_type || rule.symbol !== body.symbol) ||
+        c.symbol_enabled !== body.enabled || !/^[1-9]\d*$/.test(c.template_version)) throw Error('开关回执与当前操作不符，请核验原操作')
+    return {...response, priorVersion:body.based_on_template_version}
+}
+function switched(response: unknown) {
+    const {configuration,priorVersion} = response as {configuration:PredictionConfiguration;priorVersion:string}
+    updateSavedRow(configuration,priorVersion)
+    editRef.value?.appliedSwitch(priorVersion, configuration)
+}
+function updateSavedRow(configuration:PredictionConfiguration, priorVersion:string) {
+    const first=configuration.rules[0]
+    let found=false
+    const updated=configurations.value.map(current=>{
+        if(current.rules[0]?.symbol===first.symbol && current.rules[0].game_type===first.game_type){
+            found=true
+            return BigInt(current.template_version)>BigInt(configuration.template_version) ? current : configuration
+        }
+        return current.template_version===priorVersion ? {...current,template_version:configuration.template_version} : current
+    })
+    if (!found && first.game_type==='GAME_TYPE_'+gameTypeFilter.value) updated.push(configuration)
+    configurations.value=updated
+}
 const gameTypeFromProto = (value?: PredictionProtoGameType): PredictionGameType | null => {
     if (value === 'GAME_TYPE_UP_DOWN') return 'UP_DOWN'
     if (value === 'GAME_TYPE_HIGH_LOW') return 'HIGH_LOW'
@@ -417,7 +426,7 @@ const loadConfigurations = async () => {
     }
 }
 const selectMode = async (value: UiMode) => {
-    if (uiMode.value === value) return
+    if (uiMode.value === value || switchBusy.value || switchPending.value) return
     if (uiMode.value === 'GRID' && gridRef.value && !(await gridRef.value.confirmLeave())) return
     if (uiMode.value !== 'GRID' && (editorState.value?.dirty || editorState.value?.pending)) {
         ElMessage.warning('请先处理当前未保存修改或待确认操作')
@@ -437,7 +446,7 @@ const selectMode = async (value: UiMode) => {
     if (!directory.value.length) void loadCatalog()
 }
 const openEdit = async (row: PredictionRow, useListSnapshot = false) => {
-    if (editorState.value?.saving) {
+    if (!useListSnapshot && (editorState.value?.saving || editorState.value?.pending || editorState.value?.dirty || switchBusy.value || switchPending.value)) {
         ElMessage.warning('请先处理当前未保存修改或待确认操作')
         return
     }

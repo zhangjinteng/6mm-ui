@@ -1,5 +1,5 @@
 import { computed, inject, type Component, type InjectionKey, type Ref } from 'vue'
-import type { PredictionConfiguration, PredictionGameType, SavePredictionConfigurationPayload } from './platform/views/config/prediction/types'
+import type { PredictionConfiguration, PredictionGameType, PlatformSettingsCommand } from './platform/views/config/prediction/types'
 import type { Receipt } from './platform/views/prediction/submission'
 import type * as PlatformGrid from './platform/views/grid/config/model'
 import type * as AgentGrid from './agent/views/grid/config/model'
@@ -25,12 +25,12 @@ export interface PlatformConfigAdapter {
   api: {
     predictionConfigurationList(params: { game_type?: PredictionGameType }, signal?: AbortSignal): Promise<{ configurations: PredictionConfiguration[] }>
     predictionConfigurationDetail(params: { game_type: PredictionGameType; symbol: string }, signal?: AbortSignal): Promise<{ configuration: PredictionConfiguration }>
-    predictionConfigurationSave(body: SavePredictionConfigurationPayload): Promise<{ configuration: PredictionConfiguration; receipt: Receipt }>
+    predictionConfigurationSave(body: PlatformSettingsCommand): Promise<{ configuration: PredictionConfiguration; receipt: Receipt }>
     symbols(signal?: AbortSignal): Promise<string[]>
   }
   grid: {
     globalTemplate?: {
-      catalog(signal?: AbortSignal): Promise<{ products: Array<{symbol:string; configured:boolean}> }>
+      catalog(signal?: AbortSignal): Promise<{ products: Array<{symbol:string; configured:boolean; enabled?:boolean; availability_version?:string}> }>
       detail(symbol:string, signal?:AbortSignal): Promise<unknown>
       save(command:import('./platform/views/grid/config/global-template').GlobalCommand): Promise<unknown>
       receipt(command:import('./platform/views/grid/config/global-template').GlobalCommand): Promise<unknown>

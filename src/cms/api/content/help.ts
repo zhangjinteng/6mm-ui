@@ -11,6 +11,8 @@ export interface HelpRow {
     sort_order: number
     is_enabled: boolean
     help_count: number
+    image_url?: string | null
+    image_media_id?: string | null
     icon_key: string | null
     updated_by_name: string
     updated_at: string
@@ -65,6 +67,7 @@ const deleteHelp = (kind: HelpKind, id: string, row_version: string) =>
         { url: `${base}/${kind}/delete`, params: { id, row_version } },
         { isOpenRetry: false }
     )
+const uploadHelpCategoryImage = createMediaUploader(request, base + "/categories/upload")
 const uploadHelpCover = createMediaUploader(request, base + "/upload")
 const helpPublishStates = [
     { label: '草稿', value: 'draft' },
@@ -89,5 +92,5 @@ function helpError(error: unknown): string {
     }
     return '操作失败，请稍后重试'
 }
-return { getHelpMetadata, getHelpList, getHelpDetail, saveHelp, deleteHelp, uploadHelpCover, helpPublishStates, helpCategoryLabel, helpError }
+return { getHelpMetadata, getHelpList, getHelpDetail, saveHelp, deleteHelp, uploadHelpCategoryImage, uploadHelpCover, helpPublishStates, helpCategoryLabel, helpError }
 }

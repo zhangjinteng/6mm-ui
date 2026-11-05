@@ -80,45 +80,18 @@
                             </p>
                         </div>
                     </MmFormItem>
-                    <MmFormItem label="图标标识">
-                        <div class="taxonomy-editor__field">
-                            <div class="taxonomy-editor__icon-control">
-                                <MmAutocomplete
-                                    v-model="form.icon_key"
-                                    :suggestions="availableIcons"
-                                    :min-length="0"
-                                    :disabled="readonly || busy"
-                                    clearable
-                                    placeholder="输入或下拉选择 6mm 图标，例如 circle-help"
-                                >
-                                    <template #option="{ option }">
-                                        <span
-                                            class="taxonomy-editor__icon-option"
-                                            :title="String(option)"
-                                        >
-                                            <MmIcon :name="String(option) as IconName" :size="18" />
-                                            <span>{{ option }}</span>
-                                        </span>
-                                    </template>
-                                </MmAutocomplete>
-                                <span
-                                    class="taxonomy-editor__icon-preview"
-                                    role="img"
-                                    :aria-label="
-                                        selectedIcon ? `图标预览：${selectedIcon}` : '暂无图标预览'
-                                    "
-                                >
-                                    <MmIcon v-if="selectedIcon" :name="selectedIcon" :size="20" />
-                                    <span v-else>—</span>
-                                </span>
-                            </div>
-                            <p class="help-hint">
-                                支持直接输入名称或从下拉列表选择；不填写 SVG 或 HTML。
-                            </p>
-                            <p v-if="form.icon_key && !selectedIcon" class="help-hint">
-                                当前名称不在已安装的 6mm 图标库中，暂无法预览。
-                            </p>
-                        </div>
+                    <MmFormItem label="分类图片">
+                        <MmMediaUpload
+                            class="taxonomy-editor__image"
+                            v-model="form.image_url"
+                            label="分类图片"
+                            :upload="uploadHelpCategoryImage"
+                            :disabled="readonly || busy"
+                            @update:media-id="form.image_media_id = $event"
+                            @busy-change="uploading = $event"
+                            @start="error = ''"
+                            @error="error = helpError($event)"
+                        />
                     </MmFormItem>
                     <div class="taxonomy-editor__row">
                         <MmFormItem label="前端排序" required
@@ -153,7 +126,7 @@
                     v-if="!readonly"
                     variant="primary"
                     :loading="saving"
-                    :disabled="loading || loadFailed || deleting"
+                    :disabled="loading || loadFailed || deleting || uploading"
                     @click="save"
                     >保存{{ noun }}</MmButton
                 ></template
@@ -179,7 +152,7 @@
 </template>
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
-const { helpError, deleteHelp, getHelpMetadata, getHelpList, getHelpDetail, saveHelp } = useHelpApi()
+const { helpError, deleteHelp, getHelpMetadata, getHelpList, getHelpDetail, saveHelp, uploadHelpCategoryImage } = useHelpApi()
 const { hasPermission } = useCmsRuntime()
 const { formatDateTime: formatDateTimeInClientTimezone } = useCmsRuntime()
 
@@ -194,9 +167,6 @@ import {
     MmForm,
     MmFormItem,
     MmInput,
-    MmAutocomplete,
-    iconNames,
-    type IconName,
     MmSelect,
     MmInputNumber,
     MmAlert,
@@ -207,6 +177,7 @@ import {
     type QueryBarField
 } from "../../../../../index"
 import { useHelpApi, type HelpMetadata, type HelpRow } from "../../../../api/content/help"
+import MmMediaUpload from '../../components/ContentCoverUpload.vue'
 import EnabledToggle from '../EnabledToggle.vue'
 
 
@@ -307,16 +278,13 @@ const initial = () => ({
     name: '',
     code: '',
     parent_id: '',
-    icon_key: '',
+    image_url: '',
+    image_media_id: null as string | null,
     sort_order: 10 as number | null,
     is_enabled: true
 })
 const form = reactive(initial())
-const availableIcons = [...iconNames]
-const availableIconSet = new Set<string>(availableIcons)
-const selectedIcon = computed(() =>
-    availableIconSet.has(form.icon_key) ? (form.icon_key as IconName) : undefined
-)
+const uploading = ref(false)
 const visible = ref(false),
     loading = ref(false),
     saving = ref(false),
@@ -326,7 +294,7 @@ const visible = ref(false),
     loadFailed = ref(false),
     error = ref('')
 const readonly = computed(() => !can(form.id ? 'edit' : 'add'))
-const busy = computed(() => saving.value || deleting.value)
+const busy = computed(() => saving.value || deleting.value || uploading.value)
 let controller: AbortController | undefined
 async function open(id?: string) {
     controller?.abort()
@@ -351,7 +319,8 @@ async function open(id?: string) {
             name: data.name,
             code: data.code,
             parent_id: data.parent_id || '',
-            icon_key: data.icon_key || '',
+            image_url: data.image_url || '',
+            image_media_id: data.image_media_id || null,
             sort_order: data.sort_order,
             is_enabled: data.is_enabled
         })
@@ -378,17 +347,13 @@ async function save() {
         error.value = '请填写分类名称和排序'
         return
     }
-    if (form.icon_key.length > 128) {
-        error.value = '图标标识最多 128 个字符'
-        return
-    }
     saving.value = true
     error.value = ''
     try {
         await saveHelp('categories', {
             name: form.name,
             parent_id: form.parent_id || null,
-            icon_key: form.icon_key || null,
+            image_media_id: form.image_media_id,
             sort_order: form.sort_order,
             is_enabled: form.is_enabled,
             id: form.id || undefined,
@@ -483,60 +448,7 @@ onBeforeUnmount(() => {
     width: 100%;
     min-width: 0;
 }
-.taxonomy-editor__icon-control {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.taxonomy-editor__icon-control :deep(.mm-autocomplete) {
-    flex: 1;
-    min-width: 0;
-}
-.taxonomy-editor__icon-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    min-width: 0;
-    gap: 8px;
-}
-.taxonomy-editor__icon-option > span {
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: center;
-    font-size: 10px;
-}
-/* Autocomplete teleports its popup to body; only style this icon picker. */
-:global(.mm-popover__floating:has(.taxonomy-editor__icon-option)) {
-    width: min(600px, calc(100vw - 32px)) !important;
-}
-:global(.mm-autocomplete__dropdown:has(.taxonomy-editor__icon-option)) {
-    max-height: 300px;
-}
-:global(.mm-autocomplete__list:has(.taxonomy-editor__icon-option)) {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 8px;
-}
-:global(.mm-autocomplete__option:has(.taxonomy-editor__icon-option)) {
-    min-width: 0;
-    min-height: 64px;
-    padding: 8px 4px;
-    border: 1px solid var(--mm-color-line);
-    border-radius: 6px;
-}
-.taxonomy-editor__icon-preview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 36px;
-    height: 36px;
-    border: 1px solid var(--mm-color-line);
-    border-radius: 6px;
-    color: var(--mm-color-text-muted);
-}
+.taxonomy-editor__image { max-width: 240px; }
 .taxonomy-editor__loading {
     min-height: 300px;
     display: flex;

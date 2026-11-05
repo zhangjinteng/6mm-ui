@@ -9,6 +9,8 @@ export interface HelpRow {
     sort_order: number;
     is_enabled: boolean;
     help_count: number;
+    image_url?: string | null;
+    image_media_id?: string | null;
     icon_key: string | null;
     updated_by_name: string;
     updated_at: string;
@@ -57,6 +59,7 @@ export declare function useHelpApi(): {
     getHelpDetail: <T = HelpRow>(kind: HelpKind, id: string, signal?: AbortSignal) => Promise<T>;
     saveHelp: <T = HelpRow>(kind: HelpKind, params: Record<string, unknown>) => Promise<T>;
     deleteHelp: (kind: HelpKind, id: string, row_version: string) => Promise<unknown>;
+    uploadHelpCategoryImage: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     uploadHelpCover: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     helpPublishStates: {
         label: string;

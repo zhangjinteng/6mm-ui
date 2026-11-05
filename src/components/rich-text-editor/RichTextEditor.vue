@@ -56,6 +56,11 @@ const dialog = ref<'html' | 'image' | 'link' | null>(null)
 const draft = ref('')
 const imageAlt = ref('')
 const dialogError = ref('')
+const imageBusy = ref(false)
+function setImageUrl(url: string) {
+  draft.value = url
+  dialogError.value = ''
+}
 const dialogFormId = useId('mm-editor-dialog')
 const rootAttrs = computed(() => Object.fromEntries(Object.entries(attrs)
   .filter(([key]) => !['aria-label', 'aria-labelledby', 'aria-describedby'].includes(key))))
@@ -234,13 +239,14 @@ function openDialog(kind: 'html' | 'image' | 'link'): void {
   if (locked.value) return
   draft.value = kind === 'html' ? htmlOf(editor.value) : kind === 'link' ? editor.value?.getAttributes('link').href ?? '' : ''
   imageAlt.value = ''
+  imageBusy.value = false
   dialogError.value = ''
   dialog.value = kind
 }
 
 function applyDialog(): void {
   const current = editor.value
-  if (!current || locked.value) return
+  if (!current || locked.value || (dialog.value === 'image' && imageBusy.value)) return
   if (dialog.value === 'html') current.commands.setContent(draft.value)
   else if (dialog.value === 'link') {
     const href = draft.value.trim()
@@ -312,6 +318,8 @@ defineExpose<RichTextEditorExpose>({
           <textarea v-model="draft" class="mm-rich-text-editor__source" spellcheck="false" />
         </label>
         <template v-else>
+          <slot v-if="dialog === 'image'" name="image-upload" :url="draft" :set-url="setImageUrl"
+            :set-busy="(busy: boolean) => imageBusy = busy" />
           <label class="mm-rich-text-editor__label"><span>{{ labels.url }}</span><MmInput v-model="draft" placeholder="https://" :status="dialogError ? 'error' : undefined" @input="dialogError = ''" /></label>
           <label v-if="dialog === 'image'" class="mm-rich-text-editor__label"><span>{{ labels.imageAlt }}</span><MmInput v-model="imageAlt" /></label>
         </template>
@@ -320,7 +328,7 @@ defineExpose<RichTextEditorExpose>({
       <template #footer>
         <MmButton size="sm" @click="dialog = null">{{ messages.common.cancel }}</MmButton>
         <MmButton v-if="dialog === 'link' && editor?.isActive('link')" size="sm" @click="draft = ''; applyDialog()">{{ labels.unlink }}</MmButton>
-        <MmButton size="sm" variant="primary" native-type="submit" :form="dialogFormId" :disabled="locked">{{ messages.common.confirm }}</MmButton>
+        <MmButton size="sm" variant="primary" native-type="submit" :form="dialogFormId" :disabled="locked || (dialog === 'image' && imageBusy)">{{ messages.common.confirm }}</MmButton>
       </template>
     </MmDialog>
   </div>

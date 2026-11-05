@@ -1,4 +1,5 @@
 import { useCmsRuntime } from "../../runtime"
+import { createMediaUploader } from '../../../services/media-upload'
 export type NewsKind = 'categories' | 'articles'
 export interface NewsRow {
     [key: string]: unknown
@@ -55,14 +56,7 @@ const deleteNews = (kind: NewsKind, id: string, row_version: string) =>
         { url: `${base}/${kind}/delete`, params: { id, row_version } },
         { isOpenRetry: false }
     )
-const uploadNewsCover = (file: File, signal?: AbortSignal) => {
-    const data = new FormData()
-    data.append('file', file)
-    return request.post<{ url: string }>(
-        { url: `${base}/upload`, data, signal, headers: { 'Content-Type': 'multipart/form-data' } },
-        { isOpenRetry: false }
-    )
-}
+const uploadNewsCover = createMediaUploader(request, `${base}/upload`)
 const newsPublishStates = [
     { label: '草稿', value: 'draft' },
     { label: '定时发布', value: 'scheduled' },

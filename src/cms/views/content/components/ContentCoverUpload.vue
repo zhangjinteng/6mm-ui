@@ -48,18 +48,20 @@
 import { nextTick, ref, shallowRef, watch } from 'vue'
 import { MmIcon, MmUpload, type UploadRequestOptions } from "../../../../index"
 import CoverFileItem from './CoverFileItem.vue'
+import type { MediaUploadResult } from '../../../../services/media-upload'
 
 const props = withDefaults(
     defineProps<{
         modelValue: string
         label?: string
         disabled?: boolean
-        upload: (file: File, signal: AbortSignal) => Promise<{ url: string }>
+        upload: (file: File, signal: AbortSignal) => Promise<MediaUploadResult>
     }>(),
     { label: '文章封面', disabled: false }
 )
 const emit = defineEmits<{
     'update:modelValue': [value: string]
+    'update:mediaId': [value: string | null]
     'busy-change': [value: boolean]
     start: []
     success: []
@@ -90,6 +92,7 @@ async function uploadCover({ file, signal }: UploadRequestOptions) {
             uploadedCover.value = { url: result.url, file }
             coverFailed.value = false
             emit('update:modelValue', result.url)
+            emit('update:mediaId', result.media_id ?? null)
         }
         return result
     } catch (error) {
@@ -118,6 +121,7 @@ function removeCover() {
     uploadedCover.value = undefined
     coverFailed.value = false
     emit('update:modelValue', '')
+    emit('update:mediaId', null)
 }
 </script>
 

@@ -1,6 +1,7 @@
 import { flushPromises, mount, type VueWrapper } from '@vue/test-utils'
 import { afterEach, describe, expect, it } from 'vitest'
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
+import MmMediaUpload from '../../../cms/views/content/components/ContentCoverUpload.vue'
 
 import { createMmLocaleContext, mmLocaleKey } from '../../../composables/use-locale'
 import { MmForm, MmFormItem } from '../../form'
@@ -18,6 +19,26 @@ async function render(props: RichTextEditorProps = {}) {
 afterEach(() => { mounted.splice(0).forEach(wrapper => wrapper.unmount()) })
 
 describe('MmRichTextEditor', () => {
+  it('inserts the public uploader result only when the image dialog is confirmed', async () => {
+    const url = 'https://cdn.test/media/upload_files/test.png'
+    const wrapper = mount(RichTextEditor, { attachTo: document.body, slots: {
+      'image-upload': ({ url: value, setUrl, setBusy }) => h(MmMediaUpload, {
+        modelValue: value, upload: async () => ({ url, media_id: '1' }),
+        'onUpdate:modelValue': setUrl, onBusyChange: setBusy,
+      }),
+    } })
+    mounted.push(wrapper)
+    await flushPromises()
+    await wrapper.get('button[aria-label="插入图片"]').trigger('click')
+    const input = document.querySelector<HTMLInputElement>('input[type=file]')!
+    Object.defineProperty(input, 'files', { value: [new File(['png'], 'test.png', { type: 'image/png' })] })
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+    await flushPromises()
+    expect(wrapper.find('.mm-rich-text-editor__document img').exists()).toBe(false)
+    document.querySelector('form.mm-rich-text-editor__dialog-form')!.dispatchEvent(new Event('submit', { cancelable: true }))
+    await flushPromises()
+    expect(wrapper.get('.mm-rich-text-editor__document img').attributes('src')).toBe(url)
+  })
   it('imports supported HTML and filters unsupported attributes and unsafe URLs', async () => {
     const { wrapper, api } = await render({ modelValue: '<h2>公告</h2><p><strong>加粗</strong><a href="https://6mm.com">链接</a></p><table><tr><th>币种</th></tr><tr><td>BTC</td></tr></table><img src="https://6mm.com/image.png" onerror="alert(1)"><p><a href="javascript:alert(1)">无效链接</a></p><img src="javascript:alert(1)"><script>alert(1)</script>' })
 

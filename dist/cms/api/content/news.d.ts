@@ -48,9 +48,7 @@ export declare function useNewsApi(): {
     getNewsDetail: <T = NewsRow>(kind: NewsKind, id: string, signal?: AbortSignal) => Promise<T>;
     saveNews: <T = NewsRow>(kind: NewsKind, params: Record<string, unknown>) => Promise<T>;
     deleteNews: (kind: NewsKind, id: string, row_version: string) => Promise<unknown>;
-    uploadNewsCover: (file: File, signal?: AbortSignal) => Promise<{
-        url: string;
-    }>;
+    uploadNewsCover: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     newsPublishStates: {
         label: string;
         value: string;

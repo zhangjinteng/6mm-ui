@@ -1,15 +1,22 @@
 import { RichTextEditorExpose, RichTextEditorProps, RichTextEditorValue } from './types';
+declare function setImageUrl(url: string): void;
 declare var __VLS_13: {
     editor: import('@tiptap/vue-3').Editor | undefined;
     disabled: boolean;
 }, __VLS_25: {
     editor: import('@tiptap/vue-3').Editor | undefined;
     characters: number;
+}, __VLS_35: {
+    url: string;
+    setUrl: typeof setImageUrl;
+    setBusy: (busy: boolean) => boolean;
 };
 type __VLS_Slots = {} & {
     'toolbar-end'?: (props: typeof __VLS_13) => any;
 } & {
     footer?: (props: typeof __VLS_25) => any;
+} & {
+    'image-upload'?: (props: typeof __VLS_35) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<RichTextEditorProps, RichTextEditorExpose, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     blur: (event: FocusEvent) => any;

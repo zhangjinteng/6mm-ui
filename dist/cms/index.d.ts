@@ -1,4 +1,6 @@
 export { default as MmCmsPage } from './MmCmsPage.vue';
+export { default as MmMediaUpload } from './views/content/components/ContentCoverUpload.vue';
+export { createMediaUploader, type MediaUploadResult } from '../services/media-upload';
 export type { CmsPage } from './MmCmsPage.vue';
 export type { CmsRuntime, CmsRequest, CmsSite, CmsSiteContext } from './runtime';
 export { cmsPermissionItems, cmsPermissionSubmission } from './permission-tree';

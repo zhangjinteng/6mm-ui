@@ -9,7 +9,8 @@
             columns-configurable
             show-cell-title
             :aria-label="`${noun}管理`"
-            :page-sizes="[20, 50, 100]"
+            :data="visibleRows"
+            :show-pagination="false"
         >
             <template #cell-cms_source_type="{ row }"><SourceTypeTag :source-type="row.cms_source_type ?? null" /></template>
             <template #toolbar-actions>
@@ -18,6 +19,14 @@
                         noun
                     }}</MmButton
                 >
+                <MmButton size="sm" :disabled="!groups.children.size" @click="toggleAll">
+                    <template #icon><MmIcon :name="allExpanded ? 'chevron-up' : 'chevron-down'" :size="14" /></template>
+                    {{ allExpanded ? '全部收起' : '全部展开' }}
+                </MmButton>
+            </template>
+            <template #cell-name="{ row }">
+                <CategoryTreeName :name="row.name" :child="row.parent_id != null" :branch="groups.children.has(row.id)"
+                    :expanded="expanded.has(row.id)" @toggle="toggle(row.id)" />
             </template>
             <template #cell-is_enabled="{ row }"
                 ><MmTag size="sm" effect="soft" :type="row.is_enabled ? 'success' : 'danger'">{{
@@ -156,6 +165,8 @@ const { helpError, deleteHelp, getHelpMetadata, getHelpList, getHelpDetail, save
 const { hasPermission } = useCmsRuntime()
 const { formatDateTime: formatDateTimeInClientTimezone } = useCmsRuntime()
 
+import CategoryTreeName from '../../components/CategoryTreeName.vue'
+import { loadCategoryPages, useCategoryTree } from '../../categoryTree'
 import { createCmsSourceColumns, useCmsSourceFields } from "../../cmsSources"
 import SourceTypeTag from "../../../../components/source-type-tag/index.vue"
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
@@ -187,9 +198,9 @@ const metadata = ref<HelpMetadata>()
 const editorMetadata = ref<HelpMetadata>()
 const cmsSources = useCmsSourceFields(getHelpMetadata, value => { metadata.value = value })
 const columns: ProTableColumn<HelpRow>[] = [
+    { key: 'name', dataIndex: 'name', title: '分类名称', width: 210, hideable: false },
     ...createCmsSourceColumns(),
     { key: 'code', dataIndex: 'code', title: '分类ID', width: 220 },
-    { key: 'name', dataIndex: 'name', title: '分类名称', width: 210 },
     {
         key: 'parent_id',
         dataIndex: 'parent_id',
@@ -254,22 +265,26 @@ const queryFields = computed<QueryBarField[]>(() => [
         ]
     }
 ])
-const { proTableBindings, reload, filters: cmsSourceFilters } = useMmProTable<HelpRow>({
+const { proTableBindings, rows, reload, filters: cmsSourceFilters } = useMmProTable<HelpRow>({
     initialAutoRefreshSeconds: 0,
     initialPageSize: 20,
     queryFields,
-    request: async ({ filters, page, pageSize, signal }) => {
+    request: async ({ filters, signal, reason }) => {
         const params = Object.fromEntries(
             Object.entries(filters).filter(([, v]) => v !== '' && v != null)
         )
-        const result = await getHelpList(
-            'categories',
-            { ...params, page_no: page, page_size: pageSize },
-            signal
-        )
-        return { rows: result.lists, total: result.count }
+        const result = await loadCategoryPages((page, pageSize) => getHelpList<HelpRow>(
+            'categories', { ...params, page_no: page, page_size: pageSize }, signal
+        ), signal)
+        if (!signal.aborted && (reason === 'query' || reason === 'reset')) {
+            expanded.value = Object.keys(params).length
+                ? new Set(result.rows.filter(r => r.parent_id != null).map(r => String(r.parent_id)))
+                : new Set()
+        }
+        return result
     }
 })
+const { visibleRows, expanded, groups, allExpanded, toggle, toggleAll } = useCategoryTree(rows)
 cmsSources.bindFilters(cmsSourceFilters)
 
 const initial = () => ({

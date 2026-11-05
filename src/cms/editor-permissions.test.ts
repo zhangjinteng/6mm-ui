@@ -20,15 +20,19 @@ const modules = [
 ] as const
 
 describe.each(modules)('%s shared white-label editor', (module, Editor, idProp) => {
-  function editor(grants: string[], existing = false, status = 'draft') {
+  function editor(grants: string[], existing = false, status = 'draft', mode: CmsRuntime['mode'] = 'white_label') {
     const runtime: CmsRuntime = {
-      mode: 'white_label', hasPermission: required => required.some(value => grants.includes(value)),
+      mode, hasPermission: required => required.some(value => grants.includes(value)),
       formatDateTime: String, registerBeforeLeave: () => {},
       request: {
         async get<T>(options: Record<string, any>): Promise<T> {
-          return (options.url.endsWith('/metadata') ? { categories: [{ id: '7', name: 'Category', is_enabled: true, effective_enabled: true, difficulty_levels: [1, 2, 3] }], source_locale: 'zh-CN' } : {
+          return (options.url.endsWith('/metadata') ? { categories: [
+            { id: '7', parent_id: null, name: 'Category', is_enabled: true, effective_enabled: true, difficulty_levels: [1, 2, 3] },
+            { id: '8', parent_id: '7', name: 'Child', is_enabled: true, effective_enabled: true },
+            { id: '9', parent_id: '7', name: 'Disabled', is_enabled: false, effective_enabled: false },
+          ], source_locale: 'zh-CN' } : {
             id: '1', space_id: '11', row_version: '1', title: 'Draft', category_ids: [], difficulty_level: 1,
-            category_id: null, sort_order: 0, is_enabled: true, body_html: '<p>Body</p>', publish_status: status,
+            category_id: module === 'announcement' ? '7' : null, sort_order: 0, is_enabled: true, body_html: '<p>Body</p>', publish_status: status,
           }) as T
         },
         post: vi.fn().mockResolvedValue({}),
@@ -38,6 +42,22 @@ describe.each(modules)('%s shared white-label editor', (module, Editor, idProp) 
     return Object.assign(wrapper, { post: runtime.request.post })
   }
   const buttons = (wrapper: ReturnType<typeof mount>) => wrapper.findAll('button').map(button => button.text())
+  if (module === 'announcement') it.each(['platform', 'white_label'] as const)('only offers child categories in %s', async mode => {
+    for (const existing of [false, true]) {
+      const wrapper = editor(['cms_announcement:add', 'cms_announcement:edit'], existing, 'draft', mode)
+      await flushPromises()
+      const setup = (wrapper.vm as any).$.setupState
+      expect(setup.categoryOptions).toEqual([
+        { value: '8', label: 'Category / Child', disabled: false },
+        { value: '9', label: 'Category / Disabled (已停用)', disabled: true },
+      ])
+      expect(setup.form.category_id).toBe(existing ? '7' : '')
+      expect(setup.selectedCategory).toBe('')
+      setup.selectedCategory = '8'
+      expect(setup.form.category_id).toBe('8')
+      wrapper.unmount()
+    }
+  })
   it('list-only permission does not expose save/delete/publication controls', async () => {
     const wrapper = editor([`cms_${module}:lists`], true)
     await flushPromises()

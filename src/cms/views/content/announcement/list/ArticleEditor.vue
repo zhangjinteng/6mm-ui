@@ -77,8 +77,9 @@
                             :error="fieldErrors.category_id"
                             required
                             ><MmSelect
-                                v-model="form.category_id"
+                                v-model="selectedCategory"
                                 :options="categoryOptions"
+                                :placeholder="legacyCategory ? '原分类：' + legacyCategory.name + '（一级）' : '请选择二级分类'"
                                 clearable
                                 :disabled="locked"
                                 aria-label="公告分类"
@@ -372,7 +373,7 @@ const {
 } = useArticleValidation(form, () => metadata.value?.categories || [], 'announcement', seoOpen)
 
 const categoryOptions = computed(() =>
-    (metadata.value?.categories || []).map((c) => ({
+    (metadata.value?.categories || []).filter(c => c.parent_id != null).map((c) => ({
         label:
             announcementCategoryLabel(metadata.value, c.id) +
             (c.effective_enabled ? '' : ' (已停用)'),
@@ -380,6 +381,12 @@ const categoryOptions = computed(() =>
         disabled: !c.effective_enabled
     }))
 )
+// A historical root assignment is preserved until the editor selects a child.
+const legacyCategory = computed(() => metadata.value?.categories.find(c => c.id === form.category_id && c.parent_id == null))
+const selectedCategory = computed({
+    get: () => legacyCategory.value ? '' : form.category_id,
+    set: (value: string) => { form.category_id = value }
+})
 let original = '',
     controller: AbortController | undefined
 function localDate(value: string | null) {

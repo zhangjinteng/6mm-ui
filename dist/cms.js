@@ -5801,7 +5801,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 			if (!(!W.value || E.value || T.value || D.value)) {
 				E.value = !0, O.value = "";
 				try {
-					await c("articles", K.id, K.row_version), be = JSON.stringify(K), d.success("公告已删除"), g("saved");
+					await c("articles", K.id, K.row_version), xe = JSON.stringify(K), d.success("公告已删除"), g("saved");
 				} catch (e) {
 					O.value = o(e), N.value = !1;
 				} finally {
@@ -5824,19 +5824,24 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 			is_enabled: !0,
 			helpful_enabled: !0,
 			scheduled_local: ""
-		}), { editorRoot: q, seoInput: J, fieldRules: he, fieldErrors: Y, pendingCount: X, saveError: Z, validateSave: ge, setSaveFailure: _e, focusFirstError: Q, focusSeoError: ve } = Se(K, () => L.value?.categories || [], "announcement", k), ye = v(() => (L.value?.categories || []).map((e) => ({
+		}), { editorRoot: q, seoInput: J, fieldRules: he, fieldErrors: Y, pendingCount: X, saveError: Z, validateSave: ge, setSaveFailure: _e, focusFirstError: Q, focusSeoError: ve } = Se(K, () => L.value?.categories || [], "announcement", k), ye = v(() => (L.value?.categories || []).filter((e) => e.parent_id != null).map((e) => ({
 			label: s(L.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
 			value: e.id,
 			disabled: !e.effective_enabled
-		}))), be = "", $;
-		function xe(e) {
+		}))), be = v(() => L.value?.categories.find((e) => e.id === K.category_id && e.parent_id == null)), $ = v({
+			get: () => be.value ? "" : K.category_id,
+			set: (e) => {
+				K.category_id = e;
+			}
+		}), xe = "", Ce;
+		function we(e) {
 			if (!e) return "";
 			let t = new Date(e);
 			return Number.isNaN(t.getTime()) ? "" : `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}T${String(t.getHours()).padStart(2, "0")}:${String(t.getMinutes()).padStart(2, "0")}`;
 		}
-		async function Ce() {
-			$?.abort(), $ = new AbortController();
-			let e = $;
+		async function Te() {
+			Ce?.abort(), Ce = new AbortController();
+			let e = Ce;
 			T.value = !0, D.value = !1, O.value = "";
 			try {
 				if (L.value = await ee(e.signal, { cms_source_type: "platform" }), ae.articleId) {
@@ -5858,26 +5863,26 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 						"content_source",
 						"author_name"
 					]) K[e] = t[e] || "";
-					K.scheduled_local = t.publish_status === "scheduled" ? xe(t.scheduled_at) : "", R.value = t.publish_status;
+					K.scheduled_local = t.publish_status === "scheduled" ? we(t.scheduled_at) : "", R.value = t.publish_status;
 				}
-				be = JSON.stringify(K);
+				xe = JSON.stringify(K);
 			} catch (t) {
 				e.signal.aborted || (O.value = o(t), D.value = !0);
 			} finally {
 				e.signal.aborted || (T.value = !1);
 			}
 		}
-		let we = () => !T.value && !D.value && be !== JSON.stringify(K);
-		function Te() {
-			we() ? ce.value = !0 : g("close");
-		}
-		function Ee() {
-			R.value === "draft" ? Oe("draft") : le.value = !0;
-		}
+		let Ee = () => !T.value && !D.value && xe !== JSON.stringify(K);
 		function De() {
-			le.value = !1, Oe("draft");
+			Ee() ? ce.value = !0 : g("close");
 		}
-		async function Oe(e) {
+		function Oe() {
+			R.value === "draft" ? Ae("draft") : le.value = !0;
+		}
+		function ke() {
+			le.value = !1, Ae("draft");
+		}
+		async function Ae(e) {
 			if (G.value || T.value || D.value || z.value || (O.value = "", !await ge(e))) return;
 			let t = K.scheduled_local ? new Date(K.scheduled_local) : null;
 			E.value = !0, O.value = "";
@@ -5889,7 +5894,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 					category_id: K.category_id || null,
 					publish_status: e,
 					scheduled_at: e === "scheduled" ? t.toISOString() : null
-				}), be = JSON.stringify(K), d.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "公告已发布"), g("saved");
+				}), xe = JSON.stringify(K), d.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "公告已发布"), g("saved");
 			} catch (e) {
 				_e(e);
 			} finally {
@@ -5897,16 +5902,16 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 			}
 			X.value && await Q();
 		}
-		function ke(e) {
+		function je(e) {
 			O.value = o(e);
 		}
-		let Ae = (e) => {
-			we() && (e.preventDefault(), e.returnValue = "");
+		let Me = (e) => {
+			Ee() && (e.preventDefault(), e.returnValue = "");
 		};
-		return pe(() => !E.value && !z.value && (!we() || window.confirm("公告有未保存的修改，确定离开？"))), se(() => {
-			Ce(), window.addEventListener("beforeunload", Ae);
+		return pe(() => !E.value && !z.value && (!Ee() || window.confirm("公告有未保存的修改，确定离开？"))), se(() => {
+			Te(), window.addEventListener("beforeunload", Me);
 		}), oe(() => {
-			$?.abort(), window.removeEventListener("beforeunload", Ae);
+			Ce?.abort(), window.removeEventListener("beforeunload", Me);
 		}), (i, a) => (A(), x("section", {
 			ref_key: "editorRoot",
 			ref: q,
@@ -5919,7 +5924,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 					title: "返回公告列表",
 					"aria-label": "返回公告列表",
 					disabled: E.value || z.value,
-					onClick: Te
+					onClick: De
 				}, {
 					default: B(() => [w(I(m), {
 						name: "arrow-left",
@@ -5954,7 +5959,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 						key: 1,
 						size: "sm",
 						disabled: T.value || D.value || E.value || z.value,
-						onClick: Ee
+						onClick: Oe
 					}, {
 						icon: B(() => [w(I(m), {
 							name: "save",
@@ -5971,7 +5976,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 						size: "sm",
 						disabled: T.value || D.value || z.value,
 						loading: E.value,
-						onClick: a[2] ||= (e) => Oe(K.scheduled_local ? "scheduled" : "published")
+						onClick: a[2] ||= (e) => Ae(K.scheduled_local ? "scheduled" : "published")
 					}, {
 						icon: B(() => [w(I(m), {
 							name: "arrow-up-to-line",
@@ -5990,7 +5995,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 				type: "error",
 				description: O.value,
 				closable: !1
-			}, null, 8, ["description"]), w(I(t), { onClick: Ce }, {
+			}, null, 8, ["description"]), w(I(t), { onClick: Te }, {
 				default: B(() => [...a[33] ||= [C("重新加载", -1)]]),
 				_: 1
 			})])) : (A(), x(_, { key: 2 }, [O.value ? (A(), x("div", Rn, [w(I(p), {
@@ -6011,15 +6016,17 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 						required: ""
 					}, {
 						default: B(() => [w(I(re), {
-							modelValue: K.category_id,
-							"onUpdate:modelValue": a[3] ||= (e) => K.category_id = e,
+							modelValue: $.value,
+							"onUpdate:modelValue": a[3] ||= (e) => $.value = e,
 							options: ye.value,
+							placeholder: be.value ? "原分类：" + be.value.name + "（一级）" : "请选择二级分类",
 							clearable: "",
 							disabled: G.value,
 							"aria-label": "公告分类"
 						}, null, 8, [
 							"modelValue",
 							"options",
+							"placeholder",
 							"disabled"
 						])]),
 						_: 1
@@ -6038,7 +6045,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 							upload: I(f),
 							onBusyChange: a[5] ||= (e) => z.value = e,
 							onStart: a[6] ||= (e) => O.value = "",
-							onError: ke
+							onError: je
 						}, null, 8, [
 							"modelValue",
 							"disabled",
@@ -6195,7 +6202,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 								upload: I(f),
 								"onUpdate:modelValue": t,
 								onBusyChange: n,
-								onError: ke
+								onError: je
 							}, null, 8, [
 								"model-value",
 								"upload",
@@ -6327,7 +6334,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 					_: 1
 				}), w(I(t), {
 					variant: "primary",
-					onClick: De
+					onClick: ke
 				}, {
 					default: B(() => [...a[43] ||= [C("转为草稿", -1)]]),
 					_: 1
@@ -6336,7 +6343,7 @@ var Cn = { class: "announcement-categories" }, wn = ["aria-busy"], Tn = {
 			}, 8, ["modelValue"])
 		], 8, An));
 	}
-}), [["__scopeId", "data-v-d210b47b"]]), Kn = { class: "announcement-articles" }, qn = /*#__PURE__*/ g(/* @__PURE__ */ T({
+}), [["__scopeId", "data-v-6f468168"]]), Kn = { class: "announcement-articles" }, qn = /*#__PURE__*/ g(/* @__PURE__ */ T({
 	__name: "index",
 	setup(e) {
 		let { hasPermission: n } = fe(), { formatDateTime: i } = fe(), { announcementPublishStates: a, announcementCategoryLabel: o, getAnnouncementList: c, getAnnouncementMetadata: l } = Sn(), u = M(!1), d = M(), te = (e) => n([`cms_announcement:${e}`]), f = M(), p = G(l, (e) => {

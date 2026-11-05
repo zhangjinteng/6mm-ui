@@ -18,7 +18,7 @@
                 <write-panel
                     ref="writeRef"
                     :hide-button="externalSave"
-                    :hide-success="externalSave"
+                    hide-success
                     :hide-pending-details="externalSave"
                     :hide-error="externalSave"
                     v-if="visible && editable"
@@ -204,7 +204,7 @@
     </component>
 </template>
 <script setup lang="ts">
-import { ElAlert, ElCard, ElSwitch, ElForm, ElFormItem, ElTag, ElButton, ElDrawer } from 'element-plus'
+import { ElAlert, ElCard, ElSwitch, ElForm, ElFormItem, ElTag, ElButton, ElDrawer, ElMessage } from 'element-plus'
 
 import { usePlatformConfigRuntime } from '../../../../runtime'
 const { predictionConfigurationDetail, predictionConfigurationList, predictionConfigurationSave } = usePlatformConfigRuntime().api
@@ -445,6 +445,7 @@ async function send(body: Record<string, unknown>) {
     return {...response,priorVersion:body.based_on_template_version}
 }
 function saved(response: unknown) {
+    ElMessage.success('保存成功')
     const {configuration,priorVersion}=response as {configuration:PredictionConfiguration;priorVersion:string}
     if (model.value && BigInt(model.value.based_on_template_version)>BigInt(configuration.template_version)) {
         void reload()

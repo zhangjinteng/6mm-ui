@@ -124,7 +124,7 @@
                             :loading="editorState?.saving || switchBusy"
                             :disabled="switchBusy || (!switchPending && (!editorState || editorState.saving || (!editorState.pending && !editorState.ready)))"
                             @click="switchPending ? switchPanel?.submit() : editRef?.saveConfig()"
-                            >{{ switchPending || editorState?.pending ? '核验原操作' : '仅保存参数' }}</el-button
+                            >{{ switchPending || editorState?.pending ? '核验原操作' : '保存配置' }}</el-button
                         >
                     </div>
                 </div>
@@ -223,7 +223,7 @@ const saveFeedback = computed(() => {
     if (!state.ready) return null
     return state.dirty || state.isNew
         ? {text: '未保存', tone: 'warning', detail: ''}
-        : {text: '已保存', tone: 'success', detail: ''}
+        : null
 })
 let selectionSequence = 0
 const switchPanel = shallowRef<InstanceType<typeof WritePanel>>()

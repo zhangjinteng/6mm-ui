@@ -327,7 +327,7 @@ async function send(original: SitePending) {
         syncPending()
         if (result.status === 'success') {
             receipt.value = result.value.receipt
-            if (result.latest) { apply(result.latest); error.value = ''; message.value = t('predictionPages.saved') }
+            if (result.latest) { apply(result.latest); error.value = ''; message.value = ''; ElMessage.success('保存成功') }
             else { config.value = null; rows.value = []; baselineDraft.value = ''; error.value = '已保存，刷新失败。请刷新查看当前配置。'; message.value = '已保存，刷新失败' }
         } else if (result.status !== 'superseded') message.value = t('predictionPages.' + (result.status === 'unknown' ? 'pending' : 'rejected')) + ' · ' + exact((result.error as {error_code?: string})?.error_code)
     } catch { if (owns()) { syncPending(); message.value = t('predictionPages.pending') } }

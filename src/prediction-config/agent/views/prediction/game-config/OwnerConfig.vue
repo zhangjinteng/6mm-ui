@@ -65,7 +65,7 @@
 </section>
 </template>
 <script setup lang="ts">
-import { ElButton, ElSwitch, ElFormItem } from 'element-plus'
+import { ElButton, ElSwitch, ElFormItem, ElMessage } from 'element-plus'
 import { MmInput } from '../../../../ui'
 
 import { useAgentConfigRuntime } from '../../../../runtime'
@@ -167,11 +167,16 @@ async function save(){
         if(!current()||mode.value!==game||symbol.value!==selectedSymbol)return
         readPending()
         if(result.status==='success'){
-            message.value=result.refreshFailed?'保存已成功，配置刷新失败，请重新打开页面查看；无需再次保存。':'配置已保存并生效。'
+            message.value=result.refreshFailed?'保存已成功，配置刷新失败，请重新打开页面查看；无需再次保存。':''
+            if(!result.refreshFailed)ElMessage.success('保存成功')
             if(result.latest && result.latest.symbol===symbol.value && result.latest.game_type==='GAME_TYPE_'+mode.value){items.value=items.value.map(i=>i.symbol===symbol.value?result.latest!:i);project()}
             else {items.value=[];symbol.value='';project();loadError.value='保存已确认，请重试读取最新配置。'}
         }else {message.value=result.status==='rejected'?'保存未通过，请重新读取配置后调整。':'暂未确认保存结果，请稍后使用原请求确认。';if(result.status==='rejected')loadError.value='保存被拒绝，请读取最新配置后修改。'}
-    }catch(error){message.value=error instanceof Error&&error.message==='SEPARATE_ENABLE'?'请先关闭币种开关并保存参数，再单独开启币种。':error instanceof Error&&error.message==='NO_CHANGES'?'配置没有变化。':'无法保存，请检查金额、赔率范围及待确认请求。'}
+    }catch(error){
+        if(error instanceof Error&&error.message==='NO_CHANGES'){
+            message.value='';ElMessage.success('保存成功')
+        }else message.value=error instanceof Error&&error.message==='SEPARATE_ENABLE'?'请先关闭币种开关并保存参数，再单独开启币种。':'无法保存，请检查金额、赔率范围及待确认请求。'
+    }
     finally{busy.value=false}
 }
 readPending();

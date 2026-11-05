@@ -129,7 +129,7 @@ import DecimalInput from '../../prediction/components/DecimalInput.vue'
 import { MmInput } from '../../../../ui'
 import { toRaw, computed, onBeforeUnmount, ref, watch } from 'vue'
 import { useConfigBeforeLeave as onBeforeRouteLeave } from '../../../../runtime'
-import { ElMessageBox } from 'element-plus'
+import { ElMessage, ElMessageBox } from 'element-plus'
 import ParameterHelp from '../../prediction/components/ParameterHelp.vue'
 import GridGuide from '../../prediction/components/GridGuide.vue'
 import PredictionLoadingRegion from '../../prediction/components/PredictionLoadingRegion.vue'
@@ -425,6 +425,11 @@ async function reviewSave() {
     try {
         command = makeCommand(snapshot.value, { ...draft.value, target_rtp: percentToRatio(rtpPercent.value) }, reason.value, secureRequestId(), (creating.value || !!selectedSite.value?.can_edit_limits), true)
     } catch (problem) {
+        if (problem instanceof Error && problem.message === 'EMPTY_CHANGES') {
+            message.value = ''
+            ElMessage.success('保存成功')
+            return
+        }
         messageType.value = 'warning'
         message.value = errorText(problem)
         return
@@ -506,6 +511,7 @@ async function send(original: PendingGridCommand, mode: 'save' | 'receipt' | 're
             if (savedOperator === operator.value) {
                 messageType.value = 'warning'
                 message.value = error.value ? '配置已保存；最新配置刷新失败，请手动刷新' : ''
+                if (!error.value) ElMessage.success('保存成功')
             }
         } else if (mode === 'recover' && result.status === 'rejected' && (result.error as { error_code?: string })?.error_code === 'VERSION_CONFLICT') {
             if (!result.journalCleared || pending.value || storageError.value) {

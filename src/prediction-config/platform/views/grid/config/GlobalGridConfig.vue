@@ -26,7 +26,7 @@
                     <div><h2>{{ symbol }} · 预测网格</h2><p>平台模板</p></div>
                     <div class="config-heading__actions">
                         <el-button @click="guide=true">玩法说明</el-button>
-                        <el-button v-if="canSave" type="primary" :disabled="locked || !snapshot" :loading="busy" @click="save">仅保存参数</el-button>
+                        <el-button v-if="canSave" type="primary" :disabled="locked || !snapshot" :loading="busy" @click="save">保存配置</el-button>
                     </div>
                 </header>
                 <PredictionLoadingRegion :loading="busy && !snapshot" :hide-content="busy && !snapshot" min-height="0px" class="grid-config__detail">
@@ -63,7 +63,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, shallowRef, watch } from 'vue'
-import { ElAlert, ElButton, ElEmpty, ElForm, ElFormItem, ElMessageBox, ElSwitch } from 'element-plus'
+import { ElAlert, ElButton, ElEmpty, ElForm, ElFormItem, ElMessageBox, ElMessage, ElSwitch } from 'element-plus'
 import { useConfigBeforeLeave, useConfigRuntime, useConfigSymbol, usePlatformConfigRuntime } from '../../../../runtime'
 import { MmInput } from '../../../../ui'
 import DecimalInput from '../../prediction/components/DecimalInput.vue'
@@ -184,6 +184,7 @@ async function submit(mode:'save'|'receipt'|'recover'){
         }else if (result.status==='rejected' && result.journalCleared && products.value.length && original.command.action==='set_enabled'){
             message.value=result.error instanceof Error ? result.error.message : '开关未生效，请重新读取币种配置。'
         }else if(result.status==='success' || result.status==='rejected' && result.journalCleared){
+            if(result.status==='success')ElMessage.success('保存成功')
             busy.value=false;snapshot.value=null;symbol.value=original.command.symbol;await refresh()
             if(result.status==='rejected')message.value='保存未生效，请核对最新配置后再提交。'
         }else{

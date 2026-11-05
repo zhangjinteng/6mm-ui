@@ -9,6 +9,8 @@ export interface AnnouncementRow {
     sort_order: number;
     is_enabled: boolean;
     announcement_count: number;
+    image_url?: string | null;
+    image_media_id?: string | null;
     updated_by_name: string;
     updated_at: string;
 }
@@ -52,6 +54,7 @@ export declare function useAnnouncementApi(): {
     saveAnnouncement: <T = AnnouncementRow>(kind: AnnouncementKind, params: Record<string, unknown>) => Promise<T>;
     deleteAnnouncement: (kind: AnnouncementKind, id: string, row_version: string) => Promise<unknown>;
     uploadAnnouncementCover: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
+    uploadAnnouncementCategoryImage: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     announcementPublishStates: {
         label: string;
         value: string;

@@ -80,6 +80,19 @@
                             </p>
                         </div>
                     </MmFormItem>
+                    <MmFormItem label="分类图片">
+                        <MmMediaUpload
+                            class="taxonomy-editor__image"
+                            v-model="form.image_url"
+                            label="分类图片"
+                            :upload="uploadAnnouncementCategoryImage"
+                            :disabled="readonly || busy"
+                            @update:media-id="form.image_media_id = $event"
+                            @busy-change="uploading = $event"
+                            @start="error = ''"
+                            @error="error = announcementError($event)"
+                        />
+                    </MmFormItem>
                     <div class="taxonomy-editor__row">
                         <MmFormItem label="前端排序" required
                             ><MmInputNumber
@@ -113,7 +126,7 @@
                     v-if="!readonly"
                     variant="primary"
                     :loading="saving"
-                    :disabled="loading || loadFailed || deleting"
+                    :disabled="loading || loadFailed || deleting || uploading"
                     @click="save"
                     >保存{{ noun }}</MmButton
                 ></template
@@ -169,7 +182,8 @@ import {
     type QueryBarField
 } from "../../../../../index"
 import { useAnnouncementApi, type AnnouncementMetadata, type AnnouncementRow } from "../../../../api/content/announcement"
-const { announcementError, deleteAnnouncement, getAnnouncementMetadata, getAnnouncementList, getAnnouncementDetail, saveAnnouncement } = useAnnouncementApi()
+const { announcementError, deleteAnnouncement, getAnnouncementMetadata, getAnnouncementList, getAnnouncementDetail, saveAnnouncement, uploadAnnouncementCategoryImage } = useAnnouncementApi()
+import MmMediaUpload from '../../components/ContentCoverUpload.vue'
 import EnabledToggle from '../../news/EnabledToggle.vue'
 
 
@@ -257,6 +271,8 @@ const initial = () => ({
     name: '',
     code: '',
     parent_id: '',
+    image_url: '',
+    image_media_id: null as string | null,
     sort_order: 10 as number | null,
     is_enabled: true
 })
@@ -271,7 +287,8 @@ const visible = ref(false),
     error = ref(''),
     discard = ref(false)
 const readonly = computed(() => !can(form.id ? 'edit' : 'add'))
-const busy = computed(() => saving.value || deleting.value)
+const uploading = ref(false)
+const busy = computed(() => saving.value || deleting.value || uploading.value)
 let original = '',
     controller: AbortController | undefined
 async function open(id?: string) {
@@ -298,6 +315,8 @@ async function open(id?: string) {
             name: data.name,
             code: data.code,
             parent_id: data.parent_id || '',
+            image_url: data.image_url || '',
+            image_media_id: data.image_media_id || null,
             sort_order: data.sort_order,
             is_enabled: data.is_enabled
         })
@@ -340,6 +359,7 @@ async function save() {
         await saveAnnouncement('categories', {
             name: form.name,
             parent_id: form.parent_id || null,
+            image_media_id: form.image_media_id,
             sort_order: form.sort_order,
             is_enabled: form.is_enabled,
             id: form.id || undefined,
@@ -425,6 +445,7 @@ onBeforeUnmount(() => {
     flex-direction: column;
     gap: 14px;
 }
+.taxonomy-editor__image { max-width: 240px; }
 .taxonomy-editor__row {
     display: grid;
     grid-template-columns: 1fr 1fr;

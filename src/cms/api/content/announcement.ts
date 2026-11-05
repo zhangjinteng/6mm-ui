@@ -11,6 +11,8 @@ export interface AnnouncementRow {
     sort_order: number
     is_enabled: boolean
     announcement_count: number
+    image_url?: string | null
+    image_media_id?: string | null
     updated_by_name: string
     updated_at: string
 }
@@ -69,6 +71,7 @@ const deleteAnnouncement = (kind: AnnouncementKind, id: string, row_version: str
         { isOpenRetry: false }
     )
 const uploadAnnouncementCover = createMediaUploader(request, base + "/upload")
+const uploadAnnouncementCategoryImage = createMediaUploader(request, base + "/categories/upload")
 const announcementPublishStates = [
     { label: '草稿', value: 'draft' },
     { label: '定时发布', value: 'scheduled' },
@@ -95,5 +98,5 @@ function announcementError(error: unknown): string {
     }
     return '操作失败，请稍后重试'
 }
-return { getAnnouncementMetadata, getAnnouncementList, getAnnouncementDetail, saveAnnouncement, deleteAnnouncement, uploadAnnouncementCover, announcementPublishStates, announcementCategoryLabel, announcementError }
+return { getAnnouncementMetadata, getAnnouncementList, getAnnouncementDetail, saveAnnouncement, deleteAnnouncement, uploadAnnouncementCover, uploadAnnouncementCategoryImage, announcementPublishStates, announcementCategoryLabel, announcementError }
 }

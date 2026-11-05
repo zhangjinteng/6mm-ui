@@ -42,7 +42,7 @@
                 <template v-else-if="snapshot && draft">
                     <header class="config-heading">
                         <div><h2>{{ snapshot.symbol }} · 预测网格</h2><p data-config-updated-at>更新时间 {{ configUpdatedAt }}</p><p v-if="sites.length > 1">当前站点：{{ snapshot.site_id }}</p></div>
-                        <div class="config-heading__actions"><el-button @click="guideVisible = true">玩法说明</el-button><el-button v-if="canSavePermission" type="primary" :loading="busy" :disabled="!editable || !dirty" @click="reviewSave">保存配置</el-button></div>
+                        <div class="config-heading__actions"><el-button @click="guideVisible = true">玩法说明</el-button><el-button v-if="canSavePermission" type="primary" :loading="busy" :disabled="!editable" @click="reviewSave">保存配置</el-button></div>
                     </header>
                     <p v-if="snapshot.requested_agent_id !== '0'" class="parameter-description">{{ snapshot.inherited ? '当前继承所属站点配置' : '当前使用商户配置' }}；已有商户配置保持不变。平台返奖率上限 {{ snapshot.default_target_rtp ? `${ratioToPercent(snapshot.default_target_rtp)}%` : '—' }}，单笔范围 {{ snapshot.default_min_order_amount }} ~ {{ snapshot.default_max_order_amount }} USDT。</p>
                     <el-alert v-if="!whiteLabel && snapshot.default_enabled === false" title="平台已关闭此币种，商户不能开启" type="info" :closable="false" />

@@ -23,7 +23,7 @@
         <main class="config-content">
             <header class="config-title">
                 <div><h3>{{symbol||'请选择交易对'}} · {{mode==='UP_DOWN'?'涨跌预测':'自选预测'}}</h3><p>{{actor.kind==='SITE'?'当前白标生效':'当前商户生效'}}</p></div>
-                <div class="config-title-actions"><span v-if="dirty" class="draft-label">有未保存修改</span><el-button v-if="selected||pending" type="primary" :loading="busy" :disabled="!editable||busy||(!pending&&!dirty)||(!!pending&&!pendingActorMatches)" @click="save">{{pending?'确认原保存结果':'保存配置'}}</el-button></div>
+                <div class="config-title-actions"><span v-if="dirty" class="draft-label">有未保存修改</span><el-button v-if="selected||pending" type="primary" :loading="busy" :disabled="!editable||busy||loading||(!!pending&&!pendingActorMatches)" @click="save">{{pending?'确认原保存结果':'保存配置'}}</el-button></div>
             </header>
             <p v-if="pending" role="alert">存在待确认操作（{{pending.body.symbol}}），请使用原请求确认结果。{{!pendingActorMatches?'该操作属于另一个账号或站点，需切回原范围处理。':''}}</p>
             <p v-if="message" role="status">{{message}}</p>

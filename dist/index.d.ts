@@ -8,3 +8,4 @@ export * from './locales';
 export * from './services';
 export * from './shared';
 export * from './components/prediction-operations';
+export * from './components/asset-phase-report';

@@ -31808,8 +31808,287 @@ var KS = class {
 			ie.value > 1e3 ? (V(), w("p", QS, J(g("limit")), 1)) : C("", !0)
 		], 64)) : (V(), w("p", YS, J(g("noPermission")), 1))], 2));
 	}
-}), [["__scopeId", "data-v-809c4e4e"]]);
+}), [["__scopeId", "data-v-809c4e4e"]]), eC = { class: "asset-phase-one-report__bucket" }, tC = { key: 0 }, nC = { key: 0 }, rC = /*#__PURE__*/ h(/* @__PURE__ */ k({
+	__name: "AssetPhaseReport",
+	props: {
+		kind: {},
+		showSources: { type: Boolean },
+		request: { type: Function },
+		formatTimestamp: { type: Function }
+	},
+	setup(e) {
+		let t = e, n = b(() => t.kind === "distribution" ? "用户资产分布" : "资产变动"), r = [
+			"0–100U",
+			"100–1,000U",
+			"1千–1万U",
+			"1万–10万U",
+			"10万U以上"
+		], i = (e) => e == null || e === "" ? "—" : Jo(e, 2), a = (e) => e == null || e === "" ? "—" : Jo(e, 0), o = (e) => e == null || e === "" ? "—" : `${Jo(e, 2)}%`, s = b(() => [
+			{
+				key: "period",
+				type: "segmented",
+				label: "统计粒度",
+				defaultValue: "day",
+				width: 110,
+				options: [{
+					value: "day",
+					label: "日报"
+				}, {
+					value: "month",
+					label: "月报"
+				}]
+			},
+			{
+				key: "account_type",
+				type: "segmented",
+				label: "账户类型",
+				defaultValue: "funding",
+				width: 190,
+				options: [{
+					value: "funding",
+					label: "资金账户"
+				}, {
+					value: "contract",
+					label: "合约账户"
+				}]
+			},
+			...t.showSources ? [{
+				key: "source_type",
+				type: "segmented",
+				label: "来源类型",
+				defaultValue: "platform",
+				width: 180,
+				options: [
+					{
+						value: "platform",
+						label: "平台"
+					},
+					{
+						value: "tenant",
+						label: "白标"
+					},
+					{
+						value: "merchant",
+						label: "商户"
+					}
+				]
+			}, {
+				key: "source_keyword",
+				type: "keyword",
+				label: "来源名称",
+				placeholder: "来源名称 / ID",
+				defaultValue: "",
+				maxlength: 128,
+				clearable: !0,
+				width: 180
+			}] : [],
+			{
+				key: "date_range",
+				type: "date-range",
+				label: "统计日期",
+				placeholder: "UTC统计日期范围",
+				defaultValue: null,
+				width: 250
+			}
+		]), c = b(() => [
+			{
+				key: "stat_date",
+				title: l.value.period === "month" ? "统计月份" : "统计日期",
+				width: t.kind === "distribution" ? 105 : 120,
+				sortable: !0,
+				hideable: !1
+			},
+			...t.showSources ? [{
+				key: "source_name",
+				title: "来源名称",
+				width: t.kind === "distribution" ? 110 : 140,
+				sortable: !0
+			}, {
+				key: "source_type",
+				title: "来源类型",
+				width: t.kind === "distribution" ? 75 : 90
+			}] : [],
+			{
+				key: "account_type",
+				title: "账户类型",
+				width: t.kind === "distribution" ? 85 : 100
+			},
+			{
+				key: "currency",
+				title: "币种",
+				width: t.kind === "distribution" ? 60 : 80
+			},
+			...t.kind === "distribution" ? [
+				{
+					key: "funded_user_count",
+					title: "有资产用户",
+					width: 100,
+					sortable: !0,
+					formatter: a
+				},
+				{
+					key: "total_assets",
+					title: "资产总额(U)",
+					width: 125,
+					sortable: !0,
+					formatter: i
+				},
+				{
+					key: "negative_assets",
+					title: "负余额合计(U)",
+					width: 120,
+					sortable: !0,
+					formatter: i
+				},
+				...r.map((e, t) => ({
+					key: `bucket_${t}_amount`,
+					title: `${e} 人数/金额`,
+					width: 160,
+					sortable: !0
+				}))
+			] : [
+				{
+					key: "opening_assets",
+					title: "期初资产(U)",
+					width: 150,
+					sortable: !0,
+					formatter: i
+				},
+				{
+					key: "deposit_in",
+					title: "充值/划入(U)",
+					width: 150,
+					sortable: !0,
+					formatter: i
+				},
+				{
+					key: "withdraw_out",
+					title: "提现/划出(U)",
+					width: 150,
+					sortable: !0,
+					formatter: i
+				},
+				{
+					key: "transfer_net",
+					title: "账户划转净额(U)",
+					width: 160,
+					sortable: !0,
+					formatter: i
+				},
+				...l.value.account_type === "contract" ? [{
+					key: "realized_pnl",
+					title: "合约已实现盈亏(U)",
+					width: 170,
+					sortable: !0,
+					formatter: i
+				}, {
+					key: "fee_net",
+					title: "合约手续费及资金费(U)",
+					width: 180,
+					sortable: !0,
+					formatter: i
+				}] : [],
+				{
+					key: "manual_adjust",
+					title: "人工调账(U)",
+					width: 150,
+					sortable: !0,
+					formatter: i
+				},
+				{
+					key: "closing_assets",
+					title: "实际期末(U)",
+					width: 150,
+					sortable: !0,
+					formatter: i
+				}
+			],
+			{
+				key: "updated_at",
+				title: "快照采集时间",
+				width: t.kind === "distribution" ? 165 : 180
+			},
+			{
+				key: "stat_status",
+				title: "统计状态",
+				width: t.kind === "distribution" ? 90 : 115,
+				fixed: "right"
+			}
+		]), { filters: l, proTableBindings: u, query: d } = Go({
+			queryFields: s,
+			initialPageSize: 20,
+			initialSort: {
+				key: "stat_date",
+				order: "desc"
+			},
+			initialAutoRefreshSeconds: 0,
+			request: async ({ filters: e, page: n, pageSize: r, signal: i, sort: a }) => {
+				let o = Array.isArray(e.date_range) ? e.date_range : [], s = {
+					period: e.period === "month" ? "month" : "day",
+					account_type: e.account_type === "contract" ? "contract" : "funding",
+					currency: "USDT",
+					...t.showSources ? {
+						source_type: e.source_type === "tenant" || e.source_type === "merchant" ? e.source_type : "platform",
+						source_keyword: String(e.source_keyword ?? "").trim()
+					} : {},
+					start_date: String(o[0] ?? ""),
+					end_date: String(o[1] ?? ""),
+					page_no: n,
+					page_size: r,
+					order_by: a.order ? a.key : "stat_date",
+					order_dir: a.order === "asc" ? "asc" : "desc"
+				};
+				try {
+					return await t.request(s, { signal: i });
+				} catch (e) {
+					let t = e;
+					throw Error(t?.msg || t?.message || "加载资产报表失败");
+				}
+			}
+		});
+		return X([
+			() => l.value.period,
+			() => l.value.source_type,
+			() => l.value.account_type
+		], () => d()), (t, s) => (V(), w("section", { class: I(["asset-phase-one-report", { "asset-phase-one-report--distribution": e.kind === "distribution" }]) }, [O(Y(Ic), P(Y(u), {
+			columns: c.value,
+			"aria-label": n.value,
+			"auto-refreshable": !1,
+			"columns-configurable": "",
+			"fill-height": "",
+			"show-cell-title": "",
+			"row-key": "id",
+			"filter-drawer-title": `筛选${n.value}`,
+			"page-sizes": [
+				20,
+				30,
+				50
+			]
+		}), E({
+			"cell-stat_date": Z(({ row: e }) => [T("strong", null, J(e.stat_date), 1)]),
+			"cell-source_type": Z(({ row: e }) => [O(Y($), {
+				type: e.source_type === "platform" ? "success" : e.source_type === "tenant" ? "info" : "warning",
+				size: "sm",
+				round: ""
+			}, {
+				default: Z(() => [D(J(e.source_type === "platform" ? "平台" : e.source_type === "tenant" ? "白标" : "商户"), 1)]),
+				_: 2
+			}, 1032, ["type"])]),
+			"cell-account_type": Z(({ row: e }) => [D(J(e.account_type === "funding" ? "资金账户" : "合约账户"), 1)]),
+			"cell-updated_at": Z(({ row: t }) => [D(J(t.updated_at ? e.formatTimestamp(t.updated_at) : "—"), 1)]),
+			"cell-stat_status": Z(({ row: e }) => [K(t.$slots, "cell-stat_status", { row: e }, void 0, !0)]),
+			_: 2
+		}, [G(r, (e, t) => ({
+			name: `cell-bucket_${t}_amount`,
+			fn: Z(({ row: e }) => [T("div", eC, [T("span", null, [D(J(a(e.buckets[t]?.count)) + " ", 1), e.buckets[t]?.user_share == null ? C("", !0) : (V(), w("small", tC, "（" + J(o(e.buckets[t]?.user_share)) + "）", 1))]), T("span", null, [D(J(i(e.buckets[t]?.amount)) + " ", 1), e.buckets[t]?.asset_share == null ? C("", !0) : (V(), w("small", nC, "（" + J(o(e.buckets[t]?.asset_share)) + "）", 1))])])])
+		}))]), 1040, [
+			"columns",
+			"aria-label",
+			"filter-drawer-title"
+		])], 2));
+	}
+}), [["__scopeId", "data-v-6b7b4cad"]]);
 //#endregion
-export { Fg as $, gu as $n, ti as $r, ip as $t, Vv as A, gt as Ai, qd as An, qo as Ar, ch as At, U_ as B, Q as Bi, gd as Bn, fo as Br, Cm as Bt, Zy as C, Ht as Ci, bf as Cn, fs as Cr, bh as Ct, ry as D, kt as Di, lf as Dn, Yo as Dr, Ch as Dt, uy as E, At as Ei, ff as En, Zo as Er, Sh as Et, J_ as F, it as Fi, kd as Fn, Fo as Fr, Wm as Ft, D_ as G, id as Gn, Ra as Gr, Sp as Gt, L_ as H, _d as Hn, uo as Hr, sm as Ht, K_ as I, st as Ii, Ed as In, Co as Ir, Um as It, Wg as J, Yu as Jn, Pa as Jr, fp as Jt, A_ as K, $u as Kn, La as Kr, mp as Kt, G_ as L, ht as Li, Td as Ln, mo as Lr, Rm as Lt, vv as M, at as Mi, Md as Mn, Lo as Mr, Zm as Mt, uv as N, pt as Ni, jd as Nn, Bo as Nr, Qm as Nt, ey as O, lt as Oi, tf as On, Jo as Or, uh as Ot, Y_ as P, ot as Pi, Ad as Pn, Vo as Pr, Ym as Pt, zg as Q, Pu as Qn, Yi as Qr, rp as Qt, W_ as R, ft as Ri, fd as Rn, ho as Rr, Im as Rt, Qy as S, Wt as Si, xf as Sn, _s as Sr, vh as St, gy as T, Mt as Ti, df as Tn, Qo as Tr, xh as Tt, O_ as U, ld as Un, lo as Ur, Xp as Ut, V_ as V, hd as Vn, po as Vr, gm as Vt, k_ as W, cd as Wn, za as Wr, Ip as Wt, Rg as X, Lu as Xn, Zi as Xr, tp as Xt, Ng as Y, Wu as Yn, ka as Yr, dp as Yt, Bg as Z, Fu as Zn, Xi as Zr, np as Zt, $y as _, pn as _i, If as _n, gc as _r, jh as _t, Zb as a, zn as ai, Qf as an, Kl as ar, Eg as at, rb as b, Yt as bi, Of as bn, Ss as br, mh as bt, Rb as c, Bn as ci, Yf as cn, el as cr, gg as ct, Mb as d, Gn as di, Kf as dn, Yc as dr, Rh as dt, Zr as ei, sp as en, mu as er, Pg as et, xb as f, Kn as fi, Uf as fn, qc as fr, Ih as ft, mb as g, On as gi, Ff as gn, yc as gr, Ph as gt, vb as h, jn as hi, Pf as hn, Ic as hr, Fh as ht, Kb as i, Sr as ii, $f as in, Zl as ir, wg as it, wv as j, dt as ji, Vd as jn, Go as jr, Xm as jt, Uv as k, ut as ki, Xd as kn, Ko as kr, lh as kt, Lb as l, Hn as li, Jf as ln, tl as lr, rg as lt, Sb as m, Fn as mi, zf as mn, Hc as mr, zh as mt, mS as n, Lr as ni, ep as nn, ru as nr, Mg as nt, Gb as o, Vn as oi, Zf as on, ol as or, Tg as ot, bb as p, $ as pi, Bf as pn, Gc as pr, Nh as pt, S_ as q, Zu as qn, Ia as qr, pp as qt, tx as r, Er as ri, ap as rn, $l as rr, Cg as rt, Wb as s, Wn as si, Xf as sn, $c as sr, bg as st, $S as t, Ur as ti, op as tn, cu as tr, Ig as tt, Nb as u, Un as ui, qf as un, Xc as ur, eg as ut, tb as v, un as vi, Nf as vn, oc as vr, ph as vt, Wy as w, Rt as wi, uf as wn, ss as wr, yh as wt, nb as x, qt as xi, Df as xn, xs as xr, dh as xt, eb as y, Qt as yi, Af as yn, Os as yr, fh as yt, H_ as z, nt as zi, pd as zn, go as zr, Pm as zt };
+export { zg as $, Pu as $n, Yi as $r, rp as $t, Uv as A, ut as Ai, Xd as An, Ko as Ar, lh as At, H_ as B, nt as Bi, pd as Bn, go as Br, Pm as Bt, Qy as C, Wt as Ci, xf as Cn, _s as Cr, vh as Ct, uy as D, At as Di, ff as Dn, Zo as Dr, Sh as Dt, gy as E, Mt as Ei, df as En, Qo as Er, xh as Et, Y_ as F, ot as Fi, Ad as Fn, Vo as Fr, Ym as Ft, k_ as G, cd as Gn, za as Gr, Ip as Gt, V_ as H, hd as Hn, po as Hr, gm as Ht, J_ as I, it as Ii, kd as In, Fo as Ir, Wm as It, S_ as J, Zu as Jn, Ia as Jr, pp as Jt, D_ as K, id as Kn, Ra as Kr, Sp as Kt, K_ as L, st as Li, Ed as Ln, Co as Lr, Um as Lt, wv as M, dt as Mi, Vd as Mn, Go as Mr, Xm as Mt, vv as N, at as Ni, Md as Nn, Lo as Nr, Zm as Nt, ry as O, kt as Oi, lf as On, Yo as Or, Ch as Ot, uv as P, pt as Pi, jd as Pn, Bo as Pr, Qm as Pt, Bg as Q, Fu as Qn, Xi as Qr, np as Qt, G_ as R, ht as Ri, Td as Rn, mo as Rr, Rm as Rt, nb as S, qt as Si, Df as Sn, xs as Sr, dh as St, Wy as T, Rt as Ti, uf as Tn, ss as Tr, yh as Tt, L_ as U, _d as Un, uo as Ur, sm as Ut, U_ as V, Q as Vi, gd as Vn, fo as Vr, Cm as Vt, O_ as W, ld as Wn, lo as Wr, Xp as Wt, Ng as X, Wu as Xn, ka as Xr, dp as Xt, Wg as Y, Yu as Yn, Pa as Yr, fp as Yt, Rg as Z, Lu as Zn, Zi as Zr, tp as Zt, mb as _, On as _i, Ff as _n, yc as _r, Ph as _t, Kb as a, Sr as ai, $f as an, Zl as ar, wg as at, eb as b, Qt as bi, Af as bn, Os as br, fh as bt, Wb as c, Wn as ci, Xf as cn, $c as cr, bg as ct, Nb as d, Un as di, qf as dn, Xc as dr, eg as dt, ti as ei, ip as en, gu as er, Fg as et, Mb as f, Gn as fi, Kf as fn, Yc as fr, Rh as ft, vb as g, jn as gi, Pf as gn, Ic as gr, Fh as gt, Sb as h, Fn as hi, zf as hn, Hc as hr, zh as ht, tx as i, Er as ii, ap as in, $l as ir, Cg as it, Vv as j, gt as ji, qd as jn, qo as jr, ch as jt, ey as k, lt as ki, tf as kn, Jo as kr, uh as kt, Rb as l, Bn as li, Yf as ln, el as lr, gg as lt, bb as m, $ as mi, Bf as mn, Gc as mr, Nh as mt, $S as n, Ur as ni, op as nn, cu as nr, Ig as nt, Zb as o, zn as oi, Qf as on, Kl as or, Eg as ot, xb as p, Kn as pi, Uf as pn, qc as pr, Ih as pt, A_ as q, $u as qn, La as qr, mp as qt, mS as r, Lr as ri, ep as rn, ru as rr, Mg as rt, Gb as s, Vn as si, Zf as sn, ol as sr, Tg as st, rC as t, Zr as ti, sp as tn, mu as tr, Pg as tt, Lb as u, Hn as ui, Jf as un, tl as ur, rg as ut, $y as v, pn as vi, If as vn, gc as vr, jh as vt, Zy as w, Ht as wi, bf as wn, fs as wr, bh as wt, rb as x, Yt as xi, Of as xn, Ss as xr, mh as xt, tb as y, un as yi, Nf as yn, oc as yr, ph as yt, W_ as z, ft as zi, fd as zn, ho as zr, Im as zt };
 
-//# sourceMappingURL=src-D9gwl4U-.js.map
+//# sourceMappingURL=src-BIXBCd37.js.map

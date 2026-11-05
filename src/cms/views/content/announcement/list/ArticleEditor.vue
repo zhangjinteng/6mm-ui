@@ -198,7 +198,12 @@
                                 :min-height="420"
                                 :max-height="760"
                                 aria-label="公告正文"
-                        /></MmFormItem>
+                            >
+                                <template #image-upload="{ url, setUrl, setBusy }">
+                                    <ContentCoverUpload label="正文图片" :model-value="url" :upload="uploadAnnouncementCover"
+                                        @update:model-value="setUrl" @busy-change="setBusy" @error="uploadError" />
+                                </template>
+                            </MmRichTextEditor></MmFormItem>
                     </MmForm>
                 </main>
             </div>

@@ -50,9 +50,7 @@ export declare function useAcademyApi(): {
     }>;
     getAcademyDetail: <T = AcademyRow>(kind: AcademyKind, id: string, signal?: AbortSignal) => Promise<T>;
     saveAcademy: <T = AcademyRow>(kind: AcademyKind, params: Record<string, unknown>) => Promise<T>;
-    uploadAcademyCover: (file: File, signal?: AbortSignal) => Promise<{
-        url: string;
-    }>;
+    uploadAcademyCover: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     deleteAcademyCourse: (params: Pick<AcademyRow, "id" | "row_version">) => Promise<{
         id: string;
     }>;

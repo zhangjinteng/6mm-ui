@@ -187,7 +187,7 @@
                                 :max-height="760"
                                 aria-label="新闻正文"
                             >
-                                <template v-if="mode === 'platform'" #image-upload="{ url, setUrl, setBusy }">
+                                <template #image-upload="{ url, setUrl, setBusy }">
                                     <ContentCoverUpload label="正文图片" :model-value="url" :upload="uploadNewsCover"
                                         @update:model-value="setUrl" @busy-change="setBusy" @error="uploadError" />
                                 </template>
@@ -266,7 +266,7 @@
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
 const { newsError, newsCategoryLabel, deleteNews, getNewsDetail, getNewsMetadata, saveNews, uploadNewsCover } = useNewsApi()
-const { hasPermission, mode } = useCmsRuntime()
+const { hasPermission } = useCmsRuntime()
 
 import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 import { onBeforeCmsLeave as onBeforeRouteLeave } from "../../../../runtime"

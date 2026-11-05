@@ -1,4 +1,5 @@
 import { useCmsRuntime } from "../../runtime"
+import { createMediaUploader } from "../../../services/media-upload"
 export type AcademyKind = 'categories' | 'courses'
 export interface AcademyRow {
     [key: string]: unknown
@@ -53,14 +54,7 @@ const saveAcademy = <T = AcademyRow>(kind: AcademyKind, params: Record<string, u
         { url: `${base}/${kind}/${params.id ? 'edit' : 'create'}`, params },
         { isOpenRetry: false }
     )
-const uploadAcademyCover = (file: File, signal?: AbortSignal) => {
-    const data = new FormData()
-    data.append('file', file)
-    return request.post<{ url: string }>(
-        { url: `${base}/upload`, data, signal, headers: { 'Content-Type': 'multipart/form-data' } },
-        { isOpenRetry: false }
-    )
-}
+const uploadAcademyCover = createMediaUploader(request, base + "/upload")
 const deleteAcademyCourse = (params: Pick<AcademyRow, 'id' | 'row_version'>) =>
     request.post<{ id: string }>({ url: `${base}/courses/delete`, params }, { isOpenRetry: false })
 const deleteAcademyCategory = (params: Pick<AcademyRow, 'id' | 'row_version'>) =>

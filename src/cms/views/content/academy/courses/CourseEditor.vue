@@ -189,8 +189,8 @@
                                 :max-height="760"
                                 aria-label="课程正文"
                             >
-                                <template v-if="mode === 'platform'" #image-upload="{ url, setUrl, setBusy }">
-                                    <ContentCoverUpload label="正文图片" :model-value="url" :upload="uploadCourseBodyImage"
+                                <template #image-upload="{ url, setUrl, setBusy }">
+                                    <ContentCoverUpload label="正文图片" :model-value="url" :upload="uploadAcademyCover"
                                         @update:model-value="setUrl" @busy-change="setBusy" @error="uploadError" />
                                 </template>
                             </MmRichTextEditor></MmFormItem>
@@ -273,9 +273,7 @@
 </template>
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
-const { hasPermission, mode, request } = useCmsRuntime()
-import { createMediaUploader } from '../../../../../services/media-upload'
-const uploadCourseBodyImage = createMediaUploader(request, '/cms/academy/body-image/upload')
+const { hasPermission } = useCmsRuntime()
 
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { onBeforeCmsLeave as onBeforeRouteLeave } from "../../../../runtime"

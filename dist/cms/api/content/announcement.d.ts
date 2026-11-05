@@ -51,9 +51,7 @@ export declare function useAnnouncementApi(): {
     getAnnouncementDetail: <T = AnnouncementRow>(kind: AnnouncementKind, id: string, signal?: AbortSignal) => Promise<T>;
     saveAnnouncement: <T = AnnouncementRow>(kind: AnnouncementKind, params: Record<string, unknown>) => Promise<T>;
     deleteAnnouncement: (kind: AnnouncementKind, id: string, row_version: string) => Promise<unknown>;
-    uploadAnnouncementCover: (file: File, signal?: AbortSignal) => Promise<{
-        url: string;
-    }>;
+    uploadAnnouncementCover: (file: File, signal?: AbortSignal) => Promise<import('../..').MediaUploadResult>;
     announcementPublishStates: {
         label: string;
         value: string;

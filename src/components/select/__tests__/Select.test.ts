@@ -11,6 +11,33 @@ const options = [
 ];
 
 describe("MmSelect", () => {
+  it("shows the chosen tenant label after search, refresh and reopen", async () => {
+    const tenants = [{ label: "Freedex-self-operated", value: "900003" }];
+    const wrapper = mount(Select, {
+      attachTo: document.body,
+      props: {
+        options: tenants, modelValue: "", filterable: true, clearable: true,
+        placeholder: "搜索白标昵称",
+        "onUpdate:modelValue": (value) => wrapper.setProps({ modelValue: value }),
+      },
+    });
+    try {
+      await wrapper.get("input").setValue("Freedex");
+      document.querySelector<HTMLButtonElement>('[role="option"][data-value="900003"]')!.click();
+      await nextTick();
+      expect(wrapper.get(".mm-select__value").text()).toBe(tenants[0]!.label);
+      await wrapper.setProps({ options: tenants.map(t => ({ ...t })) });
+      await wrapper.get('[role="combobox"]').trigger("click");
+      expect((wrapper.get("input").element as HTMLInputElement).value).toBe("");
+      await wrapper.get("input").trigger("keydown", { key: "Escape" });
+      expect(wrapper.get(".mm-select__value").text()).toBe(tenants[0]!.label);
+      await wrapper.get(".mm-select__clear").trigger("click");
+      expect(wrapper.get("input").attributes("placeholder")).toBe("搜索白标昵称");
+    } finally {
+      wrapper.unmount();
+    }
+  });
+
   it("shows the placeholder when an empty-value option is selected", async () => {
     const wrapper = mount(Select, {
       props: {

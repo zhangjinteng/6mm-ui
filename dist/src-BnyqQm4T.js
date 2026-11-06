@@ -1603,18 +1603,17 @@ var $t = ["data-mm-component"], en = [
 					key: String(e.value),
 					class: "mm-select__tag"
 				}, J(e.label), 1))), 128)), te.value ? (V(), w("span", gn, "+" + J(te.value), 1)) : C("", !0)])) : C("", !0),
-				t.filterable ? (V(), w("input", {
+				t.filterable && (t.multiple || g.value || !U.value || !H.value) ? (V(), w("input", {
 					key: 1,
 					ref_key: "searchRef",
 					ref: h,
 					class: "mm-select__search",
 					value: v.value,
-					placeholder: U.value ? "" : l.value,
+					placeholder: U.value ? t.multiple ? "" : H.value : l.value,
 					"aria-label": Y(s).select.filter,
 					autocomplete: "off",
 					onClick: fe(oe, ["stop"]),
-					onInput: he,
-					onKeydown: pe
+					onInput: he
 				}, null, 40, _n)) : (V(), w("span", {
 					key: 2,
 					class: I(["mm-select__value", { "is-placeholder": !U.value }])
@@ -32119,4 +32118,4 @@ var qS = class {
 //#endregion
 export { Bg as $, Fu as $n, Xi as $r, np as $t, ey as A, lt as Ai, tf as An, Jo as Ar, uh as At, W_ as B, ft as Bi, fd as Bn, ho as Br, Im as Bt, nb as C, qt as Ci, Df as Cn, xs as Cr, dh as Ct, gy as D, Mt as Di, df as Dn, Qo as Dr, xh as Dt, Wy as E, Rt as Ei, uf as En, ss as Er, yh as Et, uv as F, pt as Fi, jd as Fn, Bo as Fr, Qm as Ft, O_ as G, ld as Gn, lo as Gr, Xp as Gt, U_ as H, Q as Hi, gd as Hn, fo as Hr, Cm as Ht, Y_ as I, ot as Ii, Ad as In, Vo as Ir, Ym as It, A_ as J, $u as Jn, La as Jr, mp as Jt, k_ as K, cd as Kn, za as Kr, Ip as Kt, J_ as L, it as Li, kd as Ln, Fo as Lr, Wm as Lt, Vv as M, gt as Mi, qd as Mn, qo as Mr, ch as Mt, wv as N, dt as Ni, Vd as Nn, Go as Nr, Xm as Nt, uy as O, At as Oi, ff as On, Zo as Or, Sh as Ot, vv as P, at as Pi, Md as Pn, Lo as Pr, Zm as Pt, Rg as Q, Lu as Qn, Zi as Qr, tp as Qt, K_ as R, st as Ri, Ed as Rn, Co as Rr, Um as Rt, rb as S, Yt as Si, Of as Sn, Ss as Sr, mh as St, Zy as T, Ht as Ti, bf as Tn, fs as Tr, bh as Tt, V_ as U, hd as Un, po as Ur, gm as Ut, H_ as V, nt as Vi, pd as Vn, go as Vr, Pm as Vt, L_ as W, _d as Wn, uo as Wr, sm as Wt, Wg as X, Yu as Xn, Pa as Xr, fp as Xt, S_ as Y, Zu as Yn, Ia as Yr, pp as Yt, Ng as Z, Wu as Zn, ka as Zr, dp as Zt, vb as _, jn as _i, Pf as _n, Ic as _r, Fh as _t, Qb as a, Er as ai, ap as an, $l as ar, Cg as at, tb as b, un as bi, Nf as bn, oc as br, ph as bt, Gb as c, Vn as ci, Zf as cn, ol as cr, Tg as ct, Lb as d, Hn as di, Jf as dn, tl as dr, rg as dt, Yi as ei, rp as en, Pu as er, zg as et, Nb as f, Un as fi, qf as fn, Xc as fr, eg as ft, Sb as g, Fn as gi, zf as gn, Hc as gr, zh as gt, bb as h, $ as hi, Bf as hn, Gc as hr, Nh as ht, nx as i, Lr as ii, ep as in, ru as ir, Mg as it, Uv as j, ut as ji, Xd as jn, Ko as jr, lh as jt, ry as k, kt as ki, lf as kn, Yo as kr, Ch as kt, Wb as l, Wn as li, Xf as ln, $c as lr, bg as lt, xb as m, Kn as mi, Uf as mn, qc as mr, Ih as mt, eC as n, Zr as ni, sp as nn, mu as nr, Pg as nt, Kb as o, Sr as oi, $f as on, Zl as or, wg as ot, Mb as p, Gn as pi, Kf as pn, Yc as pr, Rh as pt, D_ as q, id as qn, Ra as qr, Sp as qt, hS as r, Ur as ri, op as rn, cu as rr, Ig as rt, Zb as s, zn as si, Qf as sn, Kl as sr, Eg as st, iC as t, ti, ip as tn, gu as tr, Fg as tt, Rb as u, Bn as ui, Yf as un, el as ur, gg as ut, mb as v, On as vi, Ff as vn, yc as vr, Ph as vt, Qy as w, Wt as wi, xf as wn, _s as wr, vh as wt, eb as x, Qt as xi, Af as xn, Os as xr, fh as xt, $y as y, pn as yi, If as yn, gc as yr, jh as yt, G_ as z, ht as zi, Td as zn, mo as zr, Rm as zt };
 
-//# sourceMappingURL=src-D28mL1tZ.js.map
+//# sourceMappingURL=src-BnyqQm4T.js.map

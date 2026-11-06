@@ -311,16 +311,15 @@ onBeforeUnmount(() => controller?.abort());
           >
         </span>
         <input
-          v-if="filterable"
+          v-if="filterable && (multiple || open || !hasValue || !singleLabel)"
           ref="searchRef"
           class="mm-select__search"
           :value="query"
-          :placeholder="hasValue ? '' : resolvedPlaceholder"
+          :placeholder="hasValue ? (multiple ? '' : singleLabel) : resolvedPlaceholder"
           :aria-label="messages.select.filter"
           autocomplete="off"
           @click.stop="openMenu"
           @input="onSearch"
-          @keydown="onKeydown"
         />
         <span
           v-else

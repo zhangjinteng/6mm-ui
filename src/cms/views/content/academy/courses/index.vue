@@ -102,13 +102,6 @@ const columns: ProTableColumn<AcademyCourse>[] = [
         width: 70,
         formatter: (v) => academyDifficulties.find((d) => d.value === Number(v))?.label || '-'
     },
-    {
-        key: 'estimated_minutes',
-        dataIndex: 'estimated_minutes',
-        title: '预计课时(分钟)',
-        width: 120,
-        formatter: (v) => (v == null ? '-' : String(v))
-    },
     { key: 'sort_order', dataIndex: 'sort_order', title: '排序', width: 70 },
     { key: 'publish_status', title: '发布状态', width: 100 },
     { key: 'is_enabled', title: '状态', width: 85 },

@@ -6,7 +6,6 @@ export interface CourseForm {
     cover_url: string;
     seo_description: string;
     difficulty_level: number | '';
-    estimated_minutes: number | null;
     sort_order: number | null;
     is_enabled: boolean;
     scheduled_local: string;
@@ -17,7 +16,6 @@ export declare const courseFields: CourseField[];
 interface Category {
     id: string;
     is_enabled: boolean;
-    difficulty_levels: number[];
 }
 export declare function validateCourse(form: CourseForm, categories: Category[], status: 'draft' | 'published' | 'scheduled', now?: number): CourseErrors;
 export declare function courseFieldErrors(error: unknown): {

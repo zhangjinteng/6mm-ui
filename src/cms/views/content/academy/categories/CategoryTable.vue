@@ -62,14 +62,6 @@
                         :disabled="readonly || busy"
                         :aria-label="`${noun}名称`"
                 /></MmFormItem>
-                <MmFormItem label="适用难度" required
-                    ><MmSelect
-                        v-model="form.difficulty_levels"
-                        multiple
-                        :options="academyDifficulties"
-                        :disabled="readonly || busy"
-                        aria-label="适用难度"
-                /></MmFormItem>
                 <div class="taxonomy-editor__row">
                     <MmFormItem label="前端排序" required
                         ><MmInputNumber
@@ -147,7 +139,6 @@ import {
     MmForm,
     MmFormItem,
     MmInput,
-    MmSelect,
     MmInputNumber,
     MmCheckbox,
     MmAlert,
@@ -168,16 +159,6 @@ const columns: ProTableColumn<AcademyRow>[] = [
     ...createCmsSourceColumns(),
     { key: 'code', dataIndex: 'code', title: '分类ID', width: 220 },
     { key: 'name', dataIndex: 'name', title: '分类名称', width: 210 },
-    {
-        key: 'difficulty_levels',
-        dataIndex: 'difficulty_levels',
-        title: '难度范围',
-        width: 170,
-        formatter: (v: unknown) =>
-            ((v as number[]) || [])
-                .map((n) => academyDifficulties.find((d) => d.value === n)?.label)
-                .join(' / ')
-    },
     { key: 'course_count', dataIndex: 'course_count', title: '课程数量', width: 100 },
     { key: 'sort_order', dataIndex: 'sort_order', title: '排序', width: 80 },
     { key: 'is_enabled', title: '状态', width: 100 },
@@ -323,8 +304,8 @@ function discardChanges() {
 }
 async function save() {
     if (readonly.value || busy.value || loading.value || loadFailed.value) return
-    if (!form.name.trim() || form.sort_order === null || !form.difficulty_levels.length) {
-        error.value = '请填写名称、排序和适用难度'
+    if (!form.name.trim() || form.sort_order === null) {
+        error.value = '请填写名称和排序'
         return
     }
     saving.value = true

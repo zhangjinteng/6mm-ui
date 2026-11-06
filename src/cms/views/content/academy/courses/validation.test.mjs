@@ -4,7 +4,8 @@ import { validateCourse, courseFieldErrors } from './validation.ts'
 
 const categories = [
     { id: '1', is_enabled: true, difficulty_levels: [1, 2] },
-    { id: '2', is_enabled: false, difficulty_levels: [1] }
+    { id: '2', is_enabled: false, difficulty_levels: [1] },
+    { id: '3', is_enabled: true, difficulty_levels: [3] }
 ]
 const form = (changes = {}) => ({
     title: '课程',
@@ -14,7 +15,6 @@ const form = (changes = {}) => ({
     cover_url: '',
     seo_description: '',
     difficulty_level: 1,
-    estimated_minutes: 6,
     sort_order: 10,
     is_enabled: true,
     scheduled_local: '',
@@ -28,7 +28,7 @@ test('valid publish and draft pass without requiring optional cover or summary',
     assert.deepEqual(validate({}), {})
     assert.deepEqual(
         validate(
-            { category_ids: [], body_html: '', difficulty_level: '', estimated_minutes: null },
+            { category_ids: [], body_html: '', difficulty_level: '' },
             'draft'
         ),
         {}
@@ -41,8 +41,7 @@ test('collects all missing publish fields; draft still requires title and sort',
         sort_order: null,
         category_ids: [],
         body_html: '<p><br></p>',
-        difficulty_level: '',
-        estimated_minutes: null
+        difficulty_level: ''
     }
     assert.deepEqual(
         Object.keys(validate(empty)).sort(),
@@ -51,8 +50,7 @@ test('collects all missing publish fields; draft still requires title and sort',
             'sort_order',
             'category_ids',
             'body_html',
-            'difficulty_level',
-            'estimated_minutes'
+            'difficulty_level'
         ].sort()
     )
     assert.deepEqual(Object.keys(validate(empty, 'draft')).sort(), ['sort_order', 'title'])
@@ -64,16 +62,19 @@ test('recomputes errors as fields are corrected and validates numeric bounds', (
     for (const sort_order of [-1, 1.2, 2147483648, NaN])
         assert.ok(validate({ sort_order }).sort_order)
     assert.equal(validate({ sort_order: 0 }).sort_order, undefined)
-    for (const estimated_minutes of [0, -1, 1.5, 100001])
-        assert.ok(validate({ estimated_minutes }).estimated_minutes)
+    for (const difficulty_level of [0, -1, 1.5, 4])
+        assert.ok(validate({ difficulty_level }).difficulty_level)
 })
 
-test('category existence, enabled state and compatible difficulty follow backend rules', () => {
+test('category availability is enforced independently of course difficulty', () => {
     assert.ok(validate({ category_ids: ['missing'] }, 'draft').category_ids)
     assert.ok(validate({ category_ids: ['2'] }).category_ids)
     assert.deepEqual(validate({ category_ids: ['2'] }, 'draft'), {})
-    assert.ok(validate({ difficulty_level: 3 }, 'draft').difficulty_level)
-    assert.ok(validate({ category_ids: ['1', '2'], difficulty_level: 2 }).difficulty_level)
+    for (const difficulty_level of [1, 2, 3]) {
+        for (const status of ['draft', 'published', 'scheduled']) {
+            assert.deepEqual(validate({ category_ids: ['1', '3'], difficulty_level, scheduled_local: '2099-01-01T00:00:00Z' }, status), {})
+        }
+    }
 })
 
 test('empty rich text, image-only and non-content markup do not satisfy body requirement', () => {
@@ -141,8 +142,8 @@ test('server fields and nested category indexes map to the editor fields', () =>
         }
     )
     assert.deepEqual(
-        courseFieldErrors({ errors: { academy: ['课程难度不在所选分类的适用范围内'] } }).fields,
-        { difficulty_level: '课程难度不在所选分类的适用范围内' }
+        courseFieldErrors({ errors: { academy: ['发布课程需要填写正文和课程难度'] } }).fields,
+        { body_html: '发布课程需要填写正文和课程难度' }
     )
 })
 

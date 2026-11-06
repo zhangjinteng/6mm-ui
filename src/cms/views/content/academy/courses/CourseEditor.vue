@@ -108,21 +108,9 @@
                             :error="fieldErrors.difficulty_level"
                             ><MmSelect
                                 v-model="form.difficulty_level"
-                                :options="difficultyOptions"
+                                :options="academyDifficulties"
                                 :disabled="locked"
                                 aria-label="课程难度"
-                        /></MmFormItem>
-                        <MmFormItem
-                            label="预计课时(分钟)"
-                            prop="estimated_minutes"
-                            :error="fieldErrors.estimated_minutes"
-                            ><MmInputNumber
-                                v-model="form.estimated_minutes"
-                                :min="1"
-                                :max="100000"
-                                :precision="0"
-                                :disabled="locked"
-                                aria-label="预计课时"
                         /></MmFormItem>
                         <MmFormItem
                             label="前端排序"
@@ -334,7 +322,6 @@ const form = reactive({
     seo_description: '',
     cover_url: '',
     difficulty_level: 1 as number | '',
-    estimated_minutes: 6 as number | null,
     sort_order: 10 as number | null,
     is_enabled: true,
     scheduled_local: ''
@@ -376,7 +363,6 @@ for (const field of courseFields) {
         () => form[field],
         () => {
             delete serverErrors[field]
-            if (field === 'category_ids') delete serverErrors.difficulty_level
             saveError.value = ''
             validationNow.value = Date.now()
         },
@@ -415,15 +401,6 @@ const categoryOptions = computed(() =>
         disabled: !c.is_enabled
     }))
 )
-const difficultyOptions = computed(() => {
-    const selected = (metadata.value?.categories || []).filter((c) =>
-        form.category_ids.includes(c.id)
-    )
-    return academyDifficulties.map((d) => ({
-        ...d,
-        disabled: selected.some((c) => !c.difficulty_levels.includes(d.value))
-    }))
-})
 let original = '',
     controller: AbortController | undefined
 function localDate(value: string | null) {
@@ -455,7 +432,6 @@ async function load() {
                 'row_version',
                 'title',
                 'category_ids',
-                'estimated_minutes',
                 'sort_order',
                 'is_enabled'
             ] as const)

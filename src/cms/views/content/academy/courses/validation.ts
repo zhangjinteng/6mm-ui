@@ -6,7 +6,6 @@ export interface CourseForm {
     cover_url: string
     seo_description: string
     difficulty_level: number | ''
-    estimated_minutes: number | null
     sort_order: number | null
     is_enabled: boolean
     scheduled_local: string
@@ -17,7 +16,6 @@ export const courseFields: CourseField[] = [
     'category_ids',
     'cover_url',
     'difficulty_level',
-    'estimated_minutes',
     'sort_order',
     'is_enabled',
     'scheduled_local',
@@ -29,7 +27,6 @@ export const courseFields: CourseField[] = [
 interface Category {
     id: string
     is_enabled: boolean
-    difficulty_levels: number[]
 }
 
 function safeCoverUrl(value: string): boolean {
@@ -92,19 +89,6 @@ export function validateCourse(
     if (publishing && !form.difficulty_level) errors.difficulty_level = '请选择课程难度'
     else if (form.difficulty_level !== '' && ![1, 2, 3].includes(form.difficulty_level))
         errors.difficulty_level = '请选择有效的课程难度'
-    else if (
-        form.difficulty_level &&
-        selected.some((c) => c && !c.difficulty_levels.includes(Number(form.difficulty_level)))
-    )
-        errors.difficulty_level = '课程难度不在所选分类的适用范围内'
-    if (publishing && form.estimated_minutes === null) errors.estimated_minutes = '请填写预计课时'
-    else if (
-        form.estimated_minutes !== null &&
-        (!Number.isInteger(form.estimated_minutes) ||
-            form.estimated_minutes < 1 ||
-            form.estimated_minutes > 100000)
-    )
-        errors.estimated_minutes = '预计课时须为 1–100000 之间的整数'
     if (publishing && !hasBodyText(form.body_html)) errors.body_html = '请填写课程正文'
     if (status === 'scheduled') {
         const time = new Date(form.scheduled_local).getTime()
@@ -122,9 +106,7 @@ const legacyFields: Record<string, CourseField> = {
     发布课程必须选择分类: 'category_ids',
     所选分类不存在或不属于当前学院模板: 'category_ids',
     '发布课程必须选择已启用的分类，存在已停用分类': 'category_ids',
-    课程难度不在所选分类的适用范围内: 'difficulty_level',
-    // Local validation already checks difficulty/minutes before a request is sent.
-    '发布课程需要填写正文、课程难度及预计课时': 'body_html'
+    发布课程需要填写正文和课程难度: 'body_html'
 }
 
 export function courseFieldErrors(error: unknown): { fields: CourseErrors; general: string } {

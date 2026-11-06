@@ -1,6 +1,8 @@
 <template>
   <div class="cms-fixture-shell">
-    <header class="cms-fixture-header">CMS viewport regression</header>
+    <header class="cms-fixture-header">CMS viewport regression
+      <output v-if="sourceFilters" aria-label="筛选请求次数">元数据 {{ metadataRequests }} · 列表 {{ listRequests }}</output>
+    </header>
     <main class="cms-fixture-scroll">
       <div class="cms-fixture-padding">
         <MmCmsPage :page="page" :runtime="runtime" identity-key="fixture" :viewport="true" :show-site-selector="!inline || page === 'localization/translations'" />
@@ -9,17 +11,24 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import { MmCmsPage, type CmsPage, type CmsRuntime } from '../src/cms'
 const params = new URLSearchParams(location.search)
 const page = (params.get('page') || 'news/categories') as CmsPage
 const inline = params.get('inline') === '1'
+const sourceFilters = params.get('sources') === '1'
+const metadataRequests = ref(0), listRequests = ref(0)
+const tenantOptions = [{ value: '10', label: '白标甲' }, { value: '20', label: '白标乙' }]
 const requests: string[] = []
 ;(window as any).cmsRequests = requests
 const cms_context = { sites: [{ site_id: '1', space_id: '11', label: '站点 A' }], site_id: '1', space_id: '11' }
 const rows = Array.from({ length: 20 }, (_, i) => ({
   id: String(i + 1), row_version: '1', code: `ROW-${i + 1}`, name: `分类 ${i + 1}`, title: `内容 ${i + 1}`,
   parent_id: null, category_id: null, is_enabled: true, sort_order: i, publish_status: 'draft',
-  cms_source_name: '管理员', cms_source_type: 'platform', updated_by_name: '管理员', updated_at: '2026-10-31 12:00:00',
+  cms_source_name: sourceFilters && i % 3 ? tenantOptions[i % 3 - 1].label : '管理员',
+  cms_source_type: sourceFilters && i % 3 ? 'white_label' : 'platform',
+  cms_tenant_id: sourceFilters && i % 3 ? tenantOptions[i % 3 - 1].value : '',
+  updated_by_name: '管理员', updated_at: '2026-10-31 12:00:00',
   difficulty_levels: [1], difficulty_level: 1, category_ids: [], news_count: 0, course_count: 0, help_count: 0,
   source_type: 'platform', content: `反馈 ${i + 1}`, public_user_id_snapshot: '100', scene_name_snapshot: '交易', issue_category_name_snapshot: '其他', done: 0, total: 0
 }))
@@ -32,10 +41,18 @@ const runtime: CmsRuntime = {
       requests.push(options.url)
       if (inline) await new Promise(resolve => setTimeout(resolve, 600))
       if (options.url === '/cms/sites') return { sites: [{ site_id: '1', space_id: '11', label: '站点 A' }] } as T
-      if (options.url.endsWith('/metadata')) return { cms_context, categories: [], scenes: [], issues: [], cms_source_options: [], source_locale: 'zh-CN', enabled_locales: ['zh-CN'],
+      if (options.url.endsWith('/metadata')) {
+        metadataRequests.value++
+        return { cms_context, categories: [], scenes: [], issues: [], cms_source_options: sourceFilters ? tenantOptions : [], source_locale: 'zh-CN', enabled_locales: ['zh-CN'],
         spaces: [{ id: '11', label: '站点 A', is_enabled: true }], space_id: '11', space_revision: '1', space_enabled: true, target_locales: [], locales: [], modules: [], done: 0, total: 0,
-      } as T
-      return { cms_context, lists: page === 'localization/translations' ? [] : rows, count: page === 'localization/translations' ? 0 : 50 } as T
+        } as T
+      }
+      listRequests.value++
+      const selected = sourceFilters ? rows.filter(row =>
+        (!options.params?.cms_source_type || row.cms_source_type === options.params.cms_source_type) &&
+        (!options.params?.cms_tenant_id || row.cms_tenant_id === options.params.cms_tenant_id) &&
+        (runtime.mode !== 'white_label' || row.cms_tenant_id === '10')) : rows
+      return { cms_context, lists: page === 'localization/translations' ? [] : selected, count: page === 'localization/translations' ? 0 : sourceFilters ? selected.length : 50 } as T
     },
     async post<T>(): Promise<T> { throw new Error('Read-only layout fixture') }
   }

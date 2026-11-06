@@ -2,7 +2,6 @@ import assert from 'node:assert/strict'
 import test from 'node:test'
 import { readFileSync } from 'node:fs'
 import { parse, compileScript, compileTemplate } from '@vue/compiler-sfc'
-import ts from 'typescript'
 
 const pages = [
     'news/categories/index.vue', 'news/list/index.vue',
@@ -18,39 +17,11 @@ for (const page of pages) test(`${page} compiles with shared CMS columns and sou
     assert.deepEqual(compileTemplate({ source: descriptor.template.content, filename: page, id: page }).errors, [])
     assert.match(source, /\.\.\.createCmsSourceColumns\(\)/)
     assert.match(source, /\.\.\.cmsSources\.fields/)
-    assert.match(source, /cmsSources\.bindFilters\(cmsSourceFilters\)/)
+    assert.match(source, /cmsSources\.bindTable\(useMmProTable/)
+    assert.doesNotMatch(source, /onMounted\(loadMetadata\)|metadata\.value = await get\w+Metadata/)
     assert.match(source, /#cell-cms_source_type/)
     assert.match(source, /Object\.entries\(filters\)/)
     assert.doesNotMatch(source, /appendToUserRows|createContractSourceColumns/)
-})
-
-test('shared fields load tenant nicknames, filter by ID and clear tenant when platform is selected', async () => {
-    let mounted, unmounted, changed
-    const module = { exports: {} }
-    const source = readFileSync(new URL('cmsSources.ts', import.meta.url), 'utf8')
-    const code = ts.transpileModule(source, { compilerOptions: { target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.CommonJS } }).outputText
-    const vue = { reactive: value => value, onMounted: callback => { mounted = callback },
-        onBeforeUnmount: callback => { unmounted = callback }, watch: (_get, callback) => { changed = callback } }
-    new Function('require', 'module', 'exports', code)(name => name.includes('runtime') ? { useCmsRuntime: () => ({ mode: 'platform' }) } : vue, module, module.exports)
-    assert.deepEqual(module.exports.createCmsSourceColumns().map(c => c.title), ['来源昵称', '来源类型'])
-    const hook = module.exports.useCmsSourceFields(async () => ({ cms_source_options: [{ value: '10', label: '白标昵称甲' }] }))
-    await mounted()
-    assert.equal(hook.fields[1].filterable, true)
-    assert.deepEqual(hook.fields[1].options[1], { value: '10', label: '白标昵称甲' })
-    assert.equal(hook.fields[0].type, 'segmented')
-    assert.equal(hook.fields[0].label, '来源类型')
-    assert.equal(hook.fields[0].width, 200)
-    assert.equal(hook.fields[0].defaultValue, '')
-    assert.deepEqual(hook.fields[0].options.map(o => o.label), ['全部', '平台', '白标'])
-    assert.deepEqual(hook.fields[0].options.map(o => o.value), ['', 'platform', 'white_label'])
-    const filters = { value: { cms_source_type: 'white_label', cms_tenant_id: '10' } }
-    hook.bindFilters(filters)
-    changed('platform')
-    assert.equal(filters.value.cms_tenant_id, '')
-    assert.equal(hook.fields[1].disabled, true)
-    changed('white_label')
-    assert.equal(hook.fields[1].disabled, false)
-    unmounted()
 })
 
 test('feedback ownership fields do not overwrite submitting user snapshots', () => {

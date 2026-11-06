@@ -25,6 +25,7 @@ export declare const articleLabels: {
 export declare const articleFields: ArticleField[];
 interface Category {
     id: string;
+    parent_id: string | null;
     effective_enabled: boolean;
 }
 export declare function validateArticle(form: ArticleForm, categories: Category[], module: ArticleModule, status: 'draft' | 'published' | 'scheduled', now?: number): ArticleErrors;

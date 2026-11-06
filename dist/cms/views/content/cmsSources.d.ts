@@ -1,5 +1,4 @@
-import { Ref } from 'vue';
-import { ProTableColumn, QueryBarField, TableRow } from '../../../index';
+import { ProTableColumn, QueryBarField, TableRow, UseMmProTableReturn } from '../../../index';
 export interface CmsSourceMetadata {
     cms_source_options?: {
         value: string;
@@ -12,6 +11,7 @@ export declare function useCmsSourceFields<T extends CmsSourceMetadata>(load: (s
     cms_source_type?: string;
     cms_tenant_id?: string;
 }) => Promise<T>, updateMetadata?: (metadata: T) => void): {
-    fields: QueryBarField[];
-    bindFilters: (_filters: Ref<Record<string, unknown>>) => void;
+    fields: import('vue').Reactive<QueryBarField[]>;
+    bindTable: <Row extends TableRow>(table: UseMmProTableReturn<Row>) => UseMmProTableReturn<Row>;
+    loadMetadata: () => Promise<void>;
 };

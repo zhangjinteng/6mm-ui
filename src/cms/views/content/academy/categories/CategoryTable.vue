@@ -230,7 +230,7 @@ const queryFields: QueryBarField[] = [
         ]
     }
 ]
-const { proTableBindings, reload, currentPage, pageSize, total, filters: cmsSourceFilters } = useMmProTable<AcademyRow>({
+const { proTableBindings, reload, currentPage, pageSize, total } = cmsSources.bindTable(useMmProTable<AcademyRow>({
     initialAutoRefreshSeconds: 0,
     initialPageSize: 20,
     queryFields,
@@ -245,8 +245,7 @@ const { proTableBindings, reload, currentPage, pageSize, total, filters: cmsSour
         )
         return { rows: result.lists, total: result.count }
     }
-})
-cmsSources.bindFilters(cmsSourceFilters)
+}))
 
 const initial = () => ({
     id: '',

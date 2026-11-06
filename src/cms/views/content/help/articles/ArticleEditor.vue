@@ -77,8 +77,9 @@
                             :error="fieldErrors.category_id"
                             required
                             ><MmSelect
-                                v-model="form.category_id"
+                                v-model="selectedCategory"
                                 :options="categoryOptions"
+                                :placeholder="legacyCategory ? '原分类：' + legacyCategory.name + '（请选择二级分类）' : '请选择二级分类'"
                                 clearable
                                 :disabled="locked"
                                 aria-label="文章分类"
@@ -446,12 +447,19 @@ async function searchRelated() {
     }
 }
 const categoryOptions = computed(() =>
-    (metadata.value?.categories || []).map((c) => ({
+    (metadata.value?.categories || []).filter((c) => c.parent_id != null).map((c) => ({
         label: helpCategoryLabel(metadata.value, c.id) + (c.effective_enabled ? '' : ' (已停用)'),
         value: c.id,
         disabled: !c.effective_enabled
     }))
 )
+const legacyCategory = computed(() =>
+    metadata.value?.categories.find(c => c.id === form.category_id && c.parent_id == null)
+)
+const selectedCategory = computed({
+    get: () => legacyCategory.value ? '' : form.category_id,
+    set: (id: string) => { form.category_id = id }
+})
 let original = '',
     controller: AbortController | undefined
 function localDate(value: string | null) {

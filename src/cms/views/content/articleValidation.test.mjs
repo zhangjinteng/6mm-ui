@@ -3,8 +3,9 @@ import test from 'node:test'
 import { validateArticle, articleFieldErrors } from './articleValidation.ts'
 
 const categories = [
-    { id: '1', effective_enabled: true },
-    { id: '2', effective_enabled: false }
+    { id: 'root', parent_id: null, effective_enabled: true },
+    { id: '1', parent_id: 'root', effective_enabled: true },
+    { id: '2', parent_id: 'root', effective_enabled: false }
 ]
 const form = (extra = {}) => ({
     title: '标题',
@@ -32,6 +33,8 @@ for (const module of ['news', 'help', 'announcement']) {
         assert.deepEqual(validate({ category_id: '', body_html: '' }, 'draft'), {})
         assert.ok(validate({ category_id: '2' }).category_id)
         assert.ok(validate({ category_id: 'missing' }, 'draft').category_id)
+        for (const status of ['draft', 'published', 'scheduled'])
+            assert.equal(Boolean(validate({ category_id: 'root' }, status).category_id), module !== 'announcement')
     })
     test(`${module}: optional field limits and schedule`, () => {
         assert.ok(validate({ sort_order: -1 }).sort_order)

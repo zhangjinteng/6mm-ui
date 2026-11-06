@@ -2,6 +2,7 @@ import { Ref } from 'vue';
 import { ArticleForm, ArticleModule } from './articleValidation';
 export declare function useArticleValidation(form: ArticleForm, categories: () => {
     id: string;
+    parent_id: string | null;
     effective_enabled: boolean;
 }[], module: ArticleModule, seoOpen: Ref<boolean>): {
     editorRoot: Ref<HTMLElement | undefined, HTMLElement | undefined>;

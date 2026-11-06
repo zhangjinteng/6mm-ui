@@ -129,7 +129,7 @@ const { formatDateTime: formatDateTimeInClientTimezone } = useCmsRuntime()
 
 import { createCmsSourceColumns, useCmsSourceFields } from "../../cmsSources"
 import SourceTypeTag from "../../../../components/source-type-tag/index.vue"
-import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import {
     MmProTable,
     MmButton,
@@ -246,7 +246,7 @@ const queryFields = computed<QueryBarField[]>(() => [
         defaultValue: null
     }
 ])
-const { proTableBindings, filters: cmsSourceFilters } = useMmProTable<FeedbackRow>({
+const { proTableBindings } = cmsSources.bindTable(useMmProTable<FeedbackRow>({
     initialAutoRefreshSeconds: 0,
     initialPageSize: 20,
     queryFields,
@@ -267,8 +267,7 @@ const { proTableBindings, filters: cmsSourceFilters } = useMmProTable<FeedbackRo
         )
         return { rows: result.lists, total: result.count }
     }
-})
-cmsSources.bindFilters(cmsSourceFilters)
+}))
 
 const visible = ref(false),
     loading = ref(false),
@@ -277,7 +276,6 @@ const visible = ref(false),
     previews = ref<Record<string, string>>({}),
     attachmentLoading = ref('')
 let detailController: AbortController | undefined
-const controller = new AbortController()
 async function open(id: string) {
     detailController?.abort()
     const current = new AbortController()
@@ -324,15 +322,7 @@ watch(visible, (value) => {
         error.value = ''
     }
 })
-onMounted(async () => {
-    try {
-        metadata.value = await getFeedbackMetadata(controller.signal)
-    } catch {
-        /* Request layer reports errors. */
-    }
-})
 onBeforeUnmount(() => {
-    controller.abort()
     detailController?.abort()
 })
 </script>

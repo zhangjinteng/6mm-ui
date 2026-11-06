@@ -89,12 +89,14 @@ describe.each(modules)('%s shared white-label editor', (module, Editor, idProp) 
     const wrapper = editor(['edit', 'publish'].map(action => `cms_${module}:${action}`), true)
     await flushPromises()
     const setup = (wrapper.vm as any).$.setupState
-    Object.assign(setup.form, { title: 'Ready', body_html: '<p>Ready body</p>', category_id: '7', category_ids: ['7'],
+    const needsChildCategory = module === 'news' || module === 'help'
+    Object.assign(setup.form, { title: 'Ready', body_html: '<p>Ready body</p>', category_id: needsChildCategory ? '8' : '7', category_ids: ['7'],
       difficulty_level: 1, estimated_minutes: 10, scheduled_local: status === 'scheduled' ? '2099-01-01T12:00' : '' })
     await setup.save(status)
     expect(wrapper.post).toHaveBeenCalledWith(expect.objectContaining({
       url: `/cms/${module}/${module === 'academy' ? 'courses' : 'articles'}/edit`,
       params: expect.objectContaining({ id: '1', row_version: '1', publish_status: status,
+        ...(needsChildCategory ? { category_id: '8' } : {}),
         scheduled_at: status === 'scheduled' ? new Date('2099-01-01T12:00').toISOString() : null }),
     }), { isOpenRetry: false })
     expect(wrapper.emitted('saved')).toHaveLength(1)

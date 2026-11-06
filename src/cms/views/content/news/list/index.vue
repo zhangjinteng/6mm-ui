@@ -64,7 +64,7 @@ const { formatDateTime: formatDateTimeInClientTimezone } = useCmsRuntime()
 
 import { createCmsSourceColumns, useCmsSourceFields } from "../../cmsSources"
 import SourceTypeTag from "../../../../components/source-type-tag/index.vue"
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import {
     MmProTable,
     MmButton,
@@ -162,7 +162,7 @@ const queryFields = computed<QueryBarField[]>(() => [
     },
     { key: 'publish_range', label: '发布时间', type: 'date-range', width: 240, defaultValue: null }
 ])
-const { proTableBindings, reload, filters: cmsSourceFilters } = useMmProTable<NewsArticle>({
+const { proTableBindings, reload } = cmsSources.bindTable(useMmProTable<NewsArticle>({
     initialAutoRefreshSeconds: 0,
     initialPageSize: 20,
     queryFields,
@@ -184,17 +184,8 @@ const { proTableBindings, reload, filters: cmsSourceFilters } = useMmProTable<Ne
         )
         return { rows: result.lists, total: result.count }
     }
-})
-cmsSources.bindFilters(cmsSourceFilters)
-
-const controller = new AbortController()
-async function loadMetadata() {
-    try {
-        metadata.value = await getNewsMetadata(controller.signal)
-    } catch {
-        /* Request layer reports the error. */
-    }
-}
+}))
+const loadMetadata = cmsSources.loadMetadata
 function open(id?: string) {
     selectedId.value = id
     editing.value = true
@@ -204,8 +195,6 @@ function saved() {
     void reload()
     void loadMetadata()
 }
-onMounted(loadMetadata)
-onBeforeUnmount(() => controller.abort())
 </script>
 <style scoped>
 .news-articles {

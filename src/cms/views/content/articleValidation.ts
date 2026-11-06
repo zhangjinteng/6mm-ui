@@ -36,6 +36,7 @@ export const articleFields: ArticleField[] = [
 ]
 interface Category {
     id: string
+    parent_id: string | null
     effective_enabled: boolean
 }
 
@@ -83,6 +84,8 @@ export function validateArticle(
     }
     const category = categories.find((c) => c.id === form.category_id)
     if (form.category_id && !category) errors.category_id = '所选分类已不可用，请重新选择'
+    if (module !== 'announcement' && category && category.parent_id == null)
+        errors.category_id = `${label}只能选择二级分类`
     if (status !== 'draft') {
         if (!form.category_id) errors.category_id = `请选择${label}分类`
         else if (category && !category.effective_enabled)
@@ -112,6 +115,7 @@ export function articleFieldErrors(error: unknown, module: ArticleModule) {
     const legacy: Record<string, ArticleField> = {
         [`${label}标题不能为空`]: 'title',
         [`发布${label}必须选择分类`]: 'category_id',
+        [`${label}只能选择二级分类`]: 'category_id',
         [`发布${label}的分类及父分类必须已启用`]: 'category_id',
         [`发布${label}需要填写正文`]: 'body_html',
         '封面地址必须为 HTTP(S) 或站内绝对路径': 'cover_url',

@@ -169,7 +169,7 @@ import CategoryTreeName from '../../components/CategoryTreeName.vue'
 import { loadCategoryPages, useCategoryTree } from '../../categoryTree'
 import { createCmsSourceColumns, useCmsSourceFields } from "../../cmsSources"
 import SourceTypeTag from "../../../../components/source-type-tag/index.vue"
-import { computed, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
+import { computed, onBeforeUnmount, reactive, ref } from 'vue'
 import {
     MmProTable,
     MmButton,
@@ -265,7 +265,7 @@ const queryFields = computed<QueryBarField[]>(() => [
         ]
     }
 ])
-const { proTableBindings, rows, reload, filters: cmsSourceFilters } = useMmProTable<HelpRow>({
+const { proTableBindings, rows, reload } = cmsSources.bindTable(useMmProTable<HelpRow>({
     initialAutoRefreshSeconds: 0,
     initialPageSize: 20,
     queryFields,
@@ -283,9 +283,8 @@ const { proTableBindings, rows, reload, filters: cmsSourceFilters } = useMmProTa
         }
         return result
     }
-})
+}))
 const { visibleRows, expanded, groups, allExpanded, toggle, toggleAll } = useCategoryTree(rows)
-cmsSources.bindFilters(cmsSourceFilters)
 
 const initial = () => ({
     id: '',
@@ -421,18 +420,9 @@ const parentOptions = computed(() => [
             value: c.id
         }))
 ])
-const metadataController = new AbortController()
-async function loadMetadata() {
-    try {
-        metadata.value = await getHelpMetadata(metadataController.signal)
-    } catch {
-        /* request reports error */
-    }
-}
-onMounted(loadMetadata)
+const loadMetadata = cmsSources.loadMetadata
 onBeforeUnmount(() => {
     controller?.abort()
-    metadataController.abort()
 })
 </script>
 <style scoped>

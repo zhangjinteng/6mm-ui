@@ -11,7 +11,7 @@ import {
 
 export function useArticleValidation(
     form: ArticleForm,
-    categories: () => { id: string; effective_enabled: boolean }[],
+    categories: () => { id: string; parent_id: string | null; effective_enabled: boolean }[],
     module: ArticleModule,
     seoOpen: Ref<boolean>
 ) {

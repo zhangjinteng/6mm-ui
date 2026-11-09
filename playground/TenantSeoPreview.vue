@@ -7,7 +7,7 @@ async function load(_signal?: AbortSignal, siteId = '910001'): Promise<TenantSeo
     primary_domain: 'trade.example.com', indexing_enabled: false, effective_indexing_enabled: false, blocking_reason: null,
     configured_locales: 1, total_locales: 20, updated_at: '2026-11-04T01:00:00Z', default_locale: 'zh-CN',
     translations: { 'zh-CN': { title: 'AlphaEx 首页', description: '安全、可靠的数字资产交易服务。' } },
-    google_verification_token: null, verification_domain: null, verification_domain_matches: false, version: 1,
+    og_image_url: null, google_verification_token: null, verification_domain: null, verification_domain_matches: false, version: 1,
     locales: [{ value: 'zh-CN', label: '简体中文 · zh-CN' }, { value: 'en', label: 'English · en' }],
     sites, can_edit: !new URLSearchParams(location.search).has('readonly') }
   return structuredClone(row)

@@ -14,6 +14,7 @@ export interface TenantSeoDraft {
     indexing_enabled: boolean;
     default_locale: string;
     translations: Record<string, SeoCopy>;
+    og_image_url: string | null;
     google_verification_token: string | null;
     verification_domain: string | null;
 }

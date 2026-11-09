@@ -36,6 +36,14 @@ let controller: AbortController | undefined
 let translationController: AbortController | undefined
 let generation = 0
 const dirty = computed(() => draft.value !== null && JSON.stringify(draft.value) !== baseline.value)
+const imageUrl = computed({
+    get: () => draft.value?.og_image_url ?? '',
+    set: (value: string) => { if (draft.value) draft.value.og_image_url = value.trim() || null }
+})
+const validImageUrl = computed(() => {
+    if (!/^https:\/\/[^/@?#\s]+(?:[/?#][^\s]*)?$/i.test(imageUrl.value)) return false
+    try { return !!new URL(imageUrl.value).hostname } catch { return false }
+})
 const updatedLabel = computed(() => {
     const value = detail.value?.updated_at
     if (!value) return '—'
@@ -152,6 +160,7 @@ async function loadDetail() {
             default_locale: result.default_locale,
             translations: JSON.parse(JSON.stringify(result.translations)),
             google_verification_token: result.google_verification_token,
+            og_image_url: result.og_image_url ?? null,
             verification_domain: result.verification_domain
         }
         baseline.value = JSON.stringify(draft.value)
@@ -231,6 +240,10 @@ function disposeEditor() {
 async function save() {
     if (!canSave.value || !draft.value || !detail.value || saving.value || !dirty.value) return
     const copy = draft.value.translations[draft.value.default_locale]
+    if (imageUrl.value && !validImageUrl.value) {
+        message.error('请填写有效的 HTTPS 图片链接')
+        return
+    }
     if (draft.value.indexing_enabled && (!copy?.title.trim() || !copy?.description.trim())) {
         message.error('允许收录前，请填写默认语言的首页标题和描述')
         return
@@ -262,6 +275,7 @@ async function save() {
         if (result.detail) {
             detail.value = result.detail
             draft.value = { indexing_enabled: result.detail.indexing_enabled, default_locale: result.detail.default_locale,
+                og_image_url: result.detail.og_image_url ?? null,
                 translations: JSON.parse(JSON.stringify(result.detail.translations)), google_verification_token: result.detail.google_verification_token,
                 verification_domain: result.detail.verification_domain }
         }
@@ -389,6 +403,15 @@ onBeforeUnmount(() => {
                             ></textarea>
                             <small class="seo-field-help">建议 80–160 个字符</small>
                         </label>
+                    </section>
+                    <section class="seo-section seo-copy-card">
+                        <label class="seo-field">分享预览图（选填）
+                            <mm-input v-model="imageUrl" aria-label="分享预览图" :maxlength="2048"
+                                :disabled="!canSave || saving" placeholder="https://example.com/share.png" clearable />
+                            <small class="seo-field-help">分享站点链接时使用的预览图。填写可公开访问的 HTTPS 图片链接，留空则不指定。</small>
+                        </label>
+                        <img v-if="validImageUrl" class="seo-share-preview" :src="imageUrl"
+                            alt="站点分享预览图" referrerpolicy="no-referrer" loading="lazy" />
                     </section>
                     <section class="seo-section seo-verification">
                         <button
@@ -560,6 +583,14 @@ onBeforeUnmount(() => {
 }
 .seo-section.seo-copy-card {
     padding-bottom: 14px;
+}
+.seo-share-preview {
+    display: block;
+    max-width: 100%;
+    max-height: 120px;
+    margin-top: 8px;
+    border-radius: 6px;
+    object-fit: contain;
 }
 .seo-heading-copy {
     display: grid;

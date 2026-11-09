@@ -15,13 +15,13 @@ async function save(input: TenantFeatureSaveInput) {
   values.set(input.site_id, { enabled: input.features.trade_ranking, version: new Date().toISOString() })
   return { changed: true, detail: await load(undefined, input.site_id) }
 }
-let customer: TenantCustomerServiceDetail = { site_id: '910001', entitlement_version: '3', enabled: false,
+let customer: TenantCustomerServiceDetail = { site_id: '910001', config_version: '8', entitlement_version: '3', enabled: false,
   binding_status: 'unconfigured', operation: null, service_ready: true, updated_at: null, can_edit: !params.has('readonly') }
 const customerService: TenantCustomerServiceTransport = {
   load: async () => ({ ...customer }),
   toggle: async input => {
     // Disposable in-memory preview: never call a real customer-service API.
-    customer = { ...customer, enabled: input.enabled, binding_status: 'bound', entitlement_version: String(Number(customer.entitlement_version) + 1) }
+    customer = { ...customer, enabled: input.enabled, binding_status: 'bound', config_version: String(Number(customer.config_version) + 1), entitlement_version: String(Number(customer.entitlement_version) + 1) }
     return { changed: true, detail: { ...customer } }
   },
 }

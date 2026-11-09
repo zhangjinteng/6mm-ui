@@ -10,6 +10,7 @@ export interface BrandDomainSite {
     site_id: string;
     site_name: string;
     domains: BrandDomain[];
+    config_version: string;
     revision: string;
     updated_at?: string | null;
 }
@@ -22,10 +23,12 @@ export interface TenantBrandDetail {
 export interface TenantBrandSaveInput {
     site_id: string;
     expected_revision: string;
+    expected_config_version: string;
     domains: BrandDomain[];
 }
 export interface TenantBrandSaveResult {
     changed: boolean;
+    config_version?: string;
     snapshot_version?: string;
     revision?: string;
     updated_at?: string;

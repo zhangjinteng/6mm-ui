@@ -66,7 +66,7 @@ async function toggle(retry = false): Promise<void> {
   if (!detail.value || busy.value || props.disabled || !editable.value || failedRead.value || uncertain.value || !detail.value.service_ready
     || (retry ? !retryable.value : disabled.value)) return
   const enabled = retry ? detail.value.operation!.enabled : !detail.value.enabled
-  const input = { site_id: detail.value.site_id, expected_entitlement_version: detail.value.entitlement_version,
+  const input = { site_id: detail.value.site_id, expected_config_version: detail.value.config_version, expected_entitlement_version: detail.value.entitlement_version,
     enabled, client_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC' }
   writing.value = true; error.value = ''
   try { const result = await props.transport.toggle(input); if (!disposed) accept(result.detail) }

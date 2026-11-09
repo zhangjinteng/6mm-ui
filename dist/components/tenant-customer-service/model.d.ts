@@ -8,6 +8,7 @@ export interface TenantCustomerOperation {
 }
 export interface TenantCustomerServiceDetail {
     site_id: string;
+    config_version: string;
     entitlement_version: string;
     enabled: boolean;
     binding_status: string;
@@ -18,6 +19,7 @@ export interface TenantCustomerServiceDetail {
 }
 export interface TenantCustomerServiceToggleInput {
     site_id: string;
+    expected_config_version: string;
     expected_entitlement_version: string;
     enabled: boolean;
     client_timezone: string;

@@ -114,9 +114,10 @@ async function submit(): Promise<void> {
   const site = selectedSite.value
   const domains = normalizeBrandDomains(draft.value)
   try {
-    const result = await props.save({ site_id: site.site_id, expected_revision: site.revision, domains })
+    const result = await props.save({ site_id: site.site_id, expected_revision: site.revision, expected_config_version: site.config_version, domains })
     if (disposed) return
     // The server returns the exact revision for the normalized domain set; keep other sites untouched.
+    if (result.config_version) site.config_version = result.config_version
     site.domains = domains
     if (result.revision) site.revision = result.revision
     if (result.changed) site.updated_at = result.updated_at ?? new Date().toISOString()

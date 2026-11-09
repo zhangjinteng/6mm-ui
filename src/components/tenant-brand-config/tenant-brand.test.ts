@@ -6,8 +6,8 @@ import TenantBrandSettings from './TenantBrandSettings.vue'
 import { brandDomainError, brandDomainsEqual, normalizeBrandDomains, type TenantBrandDetail } from './model'
 
 const fixture = (): TenantBrandDetail => ({ tenant_id: '101', tenant_name: 'Alpha', can_edit: true, sites: [
-  { site_id: '10', site_name: 'Main', domains: [{ domain: 'one.example', is_primary: true }], revision: 'a'.repeat(64) },
-  { site_id: '11', site_name: 'Other site', domains: [], revision: 'b'.repeat(64) },
+  { site_id: '10', config_version: '8', site_name: 'Main', domains: [{ domain: 'one.example', is_primary: true }], revision: 'a'.repeat(64) },
+  { site_id: '11', config_version: '8', site_name: 'Other site', domains: [], revision: 'b'.repeat(64) },
 ] })
 const button = (wrapper: ReturnType<typeof mount>, text: string) => wrapper.findAll('button').find(item => item.text().trim() === text)!
 const options = { global: { stubs: { teleport: true } } }
@@ -16,7 +16,7 @@ describe('brand domain model', () => {
   it('normalizes canonical names and validates primary uniqueness, duplicate names and syntax', () => {
     expect(normalizeBrandDomains([{ domain: ' ONE.Example. ', is_primary: true }])).toEqual([{ domain: 'one.example', is_primary: true }])
     expect(brandDomainsEqual([{ domain: 'one.example', is_primary: true }], [{ domain: 'ONE.example.', is_primary: true }])).toBe(true)
-    expect(brandDomainError([])).toBe('')
+    expect(brandDomainError([])).not.toBe('')
     expect(brandDomainError([{ domain: 'one.example', is_primary: false }])).toContain('主域名')
     expect(brandDomainError([{ domain: 'one.example', is_primary: true }, { domain: 'ONE.example', is_primary: false }])).toContain('重复')
     for (const name of ['http://a.test', '*.test', 'a.test:443', 'a.test/path', '127.0.0.1', 'localhost', 'a..test']) {
@@ -40,7 +40,7 @@ describe('shared tenant brand settings', () => {
     await button(wrapper, '保存配置').trigger('click')
     expect(save).not.toHaveBeenCalled()
     await button(wrapper, '确认保存').trigger('click'); await flushPromises()
-    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_revision: 'a'.repeat(64), domains: [
+    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_config_version: '8', expected_revision: 'a'.repeat(64), domains: [
       { domain: 'one.example', is_primary: true }, { domain: 'backup.example', is_primary: false },
     ] })
     expect(wrapper.emitted('saved')).toHaveLength(1)
@@ -62,7 +62,7 @@ describe('shared tenant brand settings', () => {
     expect(save).not.toHaveBeenCalled()
     expect(wrapper.get('.mm-tenant-brand-settings__removed').text()).toContain('one.example')
     await button(wrapper, '确认保存').trigger('click'); await flushPromises()
-    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_revision: 'a'.repeat(64), domains: [{ domain: 'renamed.example', is_primary: true }] })
+    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_config_version: '8', expected_revision: 'a'.repeat(64), domains: [{ domain: 'renamed.example', is_primary: true }] })
     expect((wrapper.get('input[aria-label="访问域名 1"]').element as HTMLInputElement).value).toBe('renamed.example')
     expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
     wrapper.unmount()

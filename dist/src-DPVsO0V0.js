@@ -181,6 +181,7 @@ var We = [
 			if (!l.value || y.value || a.disabled || !E.value || f.value || p.value || !l.value.service_ready || (e ? !k.value : A.value)) return;
 			let t = e ? l.value.operation.enabled : !l.value.enabled, n = {
 				site_id: l.value.site_id,
+				expected_config_version: l.value.config_version,
 				expected_entitlement_version: l.value.entitlement_version,
 				enabled: t,
 				client_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC"
@@ -263,7 +264,7 @@ var We = [
 			x.value && !k.value ? (V(), w("span", tt, J(c.value.cooldown), 1)) : C("", !0)
 		], 2)) : C("", !0)], 8, Je));
 	}
-}), [["__scopeId", "data-v-30e5231d"]]);
+}), [["__scopeId", "data-v-ed70fbb9"]]);
 //#endregion
 //#region src/shared/date.ts
 function rt(e) {
@@ -4252,10 +4253,10 @@ function Ra(e, t) {
 }
 function za(e, t = !1) {
 	if (e.length > 20) return t ? "Up to 20 domains are supported." : "访问域名最多 20 个";
-	if (!e.length) return "";
+	if (!e.length) return t ? "At least one domain is required." : "请保留至少一个站点域名";
 	if (e.filter((e) => e.is_primary).length !== 1) return t ? "Select exactly one primary domain." : "请指定一个主域名";
 	let n = La(e).map((e) => e.domain);
-	return new Set(n).size === n.length ? n.some((e) => !/^(?=.{1,253}$)(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(e)) ? t ? "Enter a full domain without a protocol, port, path or wildcard. Use Punycode for internationalized domains." : "请输入完整域名，不包含协议、端口、路径或通配符；国际化域名请使用 Punycode" : "" : t ? "Domains must be unique." : "域名不能重复";
+	return new Set(n).size === n.length ? n.some((e) => !/^(?=.{1,253}$)(?:\*\.)?(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(e)) ? t ? "Enter a full domain without a protocol, port, or path. Use Punycode for internationalized domains." : "请输入完整域名，不包含协议、端口或路径；国际化域名请使用 Punycode" : "" : t ? "Domains must be unique." : "域名不能重复";
 }
 //#endregion
 //#region src/components/tenant-brand-config/TenantBrandSettings.vue?vue&type=script&setup=true&lang.ts
@@ -4467,10 +4468,11 @@ var Ba = ["aria-busy"], Va = {
 				let n = await a.save({
 					site_id: e.site_id,
 					expected_revision: e.revision,
+					expected_config_version: e.config_version,
 					domains: t
 				});
 				if (N) return;
-				e.domains = t, n.revision && (e.revision = n.revision), n.changed && (e.updated_at = n.updated_at ?? (/* @__PURE__ */ new Date()).toISOString()), q(e), E.value = !1, o("saved");
+				n.config_version && (e.config_version = n.config_version), e.domains = t, n.revision && (e.revision = n.revision), n.changed && (e.updated_at = n.updated_at ?? (/* @__PURE__ */ new Date()).toISOString()), q(e), E.value = !1, o("saved");
 			} catch (e) {
 				if (!N) {
 					let t = e?.response?.data?.msg;
@@ -32118,4 +32120,4 @@ var qS = class {
 //#endregion
 export { Bg as $, Fu as $n, Xi as $r, np as $t, ey as A, lt as Ai, tf as An, Jo as Ar, uh as At, W_ as B, ft as Bi, fd as Bn, ho as Br, Im as Bt, nb as C, qt as Ci, Df as Cn, xs as Cr, dh as Ct, gy as D, Mt as Di, df as Dn, Qo as Dr, xh as Dt, Wy as E, Rt as Ei, uf as En, ss as Er, yh as Et, uv as F, pt as Fi, jd as Fn, Bo as Fr, Qm as Ft, O_ as G, ld as Gn, lo as Gr, Xp as Gt, U_ as H, Q as Hi, gd as Hn, fo as Hr, Cm as Ht, Y_ as I, ot as Ii, Ad as In, Vo as Ir, Ym as It, A_ as J, $u as Jn, La as Jr, mp as Jt, k_ as K, cd as Kn, za as Kr, Ip as Kt, J_ as L, it as Li, kd as Ln, Fo as Lr, Wm as Lt, Vv as M, gt as Mi, qd as Mn, qo as Mr, ch as Mt, wv as N, dt as Ni, Vd as Nn, Go as Nr, Xm as Nt, uy as O, At as Oi, ff as On, Zo as Or, Sh as Ot, vv as P, at as Pi, Md as Pn, Lo as Pr, Zm as Pt, Rg as Q, Lu as Qn, Zi as Qr, tp as Qt, K_ as R, st as Ri, Ed as Rn, Co as Rr, Um as Rt, rb as S, Yt as Si, Of as Sn, Ss as Sr, mh as St, Zy as T, Ht as Ti, bf as Tn, fs as Tr, bh as Tt, V_ as U, hd as Un, po as Ur, gm as Ut, H_ as V, nt as Vi, pd as Vn, go as Vr, Pm as Vt, L_ as W, _d as Wn, uo as Wr, sm as Wt, Wg as X, Yu as Xn, Pa as Xr, fp as Xt, S_ as Y, Zu as Yn, Ia as Yr, pp as Yt, Ng as Z, Wu as Zn, ka as Zr, dp as Zt, vb as _, jn as _i, Pf as _n, Ic as _r, Fh as _t, Qb as a, Er as ai, ap as an, $l as ar, Cg as at, tb as b, un as bi, Nf as bn, oc as br, ph as bt, Gb as c, Vn as ci, Zf as cn, ol as cr, Tg as ct, Lb as d, Hn as di, Jf as dn, tl as dr, rg as dt, Yi as ei, rp as en, Pu as er, zg as et, Nb as f, Un as fi, qf as fn, Xc as fr, eg as ft, Sb as g, Fn as gi, zf as gn, Hc as gr, zh as gt, bb as h, $ as hi, Bf as hn, Gc as hr, Nh as ht, nx as i, Lr as ii, ep as in, ru as ir, Mg as it, Uv as j, ut as ji, Xd as jn, Ko as jr, lh as jt, ry as k, kt as ki, lf as kn, Yo as kr, Ch as kt, Wb as l, Wn as li, Xf as ln, $c as lr, bg as lt, xb as m, Kn as mi, Uf as mn, qc as mr, Ih as mt, eC as n, Zr as ni, sp as nn, mu as nr, Pg as nt, Kb as o, Sr as oi, $f as on, Zl as or, wg as ot, Mb as p, Gn as pi, Kf as pn, Yc as pr, Rh as pt, D_ as q, id as qn, Ra as qr, Sp as qt, hS as r, Ur as ri, op as rn, cu as rr, Ig as rt, Zb as s, zn as si, Qf as sn, Kl as sr, Eg as st, iC as t, ti, ip as tn, gu as tr, Fg as tt, Rb as u, Bn as ui, Yf as un, el as ur, gg as ut, mb as v, On as vi, Ff as vn, yc as vr, Ph as vt, Qy as w, Wt as wi, xf as wn, _s as wr, vh as wt, eb as x, Qt as xi, Af as xn, Os as xr, fh as xt, $y as y, pn as yi, If as yn, gc as yr, jh as yt, G_ as z, ht as zi, Td as zn, mo as zr, Rm as zt };
 
-//# sourceMappingURL=src-BnyqQm4T.js.map
+//# sourceMappingURL=src-DPVsO0V0.js.map

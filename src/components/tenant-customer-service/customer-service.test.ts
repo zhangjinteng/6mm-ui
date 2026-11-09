@@ -6,7 +6,7 @@ import Features from '../tenant-feature-settings/TenantFeatureSettings.vue'
 import type { TenantCustomerServiceDetail, TenantCustomerServiceToggleInput } from './model'
 
 const state = (extra: Partial<TenantCustomerServiceDetail> = {}): TenantCustomerServiceDetail => ({
-  site_id: '10', entitlement_version: '3', enabled: false, binding_status: 'unconfigured', operation: null,
+  site_id: '10', config_version: '8', entitlement_version: '3', enabled: false, binding_status: 'unconfigured', operation: null,
   service_ready: true, updated_at: null, can_edit: true, ...extra,
 })
 const pending = (extra = {}) => state({ operation: { status: 'pending', enabled: true, message: '结果待核验',
@@ -24,7 +24,7 @@ describe('shared 6MM customer service', () => {
     expect(toggle).not.toHaveBeenCalled()
     await wrapper.get('[role="switch"]').trigger('click'); await flushPromises()
     expect(toggle).toHaveBeenCalledOnce()
-    expect(toggle.mock.calls[0]![0]).toEqual({ site_id: '10', expected_entitlement_version: '3', enabled: true,
+    expect(toggle.mock.calls[0]![0]).toEqual({ site_id: '10', expected_config_version: '8', expected_entitlement_version: '3', enabled: true,
       client_timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC' })
     expect(wrapper.get('[role="switch"]').attributes('aria-checked')).toBe('true')
     expect(wrapper.text()).not.toContain('保存配置'); wrapper.unmount()

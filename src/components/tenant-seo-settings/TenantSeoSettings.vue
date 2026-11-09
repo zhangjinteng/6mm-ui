@@ -11,6 +11,7 @@ import { MmLoading } from '../loading'
 import { MmSegmented } from '../segmented'
 import { MmSelect } from '../select'
 import type { TenantSeoSettingsProps, TenantSeoDetail, TenantSeoDraft, SeoTranslationContext } from './model'
+import ContentCoverUpload from '../../cms/views/content/components/ContentCoverUpload.vue'
 import TenantSeoTranslations from './TenantSeoTranslations.vue'
 defineOptions({ name: 'MmTenantSeoSettings' })
 const props = withDefaults(defineProps<TenantSeoSettingsProps>(), { canEdit: true, fullPage: true })
@@ -18,7 +19,8 @@ const emit = defineEmits<{ saved: []; close: [] }>()
 const canSave = computed(() => props.canEdit && detail.value?.can_edit !== false)
 const visible = ref(true),
     loading = ref(false),
-    saving = ref(false),
+    savingConfig = ref(false), uploadingImage = ref(false),
+    saving = computed(() => savingConfig.value || uploadingImage.value),
     loadFailed = ref(false),
     saveFailed = ref(false)
 const showLanguages = ref(false),
@@ -241,7 +243,7 @@ async function save() {
     if (!canSave.value || !draft.value || !detail.value || saving.value || !dirty.value) return
     const copy = draft.value.translations[draft.value.default_locale]
     if (imageUrl.value && !validImageUrl.value) {
-        message.error('请填写有效的 HTTPS 图片链接')
+        message.error('图片地址无效，请重新上传')
         return
     }
     if (draft.value.indexing_enabled && (!copy?.title.trim() || !copy?.description.trim())) {
@@ -261,7 +263,7 @@ async function save() {
     }
     const localePreferenceKey = editingLocaleKey(detail.value)
     const savedEditingLocale = locale.value
-    saving.value = true
+    savingConfig.value = true
     saveFailed.value = false
     const current = generation
     try {
@@ -286,10 +288,10 @@ async function save() {
     } catch {
         if (current === generation) saveFailed.value = true
     } finally {
-        saving.value = false
+        savingConfig.value = false
     }
 }
-function beforeUnload(event: BeforeUnloadEvent) { if (dirty.value) { event.preventDefault(); event.returnValue = '' } }
+function beforeUnload(event: BeforeUnloadEvent) { if (dirty.value || uploadingImage.value) { event.preventDefault(); event.returnValue = '' } }
 onMounted(() => { window.addEventListener('beforeunload', beforeUnload); void loadDetail() })
 defineExpose({ hasUnsavedChanges: dirty, isSaving: saving, isBusy: computed(() => loading.value || saving.value), requestClose })
 onBeforeUnmount(() => {
@@ -405,13 +407,14 @@ onBeforeUnmount(() => {
                         </label>
                     </section>
                     <section class="seo-section seo-copy-card">
-                        <label class="seo-field">分享预览图（选填）
-                            <mm-input v-model="imageUrl" aria-label="分享预览图" :maxlength="2048"
-                                :disabled="!canSave || saving" placeholder="https://example.com/share.png" clearable />
-                            <small class="seo-field-help">分享站点链接时使用的预览图。填写可公开访问的 HTTPS 图片链接，留空则不指定。</small>
-                        </label>
-                        <img v-if="validImageUrl" class="seo-share-preview" :src="imageUrl"
-                            alt="站点分享预览图" referrerpolicy="no-referrer" loading="lazy" />
+                        <div class="seo-copy-heading"><h3>分享预览图（选填）</h3>
+                            <p>分享站点链接时使用。上传、替换或移除后，保存配置即可生效。</p>
+                        </div>
+                        <ContentCoverUpload class="seo-share-upload" :key="detail.site_id" v-model="imageUrl"
+                            label="站点分享预览图" :disabled="!canSave || savingConfig"
+                            :upload="(file, signal) => upload(detail!.site_id, file, signal)"
+                            @busy-change="uploadingImage = $event"
+                            @error="message.error($event instanceof Error ? $event.message : '图片上传失败，请重试')" />
                     </section>
                     <section class="seo-section seo-verification">
                         <button
@@ -510,7 +513,7 @@ onBeforeUnmount(() => {
                     v-if="canSave"
                     class="seo-footer-button"
                     variant="primary"
-                    :loading="saving"
+                    :loading="savingConfig"
                     :disabled="loading || !draft || !dirty || saving"
                     @click="save"
                     >保存配置</mm-button
@@ -584,14 +587,7 @@ onBeforeUnmount(() => {
 .seo-section.seo-copy-card {
     padding-bottom: 14px;
 }
-.seo-share-preview {
-    display: block;
-    max-width: 100%;
-    max-height: 120px;
-    margin-top: 8px;
-    border-radius: 6px;
-    object-fit: contain;
-}
+.seo-share-upload { max-width: 320px; }
 .seo-heading-copy {
     display: grid;
     gap: 3px;

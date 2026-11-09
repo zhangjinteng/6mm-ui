@@ -64,13 +64,13 @@ declare const __VLS_base: import('vue').DefineComponent<UploadProps, {
     readonly: boolean;
     drag: boolean;
     multiple: boolean;
-    request: import('./types').UploadRequest;
-    limit: number;
     accept: string;
     autoUpload: boolean;
     beforeUpload: (file: File) => boolean | void | Promise<boolean | void>;
     directory: boolean;
+    limit: number;
     maxSize: number;
+    request: import('./types').UploadRequest;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

@@ -18,6 +18,7 @@
                     v-if="modelValue"
                     :src="modelValue"
                     :alt="label"
+                    referrerpolicy="no-referrer"
                     draggable="false"
                     @error="coverFailed = true"
                     @load="coverFailed = false"
@@ -46,7 +47,8 @@
 
 <script setup lang="ts">
 import { nextTick, ref, shallowRef, watch } from 'vue'
-import { MmIcon, MmUpload, type UploadRequestOptions } from "../../../../index"
+import { MmIcon } from '../../../../components/icon'
+import { MmUpload, type UploadRequestOptions } from '../../../../components/upload'
 import CoverFileItem from './CoverFileItem.vue'
 import type { MediaUploadResult } from '../../../../services/media-upload'
 

@@ -2,7 +2,7 @@ import { TenantSeoSettingsProps } from './model';
 declare function requestClose(): void;
 declare const __VLS_export: import('vue').DefineComponent<TenantSeoSettingsProps, {
     hasUnsavedChanges: import('vue').ComputedRef<boolean>;
-    isSaving: import('vue').Ref<boolean, boolean>;
+    isSaving: import('vue').ComputedRef<boolean>;
     isBusy: import('vue').ComputedRef<boolean>;
     requestClose: typeof requestClose;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {

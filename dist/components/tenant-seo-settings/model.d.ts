@@ -70,6 +70,9 @@ export interface SeoTranslationCallbacks {
     testConnection?: (spaceId: string, revision: string, apiKey: string) => Promise<unknown>;
 }
 export interface TenantSeoSettingsProps {
+    upload: (siteId: string, file: File, signal: AbortSignal) => Promise<{
+        url: string;
+    }>;
     load: (signal: AbortSignal, siteId?: string) => Promise<TenantSeoDetail>;
     save: (input: TenantSeoSaveInput) => Promise<TenantSeoSaveResult>;
     translation: SeoTranslationCallbacks;

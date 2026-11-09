@@ -5,7 +5,7 @@
                 <img
                     v-if="!previewFailed"
                     :src="url"
-                    alt="封面缩略图"
+                    alt="图片缩略图" referrerpolicy="no-referrer"
                     @error="previewFailed = true"
                 />
                 <MmIcon v-else name="image" :size="20" />
@@ -38,7 +38,7 @@
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
-import { MmIcon } from "../../../../index"
+import { MmIcon } from '../../../../components/icon'
 
 const props = defineProps<{ url: string; file?: File; disabled?: boolean }>()
 const emit = defineEmits<{ remove: [] }>()

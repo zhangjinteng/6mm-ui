@@ -19,5 +19,5 @@ async function save(input: TenantSeoSaveInput) {
 }
 const translation = { loadContext: async () => ({ available: false, reason: '尚未启用翻译，可手动编辑。', settings: null }), translate: async () => ({ target_locale: 'en', values: {}, errors: {} }) }
 </script>
-<template><main class="seo-preview"><MmTenantSeoSettings :load="load" :save="save" :translation="translation" /></main></template>
+<template><main class="seo-preview"><MmTenantSeoSettings :load="load" :save="save" :upload="async () => { throw new Error('演示页未连接图床') }" :translation="translation" /></main></template>
 <style>body { margin: 0; background: #f6f7f9; } .seo-preview { padding: 12px; --navbar-height: 0px; --mm-color-primary: #008675; }</style>

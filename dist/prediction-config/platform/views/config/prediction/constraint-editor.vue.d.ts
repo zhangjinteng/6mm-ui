@@ -21,8 +21,8 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_PublicProps, {},
     disabled: boolean;
     compact: boolean;
     field: "default_value" | "maximum_value";
-    unit: string;
     percentage: boolean;
+    unit: string;
     agentLocked: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const _default: typeof __VLS_export;

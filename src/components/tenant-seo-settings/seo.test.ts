@@ -16,24 +16,37 @@ const button = (w: ReturnType<typeof mount>, text: string) => w.findAll('button'
 function setup(extra: Partial<TenantSeoSettingsProps> = {}) {
   const save = vi.fn(async input => ({ changed: true, version: 1, detail: { ...detail(), ...input, version: 1 } }))
   const load = vi.fn(async (_signal, siteId) => detail(siteId))
-  const w = mount(Seo, { props: { load, save, translation: callbacks, ...extra }, global: { stubs: { teleport: true } } })
+  const w = mount(Seo, { props: { load, save, upload: vi.fn(), translation: callbacks, ...extra }, global: { stubs: { teleport: true } } })
   return { w, save, load }
 }
 describe('shared SEO page behavior', () => {
   it('previews and clears the same site image in both layouts', async () => {
     const url = 'https://cdn.example.test/share.png'
     for (const fullPage of [true, false]) {
-      const { w, save } = setup({ fullPage, load: async () => ({ ...detail(), og_image_url: url }) })
+      const upload = vi.fn(async () => ({ url: 'https://cdn.example.test/new.webp' }))
+      const { w, save } = setup({ fullPage, upload, load: async () => ({ ...detail(), og_image_url: url }) })
       await flushPromises()
-      expect(w.get('.seo-share-preview').attributes('src')).toBe(url)
-      const field = w.get('input[aria-label="分享预览图"]')
-      await field.setValue('javascript:alert(1)')
-      await button(w, '保存配置').trigger('click')
+      const preview = () => w.get('img[alt="站点分享预览图"]').attributes('src')
+      expect(preview()).toBe(url)
+      const field = w.get('input[type="file"]')
+      const choose = async (file: File) => {
+        Object.defineProperty(field.element, 'files', { configurable: true, value: [file] })
+        await field.trigger('change'); await flushPromises()
+      }
+      await choose(new File(['bad'], 'bad.svg', { type: 'image/svg+xml' }))
+      await choose(new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }))
+      expect(upload).not.toHaveBeenCalled()
+      expect(preview()).toBe(url)
+      const file = new File(['image'], 'new.webp', { type: 'image/webp' })
+      await choose(file)
+      expect(upload).toHaveBeenCalledWith('10', file, expect.any(AbortSignal))
+      expect(preview()).toBe('https://cdn.example.test/new.webp')
       expect(save).not.toHaveBeenCalled()
-      expect(w.find('.seo-share-preview').exists()).toBe(false)
-      await field.setValue('')
       await button(w, '保存配置').trigger('click'); await flushPromises()
-      expect(save.mock.calls[0][0].og_image_url).toBeNull()
+      expect(save.mock.calls[0][0].og_image_url).toBe('https://cdn.example.test/new.webp')
+      await w.get('.file-remove').trigger('click')
+      await button(w, '保存配置').trigger('click'); await flushPromises()
+      expect(save.mock.calls[1][0].og_image_url).toBeNull()
       w.unmount()
     }
   })

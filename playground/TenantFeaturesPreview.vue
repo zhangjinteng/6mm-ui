@@ -8,7 +8,7 @@ async function load(_signal?: AbortSignal, siteId = '910001'): Promise<TenantFea
   const site = sites.find(site => site.site_id === siteId)!
   const value = values.get(siteId)
   return { tenant_id: '900001', tenant_name: 'AlphaEx', ...site, sites, can_edit: !params.has('readonly'),
-    features: { trade_ranking: value?.enabled ?? true }, expected_updated_at: value?.version ?? null }
+    features: { trade_ranking: value?.enabled ?? false }, expected_updated_at: value?.version ?? null }
 }
 async function save(input: TenantFeatureSaveInput) {
   // In-memory QA only: no requests to business APIs or real tenant configuration.

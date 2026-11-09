@@ -38,7 +38,7 @@ const copy = computed(() => english.value ? {
   discard: '放弃修改', cancel: '取消', close: '关闭', save: '保存配置', switchTitle: '放弃未保存的开关修改？', switchSite: '切换站点',
 })
 const detail = ref<TenantFeatureSettingsDetail | null>(null)
-const draft = ref<TenantFeatureValues>({ trade_ranking: true })
+const draft = ref<TenantFeatureValues>({ trade_ranking: false })
 const loading = ref(false), saving = ref(false), loadFailed = ref(false), saveError = ref('')
 const switchVisible = ref(false), pendingSiteId = ref('')
 const customerBusy = ref(false), customerState = ref<TenantCustomerServiceDetail | null>(null)

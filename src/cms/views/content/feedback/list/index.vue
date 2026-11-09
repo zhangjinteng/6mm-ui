@@ -305,7 +305,7 @@ async function preview(id: string) {
         const result = await getFeedbackAttachment(feedbackId, id, current.signal)
         if (
             !current.signal.aborted &&
-            /^data:image\/(png|jpeg|webp);base64,[A-Za-z0-9+/=]+$/.test(result.data_url)
+            /^data:image\/(png|jpeg|webp|svg\+xml|x-icon|vnd\.microsoft\.icon);base64,[A-Za-z0-9+/=]+$/.test(result.data_url)
         )
             previews.value[id] = result.data_url
     } catch (e) {

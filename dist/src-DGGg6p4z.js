@@ -3032,7 +3032,7 @@ var Yr = [
 				ref: a,
 				class: "content-cover__upload",
 				drag: "",
-				accept: "image/jpeg,image/png,image/webp",
+				accept: ".jpg,.jpeg,.png,.webp,.svg,.ico,image/jpeg,image/png,image/webp,image/svg+xml,image/x-icon,image/vnd.microsoft.icon",
 				limit: 1,
 				"max-size": 5242880,
 				disabled: e.disabled || s.value,
@@ -3052,7 +3052,7 @@ var Yr = [
 				}, null, 40, gi)) : (B(), w("div", _i, [O(Y(r), {
 					name: "image",
 					size: 28
-				})])), e.modelValue ? C("", !0) : (B(), w("span", vi, [D(q(s.value ? "正在上传…" : "拖动图片到此处，或点击上传") + " ", 1), n[3] ||= T("span", { class: "content-cover__types" }, "JPG / PNG / WebP，最大 5 MB", -1)]))])]),
+				})])), e.modelValue ? C("", !0) : (B(), w("span", vi, [D(q(s.value ? "正在上传…" : "拖动图片到此处，或点击上传") + " ", 1), n[3] ||= T("span", { class: "content-cover__types" }, "JPG / PNG / WebP / SVG / ICO，最大 5 MB", -1)]))])]),
 				_: 1
 			}, 8, ["disabled"]),
 			c.value ? (B(), w("span", yi, " 封面无法加载，请重新上传 ")) : C("", !0),
@@ -3069,7 +3069,7 @@ var Yr = [
 			])) : C("", !0)
 		]));
 	}
-}), [["__scopeId", "data-v-9cc07955"]]), xi = { class: "mm-translation-enabled" }, Si = { class: "mm-translation-enabled__copy" }, Ci = ["id"], wi = ["id"], Ti = { class: "mm-translation-enabled__control" }, Ei = { "aria-hidden": "true" }, Di = [
+}), [["__scopeId", "data-v-a23c7b51"]]), xi = { class: "mm-translation-enabled" }, Si = { class: "mm-translation-enabled__copy" }, Ci = ["id"], wi = ["id"], Ti = { class: "mm-translation-enabled__control" }, Ei = { "aria-hidden": "true" }, Di = [
 	"aria-checked",
 	"aria-labelledby",
 	"aria-describedby",
@@ -5303,7 +5303,7 @@ var xo = ["aria-busy"], So = {
 								"disabled"
 							]))
 						])]),
-						T("p", Zo, "JPG / PNG / WebP，最大 5 MB · " + q(c.value ? "Changes take effect after saving and apply to all domains of this site." : "保存配置后生效，同一站点的所有域名共用。"), 1)
+						T("p", Zo, "JPG / PNG / WebP / SVG / ICO，最大 5 MB · " + q(c.value ? "Changes take effect after saving and apply to all domains of this site." : "保存配置后生效，同一站点的所有域名共用。"), 1)
 					], 512), [[le, j.value === "identity"]])
 				], 64)) : (B(), w("p", No, q(u.value.emptySites), 1))
 			])) : C("", !0)], 8, Oo),
@@ -32496,4 +32496,4 @@ var TC = class {
 //#endregion
 export { O_ as $, ed as $n, bi as $r, Qp as $t, uy as A, At as Ai, Tf as An, ks as Ar, Uh as At, kv as B, gt as Bi, uf as Bn, rs as Br, $m as Bt, cb as C, Xt as Ci, rp as Cn, Ws as Cr, pg as Ct, Fy as D, zt as Di, Uf as Dn, Rs as Dr, tg as Dt, Ky as E, Ut as Ei, Jf as En, Bs as Er, ng as Et, Lv as F, ot as Fi, vf as Fn, os as Fr, Ah as Ft, mv as G, Ud as Gn, ho as Gr, am as Gt, xv as H, rt as Hi, ef as Hn, bo as Hr, Om as Ht, Iv as I, mt as Ii, af as In, ss as Ir, Oh as It, A_ as J, kd as Jn, ka as Jr, qp as Jt, I_ as K, Vd as Kn, po as Kr, im as Kt, Pv as L, st as Li, of as Ln, cs as Lr, Eh as Lt, Vv as M, dt as Mi, Cf as Mn, Ns as Mr, Vh as Mt, Bv as N, _t as Ni, Sf as Nn, Ds as Nr, Ih as Nt, Ny as O, Nt as Oi, Bf as On, zs as Or, eg as Ot, Rv as P, ft as Pi, yf as Pn, hs as Pr, Fh as Pt, E_ as Q, od as Qn, Oi as Qr, $p as Qt, Fv as R, at as Ri, lf as Rn, is as Rr, hh as Rt, Ib as S, $t as Si, np as Sn, $s as Sr, dg as St, Yy as T, Gt as Ti, tp as Tn, Vs as Tr, hg as Tt, yv as U, Q as Ui, Xd as Un, yo as Ur, mm as Ut, bv as V, pt as Vi, tf as Vn, ns as Vr, Hm as Vt, Sv as W, Gd as Wn, vo as Wr, om as Wt, j_ as X, Ed as Xn, Da as Xr, Yp as Xt, M_ as Y, Dd as Yn, Oa as Yr, Jp as Yt, D_ as Z, cd as Zn, Mi as Zr, Xp as Zt, Kb as _, In as _i, Sp as _n, bc as _r, ig as _t, Ax as a, Rr as ai, Hp as an, Gl as ar, f_ as at, Wb as b, mn as bi, pp as bn, lc as br, ug as bt, Cx as c, Bn as ci, zp as cn, Hl as cr, Kg as ct, hx as d, Vn as di, Mp as dn, Ll as dr, Tg as dt, ii as ei, Kp as en, Yu as er, w_ as et, dx as f, Un as fi, jp as fn, Pl as fr, jg as ft, qb as g, $ as gi, Tp as gn, Qc as gr, ag as gt, Gb as h, qn as hi, Op as hn, cl as hr, Cg as ht, Px as i, Wr as ii, Up as in, Ql as ir, __ as it, ny as j, ut as ji, wf as jn, Ms as jr, Wh as jt, gy as k, jt as ki, Pf as kn, Ls as kr, Hh as kt, Sx as l, Hn as li, Rp as ln, Vl as lr, Ag as lt, ox as m, Kn as mi, Dp as mn, dl as mr, Eg as mt, MC as n, Kr as ni, Gp as nn, Uu as nr, g_ as nt, wx as o, Dr as oi, Vp as on, Kl as or, c_ as ot, ux as p, Wn as pi, Ep as pn, Ol as pr, Dg as pt, T_ as q, Id as qn, so as qr, rm as qt, qS as r, Jr as ri, Wp as rn, Ru as rr, v_ as rt, kx as s, Cr as si, Bp as sn, ql as sr, Yg as st, IC as t, qr as ti, Zp as tn, Gu as tr, h_ as tt, gx as u, Gn as ui, Fp as un, zl as ur, Og as ut, Yb as v, Mn as vi, bp as vn, mc as vr, og as vt, nb as w, Jt as wi, ip as wn, Us as wr, mg as wt, Ub as x, dn as xi, fp as xn, ic as xr, fg as xt, Jb as y, kn as yi, yp as yn, pc as yr, rg as yt, Nv as z, ct as zi, cf as zn, as as zr, ch as zt };
 
-//# sourceMappingURL=src-DSFkmiw6.js.map
+//# sourceMappingURL=src-DGGg6p4z.js.map

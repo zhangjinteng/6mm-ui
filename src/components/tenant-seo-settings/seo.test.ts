@@ -33,7 +33,7 @@ describe('shared SEO page behavior', () => {
         Object.defineProperty(field.element, 'files', { configurable: true, value: [file] })
         await field.trigger('change'); await flushPromises()
       }
-      await choose(new File(['bad'], 'bad.svg', { type: 'image/svg+xml' }))
+      await choose(new File(['bad'], 'bad.gif', { type: 'image/gif' }))
       await choose(new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }))
       expect(upload).not.toHaveBeenCalled()
       expect(preview()).toBe(url)

@@ -240,7 +240,7 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
                   @busy-change="faviconUploading = $event" @start="saveError = ''" @error="uploadError" />
               </section>
             </div>
-            <p class="mm-tenant-brand-settings__hint">JPG / PNG / WebP，最大 5 MB · {{ english ? 'Changes take effect after saving and apply to all domains of this site.' : '保存配置后生效，同一站点的所有域名共用。' }}</p>
+            <p class="mm-tenant-brand-settings__hint">JPG / PNG / WebP / SVG / ICO，最大 5 MB · {{ english ? 'Changes take effect after saving and apply to all domains of this site.' : '保存配置后生效，同一站点的所有域名共用。' }}</p>
           </div>
         </template>
       </div>

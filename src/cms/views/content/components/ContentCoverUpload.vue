@@ -4,7 +4,7 @@
             ref="uploadRef"
             class="content-cover__upload"
             drag
-            accept="image/jpeg,image/png,image/webp"
+            accept=".jpg,.jpeg,.png,.webp,.svg,.ico,image/jpeg,image/png,image/webp,image/svg+xml,image/x-icon,image/vnd.microsoft.icon"
             :limit="1"
             :max-size="5242880"
             :disabled="disabled || uploading"
@@ -28,7 +28,7 @@
                 </div>
                 <span v-if="!modelValue" class="content-cover__hint">
                     {{ uploading ? '正在上传…' : '拖动图片到此处，或点击上传' }}
-                    <span class="content-cover__types">JPG / PNG / WebP，最大 5 MB</span>
+                    <span class="content-cover__types">JPG / PNG / WebP / SVG / ICO，最大 5 MB</span>
                 </span>
             </div>
         </MmUpload>

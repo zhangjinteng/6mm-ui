@@ -36,7 +36,7 @@ describe('shared tenant brand settings', () => {
       await flushPromises()
       await button(wrapper, '主题与标识').trigger('click')
       expect(wrapper.findAll('.mm-tenant-brand-settings__theme img')).toHaveLength(2)
-      expect(wrapper.text()).toContain('JPG / PNG / WebP，最大 5 MB')
+      expect(wrapper.text()).toContain('JPG / PNG / WebP / SVG / ICO，最大 5 MB')
       await wrapper.get('input[value="template-2"]').setValue(true)
       const pick = async (index: number, file: File) => {
         const input = wrapper.findAll('input[type=file]')[index]
@@ -62,7 +62,7 @@ describe('shared tenant brand settings', () => {
     const uploadImage = vi.fn().mockRejectedValue(new Error('图床不可用'))
     const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => detail, save: vi.fn(), uploadImage } })
     await flushPromises(); await button(wrapper, '主题与标识').trigger('click')
-    for (const file of [new File(['svg'], 'icon.svg', { type: 'image/svg+xml' }), new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }), new File(['test'], 'logo.png', { type: 'image/png' })]) {
+    for (const file of [new File(['gif'], 'icon.gif', { type: 'image/gif' }), new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }), new File(['test'], 'logo.png', { type: 'image/png' })]) {
       const input = wrapper.findAll('input[type=file]')[0]
       Object.defineProperty(input.element, 'files', { value: [file], configurable: true })
       await input.trigger('change'); await flushPromises()

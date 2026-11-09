@@ -1,7 +1,7 @@
 import { TenantBrandSettingsProps } from './model';
 declare const __VLS_export: import('vue').DefineComponent<TenantBrandSettingsProps, {
     hasUnsavedChanges: import('vue').ComputedRef<boolean>;
-    isSaving: import('vue').Ref<boolean, boolean>;
+    isSaving: import('vue').ComputedRef<boolean>;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     close: () => any;
     saved: () => any;

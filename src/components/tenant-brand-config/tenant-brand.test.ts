@@ -26,6 +26,53 @@ describe('brand domain model', () => {
 })
 
 describe('shared tenant brand settings', () => {
+  it('selects a theme and uploads scoped logo and favicon in both page and dialog layouts', async () => {
+    for (const fullPage of [true, false]) {
+      const detail = fixture()
+      Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), template_id: 'template-1', logo_url: 'https://cdn.example/old.png', favicon_url: null })
+      const save = vi.fn(async () => ({ changed: true, brand_revision: 'e'.repeat(64) }))
+      const uploadImage = vi.fn(async (_site, file: File) => ({ url: 'https://cdn.example/' + file.name, media_id: '1' }))
+      const wrapper = mount(TenantBrandSettings, { ...options, props: { fullPage, load: async () => detail, save, uploadImage } })
+      await flushPromises()
+      await button(wrapper, '主题与标识').trigger('click')
+      expect(wrapper.findAll('.mm-tenant-brand-settings__theme img')).toHaveLength(2)
+      expect(wrapper.text()).toContain('JPG / PNG / WebP，最大 5 MB')
+      await wrapper.get('input[value="template-2"]').setValue(true)
+      const pick = async (index: number, file: File) => {
+        const input = wrapper.findAll('input[type=file]')[index]
+        Object.defineProperty(input.element, 'files', { value: [file], configurable: true })
+        await input.trigger('change'); await flushPromises()
+      }
+      await pick(0, new File(['logo'], 'logo.png', { type: 'image/png' }))
+      await pick(1, new File(['favicon'], 'favicon.webp', { type: 'image/webp' }))
+      expect(uploadImage.mock.calls.map(args => args[0])).toEqual(['10', '10'])
+      expect(wrapper.get('img[alt="网站 Logo"]').attributes('src')).toBe('https://cdn.example/logo.png')
+      await button(wrapper, '保存配置').trigger('click')
+      await button(wrapper, '确认保存').trigger('click'); await flushPromises()
+      expect(save).toHaveBeenCalledWith(expect.objectContaining({ site_id: '10', template_id: 'template-2',
+        expected_brand_revision: 'd'.repeat(64), logo_url: 'https://cdn.example/logo.png', favicon_url: 'https://cdn.example/favicon.webp' }))
+      expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
+      wrapper.unmount()
+    }
+  })
+
+  it('rejects unsupported or oversized images and preserves the current logo on upload failure', async () => {
+    const detail = fixture()
+    Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), logo_url: 'https://cdn.example/old.png' })
+    const uploadImage = vi.fn().mockRejectedValue(new Error('图床不可用'))
+    const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => detail, save: vi.fn(), uploadImage } })
+    await flushPromises(); await button(wrapper, '主题与标识').trigger('click')
+    for (const file of [new File(['svg'], 'icon.svg', { type: 'image/svg+xml' }), new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }), new File(['test'], 'logo.png', { type: 'image/png' })]) {
+      const input = wrapper.findAll('input[type=file]')[0]
+      Object.defineProperty(input.element, 'files', { value: [file], configurable: true })
+      await input.trigger('change'); await flushPromises()
+      expect(wrapper.get('img[alt="网站 Logo"]').attributes('src')).toBe('https://cdn.example/old.png')
+    }
+    expect(uploadImage).toHaveBeenCalledTimes(1)
+    expect(wrapper.text()).toContain('图床不可用')
+    wrapper.unmount()
+  })
+
   it('loads, adds a domain and requires confirmation before saving the site-scoped revision', async () => {
     const save = vi.fn(async () => ({ changed: true, revision: 'c'.repeat(64), snapshot_version: '9' }))
     const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => fixture(), save } })

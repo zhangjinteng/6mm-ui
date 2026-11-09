@@ -6,7 +6,13 @@ export interface BrandDomainDraft extends BrandDomain {
     key: number;
     existing: boolean;
 }
-export interface BrandDomainSite {
+export interface SiteBrandAssets {
+    template_id?: 'template-1' | 'template-2' | null;
+    logo_url?: string | null;
+    favicon_url?: string | null;
+    brand_revision?: string;
+}
+export interface BrandDomainSite extends SiteBrandAssets {
     site_id: string;
     site_name: string;
     domains: BrandDomain[];
@@ -20,10 +26,11 @@ export interface TenantBrandDetail {
     sites: BrandDomainSite[];
     can_edit?: boolean;
 }
-export interface TenantBrandSaveInput {
+export interface TenantBrandSaveInput extends SiteBrandAssets {
     site_id: string;
     expected_revision: string;
     expected_config_version: string;
+    expected_brand_revision?: string;
     domains: BrandDomain[];
 }
 export interface TenantBrandSaveResult {
@@ -31,11 +38,13 @@ export interface TenantBrandSaveResult {
     config_version?: string;
     snapshot_version?: string;
     revision?: string;
+    brand_revision?: string;
     updated_at?: string;
 }
 export interface TenantBrandSettingsProps {
     load: (signal: AbortSignal) => Promise<TenantBrandDetail>;
     save: (input: TenantBrandSaveInput) => Promise<TenantBrandSaveResult>;
+    uploadImage?: (siteId: string, file: File, signal: AbortSignal) => Promise<import('../../services/media-upload').MediaUploadResult>;
     canEdit?: boolean;
     fullPage?: boolean;
     formatUpdatedAt?: (value: string) => string;

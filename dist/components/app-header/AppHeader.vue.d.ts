@@ -59,6 +59,7 @@ declare const __VLS_base: import('vue').DefineComponent<AppHeaderProps, {}, {}, 
     "onUpdate:theme"?: ((theme: AppHeaderTheme) => any) | undefined;
 }>, {
     display: import('./types').AppHeaderDisplay;
+    theme: AppHeaderTheme;
     contextActions: AppHeaderAction[];
     metrics: import('./types').AppHeaderMetric[];
     mobileBreakpoint: number;
@@ -68,7 +69,6 @@ declare const __VLS_base: import('vue').DefineComponent<AppHeaderProps, {}, {}, 
     showSidebarToggle: boolean;
     showThemeToggle: boolean;
     sidebarCollapsed: boolean;
-    theme: AppHeaderTheme;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

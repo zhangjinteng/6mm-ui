@@ -14,10 +14,8 @@
       </div>
     </template>
     <template #header-actions>
-      <MmButton v-if="showGoogleSettings" class="mm-tag-translation__settings" size="sm" @click="emit('open-settings')">
-        <template #icon><span class="mm-tag-translation__provider-dot" aria-hidden="true"></span></template>
-        {{ copy.settings }} <MmIcon name="settings-2" :size="15" />
-      </MmButton>
+      <MmTranslationSettingsButton v-if="showGoogleSettings" class="mm-tag-translation__settings"
+        :locale="locale" @click="emit('open-settings')" />
     </template>
 
     <div class="mm-tag-translation">
@@ -73,6 +71,7 @@
 
 <script setup lang="ts">
 import type { TranslationSettingsActions } from '../translation-settings';
+import MmTranslationSettingsButton from '../translation-settings/TranslationSettingsButton.vue';
 import { computed, onBeforeUnmount, reactive, ref, watch } from "vue";
 import { MmMultilingualFields } from '../multilingual-fields';
 import MmAlert from "../alert/Alert.vue";
@@ -112,7 +111,7 @@ const emit = defineEmits<{
 const zh = {
   name: '标签名称',
   all: "全部", apply: "应用到表单", cancel: "取消", chooseSource: "请选择翻译源", configured: "已配置", failed: "失败",
-  loadFailed: "标签多语言加载失败", loading: "正在加载标签语言", noMatches: "当前状态下没有语言", original: "原文", pending: "待完善", settings: "翻译设置", source: "翻译来源",
+  loadFailed: "标签多语言加载失败", loading: "正在加载标签语言", noMatches: "当前状态下没有语言", original: "原文", pending: "待完善", source: "翻译来源",
   sourceRequired: "请先填写翻译源语言内容", title: "标签多语言", translateAll: "Google 一键翻译", translateFailed: "部分语言翻译失败，可重试或手动填写。",
   translateHint: "仅翻译空白项 · 应用后保存主表单", translateSuccess: "空白语言已翻译，请检查后应用。", unwritten: "未填写", written: "已配置",
   saveFailed: "标签多语言保存失败", saved: "标签多语言已保存",
@@ -120,7 +119,7 @@ const zh = {
 const en = {
   name: 'Tag name',
   all: "All", apply: "Apply to Form", cancel: "Cancel", chooseSource: "Choose source language", configured: "Configured", failed: "Failed",
-  loadFailed: "Failed to load tag languages", loading: "Loading tag languages", noMatches: "No languages in this state", original: "Source", pending: "Pending", settings: "Translation settings", source: "Translation source",
+  loadFailed: "Failed to load tag languages", loading: "Loading tag languages", noMatches: "No languages in this state", original: "Source", pending: "Pending", source: "Translation source",
   sourceRequired: "Enter the source language value first", title: "Tag Languages", translateAll: "Translate with Google", translateFailed: "Some languages failed. Retry or enter them manually.",
   translateHint: "Only blank values are translated · Apply to save", translateSuccess: "Blank languages translated. Review them before applying.", unwritten: "Empty", written: "Configured",
   saveFailed: "Failed to save tag languages", saved: "Tag languages saved",
@@ -271,8 +270,6 @@ async function save() {
 .mm-tag-translation-dialog{max-height:min(760px,calc(100vh - 36px))}.mm-tag-translation-dialog .mm-dialog__body{padding:0;overflow:hidden}
 .mm-tag-translation__fields { max-height: 520px; overflow: auto; padding: 0 20px 20px; }
 .mm-tag-translation__title{display:flex;align-items:baseline;gap:12px}.mm-tag-translation__title strong{font-size:16px}.mm-tag-translation__title span{color:var(--mm-color-text-subtle);font-size:11px;font-weight:var(--mm-font-weight-medium)}
-.mm-tag-translation__provider-dot{width:6px;height:6px;border-radius:50%;background:var(--mm-color-success);box-shadow:0 0 0 3px var(--mm-color-success-soft)}
-.mm-tag-translation__settings .mm-button__label{display:inline-flex;align-items:center;gap:6px}
 .mm-tag-translation{display:grid;min-height:470px;grid-template-rows:auto auto minmax(0,1fr)}.mm-tag-translation>.mm-alert{margin:12px 20px 0}
 .mm-tag-translation__toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:10px 20px;border-bottom:1px solid var(--mm-color-line);background:var(--mm-color-fill-subtle)}
 .mm-tag-translation__source{display:flex;align-items:center;gap:10px}.mm-tag-translation__source label,.mm-tag-translation__source>span{color:var(--mm-color-text-secondary);font-size:12px}.mm-tag-translation__source .mm-select{width:196px}

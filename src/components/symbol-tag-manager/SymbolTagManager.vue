@@ -63,8 +63,14 @@
       </template>
       <template #cell-actions="{ row }">
         <div class="mm-symbol-tag-manager__actions">
-          <MmButton icon-only :aria-label="copy.detail" size="sm" :title="copy.detail" @click.stop="openDetail(row)">
-            <template #icon><MmIcon name="panel-left-close" :size="15" /></template>
+          <MmButton
+            icon-only
+            :aria-label="canUpdate || canDelete ? copy.edit : copy.detail"
+            size="sm"
+            :title="canUpdate || canDelete ? copy.edit : copy.detail"
+            @click.stop="canUpdate || canDelete ? openEdit(row) : openDetail(row)"
+          >
+            <template #icon><MmIcon :name="canUpdate || canDelete ? 'square-pen' : 'panel-left-close'" :size="14" /></template>
           </MmButton>
         </div>
       </template>
@@ -102,18 +108,14 @@
               <span>{{ Number(detailRow.is_enable) === 1 ? copy.hideTag : copy.showTag }}</span>
               <MmIcon name="chevron-right" :size="15" />
             </button>
-            <button v-if="canUpdate" type="button" @click="runDetailAction('edit')">
+            <button v-if="canUpdate || canDelete" type="button" @click="runDetailAction('edit')">
               <MmIcon name="square-pen" :size="15" /><span>{{ copy.edit }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
             <button v-if="canUpdate && translationActions" type="button" @click="runDetailAction('translations')">
               <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Languages' : '多语言' }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
-            <button v-if="translationSettingsActions || translationConfigActions" type="button" @click="runDetailAction('translation-config')">
-              <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Translation Settings' : '翻译配置' }}</span><MmIcon name="chevron-right" :size="15" />
-            </button>
-            <button v-if="canDelete" class="is-danger" type="button" @click="runDetailAction('delete')">
-              <MmIcon name="trash-2" :size="15" /><span>{{ copy.delete }}</span><MmIcon name="chevron-right" :size="15" />
-            </button>
+            <MmTranslationSettingsButton v-if="translationSettingsActions || translationConfigActions"
+              :locale="locale" @click="runDetailAction('translation-config')" />
           </div>
         </section>
       </div>
@@ -123,8 +125,9 @@
     <MmDialog
       v-model="dialog.visible"
       :close-on-click-modal="false"
+      :close-on-escape="!dialogBusy"
       panel-class="mm-symbol-tag-manager__create-dialog"
-      :show-close="!dialog.saving"
+      :show-close="!dialogBusy"
       :title="dialog.editingId ? copy.dialogEdit : copy.dialogCreate"
       width="min(700px, calc(100vw - 32px))"
       @close="resetForm"
@@ -139,6 +142,7 @@
       <MmForm
         ref="formRef"
         class="mm-symbol-tag-manager__create-form"
+        :disabled="dialogBusy || (Boolean(dialog.editingId) && !canUpdate)"
         label-position="top"
         :model="form"
         :rules="formRules"
@@ -172,7 +176,7 @@
             <strong>{{ copy.translation }}</strong>
             <span>{{ translationConfiguredCount }}/20</span>
           </div>
-          <MmButton size="sm" :disabled="!translationActions || translationDraftLoading" @click="openCreateTranslations">
+          <MmButton size="sm" :disabled="!translationActions || translationDraftLoading || dialogBusy || (Boolean(dialog.editingId) && !canUpdate)" @click="openCreateTranslations">
             <template #icon><MmIcon name="globe" :size="14" /></template>{{ copy.editTranslation }}
           </MmButton>
         </section>
@@ -190,7 +194,7 @@
               role="switch"
               :aria-checked="Number(form.is_enable) === 1"
               :aria-label="copy.frontendDisplay"
-              :disabled="dialog.saving"
+              :disabled="dialogBusy || (Boolean(dialog.editingId) && !canUpdate)"
               @click="form.is_enable = Number(form.is_enable) === 1 ? 0 : 1"
             ><i aria-hidden="true"></i></button>
             <span>{{ Number(form.is_enable) === 1 ? copy.enabled : copy.disabled }}</span>
@@ -204,8 +208,9 @@
       </MmForm>
       <template #footer>
         <div class="mm-symbol-tag-manager__dialog-footer">
-          <MmButton size="sm" :disabled="dialog.saving" @click="dialog.visible = false">{{ copy.cancel }}</MmButton>
-          <MmButton size="sm" :disabled="translationDraftLoading" :loading="dialog.saving" variant="primary" @click="save">{{ copy.save }}</MmButton>
+          <MmButton size="sm" :disabled="dialogBusy" @click="dialog.visible = false">{{ copy.cancel }}</MmButton>
+          <MmButton v-if="dialog.editingId && canDelete" size="sm" :disabled="dialogBusy" @click="requestEditDelete">{{ copy.delete }}</MmButton>
+          <MmButton v-if="dialog.editingId ? canUpdate : canCreate" size="sm" :disabled="translationDraftLoading || deleting" :loading="dialog.saving" variant="primary" @click="save">{{ copy.save }}</MmButton>
         </div>
       </template>
     </MmDialog>
@@ -275,6 +280,7 @@ import type { FormRules } from "../../shared/form";
 import type { SymbolTagActionName, SymbolTagFormValue, SymbolTagManagerLabels, SymbolTagManagerProps, SymbolTagRow } from "./types";
 import TranslationConfigDialog from "./TranslationConfigDialog.vue";
 import TagTranslationDialog from "./TagTranslationDialog.vue";
+import MmTranslationSettingsButton from '../translation-settings/TranslationSettingsButton.vue';
 
 defineOptions({ name: "MmSymbolTagManager" });
 
@@ -318,7 +324,7 @@ const en: SymbolTagManagerLabels = {
 const copy = computed(() => ({ ...(props.locale.toLowerCase().startsWith("en") ? en : zh), ...props.labels }));
 type TagRow = SymbolTagRow & TableRow & { children?: TagRow[] };
 type VisibleTagRow = TagRow & { _expanded: boolean; _hasChildren: boolean; _level: number };
-type DetailAction = "add-child" | "delete" | "edit" | "toggle-status" | "translation-config" | "translations";
+type DetailAction = "add-child" | "edit" | "toggle-status" | "translation-config" | "translations";
 
 const rows = ref<TagRow[]>([]);
 const filters = ref<QueryBarValue>(defaultFilters());
@@ -345,6 +351,8 @@ const deleteTarget = shallowRef<TagRow>();
 const formError = ref("");
 const formRef = shallowRef<FormExpose>();
 const dialog = reactive({ visible: false, saving: false, editingId: 0 });
+const deleting = ref(false);
+const dialogBusy = computed(() => dialog.saving || deleting.value);
 const form = reactive<SymbolTagFormValue>(newForm());
 
 const columns = computed<ProTableColumn<VisibleTagRow>[]>(() => [
@@ -527,7 +535,7 @@ async function openEdit(row: TagRow) {
 }
 function normalizeCode(value: unknown) { form.tag_code = String(value || "").trim().toLowerCase().replace(/[^a-z0-9_-]/g, ""); }
 async function save() {
-  if (dialog.saving || !(await formRef.value?.validate())) return;
+  if (dialogBusy.value || (dialog.editingId ? !props.canUpdate : !props.canCreate) || !(await formRef.value?.validate())) return;
   dialog.saving = true;
   formError.value = "";
   const tagName = form.tag_name.trim();
@@ -563,12 +571,29 @@ async function toggleStatus(row: TagRow) {
     await load();
   } catch (error) { pageError.value = errorMessage(error); emit("action-error", "update", error); }
 }
-function requestDelete(row: TagRow) { deleteTarget.value = row; deleteVisible.value = true; }
+function requestEditDelete() {
+  if (!props.canDelete || dialogBusy.value || !dialog.editingId) return;
+  // Delete the persisted row, never the unsaved form or the already-closed drawer.
+  const row = rows.value.find((item) => item.id === dialog.editingId);
+  if (!row) return;
+  deleteTarget.value = row;
+  deleteVisible.value = true;
+}
 async function handleDeleteAction(action: MessageBoxAction) {
-  if (action !== "confirm" || !deleteTarget.value) return;
+  if (action !== "confirm") { deleteTarget.value = undefined; return; }
+  if (!props.canDelete || deleting.value || !deleteTarget.value) return;
   const row = deleteTarget.value;
-  try { await props.actions.remove(row.id); emit("action-success", "delete", row); deleteTarget.value = undefined; await load(); }
-  catch (error) { pageError.value = errorMessage(error); emit("action-error", "delete", error); }
+  deleting.value = true;
+  formError.value = "";
+  try {
+    await props.actions.remove(row.id);
+    emit("action-success", "delete", row);
+    if (dialog.editingId === row.id) dialog.visible = false;
+    await load();
+  } catch (error) {
+    formError.value = errorMessage(error);
+    emit("action-error", "delete", error);
+  } finally { deleting.value = false; deleteTarget.value = undefined; }
 }
 function runDetailAction(action: DetailAction) {
   const row = detailRow.value;
@@ -576,7 +601,6 @@ function runDetailAction(action: DetailAction) {
   detailVisible.value = false;
   if (action === "add-child") openCreate(row.id);
   else if (action === "toggle-status") void toggleStatus(row);
-  else if (action === "delete") requestDelete(row);
   else if (action === "translation-config") translationConfigVisible.value = true;
   else if (action === "translations") {
     translationDraftActive.value = false;
@@ -625,8 +649,9 @@ defineExpose({ reload: load });
 .mm-symbol-tag-manager__drawer-title{display:flex;min-width:0;flex-direction:column;gap:1px}.mm-symbol-tag-manager__drawer-title strong{color:var(--mm-color-text);font-weight:var(--mm-font-weight-bold)}.mm-symbol-tag-manager__drawer-title span{overflow:hidden;color:var(--mm-color-text-subtle);font-size:var(--mm-font-size-xs);font-weight:var(--mm-font-weight-medium);text-overflow:ellipsis;white-space:nowrap}
 .mm-symbol-tag-manager__drawer-content{display:grid;gap:18px}.mm-symbol-tag-manager__descriptions .mm-descriptions__title,.mm-symbol-tag-manager__descriptions .mm-descriptions-item__label,.mm-symbol-tag-manager__descriptions .mm-descriptions-item__content{font-size:12px}.mm-symbol-tag-manager__descriptions .mm-descriptions-item--horizontal{grid-template-columns:128px minmax(0,1fr)}
 .mm-symbol-tag-manager__drawer-actions{display:grid;gap:10px;padding-top:14px;border-top:1px solid var(--mm-color-line)}.mm-symbol-tag-manager__drawer-actions h3{margin:0;color:var(--mm-color-text);font-size:12px;font-weight:var(--mm-font-weight-semibold)}.mm-symbol-tag-manager__drawer-actions>div{display:grid;gap:7px}
-.mm-symbol-tag-manager__drawer-actions button{display:grid;width:100%;min-height:38px;align-items:center;gap:10px;padding:0 12px;border:1px solid var(--mm-color-line);border-radius:var(--mm-radius-md);color:var(--mm-color-text);background:var(--mm-color-panel);cursor:pointer;font:inherit;font-size:12px;grid-template-columns:16px minmax(0,1fr) 16px;text-align:left;transition:border-color var(--mm-duration-fast) var(--mm-ease-standard),background var(--mm-duration-fast) var(--mm-ease-standard),color var(--mm-duration-fast) var(--mm-ease-standard)}
-.mm-symbol-tag-manager__drawer-actions button:hover{border-color:var(--mm-color-primary);color:var(--mm-color-primary);background:var(--mm-color-primary-soft)}.mm-symbol-tag-manager__drawer-actions button.is-danger{color:var(--mm-color-danger)}.mm-symbol-tag-manager__drawer-actions button.is-danger:hover{border-color:var(--mm-color-danger);background:var(--mm-color-danger-soft)}
+.mm-symbol-tag-manager__drawer-actions button:not(.mm-translation-settings-button){display:grid;width:100%;min-height:38px;align-items:center;gap:10px;padding:0 12px;border:1px solid var(--mm-color-line);border-radius:var(--mm-radius-md);color:var(--mm-color-text);background:var(--mm-color-panel);cursor:pointer;font:inherit;font-size:12px;grid-template-columns:16px minmax(0,1fr) 16px;text-align:left;transition:border-color var(--mm-duration-fast) var(--mm-ease-standard),background var(--mm-duration-fast) var(--mm-ease-standard),color var(--mm-duration-fast) var(--mm-ease-standard)}
+.mm-symbol-tag-manager__drawer-actions button:not(.mm-translation-settings-button):hover{border-color:var(--mm-color-primary);color:var(--mm-color-primary);background:var(--mm-color-primary-soft)}.mm-symbol-tag-manager__drawer-actions button.is-danger{color:var(--mm-color-danger)}.mm-symbol-tag-manager__drawer-actions button.is-danger:hover{border-color:var(--mm-color-danger);background:var(--mm-color-danger-soft)}
+.mm-symbol-tag-manager__drawer-actions .mm-translation-settings-button{justify-self:start}
 .mm-symbol-tag-manager__dialog-footer{display:flex;justify-content:flex-end;gap:8px}
 .mm-symbol-tag-manager__create-dialog .mm-dialog__header{align-items:flex-start;padding:16px 18px 13px}.mm-symbol-tag-manager__create-dialog .mm-dialog__body{padding:18px}.mm-symbol-tag-manager__create-dialog .mm-dialog__footer{padding:10px 16px}
 .mm-symbol-tag-manager__create-heading{display:flex;flex-direction:column;gap:4px}.mm-symbol-tag-manager__create-heading strong{color:var(--mm-color-text);font-size:16px;font-weight:var(--mm-font-weight-bold);line-height:1.25}.mm-symbol-tag-manager__create-heading span{color:var(--mm-color-text-muted);font-size:12px;font-weight:var(--mm-font-weight-regular)}

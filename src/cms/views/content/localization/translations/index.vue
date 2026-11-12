@@ -33,14 +33,11 @@
                 <span class="source-language"
                     >内容源语言 <b>{{ sourceLabel }}</b></span
                 >
-                <MmButton
+                <MmTranslationSettingsButton
                     v-if="canConfig"
-                    size="sm"
                     :disabled="!spaceId || busy"
                     @click="openSettings"
-                    ><template #icon><MmIcon name="sliders-horizontal" :size="14" /></template
-                    >翻译配置</MmButton
-                >
+                />
                 <MmButton
                     v-if="canTranslate"
                     size="sm"
@@ -411,7 +408,7 @@
 
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
-import { MmTranslationSettingsDialog, type TranslationSettingsActions } from '../../../../../components/translation-settings'
+import { MmTranslationSettingsButton, MmTranslationSettingsDialog, type TranslationSettingsActions } from '../../../../../components/translation-settings'
 const { cancelTranslationJob, createTranslationJob, getTranslationDetail, getTranslationJob, getTranslationList, getTranslationMetadata, getTranslationSettings, saveTranslations, saveTranslationSettings, testTranslationConnection } = useTranslationsApi()
 const { hasPermission } = useCmsRuntime()
 

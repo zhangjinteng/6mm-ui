@@ -10,15 +10,11 @@
         @close="close"
     >
         <template #header-actions>
-            <MmButton
+            <MmTranslationSettingsButton
                 v-if="canConfigure && context?.settings"
-                size="sm"
                 :disabled="running"
                 @click="openSettings"
-            >
-                <template #icon><MmIcon name="sliders-horizontal" :size="14" /></template>
-                翻译配置
-            </MmButton>
+            />
         </template>
         <div class="translation-toolbar">
             <label
@@ -80,7 +76,7 @@
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { MmAlert } from '../alert'
 import { MmButton } from '../button'
-import { MmTranslationSettingsDialog, type TranslationSettingsActions } from '../translation-settings'
+import { MmTranslationSettingsButton, MmTranslationSettingsDialog, type TranslationSettingsActions } from '../translation-settings'
 import { MmDialog } from '../dialog'
 import { MmIcon } from '../icon'
 import { MmInput } from '../input'

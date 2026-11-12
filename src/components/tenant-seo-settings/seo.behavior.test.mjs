@@ -24,14 +24,12 @@ test('translation toolbar, notice and rows are spaced by the parent gap without 
     const toolbarStyles = editor.match(/\.translation-toolbar\s*\{([^}]+)\}/)[1]
     assert.doesNotMatch(toolbarStyles, /padding-bottom|margin-bottom/)
 })
-test('translation settings uses the centered button icon slot instead of an inline label icon', () => {
+test('translation settings uses the shared dot, label and centered icon button', () => {
     const editor = readFileSync(new URL('./TenantSeoTranslations.vue', import.meta.url), 'utf8')
-    const headerActions = editor.split('<template #header-actions>')[1].split('</MmButton>')[0]
-    assert.match(
-        headerActions,
-        /<template #icon><MmIcon name="sliders-horizontal" :size="14" \/><\/template>/
-    )
-    assert.doesNotMatch(headerActions, /<MmIcon[^>]+\/>翻译配置/)
+    const headerActions = editor.split('<template #header-actions>')[1].split('</template>')[0]
+    assert.match(headerActions, /<MmTranslationSettingsButton/)
+    assert.match(headerActions, /:disabled="running"/)
+    assert.doesNotMatch(headerActions, /sliders-horizontal/)
 })
 test('SEO page script, template and scoped styles compile', () => {
     const { descriptor, errors } = parse(source)

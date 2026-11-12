@@ -4,6 +4,108 @@ import { describe, expect, it, vi } from "vitest";
 import SymbolTagManager from "../SymbolTagManager.vue";
 
 describe("MmSymbolTagManager", () => {
+  const deletionRow = { id: 7, parent_id: 0, tag_name: "Crypto", tag_code: "crypto", tag_name_zh: "加密货币", tag_name_en: "Crypto", sort: 800, is_enable: 1, symbol_count: 2 };
+  function deletionActions() {
+    return {
+      create: vi.fn(),
+      list: vi.fn(async () => ({ count: 1, parent_count: 1, lists: [deletionRow] })),
+      loadOptions: vi.fn(async () => []),
+      remove: vi.fn(async (_id: number) => undefined),
+      update: vi.fn(),
+    };
+  }
+
+  it("moves deletion into the edit footer with cancel styling and preserves confirmation", async () => {
+    const actions = deletionActions();
+    const wrapper = mount(SymbolTagManager, { props: { actions }, global: { stubs: { teleport: true } } });
+    await flushPromises();
+    const edit = wrapper.get("button[aria-label='编辑标签']");
+    expect(edit.attributes('title')).toBe('编辑标签');
+    expect(edit.get('svg').attributes('style')).toContain('14px');
+    expect(edit.get('path').attributes('d')).toBe('M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7');
+    await edit.trigger('click');
+    await flushPromises();
+    expect(wrapper.find('.mm-symbol-tag-manager__drawer-actions').exists()).toBe(false);
+    expect((wrapper.get("input[placeholder='例如：加密货币']").element as HTMLInputElement).value).toBe('Crypto');
+    const footer = wrapper.get('.mm-symbol-tag-manager__dialog-footer');
+    expect(footer.findAll('button').map(button => button.text())).toEqual(['取消', '删除标签', '保存标签']);
+    expect(footer.findAll('button')[1]!.classes()).toEqual(footer.findAll('button')[0]!.classes());
+    await wrapper.get("input[placeholder='例如：加密货币']").setValue('未保存名称');
+    await footer.findAll('button')[1]!.trigger('click');
+    expect(actions.remove).not.toHaveBeenCalled();
+    expect(wrapper.text()).toContain('确认删除标签“加密货币”？');
+    await wrapper.get('[data-message-box-cancel]').trigger('click');
+    await flushPromises();
+    expect(actions.remove).not.toHaveBeenCalled();
+    expect((wrapper.get("input[placeholder='例如：加密货币']").element as HTMLInputElement).value).toBe('未保存名称');
+    await footer.findAll('button')[1]!.trigger('click');
+    await wrapper.get('[data-message-box-confirm]').trigger('click');
+    await flushPromises();
+    expect(actions.remove).toHaveBeenCalledExactlyOnceWith(7);
+    expect(actions.update).not.toHaveBeenCalled();
+    expect(actions.list).toHaveBeenCalledTimes(2);
+    expect(wrapper.find('.mm-symbol-tag-manager__dialog-footer').exists()).toBe(false);
+    wrapper.unmount();
+  });
+
+  it("keeps the edit form on delete failure and blocks concurrent save/delete/close", async () => {
+    const actions = deletionActions();
+    let rejectDelete!: (reason: Error) => void;
+    actions.remove.mockImplementation(() => new Promise((_resolve, reject) => { rejectDelete = reject; }));
+    const wrapper = mount(SymbolTagManager, { props: { actions }, global: { stubs: { teleport: true } } });
+    await flushPromises();
+    await wrapper.get("button[aria-label='编辑标签']").trigger('click');
+    await flushPromises();
+    await wrapper.get("input[placeholder='例如：加密货币']").setValue('保留草稿');
+    const footer = wrapper.get('.mm-symbol-tag-manager__dialog-footer');
+    await footer.findAll('button')[1]!.trigger('click');
+    await wrapper.get('[data-message-box-confirm]').trigger('click');
+    await flushPromises();
+    expect(actions.remove).toHaveBeenCalledExactlyOnceWith(7);
+    expect(wrapper.get('.mm-symbol-tag-manager__dialog-footer').findAll('button').map(button => button.attributes('disabled'))).toEqual(['', '', '']);
+    await footer.findAll('button')[2]!.trigger('click');
+    expect(actions.update).not.toHaveBeenCalled();
+    rejectDelete(new Error('该标签仍有关联，不能删除'));
+    await flushPromises();
+    expect(wrapper.text()).toContain('该标签仍有关联，不能删除');
+    expect((wrapper.get("input[placeholder='例如：加密货币']").element as HTMLInputElement).value).toBe('保留草稿');
+    expect(footer.findAll('button')[1]!.attributes('disabled')).toBeUndefined();
+    expect(actions.list).toHaveBeenCalledOnce();
+    wrapper.unmount();
+  });
+
+  it("does not offer deletion for a new tag or without delete permission", async () => {
+    const actions = deletionActions();
+    const wrapper = mount(SymbolTagManager, { props: { actions, canDelete: false }, global: { stubs: { teleport: true } } });
+    await flushPromises();
+    await wrapper.get("button[aria-label='编辑标签']").trigger('click');
+    await flushPromises();
+    expect(wrapper.get('.mm-symbol-tag-manager__dialog-footer').findAll('button').map(button => button.text())).toEqual(['取消', '保存标签']);
+    await wrapper.setProps({ canDelete: true });
+    await wrapper.get('.mm-symbol-tag-manager__dialog-footer button').trigger('click');
+    await wrapper.get("button[aria-label='新增']").trigger('click');
+    await flushPromises();
+    expect(wrapper.get('.mm-symbol-tag-manager__dialog-footer').findAll('button').map(button => button.text())).toEqual(['取消', '保存标签']);
+    wrapper.unmount();
+  });
+
+  it("preserves deletion-only permissions without allowing updates and supports English labels", async () => {
+    const actions = deletionActions();
+    const wrapper = mount(SymbolTagManager, { props: { actions, canUpdate: false, locale: 'en-US' }, global: { stubs: { teleport: true } } });
+    await flushPromises();
+    await wrapper.get("button[aria-label='Edit Tag']").trigger('click');
+    await flushPromises();
+    const footer = wrapper.get('.mm-symbol-tag-manager__dialog-footer');
+    expect(footer.findAll('button').map(button => button.text())).toEqual(['Cancel', 'Delete Tag']);
+    expect(wrapper.get("input[placeholder='e.g. Crypto']").attributes('disabled')).toBeDefined();
+    await footer.findAll('button')[1]!.trigger('click');
+    await wrapper.get('[data-message-box-confirm]').trigger('click');
+    await flushPromises();
+    expect(actions.remove).toHaveBeenCalledExactlyOnceWith(7);
+    expect(actions.update).not.toHaveBeenCalled();
+    wrapper.unmount();
+  });
+
   it("renders the redesigned create dialog and keeps the create payload compatible", async () => {
     const actions = {
       create: vi.fn(async () => undefined),
@@ -99,8 +201,7 @@ describe("MmSymbolTagManager", () => {
     });
     await flushPromises();
 
-    await wrapper.find("button[aria-label='查看标签详情']").trigger("click");
-    await wrapper.findAll("button").find((button) => button.text().includes("编辑标签"))!.trigger("click");
+    await wrapper.get("button[aria-label='编辑标签']").trigger("click");
     await flushPromises();
 
     expect(wrapper.text()).toContain("修改标签信息与前端多语言");
@@ -148,10 +249,9 @@ describe("MmSymbolTagManager", () => {
     expect(wrapper.text()).toContain("中文名称");
     expect(wrapper.text()).toContain("英文名称");
 
-    await wrapper.find("button[aria-label='查看标签详情']").trigger("click");
-    const toggleButton = wrapper.findAll("button").find((button) => button.text().includes("隐藏标签"));
-    expect(toggleButton).toBeTruthy();
-    await toggleButton!.trigger("click");
+    await wrapper.get("button[aria-label='编辑标签']").trigger("click");
+    await wrapper.get("button[role='switch'][aria-label='前台显示']").trigger("click");
+    await wrapper.findAll('button').find(button => button.text() === '保存标签')!.trigger('click');
     await flushPromises();
     expect(actions.update).toHaveBeenCalledWith(1, expect.objectContaining({ is_enable: 0, tag_code: "crypto" }));
   });
@@ -174,7 +274,7 @@ describe("MmSymbolTagManager", () => {
     expect(wrapper.find("button[aria-label='Add Tag']").exists()).toBe(false);
   });
 
-  it("opens the optional Google translation configuration below the edit action", async () => {
+  it("keeps optional translation settings accessible in the read-only detail drawer", async () => {
     const actions = {
       create: vi.fn(),
       list: vi.fn(async () => ({ count: 1, parent_count: 1, lists: [
@@ -190,16 +290,17 @@ describe("MmSymbolTagManager", () => {
       testConnection: vi.fn(),
     };
     const wrapper = mount(SymbolTagManager, {
-      props: { actions, locale: "zh-CN", translationSettingsActions },
+      props: { actions, locale: "zh-CN", translationSettingsActions, canUpdate: false, canDelete: false },
       global: { stubs: { teleport: true } },
     });
     await flushPromises();
 
     await wrapper.find("button[aria-label='查看标签详情']").trigger("click");
     const buttons = wrapper.findAll("button");
-    const editIndex = buttons.findIndex((button) => button.text().includes("编辑标签"));
-    const translationIndex = buttons.findIndex((button) => button.text().includes("翻译配置"));
-    expect(translationIndex).toBe(editIndex + 1);
+    const translationIndex = buttons.findIndex((button) => button.text().includes("翻译设置"));
+    expect(wrapper.find("button[aria-label='编辑标签']").exists()).toBe(false);
+    expect(translationIndex).toBeGreaterThanOrEqual(0);
+    expect(buttons[translationIndex]!.classes()).toContain('mm-translation-settings-button');
 
     await buttons[translationIndex]!.trigger("click");
     await flushPromises();
@@ -211,7 +312,7 @@ describe("MmSymbolTagManager", () => {
     expect(wrapper.text()).not.toContain("启用 Google 翻译");
   });
 
-  it("opens tag languages below edit and only translates empty values", async () => {
+  it("opens languages from the direct edit dialog and saves translated drafts with the tag", async () => {
     const actions = {
       create: vi.fn(),
       list: vi.fn(async () => ({ count: 1, parent_count: 1, lists: [
@@ -248,11 +349,11 @@ describe("MmSymbolTagManager", () => {
     });
     await flushPromises();
 
-    await wrapper.find("button[aria-label='查看标签详情']").trigger("click");
+    await wrapper.get("button[aria-label='编辑标签']").trigger("click");
+    await flushPromises();
     const buttons = wrapper.findAll("button");
-    const editIndex = buttons.findIndex((button) => button.text().includes("编辑标签"));
-    const languagesIndex = buttons.findIndex((button) => button.text().includes("多语言"));
-    expect(languagesIndex).toBe(editIndex + 1);
+    const languagesIndex = buttons.findIndex((button) => button.text().includes("编辑译文"));
+    expect(languagesIndex).toBeGreaterThanOrEqual(0);
 
     await buttons[languagesIndex]!.trigger("click");
     await flushPromises();
@@ -273,10 +374,13 @@ describe("MmSymbolTagManager", () => {
     const applyButton = wrapper.findAll("button").find((button) => button.text().includes("应用到表单"));
     await applyButton!.trigger("click");
     await flushPromises();
-    expect(translationActions.save).toHaveBeenCalledWith(1, {
+    expect(translationActions.save).not.toHaveBeenCalled();
+    await wrapper.findAll('button').find(button => button.text() === '保存标签')!.trigger('click');
+    await flushPromises();
+    expect(actions.update).toHaveBeenCalledWith(1, expect.objectContaining({ translations: {
       "zh-CN": "热门",
       en: "Hot",
       ja: "人気",
-    });
+    } }));
   });
 });

@@ -27020,7 +27020,7 @@ var Vv = /* @__PURE__ */ k({
 			childTag: "子标签",
 			close: "关闭",
 			code: "标签编码",
-			codeHint: "仅支持小写字母、数字和下划线",
+			codeHint: "支持小写字母、数字、下划线和短横线，不能以短横线开头",
 			collapseAll: "全部折叠",
 			collapseTag: "折叠标签",
 			confirm: "确定",
@@ -27046,7 +27046,7 @@ var Vv = /* @__PURE__ */ k({
 			frontendDisplay: "前台显示",
 			filterTitle: "筛选交易对标签",
 			hideTag: "隐藏标签",
-			invalidCode: "仅支持小写字母、数字、下划线",
+			invalidCode: "支持小写字母、数字、下划线和短横线，不能以短横线开头",
 			loadingDescription: "正在准备当前查询的数据，请稍候。",
 			loadingTitle: "正在加载数据",
 			name: "标签名称",
@@ -27092,7 +27092,7 @@ var Vv = /* @__PURE__ */ k({
 			childTag: "Child Tag",
 			close: "Close",
 			code: "Tag Code",
-			codeHint: "Lowercase letters, numbers, and underscores only",
+			codeHint: "Lowercase letters, numbers, underscores or hyphens; no leading hyphen",
 			collapseAll: "Collapse All",
 			collapseTag: "Collapse Tag",
 			confirm: "Confirm",
@@ -27118,7 +27118,7 @@ var Vv = /* @__PURE__ */ k({
 			frontendDisplay: "Frontend visibility",
 			filterTitle: "Filter Trading Pair Tags",
 			hideTag: "Hide Tag",
-			invalidCode: "Lowercase letters, numbers, and underscores only",
+			invalidCode: "Use lowercase letters, numbers, underscores or hyphens; no leading hyphen",
 			loadingDescription: "Preparing data for the current query.",
 			loadingTitle: "Loading Data",
 			name: "Tag Name",
@@ -27318,7 +27318,7 @@ var Vv = /* @__PURE__ */ k({
 				message: `${c.value.required}: ${c.value.code}`,
 				trigger: "blur"
 			}, {
-				pattern: /^[a-z0-9_]+$/,
+				pattern: /^[a-z0-9_][a-z0-9_-]*$/,
 				message: c.value.invalidCode,
 				trigger: "blur"
 			}],
@@ -27480,7 +27480,7 @@ var Vv = /* @__PURE__ */ k({
 			}
 		}
 		function Ae(e) {
-			L.tag_code = String(e || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, "");
+			L.tag_code = String(e || "").trim().toLowerCase().replace(/[^a-z0-9_-]/g, "");
 		}
 		async function je() {
 			if (F.saving || !await P.value?.validate()) return;
@@ -32496,4 +32496,4 @@ var TC = class {
 //#endregion
 export { O_ as $, ed as $n, bi as $r, Qp as $t, uy as A, At as Ai, Tf as An, ks as Ar, Uh as At, kv as B, gt as Bi, uf as Bn, rs as Br, $m as Bt, cb as C, Xt as Ci, rp as Cn, Ws as Cr, pg as Ct, Fy as D, zt as Di, Uf as Dn, Rs as Dr, tg as Dt, Ky as E, Ut as Ei, Jf as En, Bs as Er, ng as Et, Lv as F, ot as Fi, vf as Fn, os as Fr, Ah as Ft, mv as G, Ud as Gn, ho as Gr, am as Gt, xv as H, rt as Hi, ef as Hn, bo as Hr, Om as Ht, Iv as I, mt as Ii, af as In, ss as Ir, Oh as It, A_ as J, kd as Jn, ka as Jr, qp as Jt, I_ as K, Vd as Kn, po as Kr, im as Kt, Pv as L, st as Li, of as Ln, cs as Lr, Eh as Lt, Vv as M, dt as Mi, Cf as Mn, Ns as Mr, Vh as Mt, Bv as N, _t as Ni, Sf as Nn, Ds as Nr, Ih as Nt, Ny as O, Nt as Oi, Bf as On, zs as Or, eg as Ot, Rv as P, ft as Pi, yf as Pn, hs as Pr, Fh as Pt, E_ as Q, od as Qn, Oi as Qr, $p as Qt, Fv as R, at as Ri, lf as Rn, is as Rr, hh as Rt, Ib as S, $t as Si, np as Sn, $s as Sr, dg as St, Yy as T, Gt as Ti, tp as Tn, Vs as Tr, hg as Tt, yv as U, Q as Ui, Xd as Un, yo as Ur, mm as Ut, bv as V, pt as Vi, tf as Vn, ns as Vr, Hm as Vt, Sv as W, Gd as Wn, vo as Wr, om as Wt, j_ as X, Ed as Xn, Da as Xr, Yp as Xt, M_ as Y, Dd as Yn, Oa as Yr, Jp as Yt, D_ as Z, cd as Zn, Mi as Zr, Xp as Zt, Kb as _, In as _i, Sp as _n, bc as _r, ig as _t, Ax as a, Rr as ai, Hp as an, Gl as ar, f_ as at, Wb as b, mn as bi, pp as bn, lc as br, ug as bt, Cx as c, Bn as ci, zp as cn, Hl as cr, Kg as ct, hx as d, Vn as di, Mp as dn, Ll as dr, Tg as dt, ii as ei, Kp as en, Yu as er, w_ as et, dx as f, Un as fi, jp as fn, Pl as fr, jg as ft, qb as g, $ as gi, Tp as gn, Qc as gr, ag as gt, Gb as h, qn as hi, Op as hn, cl as hr, Cg as ht, Px as i, Wr as ii, Up as in, Ql as ir, __ as it, ny as j, ut as ji, wf as jn, Ms as jr, Wh as jt, gy as k, jt as ki, Pf as kn, Ls as kr, Hh as kt, Sx as l, Hn as li, Rp as ln, Vl as lr, Ag as lt, ox as m, Kn as mi, Dp as mn, dl as mr, Eg as mt, MC as n, Kr as ni, Gp as nn, Uu as nr, g_ as nt, wx as o, Dr as oi, Vp as on, Kl as or, c_ as ot, ux as p, Wn as pi, Ep as pn, Ol as pr, Dg as pt, T_ as q, Id as qn, so as qr, rm as qt, qS as r, Jr as ri, Wp as rn, Ru as rr, v_ as rt, kx as s, Cr as si, Bp as sn, ql as sr, Yg as st, IC as t, qr as ti, Zp as tn, Gu as tr, h_ as tt, gx as u, Gn as ui, Fp as un, zl as ur, Og as ut, Yb as v, Mn as vi, bp as vn, mc as vr, og as vt, nb as w, Jt as wi, ip as wn, Us as wr, mg as wt, Ub as x, dn as xi, fp as xn, ic as xr, fg as xt, Jb as y, kn as yi, yp as yn, pc as yr, rg as yt, Nv as z, ct as zi, cf as zn, as as zr, ch as zt };
 
-//# sourceMappingURL=src-DGGg6p4z.js.map
+//# sourceMappingURL=src-Bc-5_fFJ.js.map

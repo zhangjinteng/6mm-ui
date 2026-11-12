@@ -287,11 +287,11 @@ const emit = defineEmits<{
 
 const zh: SymbolTagManagerLabels = {
   actions: "操作", add: "新增", addChild: "新增子标签", all: "全部", availableActions: "可用操作", cancel: "取消", childTag: "子标签", close: "关闭",
-  code: "标签编码", codeHint: "仅支持小写字母、数字和下划线", collapseAll: "全部折叠", collapseTag: "折叠标签", confirm: "确定", delete: "删除标签",
+  code: "标签编码", codeHint: "支持小写字母、数字、下划线和短横线，不能以短横线开头", collapseAll: "全部折叠", collapseTag: "折叠标签", confirm: "确定", delete: "删除标签",
   deleteConfirm: "确认删除标签“{name}”？", deleteDescription: "删除后，当前标签及其关联关系将立即失效，此操作不可撤销。", deleteTitle: "删除标签",
   detail: "查看标签详情", dialogCreate: "新增标签", dialogEdit: "修改标签", dialogSubtitleCreate: "新增父标签或独立标签", dialogSubtitleEdit: "修改标签信息与前端多语言", disabled: "隐藏", display: "显示状态",
   displayHint: "隐藏后不会在前台标签列表中展示", edit: "编辑标签", editTranslation: "编辑译文", enabled: "显示", enName: "英文名称", expandAll: "全部展开", expandTag: "展开标签", filterSubtitle: "可按标签名称、父级标签和状态组合筛选", frontendDisplay: "前台显示",
-  filterTitle: "筛选交易对标签", hideTag: "隐藏标签", invalidCode: "仅支持小写字母、数字、下划线", loadingDescription: "正在准备当前查询的数据，请稍候。",
+  filterTitle: "筛选交易对标签", hideTag: "隐藏标签", invalidCode: "支持小写字母、数字、下划线和短横线，不能以短横线开头", loadingDescription: "正在准备当前查询的数据，请稍候。",
   loadingTitle: "正在加载数据", name: "标签名称", nameHint: "后台显示名称；未配置翻译的语种也使用此名称。", namePlaceholder: "例如：加密货币", noData: "暂无交易对标签", notice: "标签只负责分类和前台展示；热门、新币等交易对属性应在交易对配置中维护。", pairCount: "交易对数量", pairHint: "", parent: "父级标签",
   parentFilter: "父级标签", parentHint: "选择“根标签”时，该标签将作为一级分类展示", query: "查询", refresh: "刷新", required: "请完整填写必填项", reset: "重置", rootOnly: "根标签", rootOption: "根标签",
   rootTag: "根标签", save: "保存标签", searchPlaceholder: "名称 / 编码", showTag: "显示标签", sort: "排序", sortHint: "数值越大，前台排序越靠前", status: "状态", statusFilter: "状态",
@@ -299,11 +299,11 @@ const zh: SymbolTagManagerLabels = {
 };
 const en: SymbolTagManagerLabels = {
   actions: "Actions", add: "Add", addChild: "Add Child Tag", all: "All", availableActions: "Available Actions", cancel: "Cancel", childTag: "Child Tag", close: "Close",
-  code: "Tag Code", codeHint: "Lowercase letters, numbers, and underscores only", collapseAll: "Collapse All", collapseTag: "Collapse Tag", confirm: "Confirm", delete: "Delete Tag",
+  code: "Tag Code", codeHint: "Lowercase letters, numbers, underscores or hyphens; no leading hyphen", collapseAll: "Collapse All", collapseTag: "Collapse Tag", confirm: "Confirm", delete: "Delete Tag",
   deleteConfirm: "Delete tag “{name}”?", deleteDescription: "The tag and its associations will be removed immediately. This action cannot be undone.", deleteTitle: "Delete Tag",
   detail: "View Tag Details", dialogCreate: "Add Tag", dialogEdit: "Edit Tag", dialogSubtitleCreate: "Add a parent or standalone tag", dialogSubtitleEdit: "Update tag details and frontend languages", disabled: "Hidden", display: "Status",
   displayHint: "Hidden tags are not shown in the frontend tag list", edit: "Edit Tag", editTranslation: "Edit translations", enabled: "Visible", enName: "English Name", expandAll: "Expand All", expandTag: "Expand Tag", filterSubtitle: "Filter by tag name, parent, and status", frontendDisplay: "Frontend visibility",
-  filterTitle: "Filter Trading Pair Tags", hideTag: "Hide Tag", invalidCode: "Lowercase letters, numbers, and underscores only", loadingDescription: "Preparing data for the current query.",
+  filterTitle: "Filter Trading Pair Tags", hideTag: "Hide Tag", invalidCode: "Use lowercase letters, numbers, underscores or hyphens; no leading hyphen", loadingDescription: "Preparing data for the current query.",
   loadingTitle: "Loading Data", name: "Tag Name", nameHint: "Admin display name and fallback for languages without a translation.", namePlaceholder: "e.g. Crypto", noData: "No trading pair tags", notice: "Tags are only used for categorization and frontend display. Trading-pair attributes such as Hot and New should be maintained in trading-pair settings.", pairCount: "Trading Pairs", pairHint: "", parent: "Parent Tag",
   parentFilter: "Parent Tag", parentHint: "Selecting Root Tag displays this tag as a top-level category", query: "Search", refresh: "Refresh", required: "Complete all required fields", reset: "Reset", rootOnly: "Root Tag", rootOption: "Root Tag",
   rootTag: "Root Tag", save: "Save Tag", searchPlaceholder: "Name / Code", showTag: "Show Tag", sort: "Sort", sortHint: "Larger values appear earlier on the frontend", status: "Status", statusFilter: "Status",
@@ -401,7 +401,7 @@ const formRules = computed<FormRules>(() => ({
   tag_name: [{ required: true, message: `${copy.value.required}: ${copy.value.name}`, trigger: "blur" }],
   tag_code: [
     { required: true, message: `${copy.value.required}: ${copy.value.code}`, trigger: "blur" },
-    { pattern: /^[a-z0-9_]+$/, message: copy.value.invalidCode, trigger: "blur" },
+  { pattern: /^[a-z0-9_][a-z0-9_-]*$/, message: copy.value.invalidCode, trigger: "blur" },
   ],
   tag_name_zh: [{ required: true, message: `${copy.value.required}: ${copy.value.zhName}`, trigger: "blur" }],
   tag_name_en: [{ required: true, message: `${copy.value.required}: ${copy.value.enName}`, trigger: "blur" }],
@@ -514,7 +514,7 @@ async function openEdit(row: TagRow) {
     translationDraftLoading.value = false;
   }
 }
-function normalizeCode(value: unknown) { form.tag_code = String(value || "").trim().toLowerCase().replace(/[^a-z0-9_]/g, ""); }
+function normalizeCode(value: unknown) { form.tag_code = String(value || "").trim().toLowerCase().replace(/[^a-z0-9_-]/g, ""); }
 async function save() {
   if (dialog.saving || !(await formRef.value?.validate())) return;
   dialog.saving = true;

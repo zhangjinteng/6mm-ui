@@ -61,7 +61,7 @@ describe("MmSymbolTagManager", () => {
     await flushPromises();
     expect(actions.create).toHaveBeenCalledWith(expect.objectContaining({
       is_enable: 0,
-      tag_code: "cryptospot",
+      tag_code: "crypto-spot",
       tag_name: "加密货币",
       tag_name_en: "Crypto",
       tag_name_zh: "加密货币",

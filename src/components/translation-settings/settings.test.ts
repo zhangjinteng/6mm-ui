@@ -23,7 +23,15 @@ describe('shared translation settings (CMS, SEO, tags)', () => {
     const { w } = fixture(); await flushPromises()
     for (const label of ['目标语言', '开启自动翻译', 'Google API Key', '并发上限', '请求超时（秒）', '最大尝试次数']) expect(w.text()).toContain(label)
     expect((w.get('input[type="password"]').element as HTMLInputElement).value).toBe('')
-    expect(w.text()).toContain('••••1234'); w.unmount()
+    expect(w.text()).toContain('••••1234')
+    expect(w.text()).toContain('密钥原样存入数据库')
+    expect(w.text()).not.toContain('加密保存'); w.unmount()
+  })
+  it('explains that historical ciphertext needs explicit conversion', async () => {
+    const { w } = fixture({ credential_configured: false, credential_error: 'GOOGLE_CREDENTIAL_MIGRATION_REQUIRED' })
+    await flushPromises()
+    expect(w.text()).toContain('旧密钥尚未转换')
+    w.unmount()
   })
   it('tests a candidate without saving and keeps drafts isolated', async () => {
     const { w, actions, value } = fixture(); await flushPromises()

@@ -3476,7 +3476,7 @@ var ti = [
 							"placeholder"
 						])]),
 						a.value.api_key_mask ? (V(), w("small", Hi, J(a.value.credential_source === "database" ? "数据库密钥" : "环境配置密钥") + "：" + J(a.value.api_key_mask), 1)) : C("", !0),
-						a.value.credential_error === "GOOGLE_CREDENTIAL_DECRYPT_FAILED" ? (V(), w("small", Ui, "数据库密钥无法解密，请检查专用加密配置，或输入新密钥替换。")) : (V(), w("small", Wi, "密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。"))
+						a.value.credential_error === "GOOGLE_CREDENTIAL_MIGRATION_REQUIRED" ? (V(), w("small", Ui, "旧密钥尚未转换，请先执行密钥迁移，或输入新密钥替换。")) : (V(), w("small", Wi, "密钥原样存入数据库，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。"))
 					]),
 					T("div", Gi, [
 						T("label", null, [r[12] ||= D("并发上限", -1), O(Ai, {
@@ -26580,7 +26580,7 @@ var Uv = /* @__PURE__ */ k({
 	setup(e, { emit: n }) {
 		let r = e, i = n, a = {
 			apiKey: "Google API Key",
-			apiKeyHint: "API Key 将加密保存，页面不会返回完整密钥。",
+			apiKeyHint: "API Key 将原样存入数据库，页面不会返回完整密钥。",
 			apiKeyPlaceholder: "请输入 Google API Key",
 			cancel: "取消",
 			concurrency: "并发任务数",
@@ -26599,7 +26599,7 @@ var Uv = /* @__PURE__ */ k({
 			apiVersion: "接口版本"
 		}, o = {
 			apiKey: "Google API Key",
-			apiKeyHint: "The API Key is encrypted at rest and is never returned in full.",
+			apiKeyHint: "The API Key is stored as supplied and is never returned in full.",
 			apiKeyPlaceholder: "Enter Google API Key",
 			cancel: "Cancel",
 			concurrency: "Concurrent Tasks",
@@ -32664,4 +32664,4 @@ var CC = class {
 //#endregion
 export { A_ as $, nd as $n, Ei as $r, em as $t, fy as A, yt as Ai, Df as An, js as Ar, Gh as At, jv as B, St as Bi, ff as Bn, as as Br, th as Bt, ub as C, rn as Ci, ap as Cn, Ks as Cr, hg as Ct, Ly as D, Ht as Di, Gf as Dn, Bs as Dr, rg as Dt, Jy as E, Jt as Ei, Xf as En, Hs as Er, ig as Et, zv as F, Ct as Fi, bf as Fn, cs as Fr, Mh as Ft, gv as G, Gd as Gn, _o as Gr, sm as Gt, Cv as H, $ as Hi, nf as Hn, So as Hr, Am as Ht, Rv as I, gt as Ii, sf as In, ls as Ir, Ah as It, M_ as J, jd as Jn, ja as Jr, Yp as Jt, R_ as K, Ud as Kn, ho as Kr, om as Kt, Iv as L, mt as Li, cf as Ln, us as Lr, Oh as Lt, Uv as M, Et as Mi, Tf as Mn, Fs as Mr, Uh as Mt, Hv as N, xt as Ni, wf as Nn, ks as Nr, Rh as Nt, Fy as O, Bt as Oi, Hf as On, Vs as Or, ng as Ot, Bv as P, ht as Pi, xf as Pn, _s as Pr, Lh as Pt, O_ as Q, cd as Qn, Ai as Qr, tm as Qt, Lv as R, _t as Ri, df as Rn, os as Rr, _h as Rt, Pb as S, on as Si, ip as Sn, tc as Sr, pg as St, Zy as T, Qt as Ti, rp as Tn, Us as Tr, _g as Tt, xv as U, $e as Ui, Qd as Un, xo as Ur, gm as Ut, Sv as V, ft as Vi, rf as Vn, is as Vr, Wm as Vt, wv as W, Q as Wi, qd as Wn, bo as Wr, cm as Wt, N_ as X, Od as Xn, ka as Xr, Zp as Xt, P_ as Y, kd as Yn, Aa as Yr, Xp as Yt, k_ as Z, ud as Zn, Ki as Zr, Qp as Zt, Wb as _, Vn as _i, wp as _n, Sc as _r, og as _t, Ox as a, Wr as ai, Wp as an, ql as ar, m_ as at, Hb as b, bn as bi, hp as bn, dc as br, fg as bt, xx as c, Kn as ci, Vp as cn, Wl as cr, Jg as ct, px as d, qn as di, Pp as dn, zl as dr, Dg as dt, ui as ei, Jp as en, Zu as er, E_ as et, lx as f, Yn as fi, Np as fn, Il as fr, Ng as ft, Gb as g, Gn as gi, Dp as gn, el as gr, sg as gt, Ub as h, $n as hi, Ap as hn, ul as hr, Tg as ht, Mx as i, Xr as ii, Gp as in, eu as ir, y_ as it, iy as j, bt as ji, Ef as jn, Ps as jr, Kh as jt, vy as k, zt as ki, If as kn, zs as kr, Wh as kt, bx as l, Jn as li, Bp as ln, Ul as lr, Mg as lt, ix as m, Qn as mi, kp as mn, pl as mr, Og as mt, AC as n, Qr as ni, qp as nn, Gu as nr, v_ as nt, Sx as o, Nr as oi, Up as on, Jl as or, u_ as ot, cx as p, Xn as pi, Op as pn, Al as pr, kg as pt, D_ as q, Rd as qn, lo as qr, am as qt, GS as r, ei as ri, Kp as rn, Bu as rr, b_ as rt, Dx as s, kr as si, Hp as sn, Yl as sr, Zg as st, PC as t, $r as ti, $p as tn, qu as tr, __ as tt, mx as u, Zn as ui, Lp as un, Vl as ur, Ag as ut, qb as v, Rn as vi, Sp as vn, gc as vr, cg as vt, ib as w, en as wi, op as wn, Gs as wr, gg as wt, Vb as x, ln as xi, mp as xn, oc as xr, mg as xt, Kb as y, Cn as yi, xp as yn, hc as yr, ag as yt, Fv as z, Tt as zi, uf as zn, ss as zr, uh as zt };
 
-//# sourceMappingURL=src-CPQZp0Mv.js.map
+//# sourceMappingURL=src-DAff1iN_.js.map

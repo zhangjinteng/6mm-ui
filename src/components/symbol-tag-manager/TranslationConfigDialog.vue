@@ -79,13 +79,13 @@ const props = defineProps<{
 const emit = defineEmits<{ "update:modelValue": [value: boolean] }>();
 
 const zh = {
-  apiKey: "Google API Key", apiKeyHint: "API Key 将加密保存，页面不会返回完整密钥。", apiKeyPlaceholder: "请输入 Google API Key",
+  apiKey: "Google API Key", apiKeyHint: "API Key 将原样存入数据库，页面不会返回完整密钥。", apiKeyPlaceholder: "请输入 Google API Key",
   cancel: "取消", concurrency: "并发任务数", invalid: "验证失败", loadFailed: "翻译配置加载失败", notConfigured: "尚未配置 Google API Key",
   pending: "待验证", save: "保存配置", saveFailed: "翻译配置保存失败", saved: "配置已保存", test: "测试连接",
   testFailed: "连接测试失败", testSuccess: "连接测试成功", title: "Google 翻译配置", valid: "验证通过", apiVersion: "接口版本",
 };
 const en = {
-  apiKey: "Google API Key", apiKeyHint: "The API Key is encrypted at rest and is never returned in full.", apiKeyPlaceholder: "Enter Google API Key",
+  apiKey: "Google API Key", apiKeyHint: "The API Key is stored as supplied and is never returned in full.", apiKeyPlaceholder: "Enter Google API Key",
   cancel: "Cancel", concurrency: "Concurrent Tasks", invalid: "Verification failed", loadFailed: "Failed to load translation configuration", notConfigured: "Google API Key is not configured",
   pending: "Pending verification", save: "Save Configuration", saveFailed: "Failed to save translation configuration", saved: "Configuration saved", test: "Test Connection",
   testFailed: "Connection test failed", testSuccess: "Connection test succeeded", title: "Google Translate Configuration", valid: "Verified", apiVersion: "API Version",

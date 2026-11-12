@@ -17,8 +17,8 @@
           :disabled="busy || readonly" aria-label="Google API Key"
           :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'" /></label>
         <small v-if="settings.api_key_mask">{{ settings.credential_source === 'database' ? '数据库密钥' : '环境配置密钥' }}：{{ settings.api_key_mask }}</small>
-        <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_DECRYPT_FAILED'">数据库密钥无法解密，请检查专用加密配置，或输入新密钥替换。</small>
-        <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small>
+        <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_MIGRATION_REQUIRED'">旧密钥尚未转换，请先执行密钥迁移，或输入新密钥替换。</small>
+        <small v-else>密钥原样存入数据库，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small>
       </div>
       <div class="mm-translation-settings__grid">
         <label>并发上限<MmInputNumber v-model="settings.concurrency_limit" :min="1" :max="20" :disabled="busy || readonly" /></label>

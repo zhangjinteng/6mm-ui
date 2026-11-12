@@ -184,13 +184,13 @@ describe("MmSymbolTagManager", () => {
       remove: vi.fn(),
       update: vi.fn(),
     };
-    const translationConfigActions = {
-      load: vi.fn(async () => ({ provider: "google" as const, api_version: "v2" as const, api_key_mask: "AIza****1234", api_key_set: true, concurrency: 3, is_enabled: true, verify_status: "pending" as const, verified_at: null, last_error: null })),
+    const translationSettingsActions = {
+      load: vi.fn(async () => ({ space_id: "merchant:7", space_revision: "1", target_locales: ["en"], provider: "google", api_version: "v2", credential_ref: "database", credential_configured: true, supported: true, concurrency_limit: 3, request_timeout_seconds: 30, max_attempts: 3, is_enabled: true })),
       save: vi.fn(),
-      test: vi.fn(),
+      testConnection: vi.fn(),
     };
     const wrapper = mount(SymbolTagManager, {
-      props: { actions, locale: "zh-CN", translationConfigActions },
+      props: { actions, locale: "zh-CN", translationSettingsActions },
       global: { stubs: { teleport: true } },
     });
     await flushPromises();
@@ -198,16 +198,17 @@ describe("MmSymbolTagManager", () => {
     await wrapper.find("button[aria-label='查看标签详情']").trigger("click");
     const buttons = wrapper.findAll("button");
     const editIndex = buttons.findIndex((button) => button.text().includes("编辑标签"));
-    const translationIndex = buttons.findIndex((button) => button.text().includes("Google 翻译配置"));
+    const translationIndex = buttons.findIndex((button) => button.text().includes("翻译配置"));
     expect(translationIndex).toBe(editIndex + 1);
 
     await buttons[translationIndex]!.trigger("click");
     await flushPromises();
-    expect(translationConfigActions.load).toHaveBeenCalledOnce();
+    expect(translationSettingsActions.load).toHaveBeenCalledOnce();
     expect(wrapper.text()).toContain("Cloud Translation Basic v2");
-    expect(wrapper.text()).toContain("并发任务数");
+    expect(wrapper.text()).toContain("并发上限");
+    expect(wrapper.text()).toContain("目标语言");
+    expect(wrapper.text()).toContain("最大尝试次数");
     expect(wrapper.text()).not.toContain("启用 Google 翻译");
-    expect(wrapper.text().indexOf("待验证")).toBeGreaterThan(wrapper.text().indexOf("并发任务数"));
   });
 
   it("opens tag languages below edit and only translates empty values", async () => {

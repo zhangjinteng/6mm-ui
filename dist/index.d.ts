@@ -10,3 +10,4 @@ export * from './services/media-upload';
 export * from './shared';
 export * from './components/prediction-operations';
 export * from './components/asset-phase-report';
+export * from './components/translation-settings';

@@ -222,91 +222,20 @@ test('English passed by the parent is readonly and used as the actual translatio
     assert.equal('defaultLocale' in emitted[0][1], false)
 })
 
-test('SEO edits the canonical platform settings rather than the site settings', async () => {
+test('SEO delegates canonical settings and credential lifecycle to the shared dialog', async () => {
     const editor = readFileSync(new URL('./TenantSeoTranslations.vue', import.meta.url), 'utf8')
-    assert.match(editor, /settings\?\.configuration_scope === 'platform' \? '平台统一配置' : '当前内容空间共用'/)
-    const { descriptor } = parse(editor)
-    const script = compileScript(descriptor, { id: 'shared-translation-settings' }).content
-    const javascript = ts.transpileModule(script, {
-        compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 }
-    }).outputText
-    const saved = [], tested = [], emitted = []
-    let failSave = false
-    const module = { exports: {} }
-    vm.runInNewContext(javascript, {
-        module, exports: module.exports, AbortController,
-        require(name) {
-            if (name === 'vue') return { ...Vue, onMounted() {}, onBeforeUnmount() {} }
-            if (name === '@/utils/perm') return { hasPermission: () => true }
-            if (name === '@/api/content/translations') return {
-                saveTranslationSettings: async (input, candidate) => {
-                    if (failSave) throw new Error('Save failed')
-                    saved.push({ ...JSON.parse(JSON.stringify(input)), candidate })
-                    return { ...input, space_revision: '8', credential_configured: true }
-                },
-                testTranslationConnection: async (...args) => { tested.push(args) }
-            }
-            if (name === '../../services/message') return { message: { success() {} } }
-            return {}
-        }
-    })
-    const state = module.exports.default.setup({
-        callbacks: {
-            loadContext: async () => ({}),
-            saveSettings: async (input, candidate) => { if (failSave) throw new Error('Save failed'); saved.push({ ...JSON.parse(JSON.stringify(input)), candidate }); return { ...input, space_revision: '8', credential_configured: true } },
-            testConnection: async (...args) => { tested.push(args) },
-        }, siteId: 'site', readonly: false, editingLocale: 'en',
-        locales: ['zh-CN', 'en', 'ja'].map(value => ({ value, label: value })),
-        translations: {}
-    }, { expose() {}, emit: (...args) => emitted.push(args) })
-    state.context.value = {
-        available: true, source_locale: 'en',
-        settings: {
-            space_id: '41', space_revision: '7', source_locale: 'zh-CN', configuration_scope: 'platform',
-            target_locales: ['en', 'ja'], is_enabled: false, supported: true,
-            concurrency_limit: 3, request_timeout_seconds: 30, max_attempts: 3
-        }
-    }
+    assert.match(editor, /<MmTranslationSettingsDialog/)
+    assert.doesNotMatch(editor, /v-model="apiKey"|mm-translation-settings__credential/)
+    const state = translationLanguageFixture({ callbacks: { loadContext: async () => ({}), saveSettings: async s => s, testConnection: async () => ({}) } }).state
+    const canonical = { space_id: '41', space_revision: '7', source_locale: 'zh-CN', configuration_scope: 'platform', target_locales: ['en'] }
+    state.context.value = { available: true, source_locale: 'en', settings: canonical }
     state.openSettings()
-    assert.equal(state.settings.value.space_id, '41')
-    assert.deepEqual(Array.from(state.settingLocales.value, item => item.value), ['en', 'ja'])
-    assert.deepEqual(Array.from(state.shownLocales.value, item => item.value), ['en', 'ja'])
-    state.settings.value.target_locales = ['en']
-    assert.equal(state.context.value.settings.target_locales.length, 2)
-    assert.deepEqual(Array.from(state.shownLocales.value, item => item.value), ['en', 'ja'])
-    state.apiKey.value = ' FAKE_SEO_CANDIDATE '
-    await state.testConnection()
-    assert.deepEqual(tested[0], ['41', '7', 'FAKE_SEO_CANDIDATE'])
-    assert.equal(state.context.value.settings.api_key, undefined)
-    failSave = true
-    await state.saveSettings()
     assert.equal(state.settingsOpen.value, true)
-    assert.equal(state.apiKey.value, ' FAKE_SEO_CANDIDATE ')
-    failSave = false
-    await state.saveSettings()
-    assert.equal(state.apiKey.value, '')
-    assert.equal(saved[0].candidate, 'FAKE_SEO_CANDIDATE')
-    assert.equal(saved[0].api_key, undefined)
-    assert.equal(saved[0].space_id, '41')
-    assert.equal(saved[0].space_revision, '7')
-    assert.deepEqual(saved[0].target_locales, ['en'])
-    assert.equal(state.context.value.source_locale, 'en')
+    state.settingsSaved({ ...canonical, space_revision: '8', target_locales: ['ja'] })
+    assert.equal(state.context.value.settings.space_id, '41')
     assert.equal(state.context.value.settings.space_revision, '8')
-    assert.equal(emitted.at(-1)[0], 'context-change')
-    assert.deepEqual(Array.from(emitted.at(-1)[1].settings.target_locales), ['en'])
-    assert.deepEqual(Array.from(state.shownLocales.value, item => item.value), ['en'])
-    assert.equal(state.filterOptions.value[0].label, '全部 1')
-    state.openSettings()
-    assert.deepEqual(Array.from(state.settings.value.target_locales), ['en'])
-    assert.equal(state.apiKey.value, '')
-    await state.saveSettings()
-    assert.equal(saved[1].candidate, '')
-    state.openSettings()
-    state.apiKey.value = 'FAKE_DISCARDED_KEY'
-    state.settingsOpen.value = false
-    await Vue.nextTick()
-    assert.equal(state.apiKey.value, '')
-    assert.equal(state.context.value.settings.api_key, undefined)
+    assert.equal(state.context.value.source_locale, 'en')
+    assert.deepEqual(Array.from(state.context.value.settings.target_locales), ['ja'])
 })
 
 function translationLanguageFixture(overrides = {}) {

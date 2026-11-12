@@ -108,8 +108,8 @@
             <button v-if="canUpdate && translationActions" type="button" @click="runDetailAction('translations')">
               <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Languages' : '多语言' }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
-            <button v-if="translationConfigActions" type="button" @click="runDetailAction('translation-config')">
-              <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Google Translate Configuration' : 'Google 翻译配置' }}</span><MmIcon name="chevron-right" :size="15" />
+            <button v-if="translationSettingsActions || translationConfigActions" type="button" @click="runDetailAction('translation-config')">
+              <MmIcon name="globe" :size="15" /><span>{{ locale.toLowerCase().startsWith('en') ? 'Translation Settings' : '翻译配置' }}</span><MmIcon name="chevron-right" :size="15" />
             </button>
             <button v-if="canDelete" class="is-danger" type="button" @click="runDetailAction('delete')">
               <MmIcon name="trash-2" :size="15" /><span>{{ copy.delete }}</span><MmIcon name="chevron-right" :size="15" />
@@ -210,8 +210,10 @@
       </template>
     </MmDialog>
 
+    <MmTranslationSettingsDialog v-if="translationSettingsActions" v-model="translationConfigVisible"
+      :actions="translationSettingsActions" :locales="translationLocaleOptions" />
     <TranslationConfigDialog
-      v-if="translationConfigActions"
+      v-if="!translationSettingsActions && translationConfigActions"
       v-model="translationConfigVisible"
       :actions="translationConfigActions"
       :locale="locale"
@@ -224,7 +226,8 @@
       :draft-mode="translationDraftActive"
       :initial-values="translationDraft"
       :locale="locale"
-      :show-google-settings="Boolean(translationConfigActions)"
+      :show-google-settings="Boolean(translationSettingsActions || translationConfigActions)"
+      :settings-actions="translationSettingsActions"
       :tag-id="translationRow?.id"
       @apply="handleTranslationDraftApplied"
       @open-settings="openTranslationSettings"
@@ -244,6 +247,8 @@
 </template>
 
 <script setup lang="ts">
+import { MmTranslationSettingsDialog } from "../translation-settings";
+
 import { computed, onMounted, reactive, ref, shallowRef } from "vue";
 import MmAlert from "../alert/Alert.vue";
 import MmButton from "../button/Button.vue";
@@ -322,6 +327,12 @@ const pageError = ref("");
 const expandedKeys = ref<Set<TableKey>>(new Set());
 const detailVisible = ref(false);
 const translationConfigVisible = ref(false);
+const translationLocaleOptions = [
+ ['zh-CN','简体中文'],['en','英语'],['ja','日语'],['ru','俄语'],['es-419','西班牙语（拉美）'],
+ ['it','意大利语'],['fr','法语'],['de','德语'],['zh-TW','繁体中文'],['pt-BR','葡萄牙语（巴西）'],
+ ['id','印尼语'],['pl','波兰语'],['vi','越南语'],['uk','乌克兰语'],['pt-PT','葡萄牙语（葡萄牙）'],
+ ['es','西班牙语（国际）'],['uz','乌兹别克语'],['ar','阿拉伯语'],['fil','菲律宾语'],['az','阿塞拜疆语'],
+].map(([value,label]) => ({value,label}));
 const translationVisible = ref(false);
 const translationDraftActive = ref(false);
 const translationDraftReady = ref(false);

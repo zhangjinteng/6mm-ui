@@ -16,7 +16,7 @@
     <template #header-actions>
       <MmButton v-if="showGoogleSettings" size="sm" @click="emit('open-settings')">
         <template #icon><span class="mm-tag-translation__provider-dot" aria-hidden="true"></span></template>
-        Google {{ copy.settings }} <MmIcon name="sliders-horizontal" :size="13" />
+        {{ copy.settings }} <MmIcon name="sliders-horizontal" :size="13" />
       </MmButton>
     </template>
 
@@ -72,6 +72,7 @@
 </template>
 
 <script setup lang="ts">
+import type { TranslationSettingsActions } from '../translation-settings';
 import { computed, onBeforeUnmount, reactive, ref, watch } from "vue";
 import { MmMultilingualFields } from '../multilingual-fields';
 import MmAlert from "../alert/Alert.vue";
@@ -92,6 +93,7 @@ const props = withDefaults(defineProps<{
   locale?: string;
   modelValue: boolean;
   showGoogleSettings?: boolean;
+  settingsActions?: TranslationSettingsActions;
   tagId?: number;
 }>(), {
   draftMode: false,
@@ -208,7 +210,7 @@ async function translateAll() {
     setMessage(copy.value.sourceRequired, "warning");
     return;
   }
-  const targetLocales = languages.value
+  let targetLocales = languages.value
     .map((item) => item.locale)
     .filter((locale) => locale !== sourceLocale.value && !values[locale]?.trim());
   if (!targetLocales.length) return;
@@ -217,6 +219,15 @@ async function translateAll() {
   message.text = "";
   Object.keys(failures).forEach((key) => delete failures[key]);
   try {
+    if (props.settingsActions) {
+      const settings = await props.settingsActions.load();
+      if (current !== generation || !props.modelValue) return;
+      if (!settings.supported || !settings.is_enabled || !settings.credential_configured) {
+        setMessage('请先配置并启用翻译服务', 'warning'); return;
+      }
+      targetLocales = targetLocales.filter(code => settings.target_locales.includes(code));
+      if (!targetLocales.length) { setMessage('没有待翻译的已启用目标语言，请检查翻译配置', 'info'); return; }
+    }
     const result = await props.actions.translate(props.tagId, {
       source_locale: sourceLocale.value,
       source_text: sourceText,

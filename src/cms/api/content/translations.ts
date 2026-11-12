@@ -67,24 +67,8 @@ export interface TranslationDetail extends TranslationRow {
     space_revision: string
     source_locale: string
 }
-export interface TranslationSettings {
-    [key: string]: unknown
-    space_id: string
-    space_revision: string
-    target_locales: string[]
-    provider: string
-    api_version: string
-    credential_ref: string
-    credential_configured: boolean
-    credential_source?: 'database' | 'env'
-    api_key_mask?: string | null
-    credential_error?: string | null
-    supported: boolean
-    is_enabled: boolean
-    concurrency_limit: number
-    request_timeout_seconds: number
-    max_attempts: number
-}
+export type { TranslationSettings } from "../../../components/translation-settings"
+import type { TranslationSettings } from "../../../components/translation-settings"
 export interface TranslationJob {
     id: string
     space_id: string

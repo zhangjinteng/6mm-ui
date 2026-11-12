@@ -1,3 +1,4 @@
+import { TranslationSettingsActions } from '../translation-settings';
 import { SymbolTagTranslationActions } from './types';
 type __VLS_Props = {
     actions: SymbolTagTranslationActions;
@@ -6,6 +7,7 @@ type __VLS_Props = {
     locale?: string;
     modelValue: boolean;
     showGoogleSettings?: boolean;
+    settingsActions?: TranslationSettingsActions;
     tagId?: number;
 };
 declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {

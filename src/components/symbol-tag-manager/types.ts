@@ -1,3 +1,4 @@
+import type { TranslationSettingsActions } from '../translation-settings';
 export interface SymbolTagRow {
   created_at?: string;
   id: number;
@@ -189,6 +190,7 @@ export interface SymbolTagManagerProps {
   labels?: Partial<SymbolTagManagerLabels>;
   locale?: "en-US" | "zh-CN" | string;
   translationConfigActions?: TranslationConfigActions;
+  translationSettingsActions?: TranslationSettingsActions;
   translationActions?: SymbolTagTranslationActions;
 }
 

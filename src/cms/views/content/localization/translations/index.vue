@@ -347,103 +347,8 @@
             </section>
         </main>
 
-        <MmDialog
-            v-model="settingsOpen"
-            title="翻译配置"
-            subtitle="当前内容空间共用 · Google Cloud Translation Basic v2"
-            width="560px"
-            :close-on-click-modal="false"
-            :before-close="() => !configSaving && !testing"
-        >
-            <MmAlert v-if="settingsError" type="error">{{ settingsError }}</MmAlert>
-            <div v-if="settingsLoading" class="region-status">加载配置中…</div>
-            <div v-else-if="settings" class="mm-translation-settings">
-                <label>
-                    目标语言
-                    <MmSelect
-                        v-model="settings.target_locales"
-                        :options="settingsLocaleOptions"
-                        multiple
-                        filterable
-                        :max-tag-count="4"
-                        placeholder="选择需要维护的目标语言"
-                        :disabled="configSaving || testing"
-                        aria-label="翻译目标语言"
-                    />
-                </label>
-                <TranslationEnabledToggle
-                    v-model="settings.is_enabled"
-                    :disabled="configSaving || testing"
-                    :credential-ready="!!settings.credential_configured || !!apiKey.trim()"
-                />
-                <div class="mm-translation-settings__credential">
-                    <label>
-                        Google API Key
-                        <MmInput
-                            v-model="apiKey"
-                            type="password"
-                            autocomplete="new-password"
-                            :disabled="configSaving || testing"
-                            :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'"
-                        />
-                    </label>
-                    <small v-if="settings.api_key_mask">{{ settings.credential_source === 'database' ? '数据库密钥' : '环境配置密钥' }}：{{ settings.api_key_mask }}</small>
-                    <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_DECRYPT_FAILED'">数据库密钥无法解密，请检查两套后台的专用加密配置，或输入新密钥替换。</small>
-                    <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small>
-                </div>
-                <div class="mm-translation-settings__grid">
-                    <label>
-                        并发上限
-                        <MmInputNumber
-                            v-model="settings.concurrency_limit"
-                            :min="1"
-                            :max="20"
-                            :disabled="configSaving || testing"
-                        />
-                    </label>
-                    <label>
-                        请求超时（秒）
-                        <MmInputNumber
-                            v-model="settings.request_timeout_seconds"
-                            :min="1"
-                            :max="120"
-                            :disabled="configSaving || testing"
-                        />
-                    </label>
-                    <label>
-                        最大尝试次数
-                        <MmInputNumber
-                            v-model="settings.max_attempts"
-                            :min="1"
-                            :max="10"
-                            :disabled="configSaving || testing"
-                        />
-                    </label>
-                </div>
-                <MmAlert v-if="!settings.supported" type="warning"
-                    >当前空间关联了其他版本的翻译配置。保存将为该空间创建独立的 Google v2
-                    配置，不修改其他空间。</MmAlert
-                >
-            </div>
-            <template #footer
-                ><MmButton
-                    :loading="testing"
-                    :disabled="(!settings?.credential_configured && !apiKey.trim()) || configSaving || settingsLoading"
-                    @click="testConnection"
-                    >测试连接</MmButton
-                ><MmButton
-                    :disabled="configSaving || testing"
-                    @click="settingsOpen = false"
-                    >取消</MmButton
-                ><MmButton
-                    variant="primary"
-                    :loading="configSaving"
-                    :disabled="!settings || settingsLoading || testing"
-                    @click="saveConfig"
-                    >保存翻译配置</MmButton
-                ></template
-            >
-        </MmDialog>
+        <MmTranslationSettingsDialog v-model="settingsOpen" :actions="settingsActions"
+            :locales="settingsLocaleOptions" @busy="configSaving = $event" @saved="refresh" />
 
         <MmDialog
             v-model="jobOpen"
@@ -506,7 +411,7 @@
 
 <script setup lang="ts">
 import { useCmsRuntime } from "../../../../runtime"
-import TranslationEnabledToggle from '../../../../../components/translation-enabled-toggle/TranslationEnabledToggle.vue'
+import { MmTranslationSettingsDialog, type TranslationSettingsActions } from '../../../../../components/translation-settings'
 const { cancelTranslationJob, createTranslationJob, getTranslationDetail, getTranslationJob, getTranslationList, getTranslationMetadata, getTranslationSettings, saveTranslations, saveTranslationSettings, testTranslationConnection } = useTranslationsApi()
 const { hasPermission } = useCmsRuntime()
 
@@ -520,7 +425,6 @@ import {
     MmFormItem,
     MmIcon,
     MmInput,
-    MmInputNumber,
     MmProgress,
     MmSelect,
     MmTabPane,
@@ -563,20 +467,21 @@ const loading = ref(false),
 const focusedLocale = ref(''),
     editorBody = ref<HTMLElement>(),
     job = ref<TranslationJob | null>(null)
-const settingsOpen = ref(false),
-    apiKey = ref(''),
-    settingsLoading = ref(false),
-    settings = ref<TranslationSettings>(),
-    settingsError = ref(''),
-    configSaving = ref(false),
-    testing = ref(false)
+const settingsOpen = ref(false), configSaving = ref(false)
+const settingsActions: TranslationSettingsActions = {
+    load: () => getTranslationSettings(spaceId.value, lifetime.signal),
+    save: (settings, key) => {
+        if (dirty.value) throw new Error('请先保存或放弃当前译文修改，再修改配置。')
+        return saveTranslationSettings(settings, key)
+    },
+    testConnection: (settings, key) => testTranslationConnection(settings.space_id, settings.space_revision, key),
+}
 const jobOpen = ref(false),
     jobMode = ref<'batch' | 'field'>('field'),
     jobLocales = ref<string[]>([]),
     jobError = ref(''),
     submittingJob = ref(false)
 const discardOpen = ref(false)
-watch(settingsOpen, open => { if (!open) apiKey.value = '' })
 let pendingChange: (() => void) | undefined,
     listController: AbortController | undefined,
     detailController: AbortController | undefined,
@@ -610,7 +515,7 @@ const localeOptions = computed(() =>
     targetOptions.value.map((l) => ({ label: `${l.flag} ${l.label}`, value: l.code }))
 )
 const settingsLocaleOptions = computed(() =>
-    targetOptions.value.map((l) => ({ label: `${l.label} · ${l.code}`, value: l.code }))
+    metadata.value?.locales.map((l) => ({ label: `${l.label} · ${l.code}`, value: l.code })) || []
 )
 const enabledLocaleOptions = computed(() =>
     localeOptions.value.filter((l) => isEnabled(String(l.value)))
@@ -850,53 +755,9 @@ async function focusLocale(code: string) {
     target?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
     target?.querySelector('textarea')?.focus()
 }
-async function openSettings() {
-    if (!canConfig.value || !spaceId.value) return
-    settingsOpen.value = true
-    settingsLoading.value = true
-    settingsError.value = ''
-    settings.value = undefined
-    apiKey.value = ''
-    try {
-        settings.value = await getTranslationSettings(spaceId.value, lifetime.signal)
-    } catch (e) {
-        settingsError.value = readableError(e)
-    } finally {
-        settingsLoading.value = false
-    }
-}
-async function saveConfig() {
-    if (!settings.value || configSaving.value) return
-    if (dirty.value) {
-        settingsError.value = '请先保存或放弃当前译文修改，再修改配置。'
-        return
-    }
-    configSaving.value = true
-    settingsError.value = ''
-    try {
-        await saveTranslationSettings(settings.value, apiKey.value.trim())
-        apiKey.value = ''
-        settingsOpen.value = false
-        message.success('翻译配置已保存')
-        await refresh()
-    } catch (e) {
-        settingsError.value = readableError(e)
-    } finally {
-        configSaving.value = false
-    }
-}
-async function testConnection() {
-    if (!settings.value || testing.value || configSaving.value) return
-    testing.value = true
-    settingsError.value = ''
-    try {
-        await testTranslationConnection(settings.value.space_id, settings.value.space_revision, apiKey.value.trim())
-        message.success('Google Translate 连接成功')
-    } catch (e) {
-        settingsError.value = readableError(e)
-    } finally {
-        testing.value = false
-    }
+function openSettings() {
+    if (canConfig.value && spaceId.value && !dirty.value) settingsOpen.value = true
+    else if (dirty.value) message.warning('请先保存或放弃当前译文修改，再修改配置。')
 }
 function openJob(mode: 'batch' | 'field') {
     jobMode.value = mode
@@ -989,7 +850,6 @@ onMounted(() => {
     void refresh()
 })
 onBeforeUnmount(() => {
-    apiKey.value = ''
     routeDecision?.(false)
     lifetime.abort()
     listController?.abort()

@@ -72,112 +72,20 @@
             >
         </template>
     </MmDialog>
-    <MmDialog
-        v-model="settingsOpen"
-        title="翻译配置"
-        :subtitle="`${settings?.configuration_scope === 'platform' ? '平台统一配置' : '当前内容空间共用'} · Google Cloud Translation Basic v2`"
-        width="560px"
-        :close-on-click-modal="false"
-        :before-close="() => !configSaving && !testing"
-    >
-        <MmAlert v-if="settingsError" type="error"
-            >{{ settingsError }}
-            <MmButton
-                size="sm"
-                :disabled="configSaving || testing || contextLoading"
-                @click="reloadSettings"
-                >重新加载配置</MmButton
-            >
-        </MmAlert>
-        <div v-if="settings" class="mm-translation-settings">
-            <label
-                >目标语言<MmSelect
-                    v-model="settings.target_locales"
-                    :options="settingLocales"
-                    multiple
-                    filterable
-                    :max-tag-count="4"
-                    :disabled="configSaving || testing"
-                    aria-label="翻译目标语言"
-            /></label>
-            <TranslationEnabledToggle
-                v-model="settings.is_enabled"
-                :disabled="configSaving || testing"
-                :credential-ready="!!settings.credential_configured || !!apiKey.trim()"
-            />
-            <div class="mm-translation-settings__credential">
-                <label>
-                    Google API Key
-                    <MmInput
-                        v-model="apiKey"
-                        type="password"
-                        autocomplete="new-password"
-                        :disabled="configSaving || testing"
-                        :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'"
-                        aria-label="Google API Key"
-                    />
-                </label>
-                <small v-if="settings.api_key_mask">{{ settings.credential_source === 'database' ? '数据库密钥' : '环境配置密钥' }}：{{ settings.api_key_mask }}</small>
-                <small v-if="settings.credential_error === 'GOOGLE_CREDENTIAL_DECRYPT_FAILED'">数据库密钥无法解密，请检查两套后台的专用加密配置，或输入新密钥替换。</small>
-                <small v-else>密钥加密保存，不回显原文；留空保留原值。未配置密钥时仍可人工翻译。</small>
-            </div>
-            <div class="mm-translation-settings__grid">
-                <label
-                    >并发上限<MmInputNumber
-                        v-model="settings.concurrency_limit"
-                        :min="1"
-                        :max="20"
-                        :disabled="configSaving || testing"
-                /></label>
-                <label
-                    >请求超时（秒）<MmInputNumber
-                        v-model="settings.request_timeout_seconds"
-                        :min="1"
-                        :max="120"
-                        :disabled="configSaving || testing"
-                /></label>
-                <label
-                    >最大尝试次数<MmInputNumber
-                        v-model="settings.max_attempts"
-                        :min="1"
-                        :max="10"
-                        :disabled="configSaving || testing"
-                /></label>
-            </div>
-        </div>
-        <template #footer>
-            <MmButton
-                :loading="testing"
-                :disabled="configSaving || !settings || (!settings.credential_configured && !apiKey.trim())"
-                @click="testConnection"
-                >测试连接</MmButton
-            >
-            <MmButton :disabled="configSaving || testing" @click="settingsOpen = false"
-                >取消</MmButton
-            >
-            <MmButton
-                variant="primary"
-                :loading="configSaving"
-                :disabled="testing || !settings"
-                @click="saveSettings"
-                >保存翻译配置</MmButton
-            >
-        </template>
-    </MmDialog>
+    <MmTranslationSettingsDialog v-model="settingsOpen" :actions="settingsActions" :locales="locales"
+        @saved="settingsSaved" />
 </template>
 
 <script setup lang="ts">
 import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 import { MmAlert } from '../alert'
 import { MmButton } from '../button'
-import TranslationEnabledToggle from '../translation-enabled-toggle/TranslationEnabledToggle.vue'
+import { MmTranslationSettingsDialog, type TranslationSettingsActions } from '../translation-settings'
 import { MmDialog } from '../dialog'
 import { MmIcon } from '../icon'
 import { MmInput } from '../input'
-import { MmInputNumber } from '../input-number'
 import { MmLoading } from '../loading'
 import { MmSegmented } from '../segmented'
-import { MmSelect } from '../select'
 import { MmMultilingualFields, type TranslationField } from '../multilingual-fields'
 import { message } from '../../services/message'
 import type { SeoCopy, SeoTranslationContext, SeoTranslationCallbacks, TranslationSettings } from './model'
@@ -216,13 +124,16 @@ const context = ref<SeoTranslationContext | null>(null),
     contextError = ref(false)
 const running = ref(false),
     progress = reactive({ done: 0, total: 0 })
-const settingsOpen = ref(false),
-    apiKey = ref(''),
-    settings = ref<TranslationSettings | null>(null),
-    settingsError = ref('')
-const configSaving = ref(false),
-    testing = ref(false)
-watch(settingsOpen, open => { if (!open) apiKey.value = '' }, { flush: 'sync' })
+const settingsOpen = ref(false)
+const settingsActions: TranslationSettingsActions = {
+    load: async () => {
+        await loadContext()
+        if (!context.value?.settings || contextError.value) throw new Error('翻译配置读取失败')
+        return context.value.settings
+    },
+    save: (settings, key) => props.callbacks.saveSettings!(settings, key),
+    testConnection: (settings, key) => props.callbacks.testConnection!(settings.space_id, settings.space_revision, key),
+}
 let generation = 0,
     disposed = false
 let contextController: AbortController | undefined
@@ -262,11 +173,6 @@ const shownLocales = computed(() => {
     )
     return source ? [source, ...targets] : targets
 })
-const settingLocales = computed(() =>
-    props.locales.filter(
-        (item) => item.value !== (settings.value?.source_locale || context.value?.settings?.source_locale || context.value?.source_locale)
-    )
-)
 function isComplete(code: string) {
     return !!(copies.value[code]?.title.trim() && copies.value[code]?.description.trim())
 }
@@ -408,52 +314,16 @@ function apply() {
     close()
 }
 function openSettings() {
-    if (!canConfigure.value || !context.value?.settings) return
-    apiKey.value = ''
-    settings.value = JSON.parse(JSON.stringify(context.value.settings))
-    settingsError.value = ''
-    settingsOpen.value = true
+    if (canConfigure.value && context.value?.settings) settingsOpen.value = true
 }
-async function reloadSettings() {
-    await loadContext()
-    if (!disposed && !contextError.value) openSettings()
-}
-async function saveSettings() {
-    if (!settings.value || !canConfigure.value || configSaving.value || testing.value) return
-    configSaving.value = true
-    settingsError.value = ''
-    try {
-        const value = await props.callbacks.saveSettings!(settings.value, apiKey.value.trim())
-        if (disposed) return
-        if (context.value) {
-            context.value = { ...context.value, settings: value }
-            emit('context-change', context.value)
-        }
-        apiKey.value = ''
-        settingsOpen.value = false
-        message.success('翻译配置已保存')
-    } catch {
-        if (!disposed) settingsError.value = '翻译配置保存失败，请重新加载后重试'
-    } finally {
-        if (!disposed) configSaving.value = false
-    }
-}
-async function testConnection() {
-    if (!settings.value || !canConfigure.value || testing.value || configSaving.value) return
-    testing.value = true
-    settingsError.value = ''
-    try {
-        await props.callbacks.testConnection!(settings.value.space_id, settings.value.space_revision, apiKey.value.trim())
-        if (!disposed) message.success('连接成功')
-    } catch {
-        if (!disposed) settingsError.value = '连接失败，请检查翻译密钥与网络配置'
-    } finally {
-        if (!disposed) testing.value = false
+function settingsSaved(value: TranslationSettings) {
+    if (!disposed && context.value) {
+        context.value = { ...context.value, settings: value }
+        emit('context-change', context.value)
     }
 }
 onMounted(loadContext)
 onBeforeUnmount(() => {
-    apiKey.value = ''
     disposed = true
     stop()
     contextController?.abort()

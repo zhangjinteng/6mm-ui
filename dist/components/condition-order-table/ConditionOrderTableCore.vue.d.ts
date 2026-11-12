@@ -42,13 +42,13 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {
     reload: (reason?: import('../..').MmProTableRequestReason) => Promise<void>;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {}, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{}>, {
+    actions: import('./types').ConditionOrderTableActions<ConditionOrderRow>;
     ariaLabel: string;
     pageSizes: number[];
     columnsConfigurable: boolean;
     fillHeight: boolean;
     filterDrawerSubtitle: string;
     filterDrawerTitle: string;
-    actions: import('./types').ConditionOrderTableActions<ConditionOrderRow>;
     initialPageSize: number;
     showUserType: boolean;
     quantityDisplay: import('./types').ConditionOrderQuantityDisplay;

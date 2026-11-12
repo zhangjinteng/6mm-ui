@@ -72,7 +72,7 @@ describe("MmHandlingFeeConfig", () => {
     findBodyButton('确定').click();
     await flushPromises();
     expect(update).toHaveBeenCalledWith(own, expect.objectContaining({ maker_fee_rate: '0.00025', taker_fee_rate: '0' }),
-      expect.objectContaining({ requestId: expect.stringMatching(/^[A-Za-z0-9_-]{16,64}$/) }));
+      expect.objectContaining({ requestId: expect.stringMatching(/^fee-[0-9]{13}-[A-Za-z0-9_-]{16,44}$/) }));
     wrapper.unmount();
     expect(shiftFeeDecimal('0.000000000000000001', 2)).toBe('0.0000000000000001');
     expect(shiftFeeDecimal('0.0000000000000001', -2)).toBe('0.000000000000000001');

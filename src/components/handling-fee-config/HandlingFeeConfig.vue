@@ -72,7 +72,8 @@ const formRequestId = ref('');
 const deleteRequestId = ref('');
 const retrying = ref(false);
 const retryError = ref('');
-const newRequestId = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}-fee`;
+// Timestamp lets the server reject an expired receipt instead of creating a new TK command.
+const newRequestId = () => `fee-${Date.now()}-${globalThis.crypto?.randomUUID?.() ?? Math.random().toString(36).slice(2).padEnd(16, '0')}`;
 
 function normalizeAgentId(value: unknown): number | string {
   if (typeof value === 'string' && /^\d+$/.test(value) && !Number.isSafeInteger(Number(value))) return value;

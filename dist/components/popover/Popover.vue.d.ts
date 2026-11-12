@@ -29,20 +29,20 @@ declare const __VLS_base: import('vue').DefineComponent<PopoverProps, {
     toggle: typeof toggle;
     updatePosition: typeof updatePosition;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    close: () => any;
     "update:modelValue": (value: boolean) => any;
+    close: () => any;
     open: () => any;
     "visible-change": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<PopoverProps> & Readonly<{
-    onClose?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    onClose?: (() => any) | undefined;
     onOpen?: (() => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
     disabled: boolean;
+    modelValue: boolean;
     width: number | string;
     role: string;
-    modelValue: boolean;
     closeDelay: number;
     closeOnClickOutside: boolean;
     closeOnEscape: boolean;

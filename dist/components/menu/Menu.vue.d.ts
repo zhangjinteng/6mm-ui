@@ -7,15 +7,15 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<MenuProps, {
     focusFirst: typeof focusFirst;
 }, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    select: (value: MenuValue) => any;
     change: (value: MenuValue) => any;
     "update:modelValue": (value: MenuValue) => any;
+    select: (value: MenuValue) => any;
     "open-change": (value: MenuValue[]) => any;
     "update:openKeys": (value: MenuValue[]) => any;
 }, string, import('vue').PublicProps, Readonly<MenuProps> & Readonly<{
-    onSelect?: ((value: MenuValue) => any) | undefined;
     onChange?: ((value: MenuValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: MenuValue) => any) | undefined;
+    onSelect?: ((value: MenuValue) => any) | undefined;
     "onOpen-change"?: ((value: MenuValue[]) => any) | undefined;
     "onUpdate:openKeys"?: ((value: MenuValue[]) => any) | undefined;
 }>, {

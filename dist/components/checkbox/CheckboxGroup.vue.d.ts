@@ -11,12 +11,12 @@ declare const __VLS_base: import('vue').DefineComponent<CheckboxGroupProps, {}, 
     "onUpdate:modelValue"?: ((value: CheckboxValue[]) => any) | undefined;
 }>, {
     disabled: boolean;
+    modelValue: CheckboxValue[];
+    readonly: boolean;
     size: import('../..').FormControlSize;
     status: import('../..').FormControlStatus;
     max: number;
     min: number;
-    modelValue: CheckboxValue[];
-    readonly: boolean;
     direction: "horizontal" | "vertical";
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;

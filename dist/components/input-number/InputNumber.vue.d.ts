@@ -6,21 +6,21 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<InputNumberProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     blur: (event: FocusEvent) => any;
     change: (value: number | null) => any;
-    "update:modelValue": (value: number | null) => any;
     focus: (event: FocusEvent) => any;
+    "update:modelValue": (value: number | null) => any;
 }, string, import('vue').PublicProps, Readonly<InputNumberProps> & Readonly<{
     onBlur?: ((event: FocusEvent) => any) | undefined;
     onChange?: ((value: number | null) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: number | null) => any) | undefined;
     onFocus?: ((event: FocusEvent) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: number | null) => any) | undefined;
 }>, {
     disabled: boolean;
+    modelValue: number | null;
+    readonly: boolean;
     size: import('../..').FormControlSize;
     status: import('../..').FormControlStatus;
     max: number;
     min: number;
-    modelValue: number | null;
-    readonly: boolean;
     controls: boolean;
     precision: number;
     step: number;

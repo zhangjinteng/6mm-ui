@@ -10,8 +10,8 @@ declare const __VLS_base: import('vue').DefineComponent<TabsProps, {}, {}, {}, {
     onChange?: ((value: TabsValue) => any) | undefined;
     "onUpdate:modelValue"?: ((value: TabsValue) => any) | undefined;
 }>, {
-    type: import('./types').TabsType;
     modelValue: TabsValue;
+    type: import('./types').TabsType;
     direction: import('./types').TabsDirection;
     lazy: boolean;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;

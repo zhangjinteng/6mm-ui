@@ -47,26 +47,11 @@
       <div v-if="loading" class="mm-tag-translation__loading" role="status">
         <MmIcon name="loader-circle" :size="18" />{{ copy.loading }}
       </div>
-      <div v-else class="mm-tag-translation__grid">
-        <div v-for="language in visibleLanguages" :key="language.locale" class="mm-tag-translation__language">
-          <div class="mm-tag-translation__language-head">
-            <strong>{{ languageLabel(language) }}</strong>
-            <code>{{ language.locale }}</code>
-            <span :class="languageStatus(language).className">{{ languageStatus(language).label }}</span>
-          </div>
-          <MmInput
-            :model-value="values[language.locale] || ''"
-            :disabled="busy"
-            :maxlength="100"
-            :placeholder="placeholder(language)"
-            @update:model-value="updateValue(language.locale, $event)"
-          />
-          <small v-if="failures[language.locale]" class="mm-tag-translation__failure">
-            {{ failures[language.locale] }}
-          </small>
-        </div>
-        <div v-if="visibleLanguages.length === 0" class="mm-tag-translation__empty">{{ copy.noMatches }}</div>
-      </div>
+      <MmMultilingualFields v-else class="mm-tag-translation__fields" :locales="editorLocales"
+        :fields="[{ key: 'name', label: copy.name, maxLength: 100 }]" :values="editorValues"
+        :errors="editorErrors" :source-locale="sourceLocale" :disabled="busy" :empty-text="copy.noMatches"
+        :locale="locale"
+        @edit="(locale, _field, value) => updateValue(locale, value)" />
     </div>
 
     <template #footer>
@@ -87,13 +72,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, watch } from "vue";
+import { computed, onBeforeUnmount, reactive, ref, watch } from "vue";
+import { MmMultilingualFields } from '../multilingual-fields';
 import MmAlert from "../alert/Alert.vue";
 import type { AlertType } from "../alert";
 import MmButton from "../button/Button.vue";
 import MmDialog from "../dialog/Dialog.vue";
 import MmIcon from "../icon/Icon.vue";
-import MmInput from "../input/Input.vue";
 import MmSegmented from "../segmented/Segmented.vue";
 import MmSelect from "../select/Select.vue";
 import type { SelectOption } from "../select";
@@ -123,6 +108,7 @@ const emit = defineEmits<{
 }>();
 
 const zh = {
+  name: '标签名称',
   all: "全部", apply: "应用到表单", cancel: "取消", chooseSource: "请选择翻译源", configured: "已配置", failed: "失败",
   loadFailed: "标签多语言加载失败", loading: "正在加载标签语言", noMatches: "当前状态下没有语言", original: "原文", pending: "待完善", settings: "设置", source: "翻译来源",
   sourceRequired: "请先填写翻译源语言内容", title: "标签多语言", translateAll: "Google 一键翻译", translateFailed: "部分语言翻译失败，可重试或手动填写。",
@@ -130,6 +116,7 @@ const zh = {
   saveFailed: "标签多语言保存失败", saved: "标签多语言已保存",
 };
 const en = {
+  name: 'Tag name',
   all: "All", apply: "Apply to Form", cancel: "Cancel", chooseSource: "Choose source language", configured: "Configured", failed: "Failed",
   loadFailed: "Failed to load tag languages", loading: "Loading tag languages", noMatches: "No languages in this state", original: "Source", pending: "Pending", settings: "Settings", source: "Translation source",
   sourceRequired: "Enter the source language value first", title: "Tag Languages", translateAll: "Translate with Google", translateFailed: "Some languages failed. Retry or enter them manually.",
@@ -163,10 +150,16 @@ const visibleLanguages = computed(() => languages.value.filter((item) => {
   if (statusFilter.value === "pending") return !values[item.locale]?.trim();
   return true;
 }));
+const editorLocales = computed(() => visibleLanguages.value.map(item => ({ value: item.locale, label: languageLabel(item), placeholder: placeholder(item) })));
+const editorValues = computed(() => Object.fromEntries(Object.entries(values).map(([code, name]) => [code, { name }])));
+const editorErrors = computed(() => Object.fromEntries(Object.entries(failures).map(([code, name]) => [code, { name }])));
+let generation = 0;
+onBeforeUnmount(() => { generation++; });
 
-watch(() => props.modelValue, (visible) => {
+watch(() => [props.modelValue, props.tagId] as const, ([visible]) => {
+  generation++;
   if (visible) void load();
-});
+}, { immediate: true });
 
 function languageLabel(language: SymbolTagTranslationLanguage): string {
   return props.locale.toLowerCase().startsWith("en") ? language.label_en : language.label;
@@ -176,11 +169,6 @@ function placeholder(language: SymbolTagTranslationLanguage): string {
     ? `Enter ${language.label_en} tag name`
     : `请输入${language.label}标签显示名称`;
 }
-function languageStatus(language: SymbolTagTranslationLanguage): { className: string; label: string } {
-  if (failures[language.locale]) return { className: "is-failed", label: `• ${copy.value.failed}` };
-  if (values[language.locale]?.trim()) return { className: "is-configured", label: `• ${copy.value.written}` };
-  return { className: "is-empty", label: `• ${copy.value.unwritten}` };
-}
 function updateValue(locale: string, value: unknown) {
   values[locale] = String(value ?? "");
   delete failures[locale];
@@ -189,6 +177,9 @@ function setMessage(text: string, type: AlertType, description?: string) {
   Object.assign(message, { text, type, description });
 }
 async function load() {
+  const current = ++generation;
+  translating.value = false;
+  saving.value = false;
   loading.value = true;
   message.text = "";
   languages.value = [];
@@ -196,6 +187,7 @@ async function load() {
   Object.keys(failures).forEach((key) => delete failures[key]);
   try {
     const detail = await props.actions.load(props.tagId);
+    if (current !== generation || !props.modelValue) return;
     languages.value = detail.languages || [];
     languages.value.forEach((item) => {
       values[item.locale] = props.draftMode
@@ -205,10 +197,12 @@ async function load() {
     sourceLocale.value = values["zh-CN"]?.trim() ? "zh-CN" : (values.en?.trim() ? "en" : (sourceOptions.value[0]?.value as string || "zh-CN"));
     statusFilter.value = "all";
   } catch (error) {
+    if (current !== generation) return;
     setMessage(error instanceof Error ? error.message : copy.value.loadFailed, "error");
-  } finally { loading.value = false; }
+  } finally { if (current === generation) loading.value = false; }
 }
 async function translateAll() {
+  const current = generation;
   const sourceText = values[sourceLocale.value]?.trim() || "";
   if (!sourceText) {
     setMessage(copy.value.sourceRequired, "warning");
@@ -228,16 +222,20 @@ async function translateAll() {
       source_text: sourceText,
       target_locales: targetLocales,
     });
+    if (current !== generation || !props.modelValue) return;
     Object.entries(result.translations || {}).forEach(([locale, value]) => {
       if (!values[locale]?.trim()) values[locale] = value;
     });
     Object.assign(failures, result.failures || {});
     setMessage(Object.keys(failures).length ? copy.value.translateFailed : copy.value.translateSuccess, Object.keys(failures).length ? "warning" : "success");
   } catch (error) {
+    if (current !== generation) return;
     setMessage(error instanceof Error ? error.message : copy.value.translateFailed, "error");
-  } finally { translating.value = false; }
+  } finally { if (current === generation) translating.value = false; }
 }
 async function save() {
+  if (busy.value) return;
+  const current = generation;
   if (props.draftMode) {
     emit("apply", { ...values });
     emit("update:modelValue", false);
@@ -247,17 +245,20 @@ async function save() {
   message.text = "";
   try {
     await props.actions.save(props.tagId, { ...values });
+    if (current !== generation || !props.modelValue) return;
     setMessage(copy.value.saved, "success");
     emit("saved");
     emit("update:modelValue", false);
   } catch (error) {
+    if (current !== generation) return;
     setMessage(error instanceof Error ? error.message : copy.value.saveFailed, "error");
-  } finally { saving.value = false; }
+  } finally { if (current === generation) saving.value = false; }
 }
 </script>
 
 <style>
 .mm-tag-translation-dialog{max-height:min(760px,calc(100vh - 36px))}.mm-tag-translation-dialog .mm-dialog__body{padding:0;overflow:hidden}
+.mm-tag-translation__fields { max-height: 520px; overflow: auto; padding: 0 20px 20px; }
 .mm-tag-translation__title{display:flex;align-items:baseline;gap:12px}.mm-tag-translation__title strong{font-size:16px}.mm-tag-translation__title span{color:var(--mm-color-text-subtle);font-size:11px;font-weight:var(--mm-font-weight-medium)}
 .mm-tag-translation__provider-dot{width:6px;height:6px;border-radius:50%;background:var(--mm-color-success);box-shadow:0 0 0 3px var(--mm-color-success-soft)}
 .mm-tag-translation{display:grid;min-height:470px;grid-template-rows:auto auto minmax(0,1fr)}.mm-tag-translation>.mm-alert{margin:12px 20px 0}

@@ -10,10 +10,10 @@ declare const __VLS_base: import('vue').DefineComponent<AlertProps, {}, {}, {}, 
 }, string, import('vue').PublicProps, Readonly<AlertProps> & Readonly<{
     onClose?: (() => any) | undefined;
 }>, {
-    title: string;
     type: import('./types').AlertType;
-    center: boolean;
+    title: string;
     closable: boolean;
+    center: boolean;
     showIcon: boolean;
     banner: boolean;
     description: string;

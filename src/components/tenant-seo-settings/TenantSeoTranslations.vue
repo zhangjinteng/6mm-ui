@@ -48,66 +48,9 @@
             {{ running ? '翻译中' : '翻译结束' }} {{ progress.done }}/{{ progress.total }}
             <MmButton v-if="running" size="sm" @click="stop">停止</MmButton>
         </div>
-        <div class="translation-rows">
-            <section
-                v-for="item in shownLocales"
-                :key="item.value"
-                class="translation-row"
-                :class="{ 'is-source': item.value === sourceLocale }"
-            >
-                <div class="translation-language">
-                    <strong>{{ item.label }}</strong>
-                    <MmTag
-                        size="sm"
-                        :type="
-                            hasError(item.value)
-                                ? 'danger'
-                                : isComplete(item.value)
-                                  ? 'success'
-                                  : 'info'
-                        "
-                    >
-                        {{
-                            item.value === sourceLocale
-                                ? '源语言'
-                                : hasError(item.value)
-                                  ? '翻译失败'
-                                  : isComplete(item.value)
-                                    ? '已配置'
-                                    : '待完善'
-                        }}
-                    </MmTag>
-                </div>
-                <label
-                    >首页标题
-                    <MmInput
-                        :model-value="copies[item.value]?.title || ''"
-                        :maxlength="200"
-                        :disabled="readonly"
-                        :aria-label="`${item.value} 首页标题`"
-                        @update:model-value="edit(item.value, 'title', String($event ?? ''))"
-                    />
-                    <small v-if="errors[item.value]?.title" class="translation-error">{{
-                        errors[item.value].title
-                    }}</small>
-                </label>
-                <label
-                    >首页描述
-                    <textarea class="mm-tenant-seo-textarea"
-                        :value="copies[item.value]?.description || ''"
-                        :rows="2"
-                        :maxlength="1000"
-                        :disabled="readonly"
-                        :aria-label="`${item.value} 首页描述`"
-                        @input="edit(item.value, 'description', ($event.target as HTMLTextAreaElement).value)"
-                    ></textarea>
-                    <small v-if="errors[item.value]?.description" class="translation-error">{{
-                        errors[item.value].description
-                    }}</small>
-                </label>
-            </section>
-            <div v-if="!shownLocales.length" class="translation-empty">暂无匹配语言</div>
-        </div>
+        <MmMultilingualFields :locales="shownLocales" :fields="editorFields" :values="copies"
+            :errors="errors" :source-locale="sourceLocale" :disabled="readonly"
+            @edit="(code, field, value) => edit(code, field as Field, value)" />
         <template #footer>
             <span class="translation-footer-status">{{ readonly ? '只读' : '尚未保存' }}</span>
             <MmButton @click="close">{{ readonly ? '关闭' : '取消' }}</MmButton>
@@ -235,7 +178,7 @@ import { MmInputNumber } from '../input-number'
 import { MmLoading } from '../loading'
 import { MmSegmented } from '../segmented'
 import { MmSelect } from '../select'
-import { MmTag } from '../tag'
+import { MmMultilingualFields, type TranslationField } from '../multilingual-fields'
 import { message } from '../../services/message'
 import type { SeoCopy, SeoTranslationContext, SeoTranslationCallbacks, TranslationSettings } from './model'
 
@@ -253,6 +196,10 @@ const emit = defineEmits<{
     'context-change': [value: SeoTranslationContext]
 }>()
 const fields = ['title', 'description'] as const
+const editorFields: TranslationField[] = [
+    { key: 'title', label: '首页标题', maxLength: 200 },
+    { key: 'description', label: '首页描述', maxLength: 1000, multiline: true },
+]
 type Field = (typeof fields)[number]
 const copies = ref<Record<string, SeoCopy>>(JSON.parse(JSON.stringify(props.translations)))
 const sourceLocale = computed(() => props.editingLocale)

@@ -8,24 +8,24 @@ type __VLS_Slots = {} & {
 declare const __VLS_base: import('vue').DefineComponent<SelectProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     error: (error: Error) => any;
     change: (value: SelectValue | SelectValue[]) => any;
-    "update:modelValue": (value: SelectValue | SelectValue[]) => any;
     clear: () => any;
+    "update:modelValue": (value: SelectValue | SelectValue[]) => any;
     "visible-change": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<SelectProps> & Readonly<{
     onError?: ((error: Error) => any) | undefined;
     onChange?: ((value: SelectValue | SelectValue[]) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: SelectValue | SelectValue[]) => any) | undefined;
     onClear?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: SelectValue | SelectValue[]) => any) | undefined;
     "onVisible-change"?: ((value: boolean) => any) | undefined;
 }>, {
+    clearable: boolean;
     disabled: boolean;
-    loading: boolean;
+    modelValue: SelectValue | SelectValue[];
+    readonly: boolean;
     size: import('../..').FormControlSize;
     status: import('../..').FormControlStatus;
+    loading: boolean;
     max: number;
-    modelValue: SelectValue | SelectValue[];
-    clearable: boolean;
-    readonly: boolean;
     multiple: boolean;
     options: SelectOption[];
     filterable: boolean;

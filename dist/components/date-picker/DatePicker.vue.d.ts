@@ -14,28 +14,28 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_base: import('vue').DefineComponent<DatePickerProps, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     change: (value: DatePickerValue) => any;
-    "update:modelValue": (value: DatePickerValue) => any;
     clear: () => any;
+    "update:modelValue": (value: DatePickerValue) => any;
     invalid: (input: string) => any;
     "update:open": (value: boolean) => any;
 }, string, import('vue').PublicProps, Readonly<DatePickerProps> & Readonly<{
     onChange?: ((value: DatePickerValue) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     onClear?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: DatePickerValue) => any) | undefined;
     onInvalid?: ((input: string) => any) | undefined;
     "onUpdate:open"?: ((value: boolean) => any) | undefined;
 }>, {
+    clearable: boolean;
     disabled: boolean;
+    modelValue: DatePickerValue;
+    readonly: boolean;
     size: import('../..').FormControlSize;
-    type: import('./types').DatePickerType;
     status: import('../..').FormControlStatus;
+    type: import('./types').DatePickerType;
     editable: boolean;
     disabledDate: (date: string) => boolean;
     max: string;
     min: string;
-    modelValue: DatePickerValue;
-    clearable: boolean;
-    readonly: boolean;
     open: boolean;
     closeOnSelect: boolean;
     format: string;

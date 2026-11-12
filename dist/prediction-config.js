@@ -1,4 +1,4 @@
-import { n as e, t, u as n } from "./Loading-NM70IAOz.js";
+import { a as e, i as t, t as n } from "./Loading-Djhi-Drb.js";
 import { Fragment as r, computed as i, createBlock as a, createCommentVNode as o, createElementBlock as s, createElementVNode as c, createSlots as l, createTextVNode as u, createVNode as d, defineComponent as f, inject as ee, mergeModels as p, mergeProps as m, nextTick as h, normalizeClass as te, normalizeStyle as g, onBeforeUnmount as ne, onMounted as re, openBlock as _, provide as ie, ref as v, renderList as ae, renderSlot as y, resolveDynamicComponent as b, shallowRef as x, toDisplayString as S, toRaw as C, unref as w, useModel as oe, watch as se, withCtx as T, withKeys as E, withModifiers as D } from "vue";
 import "element-plus/es/components/alert/style/css";
 import "element-plus/es/components/button/style/css";
@@ -990,7 +990,7 @@ var sn = class {
 }, un = { key: 0 }, dn = {
 	key: 5,
 	role: "status"
-}, fn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, fn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "WritePanel",
 	props: {
 		action: {},
@@ -1200,7 +1200,7 @@ function hn(e, t, n) {
 }
 //#endregion
 //#region src/prediction-config/platform/views/prediction/components/PredictionLoadingRegion.vue?vue&type=script&setup=true&lang.ts
-var gn = ["inert", "aria-hidden"], _n = /*#__PURE__*/ n(/* @__PURE__ */ f({
+var gn = ["inert", "aria-hidden"], _n = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "PredictionLoadingRegion",
 	props: {
 		as: { default: "div" },
@@ -1213,18 +1213,18 @@ var gn = ["inert", "aria-hidden"], _n = /*#__PURE__*/ n(/* @__PURE__ */ f({
 		text: { default: "正在加载配置…" }
 	},
 	setup(e) {
-		let n = e, r = v(!1), i;
+		let t = e, r = v(!1), i;
 		function o() {
 			i !== void 0 && clearTimeout(i), i = void 0;
 		}
-		return se(() => n.loading, (e) => {
+		return se(() => t.loading, (e) => {
 			o(), r.value = !1, e && (i = setTimeout(() => {
-				i = void 0, r.value = n.loading;
+				i = void 0, r.value = t.loading;
 			}, 150));
 		}, {
 			immediate: !0,
 			flush: "sync"
-		}), ne(o), (n, i) => (_(), a(b(e.as), {
+		}), ne(o), (t, i) => (_(), a(b(e.as), {
 			class: te(["prediction-loading-region", { "is-loading": e.loading }]),
 			style: g({ "--prediction-loading-min-height": e.minHeight }),
 			"aria-busy": e.loading
@@ -1233,7 +1233,7 @@ var gn = ["inert", "aria-hidden"], _n = /*#__PURE__*/ n(/* @__PURE__ */ f({
 				class: te(["prediction-loading-region__content", { "is-hidden": e.hideContent }]),
 				inert: e.loading || void 0,
 				"aria-hidden": e.hideContent || void 0
-			}, [y(n.$slots, "default", {}, void 0, !0)], 10, gn), d(w(t), {
+			}, [y(t.$slots, "default", {}, void 0, !0)], 10, gn), d(w(n), {
 				visible: r.value,
 				size: "md",
 				text: e.text
@@ -1245,7 +1245,7 @@ var gn = ["inert", "aria-hidden"], _n = /*#__PURE__*/ n(/* @__PURE__ */ f({
 			"aria-busy"
 		]));
 	}
-}), [["__scopeId", "data-v-bd8381e2"]]), vn = { class: "prediction-help-copy" }, yn = ["aria-label", "aria-expanded"], bn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}), [["__scopeId", "data-v-bd8381e2"]]), vn = { class: "prediction-help-copy" }, yn = ["aria-label", "aria-expanded"], bn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "ParameterHelp",
 	props: {
 		label: {},
@@ -1317,7 +1317,7 @@ function Cn(e, t) {
 }
 //#endregion
 //#region src/prediction-config/platform/views/prediction/components/DecimalInput.vue?vue&type=script&setup=true&lang.ts
-var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"], Dn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"], Dn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	inheritAttrs: !1,
 	__name: "DecimalInput",
 	props: {
@@ -1396,7 +1396,7 @@ var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"
 }), [["__scopeId", "data-v-ecdf8293"]]), On = ["aria-label"], kn = { class: "prediction-constraint__title" }, An = {
 	key: 0,
 	class: "constraint-description"
-}, jn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, jn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "constraint-editor",
 	props: /*@__PURE__*/ p({
 		title: {},
@@ -1475,7 +1475,7 @@ var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"
 ], In = {
 	key: 0,
 	class: "room-empty"
-}, Ln = { class: "dialog-context" }, Rn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Ln = { class: "dialog-context" }, Rn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "FixedRoomControls",
 	props: {
 		rooms: {},
@@ -1595,7 +1595,7 @@ var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"
 }, Wn = { class: "group-heading" }, Gn = { class: "group-heading" }, Kn = { class: "group-heading" }, qn = { class: "two-fields" }, Jn = {
 	key: 2,
 	class: "editor-footer"
-}, Yn = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Yn = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "edit",
 	props: {
 		inline: {
@@ -2038,7 +2038,7 @@ var wn = { class: "decimal-step-controls" }, Tn = ["disabled"], En = ["disabled"
 			_: 1
 		}, 40, ["class", "modelValue"])) : o("", !0);
 	}
-}), [["__scopeId", "data-v-09646975"]]), Xn = { class: "guide-body" }, Zn = { class: "guide-example" }, Qn = { class: "guide-formulas" }, $n = { class: "guide-footer" }, er = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}), [["__scopeId", "data-v-09646975"]]), Xn = { class: "guide-body" }, Zn = { class: "guide-example" }, Qn = { class: "guide-formulas" }, $n = { class: "guide-footer" }, er = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "GridGuide",
 	props: {
 		modelValue: {
@@ -2241,7 +2241,7 @@ var nr = {
 	key: 0,
 	class: "parameter-card",
 	"data-price-precision": ""
-}, wr = { class: "parameter-card" }, Tr = { class: "parameter-card" }, Er = { class: "parameter-heading" }, Dr = { class: "parameter-description" }, Or = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, wr = { class: "parameter-card" }, Tr = { class: "parameter-card" }, Er = { class: "parameter-heading" }, Dr = { class: "parameter-description" }, Or = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "index",
 	setup(t, { expose: n }) {
 		let { gridConfigSymbols: l, gridConfigCatalog: f, gridConfigCreation: ee, gridConfigReceipt: p, gridConfigSite: m, saveGridConfig: h } = me().grid, g = _e(), re = ge(), ie = (e) => re.perms.includes("*") || re.perms.includes(e), y = i(() => ie("grid_config:read")), b = i(() => ie("grid_config:save")), x = i(() => {
@@ -3138,7 +3138,7 @@ var Br = at("grid.config.global.pending.v1", Lr, zr), Vr = {
 }, Zr = { class: "config-heading__actions" }, Qr = {
 	key: 2,
 	class: "grid-config__parameters"
-}, $r = { class: "parameter-card" }, ei = { class: "parameter-card" }, ti = { class: "parameter-heading" }, ni = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, $r = { class: "parameter-card" }, ei = { class: "parameter-card" }, ti = { class: "parameter-heading" }, ni = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "GlobalGridConfig",
 	setup(t, { expose: n }) {
 		let l = me().grid, f = l.globalTemplate, ee = G(), p = _e(), m = [{
@@ -3533,7 +3533,7 @@ var Br = at("grid.config.global.pending.v1", Lr, zr), Vr = {
 }, yi = { class: "config-game-label" }, bi = { "data-config-updated-at": "" }, xi = {
 	key: 0,
 	class: "config-heading-actions"
-}, Si = ["title", "aria-label"], Ci = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Si = ["title", "aria-label"], Ci = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "index",
 	setup(t) {
 		let { predictionConfigurationList: n, predictionConfigurationSave: l } = me().api, { symbols: f } = me().api, ee = _e(), p = ge(), m = v(""), g = v(!1), ie = v([]), y = v("UP_DOWN"), C = v("UP_DOWN"), oe = me().grid.globalTemplate ? ni : Or, E = x(), D = [
@@ -5039,7 +5039,7 @@ var Co = {
 	key: 0,
 	class: "parameter-card",
 	"data-price-precision": ""
-}, Ho = { class: "fields" }, Uo = { class: "parameter-card" }, Wo = { class: "fields odds-fields" }, Go = { key: 0 }, Ko = { key: 1 }, qo = { class: "parameter-card" }, Jo = { class: "parameter-heading" }, Yo = { class: "parameter-description" }, Xo = { class: "fields limit-fields" }, Zo = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Ho = { class: "fields" }, Uo = { class: "parameter-card" }, Wo = { class: "fields odds-fields" }, Go = { key: 0 }, Ko = { key: 1 }, qo = { class: "parameter-card" }, Jo = { class: "parameter-heading" }, Yo = { class: "parameter-description" }, Xo = { class: "fields limit-fields" }, Zo = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "index",
 	props: { actor: {} },
 	setup(t, { expose: n }) {
@@ -5653,7 +5653,7 @@ var Co = {
 }, Ls = {
 	key: 1,
 	class: "limit-fields"
-}, Rs = { class: "parameter-card" }, zs = { class: "parameter-heading" }, Bs = { class: "field-description" }, Vs = { class: "limit-fields" }, Hs = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Rs = { class: "parameter-card" }, zs = { class: "parameter-heading" }, Bs = { class: "field-description" }, Vs = { class: "limit-fields" }, Hs = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "OwnerConfig",
 	props: { actor: {} },
 	setup(t, { expose: n }) {
@@ -6284,7 +6284,7 @@ var ic = {
 }, Gc = { class: "parameter-facts" }, Kc = { class: "read-only-label" }, qc = {
 	key: 1,
 	class: "parameter-card"
-}, Jc = { class: "parameter-facts" }, Yc = { "data-field": "fixed_odds" }, Xc = { class: "read-only-label" }, Zc = { class: "parameter-card" }, Qc = { class: "limit-fields" }, $c = { key: 0 }, el = { key: 1 }, tl = /*#__PURE__*/ n(/* @__PURE__ */ f({
+}, Jc = { class: "parameter-facts" }, Yc = { "data-field": "fixed_odds" }, Xc = { class: "read-only-label" }, Zc = { class: "parameter-card" }, Qc = { class: "limit-fields" }, $c = { key: 0 }, el = { key: 1 }, tl = /*#__PURE__*/ t(/* @__PURE__ */ f({
 	__name: "SiteConfig",
 	setup(e) {
 		let { siteDirectorySymbols: t, configurations: n, siteConfigurationTargets: l, siteConfiguration: f, saveSiteConfiguration: ee, saveConfiguration: p, configuration: m } = he().api, h = _e(), { t: g, te: re, locale: ie } = ye(), y = ge(), b = new Us(), C = new Us(), oe = new Us(), E = new Us(), D = new Ji(), A = v("UP_DOWN"), M = x(), N = i(() => A.value === "HIGH_LOW" ? "HIGH_LOW" : "UP_DOWN"), P = i(() => ie.value === "en-US" ? pe : U), ce = (e) => y.perms.includes("*") || y.perms.includes(e), F = i(() => ce("prediction_config:lists")), I = F, R = i(() => Ei(y.userInfo.id)), B = v(null), fe = v([]), V = v(""), H = v(""), W = v(""), G = i(() => fe.value.find((e) => e.site_id === V.value)?.games.find((e) => e.game_type === N.value)?.symbols ?? []), me = v([]), ve = v([]), be = v(""), xe = i(() => Ks(G.value, ve.value, me.value, Object.keys(Ce.value).filter((e) => lt(e) && (ct(e) ?? 0) > 0))), Se = i(() => xe.value.map((e) => e.symbol).filter((e) => e.toLowerCase().includes(W.value.toLowerCase()))), Ce = v({}), we = v({}), K = v(null), q = v([]), Te = v(!1), Ee = v("35"), De = v("通过商户玩法配置页面保存配置"), Oe = v(""), ke = v(!1), Ae = v(!1), je = v(""), Me = v(!1), Ne = v(!1), Pe = v(""), Fe = v(""), Ie = v(!1), Le = v(!1), J = x(null), Re = x(null), ze = x(null), Be, Ve, He = 0, Ue = i(() => ie.value === "en-US" ? "Enabled" : "启用交易对"), We = i(() => J.value && B.value && J.value.operator_id === B.value.operator_id && J.value.agent_id === B.value.agent_id && J.value.body.site_id === V.value && J.value.body.game_type === N.value && J.value.body.symbol === H.value ? J.value : null), Ge = v(null), Ke = i(() => Re.value && Ge.value && Re.value.operator_id === R.value && Re.value.operator_id === Ge.value.operator_id && Re.value.agent_id === Ge.value.agent_id), qe = i(() => F.value && I.value && B.value?.operator_id === R.value && !!K.value && (N.value === "UP_DOWN" ? q.value.length === 5 : q.value.length > 0) && !Pe.value && !J.value && !Re.value && !Le.value && !Ne.value && !Me.value), Je = i(() => q.value.find((e) => e.duration_seconds === Ee.value)), Ye = i(() => K.value?.effective.rules.find((e) => e.duration_seconds === Ee.value)), Xe = () => JSON.stringify({

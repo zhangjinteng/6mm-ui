@@ -19,8 +19,8 @@ declare const __VLS_export: import('vue').DefineComponent<__VLS_PublicProps, {},
     "onUpdate:modelValue"?: ((value: DecimalConstraint | IntegerConstraint) => any) | undefined;
 }>, {
     disabled: boolean;
-    compact: boolean;
     field: "default_value" | "maximum_value";
+    compact: boolean;
     percentage: boolean;
     unit: string;
     agentLocked: boolean;

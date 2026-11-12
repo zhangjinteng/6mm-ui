@@ -7,8 +7,8 @@ declare const __VLS_export: import('vue').DefineComponent<CursorPaginationProps,
     onPrev?: (() => any) | undefined;
 }>, {
     disabled: boolean;
-    loading: boolean;
     size: import('..').PaginationSize;
+    loading: boolean;
     currentPage: number;
     hasMore: boolean;
     hasPrevious: boolean;

@@ -6,17 +6,17 @@ type __VLS_Props = {
     upload: (file: File, signal: AbortSignal) => Promise<MediaUploadResult>;
 };
 declare const __VLS_export: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
-    success: () => any;
-    "busy-change": (value: boolean) => any;
     error: (error: unknown) => any;
+    success: () => any;
     "update:modelValue": (value: string) => any;
+    "busy-change": (value: boolean) => any;
     start: () => any;
     "update:mediaId": (value: string | null) => any;
 }, string, import('vue').PublicProps, Readonly<__VLS_Props> & Readonly<{
-    onSuccess?: (() => any) | undefined;
-    "onBusy-change"?: ((value: boolean) => any) | undefined;
     onError?: ((error: unknown) => any) | undefined;
+    onSuccess?: (() => any) | undefined;
     "onUpdate:modelValue"?: ((value: string) => any) | undefined;
+    "onBusy-change"?: ((value: boolean) => any) | undefined;
     onStart?: (() => any) | undefined;
     "onUpdate:mediaId"?: ((value: string | null) => any) | undefined;
 }>, {

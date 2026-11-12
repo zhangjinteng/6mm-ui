@@ -12,10 +12,10 @@ declare const __VLS_base: import('vue').DefineComponent<CheckboxProps, {}, {}, {
 }>, {
     value: CheckboxValue;
     disabled: boolean;
-    size: import('../..').FormControlSize;
-    status: import('../..').FormControlStatus;
     modelValue: CheckboxValue;
     readonly: boolean;
+    size: import('../..').FormControlSize;
+    status: import('../..').FormControlStatus;
     indeterminate: boolean;
     falseValue: CheckboxValue;
     trueValue: CheckboxValue;

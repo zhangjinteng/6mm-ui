@@ -1,8 +1,8 @@
 import { App } from 'vue';
 export declare const MmLiquidationTradesDialog: (<SummaryRow extends import('./types').LiquidationTradeSummaryRow = import('./types').LiquidationTradeSummaryRow, TradeRow extends import('./types').LiquidationTradeRow = import('./types').LiquidationTradeRow>(__VLS_props: NonNullable<Awaited<typeof __VLS_setup>>["props"], __VLS_ctx?: {
-    slots: {};
     attrs: any;
     emit: ((evt: "update:modelValue", value: boolean) => void) & ((evt: "closed") => void) & ((evt: "order-click", id: import('./types').LiquidationTradeIdentifier, event: MouseEvent) => void) & ((evt: "position-click", id: import('./types').LiquidationTradeIdentifier, event: MouseEvent) => void);
+    slots: {};
 }, __VLS_exposed?: NonNullable<Awaited<typeof __VLS_setup>>["expose"], __VLS_setup?: Promise<{
     props: import('vue').PublicProps & {
         initialPageSize?: number | undefined;

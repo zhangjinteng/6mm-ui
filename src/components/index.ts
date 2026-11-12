@@ -1,4 +1,6 @@
 import type { Component } from "vue";
+import { MmMultilingualFields } from './multilingual-fields';
+export * from './multilingual-fields';
 import { MmTenantCustomerServiceCard } from "./tenant-customer-service";
 export * from "./tenant-customer-service";
 import { MmTenantComplianceSettings } from "./tenant-compliance-settings";
@@ -294,6 +296,7 @@ export const components: InstallableComponent[] = [
   MmTenantFeatureSettings,
   MmTenantCustomerServiceCard,
   MmTenantSeoSettings,
+  MmMultilingualFields,
   MmTenantComplianceSettings,
   MmMenu,
   MmMenuItem,

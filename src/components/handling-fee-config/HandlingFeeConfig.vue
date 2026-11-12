@@ -19,6 +19,7 @@ import { MmProTable } from "../pro-table";
 import type { ProTableColumn } from "../pro-table";
 import type { QueryBarField, QueryBarValue } from "../query-bar";
 import { MmTag } from "../tag";
+import { shiftFeeDecimal } from './decimals';
 import type {
   HandlingFeeConfigActionName,
   HandlingFeeConfigFormValue,
@@ -30,6 +31,10 @@ defineOptions({ inheritAttrs: false, name: "MmHandlingFeeConfig" });
 
 const props = withDefaults(defineProps<HandlingFeeConfigProps<Row>>(), {
   actions: () => ({}),
+  allowScopedWrites: false,
+  homeSiteId: 0,
+  rateUnit: 'percent',
+  pendingOperation: null,
   ariaLabel: undefined,
   canEditRow: undefined,
   columnsConfigurable: true,
@@ -63,8 +68,14 @@ const submitting = ref(false);
 const deleting = ref(false);
 const formError = ref("");
 const deleteError = ref("");
+const formRequestId = ref('');
+const deleteRequestId = ref('');
+const retrying = ref(false);
+const retryError = ref('');
+const newRequestId = () => globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}-fee`;
 
-function normalizeAgentId(value: unknown): number {
+function normalizeAgentId(value: unknown): number | string {
+  if (typeof value === 'string' && /^\d+$/.test(value) && !Number.isSafeInteger(Number(value))) return value;
   const normalized = Number(value);
   return Number.isInteger(normalized) && normalized >= 0
     ? normalized
@@ -169,7 +180,17 @@ function isPlatformRow(row: Row): boolean {
 }
 
 function isEditableRow(row: Row): boolean {
+  if (props.allowScopedWrites) return String(row.agent_id) === String(props.writeAgentId ?? props.initialAgentId)
+    && String(row.home_site_id ?? 0) === String(props.homeSiteId);
   return props.canEditRow ? props.canEditRow(row) : isPlatformRow(row);
+}
+
+function isRemovableRow(row: Row): boolean {
+  return (props.allowScopedWrites ? isEditableRow(row) : isPlatformRow(row)) && Number(row.level) !== 0;
+}
+
+function displayRate(value: unknown): string {
+  return props.rateUnit === 'fraction' ? shiftFeeDecimal(value, 2) : displayValue(value);
 }
 
 const defaultColumns = computed<ProTableColumn<Row>[]>(() => [
@@ -198,14 +219,14 @@ const defaultColumns = computed<ProTableColumn<Row>[]>(() => [
     dataIndex: "maker_fee_rate",
     title: copy.value.makerFee,
     width: 220,
-    formatter: displayValue,
+    formatter: displayRate,
   },
   {
     key: "taker_fee_rate",
     dataIndex: "taker_fee_rate",
     title: copy.value.takerFee,
     width: 220,
-    formatter: displayValue,
+    formatter: displayRate,
   },
   {
     key: "operation",
@@ -247,7 +268,7 @@ const { proTableBindings, reload } = useMmProTable<Row>({
       : normalizeAgentId(props.initialAgentId);
     selectedAgentId.value = agentId;
     return props.request(
-      { agent_id: agentId, page_no: page, page_size: pageSize },
+      { agent_id: agentId, ...(props.allowScopedWrites ? { home_site_id: props.homeSiteId } : {}), page_no: page, page_size: pageSize },
       { filters, signal },
     );
   },
@@ -255,7 +276,7 @@ const { proTableBindings, reload } = useMmProTable<Row>({
 
 const canCreate = computed(
   () =>
-    selectedAgentId.value === props.platformAgentId &&
+    (props.allowScopedWrites || selectedAgentId.value === props.platformAgentId) &&
     Boolean(props.actions.create),
 );
 const formTitle = computed(() =>
@@ -275,6 +296,7 @@ function errorMessage(error: unknown): string {
 
 function resetForm(): void {
   Object.assign(form, emptyForm());
+  formRequestId.value = newRequestId();
   editingRow.value = undefined;
   formError.value = "";
   formRef.value?.clearValidate();
@@ -295,7 +317,8 @@ function setFormData(value: Partial<HandlingFeeConfigFormValue>): void {
       (form[field] as unknown) =
         field === "agent_id"
           ? normalizeAgentId(value[field])
-          : String(value[field]);
+          : props.rateUnit === 'fraction' && (field === 'maker_fee_rate' || field === 'taker_fee_rate')
+            ? shiftFeeDecimal(value[field], 2) : String(value[field]);
     }
   }
 }
@@ -341,8 +364,8 @@ function formSnapshot(): HandlingFeeConfigFormValue {
     agent_id: normalizeAgentId(props.writeAgentId ?? props.platformAgentId),
     id: form.id,
     level_name: form.level_name.trim(),
-    maker_fee_rate: form.maker_fee_rate.trim(),
-    taker_fee_rate: form.taker_fee_rate.trim(),
+    maker_fee_rate: props.rateUnit === 'fraction' ? shiftFeeDecimal(form.maker_fee_rate.trim(), -2) : form.maker_fee_rate.trim(),
+    taker_fee_rate: props.rateUnit === 'fraction' ? shiftFeeDecimal(form.taker_fee_rate.trim(), -2) : form.taker_fee_rate.trim(),
     volume_30d: form.volume_30d.trim(),
     volume_30d_min: form.volume_30d_min,
   };
@@ -359,10 +382,11 @@ async function submitForm(): Promise<void> {
     if (formMode.value === "edit" && editingRow.value) {
       await props.actions.update?.(editingRow.value, formSnapshot(), {
         reload,
+        requestId: formRequestId.value,
       });
       emit("action-success", "update", editingRow.value);
     } else {
-      await props.actions.create?.(formSnapshot(), { reload });
+      await props.actions.create?.(formSnapshot(), { reload, requestId: formRequestId.value });
       emit("action-success", "create");
     }
     formVisible.value = false;
@@ -378,9 +402,10 @@ async function submitForm(): Promise<void> {
 }
 
 function requestDelete(row: Row): void {
-  if (!isPlatformRow(row) || !props.actions.remove || Number(row.level) === 0)
+  if (!isRemovableRow(row) || !props.actions.remove)
     return;
   deleteTarget.value = row;
+  deleteRequestId.value = newRequestId();
   deleteError.value = "";
   deleteVisible.value = true;
 }
@@ -404,7 +429,7 @@ async function confirmDelete(): Promise<void> {
   deleteError.value = "";
   const row = deleteTarget.value;
   try {
-    await props.actions.remove(row, { reload });
+    await props.actions.remove(row, { reload, requestId: deleteRequestId.value });
     emit("action-success", "delete", row);
     deleteVisible.value = false;
     deleteTarget.value = undefined;
@@ -417,6 +442,14 @@ async function confirmDelete(): Promise<void> {
   }
 }
 
+async function retryOperation(): Promise<void> {
+  if (!props.pendingOperation || !props.actions.retry || retrying.value) return;
+  retrying.value = true; retryError.value = '';
+  try { await props.actions.retry(props.pendingOperation.id); }
+  catch (error) { retryError.value = errorMessage(error); }
+  finally { retrying.value = false; await reload(); }
+}
+
 defineExpose({ reload });
 </script>
 
@@ -427,6 +460,10 @@ defineExpose({ reload });
     :class="{ 'is-fill-height': fillHeight }"
     data-mm-component="handling-fee-config"
   >
+    <div v-if="pendingOperation" class="mm-handling-fee-config__pending" role="status">
+      <span>{{ retryError || copy.pendingConfirmation }}</span>
+      <MmButton v-if="actions.retry" size="sm" :loading="retrying" @click="retryOperation">{{ copy.retryConfirmation }}</MmButton>
+    </div>
     <MmProTable
       v-bind="proTableBindings"
       :aria-label="ariaLabel || copy.tableAria"
@@ -471,7 +508,7 @@ defineExpose({ reload });
           {{
             Number(row.level) === 0
               ? `< ${formatNumber(row.volume_30d)}`
-              : `≥ ${formatNumber(row.volume_30d)}`
+              : `≥ ${formatNumber(row.volume_30d_min ?? row.volume_30d)}`
           }}
         </span>
       </template>
@@ -480,7 +517,7 @@ defineExpose({ reload });
         <div
           v-if="
             (actions.update && isEditableRow(row)) ||
-            (actions.remove && isPlatformRow(row))
+            (actions.remove && isRemovableRow(row))
           "
           class="mm-handling-fee-config__actions"
         >
@@ -496,7 +533,7 @@ defineExpose({ reload });
           </MmButton>
           <MmButton
             v-if="
-              actions.remove && isPlatformRow(row) && Number(row.level) !== 0
+              actions.remove && isRemovableRow(row)
             "
             :aria-label="copy.remove"
             class="mm-handling-fee-config__delete-button"
@@ -622,7 +659,7 @@ defineExpose({ reload });
             {{ copy.deleteMessage }}
           </div>
           <div class="mm-handling-fee-config__delete-description">
-            {{ copy.deleteDescription }}
+            {{ allowScopedWrites && String(homeSiteId) !== '0' ? copy.scopedDeleteDescription : copy.deleteDescription }}
           </div>
         </div>
       </div>

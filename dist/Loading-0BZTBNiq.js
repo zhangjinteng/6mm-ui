@@ -950,6 +950,9 @@ var j = {
 			userUid: "User UID"
 		},
 		handlingFeeConfigs: {
+			pendingConfirmation: "The previous fee change is awaiting confirmation. Retry it before making another change.",
+			retryConfirmation: "Retry confirmation",
+			scopedDeleteDescription: "Deleting this override restores the parent rate for the same VIP tier. Existing orders keep their locked rates.",
 			actionFailed: "The action failed. Please try again.",
 			add: "Add",
 			agentId: "Agent ID",
@@ -2446,6 +2449,9 @@ var j = {
 			userUid: "用户 UID"
 		},
 		handlingFeeConfigs: {
+			pendingConfirmation: "上一次手续费操作结果待确认，请先重试确认。",
+			retryConfirmation: "重试确认",
+			scopedDeleteDescription: "删除当前层配置后，同一 VIP 等级将按上级费率生效，已有订单费率保持不变。",
 			actionFailed: "操作失败，请稍后重试",
 			add: "新增",
 			agentId: "代理商 ID",
@@ -4413,4 +4419,4 @@ var V = {
 //#endregion
 export { T as _, Z as a, P as c, M as d, j as f, w as g, O as h, ee as i, z as l, k as m, $ as n, F as o, A as p, re as r, R as s, ce as t, B as u, E as v, D as y };
 
-//# sourceMappingURL=Loading-Djhi-Drb.js.map
+//# sourceMappingURL=Loading-0BZTBNiq.js.map

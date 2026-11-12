@@ -3,6 +3,7 @@ import { QueryBarField, QueryBarValue } from '../query-bar';
 import { SelectOption } from '../select';
 import { TableRow } from '../table';
 export interface HandlingFeeConfigRow extends TableRow {
+    home_site_id?: number | string;
     agent_id: number | string;
     id: number | string;
     level: number | string;
@@ -13,7 +14,8 @@ export interface HandlingFeeConfigRow extends TableRow {
     volume_30d_min?: number | string | null;
 }
 export interface HandlingFeeConfigListQuery {
-    agent_id: number;
+    agent_id: number | string;
+    home_site_id?: number | string;
     page_no: number;
     page_size: number;
 }
@@ -28,7 +30,7 @@ export interface HandlingFeeConfigRequestContext {
 }
 export type HandlingFeeConfigListRequest<Row extends HandlingFeeConfigRow = HandlingFeeConfigRow> = (query: HandlingFeeConfigListQuery, context: HandlingFeeConfigRequestContext) => Promise<HandlingFeeConfigListResult<Row>>;
 export interface HandlingFeeConfigFormValue {
-    agent_id: number;
+    agent_id: number | string;
     id?: number | string;
     level_name: string;
     maker_fee_rate: string;
@@ -39,8 +41,10 @@ export interface HandlingFeeConfigFormValue {
 export type HandlingFeeConfigCreateDefaults = Partial<HandlingFeeConfigFormValue>;
 export interface HandlingFeeConfigActionContext {
     reload: () => Promise<void>;
+    requestId: string;
 }
 export interface HandlingFeeConfigActions<Row extends HandlingFeeConfigRow = HandlingFeeConfigRow> {
+    retry?: (operationId: string) => Promise<unknown> | unknown;
     create?: (value: HandlingFeeConfigFormValue, context: HandlingFeeConfigActionContext) => Promise<unknown> | unknown;
     loadCreateDefaults?: () => Promise<HandlingFeeConfigCreateDefaults> | HandlingFeeConfigCreateDefaults;
     loadEditData?: (row: Row) => Promise<Partial<HandlingFeeConfigFormValue>> | Partial<HandlingFeeConfigFormValue>;
@@ -50,6 +54,12 @@ export interface HandlingFeeConfigActions<Row extends HandlingFeeConfigRow = Han
 export type HandlingFeeConfigColumns<Row extends HandlingFeeConfigRow = HandlingFeeConfigRow> = ProTableColumn<Row>[] | ((defaultColumns: ProTableColumn<Row>[]) => ProTableColumn<Row>[]);
 export type HandlingFeeConfigQueryFields = QueryBarField[] | ((defaultFields: QueryBarField[]) => QueryBarField[]);
 export interface HandlingFeeConfigProps<Row extends HandlingFeeConfigRow = HandlingFeeConfigRow> {
+    allowScopedWrites?: boolean;
+    homeSiteId?: number | string;
+    rateUnit?: 'percent' | 'fraction';
+    pendingOperation?: {
+        id: string;
+    } | null;
     actions?: HandlingFeeConfigActions<Row>;
     ariaLabel?: string;
     canEditRow?: (row: Row) => boolean;

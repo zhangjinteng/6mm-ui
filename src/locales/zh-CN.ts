@@ -575,6 +575,9 @@ export const zhCN: MmUILocale = {
       userUid: "用户 UID",
     },
     handlingFeeConfigs: {
+      pendingConfirmation: '上一次手续费操作结果待确认，请先重试确认。',
+      retryConfirmation: '重试确认',
+      scopedDeleteDescription: '删除当前层配置后，同一 VIP 等级将按上级费率生效，已有订单费率保持不变。',
       actionFailed: "操作失败，请稍后重试",
       add: "新增",
       agentId: "代理商 ID",

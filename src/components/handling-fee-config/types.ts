@@ -4,6 +4,7 @@ import type { SelectOption } from "../select";
 import type { TableRow } from "../table";
 
 export interface HandlingFeeConfigRow extends TableRow {
+  home_site_id?: number | string;
   agent_id: number | string;
   id: number | string;
   level: number | string;
@@ -15,7 +16,8 @@ export interface HandlingFeeConfigRow extends TableRow {
 }
 
 export interface HandlingFeeConfigListQuery {
-  agent_id: number;
+  agent_id: number | string;
+  home_site_id?: number | string;
   page_no: number;
   page_size: number;
 }
@@ -41,7 +43,7 @@ export type HandlingFeeConfigListRequest<
 ) => Promise<HandlingFeeConfigListResult<Row>>;
 
 export interface HandlingFeeConfigFormValue {
-  agent_id: number;
+  agent_id: number | string;
   id?: number | string;
   level_name: string;
   maker_fee_rate: string;
@@ -55,11 +57,13 @@ export type HandlingFeeConfigCreateDefaults =
 
 export interface HandlingFeeConfigActionContext {
   reload: () => Promise<void>;
+  requestId: string;
 }
 
 export interface HandlingFeeConfigActions<
   Row extends HandlingFeeConfigRow = HandlingFeeConfigRow,
 > {
+  retry?: (operationId: string) => Promise<unknown> | unknown;
   create?: (
     value: HandlingFeeConfigFormValue,
     context: HandlingFeeConfigActionContext,
@@ -94,6 +98,10 @@ export type HandlingFeeConfigQueryFields =
 export interface HandlingFeeConfigProps<
   Row extends HandlingFeeConfigRow = HandlingFeeConfigRow,
 > {
+  allowScopedWrites?: boolean;
+  homeSiteId?: number | string;
+  rateUnit?: 'percent' | 'fraction';
+  pendingOperation?: { id: string } | null;
   actions?: HandlingFeeConfigActions<Row>;
   ariaLabel?: string;
   canEditRow?: (row: Row) => boolean;

@@ -551,10 +551,13 @@ export interface MmUILocaleMessages {
     userUid: string;
   };
   handlingFeeConfigs: {
+    pendingConfirmation: string;
+    retryConfirmation: string;
+    scopedDeleteDescription: string;
     actionFailed: string;
     add: string;
     agentId: string;
-    agentOwner: (agentId: number) => string;
+    agentOwner: (agentId: number | string) => string;
     cancel: string;
     cannotEdit: string;
     confirm: string;

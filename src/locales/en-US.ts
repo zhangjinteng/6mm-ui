@@ -576,6 +576,9 @@ export const enUS: MmUILocale = {
       userUid: "User UID",
     },
     handlingFeeConfigs: {
+      pendingConfirmation: 'The previous fee change is awaiting confirmation. Retry it before making another change.',
+      retryConfirmation: 'Retry confirmation',
+      scopedDeleteDescription: 'Deleting this override restores the parent rate for the same VIP tier. Existing orders keep their locked rates.',
       actionFailed: "The action failed. Please try again.",
       add: "Add",
       agentId: "Agent ID",

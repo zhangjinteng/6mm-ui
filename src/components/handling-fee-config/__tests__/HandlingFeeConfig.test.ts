@@ -6,6 +6,7 @@ import type {
   HandlingFeeConfigFormValue,
   HandlingFeeConfigRow,
 } from "../types";
+import { shiftFeeDecimal } from '../decimals';
 
 const platformRows: HandlingFeeConfigRow[] = [
   {
@@ -48,6 +49,34 @@ function setInput(input: HTMLInputElement, value: string): void {
 }
 
 describe("MmHandlingFeeConfig", () => {
+  it('edits and deletes only its authenticated scoped rows and converts fractions exactly', async () => {
+    const own = { ...platformRows[1]!, id: 20, home_site_id: '100', agent_id: 14, maker_fee_rate: '0.0002', taker_fee_rate: '0' };
+    const foreign = { ...own, id: 21, home_site_id: '101' };
+    const update = vi.fn(async () => undefined);
+    const wrapper = mount(HandlingFeeConfig, { attachTo: document.body, props: {
+      request: async () => ({ rows: [own, foreign], total: 2 }),
+      initialAgentId: 14, writeAgentId: 14, homeSiteId: '100', showOwnerFilter: false,
+      allowScopedWrites: true, rateUnit: 'fraction', actions: { update, create: vi.fn(), remove: vi.fn() },
+    } });
+    await flushPromises();
+    expect(wrapper.findAll('td')[3]!.text()).toBe('0.02');
+    expect(wrapper.findAll('button[aria-label="编辑"]')).toHaveLength(1);
+    expect(wrapper.findAll('button[aria-label="删除"]')).toHaveLength(1);
+    expect(wrapper.text()).toContain('新增');
+    await wrapper.get('button[aria-label="编辑"]').trigger('click');
+    await flushPromises();
+    const inputs = document.body.querySelectorAll<HTMLInputElement>('[role="dialog"] input');
+    expect(inputs[2]!.value).toBe('0.02');
+    expect(inputs[3]!.value).toBe('0');
+    setInput(inputs[2]!, '0.025');
+    findBodyButton('确定').click();
+    await flushPromises();
+    expect(update).toHaveBeenCalledWith(own, expect.objectContaining({ maker_fee_rate: '0.00025', taker_fee_rate: '0' }),
+      expect.objectContaining({ requestId: expect.stringMatching(/^[A-Za-z0-9_-]{16,64}$/) }));
+    wrapper.unmount();
+    expect(shiftFeeDecimal('0.000000000000000001', 2)).toBe('0.0000000000000001');
+    expect(shiftFeeDecimal('0.0000000000000001', -2)).toBe('0.000000000000000001');
+  });
   it("queries the platform by default and renders fee tiers", async () => {
     const request = vi.fn(async () => ({ rows: platformRows, total: 2 }));
     const wrapper = mount(HandlingFeeConfig, { props: { request } });

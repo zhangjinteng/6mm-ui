@@ -10,6 +10,28 @@ const detail = { tag_id: 1, tag_name: '热门', total: 3, configured_count: 2, l
 ] }
 const button = (w: ReturnType<typeof mount>, label: string) => w.findAll('button').find(item => item.text().includes(label))!
 describe('tag adapter for the shared editor', () => {
+  it('uses the shared settings-2 icon and vertically aligned translation settings label', async () => {
+    const actions = { load: vi.fn(async () => detail), translate: vi.fn(), save: vi.fn() }
+    const wrapper = mount(TagDialog, { props: { modelValue: true, tagId: 1, actions }, global: { stubs: { teleport: true } } })
+    await flushPromises()
+    const settings = wrapper.get('button.mm-tag-translation__settings')
+    expect(settings.text()).toBe('翻译设置')
+    expect(settings.get('svg path').attributes('d')).toBe('M20 7h-9M14 17H5')
+    expect(settings.findAll('svg circle').map(node => node.attributes('r'))).toEqual(['3', '3'])
+    expect(settings.get('svg').element.style.height).toBe('15px')
+    const labelStyle = getComputedStyle(settings.get('.mm-button__label').element)
+    expect(labelStyle.display).toBe('inline-flex')
+    expect(labelStyle.alignItems).toBe('center')
+    await settings.trigger('click')
+    expect(wrapper.emitted('open-settings')).toHaveLength(1)
+    await wrapper.setProps({ locale: 'en' })
+    await flushPromises()
+    expect(wrapper.get('button.mm-tag-translation__settings').text()).toBe('Translation settings')
+    await wrapper.setProps({ showGoogleSettings: false })
+    expect(wrapper.find('button.mm-tag-translation__settings').exists()).toBe(false)
+    wrapper.unmount()
+  })
+
   it('uses common fields and keeps translations in the draft until applied', async () => {
     const actions = { load: vi.fn(async () => detail), translate: vi.fn(async (_id: number, _input: { target_locales: string[] }) => ({ translations: { ja: '人気' }, failures: {} })), save: vi.fn() }
     const wrapper = mount(TagDialog, { props: { modelValue: true, tagId: 1, actions, draftMode: true,

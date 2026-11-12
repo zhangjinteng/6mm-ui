@@ -26818,7 +26818,7 @@ var Uv = /* @__PURE__ */ k({
 			noMatches: "当前状态下没有语言",
 			original: "原文",
 			pending: "待完善",
-			settings: "设置",
+			settings: "翻译设置",
 			source: "翻译来源",
 			sourceRequired: "请先填写翻译源语言内容",
 			title: "标签多语言",
@@ -26843,7 +26843,7 @@ var Uv = /* @__PURE__ */ k({
 			noMatches: "No languages in this state",
 			original: "Source",
 			pending: "Pending",
-			settings: "Settings",
+			settings: "Translation settings",
 			source: "Translation source",
 			sourceRequired: "Enter the source language value first",
 			title: "Tag Languages",
@@ -26984,6 +26984,7 @@ var Uv = /* @__PURE__ */ k({
 			header: Z(() => [T("div", db, [T("strong", null, J(o.value.title), 1), T("span", null, J(o.value.configured) + " " + J(v.value) + "/" + J(s.value.length || 20), 1)])]),
 			"header-actions": Z(() => [e.showGoogleSettings ? (V(), S($, {
 				key: 0,
+				class: "mm-tag-translation__settings",
 				size: "sm",
 				onClick: n[0] ||= (e) => r("open-settings")
 			}, {
@@ -26992,8 +26993,8 @@ var Uv = /* @__PURE__ */ k({
 					"aria-hidden": "true"
 				}, null, -1)]]),
 				default: Z(() => [D(" " + J(o.value.settings) + " ", 1), O(c, {
-					name: "sliders-horizontal",
-					size: 13
+					name: "settings-2",
+					size: 15
 				})]),
 				_: 1
 			})) : C("", !0)]),
@@ -32664,4 +32665,4 @@ var CC = class {
 //#endregion
 export { A_ as $, nd as $n, Ei as $r, em as $t, fy as A, yt as Ai, Df as An, js as Ar, Gh as At, jv as B, St as Bi, ff as Bn, as as Br, th as Bt, ub as C, rn as Ci, ap as Cn, Ks as Cr, hg as Ct, Ly as D, Ht as Di, Gf as Dn, Bs as Dr, rg as Dt, Jy as E, Jt as Ei, Xf as En, Hs as Er, ig as Et, zv as F, Ct as Fi, bf as Fn, cs as Fr, Mh as Ft, gv as G, Gd as Gn, _o as Gr, sm as Gt, Cv as H, $ as Hi, nf as Hn, So as Hr, Am as Ht, Rv as I, gt as Ii, sf as In, ls as Ir, Ah as It, M_ as J, jd as Jn, ja as Jr, Yp as Jt, R_ as K, Ud as Kn, ho as Kr, om as Kt, Iv as L, mt as Li, cf as Ln, us as Lr, Oh as Lt, Uv as M, Et as Mi, Tf as Mn, Fs as Mr, Uh as Mt, Hv as N, xt as Ni, wf as Nn, ks as Nr, Rh as Nt, Fy as O, Bt as Oi, Hf as On, Vs as Or, ng as Ot, Bv as P, ht as Pi, xf as Pn, _s as Pr, Lh as Pt, O_ as Q, cd as Qn, Ai as Qr, tm as Qt, Lv as R, _t as Ri, df as Rn, os as Rr, _h as Rt, Pb as S, on as Si, ip as Sn, tc as Sr, pg as St, Zy as T, Qt as Ti, rp as Tn, Us as Tr, _g as Tt, xv as U, $e as Ui, Qd as Un, xo as Ur, gm as Ut, Sv as V, ft as Vi, rf as Vn, is as Vr, Wm as Vt, wv as W, Q as Wi, qd as Wn, bo as Wr, cm as Wt, N_ as X, Od as Xn, ka as Xr, Zp as Xt, P_ as Y, kd as Yn, Aa as Yr, Xp as Yt, k_ as Z, ud as Zn, Ki as Zr, Qp as Zt, Wb as _, Vn as _i, wp as _n, Sc as _r, og as _t, Ox as a, Wr as ai, Wp as an, ql as ar, m_ as at, Hb as b, bn as bi, hp as bn, dc as br, fg as bt, xx as c, Kn as ci, Vp as cn, Wl as cr, Jg as ct, px as d, qn as di, Pp as dn, zl as dr, Dg as dt, ui as ei, Jp as en, Zu as er, E_ as et, lx as f, Yn as fi, Np as fn, Il as fr, Ng as ft, Gb as g, Gn as gi, Dp as gn, el as gr, sg as gt, Ub as h, $n as hi, Ap as hn, ul as hr, Tg as ht, Mx as i, Xr as ii, Gp as in, eu as ir, y_ as it, iy as j, bt as ji, Ef as jn, Ps as jr, Kh as jt, vy as k, zt as ki, If as kn, zs as kr, Wh as kt, bx as l, Jn as li, Bp as ln, Ul as lr, Mg as lt, ix as m, Qn as mi, kp as mn, pl as mr, Og as mt, AC as n, Qr as ni, qp as nn, Gu as nr, v_ as nt, Sx as o, Nr as oi, Up as on, Jl as or, u_ as ot, cx as p, Xn as pi, Op as pn, Al as pr, kg as pt, D_ as q, Rd as qn, lo as qr, am as qt, GS as r, ei as ri, Kp as rn, Bu as rr, b_ as rt, Dx as s, kr as si, Hp as sn, Yl as sr, Zg as st, PC as t, $r as ti, $p as tn, qu as tr, __ as tt, mx as u, Zn as ui, Lp as un, Vl as ur, Ag as ut, qb as v, Rn as vi, Sp as vn, gc as vr, cg as vt, ib as w, en as wi, op as wn, Gs as wr, gg as wt, Vb as x, ln as xi, mp as xn, oc as xr, mg as xt, Kb as y, Cn as yi, xp as yn, hc as yr, ag as yt, Fv as z, Tt as zi, uf as zn, ss as zr, uh as zt };
 
-//# sourceMappingURL=src-DAff1iN_.js.map
+//# sourceMappingURL=src-CMmpA37K.js.map

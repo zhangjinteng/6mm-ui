@@ -8,6 +8,9 @@ export interface CmsSourceMetadata {
 
 /** CMS ownership is independent from user-source snapshots and report scopes. */
 export function createCmsSourceColumns<Row extends TableRow>(): ProTableColumn<Row>[] {
+    // White-label content is already tenant-scoped; ownership columns are platform-only.
+    // Remove them from the column model as well as the table's field chooser.
+    if (useCmsRuntime().mode === 'white_label') return []
     return [
         { key: 'cms_source_name', dataIndex: 'cms_source_name', title: '来源昵称', width: 160 },
         { key: 'cms_source_type', dataIndex: 'cms_source_type', title: '来源类型', width: 100 }

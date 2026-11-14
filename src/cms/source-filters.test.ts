@@ -9,7 +9,7 @@ vi.mock('../index', async original => {
     ...actual,
     MmProTable: defineComponent({
       name: 'SourceFilterTestTable',
-      props: ['queryFields', 'filters', 'data', 'currentPage'],
+      props: ['columns', 'queryFields', 'filters', 'data', 'currentPage'],
       emits: ['update:filters', 'update:currentPage', 'query', 'reset'],
       setup: props => () => h('div', JSON.stringify(props.data)),
     }),
@@ -81,6 +81,23 @@ function fixture(Component = NewsCategories, mode: CmsRuntime['mode'] = 'platfor
 }
 
 describe.each(pages)('%s CMS ownership filters', (_page, Component) => {
+  it('keeps ownership columns for platform but removes them entirely for white-label accounts', async () => {
+    const platform = fixture(Component, 'platform')
+    const whiteLabel = fixture(Component, 'white_label')
+    await flushPromises()
+    const platformColumns = platform.table().props('columns')
+    const whiteLabelColumns = whiteLabel.table().props('columns')
+    expect(platformColumns.filter((column: any) => column.key.startsWith('cms_source_'))
+      .map((column: any) => column.title)).toEqual(['来源昵称', '来源类型'])
+    expect(whiteLabelColumns.some((column: any) => ['cms_source_name', 'cms_source_type'].includes(column.key))).toBe(false)
+    expect(whiteLabelColumns.map((column: any) => column.key)).toEqual(
+      platformColumns.filter((column: any) => !['cms_source_name', 'cms_source_type'].includes(column.key))
+        .map((column: any) => column.key),
+    )
+    // Presentation changes must not strip ownership data or change the request scope.
+    expect(whiteLabel.table().props('data')[0]).toMatchObject({ cms_source_type: 'white_label', cms_tenant_id: '10' })
+  })
+
   it('loads metadata once and submits owner and tenant changes without a search click', async () => {
     const f = fixture(Component)
     await flushPromises()

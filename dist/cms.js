@@ -125,7 +125,7 @@ function q(e) {
 //#endregion
 //#region src/cms/views/content/cmsSources.ts
 function J() {
-	return [{
+	return he().mode === "white_label" ? [] : [{
 		key: "cms_source_name",
 		dataIndex: "cms_source_name",
 		title: "来源昵称",

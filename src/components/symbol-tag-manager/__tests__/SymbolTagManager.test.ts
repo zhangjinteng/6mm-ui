@@ -245,7 +245,16 @@ describe("MmSymbolTagManager", () => {
     expect(actions.list).toHaveBeenCalledWith({});
     expect(wrapper.text()).toContain("Crypto");
     expect(wrapper.text()).toContain("加密货币");
+    expect(wrapper.text()).not.toContain("Layer1");
+    await wrapper.get("button[aria-label='展开标签']").trigger("click");
     expect(wrapper.text()).toContain("Layer1");
+    await wrapper.findAll("button").find(button => button.text() === "全部折叠")!.trigger("click");
+    expect(wrapper.text()).not.toContain("Layer1");
+    await wrapper.findAll("button").find(button => button.text() === "全部展开")!.trigger("click");
+    expect(wrapper.text()).toContain("Layer1");
+    await wrapper.findAll("button").find(button => button.text() === "重置")!.trigger("click");
+    await flushPromises();
+    expect(wrapper.text()).not.toContain("Layer1");
     expect(wrapper.text()).toContain("中文名称");
     expect(wrapper.text()).toContain("英文名称");
 

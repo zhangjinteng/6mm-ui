@@ -485,14 +485,14 @@ function toggleRow(row: VisibleTagRow) {
 }
 function toggleAll() { expandedKeys.value = isAllExpanded.value ? new Set() : new Set(expandableKeys.value); }
 function handleQuery(value: QueryBarValue) { filters.value = { ...defaultFilters(), ...value }; expandedKeys.value = new Set(expandableKeys.value); }
-function handleReset(value: QueryBarValue) { filters.value = { ...defaultFilters(), ...value }; expandedKeys.value = new Set(expandableKeys.value); }
+function handleReset(value: QueryBarValue) { filters.value = { ...defaultFilters(), ...value }; expandedKeys.value = new Set(); }
 async function load() {
   loading.value = true;
   pageError.value = "";
   try {
     const result = await props.actions.list({});
     rows.value = Array.isArray(result?.lists) ? result.lists.map((item) => ({ ...item })) : [];
-    expandedKeys.value = new Set(expandableKeys.value);
+    expandedKeys.value = new Set();
   } catch (error) {
     pageError.value = errorMessage(error);
     emit("action-error", "list", error);

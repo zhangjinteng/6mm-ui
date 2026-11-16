@@ -9,6 +9,7 @@ export * from './tenant-channel-config';
 export * from './asset-balance-report';
 export * from './platform-trade-summary-report';
 export * from './funding-overview-table';
+export * from './contract-vip-table';
 export * from './alert';
 export * from './futures-trade-report';
 export * from './user-daily-report';

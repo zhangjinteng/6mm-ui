@@ -14,3 +14,7 @@ export * from './components/prediction-operations'
 export * from './components/asset-phase-report'
 
 export * from "./components/translation-settings";
+export { default as MmMarketCurrentPage } from './market/MarketCurrentPage.vue'
+export { default as MmMarketHistoryPage } from './market/MarketHistoryPage.vue'
+export * from './market/types'
+export * from './market/history'

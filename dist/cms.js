@@ -1,5 +1,5 @@
-import { $r as e, A as t, Gi as n, Kn as r, O as i, Qr as a, Ui as o, Zr as s, _i as c, _r as l, a as u, ai as d, bn as f, ei as ee, kr as te, oi as ne, pr as re, vi as ie, xi as p, yi as ae, yn as m } from "./src-CTYC97FT.js";
-import { a as oe, i as h, n as g } from "./Loading-0BZTBNiq.js";
+import { Ai as e, Di as t, Ei as n, Er as r, L as i, Oi as a, On as o, Qi as s, Rr as c, Sr as ee, ci as l, ea as te, hi as u, kn as d, li as f, m as p, mi as ne, oi as re, si as ie, tr as ae, z as oe } from "./src-BY3tL3qm.js";
+import { a as m, i as h, n as g } from "./Loading-0BZTBNiq.js";
 import { Fragment as _, computed as v, createBlock as y, createCommentVNode as b, createElementBlock as x, createElementVNode as S, createTextVNode as C, createVNode as w, defineComponent as T, inject as E, mergeProps as D, nextTick as O, normalizeClass as k, onBeforeUnmount as se, onMounted as ce, openBlock as A, provide as j, reactive as le, ref as M, renderList as ue, resolveDynamicComponent as de, toDisplayString as N, unref as P, vModelSelect as fe, vModelText as F, vShow as I, watch as L, withCtx as R, withDirectives as pe, withKeys as z, withModifiers as me } from "vue";
 //#region src/cms/runtime.ts
 var B = Symbol("MmCms");
@@ -170,7 +170,7 @@ function ge(e, t) {
 			label: "全部白标",
 			value: ""
 		}]
-	}] : []), i, a, o = !1, s = (e) => [String(e.cms_source_type || ""), String(e.cms_tenant_id || "")], c = (e, t) => e[0] === t[0] && e[1] === t[1], l = (e) => {
+	}] : []), i, a, o = !1, s = (e) => [String(e.cms_source_type || ""), String(e.cms_tenant_id || "")], c = (e, t) => e[0] === t[0] && e[1] === t[1], ee = (e) => {
 		for (let t of [
 			"parent_id",
 			"category_id",
@@ -178,7 +178,7 @@ function ge(e, t) {
 			"issue_category_id"
 		]) t in e && (e[t] = "");
 	};
-	async function u() {
+	async function l() {
 		if (o) return;
 		a?.abort();
 		let s = a = new AbortController(), c = n ? {
@@ -198,22 +198,22 @@ function ge(e, t) {
 		}
 	}
 	ce(() => {
-		if (n || t) return u();
+		if (n || t) return l();
 	}), se(() => {
 		o = !0, a?.abort();
 	});
-	function d(e) {
+	function te(e) {
 		if (!n) return e;
 		let t = e.filters;
 		i = t;
-		let a = s(t.value), d = (e) => {
+		let a = s(t.value), te = (e) => {
 			let t = { ...e };
-			return t.cms_source_type === "platform" && (t.cms_tenant_id = ""), c(a, s(t)) || l(t), t;
-		}, f = (n = t.value) => {
-			let r = d(n);
+			return t.cms_source_type === "platform" && (t.cms_tenant_id = ""), c(a, s(t)) || ee(t), t;
+		}, u = (n = t.value) => {
+			let r = te(n);
 			a = s(r), e.query(r);
-		}, ee = (n) => {
-			e.reset(n === void 0 ? void 0 : d(n)), a = s(t.value);
+		}, d = (n) => {
+			e.reset(n === void 0 ? void 0 : te(n)), a = s(t.value);
 		};
 		return L(() => t.value.cms_source_type, (e) => {
 			e === "platform" && (t.value.cms_tenant_id = ""), r[1].disabled = e === "platform";
@@ -221,24 +221,24 @@ function ge(e, t) {
 			immediate: !0,
 			flush: "sync"
 		}), L([() => String(t.value.cms_source_type || ""), () => String(t.value.cms_tenant_id || "")], () => {
-			l(t.value), u(), O(() => {
-				!o && !c(a, s(t.value)) && f();
+			ee(t.value), l(), O(() => {
+				!o && !c(a, s(t.value)) && u();
 			});
 		}), {
 			...e,
-			query: f,
-			reset: ee,
+			query: u,
+			reset: d,
 			proTableBindings: v(() => ({
 				...e.proTableBindings.value,
-				onQuery: f,
-				onReset: ee
+				onQuery: u,
+				onReset: d
 			}))
 		};
 	}
 	return {
 		fields: r,
-		bindTable: d,
-		loadMetadata: u
+		bindTable: te,
+		loadMetadata: l
 	};
 }
 //#endregion
@@ -247,22 +247,22 @@ var Y = /* @__PURE__ */ T({
 	__name: "index",
 	props: { sourceType: { default: "merchant" } },
 	setup(e) {
-		let t = e, r = {
+		let t = e, n = {
 			merchant: "商户",
 			white_label: "白标",
 			platform: "平台"
-		}, i = {
+		}, r = {
 			merchant: "primary",
 			white_label: "info",
 			platform: "success"
-		}, a = v(() => t.sourceType ? r[t.sourceType] : "-"), o = v(() => t.sourceType ? i[t.sourceType] : "default");
-		return (e, t) => (A(), y(P(n), {
+		}, i = v(() => t.sourceType ? n[t.sourceType] : "-"), a = v(() => t.sourceType ? r[t.sourceType] : "default");
+		return (e, t) => (A(), y(P(te), {
 			effect: "soft",
 			round: "",
 			size: "sm",
-			type: o.value
+			type: a.value
 		}, {
-			default: R(() => [C(N(a.value), 1)]),
+			default: R(() => [C(N(i.value), 1)]),
 			_: 1
 		}, 8, ["type"]));
 	}
@@ -291,7 +291,7 @@ function _e() {
 			id: r,
 			row_version: i
 		}
-	}, { isOpenRetry: !1 }), s = u(e, `${t}/upload`), c = [
+	}, { isOpenRetry: !1 }), s = p(e, `${t}/upload`), c = [
 		{
 			label: "草稿",
 			value: "draft"
@@ -305,13 +305,13 @@ function _e() {
 			value: "published"
 		}
 	];
-	function l(e, t) {
+	function ee(e, t) {
 		let n = e?.categories.find((e) => e.id === String(t));
 		if (!n) return "—";
 		let r = e?.categories.find((e) => e.id === n.parent_id);
 		return r ? `${r.name} / ${n.name}` : n.name;
 	}
-	function d(e) {
+	function l(e) {
 		if (e && typeof e == "object") {
 			let t = e;
 			return Object.values(t.errors || {}).flat()[0] || t.msg || t.message || "操作失败，请稍后重试";
@@ -326,8 +326,8 @@ function _e() {
 		deleteNews: o,
 		uploadNewsCover: s,
 		newsPublishStates: c,
-		newsCategoryLabel: l,
-		newsError: d
+		newsCategoryLabel: ee,
+		newsError: l
 	};
 }
 //#endregion
@@ -360,7 +360,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 }, Q = { class: "taxonomy-editor__field" }, xe = { class: "taxonomy-editor__row" }, Se = "分类", $ = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(t) {
-		let { newsError: r, deleteNews: i, getNewsMetadata: a, getNewsList: s, getNewsDetail: c, saveNews: l } = _e(), { hasPermission: u } = he(), { formatDateTime: ee } = he(), ie = (e) => u([`cms_news_category:${e}`]), h = M(), _ = M(), T = ge(a, (e) => {
+		let { newsError: n, deleteNews: r, getNewsMetadata: i, getNewsList: f, getNewsDetail: p, saveNews: re } = _e(), { hasPermission: ie } = he(), { formatDateTime: ae } = he(), oe = (e) => ie([`cms_news_category:${e}`]), h = M(), _ = M(), T = ge(i, (e) => {
 			h.value = e;
 		}), E = [
 			{
@@ -412,7 +412,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: ee
+				formatter: ae
 			},
 			{
 				key: "actions",
@@ -461,12 +461,12 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					}
 				]
 			}
-		], { proTableBindings: k, rows: ce, reload: j } = T.bindTable(te({
+		], { proTableBindings: k, rows: ce, reload: j } = T.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
 			queryFields: O,
 			request: async ({ filters: e, signal: t, reason: n }) => {
-				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => s("categories", {
+				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => f("categories", {
 					...r,
 					page_no: e,
 					page_size: n
@@ -481,15 +481,15 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			parent_id: "",
 			sort_order: 10,
 			is_enabled: !0
-		}), z = le(pe()), B = M(!1), V = M(!1), H = M(!1), U = M(!1), W = M(!1), X = M(""), $ = M(!1), Ce = M(""), we = M(!1), Te = v(() => !ie(z.id ? "edit" : "add")), Ee = v(() => H.value || U.value), De = "", Oe;
+		}), z = le(pe()), B = M(!1), V = M(!1), H = M(!1), U = M(!1), W = M(!1), X = M(""), $ = M(!1), Ce = M(""), we = M(!1), Te = v(() => !oe(z.id ? "edit" : "add")), Ee = v(() => H.value || U.value), De = "", Oe;
 		async function ke(e) {
 			Oe?.abort(), Oe = new AbortController();
 			let t = Oe;
 			Object.assign(z, pe(), { id: e || "" }), Ce.value = "", W.value = !1, X.value = "", $.value = !1, B.value = !0, V.value = !0, De = JSON.stringify(z);
 			try {
-				if (_.value = await a(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
-				let n = await c("categories", e, t.signal);
-				if (_.value = await a(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
+				if (_.value = await i(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
+				let n = await p("categories", e, t.signal);
+				if (_.value = await i(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
 				Object.assign(z, {
 					id: n.id,
 					row_version: n.row_version,
@@ -500,7 +500,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					is_enabled: n.is_enabled
 				}), De = JSON.stringify(z);
 			} catch (e) {
-				t.signal.aborted || ($.value = !0, Ce.value = r(e));
+				t.signal.aborted || ($.value = !0, Ce.value = n(e));
 			} finally {
 				t.signal.aborted || (V.value = !1);
 			}
@@ -522,31 +522,31 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				}
 				H.value = !0, Ce.value = "";
 				try {
-					await l("categories", {
+					await re("categories", {
 						name: z.name,
 						parent_id: z.parent_id || null,
 						sort_order: z.sort_order,
 						is_enabled: z.is_enabled,
 						id: z.id || void 0,
 						row_version: z.id ? z.row_version : void 0
-					}), B.value = !1, ne.success("保存成功"), await Promise.all([j(), Le()]);
+					}), B.value = !1, u.success("保存成功"), await Promise.all([j(), Le()]);
 				} catch (e) {
-					Ce.value = r(e);
+					Ce.value = n(e);
 				} finally {
 					H.value = !1;
 				}
 			}
 		}
 		function Pe() {
-			!z.id || !ie("delete") || Ee.value || V.value || $.value || (X.value = "", W.value = !0);
+			!z.id || !oe("delete") || Ee.value || V.value || $.value || (X.value = "", W.value = !0);
 		}
 		async function Fe() {
-			if (!(!W.value || !z.id || !ie("delete") || Ee.value || V.value || $.value)) {
+			if (!(!W.value || !z.id || !oe("delete") || Ee.value || V.value || $.value)) {
 				U.value = !0, X.value = "";
 				try {
-					await i("categories", z.id, z.row_version), W.value = !1, B.value = !1, ne.success("分类已删除"), await Promise.all([j(), Le()]);
+					await r("categories", z.id, z.row_version), W.value = !1, B.value = !1, u.success("分类已删除"), await Promise.all([j(), Le()]);
 				} catch (e) {
-					X.value = r(e);
+					X.value = n(e);
 				} finally {
 					U.value = !1;
 				}
@@ -561,8 +561,8 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 		}))]), Le = T.loadMetadata;
 		return se(() => {
 			Oe?.abort();
-		}), (t, r) => (A(), x("div", ve, [
-			w(P(re), D(P(k), {
+		}), (t, n) => (A(), x("div", ve, [
+			w(P(ee), D(P(k), {
 				"auto-refreshable": !1,
 				columns: E,
 				"row-key": "id",
@@ -574,11 +574,11 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				"show-pagination": !1
 			}), {
 				"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-				"toolbar-actions": R(() => [ie("add") ? (A(), y(P(o), {
+				"toolbar-actions": R(() => [oe("add") ? (A(), y(P(s), {
 					key: 0,
 					variant: "primary",
 					size: "sm",
-					onClick: r[0] ||= (e) => ke()
+					onClick: n[0] ||= (e) => ke()
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "plus",
@@ -586,7 +586,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					})]),
 					default: R(() => [C("新增" + N(Se))]),
 					_: 1
-				})) : b("", !0), w(P(o), {
+				})) : b("", !0), w(P(s), {
 					size: "sm",
 					disabled: !P(fe).children.size,
 					onClick: P(L)
@@ -611,7 +611,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					"expanded",
 					"onToggle"
 				])]),
-				"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+				"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.is_enabled ? "success" : "danger"
@@ -619,15 +619,15 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": R(({ row: e }) => [w(P(o), {
+				"cell-actions": R(({ row: e }) => [w(P(s), {
 					size: "sm",
 					"icon-only": "",
-					title: ie("edit") ? `编辑${Se}` : `${Se}详情`,
+					title: oe("edit") ? `编辑${Se}` : `${Se}详情`,
 					"aria-label": `编辑${Se}`,
 					onClick: (t) => ke(e.id)
 				}, {
 					default: R(() => [w(P(g), {
-						name: ie("edit") ? "square-pen" : "panel-right-open",
+						name: oe("edit") ? "square-pen" : "panel-right-open",
 						size: 15
 					}, null, 8, ["name"])]),
 					_: 1
@@ -638,9 +638,9 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				])]),
 				_: 1
 			}, 16, ["aria-label", "data"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: B.value,
-				"onUpdate:modelValue": r[5] ||= (e) => B.value = e,
+				"onUpdate:modelValue": n[5] ||= (e) => B.value = e,
 				title: `${z.id ? "编辑" : "新增"}新闻${Se}`,
 				width: "680px",
 				subtitle: "新闻分类用于前端导航与内容归档，最多支持两级",
@@ -648,7 +648,7 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				"before-close": Ae
 			}, {
 				footer: R(() => [
-					z.id && ie("delete") ? (A(), y(P(o), {
+					z.id && oe("delete") ? (A(), y(P(s), {
 						key: 0,
 						variant: "danger",
 						disabled: V.value || $.value || Ee.value,
@@ -658,17 +658,17 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 							name: "trash-2",
 							size: 14
 						})]),
-						default: R(() => [r[11] ||= C("删除分类", -1)]),
+						default: R(() => [n[11] ||= C("删除分类", -1)]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						disabled: Ee.value,
 						onClick: je
 					}, {
-						default: R(() => [...r[12] ||= [C("取消", -1)]]),
+						default: R(() => [...n[12] ||= [C("取消", -1)]]),
 						_: 1
 					}, 8, ["disabled"]),
-					Te.value ? b("", !0) : (A(), y(P(o), {
+					Te.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						variant: "primary",
 						loading: H.value,
@@ -688,36 +688,36 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						class: "news-spin",
 						size: 24
 					}), S("span", null, "正在读取" + N(Se) + "...")])) : b("", !0),
-					Ce.value ? (A(), y(P(d), {
+					Ce.value ? (A(), y(P(ne), {
 						key: 1,
 						type: "error",
 						closable: !1,
 						description: Ce.value
 					}, null, 8, ["description"])) : b("", !0),
-					!V.value && !$.value ? (A(), y(P(f), {
+					!V.value && !$.value ? (A(), y(P(d), {
 						key: 2,
 						model: z,
 						"label-position": "top",
 						onSubmit: me(Ne, ["prevent"])
 					}, {
 						default: R(() => [
-							z.id ? (A(), y(P(m), {
+							z.id ? (A(), y(P(o), {
 								key: 0,
 								label: "分类ID"
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									"model-value": z.code,
 									disabled: ""
 								}, null, 8, ["model-value"])]),
 								_: 1
 							})) : b("", !0),
-							w(P(m), {
+							w(P(o), {
 								label: `${Se}名称`,
 								required: ""
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									modelValue: z.name,
-									"onUpdate:modelValue": r[1] ||= (e) => z.name = e,
+									"onUpdate:modelValue": n[1] ||= (e) => z.name = e,
 									maxlength: 120,
 									disabled: Te.value || Ee.value,
 									"aria-label": `${Se}名称`
@@ -728,10 +728,10 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 								])]),
 								_: 1
 							}, 8, ["label"]),
-							w(P(m), { label: "父分类" }, {
-								default: R(() => [S("div", Q, [w(P(ae), {
+							w(P(o), { label: "父分类" }, {
+								default: R(() => [S("div", Q, [w(P(a), {
 									modelValue: z.parent_id,
-									"onUpdate:modelValue": r[2] ||= (e) => z.parent_id = e,
+									"onUpdate:modelValue": n[2] ||= (e) => z.parent_id = e,
 									options: Ie.value,
 									disabled: Te.value || Ee.value,
 									"aria-label": "父分类"
@@ -739,16 +739,16 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 									"modelValue",
 									"options",
 									"disabled"
-								]), r[10] ||= S("p", { class: "news-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类新闻。 ", -1)])]),
+								]), n[10] ||= S("p", { class: "news-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类新闻。 ", -1)])]),
 								_: 1
 							}),
-							S("div", xe, [w(P(m), {
+							S("div", xe, [w(P(o), {
 								label: "前端排序",
 								required: ""
 							}, {
-								default: R(() => [w(P(e), {
+								default: R(() => [w(P(l), {
 									modelValue: z.sort_order,
-									"onUpdate:modelValue": r[3] ||= (e) => z.sort_order = e,
+									"onUpdate:modelValue": n[3] ||= (e) => z.sort_order = e,
 									min: 0,
 									max: 2147483647,
 									precision: 0,
@@ -756,10 +756,10 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 									"aria-label": "前端排序"
 								}, null, 8, ["modelValue", "disabled"])]),
 								_: 1
-							}), w(P(m), { label: "启用状态" }, {
+							}), w(P(o), { label: "启用状态" }, {
 								default: R(() => [w(Z, {
 									modelValue: z.is_enabled,
-									"onUpdate:modelValue": r[4] ||= (e) => z.is_enabled = e,
+									"onUpdate:modelValue": n[4] ||= (e) => z.is_enabled = e,
 									disabled: Te.value || Ee.value,
 									label: "已启用",
 									"aria-label": "启用状态"
@@ -772,29 +772,29 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				], 8, ye)]),
 				_: 1
 			}, 8, ["modelValue", "title"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: W.value,
-				"onUpdate:modelValue": r[7] ||= (e) => W.value = e,
+				"onUpdate:modelValue": n[7] ||= (e) => W.value = e,
 				title: "删除新闻分类",
 				width: "420px",
 				"close-on-click-modal": !1,
 				"before-close": () => !U.value
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: U.value,
-					onClick: r[6] ||= (e) => W.value = !1
+					onClick: n[6] ||= (e) => W.value = !1
 				}, {
-					default: R(() => [...r[13] ||= [C("取消", -1)]]),
+					default: R(() => [...n[13] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "danger",
 					loading: U.value,
 					onClick: Fe
 				}, {
-					default: R(() => [...r[14] ||= [C("确认删除", -1)]]),
+					default: R(() => [...n[14] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [S("p", null, "确认删除分类“" + N(z.name) + "”？有关联新闻或子分类的分类无法删除。", 1), X.value ? (A(), y(P(d), {
+				default: R(() => [S("p", null, "确认删除分类“" + N(z.name) + "”？有关联新闻或子分类的分类无法删除。", 1), X.value ? (A(), y(P(ne), {
 					key: 0,
 					type: "error",
 					closable: !1,
@@ -802,20 +802,20 @@ var X = ["aria-checked", "disabled"], Z = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				}, null, 8, ["description"])) : b("", !0)]),
 				_: 1
 			}, 8, ["modelValue", "before-close"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: we.value,
-				"onUpdate:modelValue": r[9] ||= (e) => we.value = e,
+				"onUpdate:modelValue": n[9] ||= (e) => we.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[8] ||= (e) => we.value = !1 }, {
-					default: R(() => [...r[15] ||= [C("继续编辑", -1)]]),
+				footer: R(() => [w(P(s), { onClick: n[8] ||= (e) => we.value = !1 }, {
+					default: R(() => [...n[15] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: Me
 				}, {
-					default: R(() => [...r[16] ||= [C("放弃修改", -1)]]),
+					default: R(() => [...n[16] ||= [C("放弃修改", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -929,24 +929,24 @@ function Ee(e, t) {
 //#endregion
 //#region src/cms/views/content/useArticleValidation.ts
 function De(e, t, n, r) {
-	let i = M(), a = M(), o = M(null), s = M(Date.now()), c = le({}), l = M(""), u = Object.fromEntries(we.map((e) => [e, {
+	let i = M(), a = M(), o = M(null), s = M(Date.now()), c = le({}), ee = M(""), l = Object.fromEntries(we.map((e) => [e, {
 		required: e === "title" || e === "category_id",
 		trigger: "submit"
-	}])), d = v(() => o.value ? Te(e, t(), n, o.value === "draft" ? "draft" : e.scheduled_local ? "scheduled" : "published", s.value) : {}), f = v(() => ({
+	}])), te = v(() => o.value ? Te(e, t(), n, o.value === "draft" ? "draft" : e.scheduled_local ? "scheduled" : "published", s.value) : {}), u = v(() => ({
 		...c,
-		...d.value
-	})), ee = v(() => Object.keys(f.value).length);
+		...te.value
+	})), d = v(() => Object.keys(u.value).length);
 	for (let t of we) L(() => e[t], () => {
-		delete c[t], l.value = "", s.value = Date.now();
+		delete c[t], ee.value = "", s.value = Date.now();
 	}, { deep: !0 });
-	function te() {
-		f.value.seo_description && a.value?.focus();
+	function f() {
+		u.value.seo_description && a.value?.focus();
 	}
-	async function ne() {
+	async function p() {
 		await O();
-		let e = [...i.value?.querySelectorAll("[data-prop]") || []].find((e) => f.value[e.dataset.prop]);
-		if (!e && f.value.seo_description) {
-			r.value ? te() : r.value = !0;
+		let e = [...i.value?.querySelectorAll("[data-prop]") || []].find((e) => u.value[e.dataset.prop]);
+		if (!e && u.value.seo_description) {
+			r.value ? f() : r.value = !0;
 			return;
 		}
 		e && (e.scrollIntoView({
@@ -954,26 +954,26 @@ function De(e, t, n, r) {
 			behavior: "auto"
 		}), (e.querySelector("[contenteditable=\"true\"], [role=\"combobox\"]:not([aria-disabled=\"true\"])") || e.querySelector("input:not(:disabled), textarea:not(:disabled), button:not(:disabled)"))?.focus({ preventScroll: !0 }));
 	}
-	async function re(e) {
-		o.value = e === "draft" ? "draft" : "publish", s.value = Date.now(), l.value = "";
+	async function ne(e) {
+		o.value = e === "draft" ? "draft" : "publish", s.value = Date.now(), ee.value = "";
 		for (let e of we) delete c[e];
-		return ee.value ? (await ne(), !1) : !0;
+		return d.value ? (await p(), !1) : !0;
 	}
-	function ie(e) {
+	function re(e) {
 		let t = Ee(e, n);
-		Object.assign(c, t.fields), l.value = t.general;
+		Object.assign(c, t.fields), ee.value = t.general;
 	}
 	return {
 		editorRoot: i,
 		seoInput: a,
-		fieldRules: u,
-		fieldErrors: f,
-		pendingCount: ee,
-		saveError: l,
-		validateSave: re,
-		setSaveFailure: ie,
-		focusFirstError: ne,
-		focusSeoError: te
+		fieldRules: l,
+		fieldErrors: u,
+		pendingCount: d,
+		saveError: ee,
+		validateSave: ne,
+		setSaveFailure: re,
+		focusFirstError: p,
+		focusSeoError: f
 	};
 }
 //#endregion
@@ -1005,12 +1005,12 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 	props: { articleId: {} },
 	emits: ["close", "saved"],
 	setup(t, { emit: n }) {
-		let { newsError: r, newsCategoryLabel: a, deleteNews: s, getNewsDetail: c, getNewsMetadata: l, saveNews: u, uploadNewsCover: te } = _e(), { hasPermission: re } = he(), ie = t, h = n, T = M(!0), E = M(!1), D = M(!1), O = M(""), k = M(!1), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), L = M("draft"), z = M(!1), B = v(() => re(["cms_news:publish"])), H = v(() => !re([`cms_news:${ie.articleId ? "edit" : "add"}`]) || !B.value && L.value !== "draft"), U = v(() => re(["cms_news:delete"]) && (B.value || L.value === "draft"));
+		let { newsError: r, newsCategoryLabel: c, deleteNews: ee, getNewsDetail: te, getNewsMetadata: p, saveNews: re, uploadNewsCover: ie } = _e(), { hasPermission: ae } = he(), oe = t, h = n, T = M(!0), E = M(!1), D = M(!1), O = M(""), k = M(!1), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), L = M("draft"), z = M(!1), B = v(() => ae(["cms_news:publish"])), H = v(() => !ae([`cms_news:${oe.articleId ? "edit" : "add"}`]) || !B.value && L.value !== "draft"), U = v(() => ae(["cms_news:delete"]) && (B.value || L.value === "draft"));
 		async function W() {
 			if (!(!U.value || E.value || T.value || D.value)) {
 				E.value = !0, O.value = "";
 				try {
-					await s("articles", K.id, K.row_version), we = JSON.stringify(K), ne.success("新闻已删除"), h("saved");
+					await ee("articles", K.id, K.row_version), we = JSON.stringify(K), u.success("新闻已删除"), h("saved");
 				} catch (e) {
 					O.value = r(e), de.value = !1;
 				} finally {
@@ -1033,7 +1033,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 			is_enabled: !0,
 			scheduled_local: ""
 		}), { editorRoot: q, seoInput: J, fieldRules: ge, fieldErrors: Y, pendingCount: X, saveError: ve, validateSave: ye, setSaveFailure: be, focusFirstError: Q, focusSeoError: xe } = De(K, () => I.value?.categories || [], "news", k), Se = v(() => (I.value?.categories || []).filter((e) => e.parent_id != null).map((e) => ({
-			label: a(I.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
+			label: c(I.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
 			value: e.id,
 			disabled: !e.effective_enabled
 		}))), $ = v(() => I.value?.categories.find((e) => e.id === K.category_id && e.parent_id == null)), Ce = v({
@@ -1052,9 +1052,9 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 			let e = Te;
 			T.value = !0, D.value = !1, O.value = "";
 			try {
-				if (I.value = await l(e.signal, { cms_source_type: "platform" }), ie.articleId) {
-					let t = await c("articles", ie.articleId, e.signal);
-					if (I.value = await l(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
+				if (I.value = await p(e.signal, { cms_source_type: "platform" }), oe.articleId) {
+					let t = await te("articles", oe.articleId, e.signal);
+					if (I.value = await p(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
 					for (let e of [
 						"id",
 						"row_version",
@@ -1095,14 +1095,14 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 			let t = K.scheduled_local ? new Date(K.scheduled_local) : null;
 			E.value = !0, O.value = "";
 			try {
-				await u("articles", {
+				await re("articles", {
 					...K,
 					id: K.id || void 0,
 					row_version: K.id ? K.row_version : void 0,
 					category_id: K.category_id || null,
 					publish_status: e,
 					scheduled_at: e === "scheduled" ? t.toISOString() : null
-				}), we = JSON.stringify(K), ne.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "新闻已发布"), h("saved");
+				}), we = JSON.stringify(K), u.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "新闻已发布"), h("saved");
 			} catch (e) {
 				be(e);
 			} finally {
@@ -1127,7 +1127,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 			"aria-busy": T.value || E.value
 		}, [
 			S("header", ke, [
-				w(P(o), {
+				w(P(s), {
 					"icon-only": "",
 					title: "返回新闻列表",
 					"aria-label": "返回新闻列表",
@@ -1142,7 +1142,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				}, 8, ["disabled"]),
 				S("div", Ae, [S("h2", null, N(t.articleId ? "编辑新闻" : "新增新闻"), 1), S("span", null, N(I.value?.source_locale || "zh-CN") + " · " + N(fe.value), 1)]),
 				S("div", je, [
-					t.articleId && U.value ? (A(), y(P(o), {
+					t.articleId && U.value ? (A(), y(P(s), {
 						key: 0,
 						size: "sm",
 						disabled: T.value || D.value || E.value || z.value,
@@ -1151,7 +1151,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						default: R(() => [...r[28] ||= [C("删除新闻", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						disabled: T.value || D.value,
 						onClick: r[1] ||= (e) => k.value = !0
@@ -1163,7 +1163,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						default: R(() => [r[29] ||= C("SEO 设置", -1)]),
 						_: 1
 					}, 8, ["disabled"]),
-					H.value ? b("", !0) : (A(), y(P(o), {
+					H.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						size: "sm",
 						disabled: T.value || D.value || E.value || z.value,
@@ -1178,7 +1178,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 					}, 8, ["disabled"])),
 					P(ve) ? (A(), x("span", Me, N(P(ve)), 1)) : b("", !0),
 					!H.value && P(X) ? (A(), x("span", Ne, "还有 " + N(P(X)) + " 项待完善", 1)) : b("", !0),
-					!H.value && B.value ? (A(), y(P(o), {
+					!H.value && B.value ? (A(), y(P(s), {
 						key: 4,
 						variant: "primary",
 						size: "sm",
@@ -1199,31 +1199,31 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				name: "loader-circle",
 				class: "news-spin",
 				size: 28
-			}), r[31] ||= S("span", null, "正在读取新闻资料...", -1)])) : D.value ? (A(), x("div", Fe, [w(P(d), {
+			}), r[31] ||= S("span", null, "正在读取新闻资料...", -1)])) : D.value ? (A(), x("div", Fe, [w(P(ne), {
 				type: "error",
 				description: O.value,
 				closable: !1
-			}, null, 8, ["description"]), w(P(o), { onClick: Ue }, {
+			}, null, 8, ["description"]), w(P(s), { onClick: Ue }, {
 				default: R(() => [...r[32] ||= [C("重新加载", -1)]]),
 				_: 1
-			})])) : (A(), x(_, { key: 2 }, [O.value ? (A(), x("div", Ie, [w(P(d), {
+			})])) : (A(), x(_, { key: 2 }, [O.value ? (A(), x("div", Ie, [w(P(ne), {
 				type: "error",
 				description: O.value,
 				closable: !1
-			}, null, 8, ["description"])])) : b("", !0), S("div", Le, [S("aside", Re, [w(P(f), {
+			}, null, 8, ["description"])])) : b("", !0), S("div", Le, [S("aside", Re, [w(P(d), {
 				model: K,
 				rules: P(ge),
 				"label-position": "top",
 				onSubmit: r[12] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "新闻分类",
 						prop: "category_id",
 						error: P(Y).category_id,
 						required: ""
 					}, {
-						default: R(() => [w(P(ae), {
+						default: R(() => [w(P(a), {
 							modelValue: Ce.value,
 							"onUpdate:modelValue": r[3] ||= (e) => Ce.value = e,
 							options: Se.value,
@@ -1240,17 +1240,17 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						_: 1
 					}, 8, ["error"]),
 					r[33] ||= S("h3", null, "新闻设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "新闻封面",
 						prop: "cover_url",
 						error: P(Y).cover_url
 					}, {
-						default: R(() => [w(ee, {
+						default: R(() => [w(f, {
 							modelValue: K.cover_url,
 							"onUpdate:modelValue": r[4] ||= (e) => K.cover_url = e,
 							label: "新闻封面",
 							disabled: G.value,
-							upload: P(te),
+							upload: P(ie),
 							onBusyChange: r[5] ||= (e) => z.value = e,
 							onStart: r[6] ||= (e) => O.value = "",
 							onError: Ye
@@ -1261,12 +1261,12 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "内容来源",
 						prop: "content_source",
 						error: P(Y).content_source
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.content_source,
 							"onUpdate:modelValue": r[7] ||= (e) => K.content_source = e,
 							maxlength: 160,
@@ -1275,12 +1275,12 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "作者署名",
 						prop: "author_name",
 						error: P(Y).author_name
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.author_name,
 							"onUpdate:modelValue": r[8] ||= (e) => K.author_name = e,
 							maxlength: 120,
@@ -1289,12 +1289,12 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "前端排序",
 						prop: "sort_order",
 						error: P(Y).sort_order
 					}, {
-						default: R(() => [w(P(e), {
+						default: R(() => [w(P(l), {
 							modelValue: K.sort_order,
 							"onUpdate:modelValue": r[9] ||= (e) => K.sort_order = e,
 							min: 0,
@@ -1306,7 +1306,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						_: 1
 					}, 8, ["error"]),
 					r[34] ||= S("h3", null, "发布设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "启用状态",
 						prop: "is_enabled",
 						error: P(Y).is_enabled
@@ -1320,12 +1320,12 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "计划发布时间（本地时区）",
 						prop: "scheduled_local",
 						error: P(Y).scheduled_local
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.scheduled_local,
 							"onUpdate:modelValue": r[11] ||= (e) => K.scheduled_local = e,
 							type: "datetime-local",
@@ -1337,20 +1337,20 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 					r[35] ||= S("p", { class: "article-editor__hint" }, " 不填时间则立即发布。源语言正文修改后，已有对应翻译将标记为待更新。 ", -1)
 				]),
 				_: 1
-			}, 8, ["model", "rules"])]), S("main", ze, [w(P(f), {
+			}, 8, ["model", "rules"])]), S("main", ze, [w(P(d), {
 				model: K,
 				rules: P(ge),
 				"label-position": "top",
 				onSubmit: r[16] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "标题",
 						prop: "title",
 						error: P(Y).title,
 						required: ""
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.title,
 							"onUpdate:modelValue": r[13] ||= (e) => K.title = e,
 							maxlength: 255,
@@ -1360,7 +1360,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "摘要",
 						prop: "summary",
 						error: P(Y).summary
@@ -1376,7 +1376,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 						}, null, 8, Be), [[F, K.summary]])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "正文",
 						prop: "body_html",
 						error: P(Y).body_html
@@ -1390,10 +1390,10 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 							"max-height": 760,
 							"aria-label": "新闻正文"
 						}, {
-							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(ee, {
+							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(f, {
 								label: "正文图片",
 								"model-value": e,
-								upload: P(te),
+								upload: P(ie),
 								"onUpdate:modelValue": t,
 								onBusyChange: n,
 								onError: Ye
@@ -1414,27 +1414,27 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				]),
 				_: 1
 			}, 8, ["model", "rules"])])])], 64)),
-			w(P(p), {
+			w(P(e), {
 				modelValue: k.value,
 				"onUpdate:modelValue": r[20] ||= (e) => k.value = e,
 				title: "SEO 设置",
 				width: "540px",
 				"close-on-click-modal": !1
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					variant: "primary",
 					onClick: r[19] ||= (e) => k.value = !1
 				}, {
 					default: R(() => [...r[36] ||= [C("确定", -1)]]),
 					_: 1
 				})]),
-				default: R(() => [w(P(f), {
+				default: R(() => [w(P(d), {
 					model: K,
 					rules: P(ge),
 					"label-position": "top",
 					onSubmit: r[18] ||= me(() => {}, ["prevent"])
 				}, {
-					default: R(() => [w(P(m), {
+					default: R(() => [w(P(o), {
 						label: "SEO 描述",
 						prop: "seo_description",
 						error: P(Y).seo_description
@@ -1456,7 +1456,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				}, 8, ["model", "rules"])]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: de.value,
 				"onUpdate:modelValue": r[22] ||= (e) => de.value = e,
 				title: "确认删除",
@@ -1471,13 +1471,13 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 					size: 18,
 					color: "var(--mm-color-danger)"
 				})])]),
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: E.value,
 					onClick: r[21] ||= (e) => de.value = !1
 				}, {
 					default: R(() => [...r[37] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "warning",
 					loading: E.value,
 					onClick: W
@@ -1485,7 +1485,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 					default: R(() => [...r[38] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [w(P(d), {
+				default: R(() => [w(P(ne), {
 					class: "news-delete-dialog__notice",
 					type: "warning",
 					closable: !1,
@@ -1498,16 +1498,16 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				"subtitle",
 				"before-close"
 			]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: j.value,
 				"onUpdate:modelValue": r[25] ||= (e) => j.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[23] ||= (e) => j.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[23] ||= (e) => j.value = !1 }, {
 					default: R(() => [...r[39] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: r[24] ||= (e) => h("close")
 				}, {
@@ -1516,17 +1516,17 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				})]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: ue.value,
 				"onUpdate:modelValue": r[27] ||= (e) => ue.value = e,
 				title: "将新闻转为草稿？",
 				subtitle: "当前发布或定时发布状态将被取消。",
 				width: "420px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[26] ||= (e) => ue.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[26] ||= (e) => ue.value = !1 }, {
 					default: R(() => [...r[41] ||= [C("取消", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: qe
 				}, {
@@ -1540,7 +1540,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 }), [["__scopeId", "data-v-33394e7e"]]), We = { class: "news-articles" }, Ge = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(e) {
-		let { newsPublishStates: t, newsCategoryLabel: r, getNewsList: i, getNewsMetadata: a } = _e(), { hasPermission: s } = he(), { formatDateTime: c } = he(), l = M(!1), u = M(), d = (e) => s([`cms_news:${e}`]), f = M(), ee = ge(a, (e) => {
+		let { newsPublishStates: t, newsCategoryLabel: n, getNewsList: r, getNewsMetadata: i } = _e(), { hasPermission: a } = he(), { formatDateTime: o } = he(), l = M(!1), u = M(), d = (e) => a([`cms_news:${e}`]), f = M(), p = ge(i, (e) => {
 			f.value = e;
 		}), ne = [
 			...J(),
@@ -1562,7 +1562,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				dataIndex: "category_id",
 				title: "新闻分类",
 				width: 220,
-				formatter: (e) => r(f.value, e)
+				formatter: (e) => n(f.value, e)
 			},
 			{
 				key: "sort_order",
@@ -1596,7 +1596,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: c
+				formatter: o
 			},
 			{
 				key: "actions",
@@ -1606,8 +1606,8 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				fixed: "right",
 				hideable: !1
 			}
-		], ie = v(() => [
-			...ee.fields,
+		], re = v(() => [
+			...p.fields,
 			{
 				key: "code",
 				label: "新闻ID",
@@ -1634,7 +1634,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 					label: "全部",
 					value: ""
 				}, ...(f.value?.categories || []).map((e) => ({
-					label: r(f.value, e.id),
+					label: n(f.value, e.id),
 					value: e.id
 				}))]
 			},
@@ -1677,36 +1677,36 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				width: 240,
 				defaultValue: null
 			}
-		]), { proTableBindings: p, reload: ae } = ee.bindTable(te({
+		]), { proTableBindings: ie, reload: ae } = p.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
-			queryFields: ie,
-			request: async ({ filters: e, page: t, pageSize: n, signal: r }) => {
+			queryFields: re,
+			request: async ({ filters: e, page: t, pageSize: n, signal: i }) => {
 				let a = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), o = e.publish_range;
 				Array.isArray(o) && o.length === 2 && (a.published_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), a.published_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
-				let s = await i("articles", {
+				let s = await r("articles", {
 					...a,
 					page_no: t,
 					page_size: n
-				}, r);
+				}, i);
 				return {
 					rows: s.lists,
 					total: s.count
 				};
 			}
-		})), m = ee.loadMetadata;
-		function oe(e) {
+		})), oe = p.loadMetadata;
+		function m(e) {
 			u.value = e, l.value = !0;
 		}
 		function h() {
-			l.value = !1, ae(), m();
+			l.value = !1, ae(), oe();
 		}
-		return (e, r) => (A(), x("div", We, [l.value ? (A(), y(Ue, {
+		return (e, n) => (A(), x("div", We, [l.value ? (A(), y(Ue, {
 			key: 0,
 			"article-id": u.value,
-			onClose: r[0] ||= (e) => l.value = !1,
+			onClose: n[0] ||= (e) => l.value = !1,
 			onSaved: h
-		}, null, 8, ["article-id"])) : b("", !0), pe(w(P(re), D(P(p), {
+		}, null, 8, ["article-id"])) : b("", !0), pe(w(P(ee), D(P(ie), {
 			"auto-refreshable": !1,
 			columns: ne,
 			"row-key": "id",
@@ -1721,20 +1721,20 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 			]
 		}), {
 			"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-			"toolbar-actions": R(() => [d("add") ? (A(), y(P(o), {
+			"toolbar-actions": R(() => [d("add") ? (A(), y(P(s), {
 				key: 0,
 				variant: "primary",
 				size: "sm",
-				onClick: r[1] ||= (e) => oe()
+				onClick: n[1] ||= (e) => m()
 			}, {
 				icon: R(() => [w(P(g), {
 					name: "plus",
 					size: 14
 				})]),
-				default: R(() => [r[2] ||= C("新增新闻", -1)]),
+				default: R(() => [n[2] ||= C("新增新闻", -1)]),
 				_: 1
 			})) : b("", !0)]),
-			"cell-publish_status": R(({ row: e }) => [w(P(n), {
+			"cell-publish_status": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.publish_status === "published" ? "success" : "warning"
@@ -1742,7 +1742,7 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				default: R(() => [C(N(P(t).find((t) => t.value === e.publish_status)?.label), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+			"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.is_enabled ? "success" : "danger"
@@ -1750,13 +1750,13 @@ var Oe = ["aria-busy"], ke = { class: "article-editor__header" }, Ae = { class: 
 				default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-publish_time": R(({ row: e }) => [C(N(P(c)(e.published_at || e.scheduled_at)), 1)]),
-			"cell-actions": R(({ row: e }) => [w(P(o), {
+			"cell-publish_time": R(({ row: e }) => [C(N(P(o)(e.published_at || e.scheduled_at)), 1)]),
+			"cell-actions": R(({ row: e }) => [w(P(s), {
 				size: "sm",
 				"icon-only": "",
 				title: d("edit") ? "编辑新闻" : "新闻详情",
 				"aria-label": d("edit") ? "编辑新闻" : "新闻详情",
-				onClick: (t) => oe(e.id)
+				onClick: (t) => m(e.id)
 			}, {
 				default: R(() => [w(P(g), {
 					name: d("edit") ? "square-pen" : "panel-right-open",
@@ -1796,7 +1796,7 @@ function Ke() {
 			url: `${t}/${n}/${r.id ? "edit" : "create"}`,
 			params: r
 		}, { isOpenRetry: !1 }),
-		uploadAcademyCover: u(e, "/cms/academy/upload"),
+		uploadAcademyCover: p(e, "/cms/academy/upload"),
 		deleteAcademyCourse: (n) => e.post({
 			url: `${t}/courses/delete`,
 			params: n
@@ -1851,7 +1851,7 @@ var qe = ["aria-busy"], Je = {
 }, Ye = { class: "taxonomy-editor__row" }, Xe = "分类", Ze = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "CategoryTable",
 	setup(t) {
-		let { hasPermission: i } = he(), { formatDateTime: a } = he(), { academyDifficulties: s, academyError: c, getAcademyList: l, getAcademyMetadata: u, getAcademyDetail: ee, saveAcademy: ie, deleteAcademyCategory: ae } = Ke(), h = (e) => i([`cms_academy_category:${e}`]), T = ge(u), E = [
+		let { hasPermission: n } = he(), { formatDateTime: r } = he(), { academyDifficulties: i, academyError: a, getAcademyList: f, getAcademyMetadata: p, getAcademyDetail: re, saveAcademy: ie, deleteAcademyCategory: oe } = Ke(), h = (e) => n([`cms_academy_category:${e}`]), T = ge(p), E = [
 			...J(),
 			{
 				key: "code",
@@ -1893,7 +1893,7 @@ var qe = ["aria-busy"], Je = {
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: a
+				formatter: r
 			},
 			{
 				key: "actions",
@@ -1930,7 +1930,7 @@ var qe = ["aria-busy"], Je = {
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...s]
+				}, ...i]
 			},
 			{
 				key: "is_enabled",
@@ -1953,12 +1953,12 @@ var qe = ["aria-busy"], Je = {
 					}
 				]
 			}
-		], { proTableBindings: k, reload: ce, currentPage: j, pageSize: ue, total: de } = T.bindTable(te({
+		], { proTableBindings: k, reload: ce, currentPage: j, pageSize: ue, total: de } = T.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
 			queryFields: O,
 			request: async ({ filters: e, page: t, pageSize: n, signal: r }) => {
-				let i = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), a = await l("categories", {
+				let i = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), a = await f("categories", {
 					...i,
 					page_no: t,
 					page_size: n
@@ -1984,7 +1984,7 @@ var qe = ["aria-busy"], Je = {
 			_e?.abort(), _e = new AbortController();
 			let t = _e;
 			if (Object.assign(F, fe(), { id: e || "" }), U.value = "", B.value = !1, V.value = "", H.value = !1, I.value = !0, L.value = !!e, q = JSON.stringify(F), e) try {
-				let n = await ee("categories", e, t.signal);
+				let n = await re("categories", e, t.signal);
 				if (t.signal.aborted) return;
 				Object.assign(F, {
 					id: n.id,
@@ -1999,7 +1999,7 @@ var qe = ["aria-busy"], Je = {
 					is_enabled: n.is_enabled
 				}), q = JSON.stringify(F);
 			} catch (e) {
-				t.signal.aborted || (H.value = !0, U.value = c(e));
+				t.signal.aborted || (H.value = !0, U.value = a(e));
 			} finally {
 				t.signal.aborted || (L.value = !1);
 			}
@@ -2025,9 +2025,9 @@ var qe = ["aria-busy"], Je = {
 						...F,
 						id: F.id || void 0,
 						row_version: F.id ? F.row_version : void 0
-					}), I.value = !1, ne.success("保存成功"), await ce();
+					}), I.value = !1, u.success("保存成功"), await ce();
 				} catch (e) {
-					U.value = c(e);
+					U.value = a(e);
 				} finally {
 					pe.value = !1;
 				}
@@ -2040,19 +2040,19 @@ var qe = ["aria-busy"], Je = {
 			if (!(!B.value || !F.id || !h("delete") || K.value || L.value || H.value)) {
 				z.value = !0, V.value = "";
 				try {
-					await ae({
+					await oe({
 						id: F.id,
 						row_version: F.row_version
-					}), B.value = !1, I.value = !1, ne.success("分类已删除"), await ce(), j.value = Math.min(j.value, Math.max(1, Math.ceil(de.value / ue.value)));
+					}), B.value = !1, I.value = !1, u.success("分类已删除"), await ce(), j.value = Math.min(j.value, Math.max(1, Math.ceil(de.value / ue.value)));
 				} catch (e) {
-					V.value = c(e);
+					V.value = a(e);
 				} finally {
 					z.value = !1;
 				}
 			}
 		}
-		return se(() => _e?.abort()), (t, i) => (A(), x(_, null, [
-			w(P(re), D(P(k), {
+		return se(() => _e?.abort()), (t, n) => (A(), x(_, null, [
+			w(P(ee), D(P(k), {
 				"auto-refreshable": !1,
 				columns: E,
 				"row-key": "id",
@@ -2067,11 +2067,11 @@ var qe = ["aria-busy"], Je = {
 				]
 			}), {
 				"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-				"toolbar-actions": R(() => [h("add") ? (A(), y(P(o), {
+				"toolbar-actions": R(() => [h("add") ? (A(), y(P(s), {
 					key: 0,
 					variant: "primary",
 					size: "sm",
-					onClick: i[0] ||= (e) => X()
+					onClick: n[0] ||= (e) => X()
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "plus",
@@ -2080,7 +2080,7 @@ var qe = ["aria-busy"], Je = {
 					default: R(() => [C("新增" + N(Xe))]),
 					_: 1
 				})) : b("", !0)]),
-				"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+				"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.is_enabled ? "success" : "danger"
@@ -2088,7 +2088,7 @@ var qe = ["aria-busy"], Je = {
 					default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": R(({ row: e }) => [w(P(o), {
+				"cell-actions": R(({ row: e }) => [w(P(s), {
 					size: "sm",
 					"icon-only": "",
 					title: h("edit") ? `编辑${Xe}` : `${Xe}详情`,
@@ -2107,16 +2107,16 @@ var qe = ["aria-busy"], Je = {
 				])]),
 				_: 1
 			}, 16, ["aria-label"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: I.value,
-				"onUpdate:modelValue": i[4] ||= (e) => I.value = e,
+				"onUpdate:modelValue": n[4] ||= (e) => I.value = e,
 				title: `${F.id ? "编辑" : "新增"}课程${Xe}`,
 				width: "620px",
 				"close-on-click-modal": !1,
 				"before-close": Z
 			}, {
 				footer: R(() => [
-					F.id && h("delete") ? (A(), y(P(o), {
+					F.id && h("delete") ? (A(), y(P(s), {
 						key: 0,
 						variant: "danger",
 						disabled: L.value || H.value || K.value,
@@ -2126,17 +2126,17 @@ var qe = ["aria-busy"], Je = {
 							name: "trash-2",
 							size: 14
 						})]),
-						default: R(() => [i[9] ||= C("删除分类", -1)]),
+						default: R(() => [n[9] ||= C("删除分类", -1)]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						disabled: K.value,
 						onClick: ve
 					}, {
-						default: R(() => [...i[10] ||= [C("取消", -1)]]),
+						default: R(() => [...n[10] ||= [C("取消", -1)]]),
 						_: 1
 					}, 8, ["disabled"]),
-					G.value ? b("", !0) : (A(), y(P(o), {
+					G.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						variant: "primary",
 						loading: pe.value,
@@ -2156,25 +2156,25 @@ var qe = ["aria-busy"], Je = {
 						class: "academy-spin",
 						size: 24
 					}), S("span", null, "正在读取" + N(Xe) + "...")])) : b("", !0),
-					U.value ? (A(), y(P(d), {
+					U.value ? (A(), y(P(ne), {
 						key: 1,
 						type: "error",
 						closable: !1,
 						description: U.value
 					}, null, 8, ["description"])) : b("", !0),
-					!L.value && !H.value ? (A(), y(P(f), {
+					!L.value && !H.value ? (A(), y(P(d), {
 						key: 2,
 						model: F,
 						"label-position": "top",
 						onSubmit: me(be, ["prevent"])
 					}, {
-						default: R(() => [w(P(m), {
+						default: R(() => [w(P(o), {
 							label: `${Xe}名称`,
 							required: ""
 						}, {
-							default: R(() => [w(P(oe), {
+							default: R(() => [w(P(m), {
 								modelValue: F.name,
-								"onUpdate:modelValue": i[1] ||= (e) => F.name = e,
+								"onUpdate:modelValue": n[1] ||= (e) => F.name = e,
 								maxlength: 120,
 								disabled: G.value || K.value,
 								"aria-label": `${Xe}名称`
@@ -2184,13 +2184,13 @@ var qe = ["aria-busy"], Je = {
 								"aria-label"
 							])]),
 							_: 1
-						}, 8, ["label"]), S("div", Ye, [w(P(m), {
+						}, 8, ["label"]), S("div", Ye, [w(P(o), {
 							label: "前端排序",
 							required: ""
 						}, {
-							default: R(() => [w(P(e), {
+							default: R(() => [w(P(l), {
 								modelValue: F.sort_order,
-								"onUpdate:modelValue": i[2] ||= (e) => F.sort_order = e,
+								"onUpdate:modelValue": n[2] ||= (e) => F.sort_order = e,
 								min: 0,
 								max: 2147483647,
 								precision: 0,
@@ -2198,10 +2198,10 @@ var qe = ["aria-busy"], Je = {
 								"aria-label": "前端排序"
 							}, null, 8, ["modelValue", "disabled"])]),
 							_: 1
-						}), w(P(m), { label: "启用状态" }, {
-							default: R(() => [w(P(r), {
+						}), w(P(o), { label: "启用状态" }, {
+							default: R(() => [w(P(ae), {
 								modelValue: F.is_enabled,
-								"onUpdate:modelValue": i[3] ||= (e) => F.is_enabled = e,
+								"onUpdate:modelValue": n[3] ||= (e) => F.is_enabled = e,
 								disabled: G.value || K.value,
 								label: "已启用",
 								"aria-label": "启用状态"
@@ -2213,29 +2213,29 @@ var qe = ["aria-busy"], Je = {
 				], 8, qe)]),
 				_: 1
 			}, 8, ["modelValue", "title"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: B.value,
-				"onUpdate:modelValue": i[6] ||= (e) => B.value = e,
+				"onUpdate:modelValue": n[6] ||= (e) => B.value = e,
 				title: "删除课程分类",
 				width: "420px",
 				"close-on-click-modal": !1,
 				"before-close": () => !z.value
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: z.value,
-					onClick: i[5] ||= (e) => B.value = !1
+					onClick: n[5] ||= (e) => B.value = !1
 				}, {
-					default: R(() => [...i[11] ||= [C("取消", -1)]]),
+					default: R(() => [...n[11] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "danger",
 					loading: z.value,
 					onClick: xe
 				}, {
-					default: R(() => [...i[12] ||= [C("确认删除", -1)]]),
+					default: R(() => [...n[12] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [S("p", null, "确认删除分类“" + N(F.name) + "”？有关联课程的分类无法删除。", 1), V.value ? (A(), y(P(d), {
+				default: R(() => [S("p", null, "确认删除分类“" + N(F.name) + "”？有关联课程的分类无法删除。", 1), V.value ? (A(), y(P(ne), {
 					key: 0,
 					type: "error",
 					closable: !1,
@@ -2243,20 +2243,20 @@ var qe = ["aria-busy"], Je = {
 				}, null, 8, ["description"])) : b("", !0)]),
 				_: 1
 			}, 8, ["modelValue", "before-close"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: W.value,
-				"onUpdate:modelValue": i[8] ||= (e) => W.value = e,
+				"onUpdate:modelValue": n[8] ||= (e) => W.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: i[7] ||= (e) => W.value = !1 }, {
-					default: R(() => [...i[13] ||= [C("继续编辑", -1)]]),
+				footer: R(() => [w(P(s), { onClick: n[7] ||= (e) => W.value = !1 }, {
+					default: R(() => [...n[13] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: ye
 				}, {
-					default: R(() => [...i[14] ||= [C("放弃修改", -1)]]),
+					default: R(() => [...n[14] ||= [C("放弃修改", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -2391,7 +2391,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 	props: { courseId: {} },
 	emits: ["close", "saved"],
 	setup(t, { emit: n }) {
-		let { hasPermission: a } = he(), { academyDifficulties: s, academyError: c, deleteAcademyCourse: l, getAcademyDetail: u, getAcademyMetadata: te, saveAcademy: re, uploadAcademyCover: ie } = Ke(), h = t, _ = n, T = M(!0), E = M(!1), D = M(!1), k = M(""), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), z = M("draft"), B = M(!1), H = M(!1), U = M(""), W = v(() => a(["cms_academy:publish"])), G = v(() => !!h.courseId && a(["cms_academy:delete"]) && (W.value || z.value === "draft")), K = v(() => !a([`cms_academy:${h.courseId ? "edit" : "add"}`]) || !W.value && z.value !== "draft"), q = v(() => K.value || E.value), J = le({
+		let { hasPermission: r } = he(), { academyDifficulties: c, academyError: ee, deleteAcademyCourse: te, getAcademyDetail: p, getAcademyMetadata: re, saveAcademy: ie, uploadAcademyCover: oe } = Ke(), h = t, _ = n, T = M(!0), E = M(!1), D = M(!1), k = M(""), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), z = M("draft"), B = M(!1), H = M(!1), U = M(""), W = v(() => r(["cms_academy:publish"])), G = v(() => !!h.courseId && r(["cms_academy:delete"]) && (W.value || z.value === "draft")), K = v(() => !r([`cms_academy:${h.courseId ? "edit" : "add"}`]) || !W.value && z.value !== "draft"), q = v(() => K.value || E.value), J = le({
 			id: "",
 			row_version: "",
 			title: "",
@@ -2444,9 +2444,9 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 			let e = Te;
 			T.value = !0, D.value = !1, k.value = "";
 			try {
-				if (I.value = await te(e.signal, { cms_source_type: "platform" }), h.courseId) {
-					let t = await u("courses", h.courseId, e.signal);
-					if (I.value = await te(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
+				if (I.value = await re(e.signal, { cms_source_type: "platform" }), h.courseId) {
+					let t = await p("courses", h.courseId, e.signal);
+					if (I.value = await re(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
 					for (let e of [
 						"id",
 						"row_version",
@@ -2466,7 +2466,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				}
 				we = JSON.stringify(J);
 			} catch (t) {
-				e.signal.aborted || (k.value = c(t), D.value = !0);
+				e.signal.aborted || (k.value = ee(t), D.value = !0);
 			} finally {
 				e.signal.aborted || (T.value = !1);
 			}
@@ -2492,14 +2492,14 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 			let t = J.scheduled_local ? new Date(J.scheduled_local) : null;
 			E.value = !0, k.value = "";
 			try {
-				await re("courses", {
+				await ie("courses", {
 					...J,
 					id: J.id || void 0,
 					row_version: J.id ? J.row_version : void 0,
 					difficulty_level: J.difficulty_level || null,
 					publish_status: e,
 					scheduled_at: e === "scheduled" ? t.toISOString() : null
-				}), we = JSON.stringify(J), ne.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "课程已发布"), _("saved");
+				}), we = JSON.stringify(J), u.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "课程已发布"), _("saved");
 			} catch (e) {
 				let t = at(e);
 				Object.assign(Z, t.fields), ve.value = t.general;
@@ -2515,19 +2515,19 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 			if (!(!G.value || T.value || D.value || E.value || B.value)) {
 				E.value = !0, U.value = "";
 				try {
-					await l({
+					await te({
 						id: J.id,
 						row_version: J.row_version
-					}), we = JSON.stringify(J), H.value = !1, ne.success("课程已删除"), _("saved");
+					}), we = JSON.stringify(J), H.value = !1, u.success("课程已删除"), _("saved");
 				} catch (e) {
-					U.value = c(e);
+					U.value = ee(e);
 				} finally {
 					E.value = !1;
 				}
 			}
 		}
 		function Fe(e) {
-			Z.cover_url = c(e);
+			Z.cover_url = ee(e);
 		}
 		function Ie() {
 			delete Z.cover_url;
@@ -2539,14 +2539,14 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 			De(), window.addEventListener("beforeunload", Le);
 		}), se(() => {
 			Te?.abort(), window.removeEventListener("beforeunload", Le);
-		}), (n, a) => (A(), x("section", {
+		}), (n, r) => (A(), x("section", {
 			ref_key: "editorRoot",
 			ref: ge,
 			class: "course-editor",
 			"aria-busy": T.value || E.value
 		}, [
 			S("header", st, [
-				w(P(o), {
+				w(P(s), {
 					"icon-only": "",
 					title: "返回课程列表",
 					"aria-label": "返回课程列表",
@@ -2561,29 +2561,29 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				}, 8, ["disabled"]),
 				S("div", ct, [S("h2", null, N(t.courseId ? "编辑课程" : "新增课程"), 1), S("span", null, N(I.value?.source_locale || "zh-CN") + " · " + N(fe.value), 1)]),
 				S("div", lt, [
-					G.value ? (A(), y(P(o), {
+					G.value ? (A(), y(P(s), {
 						key: 0,
 						variant: "danger",
 						size: "sm",
 						disabled: T.value || D.value || E.value || B.value,
 						onClick: Ne
 					}, {
-						default: R(() => [...a[26] ||= [C("删除课程", -1)]]),
+						default: R(() => [...r[26] ||= [C("删除课程", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						disabled: T.value || D.value,
-						onClick: a[0] ||= (e) => j.value = !0
+						onClick: r[0] ||= (e) => j.value = !0
 					}, {
 						icon: R(() => [w(P(g), {
 							name: "search",
 							size: 14
 						})]),
-						default: R(() => [a[27] ||= C("SEO 设置", -1)]),
+						default: R(() => [r[27] ||= C("SEO 设置", -1)]),
 						_: 1
 					}, 8, ["disabled"]),
-					K.value ? b("", !0) : (A(), y(P(o), {
+					K.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						size: "sm",
 						disabled: T.value || D.value || E.value || B.value,
@@ -2593,17 +2593,17 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 							name: "save",
 							size: 14
 						})]),
-						default: R(() => [a[28] ||= C("保存草稿", -1)]),
+						default: R(() => [r[28] ||= C("保存草稿", -1)]),
 						_: 1
 					}, 8, ["disabled"])),
 					ve.value ? (A(), x("span", ut, N(ve.value), 1)) : b("", !0),
-					K.value ? b("", !0) : (A(), x("div", dt, [xe.value ? (A(), x("span", ft, "还有 " + N(xe.value) + " 项待完善", 1)) : b("", !0), W.value ? (A(), y(P(o), {
+					K.value ? b("", !0) : (A(), x("div", dt, [xe.value ? (A(), x("span", ft, "还有 " + N(xe.value) + " 项待完善", 1)) : b("", !0), W.value ? (A(), y(P(s), {
 						key: 1,
 						variant: "primary",
 						size: "sm",
 						disabled: T.value || D.value || B.value,
 						loading: E.value,
-						onClick: a[1] ||= (e) => Me(J.scheduled_local ? "scheduled" : "published")
+						onClick: r[1] ||= (e) => Me(J.scheduled_local ? "scheduled" : "published")
 					}, {
 						icon: R(() => [w(P(g), {
 							name: "arrow-up-to-line",
@@ -2618,29 +2618,29 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				name: "loader-circle",
 				class: "academy-spin",
 				size: 28
-			}), a[29] ||= S("span", null, "正在读取课程资料...", -1)])) : D.value ? (A(), x("div", mt, [w(P(d), {
+			}), r[29] ||= S("span", null, "正在读取课程资料...", -1)])) : D.value ? (A(), x("div", mt, [w(P(ne), {
 				type: "error",
 				description: k.value,
 				closable: !1
-			}, null, 8, ["description"]), w(P(o), { onClick: De }, {
-				default: R(() => [...a[30] ||= [C("重新加载", -1)]]),
+			}, null, 8, ["description"]), w(P(s), { onClick: De }, {
+				default: R(() => [...r[30] ||= [C("重新加载", -1)]]),
 				_: 1
-			})])) : (A(), x("div", ht, [S("aside", gt, [w(P(f), {
+			})])) : (A(), x("div", ht, [S("aside", gt, [w(P(d), {
 				model: J,
 				rules: P(ye),
 				"label-position": "top",
-				onSubmit: a[10] ||= me(() => {}, ["prevent"])
+				onSubmit: r[10] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "课程分类",
 						prop: "category_ids",
 						error: Q.value.category_ids,
 						required: ""
 					}, {
-						default: R(() => [w(P(ae), {
+						default: R(() => [w(P(a), {
 							modelValue: J.category_ids,
-							"onUpdate:modelValue": a[2] ||= (e) => J.category_ids = e,
+							"onUpdate:modelValue": r[2] ||= (e) => J.category_ids = e,
 							options: Ce.value,
 							multiple: "",
 							filterable: "",
@@ -2654,20 +2654,20 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					a[31] ||= S("h3", null, "课程设置", -1),
-					w(P(m), {
+					r[31] ||= S("h3", null, "课程设置", -1),
+					w(P(o), {
 						label: "课程封面",
 						prop: "cover_url",
 						error: Q.value.cover_url
 					}, {
-						default: R(() => [w(ee, {
+						default: R(() => [w(f, {
 							modelValue: J.cover_url,
-							"onUpdate:modelValue": a[3] ||= (e) => J.cover_url = e,
+							"onUpdate:modelValue": r[3] ||= (e) => J.cover_url = e,
 							label: "课程封面",
 							disabled: q.value,
-							upload: P(ie),
-							onBusyChange: a[4] ||= (e) => B.value = e,
-							onStart: a[5] ||= (e) => k.value = "",
+							upload: P(oe),
+							onBusyChange: r[4] ||= (e) => B.value = e,
+							onStart: r[5] ||= (e) => k.value = "",
 							onError: Fe,
 							onSuccess: Ie
 						}, null, 8, [
@@ -2677,15 +2677,15 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "课程难度",
 						prop: "difficulty_level",
 						error: Q.value.difficulty_level
 					}, {
-						default: R(() => [w(P(ae), {
+						default: R(() => [w(P(a), {
 							modelValue: J.difficulty_level,
-							"onUpdate:modelValue": a[6] ||= (e) => J.difficulty_level = e,
-							options: P(s),
+							"onUpdate:modelValue": r[6] ||= (e) => J.difficulty_level = e,
+							options: P(c),
 							disabled: q.value,
 							"aria-label": "课程难度"
 						}, null, 8, [
@@ -2695,14 +2695,14 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "前端排序",
 						prop: "sort_order",
 						error: Q.value.sort_order
 					}, {
-						default: R(() => [w(P(e), {
+						default: R(() => [w(P(l), {
 							modelValue: J.sort_order,
-							"onUpdate:modelValue": a[7] ||= (e) => J.sort_order = e,
+							"onUpdate:modelValue": r[7] ||= (e) => J.sort_order = e,
 							min: 0,
 							max: 2147483647,
 							precision: 0,
@@ -2711,29 +2711,29 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					a[32] ||= S("h3", null, "发布设置", -1),
-					w(P(m), {
+					r[32] ||= S("h3", null, "发布设置", -1),
+					w(P(o), {
 						label: "启用状态",
 						prop: "is_enabled",
 						error: Q.value.is_enabled
 					}, {
-						default: R(() => [w(P(r), {
+						default: R(() => [w(P(ae), {
 							modelValue: J.is_enabled,
-							"onUpdate:modelValue": a[8] ||= (e) => J.is_enabled = e,
+							"onUpdate:modelValue": r[8] ||= (e) => J.is_enabled = e,
 							disabled: q.value,
 							label: "已启用",
 							"aria-label": "启用状态"
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "计划发布时间",
 						prop: "scheduled_local",
 						error: Q.value.scheduled_local
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.scheduled_local,
-							"onUpdate:modelValue": a[9] ||= (e) => J.scheduled_local = e,
+							"onUpdate:modelValue": r[9] ||= (e) => J.scheduled_local = e,
 							type: "datetime-local",
 							disabled: q.value || !W.value,
 							"aria-label": "计划发布时间"
@@ -2742,22 +2742,22 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 					}, 8, ["error"])
 				]),
 				_: 1
-			}, 8, ["model", "rules"])]), S("main", _t, [w(P(f), {
+			}, 8, ["model", "rules"])]), S("main", _t, [w(P(d), {
 				model: J,
 				rules: P(ye),
 				"label-position": "top",
-				onSubmit: a[14] ||= me(() => {}, ["prevent"])
+				onSubmit: r[14] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "标题",
 						prop: "title",
 						error: Q.value.title,
 						required: ""
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.title,
-							"onUpdate:modelValue": a[11] ||= (e) => J.title = e,
+							"onUpdate:modelValue": r[11] ||= (e) => J.title = e,
 							maxlength: 255,
 							disabled: q.value,
 							placeholder: "输入课程标题",
@@ -2765,13 +2765,13 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "摘要",
 						prop: "summary",
 						error: Q.value.summary
 					}, {
 						default: R(() => [pe(S("textarea", {
-							"onUpdate:modelValue": a[12] ||= (e) => J.summary = e,
+							"onUpdate:modelValue": r[12] ||= (e) => J.summary = e,
 							class: "course-editor__textarea",
 							rows: 3,
 							maxlength: 1e4,
@@ -2781,24 +2781,24 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						}, null, 8, vt), [[F, J.summary]])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "正文",
 						prop: "body_html",
 						error: Q.value.body_html
 					}, {
 						default: R(() => [w(P(i), {
 							modelValue: J.body_html,
-							"onUpdate:modelValue": a[13] ||= (e) => J.body_html = e,
+							"onUpdate:modelValue": r[13] ||= (e) => J.body_html = e,
 							readonly: K.value,
 							disabled: E.value,
 							"min-height": 420,
 							"max-height": 760,
 							"aria-label": "课程正文"
 						}, {
-							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(ee, {
+							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(f, {
 								label: "正文图片",
 								"model-value": e,
-								upload: P(ie),
+								upload: P(oe),
 								"onUpdate:modelValue": t,
 								onBusyChange: n,
 								onError: Fe
@@ -2819,28 +2819,28 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				]),
 				_: 1
 			}, 8, ["model", "rules"])])])),
-			w(P(p), {
+			w(P(e), {
 				modelValue: j.value,
-				"onUpdate:modelValue": a[18] ||= (e) => j.value = e,
+				"onUpdate:modelValue": r[18] ||= (e) => j.value = e,
 				title: "SEO 设置",
 				width: "540px",
 				"close-on-click-modal": !1,
 				onOpened: Se
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					variant: "primary",
-					onClick: a[17] ||= (e) => j.value = !1
+					onClick: r[17] ||= (e) => j.value = !1
 				}, {
-					default: R(() => [...a[33] ||= [C("确定", -1)]]),
+					default: R(() => [...r[33] ||= [C("确定", -1)]]),
 					_: 1
 				})]),
-				default: R(() => [w(P(f), {
+				default: R(() => [w(P(d), {
 					model: J,
 					rules: P(ye),
 					"label-position": "top",
-					onSubmit: a[16] ||= me(() => {}, ["prevent"])
+					onSubmit: r[16] ||= me(() => {}, ["prevent"])
 				}, {
-					default: R(() => [w(P(m), {
+					default: R(() => [w(P(o), {
 						label: "SEO 描述",
 						prop: "seo_description",
 						error: Q.value.seo_description
@@ -2848,7 +2848,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 						default: R(() => [pe(S("textarea", {
 							ref_key: "seoInput",
 							ref: Y,
-							"onUpdate:modelValue": a[15] ||= (e) => J.seo_description = e,
+							"onUpdate:modelValue": r[15] ||= (e) => J.seo_description = e,
 							class: "course-editor__textarea",
 							rows: 5,
 							maxlength: 2e3,
@@ -2862,9 +2862,9 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				}, 8, ["model", "rules"])]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: H.value,
-				"onUpdate:modelValue": a[20] ||= (e) => H.value = e,
+				"onUpdate:modelValue": r[20] ||= (e) => H.value = e,
 				title: "确认删除",
 				subtitle: `操作对象：${J.title || "未命名课程"}`,
 				width: "460px",
@@ -2877,27 +2877,27 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 					size: 18,
 					color: "var(--mm-color-danger)"
 				})])]),
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: E.value,
-					onClick: a[19] ||= (e) => H.value = !1
+					onClick: r[19] ||= (e) => H.value = !1
 				}, {
-					default: R(() => [...a[34] ||= [C("取消", -1)]]),
+					default: R(() => [...r[34] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "warning",
 					loading: E.value,
 					onClick: Pe
 				}, {
-					default: R(() => [...a[35] ||= [C("确认删除", -1)]]),
+					default: R(() => [...r[35] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [w(P(d), {
+				default: R(() => [w(P(ne), {
 					class: "course-delete-dialog__notice",
 					type: "warning",
 					closable: !1,
 					"show-icon": !1,
 					description: "确定删除这门课程吗？删除后将不再展示，请谨慎操作。"
-				}), U.value ? (A(), y(P(d), {
+				}), U.value ? (A(), y(P(ne), {
 					key: 0,
 					type: "error",
 					closable: !1,
@@ -2909,39 +2909,39 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				"subtitle",
 				"before-close"
 			]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: ue.value,
-				"onUpdate:modelValue": a[23] ||= (e) => ue.value = e,
+				"onUpdate:modelValue": r[23] ||= (e) => ue.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: a[21] ||= (e) => ue.value = !1 }, {
-					default: R(() => [...a[36] ||= [C("继续编辑", -1)]]),
+				footer: R(() => [w(P(s), { onClick: r[21] ||= (e) => ue.value = !1 }, {
+					default: R(() => [...r[36] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
-					onClick: a[22] ||= (e) => _("close")
+					onClick: r[22] ||= (e) => _("close")
 				}, {
-					default: R(() => [...a[37] ||= [C("放弃修改", -1)]]),
+					default: R(() => [...r[37] ||= [C("放弃修改", -1)]]),
 					_: 1
 				})]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: de.value,
-				"onUpdate:modelValue": a[25] ||= (e) => de.value = e,
+				"onUpdate:modelValue": r[25] ||= (e) => de.value = e,
 				title: "将课程转为草稿？",
 				subtitle: "当前发布或定时发布状态将被取消。",
 				width: "420px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: a[24] ||= (e) => de.value = !1 }, {
-					default: R(() => [...a[38] ||= [C("取消", -1)]]),
+				footer: R(() => [w(P(s), { onClick: r[24] ||= (e) => de.value = !1 }, {
+					default: R(() => [...r[38] ||= [C("取消", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: je
 				}, {
-					default: R(() => [...a[39] ||= [C("转为草稿", -1)]]),
+					default: R(() => [...r[39] ||= [C("转为草稿", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -2951,7 +2951,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 }), [["__scopeId", "data-v-5463d19a"]]), St = { class: "academy-courses" }, Ct = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(e) {
-		let { hasPermission: t } = he(), { formatDateTime: r } = he(), { academyDifficulties: i, academyPublishStates: a, getAcademyList: s, getAcademyMetadata: c } = Ke(), l = M(!1), u = M(), d = (e) => t([`cms_academy:${e}`]), f = M(), ee = ge(c, (e) => {
+		let { hasPermission: t } = he(), { formatDateTime: n } = he(), { academyDifficulties: r, academyPublishStates: i, getAcademyList: a, getAcademyMetadata: o } = Ke(), l = M(!1), u = M(), d = (e) => t([`cms_academy:${e}`]), f = M(), p = ge(o, (e) => {
 			f.value = e;
 		}), ne = [
 			...J(),
@@ -2980,7 +2980,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				dataIndex: "difficulty_level",
 				title: "难度",
 				width: 70,
-				formatter: (e) => i.find((t) => t.value === Number(e))?.label || "-"
+				formatter: (e) => r.find((t) => t.value === Number(e))?.label || "-"
 			},
 			{
 				key: "sort_order",
@@ -3014,7 +3014,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: r
+				formatter: n
 			},
 			{
 				key: "actions",
@@ -3024,8 +3024,8 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				fixed: "right",
 				hideable: !1
 			}
-		], ie = v(() => [
-			...ee.fields,
+		], re = v(() => [
+			...p.fields,
 			{
 				key: "code",
 				label: "课程ID",
@@ -3065,7 +3065,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...i]
+				}, ...r]
 			},
 			{
 				key: "publish_status",
@@ -3076,7 +3076,7 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...a]
+				}, ...i]
 			},
 			{
 				key: "is_enabled",
@@ -3106,36 +3106,36 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				width: 240,
 				defaultValue: null
 			}
-		]), { proTableBindings: p, reload: ae } = ee.bindTable(te({
+		]), { proTableBindings: ie, reload: ae } = p.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
-			queryFields: ie,
+			queryFields: re,
 			request: async ({ filters: e, page: t, pageSize: n, signal: r }) => {
-				let i = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), a = e.publish_range;
-				Array.isArray(a) && a.length === 2 && (i.published_from = (/* @__PURE__ */ new Date(`${a[0]}T00:00:00`)).toISOString(), i.published_to = (/* @__PURE__ */ new Date(`${a[1]}T23:59:59.999`)).toISOString());
-				let o = await s("courses", {
+				let i = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), o = e.publish_range;
+				Array.isArray(o) && o.length === 2 && (i.published_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), i.published_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
+				let s = await a("courses", {
 					...i,
 					page_no: t,
 					page_size: n
 				}, r);
 				return {
-					rows: o.lists,
-					total: o.count
+					rows: s.lists,
+					total: s.count
 				};
 			}
-		})), m = ee.loadMetadata;
-		function oe(e) {
+		})), oe = p.loadMetadata;
+		function m(e) {
 			u.value = e, l.value = !0;
 		}
 		function h() {
-			l.value = !1, ae(), m();
+			l.value = !1, ae(), oe();
 		}
 		return (e, t) => (A(), x("div", St, [l.value ? (A(), y(xt, {
 			key: 0,
 			"course-id": u.value,
 			onClose: t[0] ||= (e) => l.value = !1,
 			onSaved: h
-		}, null, 8, ["course-id"])) : b("", !0), pe(w(P(re), D(P(p), {
+		}, null, 8, ["course-id"])) : b("", !0), pe(w(P(ee), D(P(ie), {
 			"auto-refreshable": !1,
 			columns: ne,
 			"row-key": "id",
@@ -3150,11 +3150,11 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 			]
 		}), {
 			"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-			"toolbar-actions": R(() => [d("add") ? (A(), y(P(o), {
+			"toolbar-actions": R(() => [d("add") ? (A(), y(P(s), {
 				key: 0,
 				variant: "primary",
 				size: "sm",
-				onClick: t[1] ||= (e) => oe()
+				onClick: t[1] ||= (e) => m()
 			}, {
 				icon: R(() => [w(P(g), {
 					name: "plus",
@@ -3163,15 +3163,15 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				default: R(() => [t[2] ||= C("新增课程", -1)]),
 				_: 1
 			})) : b("", !0)]),
-			"cell-publish_status": R(({ row: e }) => [w(P(n), {
+			"cell-publish_status": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.publish_status === "published" ? "success" : "warning"
 			}, {
-				default: R(() => [C(N(P(a).find((t) => t.value === e.publish_status)?.label), 1)]),
+				default: R(() => [C(N(P(i).find((t) => t.value === e.publish_status)?.label), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+			"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.is_enabled ? "success" : "danger"
@@ -3179,13 +3179,13 @@ var ot = ["aria-busy"], st = { class: "course-editor__header" }, ct = { class: "
 				default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-publish_time": R(({ row: e }) => [C(N(P(r)(e.published_at || e.scheduled_at)), 1)]),
-			"cell-actions": R(({ row: e }) => [w(P(o), {
+			"cell-publish_time": R(({ row: e }) => [C(N(P(n)(e.published_at || e.scheduled_at)), 1)]),
+			"cell-actions": R(({ row: e }) => [w(P(s), {
 				size: "sm",
 				"icon-only": "",
 				title: d("edit") ? "编辑课程" : "课程详情",
 				"aria-label": d("edit") ? "编辑课程" : "课程详情",
-				onClick: (t) => oe(e.id)
+				onClick: (t) => m(e.id)
 			}, {
 				default: R(() => [w(P(g), {
 					name: d("edit") ? "square-pen" : "panel-right-open",
@@ -3225,7 +3225,7 @@ function wt() {
 			id: r,
 			row_version: i
 		}
-	}, { isOpenRetry: !1 }), s = u(e, "/cms/help/categories/upload"), c = u(e, "/cms/help/upload"), l = [
+	}, { isOpenRetry: !1 }), s = p(e, "/cms/help/categories/upload"), c = p(e, "/cms/help/upload"), ee = [
 		{
 			label: "草稿",
 			value: "draft"
@@ -3239,13 +3239,13 @@ function wt() {
 			value: "published"
 		}
 	];
-	function d(e, t) {
+	function l(e, t) {
 		let n = e?.categories.find((e) => e.id === String(t));
 		if (!n) return "—";
 		let r = e?.categories.find((e) => e.id === n.parent_id);
 		return r ? `${r.name} / ${n.name}` : n.name;
 	}
-	function f(e) {
+	function te(e) {
 		if (e && typeof e == "object") {
 			let t = e;
 			return Object.values(t.errors || {}).flat()[0] || t.msg || t.message || "操作失败，请稍后重试";
@@ -3260,9 +3260,9 @@ function wt() {
 		deleteHelp: o,
 		uploadHelpCategoryImage: s,
 		uploadHelpCover: c,
-		helpPublishStates: l,
-		helpCategoryLabel: d,
-		helpError: f
+		helpPublishStates: ee,
+		helpCategoryLabel: l,
+		helpError: te
 	};
 }
 //#endregion
@@ -3295,7 +3295,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 }, At = { class: "taxonomy-editor__field" }, jt = { class: "taxonomy-editor__row" }, Mt = "分类", Nt = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(t) {
-		let { helpError: r, deleteHelp: i, getHelpMetadata: a, getHelpList: s, getHelpDetail: c, saveHelp: l, uploadHelpCategoryImage: u } = wt(), { hasPermission: ie } = he(), { formatDateTime: h } = he(), _ = (e) => ie([`cms_help_category:${e}`]), T = M(), E = M(), O = ge(a, (e) => {
+		let { helpError: n, deleteHelp: r, getHelpMetadata: i, getHelpList: p, getHelpDetail: re, saveHelp: ie, uploadHelpCategoryImage: ae } = wt(), { hasPermission: oe } = he(), { formatDateTime: h } = he(), _ = (e) => oe([`cms_help_category:${e}`]), T = M(), E = M(), O = ge(i, (e) => {
 			T.value = e;
 		}), k = [
 			{
@@ -3410,12 +3410,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					}
 				]
 			}
-		]), { proTableBindings: j, rows: ue, reload: de } = O.bindTable(te({
+		]), { proTableBindings: j, rows: ue, reload: de } = O.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
 			queryFields: ce,
 			request: async ({ filters: e, signal: t, reason: n }) => {
-				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => s("categories", {
+				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => p("categories", {
 					...r,
 					page_no: e,
 					page_size: n
@@ -3438,9 +3438,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			let t = Se;
 			Object.assign(V, B(), { id: e || "" }), be.value = "", Z.value = !1, ve.value = "", ye.value = !1, U.value = !0, W.value = !0;
 			try {
-				if (E.value = await a(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
-				let n = await c("categories", e, t.signal);
-				if (E.value = await a(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
+				if (E.value = await i(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
+				let n = await re("categories", e, t.signal);
+				if (E.value = await i(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
 				Object.assign(V, {
 					id: n.id,
 					row_version: n.row_version,
@@ -3453,7 +3453,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					is_enabled: n.is_enabled
 				});
 			} catch (e) {
-				t.signal.aborted || (ye.value = !0, be.value = r(e));
+				t.signal.aborted || (ye.value = !0, be.value = n(e));
 			} finally {
 				t.signal.aborted || (W.value = !1);
 			}
@@ -3472,7 +3472,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				}
 				_e.value = !0, be.value = "";
 				try {
-					await l("categories", {
+					await ie("categories", {
 						name: V.name,
 						parent_id: V.parent_id || null,
 						image_media_id: V.image_media_id,
@@ -3480,9 +3480,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						is_enabled: V.is_enabled,
 						id: V.id || void 0,
 						row_version: V.id ? V.row_version : void 0
-					}), U.value = !1, ne.success("保存成功"), await Promise.all([de(), ke()]);
+					}), U.value = !1, u.success("保存成功"), await Promise.all([de(), ke()]);
 				} catch (e) {
-					be.value = r(e);
+					be.value = n(e);
 				} finally {
 					_e.value = !1;
 				}
@@ -3495,9 +3495,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			if (!(!Z.value || !V.id || !_("delete") || xe.value || W.value || ye.value)) {
 				X.value = !0, ve.value = "";
 				try {
-					await i("categories", V.id, V.row_version), Z.value = !1, U.value = !1, ne.success("分类已删除"), await Promise.all([de(), ke()]);
+					await r("categories", V.id, V.row_version), Z.value = !1, U.value = !1, u.success("分类已删除"), await Promise.all([de(), ke()]);
 				} catch (e) {
-					ve.value = r(e);
+					ve.value = n(e);
 				} finally {
 					X.value = !1;
 				}
@@ -3512,8 +3512,8 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 		}))]), ke = O.loadMetadata;
 		return se(() => {
 			Se?.abort();
-		}), (t, i) => (A(), x("div", Dt, [
-			w(P(re), D(P(j), {
+		}), (t, r) => (A(), x("div", Dt, [
+			w(P(ee), D(P(j), {
 				"auto-refreshable": !1,
 				columns: k,
 				"row-key": "id",
@@ -3525,11 +3525,11 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				"show-pagination": !1
 			}), {
 				"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-				"toolbar-actions": R(() => [_("add") ? (A(), y(P(o), {
+				"toolbar-actions": R(() => [_("add") ? (A(), y(P(s), {
 					key: 0,
 					variant: "primary",
 					size: "sm",
-					onClick: i[0] ||= (e) => $()
+					onClick: r[0] ||= (e) => $()
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "plus",
@@ -3537,7 +3537,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					})]),
 					default: R(() => [C("新增" + N(Mt))]),
 					_: 1
-				})) : b("", !0), w(P(o), {
+				})) : b("", !0), w(P(s), {
 					size: "sm",
 					disabled: !P(I).children.size,
 					onClick: P(z)
@@ -3562,7 +3562,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					"expanded",
 					"onToggle"
 				])]),
-				"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+				"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.is_enabled ? "success" : "danger"
@@ -3570,7 +3570,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": R(({ row: e }) => [w(P(o), {
+				"cell-actions": R(({ row: e }) => [w(P(s), {
 					size: "sm",
 					"icon-only": "",
 					title: _("edit") ? `编辑${Mt}` : `${Mt}详情`,
@@ -3589,9 +3589,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				])]),
 				_: 1
 			}, 16, ["aria-label", "data"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: U.value,
-				"onUpdate:modelValue": i[10] ||= (e) => U.value = e,
+				"onUpdate:modelValue": r[10] ||= (e) => U.value = e,
 				title: `${V.id ? "编辑" : "新增"}帮助${Mt}`,
 				width: "680px",
 				subtitle: "帮助分类用于前端导航与内容归档，最多支持两级",
@@ -3599,7 +3599,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				"before-close": Ce
 			}, {
 				footer: R(() => [
-					V.id && _("delete") ? (A(), y(P(o), {
+					V.id && _("delete") ? (A(), y(P(s), {
 						key: 0,
 						variant: "danger",
 						disabled: W.value || ye.value || xe.value,
@@ -3609,17 +3609,17 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 							name: "trash-2",
 							size: 14
 						})]),
-						default: R(() => [i[14] ||= C("删除分类", -1)]),
+						default: R(() => [r[14] ||= C("删除分类", -1)]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						disabled: xe.value,
 						onClick: we
 					}, {
-						default: R(() => [...i[15] ||= [C("取消", -1)]]),
+						default: R(() => [...r[15] ||= [C("取消", -1)]]),
 						_: 1
 					}, 8, ["disabled"]),
-					Q.value ? b("", !0) : (A(), y(P(o), {
+					Q.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						variant: "primary",
 						loading: _e.value,
@@ -3639,36 +3639,36 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						class: "help-spin",
 						size: 24
 					}), S("span", null, "正在读取" + N(Mt) + "...")])) : b("", !0),
-					be.value ? (A(), y(P(d), {
+					be.value ? (A(), y(P(ne), {
 						key: 1,
 						type: "error",
 						closable: !1,
 						description: be.value
 					}, null, 8, ["description"])) : b("", !0),
-					!W.value && !ye.value ? (A(), y(P(f), {
+					!W.value && !ye.value ? (A(), y(P(d), {
 						key: 2,
 						model: V,
 						"label-position": "top",
 						onSubmit: me(Te, ["prevent"])
 					}, {
 						default: R(() => [
-							V.id ? (A(), y(P(m), {
+							V.id ? (A(), y(P(o), {
 								key: 0,
 								label: "分类ID"
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									"model-value": V.code,
 									disabled: ""
 								}, null, 8, ["model-value"])]),
 								_: 1
 							})) : b("", !0),
-							w(P(m), {
+							w(P(o), {
 								label: `${Mt}名称`,
 								required: ""
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									modelValue: V.name,
-									"onUpdate:modelValue": i[1] ||= (e) => V.name = e,
+									"onUpdate:modelValue": r[1] ||= (e) => V.name = e,
 									maxlength: 120,
 									disabled: Q.value || xe.value,
 									"aria-label": `${Mt}名称`
@@ -3679,10 +3679,10 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 								])]),
 								_: 1
 							}, 8, ["label"]),
-							w(P(m), { label: "父分类" }, {
-								default: R(() => [S("div", At, [w(P(ae), {
+							w(P(o), { label: "父分类" }, {
+								default: R(() => [S("div", At, [w(P(a), {
 									modelValue: V.parent_id,
-									"onUpdate:modelValue": i[2] ||= (e) => V.parent_id = e,
+									"onUpdate:modelValue": r[2] ||= (e) => V.parent_id = e,
 									options: Oe.value,
 									disabled: Q.value || xe.value,
 									"aria-label": "父分类"
@@ -3690,21 +3690,21 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 									"modelValue",
 									"options",
 									"disabled"
-								]), i[13] ||= S("p", { class: "help-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类文章。 ", -1)])]),
+								]), r[13] ||= S("p", { class: "help-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类文章。 ", -1)])]),
 								_: 1
 							}),
-							w(P(m), { label: "分类图片" }, {
-								default: R(() => [w(ee, {
+							w(P(o), { label: "分类图片" }, {
+								default: R(() => [w(f, {
 									class: "taxonomy-editor__image",
 									modelValue: V.image_url,
-									"onUpdate:modelValue": i[3] ||= (e) => V.image_url = e,
+									"onUpdate:modelValue": r[3] ||= (e) => V.image_url = e,
 									label: "分类图片",
-									upload: P(u),
+									upload: P(ae),
 									disabled: Q.value || xe.value,
-									"onUpdate:mediaId": i[4] ||= (e) => V.image_media_id = e,
-									onBusyChange: i[5] ||= (e) => H.value = e,
-									onStart: i[6] ||= (e) => be.value = "",
-									onError: i[7] ||= (e) => be.value = P(r)(e)
+									"onUpdate:mediaId": r[4] ||= (e) => V.image_media_id = e,
+									onBusyChange: r[5] ||= (e) => H.value = e,
+									onStart: r[6] ||= (e) => be.value = "",
+									onError: r[7] ||= (e) => be.value = P(n)(e)
 								}, null, 8, [
 									"modelValue",
 									"upload",
@@ -3712,13 +3712,13 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 								])]),
 								_: 1
 							}),
-							S("div", jt, [w(P(m), {
+							S("div", jt, [w(P(o), {
 								label: "前端排序",
 								required: ""
 							}, {
-								default: R(() => [w(P(e), {
+								default: R(() => [w(P(l), {
 									modelValue: V.sort_order,
-									"onUpdate:modelValue": i[8] ||= (e) => V.sort_order = e,
+									"onUpdate:modelValue": r[8] ||= (e) => V.sort_order = e,
 									min: 0,
 									max: 2147483647,
 									precision: 0,
@@ -3726,10 +3726,10 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 									"aria-label": "前端排序"
 								}, null, 8, ["modelValue", "disabled"])]),
 								_: 1
-							}), w(P(m), { label: "启用状态" }, {
+							}), w(P(o), { label: "启用状态" }, {
 								default: R(() => [w(Et, {
 									modelValue: V.is_enabled,
-									"onUpdate:modelValue": i[9] ||= (e) => V.is_enabled = e,
+									"onUpdate:modelValue": r[9] ||= (e) => V.is_enabled = e,
 									disabled: Q.value || xe.value,
 									label: "已启用",
 									"aria-label": "启用状态"
@@ -3742,29 +3742,29 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				], 8, Ot)]),
 				_: 1
 			}, 8, ["modelValue", "title"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: Z.value,
-				"onUpdate:modelValue": i[12] ||= (e) => Z.value = e,
+				"onUpdate:modelValue": r[12] ||= (e) => Z.value = e,
 				title: "删除帮助分类",
 				width: "420px",
 				"close-on-click-modal": !1,
 				"before-close": () => !X.value
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: X.value,
-					onClick: i[11] ||= (e) => Z.value = !1
+					onClick: r[11] ||= (e) => Z.value = !1
 				}, {
-					default: R(() => [...i[16] ||= [C("取消", -1)]]),
+					default: R(() => [...r[16] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "danger",
 					loading: X.value,
 					onClick: De
 				}, {
-					default: R(() => [...i[17] ||= [C("确认删除", -1)]]),
+					default: R(() => [...r[17] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [S("p", null, "确认删除分类“" + N(V.name) + "”？有关联文章或子分类的分类无法删除。", 1), ve.value ? (A(), y(P(d), {
+				default: R(() => [S("p", null, "确认删除分类“" + N(V.name) + "”？有关联文章或子分类的分类无法删除。", 1), ve.value ? (A(), y(P(ne), {
 					key: 0,
 					type: "error",
 					closable: !1,
@@ -3801,12 +3801,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	props: { articleId: {} },
 	emits: ["close", "saved"],
 	setup(t, { emit: n }) {
-		let { helpError: r, helpCategoryLabel: a, deleteHelp: s, getHelpDetail: c, getHelpMetadata: l, getHelpList: u, saveHelp: te, uploadHelpCover: re } = wt(), { hasPermission: ie } = he(), h = t, T = n, E = M(!0), D = M(!1), O = M(!1), k = M(""), j = M(!1), ue = M(!1), de = M(!1), fe = M(!1), I = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), L = M(), B = M("draft"), H = M(!1), U = v(() => ie(["cms_help:publish"])), W = v(() => !ie([`cms_help:${h.articleId ? "edit" : "add"}`]) || !U.value && B.value !== "draft"), G = v(() => ie(["cms_help:delete"]) && (U.value || B.value === "draft"));
+		let { helpError: r, helpCategoryLabel: c, deleteHelp: ee, getHelpDetail: te, getHelpMetadata: p, getHelpList: re, saveHelp: ie, uploadHelpCover: ae } = wt(), { hasPermission: oe } = he(), h = t, T = n, E = M(!0), D = M(!1), O = M(!1), k = M(""), j = M(!1), ue = M(!1), de = M(!1), fe = M(!1), I = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), L = M(), B = M("draft"), H = M(!1), U = v(() => oe(["cms_help:publish"])), W = v(() => !oe([`cms_help:${h.articleId ? "edit" : "add"}`]) || !U.value && B.value !== "draft"), G = v(() => oe(["cms_help:delete"]) && (U.value || B.value === "draft"));
 		async function K() {
 			if (!(!G.value || D.value || E.value || O.value)) {
 				D.value = !0, k.value = "";
 				try {
-					await s("articles", J.id, J.row_version), Ae = JSON.stringify(J), ne.success("文章已删除"), T("saved");
+					await ee("articles", J.id, J.row_version), Ae = JSON.stringify(J), u.success("文章已删除"), T("saved");
 				} catch (e) {
 					k.value = r(e), fe.value = !1;
 				} finally {
@@ -3839,7 +3839,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			if (!(q.value || $.value)) {
 				$.value = !0;
 				try {
-					let e = await u("articles", {
+					let e = await re("articles", {
 						keyword: Se.value,
 						page_size: 100
 					}, je?.signal), t = Ce.value.filter((e) => J.related_content_ids.includes(e.id));
@@ -3852,7 +3852,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			}
 		}
 		let Ee = v(() => (L.value?.categories || []).filter((e) => e.parent_id != null).map((e) => ({
-			label: a(L.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
+			label: c(L.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
 			value: e.id,
 			disabled: !e.effective_enabled
 		}))), Oe = v(() => L.value?.categories.find((e) => e.id === J.category_id && e.parent_id == null)), ke = v({
@@ -3871,9 +3871,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			let e = je;
 			E.value = !0, O.value = !1, k.value = "";
 			try {
-				if (L.value = await l(e.signal, { cms_source_type: "platform" }), h.articleId) {
-					let t = await c("articles", h.articleId, e.signal);
-					if (L.value = await l(e.signal, { space_id: String(t.space_id) }), I.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
+				if (L.value = await p(e.signal, { cms_source_type: "platform" }), h.articleId) {
+					let t = await te("articles", h.articleId, e.signal);
+					if (L.value = await p(e.signal, { space_id: String(t.space_id) }), I.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
 					for (let e of [
 						"id",
 						"row_version",
@@ -3914,14 +3914,14 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			let t = J.scheduled_local ? new Date(J.scheduled_local) : null;
 			D.value = !0, k.value = "";
 			try {
-				await te("articles", {
+				await ie("articles", {
 					...J,
 					id: J.id || void 0,
 					row_version: J.id ? J.row_version : void 0,
 					category_id: J.category_id || null,
 					publish_status: e,
 					scheduled_at: e === "scheduled" ? t.toISOString() : null
-				}), Ae = JSON.stringify(J), ne.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "文章已发布"), T("saved");
+				}), Ae = JSON.stringify(J), u.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "文章已发布"), T("saved");
 			} catch (e) {
 				be(e);
 			} finally {
@@ -3946,7 +3946,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 			"aria-busy": E.value || D.value
 		}, [
 			S("header", Ft, [
-				w(P(o), {
+				w(P(s), {
 					"icon-only": "",
 					title: "返回文章列表",
 					"aria-label": "返回文章列表",
@@ -3961,7 +3961,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				}, 8, ["disabled"]),
 				S("div", It, [S("h2", null, N(t.articleId ? "编辑文章" : "新增文章"), 1), S("span", null, N(L.value?.source_locale || "zh-CN") + " · " + N(I.value), 1)]),
 				S("div", Lt, [
-					t.articleId && G.value ? (A(), y(P(o), {
+					t.articleId && G.value ? (A(), y(P(s), {
 						key: 0,
 						size: "sm",
 						disabled: E.value || O.value || D.value || H.value,
@@ -3970,7 +3970,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						default: R(() => [...r[32] ||= [C("删除文章", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						disabled: E.value || O.value,
 						onClick: r[1] ||= (e) => j.value = !0
@@ -3982,7 +3982,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						default: R(() => [r[33] ||= C("SEO 设置", -1)]),
 						_: 1
 					}, 8, ["disabled"]),
-					W.value ? b("", !0) : (A(), y(P(o), {
+					W.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						size: "sm",
 						disabled: E.value || O.value || D.value || H.value,
@@ -3997,7 +3997,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					}, 8, ["disabled"])),
 					P(ve) ? (A(), x("span", Rt, N(P(ve)), 1)) : b("", !0),
 					!W.value && P(Z) ? (A(), x("span", zt, "还有 " + N(P(Z)) + " 项待完善", 1)) : b("", !0),
-					!W.value && U.value ? (A(), y(P(o), {
+					!W.value && U.value ? (A(), y(P(s), {
 						key: 4,
 						variant: "primary",
 						size: "sm",
@@ -4018,31 +4018,31 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				name: "loader-circle",
 				class: "help-spin",
 				size: 28
-			}), r[35] ||= S("span", null, "正在读取文章资料...", -1)])) : O.value ? (A(), x("div", Vt, [w(P(d), {
+			}), r[35] ||= S("span", null, "正在读取文章资料...", -1)])) : O.value ? (A(), x("div", Vt, [w(P(ne), {
 				type: "error",
 				description: k.value,
 				closable: !1
-			}, null, 8, ["description"]), w(P(o), { onClick: Ne }, {
+			}, null, 8, ["description"]), w(P(s), { onClick: Ne }, {
 				default: R(() => [...r[36] ||= [C("重新加载", -1)]]),
 				_: 1
-			})])) : (A(), x(_, { key: 2 }, [k.value ? (A(), x("div", Ht, [w(P(d), {
+			})])) : (A(), x(_, { key: 2 }, [k.value ? (A(), x("div", Ht, [w(P(ne), {
 				type: "error",
 				description: k.value,
 				closable: !1
-			}, null, 8, ["description"])])) : b("", !0), S("div", Ut, [S("aside", Wt, [w(P(f), {
+			}, null, 8, ["description"])])) : b("", !0), S("div", Ut, [S("aside", Wt, [w(P(d), {
 				model: J,
 				rules: P(_e),
 				"label-position": "top",
 				onSubmit: r[16] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "文章分类",
 						prop: "category_id",
 						error: P(X).category_id,
 						required: ""
 					}, {
-						default: R(() => [w(P(ae), {
+						default: R(() => [w(P(a), {
 							modelValue: ke.value,
 							"onUpdate:modelValue": r[3] ||= (e) => ke.value = e,
 							options: Ee.value,
@@ -4059,17 +4059,17 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						_: 1
 					}, 8, ["error"]),
 					r[39] ||= S("h3", null, "文章设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "文章封面",
 						prop: "cover_url",
 						error: P(X).cover_url
 					}, {
-						default: R(() => [w(ee, {
+						default: R(() => [w(f, {
 							modelValue: J.cover_url,
 							"onUpdate:modelValue": r[4] ||= (e) => J.cover_url = e,
 							label: "文章封面",
 							disabled: q.value,
-							upload: P(re),
+							upload: P(ae),
 							onBusyChange: r[5] ||= (e) => H.value = e,
 							onStart: r[6] ||= (e) => k.value = "",
 							onError: ze
@@ -4080,12 +4080,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "内容来源",
 						prop: "content_source",
 						error: P(X).content_source
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.content_source,
 							"onUpdate:modelValue": r[7] ||= (e) => J.content_source = e,
 							maxlength: 160,
@@ -4094,12 +4094,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "作者署名",
 						prop: "author_name",
 						error: P(X).author_name
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.author_name,
 							"onUpdate:modelValue": r[8] ||= (e) => J.author_name = e,
 							maxlength: 120,
@@ -4108,12 +4108,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "前端排序",
 						prop: "sort_order",
 						error: P(X).sort_order
 					}, {
-						default: R(() => [w(P(e), {
+						default: R(() => [w(P(l), {
 							modelValue: J.sort_order,
 							"onUpdate:modelValue": r[9] ||= (e) => J.sort_order = e,
 							min: 0,
@@ -4125,12 +4125,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						_: 1
 					}, 8, ["error"]),
 					r[40] ||= S("h3", null, "发布设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "搜索关键词",
 						prop: "search_keywords",
 						error: P(X).search_keywords
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.search_keywords,
 							"onUpdate:modelValue": r[10] ||= (e) => J.search_keywords = e,
 							maxlength: 2e3,
@@ -4140,7 +4140,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "允许有帮助评价",
 						prop: "helpful_enabled",
 						error: P(X).helpful_enabled
@@ -4154,13 +4154,13 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "相关文章",
 						prop: "related_content_ids",
 						error: P(X).related_content_ids
 					}, {
 						default: R(() => [S("div", Gt, [
-							w(P(oe), {
+							w(P(m), {
 								modelValue: Se.value,
 								"onUpdate:modelValue": r[12] ||= (e) => Se.value = e,
 								disabled: q.value,
@@ -4172,7 +4172,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 								"disabled",
 								"onKeydown"
 							]),
-							w(P(o), {
+							w(P(s), {
 								size: "sm",
 								disabled: q.value,
 								loading: $.value,
@@ -4181,7 +4181,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 								default: R(() => [...r[37] ||= [C("查找文章", -1)]]),
 								_: 1
 							}, 8, ["disabled", "loading"]),
-							w(P(ae), {
+							w(P(a), {
 								modelValue: J.related_content_ids,
 								"onUpdate:modelValue": r[13] ||= (e) => J.related_content_ids = e,
 								options: we.value,
@@ -4198,7 +4198,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "启用状态",
 						prop: "is_enabled",
 						error: P(X).is_enabled
@@ -4212,12 +4212,12 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "计划发布时间（本地时区）",
 						prop: "scheduled_local",
 						error: P(X).scheduled_local
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.scheduled_local,
 							"onUpdate:modelValue": r[15] ||= (e) => J.scheduled_local = e,
 							type: "datetime-local",
@@ -4229,20 +4229,20 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					r[41] ||= S("p", { class: "article-editor__hint" }, " 不填时间则立即发布。源语言正文修改后，已有对应翻译将标记为待更新。 ", -1)
 				]),
 				_: 1
-			}, 8, ["model", "rules"])]), S("main", Kt, [w(P(f), {
+			}, 8, ["model", "rules"])]), S("main", Kt, [w(P(d), {
 				model: J,
 				rules: P(_e),
 				"label-position": "top",
 				onSubmit: r[20] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "标题",
 						prop: "title",
 						error: P(X).title,
 						required: ""
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: J.title,
 							"onUpdate:modelValue": r[17] ||= (e) => J.title = e,
 							maxlength: 255,
@@ -4252,7 +4252,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "摘要",
 						prop: "summary",
 						error: P(X).summary
@@ -4268,7 +4268,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 						}, null, 8, qt), [[F, J.summary]])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "正文",
 						prop: "body_html",
 						error: P(X).body_html
@@ -4282,10 +4282,10 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 							"max-height": 760,
 							"aria-label": "文章正文"
 						}, {
-							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(ee, {
+							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(f, {
 								label: "正文图片",
 								"model-value": e,
-								upload: P(re),
+								upload: P(ae),
 								"onUpdate:modelValue": t,
 								onBusyChange: n,
 								onError: ze
@@ -4306,27 +4306,27 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				]),
 				_: 1
 			}, 8, ["model", "rules"])])])], 64)),
-			w(P(p), {
+			w(P(e), {
 				modelValue: j.value,
 				"onUpdate:modelValue": r[24] ||= (e) => j.value = e,
 				title: "SEO 设置",
 				width: "540px",
 				"close-on-click-modal": !1
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					variant: "primary",
 					onClick: r[23] ||= (e) => j.value = !1
 				}, {
 					default: R(() => [...r[42] ||= [C("确定", -1)]]),
 					_: 1
 				})]),
-				default: R(() => [w(P(f), {
+				default: R(() => [w(P(d), {
 					model: J,
 					rules: P(_e),
 					"label-position": "top",
 					onSubmit: r[22] ||= me(() => {}, ["prevent"])
 				}, {
-					default: R(() => [w(P(m), {
+					default: R(() => [w(P(o), {
 						label: "SEO 描述",
 						prop: "seo_description",
 						error: P(X).seo_description
@@ -4348,7 +4348,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				}, 8, ["model", "rules"])]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: fe.value,
 				"onUpdate:modelValue": r[26] ||= (e) => fe.value = e,
 				title: "确认删除",
@@ -4363,13 +4363,13 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					size: 18,
 					color: "var(--mm-color-danger)"
 				})])]),
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: D.value,
 					onClick: r[25] ||= (e) => fe.value = !1
 				}, {
 					default: R(() => [...r[43] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "warning",
 					loading: D.value,
 					onClick: K
@@ -4377,7 +4377,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					default: R(() => [...r[44] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [w(P(d), {
+				default: R(() => [w(P(ne), {
 					class: "help-delete-dialog__notice",
 					type: "warning",
 					closable: !1,
@@ -4390,16 +4390,16 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				"subtitle",
 				"before-close"
 			]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: ue.value,
 				"onUpdate:modelValue": r[29] ||= (e) => ue.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[27] ||= (e) => ue.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[27] ||= (e) => ue.value = !1 }, {
 					default: R(() => [...r[45] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: r[28] ||= (e) => T("close")
 				}, {
@@ -4408,17 +4408,17 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				})]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: de.value,
 				"onUpdate:modelValue": r[31] ||= (e) => de.value = e,
 				title: "将文章转为草稿？",
 				subtitle: "当前发布或定时发布状态将被取消。",
 				width: "420px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[30] ||= (e) => de.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[30] ||= (e) => de.value = !1 }, {
 					default: R(() => [...r[47] ||= [C("取消", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: Le
 				}, {
@@ -4435,9 +4435,9 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 }, $t = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(e) {
-		let t = he(), { helpPublishStates: r, helpCategoryLabel: i, getHelpList: a, getHelpMetadata: s } = wt(), { hasPermission: c } = he(), { formatDateTime: l } = he(), u = M(!1), d = M(), f = (e) => c([`cms_help:${e}`]), ee = M(), ne = ge(s, (e) => {
-			ee.value = e;
-		}), ie = [
+		let t = he(), { helpPublishStates: n, helpCategoryLabel: r, getHelpList: i, getHelpMetadata: a } = wt(), { hasPermission: o } = he(), { formatDateTime: l } = he(), u = M(!1), d = M(), f = (e) => o([`cms_help:${e}`]), p = M(), ne = ge(a, (e) => {
+			p.value = e;
+		}), re = [
 			...J(),
 			{
 				key: "code",
@@ -4457,7 +4457,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				dataIndex: "category_id",
 				title: "文章分类",
 				width: 220,
-				formatter: (e) => i(ee.value, e)
+				formatter: (e) => r(p.value, e)
 			},
 			{
 				key: "sort_order",
@@ -4522,7 +4522,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				fixed: "right",
 				hideable: !1
 			}
-		], p = v(() => [
+		], ie = v(() => [
 			...ne.fields,
 			{
 				key: "code",
@@ -4549,8 +4549,8 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...(ee.value?.categories || []).map((e) => ({
-					label: i(ee.value, e.id),
+				}, ...(p.value?.categories || []).map((e) => ({
+					label: r(p.value, e.id),
 					value: e.id
 				}))]
 			},
@@ -4563,7 +4563,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...r]
+				}, ...n]
 			},
 			{
 				key: "is_enabled",
@@ -4593,15 +4593,15 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				width: 240,
 				defaultValue: null
 			}
-		]), { proTableBindings: ae, reload: m } = ne.bindTable(te({
+		]), { proTableBindings: ae, reload: oe } = ne.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
-			queryFields: p,
+			queryFields: ie,
 			request: async ({ filters: e, page: t, pageSize: n, signal: r }) => {
-				let i = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), o = e.publish_range;
-				Array.isArray(o) && o.length === 2 && (i.published_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), i.published_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
-				let s = await a("articles", {
-					...i,
+				let a = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), o = e.publish_range;
+				Array.isArray(o) && o.length === 2 && (a.published_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), a.published_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
+				let s = await i("articles", {
+					...a,
 					page_no: t,
 					page_size: n
 				}, r);
@@ -4610,24 +4610,24 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					total: s.count
 				};
 			}
-		})), oe = ne.loadMetadata;
+		})), m = ne.loadMetadata;
 		function h(e) {
 			d.value = e, u.value = !0;
 		}
 		function _() {
-			u.value = !1, m(), oe();
+			u.value = !1, oe(), m();
 		}
-		return (e, i) => (A(), x("div", Zt, [
+		return (e, r) => (A(), x("div", Zt, [
 			!u.value && P(t).mode === "platform" ? (A(), x("p", Qt, " 当前管理平台默认模板。浏览量、评价数及有帮助率属于站点运行数据，此处显示“—”，不汇总白标站点。 ")) : b("", !0),
 			u.value ? (A(), y(Xt, {
 				key: 1,
 				"article-id": d.value,
-				onClose: i[0] ||= (e) => u.value = !1,
+				onClose: r[0] ||= (e) => u.value = !1,
 				onSaved: _
 			}, null, 8, ["article-id"])) : b("", !0),
-			pe(w(P(re), D(P(ae), {
+			pe(w(P(ee), D(P(ae), {
 				"auto-refreshable": !1,
-				columns: ie,
+				columns: re,
 				"row-key": "id",
 				"fill-height": "",
 				"columns-configurable": "",
@@ -4640,28 +4640,28 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 				]
 			}), {
 				"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-				"toolbar-actions": R(() => [f("add") ? (A(), y(P(o), {
+				"toolbar-actions": R(() => [f("add") ? (A(), y(P(s), {
 					key: 0,
 					variant: "primary",
 					size: "sm",
-					onClick: i[1] ||= (e) => h()
+					onClick: r[1] ||= (e) => h()
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "plus",
 						size: 14
 					})]),
-					default: R(() => [i[2] ||= C("新增文章", -1)]),
+					default: R(() => [r[2] ||= C("新增文章", -1)]),
 					_: 1
 				})) : b("", !0)]),
-				"cell-publish_status": R(({ row: e }) => [w(P(n), {
+				"cell-publish_status": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.publish_status === "published" ? "success" : "warning"
 				}, {
-					default: R(() => [C(N(P(r).find((t) => t.value === e.publish_status)?.label), 1)]),
+					default: R(() => [C(N(P(n).find((t) => t.value === e.publish_status)?.label), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+				"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.is_enabled ? "success" : "danger"
@@ -4670,7 +4670,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ h(/* @__PURE__ */ T({
 					_: 2
 				}, 1032, ["type"])]),
 				"cell-publish_time": R(({ row: e }) => [C(N(P(l)(e.published_at || e.scheduled_at)), 1)]),
-				"cell-actions": R(({ row: e }) => [w(P(o), {
+				"cell-actions": R(({ row: e }) => [w(P(s), {
 					size: "sm",
 					"icon-only": "",
 					title: f("edit") ? "编辑文章" : "文章详情",
@@ -4752,13 +4752,13 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 	class: "muted"
 }, cn = { class: "attachment-title" }, ln = ["src", "alt"], un = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
-	setup(e) {
-		let { getFeedbackList: t, getFeedbackMetadata: r, getFeedbackDetail: i, getFeedbackAttachment: a, feedbackSourceTypes: s, feedbackSourceLabel: c, feedbackError: l } = en(), { formatDateTime: u } = he(), f = M({
+	setup(t) {
+		let { getFeedbackList: n, getFeedbackMetadata: r, getFeedbackDetail: i, getFeedbackAttachment: a, feedbackSourceTypes: o, feedbackSourceLabel: l, feedbackError: u } = en(), { formatDateTime: d } = he(), f = M({
 			scenes: [],
 			issues: []
-		}), ee = ge(r, (e) => {
+		}), p = ge(r, (e) => {
 			f.value = e;
-		}), ne = [
+		}), re = [
 			...J(),
 			{
 				key: "code",
@@ -4812,7 +4812,7 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 				dataIndex: "submitted_at",
 				title: "提交时间",
 				width: 180,
-				formatter: u
+				formatter: d
 			},
 			{
 				key: "actions",
@@ -4823,7 +4823,7 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 				hideable: !1
 			}
 		], ie = v(() => [
-			...ee.fields,
+			...p.fields,
 			{
 				key: "code",
 				label: "反馈ID",
@@ -4857,7 +4857,7 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...s]
+				}, ...o]
 			},
 			{
 				key: "scene_id",
@@ -4894,16 +4894,16 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 				width: 240,
 				defaultValue: null
 			}
-		]), { proTableBindings: ae } = ee.bindTable(te({
+		]), { proTableBindings: ae } = p.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
 			queryFields: ie,
-			request: async ({ filters: e, page: n, pageSize: r, signal: i }) => {
+			request: async ({ filters: e, page: t, pageSize: r, signal: i }) => {
 				let a = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "submitted_range" && t !== "" && t != null)), o = e.submitted_range;
 				Array.isArray(o) && o.length === 2 && (a.submitted_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), a.submitted_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
-				let s = await t({
+				let s = await n({
 					...a,
-					page_no: n,
+					page_no: t,
 					page_size: r
 				}, i);
 				return {
@@ -4911,18 +4911,18 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 					total: s.count
 				};
 			}
-		})), m = M(!1), oe = M(!1), h = M(""), T = M(), E = M({}), O = M(""), k;
+		})), oe = M(!1), m = M(!1), h = M(""), T = M(), E = M({}), O = M(""), k;
 		async function ce(e) {
 			k?.abort();
 			let t = new AbortController();
-			k = t, T.value = void 0, E.value = {}, h.value = "", O.value = "", m.value = !0, oe.value = !0;
+			k = t, T.value = void 0, E.value = {}, h.value = "", O.value = "", oe.value = !0, m.value = !0;
 			try {
 				let n = await i(e, t.signal);
 				t.signal.aborted || (T.value = n);
 			} catch (e) {
-				t.signal.aborted || (h.value = l(e));
+				t.signal.aborted || (h.value = u(e));
 			} finally {
-				t.signal.aborted || (oe.value = !1);
+				t.signal.aborted || (m.value = !1);
 			}
 		}
 		async function j(e) {
@@ -4933,19 +4933,19 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 					let r = await a(n, e, t.signal);
 					!t.signal.aborted && /^data:image\/(png|jpeg|webp|svg\+xml|x-icon|vnd\.microsoft\.icon);base64,[A-Za-z0-9+/=]+$/.test(r.data_url) && (E.value[e] = r.data_url);
 				} catch (e) {
-					t.signal.aborted || (h.value = l(e));
+					t.signal.aborted || (h.value = u(e));
 				} finally {
 					t.signal.aborted || (O.value = "");
 				}
 			}
 		}
-		return L(m, (e) => {
+		return L(oe, (e) => {
 			e || (k?.abort(), T.value = void 0, E.value = {}, h.value = "");
 		}), se(() => {
 			k?.abort();
-		}), (e, t) => (A(), x("div", tn, [w(P(re), D(P(ae), {
+		}), (t, n) => (A(), x("div", tn, [w(P(ee), D(P(ae), {
 			"auto-refreshable": !1,
-			columns: ne,
+			columns: re,
 			"row-key": "id",
 			"fill-height": "",
 			"columns-configurable": "",
@@ -4958,15 +4958,15 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 			]
 		}), {
 			"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-			"cell-source_type": R(({ row: e }) => [w(P(n), {
+			"cell-source_type": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.source_type === "merchant" ? "warning" : e.source_type === "platform" ? "success" : "primary"
 			}, {
-				default: R(() => [C(N(P(c)(e.source_type)), 1)]),
+				default: R(() => [C(N(P(l)(e.source_type)), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-actions": R(({ row: e }) => [w(P(o), {
+			"cell-actions": R(({ row: e }) => [w(P(s), {
 				size: "sm",
 				"icon-only": "",
 				title: "查看反馈",
@@ -4980,53 +4980,53 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 				_: 1
 			}, 8, ["onClick"])]),
 			_: 1
-		}, 16), w(P(p), {
-			modelValue: m.value,
-			"onUpdate:modelValue": t[1] ||= (e) => m.value = e,
+		}, 16), w(P(e), {
+			modelValue: oe.value,
+			"onUpdate:modelValue": n[1] ||= (e) => oe.value = e,
 			title: "反馈详情",
 			subtitle: T.value?.code || "查看用户正式提交的意见反馈",
 			width: "760px",
 			"close-on-click-modal": !1
 		}, {
-			footer: R(() => [w(P(o), { onClick: t[0] ||= (e) => m.value = !1 }, {
-				default: R(() => [...t[14] ||= [C("关闭", -1)]]),
+			footer: R(() => [w(P(s), { onClick: n[0] ||= (e) => oe.value = !1 }, {
+				default: R(() => [...n[14] ||= [C("关闭", -1)]]),
 				_: 1
 			})]),
 			default: R(() => [S("div", {
 				class: "feedback-detail",
-				"aria-busy": oe.value
+				"aria-busy": m.value
 			}, [
-				oe.value ? (A(), x("p", rn, "正在读取反馈…")) : b("", !0),
-				h.value ? (A(), y(P(d), {
+				m.value ? (A(), x("p", rn, "正在读取反馈…")) : b("", !0),
+				h.value ? (A(), y(P(ne), {
 					key: 1,
 					type: "error",
 					closable: !1,
 					description: h.value
 				}, null, 8, ["description"])) : b("", !0),
-				T.value && !oe.value ? (A(), x(_, { key: 2 }, [
+				T.value && !m.value ? (A(), x(_, { key: 2 }, [
 					S("dl", an, [
-						S("div", null, [t[2] ||= S("dt", null, "UID", -1), S("dd", null, N(T.value.public_user_id_snapshot), 1)]),
-						S("div", null, [t[3] ||= S("dt", null, "用户账号", -1), S("dd", null, N(T.value.username_snapshot || "—"), 1)]),
-						S("div", null, [t[4] ||= S("dt", null, "来源类型", -1), S("dd", null, N(P(c)(T.value.source_type)), 1)]),
-						S("div", null, [t[5] ||= S("dt", null, "来源名称", -1), S("dd", null, N(T.value.source_name_snapshot || "—"), 1)]),
-						S("div", null, [t[6] ||= S("dt", null, "业务场景", -1), S("dd", null, N(T.value.scene_name_snapshot), 1)]),
-						S("div", null, [t[7] ||= S("dt", null, "问题分类", -1), S("dd", null, N(T.value.issue_category_name_snapshot), 1)]),
-						S("div", null, [t[8] ||= S("dt", null, "联系方式（脱敏）", -1), S("dd", null, N(T.value.contact_display), 1)]),
-						S("div", null, [t[9] ||= S("dt", null, "提交时间", -1), S("dd", null, N(P(u)(T.value.submitted_at)), 1)])
+						S("div", null, [n[2] ||= S("dt", null, "UID", -1), S("dd", null, N(T.value.public_user_id_snapshot), 1)]),
+						S("div", null, [n[3] ||= S("dt", null, "用户账号", -1), S("dd", null, N(T.value.username_snapshot || "—"), 1)]),
+						S("div", null, [n[4] ||= S("dt", null, "来源类型", -1), S("dd", null, N(P(l)(T.value.source_type)), 1)]),
+						S("div", null, [n[5] ||= S("dt", null, "来源名称", -1), S("dd", null, N(T.value.source_name_snapshot || "—"), 1)]),
+						S("div", null, [n[6] ||= S("dt", null, "业务场景", -1), S("dd", null, N(T.value.scene_name_snapshot), 1)]),
+						S("div", null, [n[7] ||= S("dt", null, "问题分类", -1), S("dd", null, N(T.value.issue_category_name_snapshot), 1)]),
+						S("div", null, [n[8] ||= S("dt", null, "联系方式（脱敏）", -1), S("dd", null, N(T.value.contact_display), 1)]),
+						S("div", null, [n[9] ||= S("dt", null, "提交时间", -1), S("dd", null, N(P(d)(T.value.submitted_at)), 1)])
 					]),
-					S("section", null, [t[10] ||= S("h3", null, "反馈内容", -1), S("div", on, N(T.value.content), 1)]),
+					S("section", null, [n[10] ||= S("h3", null, "反馈内容", -1), S("div", on, N(T.value.content), 1)]),
 					S("section", null, [
-						S("h3", null, [t[11] ||= C(" 附件 ", -1), S("span", null, N(T.value.attachments?.length || 0), 1)]),
+						S("h3", null, [n[11] ||= C(" 附件 ", -1), S("span", null, N(T.value.attachments?.length || 0), 1)]),
 						T.value.attachments?.length ? b("", !0) : (A(), x("p", sn, "暂无附件")),
 						(A(!0), x(_, null, ue(T.value.attachments, (e) => (A(), x("div", {
 							key: e.id,
 							class: "feedback-attachment"
-						}, [S("div", cn, [S("span", null, N(e.original_name || "图片附件") + " · " + N(Math.ceil(e.byte_size / 1024)) + " KB", 1), w(P(o), {
+						}, [S("div", cn, [S("span", null, N(e.original_name || "图片附件") + " · " + N(Math.ceil(e.byte_size / 1024)) + " KB", 1), w(P(s), {
 							size: "sm",
 							loading: O.value === e.id,
 							onClick: (t) => j(e.id)
 						}, {
-							default: R(() => [...t[12] ||= [C("查看图片", -1)]]),
+							default: R(() => [...n[12] ||= [C("查看图片", -1)]]),
 							_: 1
 						}, 8, ["loading", "onClick"])]), E.value[e.id] ? (A(), x("img", {
 							key: 0,
@@ -5034,7 +5034,7 @@ var tn = { class: "feedback-page" }, nn = ["aria-busy"], rn = {
 							alt: e.original_name || "反馈图片"
 						}, null, 8, ln)) : b("", !0)]))), 128))
 					]),
-					t[13] ||= S("p", { class: "muted" }, "来源和分类为提交时快照；此页面仅查看，不修改用户原始反馈。", -1)
+					n[13] ||= S("p", { class: "muted" }, "来源和分类为提交时快照；此页面仅查看，不修改用户原始反馈。", -1)
 				], 64)) : b("", !0)
 			], 8, nn)]),
 			_: 1
@@ -5065,7 +5065,7 @@ function dn() {
 			id: r,
 			row_version: i
 		}
-	}, { isOpenRetry: !1 }), s = u(e, "/cms/announcement/upload"), c = u(e, "/cms/announcement/categories/upload"), l = [
+	}, { isOpenRetry: !1 }), s = p(e, "/cms/announcement/upload"), c = p(e, "/cms/announcement/categories/upload"), ee = [
 		{
 			label: "草稿",
 			value: "draft"
@@ -5079,13 +5079,13 @@ function dn() {
 			value: "published"
 		}
 	];
-	function d(e, t) {
+	function l(e, t) {
 		let n = e?.categories.find((e) => e.id === String(t));
 		if (!n) return "—";
 		let r = e?.categories.find((e) => e.id === n.parent_id);
 		return r ? `${r.name} / ${n.name}` : n.name;
 	}
-	function f(e) {
+	function te(e) {
 		if (e && typeof e == "object") {
 			let t = e;
 			return Object.values(t.errors || {}).flat()[0] || t.msg || t.message || "操作失败，请稍后重试";
@@ -5100,9 +5100,9 @@ function dn() {
 		deleteAnnouncement: o,
 		uploadAnnouncementCover: s,
 		uploadAnnouncementCategoryImage: c,
-		announcementPublishStates: l,
-		announcementCategoryLabel: d,
-		announcementError: f
+		announcementPublishStates: ee,
+		announcementCategoryLabel: l,
+		announcementError: te
 	};
 }
 //#endregion
@@ -5114,7 +5114,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 }, hn = { class: "taxonomy-editor__field" }, gn = { class: "taxonomy-editor__row" }, _n = "分类", vn = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(t) {
-		let { hasPermission: r } = he(), { formatDateTime: i } = he(), { announcementError: a, deleteAnnouncement: s, getAnnouncementMetadata: c, getAnnouncementList: l, getAnnouncementDetail: u, saveAnnouncement: ie, uploadAnnouncementCategoryImage: h } = dn(), _ = (e) => r([`cms_announcement_category:${e}`]), T = M(), E = M(), O = ge(c, (e) => {
+		let { hasPermission: n } = he(), { formatDateTime: r } = he(), { announcementError: i, deleteAnnouncement: p, getAnnouncementMetadata: re, getAnnouncementList: ie, getAnnouncementDetail: ae, saveAnnouncement: oe, uploadAnnouncementCategoryImage: h } = dn(), _ = (e) => n([`cms_announcement_category:${e}`]), T = M(), E = M(), O = ge(re, (e) => {
 			T.value = e;
 		}), k = [
 			{
@@ -5166,7 +5166,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: i
+				formatter: r
 			},
 			{
 				key: "actions",
@@ -5215,12 +5215,12 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					}
 				]
 			}
-		], { proTableBindings: j, rows: ue, reload: de } = O.bindTable(te({
+		], { proTableBindings: j, rows: ue, reload: de } = O.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
 			queryFields: ce,
 			request: async ({ filters: e, signal: t, reason: n }) => {
-				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => l("categories", {
+				let r = Object.fromEntries(Object.entries(e).filter(([, e]) => e !== "" && e != null)), i = await K((e, n) => ie("categories", {
 					...r,
 					page_no: e,
 					page_size: n
@@ -5243,9 +5243,9 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			let t = we;
 			Object.assign(V, B(), { id: e || "" }), be.value = "", X.value = !1, ve.value = "", ye.value = !1, H.value = !0, U.value = !0, Ce = JSON.stringify(V);
 			try {
-				if (E.value = await c(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
-				let n = await u("categories", e, t.signal);
-				if (E.value = await c(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
+				if (E.value = await re(t.signal, { cms_source_type: "platform" }), !e || t.signal.aborted) return;
+				let n = await ae("categories", e, t.signal);
+				if (E.value = await re(t.signal, { space_id: String(n.space_id) }), t.signal.aborted) return;
 				Object.assign(V, {
 					id: n.id,
 					row_version: n.row_version,
@@ -5258,7 +5258,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					is_enabled: n.is_enabled
 				}), Ce = JSON.stringify(V);
 			} catch (e) {
-				t.signal.aborted || (ye.value = !0, be.value = a(e));
+				t.signal.aborted || (ye.value = !0, be.value = i(e));
 			} finally {
 				t.signal.aborted || (U.value = !1);
 			}
@@ -5280,7 +5280,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				}
 				W.value = !0, be.value = "";
 				try {
-					await ie("categories", {
+					await oe("categories", {
 						name: V.name,
 						parent_id: V.parent_id || null,
 						image_media_id: V.image_media_id,
@@ -5288,9 +5288,9 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						is_enabled: V.is_enabled,
 						id: V.id || void 0,
 						row_version: V.id ? V.row_version : void 0
-					}), H.value = !1, ne.success("保存成功"), await Promise.all([de(), Ne()]);
+					}), H.value = !1, u.success("保存成功"), await Promise.all([de(), Ne()]);
 				} catch (e) {
-					be.value = a(e);
+					be.value = i(e);
 				} finally {
 					W.value = !1;
 				}
@@ -5303,9 +5303,9 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			if (!(!X.value || !V.id || !_("delete") || $.value || U.value || ye.value)) {
 				_e.value = !0, ve.value = "";
 				try {
-					await s("categories", V.id, V.row_version), X.value = !1, H.value = !1, ne.success("分类已删除"), await Promise.all([de(), Ne()]);
+					await p("categories", V.id, V.row_version), X.value = !1, H.value = !1, u.success("分类已删除"), await Promise.all([de(), Ne()]);
 				} catch (e) {
-					ve.value = a(e);
+					ve.value = i(e);
 				} finally {
 					_e.value = !1;
 				}
@@ -5320,8 +5320,8 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 		}))]), Ne = O.loadMetadata;
 		return se(() => {
 			we?.abort();
-		}), (t, r) => (A(), x("div", fn, [
-			w(P(re), D(P(j), {
+		}), (t, n) => (A(), x("div", fn, [
+			w(P(ee), D(P(j), {
 				"auto-refreshable": !1,
 				columns: k,
 				"row-key": "id",
@@ -5333,11 +5333,11 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				"show-pagination": !1
 			}), {
 				"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-				"toolbar-actions": R(() => [_("add") ? (A(), y(P(o), {
+				"toolbar-actions": R(() => [_("add") ? (A(), y(P(s), {
 					key: 0,
 					variant: "primary",
 					size: "sm",
-					onClick: r[0] ||= (e) => Te()
+					onClick: n[0] ||= (e) => Te()
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "plus",
@@ -5345,7 +5345,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					})]),
 					default: R(() => [C("新增" + N(_n))]),
 					_: 1
-				})) : b("", !0), w(P(o), {
+				})) : b("", !0), w(P(s), {
 					size: "sm",
 					disabled: !P(I).children.size,
 					onClick: P(z)
@@ -5370,7 +5370,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					"expanded",
 					"onToggle"
 				])]),
-				"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+				"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 					size: "sm",
 					effect: "soft",
 					type: e.is_enabled ? "success" : "danger"
@@ -5378,7 +5378,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": R(({ row: e }) => [w(P(o), {
+				"cell-actions": R(({ row: e }) => [w(P(s), {
 					size: "sm",
 					"icon-only": "",
 					title: _("edit") ? `编辑${_n}` : `${_n}详情`,
@@ -5397,9 +5397,9 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				])]),
 				_: 1
 			}, 16, ["aria-label", "data"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: H.value,
-				"onUpdate:modelValue": r[10] ||= (e) => H.value = e,
+				"onUpdate:modelValue": n[10] ||= (e) => H.value = e,
 				title: `${V.id ? "编辑" : "新增"}公告${_n}`,
 				width: "680px",
 				subtitle: "公告分类用于前端导航与内容归档，最多支持两级",
@@ -5407,7 +5407,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				"before-close": Ee
 			}, {
 				footer: R(() => [
-					V.id && _("delete") ? (A(), y(P(o), {
+					V.id && _("delete") ? (A(), y(P(s), {
 						key: 0,
 						variant: "danger",
 						disabled: U.value || ye.value || $.value,
@@ -5417,17 +5417,17 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 							name: "trash-2",
 							size: 14
 						})]),
-						default: R(() => [r[16] ||= C("删除分类", -1)]),
+						default: R(() => [n[16] ||= C("删除分类", -1)]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						disabled: $.value,
 						onClick: De
 					}, {
-						default: R(() => [...r[17] ||= [C("取消", -1)]]),
+						default: R(() => [...n[17] ||= [C("取消", -1)]]),
 						_: 1
 					}, 8, ["disabled"]),
-					xe.value ? b("", !0) : (A(), y(P(o), {
+					xe.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						variant: "primary",
 						loading: W.value,
@@ -5447,36 +5447,36 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						class: "announcement-spin",
 						size: 24
 					}), S("span", null, "正在读取" + N(_n) + "...")])) : b("", !0),
-					be.value ? (A(), y(P(d), {
+					be.value ? (A(), y(P(ne), {
 						key: 1,
 						type: "error",
 						closable: !1,
 						description: be.value
 					}, null, 8, ["description"])) : b("", !0),
-					!U.value && !ye.value ? (A(), y(P(f), {
+					!U.value && !ye.value ? (A(), y(P(d), {
 						key: 2,
 						model: V,
 						"label-position": "top",
 						onSubmit: me(ke, ["prevent"])
 					}, {
 						default: R(() => [
-							V.id ? (A(), y(P(m), {
+							V.id ? (A(), y(P(o), {
 								key: 0,
 								label: "分类ID"
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									"model-value": V.code,
 									disabled: ""
 								}, null, 8, ["model-value"])]),
 								_: 1
 							})) : b("", !0),
-							w(P(m), {
+							w(P(o), {
 								label: `${_n}名称`,
 								required: ""
 							}, {
-								default: R(() => [w(P(oe), {
+								default: R(() => [w(P(m), {
 									modelValue: V.name,
-									"onUpdate:modelValue": r[1] ||= (e) => V.name = e,
+									"onUpdate:modelValue": n[1] ||= (e) => V.name = e,
 									maxlength: 120,
 									disabled: xe.value || $.value,
 									"aria-label": `${_n}名称`
@@ -5487,10 +5487,10 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 								])]),
 								_: 1
 							}, 8, ["label"]),
-							w(P(m), { label: "父分类" }, {
-								default: R(() => [S("div", hn, [w(P(ae), {
+							w(P(o), { label: "父分类" }, {
+								default: R(() => [S("div", hn, [w(P(a), {
 									modelValue: V.parent_id,
-									"onUpdate:modelValue": r[2] ||= (e) => V.parent_id = e,
+									"onUpdate:modelValue": n[2] ||= (e) => V.parent_id = e,
 									options: Me.value,
 									disabled: xe.value || $.value,
 									"aria-label": "父分类"
@@ -5498,21 +5498,21 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 									"modelValue",
 									"options",
 									"disabled"
-								]), r[15] ||= S("p", { class: "announcement-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类公告。 ", -1)])]),
+								]), n[15] ||= S("p", { class: "announcement-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类公告。 ", -1)])]),
 								_: 1
 							}),
-							w(P(m), { label: "分类图片" }, {
-								default: R(() => [w(ee, {
+							w(P(o), { label: "分类图片" }, {
+								default: R(() => [w(f, {
 									class: "taxonomy-editor__image",
 									modelValue: V.image_url,
-									"onUpdate:modelValue": r[3] ||= (e) => V.image_url = e,
+									"onUpdate:modelValue": n[3] ||= (e) => V.image_url = e,
 									label: "分类图片",
 									upload: P(h),
 									disabled: xe.value || $.value,
-									"onUpdate:mediaId": r[4] ||= (e) => V.image_media_id = e,
-									onBusyChange: r[5] ||= (e) => Se.value = e,
-									onStart: r[6] ||= (e) => be.value = "",
-									onError: r[7] ||= (e) => be.value = P(a)(e)
+									"onUpdate:mediaId": n[4] ||= (e) => V.image_media_id = e,
+									onBusyChange: n[5] ||= (e) => Se.value = e,
+									onStart: n[6] ||= (e) => be.value = "",
+									onError: n[7] ||= (e) => be.value = P(i)(e)
 								}, null, 8, [
 									"modelValue",
 									"upload",
@@ -5520,13 +5520,13 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 								])]),
 								_: 1
 							}),
-							S("div", gn, [w(P(m), {
+							S("div", gn, [w(P(o), {
 								label: "前端排序",
 								required: ""
 							}, {
-								default: R(() => [w(P(e), {
+								default: R(() => [w(P(l), {
 									modelValue: V.sort_order,
-									"onUpdate:modelValue": r[8] ||= (e) => V.sort_order = e,
+									"onUpdate:modelValue": n[8] ||= (e) => V.sort_order = e,
 									min: 0,
 									max: 2147483647,
 									precision: 0,
@@ -5534,10 +5534,10 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 									"aria-label": "前端排序"
 								}, null, 8, ["modelValue", "disabled"])]),
 								_: 1
-							}), w(P(m), { label: "启用状态" }, {
+							}), w(P(o), { label: "启用状态" }, {
 								default: R(() => [w(Z, {
 									modelValue: V.is_enabled,
-									"onUpdate:modelValue": r[9] ||= (e) => V.is_enabled = e,
+									"onUpdate:modelValue": n[9] ||= (e) => V.is_enabled = e,
 									disabled: xe.value || $.value,
 									label: "已启用",
 									"aria-label": "启用状态"
@@ -5550,29 +5550,29 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				], 8, pn)]),
 				_: 1
 			}, 8, ["modelValue", "title"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: X.value,
-				"onUpdate:modelValue": r[12] ||= (e) => X.value = e,
+				"onUpdate:modelValue": n[12] ||= (e) => X.value = e,
 				title: "删除公告分类",
 				width: "420px",
 				"close-on-click-modal": !1,
 				"before-close": () => !_e.value
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: _e.value,
-					onClick: r[11] ||= (e) => X.value = !1
+					onClick: n[11] ||= (e) => X.value = !1
 				}, {
-					default: R(() => [...r[18] ||= [C("取消", -1)]]),
+					default: R(() => [...n[18] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "danger",
 					loading: _e.value,
 					onClick: je
 				}, {
-					default: R(() => [...r[19] ||= [C("确认删除", -1)]]),
+					default: R(() => [...n[19] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [S("p", null, "确认删除分类“" + N(V.name) + "”？有关联公告或子分类的分类无法删除。", 1), ve.value ? (A(), y(P(d), {
+				default: R(() => [S("p", null, "确认删除分类“" + N(V.name) + "”？有关联公告或子分类的分类无法删除。", 1), ve.value ? (A(), y(P(ne), {
 					key: 0,
 					type: "error",
 					closable: !1,
@@ -5580,20 +5580,20 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				}, null, 8, ["description"])) : b("", !0)]),
 				_: 1
 			}, 8, ["modelValue", "before-close"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: Q.value,
-				"onUpdate:modelValue": r[14] ||= (e) => Q.value = e,
+				"onUpdate:modelValue": n[14] ||= (e) => Q.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[13] ||= (e) => Q.value = !1 }, {
-					default: R(() => [...r[20] ||= [C("继续编辑", -1)]]),
+				footer: R(() => [w(P(s), { onClick: n[13] ||= (e) => Q.value = !1 }, {
+					default: R(() => [...n[20] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: Oe
 				}, {
-					default: R(() => [...r[21] ||= [C("放弃修改", -1)]]),
+					default: R(() => [...n[21] ||= [C("放弃修改", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -5627,14 +5627,14 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 	props: { articleId: {} },
 	emits: ["close", "saved"],
 	setup(t, { emit: n }) {
-		let { hasPermission: r } = he(), { announcementError: a, announcementCategoryLabel: s, deleteAnnouncement: c, getAnnouncementDetail: l, getAnnouncementMetadata: u, saveAnnouncement: te, uploadAnnouncementCover: re } = dn(), ie = t, h = n, T = M(!0), E = M(!1), D = M(!1), O = M(""), k = M(!1), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), L = M("draft"), z = M(!1), B = v(() => r(["cms_announcement:publish"])), H = v(() => !r([`cms_announcement:${ie.articleId ? "edit" : "add"}`]) || !B.value && L.value !== "draft"), U = v(() => r(["cms_announcement:delete"]) && (B.value || L.value === "draft"));
+		let { hasPermission: r } = he(), { announcementError: c, announcementCategoryLabel: ee, deleteAnnouncement: te, getAnnouncementDetail: p, getAnnouncementMetadata: re, saveAnnouncement: ie, uploadAnnouncementCover: ae } = dn(), oe = t, h = n, T = M(!0), E = M(!1), D = M(!1), O = M(""), k = M(!1), j = M(!1), ue = M(!1), de = M(!1), fe = M(he().mode === "white_label" ? "当前站点内容" : "平台默认内容模板"), I = M(), L = M("draft"), z = M(!1), B = v(() => r(["cms_announcement:publish"])), H = v(() => !r([`cms_announcement:${oe.articleId ? "edit" : "add"}`]) || !B.value && L.value !== "draft"), U = v(() => r(["cms_announcement:delete"]) && (B.value || L.value === "draft"));
 		async function W() {
 			if (!(!U.value || E.value || T.value || D.value)) {
 				E.value = !0, O.value = "";
 				try {
-					await c("articles", K.id, K.row_version), $ = JSON.stringify(K), ne.success("公告已删除"), h("saved");
+					await te("articles", K.id, K.row_version), $ = JSON.stringify(K), u.success("公告已删除"), h("saved");
 				} catch (e) {
-					O.value = a(e), de.value = !1;
+					O.value = c(e), de.value = !1;
 				} finally {
 					E.value = !1;
 				}
@@ -5656,7 +5656,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			helpful_enabled: !0,
 			scheduled_local: ""
 		}), { editorRoot: q, seoInput: J, fieldRules: ge, fieldErrors: Y, pendingCount: _e, saveError: X, validateSave: Z, setSaveFailure: ve, focusFirstError: ye, focusSeoError: be } = De(K, () => I.value?.categories || [], "announcement", k), Q = v(() => (I.value?.categories || []).filter((e) => e.parent_id != null).map((e) => ({
-			label: s(I.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
+			label: ee(I.value, e.id) + (e.effective_enabled ? "" : " (已停用)"),
 			value: e.id,
 			disabled: !e.effective_enabled
 		}))), xe = v(() => I.value?.categories.find((e) => e.id === K.category_id && e.parent_id == null)), Se = v({
@@ -5675,9 +5675,9 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			let e = Ce;
 			T.value = !0, D.value = !1, O.value = "";
 			try {
-				if (I.value = await u(e.signal, { cms_source_type: "platform" }), ie.articleId) {
-					let t = await l("articles", ie.articleId, e.signal);
-					if (I.value = await u(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
+				if (I.value = await re(e.signal, { cms_source_type: "platform" }), oe.articleId) {
+					let t = await p("articles", oe.articleId, e.signal);
+					if (I.value = await re(e.signal, { space_id: String(t.space_id) }), fe.value = String(t.cms_source_name || "—"), e.signal.aborted) return;
 					for (let e of [
 						"id",
 						"row_version",
@@ -5698,7 +5698,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				}
 				$ = JSON.stringify(K);
 			} catch (t) {
-				e.signal.aborted || (O.value = a(t), D.value = !0);
+				e.signal.aborted || (O.value = c(t), D.value = !0);
 			} finally {
 				e.signal.aborted || (T.value = !1);
 			}
@@ -5718,14 +5718,14 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			let t = K.scheduled_local ? new Date(K.scheduled_local) : null;
 			E.value = !0, O.value = "";
 			try {
-				await te("articles", {
+				await ie("articles", {
 					...K,
 					id: K.id || void 0,
 					row_version: K.id ? K.row_version : void 0,
 					category_id: K.category_id || null,
 					publish_status: e,
 					scheduled_at: e === "scheduled" ? t.toISOString() : null
-				}), $ = JSON.stringify(K), ne.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "公告已发布"), h("saved");
+				}), $ = JSON.stringify(K), u.success(e === "draft" ? "草稿已保存" : e === "scheduled" ? "已安排定时发布" : "公告已发布"), h("saved");
 			} catch (e) {
 				ve(e);
 			} finally {
@@ -5734,7 +5734,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			_e.value && await ye();
 		}
 		function Me(e) {
-			O.value = a(e);
+			O.value = c(e);
 		}
 		let Ne = (e) => {
 			Ee() && (e.preventDefault(), e.returnValue = "");
@@ -5750,7 +5750,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			"aria-busy": T.value || E.value
 		}, [
 			S("header", bn, [
-				w(P(o), {
+				w(P(s), {
 					"icon-only": "",
 					title: "返回公告列表",
 					"aria-label": "返回公告列表",
@@ -5765,7 +5765,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				}, 8, ["disabled"]),
 				S("div", xn, [S("h2", null, N(t.articleId ? "编辑公告" : "新增公告"), 1), S("span", null, N(I.value?.source_locale || "zh-CN") + " · " + N(fe.value), 1)]),
 				S("div", Sn, [
-					t.articleId && U.value ? (A(), y(P(o), {
+					t.articleId && U.value ? (A(), y(P(s), {
 						key: 0,
 						size: "sm",
 						disabled: T.value || D.value || E.value || z.value,
@@ -5774,7 +5774,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						default: R(() => [...r[29] ||= [C("删除公告", -1)]]),
 						_: 1
 					}, 8, ["disabled"])) : b("", !0),
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						disabled: T.value || D.value,
 						onClick: r[1] ||= (e) => k.value = !0
@@ -5786,7 +5786,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						default: R(() => [r[30] ||= C("SEO 设置", -1)]),
 						_: 1
 					}, 8, ["disabled"]),
-					H.value ? b("", !0) : (A(), y(P(o), {
+					H.value ? b("", !0) : (A(), y(P(s), {
 						key: 1,
 						size: "sm",
 						disabled: T.value || D.value || E.value || z.value,
@@ -5801,7 +5801,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					}, 8, ["disabled"])),
 					P(X) ? (A(), x("span", Cn, N(P(X)), 1)) : b("", !0),
 					!H.value && P(_e) ? (A(), x("span", wn, "还有 " + N(P(_e)) + " 项待完善", 1)) : b("", !0),
-					!H.value && B.value ? (A(), y(P(o), {
+					!H.value && B.value ? (A(), y(P(s), {
 						key: 4,
 						variant: "primary",
 						size: "sm",
@@ -5822,31 +5822,31 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				name: "loader-circle",
 				class: "announcement-spin",
 				size: 28
-			}), r[32] ||= S("span", null, "正在读取公告资料...", -1)])) : D.value ? (A(), x("div", En, [w(P(d), {
+			}), r[32] ||= S("span", null, "正在读取公告资料...", -1)])) : D.value ? (A(), x("div", En, [w(P(ne), {
 				type: "error",
 				description: O.value,
 				closable: !1
-			}, null, 8, ["description"]), w(P(o), { onClick: Te }, {
+			}, null, 8, ["description"]), w(P(s), { onClick: Te }, {
 				default: R(() => [...r[33] ||= [C("重新加载", -1)]]),
 				_: 1
-			})])) : (A(), x(_, { key: 2 }, [O.value ? (A(), x("div", Dn, [w(P(d), {
+			})])) : (A(), x(_, { key: 2 }, [O.value ? (A(), x("div", Dn, [w(P(ne), {
 				type: "error",
 				description: O.value,
 				closable: !1
-			}, null, 8, ["description"])])) : b("", !0), S("div", On, [S("aside", kn, [w(P(f), {
+			}, null, 8, ["description"])])) : b("", !0), S("div", On, [S("aside", kn, [w(P(d), {
 				model: K,
 				rules: P(ge),
 				"label-position": "top",
 				onSubmit: r[13] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "公告分类",
 						prop: "category_id",
 						error: P(Y).category_id,
 						required: ""
 					}, {
-						default: R(() => [w(P(ae), {
+						default: R(() => [w(P(a), {
 							modelValue: Se.value,
 							"onUpdate:modelValue": r[3] ||= (e) => Se.value = e,
 							options: Q.value,
@@ -5863,17 +5863,17 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						_: 1
 					}, 8, ["error"]),
 					r[34] ||= S("h3", null, "公告设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "公告封面",
 						prop: "cover_url",
 						error: P(Y).cover_url
 					}, {
-						default: R(() => [w(ee, {
+						default: R(() => [w(f, {
 							modelValue: K.cover_url,
 							"onUpdate:modelValue": r[4] ||= (e) => K.cover_url = e,
 							label: "公告封面",
 							disabled: G.value,
-							upload: P(re),
+							upload: P(ae),
 							onBusyChange: r[5] ||= (e) => z.value = e,
 							onStart: r[6] ||= (e) => O.value = "",
 							onError: Me
@@ -5884,12 +5884,12 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "内容来源",
 						prop: "content_source",
 						error: P(Y).content_source
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.content_source,
 							"onUpdate:modelValue": r[7] ||= (e) => K.content_source = e,
 							maxlength: 160,
@@ -5898,12 +5898,12 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "作者署名",
 						prop: "author_name",
 						error: P(Y).author_name
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.author_name,
 							"onUpdate:modelValue": r[8] ||= (e) => K.author_name = e,
 							maxlength: 120,
@@ -5912,12 +5912,12 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "前端排序",
 						prop: "sort_order",
 						error: P(Y).sort_order
 					}, {
-						default: R(() => [w(P(e), {
+						default: R(() => [w(P(l), {
 							modelValue: K.sort_order,
 							"onUpdate:modelValue": r[9] ||= (e) => K.sort_order = e,
 							min: 0,
@@ -5929,7 +5929,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						_: 1
 					}, 8, ["error"]),
 					r[35] ||= S("h3", null, "发布设置", -1),
-					w(P(m), {
+					w(P(o), {
 						label: "允许有帮助评价",
 						prop: "helpful_enabled",
 						error: P(Y).helpful_enabled
@@ -5943,7 +5943,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "启用状态",
 						prop: "is_enabled",
 						error: P(Y).is_enabled
@@ -5957,12 +5957,12 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "计划发布时间（本地时区）",
 						prop: "scheduled_local",
 						error: P(Y).scheduled_local
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.scheduled_local,
 							"onUpdate:modelValue": r[12] ||= (e) => K.scheduled_local = e,
 							type: "datetime-local",
@@ -5974,20 +5974,20 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					r[36] ||= S("p", { class: "article-editor__hint" }, " 不填时间则立即发布。源语言正文修改后，已有对应翻译将标记为待更新。 ", -1)
 				]),
 				_: 1
-			}, 8, ["model", "rules"])]), S("main", An, [w(P(f), {
+			}, 8, ["model", "rules"])]), S("main", An, [w(P(d), {
 				model: K,
 				rules: P(ge),
 				"label-position": "top",
 				onSubmit: r[17] ||= me(() => {}, ["prevent"])
 			}, {
 				default: R(() => [
-					w(P(m), {
+					w(P(o), {
 						label: "标题",
 						prop: "title",
 						error: P(Y).title,
 						required: ""
 					}, {
-						default: R(() => [w(P(oe), {
+						default: R(() => [w(P(m), {
 							modelValue: K.title,
 							"onUpdate:modelValue": r[14] ||= (e) => K.title = e,
 							maxlength: 255,
@@ -5997,7 +5997,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, ["modelValue", "disabled"])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "摘要",
 						prop: "summary",
 						error: P(Y).summary
@@ -6013,7 +6013,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 						}, null, 8, jn), [[F, K.summary]])]),
 						_: 1
 					}, 8, ["error"]),
-					w(P(m), {
+					w(P(o), {
 						label: "正文",
 						prop: "body_html",
 						error: P(Y).body_html
@@ -6027,10 +6027,10 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 							"max-height": 760,
 							"aria-label": "公告正文"
 						}, {
-							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(ee, {
+							"image-upload": R(({ url: e, setUrl: t, setBusy: n }) => [w(f, {
 								label: "正文图片",
 								"model-value": e,
-								upload: P(re),
+								upload: P(ae),
 								"onUpdate:modelValue": t,
 								onBusyChange: n,
 								onError: Me
@@ -6051,27 +6051,27 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				]),
 				_: 1
 			}, 8, ["model", "rules"])])])], 64)),
-			w(P(p), {
+			w(P(e), {
 				modelValue: k.value,
 				"onUpdate:modelValue": r[21] ||= (e) => k.value = e,
 				title: "SEO 设置",
 				width: "540px",
 				"close-on-click-modal": !1
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					variant: "primary",
 					onClick: r[20] ||= (e) => k.value = !1
 				}, {
 					default: R(() => [...r[37] ||= [C("确定", -1)]]),
 					_: 1
 				})]),
-				default: R(() => [w(P(f), {
+				default: R(() => [w(P(d), {
 					model: K,
 					rules: P(ge),
 					"label-position": "top",
 					onSubmit: r[19] ||= me(() => {}, ["prevent"])
 				}, {
-					default: R(() => [w(P(m), {
+					default: R(() => [w(P(o), {
 						label: "SEO 描述",
 						prop: "seo_description",
 						error: P(Y).seo_description
@@ -6093,7 +6093,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				}, 8, ["model", "rules"])]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: de.value,
 				"onUpdate:modelValue": r[23] ||= (e) => de.value = e,
 				title: "确认删除",
@@ -6108,13 +6108,13 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					size: 18,
 					color: "var(--mm-color-danger)"
 				})])]),
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					disabled: E.value,
 					onClick: r[22] ||= (e) => de.value = !1
 				}, {
 					default: R(() => [...r[38] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "warning",
 					loading: E.value,
 					onClick: W
@@ -6122,7 +6122,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					default: R(() => [...r[39] ||= [C("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
-				default: R(() => [w(P(d), {
+				default: R(() => [w(P(ne), {
 					class: "announcement-delete-dialog__notice",
 					type: "warning",
 					closable: !1,
@@ -6135,16 +6135,16 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				"subtitle",
 				"before-close"
 			]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: j.value,
 				"onUpdate:modelValue": r[26] ||= (e) => j.value = e,
 				title: "放弃未保存的修改？",
 				width: "360px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[24] ||= (e) => j.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[24] ||= (e) => j.value = !1 }, {
 					default: R(() => [...r[40] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: r[25] ||= (e) => h("close")
 				}, {
@@ -6153,17 +6153,17 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				})]),
 				_: 1
 			}, 8, ["modelValue"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: ue.value,
 				"onUpdate:modelValue": r[28] ||= (e) => ue.value = e,
 				title: "将公告转为草稿？",
 				subtitle: "当前发布或定时发布状态将被取消。",
 				width: "420px"
 			}, {
-				footer: R(() => [w(P(o), { onClick: r[27] ||= (e) => ue.value = !1 }, {
+				footer: R(() => [w(P(s), { onClick: r[27] ||= (e) => ue.value = !1 }, {
 					default: R(() => [...r[42] ||= [C("取消", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					variant: "primary",
 					onClick: Ae
 				}, {
@@ -6177,7 +6177,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 }), [["__scopeId", "data-v-6f468168"]]), Fn = { class: "announcement-articles" }, In = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
 	setup(e) {
-		let { hasPermission: t } = he(), { formatDateTime: r } = he(), { announcementPublishStates: i, announcementCategoryLabel: a, getAnnouncementList: s, getAnnouncementMetadata: c } = dn(), l = M(!1), u = M(), d = (e) => t([`cms_announcement:${e}`]), f = M(), ee = ge(c, (e) => {
+		let { hasPermission: t } = he(), { formatDateTime: n } = he(), { announcementPublishStates: r, announcementCategoryLabel: i, getAnnouncementList: a, getAnnouncementMetadata: o } = dn(), l = M(!1), u = M(), d = (e) => t([`cms_announcement:${e}`]), f = M(), p = ge(o, (e) => {
 			f.value = e;
 		}), ne = [
 			...J(),
@@ -6192,7 +6192,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				dataIndex: "category_id",
 				title: "公告分类",
 				width: 220,
-				formatter: (e) => a(f.value, e)
+				formatter: (e) => i(f.value, e)
 			},
 			{
 				key: "title",
@@ -6227,7 +6227,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				dataIndex: "updated_at",
 				title: "更新时间",
 				width: 180,
-				formatter: r
+				formatter: n
 			},
 			{
 				key: "actions",
@@ -6237,8 +6237,8 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				fixed: "right",
 				hideable: !1
 			}
-		], ie = v(() => [
-			...ee.fields,
+		], re = v(() => [
+			...p.fields,
 			{
 				key: "code",
 				label: "公告ID",
@@ -6265,7 +6265,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 					label: "全部",
 					value: ""
 				}, ...(f.value?.categories || []).map((e) => ({
-					label: a(f.value, e.id),
+					label: i(f.value, e.id),
 					value: e.id
 				}))]
 			},
@@ -6278,7 +6278,7 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				options: [{
 					label: "全部",
 					value: ""
-				}, ...i]
+				}, ...r]
 			},
 			{
 				key: "is_enabled",
@@ -6308,36 +6308,36 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				width: 240,
 				defaultValue: null
 			}
-		]), { proTableBindings: p, reload: ae } = ee.bindTable(te({
+		]), { proTableBindings: ie, reload: ae } = p.bindTable(c({
 			initialAutoRefreshSeconds: 0,
 			initialPageSize: 20,
-			queryFields: ie,
+			queryFields: re,
 			request: async ({ filters: e, page: t, pageSize: n, signal: r }) => {
-				let i = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), a = e.publish_range;
-				Array.isArray(a) && a.length === 2 && (i.published_from = (/* @__PURE__ */ new Date(`${a[0]}T00:00:00`)).toISOString(), i.published_to = (/* @__PURE__ */ new Date(`${a[1]}T23:59:59.999`)).toISOString());
-				let o = await s("articles", {
+				let i = Object.fromEntries(Object.entries(e).filter(([e, t]) => e !== "publish_range" && t !== "" && t != null)), o = e.publish_range;
+				Array.isArray(o) && o.length === 2 && (i.published_from = (/* @__PURE__ */ new Date(`${o[0]}T00:00:00`)).toISOString(), i.published_to = (/* @__PURE__ */ new Date(`${o[1]}T23:59:59.999`)).toISOString());
+				let s = await a("articles", {
 					...i,
 					page_no: t,
 					page_size: n
 				}, r);
 				return {
-					rows: o.lists,
-					total: o.count
+					rows: s.lists,
+					total: s.count
 				};
 			}
-		})), m = ee.loadMetadata;
-		function oe(e) {
+		})), oe = p.loadMetadata;
+		function m(e) {
 			u.value = e, l.value = !0;
 		}
 		function h() {
-			l.value = !1, ae(), m();
+			l.value = !1, ae(), oe();
 		}
 		return (e, t) => (A(), x("div", Fn, [l.value ? (A(), y(Pn, {
 			key: 0,
 			"article-id": u.value,
 			onClose: t[0] ||= (e) => l.value = !1,
 			onSaved: h
-		}, null, 8, ["article-id"])) : b("", !0), pe(w(P(re), D(P(p), {
+		}, null, 8, ["article-id"])) : b("", !0), pe(w(P(ee), D(P(ie), {
 			"auto-refreshable": !1,
 			columns: ne,
 			"row-key": "id",
@@ -6352,11 +6352,11 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 			]
 		}), {
 			"cell-cms_source_type": R(({ row: e }) => [w(Y, { "source-type": e.cms_source_type ?? null }, null, 8, ["source-type"])]),
-			"toolbar-actions": R(() => [d("add") ? (A(), y(P(o), {
+			"toolbar-actions": R(() => [d("add") ? (A(), y(P(s), {
 				key: 0,
 				variant: "primary",
 				size: "sm",
-				onClick: t[1] ||= (e) => oe()
+				onClick: t[1] ||= (e) => m()
 			}, {
 				icon: R(() => [w(P(g), {
 					name: "plus",
@@ -6365,15 +6365,15 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				default: R(() => [t[2] ||= C("新增公告", -1)]),
 				_: 1
 			})) : b("", !0)]),
-			"cell-publish_status": R(({ row: e }) => [w(P(n), {
+			"cell-publish_status": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.publish_status === "published" ? "success" : "warning"
 			}, {
-				default: R(() => [C(N(P(i).find((t) => t.value === e.publish_status)?.label), 1)]),
+				default: R(() => [C(N(P(r).find((t) => t.value === e.publish_status)?.label), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-is_enabled": R(({ row: e }) => [w(P(n), {
+			"cell-is_enabled": R(({ row: e }) => [w(P(te), {
 				size: "sm",
 				effect: "soft",
 				type: e.is_enabled ? "success" : "danger"
@@ -6381,13 +6381,13 @@ var fn = { class: "announcement-categories" }, pn = ["aria-busy"], mn = {
 				default: R(() => [C(N(e.is_enabled ? "已启用" : "已停用"), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-publish_time": R(({ row: e }) => [C(N(P(r)(e.published_at || e.scheduled_at)), 1)]),
-			"cell-actions": R(({ row: e }) => [w(P(o), {
+			"cell-publish_time": R(({ row: e }) => [C(N(P(n)(e.published_at || e.scheduled_at)), 1)]),
+			"cell-actions": R(({ row: e }) => [w(P(s), {
 				size: "sm",
 				"icon-only": "",
 				title: d("edit") ? "编辑公告" : "公告详情",
 				"aria-label": d("edit") ? "编辑公告" : "公告详情",
-				onClick: (t) => oe(e.id)
+				onClick: (t) => m(e.id)
 			}, {
 				default: R(() => [w(P(g), {
 					name: d("edit") ? "square-pen" : "panel-right-open",
@@ -6579,9 +6579,9 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 	class: "editor-state"
 }, Rr = { class: "job-confirm" }, zr = /*#__PURE__*/ h(/* @__PURE__ */ T({
 	__name: "index",
-	setup(e) {
-		let { cancelTranslationJob: r, createTranslationJob: i, getTranslationDetail: u, getTranslationJob: f, getTranslationList: ee, getTranslationMetadata: te, getTranslationSettings: re, saveTranslations: h, saveTranslationSettings: T, testTranslationConnection: E } = Ln(), { hasPermission: D } = he(), j = M(), le = M(""), de = M("news:content"), fe = M([]), I = M(), L = M(""), me = M("title"), B = M(""), H = M(""), U = M(1), W = M(0), G = M({}), K = M(!1), q = M(!1), J = M(!1), ge = M(!1), Y = M(""), _e = M(""), X = M(), Z = M(null), ve = M(!1), ye = M(!1), be = {
-			load: () => re(le.value, Ae.signal),
+	setup(i) {
+		let { cancelTranslationJob: c, createTranslationJob: ee, getTranslationDetail: l, getTranslationJob: d, getTranslationList: f, getTranslationMetadata: p, getTranslationSettings: ae, saveTranslations: h, saveTranslationSettings: T, testTranslationConnection: E } = Ln(), { hasPermission: D } = he(), j = M(), le = M(""), de = M("news:content"), fe = M([]), I = M(), L = M(""), me = M("title"), B = M(""), H = M(""), U = M(1), W = M(0), G = M({}), K = M(!1), q = M(!1), J = M(!1), ge = M(!1), Y = M(""), _e = M(""), X = M(), Z = M(null), ve = M(!1), ye = M(!1), be = {
+			load: () => ae(le.value, Ae.signal),
 			save: (e, t) => {
 				if (Le.value) throw Error("请先保存或放弃当前译文修改，再修改配置。");
 				return T(e, t);
@@ -6660,7 +6660,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			let e = Oe = new AbortController();
 			K.value = !0, Y.value = "";
 			try {
-				let t = await te(le.value || void 0, e.signal);
+				let t = await p(le.value || void 0, e.signal);
 				if (e.signal.aborted) return;
 				j.value = t, le.value = t.space_id || "", await ut(), vt();
 			} catch (t) {
@@ -6672,7 +6672,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 		async function lt() {
 			let e = le.value;
 			if (e) try {
-				let t = await te(e, Ae.signal);
+				let t = await p(e, Ae.signal);
 				e === le.value && (j.value = t);
 			} catch {}
 		}
@@ -6685,7 +6685,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			}
 			let t = { ...ze.value };
 			try {
-				let n = await ee(t, H.value, U.value, e.signal);
+				let n = await f(t, H.value, U.value, e.signal);
 				if (e.signal.aborted) return;
 				fe.value = n.lists, W.value = n.count, fe.value[0] && await dt(fe.value[0].id);
 			} catch (t) {
@@ -6699,7 +6699,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			let t = De = new AbortController();
 			J.value = !0, L.value = e, I.value = void 0, G.value = {}, Y.value = "";
 			try {
-				let n = await u({ ...ze.value }, e, t.signal);
+				let n = await l({ ...ze.value }, e, t.signal);
 				if (t.signal.aborted) return;
 				I.value = n, G.value = Vn(n), n.fields.some((e) => e.key === me.value) || (me.value = n.fields[0]?.key || ""), X.value?.scrollTo({ top: 0 });
 			} catch (e) {
@@ -6721,7 +6721,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 					let t = await h({ ...ze.value }, I.value.id, e);
 					I.value = t, G.value = Vn(t);
 					let n = fe.value.findIndex((e) => e.id === t.id);
-					n >= 0 && (fe.value[n] = t), ne.success("翻译已保存"), lt();
+					n >= 0 && (fe.value[n] = t), u.success("翻译已保存"), lt();
 				} catch (e) {
 					Y.value = Kn(e);
 				} finally {
@@ -6738,7 +6738,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			}), t?.querySelector("textarea")?.focus();
 		}
 		function mt() {
-			Pe.value && le.value && !Le.value ? ve.value = !0 : Le.value && ne.warning("请先保存或放弃当前译文修改，再修改配置。");
+			Pe.value && le.value && !Le.value ? ve.value = !0 : Le.value && u.warning("请先保存或放弃当前译文修改，再修改配置。");
 		}
 		function ht(e) {
 			xe.value = e, Se.value = [...j.value?.target_locales || []], $.value = "", Me = crypto.randomUUID(), Q.value = !0;
@@ -6747,7 +6747,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			if (!(!Se.value.length || Ce.value)) {
 				Ce.value = !0, $.value = "";
 				try {
-					let e = await i({ ...ze.value }, {
+					let e = await ee({ ...ze.value }, {
 						request_key: Me,
 						target_locales: Se.value,
 						...xe.value === "field" ? {
@@ -6755,7 +6755,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 							field_name: me.value
 						} : { keyword: H.value }
 					});
-					Z.value = e.job, Q.value = !1, ne.success("翻译任务已提交"), _t();
+					Z.value = e.job, Q.value = !1, u.success("翻译任务已提交"), _t();
 				} catch (e) {
 					$.value = Kn(e);
 				} finally {
@@ -6773,7 +6773,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			if (!e || Ae.signal.aborted) return;
 			let t = Un(Z.value);
 			try {
-				let n = await f(e, Ae.signal);
+				let n = await d(e, Ae.signal);
 				if (e !== le.value) return;
 				Z.value = n.job, t && !Un(Z.value) && (await lt(), !Le.value && !Ie.value && L.value && await dt(L.value));
 			} catch {}
@@ -6781,7 +6781,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 		}
 		async function yt() {
 			if (Z.value) try {
-				let e = await r(le.value, Z.value.id);
+				let e = await c(le.value, Z.value.id);
 				Z.value = e.job, clearTimeout(je), lt();
 			} catch (e) {
 				Y.value = Kn(e);
@@ -6798,7 +6798,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			window.addEventListener("beforeunload", bt), ct();
 		}), se(() => {
 			ke?.(!1), Ae.abort(), Ee?.abort(), De?.abort(), Oe?.abort(), clearTimeout(je), window.removeEventListener("beforeunload", bt);
-		}), (e, r) => (A(), x("section", {
+		}), (i, c) => (A(), x("section", {
 			class: "translations-page",
 			"aria-label": "多语言翻译管理",
 			"aria-busy": K.value
@@ -6806,9 +6806,9 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			S("header", Jn, [S("div", Yn, [S("span", Xn, [w(P(g), {
 				name: "globe",
 				size: 21
-			})]), S("div", null, [r[15] ||= S("h1", null, "语言翻译管理", -1), S("div", Zn, [
+			})]), S("div", null, [c[15] ||= S("h1", null, "语言翻译管理", -1), S("div", Zn, [
 				S("strong", null, N(Re.value) + "%", 1),
-				w(P(t), {
+				w(P(oe), {
 					percentage: Re.value,
 					"show-text": !1,
 					"stroke-width": 4,
@@ -6816,52 +6816,52 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				}, null, 8, ["percentage"]),
 				S("span", null, N(j.value?.done.toLocaleString() || 0) + " / " + N(j.value?.total.toLocaleString() || 0) + " 个目标字段", 1)
 			])])]), S("div", Qn, [
-				w(P(ae), {
+				w(P(a), {
 					"model-value": le.value,
 					options: Be.value,
 					size: "sm",
 					disabled: K.value || Ie.value,
 					placeholder: "内容空间",
 					"aria-label": "内容空间",
-					"onUpdate:modelValue": r[0] ||= (e) => rt(String(e))
+					"onUpdate:modelValue": c[0] ||= (e) => rt(String(e))
 				}, null, 8, [
 					"model-value",
 					"options",
 					"disabled"
 				]),
-				S("span", $n, [r[16] ||= C("内容源语言 ", -1), S("b", null, N(Ge.value), 1)]),
-				Pe.value ? (A(), y(P(s), {
+				S("span", $n, [c[16] ||= C("内容源语言 ", -1), S("b", null, N(Ge.value), 1)]),
+				Pe.value ? (A(), y(P(re), {
 					key: 0,
 					disabled: !le.value || Ie.value,
 					onClick: mt
 				}, null, 8, ["disabled"])) : b("", !0),
-				Fe.value ? (A(), y(P(o), {
+				Fe.value ? (A(), y(P(s), {
 					key: 1,
 					size: "sm",
 					disabled: !Ye.value,
-					onClick: r[1] ||= (e) => ht("batch")
+					onClick: c[1] ||= (e) => ht("batch")
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "rocket",
 						size: 14
 					})]),
-					default: R(() => [r[17] ||= C("批量翻译", -1)]),
+					default: R(() => [c[17] ||= C("批量翻译", -1)]),
 					_: 1
 				}, 8, ["disabled"])) : b("", !0),
-				Fe.value ? (A(), y(P(o), {
+				Fe.value ? (A(), y(P(s), {
 					key: 2,
 					size: "sm",
 					disabled: !Ye.value || !I.value || !Ke.value?.translatable,
-					onClick: r[2] ||= (e) => ht("field")
+					onClick: c[2] ||= (e) => ht("field")
 				}, {
 					icon: R(() => [w(P(g), {
 						name: "globe",
 						size: 14
 					})]),
-					default: R(() => [r[18] ||= C("翻译当前字段", -1)]),
+					default: R(() => [c[18] ||= C("翻译当前字段", -1)]),
 					_: 1
 				}, 8, ["disabled"])) : b("", !0),
-				Ne.value ? (A(), y(P(o), {
+				Ne.value ? (A(), y(P(s), {
 					key: 3,
 					size: "sm",
 					variant: "primary",
@@ -6873,31 +6873,31 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 						name: "save",
 						size: 14
 					})]),
-					default: R(() => [r[19] ||= C("保存翻译", -1)]),
+					default: R(() => [c[19] ||= C("保存翻译", -1)]),
 					_: 1
 				}, 8, ["loading", "disabled"])) : b("", !0)
 			])]),
-			Y.value ? (A(), y(P(d), {
+			Y.value ? (A(), y(P(ne), {
 				key: 0,
 				type: "error",
 				closable: !0,
-				onClose: r[3] ||= (e) => Y.value = ""
+				onClose: c[3] ||= (e) => Y.value = ""
 			}, {
 				default: R(() => [C(N(Y.value), 1)]),
 				_: 1
 			})) : b("", !0),
-			j.value && !j.value.space_enabled && le.value ? (A(), y(P(d), {
+			j.value && !j.value.space_enabled && le.value ? (A(), y(P(ne), {
 				key: 1,
 				type: "warning"
 			}, {
-				default: R(() => [...r[20] ||= [C("当前内容空间已停用，仅可查看翻译。", -1)]]),
+				default: R(() => [...c[20] ||= [C("当前内容空间已停用，仅可查看翻译。", -1)]]),
 				_: 1
 			})) : b("", !0),
-			j.value && !j.value.target_locales.length && le.value ? (A(), y(P(d), {
+			j.value && !j.value.target_locales.length && le.value ? (A(), y(P(ne), {
 				key: 2,
 				type: "info"
 			}, {
-				default: R(() => [...r[21] ||= [C("尚未启用目标语言，请在“翻译配置”中选择语言后开始翻译。", -1)]]),
+				default: R(() => [...c[21] ||= [C("尚未启用目标语言，请在“翻译配置”中选择语言后开始翻译。", -1)]]),
 				_: 1
 			})) : b("", !0),
 			Z.value ? (A(), x("div", er, [
@@ -6907,7 +6907,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				}, null, 8, ["name"]),
 				S("strong", null, N(P(Wn)[Z.value.status] || Z.value.status), 1),
 				S("span", null, "任务 #" + N(Z.value.id), 1),
-				w(P(t), {
+				w(P(oe), {
 					percentage: Xe.value,
 					"show-text": !1,
 					"stroke-width": 4
@@ -6917,22 +6917,22 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 					Z.value.counts.failed ? (A(), x("span", tr, " · " + N(Z.value.counts.failed) + " 失败", 1)) : b("", !0),
 					Z.value.counts.skipped ? (A(), x("span", nr, " · " + N(Z.value.counts.skipped) + " 冲突跳过", 1)) : b("", !0)
 				]),
-				P(Un)(Z.value) && Fe.value ? (A(), y(P(o), {
+				P(Un)(Z.value) && Fe.value ? (A(), y(P(s), {
 					key: 0,
 					size: "sm",
 					variant: "text",
 					disabled: Ie.value,
 					onClick: yt
 				}, {
-					default: R(() => [...r[22] ||= [C("取消任务", -1)]]),
+					default: R(() => [...c[22] ||= [C("取消任务", -1)]]),
 					_: 1
-				}, 8, ["disabled"])) : (A(), y(P(o), {
+				}, 8, ["disabled"])) : (A(), y(P(s), {
 					key: 1,
 					size: "sm",
 					variant: "text",
-					onClick: r[4] ||= (e) => Z.value = null
+					onClick: c[4] ||= (e) => Z.value = null
 				}, {
-					default: R(() => [...r[23] ||= [C("收起", -1)]]),
+					default: R(() => [...c[23] ||= [C("收起", -1)]]),
 					_: 1
 				})),
 				Z.value.errors.length ? (A(), x("span", {
@@ -6955,7 +6955,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				S("span", null, N(e.flag), 1),
 				S("span", null, N(e.label), 1),
 				S("strong", null, N(Ze(e.code) ? P(Rn)(e.done, e.total) + "%" : "未启用"), 1),
-				w(P(t), {
+				w(P(oe), {
 					percentage: P(Rn)(e.done, e.total),
 					"show-text": !1,
 					"stroke-width": 2
@@ -6964,7 +6964,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			S("nav", or, [(A(!0), x(_, null, ue(Je.value, (e) => (A(), x("div", {
 				key: e[0].module,
 				class: "module-group"
-			}, [(A(!0), x(_, null, ue(e, (e) => (A(), y(P(o), {
+			}, [(A(!0), x(_, null, ue(e, (e) => (A(), y(P(s), {
 				key: e.key,
 				variant: de.value === e.key ? "primary" : "text",
 				plain: de.value === e.key,
@@ -6993,9 +6993,9 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				"onClick"
 			]))), 128))]))), 128))]),
 			S("main", cr, [S("aside", lr, [
-				S("div", ur, [S("div", null, [S("strong", null, N(qe.value), 1), S("span", null, N(W.value) + " 条" + N(ze.value.kind === "category" ? "分类" : "内容"), 1)]), w(P(oe), {
+				S("div", ur, [S("div", null, [S("strong", null, N(qe.value), 1), S("span", null, N(W.value) + " 条" + N(ze.value.kind === "category" ? "分类" : "内容"), 1)]), w(P(m), {
 					modelValue: B.value,
-					"onUpdate:modelValue": r[5] ||= (e) => B.value = e,
+					"onUpdate:modelValue": c[5] ||= (e) => B.value = e,
 					size: "sm",
 					clearable: "",
 					placeholder: "搜索内容",
@@ -7018,7 +7018,7 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 					"aria-current": L.value === e.id ? "true" : void 0,
 					disabled: Ie.value,
 					onClick: (t) => st(e.id)
-				}, [S("span", mr, [S("strong", { title: e.title }, N(e.title), 9, hr), S("small", null, N(P(Gn)[e.publish_status || ""] || "分类") + " · " + N(e.done) + "/" + N(e.total), 1)]), w(P(t), {
+				}, [S("span", mr, [S("strong", { title: e.title }, N(e.title), 9, hr), S("small", null, N(P(Gn)[e.publish_status || ""] || "分类") + " · " + N(e.done) + "/" + N(e.total), 1)]), w(P(oe), {
 					type: "circle",
 					percentage: P(Rn)(e.done, e.total),
 					"show-text": !1,
@@ -7027,12 +7027,12 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 					status: e.total && e.done === e.total ? "success" : "warning"
 				}, null, 8, ["percentage", "status"])], 10, pr))), 128)), fe.value.length ? b("", !0) : (A(), x("p", gr, N(H.value ? "没有匹配的内容" : "暂无可翻译内容"), 1))], 64))], 8, dr),
 				S("footer", _r, [
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						"icon-only": "",
 						"aria-label": "上一页",
 						disabled: U.value <= 1 || q.value || Ie.value,
-						onClick: r[6] ||= (e) => at(U.value - 1)
+						onClick: c[6] ||= (e) => at(U.value - 1)
 					}, {
 						default: R(() => [w(P(g), {
 							name: "chevron-left",
@@ -7041,12 +7041,12 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 						_: 1
 					}, 8, ["disabled"]),
 					S("span", null, N(U.value) + " / " + N(Math.max(1, Math.ceil(W.value / 30))), 1),
-					w(P(o), {
+					w(P(s), {
 						size: "sm",
 						"icon-only": "",
 						"aria-label": "下一页",
 						disabled: U.value * 30 >= W.value || q.value || Ie.value,
-						onClick: r[7] ||= (e) => at(U.value + 1)
+						onClick: c[7] ||= (e) => at(U.value + 1)
 					}, {
 						default: R(() => [w(P(g), {
 							name: "chevron-right",
@@ -7061,11 +7061,11 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			}, [J.value ? (A(), x("div", yr, [w(P(g), {
 				name: "loader-circle",
 				size: 28
-			}), r[24] ||= S("p", null, "加载译文中…", -1)])) : I.value ? (A(), x(_, { key: 1 }, [S("header", br, [S("div", xr, [S("span", null, [C(N(qe.value) + " ", 1), Le.value ? (A(), x("em", Sr, "有未保存修改")) : b("", !0)]), S("h2", { title: I.value.title }, N(I.value.title), 9, Cr)]), w(P(c), {
+			}), c[24] ||= S("p", null, "加载译文中…", -1)])) : I.value ? (A(), x(_, { key: 1 }, [S("header", br, [S("div", xr, [S("span", null, [C(N(qe.value) + " ", 1), Le.value ? (A(), x("em", Sr, "有未保存修改")) : b("", !0)]), S("h2", { title: I.value.title }, N(I.value.title), 9, Cr)]), w(P(n), {
 				modelValue: me.value,
-				"onUpdate:modelValue": r[8] ||= (e) => me.value = e
+				"onUpdate:modelValue": c[8] ||= (e) => me.value = e
 			}, {
-				default: R(() => [(A(!0), x(_, null, ue(I.value.fields, (e) => (A(), y(P(ie), {
+				default: R(() => [(A(!0), x(_, null, ue(I.value.fields, (e) => (A(), y(P(t), {
 					key: e.key,
 					name: e.key,
 					label: `${e.label} ${e.translatable ? P(Hn)(e) + "/" + e.translations.length : "—"}`
@@ -7077,21 +7077,21 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				ref_key: "editorBody",
 				ref: X
 			}, [
-				S("section", wr, [S("div", Tr, [S("strong", null, [C(N(Ge.value) + " ", 1), w(P(n), {
+				S("section", wr, [S("div", Tr, [S("strong", null, [C(N(Ge.value) + " ", 1), w(P(te), {
 					size: "sm",
 					type: "primary",
 					effect: "soft"
 				}, {
-					default: R(() => [...r[25] ||= [C("内容源语言", -1)]]),
+					default: R(() => [...c[25] ||= [C("内容源语言", -1)]]),
 					_: 1
-				})]), r[26] ||= S("span", null, "只读原文", -1)]), S("textarea", {
+				})]), c[26] ||= S("span", null, "只读原文", -1)]), S("textarea", {
 					value: Ke.value.source,
 					readonly: "",
 					rows: Ke.value.key === "body_html" ? 5 : 2,
 					class: "translation-textarea source-textarea",
 					"aria-label": `原文${Ke.value.label}`
 				}, null, 8, Er)]),
-				S("div", Dr, [r[27] ||= S("strong", null, "目标语言", -1), S("span", null, N(I.value.fields.find((e) => e.key === me.value)?.translations.length || 0) + " 种语言 · 手工修改后请保存", 1)]),
+				S("div", Dr, [c[27] ||= S("strong", null, "目标语言", -1), S("span", null, N(I.value.fields.find((e) => e.key === me.value)?.translations.length || 0) + " 种语言 · 手工修改后请保存", 1)]),
 				Ke.value.translatable ? Ke.value.translations.length ? (A(), x("div", {
 					key: 2,
 					class: k(["target-grid", { "is-body": me.value === "body_html" }])
@@ -7115,55 +7115,55 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				], 10, Ar))), 128))], 2)) : (A(), x("div", kr, " 请先在“翻译配置”中启用目标语言。 ")) : (A(), x("div", Or, [w(P(g), {
 					name: "info",
 					size: 18
-				}), r[28] ||= C("原文字段为空，不参与翻译和完成度统计。 ", -1)]))
-			], 512)) : b("", !0)], 64)) : (A(), x("div", Lr, [w(P(l), { description: Y.value ? "内容加载失败，可点击刷新重试" : "选择左侧内容开始翻译" }, null, 8, ["description"]), Y.value ? (A(), y(P(o), {
+				}), c[28] ||= C("原文字段为空，不参与翻译和完成度统计。 ", -1)]))
+			], 512)) : b("", !0)], 64)) : (A(), x("div", Lr, [w(P(r), { description: Y.value ? "内容加载失败，可点击刷新重试" : "选择左侧内容开始翻译" }, null, 8, ["description"]), Y.value ? (A(), y(P(s), {
 				key: 0,
 				size: "sm",
 				onClick: ct
 			}, {
-				default: R(() => [...r[29] ||= [C("重新加载", -1)]]),
+				default: R(() => [...c[29] ||= [C("重新加载", -1)]]),
 				_: 1
 			})) : b("", !0)]))], 8, vr)]),
-			w(P(a), {
+			w(P(ie), {
 				modelValue: ve.value,
-				"onUpdate:modelValue": r[9] ||= (e) => ve.value = e,
+				"onUpdate:modelValue": c[9] ||= (e) => ve.value = e,
 				actions: be,
 				locales: Ue.value,
-				onBusy: r[10] ||= (e) => ye.value = e,
+				onBusy: c[10] ||= (e) => ye.value = e,
 				onSaved: ct
 			}, null, 8, ["modelValue", "locales"]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: Q.value,
-				"onUpdate:modelValue": r[13] ||= (e) => Q.value = e,
+				"onUpdate:modelValue": c[13] ||= (e) => Q.value = e,
 				title: xe.value === "field" ? "翻译当前字段" : "批量翻译",
 				subtitle: "Google Translate · 仅补齐缺失及原文已更新的译文",
 				width: "520px",
 				"close-on-click-modal": !1,
 				"before-close": () => !Ce.value
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					size: "sm",
 					disabled: Ce.value,
-					onClick: r[12] ||= (e) => Q.value = !1
+					onClick: c[12] ||= (e) => Q.value = !1
 				}, {
-					default: R(() => [...r[31] ||= [C("取消", -1)]]),
+					default: R(() => [...c[31] ||= [C("取消", -1)]]),
 					_: 1
-				}, 8, ["disabled"]), w(P(o), {
+				}, 8, ["disabled"]), w(P(s), {
 					variant: "primary",
 					size: "sm",
 					loading: Ce.value,
 					disabled: !Se.value.length,
 					onClick: gt
 				}, {
-					default: R(() => [...r[32] ||= [C("确认翻译", -1)]]),
+					default: R(() => [...c[32] ||= [C("确认翻译", -1)]]),
 					_: 1
 				}, 8, ["loading", "disabled"])]),
 				default: R(() => [S("div", Rr, [
 					S("p", null, N(xe.value === "field" ? `当前内容的「${Ke.value?.label}」` : `当前空间「${qe.value}」${H.value ? "中匹配搜索条件的内容" : "全部内容"}`), 1),
-					w(P(m), { label: "目标语言" }, {
-						default: R(() => [w(P(ae), {
+					w(P(o), { label: "目标语言" }, {
+						default: R(() => [w(P(a), {
 							modelValue: Se.value,
-							"onUpdate:modelValue": r[11] ||= (e) => Se.value = e,
+							"onUpdate:modelValue": c[11] ||= (e) => Se.value = e,
 							options: We.value,
 							multiple: "",
 							filterable: "",
@@ -7176,11 +7176,11 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 						])]),
 						_: 1
 					}),
-					w(P(d), { type: "warning" }, {
-						default: R(() => [...r[30] ||= [C("内容将发送至 Google Translate，并可能产生翻译费用。已有有效译文不会覆盖；单次最多 200 条内容、5,000 个字段任务。后台任务需要已启动翻译 worker。", -1)]]),
+					w(P(ne), { type: "warning" }, {
+						default: R(() => [...c[30] ||= [C("内容将发送至 Google Translate，并可能产生翻译费用。已有有效译文不会覆盖；单次最多 200 条内容、5,000 个字段任务。后台任务需要已启动翻译 worker。", -1)]]),
 						_: 1
 					}),
-					$.value ? (A(), y(P(d), {
+					$.value ? (A(), y(P(ne), {
 						key: 0,
 						type: "error"
 					}, {
@@ -7194,26 +7194,26 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 				"title",
 				"before-close"
 			]),
-			w(P(p), {
+			w(P(e), {
 				modelValue: we.value,
-				"onUpdate:modelValue": r[14] ||= (e) => we.value = e,
+				"onUpdate:modelValue": c[14] ||= (e) => we.value = e,
 				title: "有未保存的翻译",
 				subtitle: "切换后将丢弃当前修改，是否继续？",
 				width: "380px",
 				onClose: nt
 			}, {
-				footer: R(() => [w(P(o), {
+				footer: R(() => [w(P(s), {
 					size: "sm",
 					onClick: nt
 				}, {
-					default: R(() => [...r[33] ||= [C("继续编辑", -1)]]),
+					default: R(() => [...c[33] ||= [C("继续编辑", -1)]]),
 					_: 1
-				}), w(P(o), {
+				}), w(P(s), {
 					size: "sm",
 					variant: "warning",
 					onClick: tt
 				}, {
-					default: R(() => [...r[34] ||= [C("放弃修改并继续", -1)]]),
+					default: R(() => [...c[34] ||= [C("放弃修改并继续", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -7256,26 +7256,26 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			"announcement/categories": vn,
 			"announcement/list": In,
 			"localization/translations": zr
-		}, r = t.runtime.mode === "white_label" && !!t.runtime.resolveSiteInRequest, i = M(!1), a = M(0), o = M([]), s = M(""), c = M(""), l = M(t.runtime.mode === "white_label" && !r), u = M(!1), d = v(() => o.value.find((e) => e.site_id === s.value)), f = v(() => n[t.page]), ee = v(() => t.runtime.hasPermission([
+		}, r = t.runtime.mode === "white_label" && !!t.runtime.resolveSiteInRequest, i = M(!1), a = M(0), o = M([]), s = M(""), c = M(""), ee = M(t.runtime.mode === "white_label" && !r), l = M(!1), te = v(() => o.value.find((e) => e.site_id === s.value)), u = v(() => n[t.page]), d = v(() => t.runtime.hasPermission([
 			"cms_news:add",
 			"cms_academy:add",
 			"cms_help:add",
 			"cms_announcement:add"
-		])), te = new AbortController(), ne = !0, re = !1;
-		function ie(e) {
-			re = !0;
+		])), f = new AbortController(), p = !0, ne = !1;
+		function re(e) {
+			ne = !0;
 			try {
 				o.value = e.sites, s.value = e.site_id ?? "", i.value = !0;
 			} finally {
-				re = !1;
+				ne = !1;
 			}
 		}
-		let p = H(t.runtime, ie);
+		let ie = H(t.runtime, re);
 		L(s, () => {
-			!r || re || (p.invalidate(), p = H(t.runtime, ie, d.value?.space_id ?? null), a.value++);
+			!r || ne || (ie.invalidate(), ie = H(t.runtime, re, te.value?.space_id ?? null), a.value++);
 		}, { flush: "sync" });
 		function ae(e, n) {
-			if (!ne || t.runtime.mode === "white_label" && d.value?.space_id !== n) throw Error("站点已切换，请重新操作");
+			if (!p || t.runtime.mode === "white_label" && te.value?.space_id !== n) throw Error("站点已切换，请重新操作");
 			if (t.runtime.mode === "platform") return e;
 			if (!n) throw Error("请选择已初始化的站点");
 			if (e.data instanceof FormData) {
@@ -7301,63 +7301,63 @@ var qn = ["aria-busy"], Jn = { class: "translation-toolbar surface" }, Yn = { cl
 			formatDateTime: (e) => t.runtime.formatDateTime(e),
 			registerBeforeLeave: (e) => t.runtime.registerBeforeLeave?.(e),
 			get request() {
-				if (r) return p.request;
-				let e = d.value?.space_id;
+				if (r) return ie.request;
+				let e = te.value?.space_id;
 				return {
 					get: (n, r) => t.runtime.request.get(ae(n, e), r),
 					post: (n, r) => t.runtime.request.post(ae(n, e), r)
 				};
 			}
 		});
-		async function m() {
+		async function oe() {
 			let e = await t.runtime.request.get({
 				url: "/cms/sites",
-				signal: te.signal
+				signal: f.signal
 			});
-			te.signal.aborted || (o.value = e.sites, o.value.some((e) => e.site_id === s.value) || (s.value = o.value[0]?.site_id ?? ""));
+			f.signal.aborted || (o.value = e.sites, o.value.some((e) => e.site_id === s.value) || (s.value = o.value[0]?.site_id ?? ""));
 		}
-		async function oe() {
-			if (!d.value || u.value) return;
+		async function m() {
+			if (!te.value || l.value) return;
 			let e = a.value;
-			u.value = !0;
+			l.value = !0;
 			try {
 				let n = await t.runtime.request.post({
 					url: "/cms/initialize",
-					params: { site_id: d.value.site_id }
+					params: { site_id: te.value.site_id }
 				}, { isOpenRetry: !1 });
-				if (!ne || r && e !== a.value) return;
+				if (!p || r && e !== a.value) return;
 				if (r) {
 					if (!n.cms_context) throw Error("初始化接口未返回站点信息");
-					p.invalidate(), p = H(t.runtime, ie, n.cms_context.space_id), ie(n.cms_context), a.value++;
-				} else await m();
+					ie.invalidate(), ie = H(t.runtime, re, n.cms_context.space_id), re(n.cms_context), a.value++;
+				} else await oe();
 			} catch (e) {
 				c.value = e instanceof Error ? e.message : "初始化失败";
 			} finally {
-				u.value = !1;
+				l.value = !1;
 			}
 		}
 		return ce(async () => {
 			if (t.runtime.mode === "white_label" && !r) try {
-				await m();
+				await oe();
 			} catch {
-				te.signal.aborted || (c.value = "加载站点失败，请刷新重试");
+				f.signal.aborted || (c.value = "加载站点失败，请刷新重试");
 			} finally {
-				l.value = !1;
+				ee.value = !1;
 			}
 		}), se(() => {
-			ne = !1, p.invalidate(), te.abort();
+			p = !1, ie.invalidate(), f.abort();
 		}), (t, n) => (A(), x("section", { class: k(["mm-cms-page", { "is-viewport": e.viewport }]) }, [e.runtime.mode === "white_label" && e.showSiteSelector && (!P(r) || i.value) ? (A(), x("header", Br, [S("label", null, [n[1] ||= C("内容站点 ", -1), pe(S("select", {
 			"onUpdate:modelValue": n[0] ||= (e) => s.value = e,
-			disabled: l.value
+			disabled: ee.value
 		}, [(A(!0), x(_, null, ue(o.value, (e) => (A(), x("option", {
 			key: e.site_id,
 			value: e.site_id
-		}, N(e.label), 9, Hr))), 128))], 8, Vr), [[fe, s.value]])]), n[2] ||= S("span", null, "各站点内容独立管理", -1)])) : b("", !0), c.value ? (A(), x("p", Ur, N(c.value), 1)) : l.value ? (A(), x("p", Wr, "正在加载站点…")) : e.runtime.mode === "white_label" && (!P(r) || i.value) && !d.value?.space_id ? (A(), x("div", Gr, [S("p", null, N(d.value ? "该站点尚未初始化内容空间。" : "暂无可管理的内容站点。"), 1), d.value && ee.value ? (A(), x("button", {
+		}, N(e.label), 9, Hr))), 128))], 8, Vr), [[fe, s.value]])]), n[2] ||= S("span", null, "各站点内容独立管理", -1)])) : b("", !0), c.value ? (A(), x("p", Ur, N(c.value), 1)) : ee.value ? (A(), x("p", Wr, "正在加载站点…")) : e.runtime.mode === "white_label" && (!P(r) || i.value) && !te.value?.space_id ? (A(), x("div", Gr, [S("p", null, N(te.value ? "该站点尚未初始化内容空间。" : "暂无可管理的内容站点。"), 1), te.value && d.value ? (A(), x("button", {
 			key: 0,
 			type: "button",
-			disabled: u.value,
-			onClick: oe
-		}, "初始化空内容空间", 8, Kr)) : b("", !0)])) : (A(), y(de(f.value), { key: `${e.page}:${e.identityKey}:${P(r) ? a.value : d.value?.space_id ?? "platform"}` }))], 2));
+			disabled: l.value,
+			onClick: m
+		}, "初始化空内容空间", 8, Kr)) : b("", !0)])) : (A(), y(de(u.value), { key: `${e.page}:${e.identityKey}:${P(r) ? a.value : te.value?.space_id ?? "platform"}` }))], 2));
 	}
 }), [["__scopeId", "data-v-f447749a"]]);
 //#endregion
@@ -7379,6 +7379,6 @@ function Yr(e, t) {
 	return e.forEach(a), i;
 }
 //#endregion
-export { qr as MmCmsPage, ee as MmMediaUpload, Jr as cmsPermissionItems, Yr as cmsPermissionSubmission, u as createMediaUploader };
+export { qr as MmCmsPage, f as MmMediaUpload, Jr as cmsPermissionItems, Yr as cmsPermissionSubmission, p as createMediaUploader };
 
 //# sourceMappingURL=cms.js.map

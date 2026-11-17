@@ -5,8 +5,11 @@ import Icon from "../Icon.vue";
 import { iconDefinitions, iconNames, type IconName } from "../icons";
 import { referenceNavigationIconDefinitions } from "../reference-navigation-icons";
 
-// First SVG node for each missing icon, read from the approved white-label prototype.
+// First SVG node for each missing icon, read from the approved navigation prototypes.
 const expected = {
+  gauge: ["path", { d: "m12 14 4-4" }],
+  timer: ["line", { x1: "10", x2: "14", y1: "2", y2: "2" }],
+  "briefcase-business": ["path", { d: "M12 12h.01" }],
   radio: ["path", { d: "M16.247 7.761a6 6 0 0 1 0 8.478" }],
   target: ["circle", { cx: "12", cy: "12", r: "10" }],
   "chart-pie": ["path", { d: "M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z" }],
@@ -24,7 +27,7 @@ const expected = {
   "log-in": ["path", { d: "m10 17 5-5-5-5" }],
 } as const;
 
-describe("white-label navigation icons", () => {
+describe("white-label and merchant navigation icons", () => {
   it.each(Object.entries(referenceNavigationIconDefinitions))("uses the corrected geometry for existing %s", (name, nodes) => {
     expect(iconDefinitions[name as IconName]).toEqual(nodes);
     const wrapper = mount(Icon, { props: { name: name as IconName } });

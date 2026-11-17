@@ -1031,6 +1031,77 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "m6 6 12 12";
     }]];
+    readonly "calendar-clock": readonly [readonly ["path", {
+        readonly d: "M16 14v2.2l1.6 1";
+    }], readonly ["path", {
+        readonly d: "M16 2v3";
+    }], readonly ["path", {
+        readonly d: "M21 7.338V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2h2.338";
+    }], readonly ["path", {
+        readonly d: "M3 9h5.859";
+    }], readonly ["path", {
+        readonly d: "M8 2v3";
+    }], readonly ["circle", {
+        readonly cx: "16";
+        readonly cy: "16";
+        readonly r: "6";
+    }]];
+    readonly waves: readonly [readonly ["path", {
+        readonly d: "M2 12q2.5 2 5 0t5 0 5 0 5 0";
+    }], readonly ["path", {
+        readonly d: "M2 19q2.5 2 5 0t5 0 5 0 5 0";
+    }], readonly ["path", {
+        readonly d: "M2 5q2.5 2 5 0t5 0 5 0 5 0";
+    }]];
+    readonly files: readonly [readonly ["path", {
+        readonly d: "M15 2h-4a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V8";
+    }], readonly ["path", {
+        readonly d: "M16.706 2.706A2.4 2.4 0 0 0 15 2v5a1 1 0 0 0 1 1h5a2.4 2.4 0 0 0-.706-1.706z";
+    }], readonly ["path", {
+        readonly d: "M5 7a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h8a2 2 0 0 0 1.732-1";
+    }]];
+    readonly blocks: readonly [readonly ["path", {
+        readonly d: "M10 22V7a1 1 0 0 0-1-1H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5a1 1 0 0 0-1-1H2";
+    }], readonly ["rect", {
+        readonly height: "8";
+        readonly rx: "1";
+        readonly width: "8";
+        readonly x: "14";
+        readonly y: "2";
+    }]];
+    readonly gauge: readonly [readonly ["path", {
+        readonly d: "m12 14 4-4";
+    }], readonly ["path", {
+        readonly d: "M3.34 19a10 10 0 1 1 17.32 0";
+    }]];
+    readonly timer: readonly [readonly ["line", {
+        readonly x1: "10";
+        readonly x2: "14";
+        readonly y1: "2";
+        readonly y2: "2";
+    }], readonly ["line", {
+        readonly x1: "12";
+        readonly x2: "15";
+        readonly y1: "14";
+        readonly y2: "11";
+    }], readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "14";
+        readonly r: "8";
+    }]];
+    readonly "briefcase-business": readonly [readonly ["path", {
+        readonly d: "M12 12h.01";
+    }], readonly ["path", {
+        readonly d: "M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2";
+    }], readonly ["path", {
+        readonly d: "M22 13a18.15 18.15 0 0 1-20 0";
+    }], readonly ["rect", {
+        readonly height: "14";
+        readonly rx: "2";
+        readonly width: "20";
+        readonly x: "2";
+        readonly y: "6";
+    }]];
     readonly radio: readonly [readonly ["path", {
         readonly d: "M16.247 7.761a6 6 0 0 1 0 8.478";
     }], readonly ["path", {

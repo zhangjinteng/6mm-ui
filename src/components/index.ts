@@ -97,6 +97,8 @@ import { MmUserTable } from "./user-table";
 import { MmUserPredictionTable } from "./user-prediction-table";
 import { MmUserContractTable } from "./user-contract-table";
 import { MmContractVipTable } from './contract-vip-table';
+import { MmAssetDistributionTable } from './asset-distribution-table';
+export * from './asset-distribution-table';
 export * from './contract-vip-table';
 import { MmUserMappingTable } from "./user-mapping-table";
 import { MmPageHeader } from "./page-header";
@@ -314,6 +316,7 @@ export const components: InstallableComponent[] = [
   MmUserPredictionTable,
   MmUserContractTable,
   MmContractVipTable,
+  MmAssetDistributionTable,
   MmUserMappingTable,
   MmPageHeader,
   MmPopover,

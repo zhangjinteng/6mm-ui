@@ -20,24 +20,24 @@ const emit = defineEmits<{ saved: []; close: [] }>()
 const { locale } = useLocale()
 const english = computed(() => locale.value === 'en-US')
 const copy = computed(() => english.value ? {
-  title: 'Brand settings', description: 'Manage site domains, themes, logo and browser icon.', updated: 'Last updated',
-  tab: 'Domains', titleDomains: 'Access domains', add: 'Add domain', site: 'Site', address: 'Access domain', type: 'Domain type',
+  title: 'Brand settings', description: 'Manage site domains, templates and brand appearance.', updated: 'Last updated',
+  tab: 'Domains', templates: 'Templates', appearance: 'Brand appearance', titleDomains: 'Access domains', add: 'Add domain', site: 'Site', address: 'Access domain', type: 'Domain type',
   primary: 'Primary domain', backup: 'Backup domain', setPrimary: 'Set primary domain', remove: 'Remove domain',
   emptySites: 'No sites are configured.', empty: 'No access domains.', loading: 'Loading domain settings…',
   loadFailed: 'Could not load domain settings.', saveFailed: 'Could not save. Your changes are preserved; reload if this configuration changed elsewhere.',
   reload: 'Reload', discardReload: 'Discard and reload', save: 'Save settings', saved: 'Current settings are saved', dirty: 'You have unsaved changes',
   readonly: 'Read-only: you do not have permission to save.', discard: 'Discard changes', cancel: 'Cancel', close: 'Close',
-  confirm: 'Confirm brand changes', confirmText: 'Save the theme, images and domains? Removed domains will no longer provide access to this site.', removed: 'Removed access domains',
+  confirm: 'Confirm brand changes', confirmText: 'Save the template, brand appearance and domains? Removed domains will no longer provide access to this site.', removed: 'Removed access domains',
   confirmSave: 'Confirm save', switchTitle: 'Discard unsaved domain changes?', switchSite: 'Switch site',
 } : {
-  title: '品牌配置', description: '管理所属站点的域名、主题、网站 Logo 和标签页图标。', updated: '最近更新',
-  tab: '域名', titleDomains: '访问域名', add: '添加域名', site: '站点', address: '访问域名', type: '域名类型',
+  title: '品牌配置', description: '管理所属站点的域名、模板和品牌外观。', updated: '最近更新',
+  tab: '域名', templates: '模板', appearance: '品牌外观', titleDomains: '访问域名', add: '添加域名', site: '站点', address: '访问域名', type: '域名类型',
   primary: '主域名', backup: '备用域名', setPrimary: '设为主域名', remove: '删除域名',
   emptySites: '尚未配置站点', empty: '暂无访问域名', loading: '正在读取域名配置…',
   loadFailed: '域名配置读取失败', saveFailed: '保存失败，修改已保留；如配置已被其他操作员修改，请放弃并重新加载后再保存。',
   reload: '重新加载', discardReload: '放弃并重新加载', save: '保存配置', saved: '当前配置已保存', dirty: '有未保存的修改',
   readonly: '当前为只读模式，暂无保存权限。', discard: '放弃修改', cancel: '取消', close: '关闭',
-  confirm: '确认品牌配置变更', confirmText: '确认保存当前站点的主题、标识和域名配置？移除的域名将不再提供此站点的访问入口。', removed: '移除的访问域名',
+  confirm: '确认品牌配置变更', confirmText: '确认保存当前站点的模板、品牌外观和域名配置？移除的域名将不再提供此站点的访问入口。', removed: '移除的访问域名',
   confirmSave: '确认保存', switchTitle: '放弃未保存的域名修改？', switchSite: '切换站点',
 })
 const id = useId()
@@ -46,13 +46,14 @@ const loading = ref(false), saving = ref(false), loadFailed = ref(false), saveEr
 const selectedSiteId = ref(''), pendingSiteId = ref('')
 const confirmVisible = ref(false), switchVisible = ref(false)
 const draft = ref<BrandDomainDraft[]>([])
-const activeTab = ref('domains')
+const tabs = ['domains', 'templates', 'appearance'] as const
+const activeTab = ref<typeof tabs[number]>('domains')
 const templateId = ref<'template-1' | 'template-2' | null>(null), logoUrl = ref(''), faviconUrl = ref('')
 const logoUploading = ref(false), faviconUploading = ref(false)
 const uploading = computed(() => logoUploading.value || faviconUploading.value)
 const themes = [
-  { id: 'template-1' as const, name: '主题1', english: 'Theme 1', preview: themeOnePreview },
-  { id: 'template-2' as const, name: '主题2', english: 'Theme 2', preview: themeTwoPreview },
+  { id: 'template-1' as const, name: '模板1', english: 'Template 1', preview: themeOnePreview },
+  { id: 'template-2' as const, name: '模板2', english: 'Template 2', preview: themeTwoPreview },
 ]
 let nextKey = 0, controller: AbortController | undefined, disposed = false
 const selectedSite = computed(() => detail.value?.sites.find(site => site.site_id === selectedSiteId.value))
@@ -156,7 +157,8 @@ async function uploadImage(file: File, signal: AbortSignal) {
 async function moveTab(event: KeyboardEvent): Promise<void> {
   if (busy.value) return
   const group = (event.currentTarget as HTMLElement).parentElement
-  activeTab.value = activeTab.value === 'domains' ? 'identity' : 'domains'
+  const direction = event.key === 'ArrowLeft' ? -1 : 1
+  activeTab.value = tabs[(tabs.indexOf(activeTab.value) + direction + tabs.length) % tabs.length]
   await nextTick()
   group?.querySelector<HTMLElement>('[aria-selected="true"]')?.focus()
 }
@@ -178,10 +180,10 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
       <div class="mm-tenant-brand-settings__updated"><span><MmIcon name="clock" :size="12" />{{ copy.updated }}</span><time>{{ updatedAt }}</time></div>
     </header>
     <div class="mm-tenant-brand-settings__tabs" role="tablist" :aria-label="copy.title">
-      <button v-for="tab in ['domains', 'identity']" :id="`${id}-tab-${tab}`" :key="tab" type="button" role="tab"
+      <button v-for="tab in tabs" :id="`${id}-tab-${tab}`" :key="tab" type="button" role="tab"
         :aria-selected="activeTab === tab" :aria-controls="`${id}-panel`" :tabindex="activeTab === tab ? 0 : -1" :disabled="busy"
         @click="activeTab = tab" @keydown.right.prevent="moveTab" @keydown.left.prevent="moveTab">
-        <MmIcon :name="tab === 'domains' ? 'globe' : 'image'" :size="16" />{{ tab === 'domains' ? copy.tab : english ? 'Theme & identity' : '主题与标识' }}
+        <MmIcon :name="tab === 'domains' ? 'globe' : tab === 'templates' ? 'layout-dashboard' : 'image'" :size="16" />{{ tab === 'domains' ? copy.tab : copy[tab] }}
         <b v-if="tab === 'domains'" role="status" :aria-label="english ? `Access domain count: ${draft.length}` : `访问域名数量：${draft.length}`">{{ loading || loadFailed ? '—' : draft.length }}</b>
       </button>
     </div>
@@ -215,10 +217,10 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
               <MmButton v-if="editable" class="mm-tenant-brand-settings__delete" icon-only :aria-label="`${copy.remove} ${row.domain || index + 1}`" :title="copy.remove" :disabled="busy" @click="removeDomain(row.key)"><MmIcon name="trash-2" :size="15" /></MmButton>
             </div>
           </fieldset>
-          <div v-show="activeTab === 'identity'" class="mm-tenant-brand-settings__identity">
+          <div v-show="activeTab === 'templates'">
             <fieldset class="mm-tenant-brand-settings__themes" :disabled="busy || !editable || !selectedSite?.brand_revision">
-              <legend>{{ english ? 'Site theme' : '网站主题' }}</legend>
-              <p v-if="!templateId" class="mm-tenant-brand-settings__hint">{{ english ? 'No override selected. Your current theme is preserved.' : '尚未选择新主题，保留站点原有主题。' }}</p>
+              <legend>{{ english ? 'Website template' : '网站模板' }}</legend>
+              <p v-if="!templateId" class="mm-tenant-brand-settings__hint">{{ english ? 'No override selected. Your current template is preserved.' : '尚未选择新模板，保留站点原有模板。' }}</p>
               <div class="mm-tenant-brand-settings__theme-grid">
                 <label v-for="theme in themes" :key="theme.id" class="mm-tenant-brand-settings__theme" :class="{ 'is-selected': templateId === theme.id }">
                   <img :src="theme.preview" :alt="english ? theme.english : theme.name" width="640" height="400" />
@@ -226,6 +228,8 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
                 </label>
               </div>
             </fieldset>
+          </div>
+          <div v-show="activeTab === 'appearance'" class="mm-tenant-brand-settings__identity">
             <div class="mm-tenant-brand-settings__image-grid">
               <section class="mm-tenant-brand-settings__asset"><h3>{{ english ? 'Website logo' : '网站 Logo' }}</h3>
                 <p class="mm-tenant-brand-settings__hint">{{ english ? 'Used in the site header and brand identity.' : '用于网站页头等品牌展示位置。' }}</p>

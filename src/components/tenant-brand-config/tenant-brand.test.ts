@@ -26,18 +26,27 @@ describe('brand domain model', () => {
 })
 
 describe('shared tenant brand settings', () => {
-  it('selects a theme and uploads scoped logo and favicon in both page and dialog layouts', async () => {
+  it('separates domains, templates and brand appearance without losing edits in page and dialog layouts', async () => {
     for (const fullPage of [true, false]) {
       const detail = fixture()
       Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), template_id: 'template-1', logo_url: 'https://cdn.example/old.png', favicon_url: null })
       const save = vi.fn(async () => ({ changed: true, brand_revision: 'e'.repeat(64) }))
       const uploadImage = vi.fn(async (_site, file: File) => ({ url: 'https://cdn.example/' + file.name, media_id: '1' }))
-      const wrapper = mount(TenantBrandSettings, { ...options, props: { fullPage, load: async () => detail, save, uploadImage } })
+      const wrapper = mount(TenantBrandSettings, { ...options, attachTo: document.body, props: { fullPage, load: async () => detail, save, uploadImage } })
       await flushPromises()
-      await button(wrapper, '主题与标识').trigger('click')
+      expect(wrapper.findAll('[role="tab"]').map(tab => tab.text().replace(/\s+/g, ''))).toEqual(['域名1', '模板', '品牌外观'])
+      await button(wrapper, '模板').trigger('click')
       expect(wrapper.findAll('.mm-tenant-brand-settings__theme img')).toHaveLength(2)
-      expect(wrapper.text()).toContain('JPG / PNG / WebP / SVG / ICO，最大 5 MB')
+      expect(wrapper.get('.mm-tenant-brand-settings__themes').isVisible()).toBe(true)
+      expect(wrapper.get('.mm-tenant-brand-settings__themes legend').text()).toBe('网站模板')
+      expect(wrapper.findAll('.mm-tenant-brand-settings__theme strong').map(label => label.text())).toEqual(['模板1', '模板2'])
+      expect(wrapper.get('.mm-tenant-brand-settings__image-grid').isVisible()).toBe(false)
       await wrapper.get('input[value="template-2"]').setValue(true)
+      await button(wrapper, '品牌外观').trigger('click')
+      expect(wrapper.get('.mm-tenant-brand-settings__themes').isVisible()).toBe(false)
+      expect(wrapper.get('.mm-tenant-brand-settings__image-grid').isVisible()).toBe(true)
+      expect(wrapper.findAll('.mm-tenant-brand-settings__asset h3').map(label => label.text())).toEqual(['网站 Logo', '浏览器标签页图标'])
+      expect(wrapper.text()).toContain('JPG / PNG / WebP / SVG / ICO，最大 5 MB')
       const pick = async (index: number, file: File) => {
         const input = wrapper.findAll('input[type=file]')[index]
         Object.defineProperty(input.element, 'files', { value: [file], configurable: true })
@@ -47,6 +56,8 @@ describe('shared tenant brand settings', () => {
       await pick(1, new File(['favicon'], 'favicon.webp', { type: 'image/webp' }))
       expect(uploadImage.mock.calls.map(args => args[0])).toEqual(['10', '10'])
       expect(wrapper.get('img[alt="网站 Logo"]').attributes('src')).toBe('https://cdn.example/logo.png')
+      await button(wrapper, '模板').trigger('click')
+      expect((wrapper.get('input[value="template-2"]').element as HTMLInputElement).checked).toBe(true)
       await button(wrapper, '保存配置').trigger('click')
       await button(wrapper, '确认保存').trigger('click'); await flushPromises()
       expect(save).toHaveBeenCalledWith(expect.objectContaining({ site_id: '10', template_id: 'template-2',
@@ -61,7 +72,7 @@ describe('shared tenant brand settings', () => {
     Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), logo_url: 'https://cdn.example/old.png' })
     const uploadImage = vi.fn().mockRejectedValue(new Error('图床不可用'))
     const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => detail, save: vi.fn(), uploadImage } })
-    await flushPromises(); await button(wrapper, '主题与标识').trigger('click')
+    await flushPromises(); await button(wrapper, '品牌外观').trigger('click')
     for (const file of [new File(['gif'], 'icon.gif', { type: 'image/gif' }), new File([new Uint8Array(5242881)], 'large.png', { type: 'image/png' }), new File(['test'], 'logo.png', { type: 'image/png' })]) {
       const input = wrapper.findAll('input[type=file]')[0]
       Object.defineProperty(input.element, 'files', { value: [file], configurable: true })
@@ -70,6 +81,18 @@ describe('shared tenant brand settings', () => {
     }
     expect(uploadImage).toHaveBeenCalledTimes(1)
     expect(wrapper.text()).toContain('图床不可用')
+    wrapper.unmount()
+  })
+
+  it('navigates all three tabs in both directions using the keyboard', async () => {
+    const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => fixture(), save: vi.fn() } })
+    await flushPromises()
+    for (const [key, label] of [['ArrowRight', '模板'], ['ArrowRight', '品牌外观'], ['ArrowRight', '域名1'], ['ArrowLeft', '品牌外观'], ['ArrowLeft', '模板'], ['ArrowLeft', '域名1']]) {
+      await wrapper.get('[role="tab"][aria-selected="true"]').trigger('keydown', { key })
+      expect(wrapper.get('[role="tab"][aria-selected="true"]').text().replace(/\s+/g, '')).toBe(label)
+      expect(wrapper.findAll('[role="tab"][tabindex="0"]')).toHaveLength(1)
+      expect(wrapper.get('[role="tabpanel"]').attributes('aria-labelledby')).toBe(wrapper.get('[aria-selected="true"]').attributes('id'))
+    }
     wrapper.unmount()
   })
 

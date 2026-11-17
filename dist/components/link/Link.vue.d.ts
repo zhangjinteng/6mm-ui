@@ -13,9 +13,9 @@ declare const __VLS_base: import('vue').DefineComponent<LinkProps, {}, {}, {}, {
     onClick?: ((event: MouseEvent) => any) | undefined;
 }>, {
     disabled: boolean;
+    target: string;
     underline: import('./types').LinkUnderline;
     href: string;
-    target: string;
     external: boolean;
     rel: string;
     tone: import('./types').LinkTone;

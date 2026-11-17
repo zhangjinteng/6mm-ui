@@ -2,6 +2,193 @@ export type IconNodeTag = "circle" | "ellipse" | "line" | "path" | "polygon" | "
 export type IconNodeAttributes = Readonly<Record<string, number | string>>;
 export type IconNode = readonly [IconNodeTag, IconNodeAttributes];
 export declare const iconDefinitions: {
+    readonly "layout-dashboard": readonly [readonly ["rect", {
+        readonly width: "7";
+        readonly height: "9";
+        readonly x: "3";
+        readonly y: "3";
+        readonly rx: "1";
+    }], readonly ["rect", {
+        readonly width: "7";
+        readonly height: "5";
+        readonly x: "14";
+        readonly y: "3";
+        readonly rx: "1";
+    }], readonly ["rect", {
+        readonly width: "7";
+        readonly height: "9";
+        readonly x: "14";
+        readonly y: "12";
+        readonly rx: "1";
+    }], readonly ["rect", {
+        readonly width: "7";
+        readonly height: "5";
+        readonly x: "3";
+        readonly y: "16";
+        readonly rx: "1";
+    }]];
+    readonly users: readonly [readonly ["path", {
+        readonly d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2";
+    }], readonly ["path", {
+        readonly d: "M16 3.128a4 4 0 0 1 0 7.744";
+    }], readonly ["path", {
+        readonly d: "M22 21v-2a4 4 0 0 0-3-3.87";
+    }], readonly ["circle", {
+        readonly cx: "9";
+        readonly cy: "7";
+        readonly r: "4";
+    }]];
+    readonly "wallet-cards": readonly [readonly ["path", {
+        readonly d: "M3 11h3.75a2 2 0 0 1 1.6.8l.45.6a4 4 0 0 0 6.4 0l.45-.6a2 2 0 0 1 1.6-.8H21";
+    }], readonly ["path", {
+        readonly d: "M3 7h18";
+    }], readonly ["rect", {
+        readonly x: "3";
+        readonly y: "3";
+        readonly width: "18";
+        readonly height: "18";
+        readonly rx: "2";
+    }]];
+    readonly "file-bar-chart": readonly [readonly ["path", {
+        readonly d: "M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z";
+    }], readonly ["path", {
+        readonly d: "M14 2v5a1 1 0 0 0 1 1h5";
+    }], readonly ["path", {
+        readonly d: "M8 18v-2";
+    }], readonly ["path", {
+        readonly d: "M12 18v-4";
+    }], readonly ["path", {
+        readonly d: "M16 18v-6";
+    }]];
+    readonly settings: readonly [readonly ["path", {
+        readonly d: "M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915";
+    }], readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "3";
+    }]];
+    readonly handshake: readonly [readonly ["path", {
+        readonly d: "m11 17 2 2a1 1 0 1 0 3-3";
+    }], readonly ["path", {
+        readonly d: "m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4";
+    }], readonly ["path", {
+        readonly d: "m21 3 1 11h-2";
+    }], readonly ["path", {
+        readonly d: "M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3";
+    }], readonly ["path", {
+        readonly d: "M3 4h8";
+    }]];
+    readonly "hand-coins": readonly [readonly ["path", {
+        readonly d: "M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17";
+    }], readonly ["path", {
+        readonly d: "m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9";
+    }], readonly ["path", {
+        readonly d: "m2 16 6 6";
+    }], readonly ["circle", {
+        readonly cx: "16";
+        readonly cy: "9";
+        readonly r: "2.9";
+    }], readonly ["circle", {
+        readonly cx: "6";
+        readonly cy: "5";
+        readonly r: "3";
+    }]];
+    readonly coins: readonly [readonly ["path", {
+        readonly d: "M13.744 17.736a6 6 0 1 1-7.48-7.48";
+    }], readonly ["path", {
+        readonly d: "M15 6h1v4";
+    }], readonly ["path", {
+        readonly d: "m6.134 14.768.866-.5 2 3.464";
+    }], readonly ["circle", {
+        readonly cx: "16";
+        readonly cy: "8";
+        readonly r: "6";
+    }]];
+    readonly "list-checks": readonly [readonly ["path", {
+        readonly d: "M13 5h8";
+    }], readonly ["path", {
+        readonly d: "M13 12h8";
+    }], readonly ["path", {
+        readonly d: "M13 19h8";
+    }], readonly ["path", {
+        readonly d: "m3 17 2 2 4-4";
+    }], readonly ["path", {
+        readonly d: "m3 7 2 2 4-4";
+    }]];
+    readonly "settings-2": readonly [readonly ["path", {
+        readonly d: "M14 17H5";
+    }], readonly ["path", {
+        readonly d: "M19 7h-9";
+    }], readonly ["circle", {
+        readonly cx: "17";
+        readonly cy: "17";
+        readonly r: "3";
+    }], readonly ["circle", {
+        readonly cx: "7";
+        readonly cy: "7";
+        readonly r: "3";
+    }]];
+    readonly "badge-dollar-sign": readonly [readonly ["path", {
+        readonly d: "M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z";
+    }], readonly ["path", {
+        readonly d: "M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8";
+    }], readonly ["path", {
+        readonly d: "M12 18V6";
+    }]];
+    readonly route: readonly [readonly ["path", {
+        readonly d: "M9 5h8.5a1 1 0 010 7h-11a1 1 0 000 7H15";
+    }], readonly ["circle", {
+        readonly cx: "18";
+        readonly cy: "19";
+        readonly r: "3";
+    }], readonly ["circle", {
+        readonly cx: "6";
+        readonly cy: "5";
+        readonly r: "3";
+    }]];
+    readonly "circle-help": readonly [readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "10";
+    }], readonly ["path", {
+        readonly d: "M9 9.5a3 2.5 0 016 0c0 2-2 2-3 3.5";
+    }], readonly ["path", {
+        readonly d: "M12 17h.01";
+    }]];
+    readonly megaphone: readonly [readonly ["path", {
+        readonly d: "M11 6a13 13 0 0 0 8.4-2.8A1 1 0 0 1 21 4v12a1 1 0 0 1-1.6.8A13 13 0 0 0 11 14H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z";
+    }], readonly ["path", {
+        readonly d: "M6 14a12 12 0 0 0 2.4 7.2 2 2 0 0 0 3.2-2.4A8 8 0 0 1 10 14";
+    }], readonly ["path", {
+        readonly d: "M8 6v8";
+    }]];
+    readonly scale: readonly [readonly ["path", {
+        readonly d: "M12 3v18";
+    }], readonly ["path", {
+        readonly d: "m19 8 3 8a5 5 0 0 1-6 0zV7";
+    }], readonly ["path", {
+        readonly d: "M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1";
+    }], readonly ["path", {
+        readonly d: "m5 8 3 8a5 5 0 0 1-6 0zV7";
+    }], readonly ["path", {
+        readonly d: "M7 21h10";
+    }]];
+    readonly "shield-check": readonly [readonly ["path", {
+        readonly d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z";
+    }], readonly ["path", {
+        readonly d: "m9 12 2 2 4-4";
+    }]];
+    readonly "building-2": readonly [readonly ["path", {
+        readonly d: "M10 12h4";
+    }], readonly ["path", {
+        readonly d: "M10 8h4";
+    }], readonly ["path", {
+        readonly d: "M14 21v-3a2 2 0 0 0-4 0v3";
+    }], readonly ["path", {
+        readonly d: "M6 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-2";
+    }], readonly ["path", {
+        readonly d: "M6 21V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v16";
+    }]];
     readonly activity: readonly [readonly ["path", {
         readonly d: "M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2";
     }]];
@@ -67,11 +254,6 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M12 7v14";
     }]];
-    readonly "badge-dollar-sign": readonly [readonly ["path", {
-        readonly d: "M12 2 15 5l4-.5.5 4L22 12l-2.5 3.5-.5 4-4-.5-3 3-3-3-4 .5-.5-4L2 12l2.5-3.5.5-4 4 .5z";
-    }], readonly ["path", {
-        readonly d: "M15 9h-5a1.5 1.5 0 0 0 0 3h4a1.5 1.5 0 0 1 0 3H9M12 7v10";
-    }]];
     readonly ban: readonly [readonly ["circle", {
         readonly cx: "12";
         readonly cy: "12";
@@ -101,9 +283,6 @@ export declare const iconDefinitions: {
         readonly d: "M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9";
     }], readonly ["path", {
         readonly d: "M10 21h4";
-    }]];
-    readonly "building-2": readonly [readonly ["path", {
-        readonly d: "M3 21h18M6 21V4h9v17M15 8h3v13M9 8h2M9 12h2M9 16h2";
     }]];
     readonly calendar: readonly [readonly ["rect", {
         readonly x: "3";
@@ -255,13 +434,6 @@ export declare const iconDefinitions: {
     readonly close: readonly [readonly ["path", {
         readonly d: "M18 6 6 18M6 6l12 12";
     }]];
-    readonly coins: readonly [readonly ["circle", {
-        readonly cx: "8";
-        readonly cy: "8";
-        readonly r: "6";
-    }], readonly ["path", {
-        readonly d: "M18 8a6 6 0 1 1-6 6";
-    }]];
     readonly columns: readonly [readonly ["rect", {
         readonly x: "3";
         readonly y: "3";
@@ -303,11 +475,6 @@ export declare const iconDefinitions: {
         readonly d: "M10 14 21 3";
     }], readonly ["path", {
         readonly d: "M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6";
-    }]];
-    readonly "file-bar-chart": readonly [readonly ["path", {
-        readonly d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z";
-    }], readonly ["path", {
-        readonly d: "M14 2v6h6M8 18v-3M12 18v-6M16 18v-4";
     }]];
     readonly "file-chart-column": readonly [readonly ["path", {
         readonly d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z";
@@ -367,17 +534,6 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M15 3v18";
     }]];
-    readonly "hand-coins": readonly [readonly ["path", {
-        readonly d: "M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.2.2-1.6.7L3 17";
-    }], readonly ["path", {
-        readonly d: "m7 21 1.6-1.4c.4-.4 1-.6 1.6-.6H15c1.1 0 2.1-.4 2.8-1.2L22 13.8";
-    }], readonly ["path", {
-        readonly d: "M2 16l6 6";
-    }], readonly ["circle", {
-        readonly cx: "16";
-        readonly cy: "6";
-        readonly r: "4";
-    }]];
     readonly history: readonly [readonly ["path", {
         readonly d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8";
     }], readonly ["path", {
@@ -427,27 +583,6 @@ export declare const iconDefinitions: {
     readonly landmark: readonly [readonly ["path", {
         readonly d: "m3 10 9-6 9 6M5 10v8M9 10v8M15 10v8M19 10v8M3 21h18";
     }]];
-    readonly "layout-dashboard": readonly [readonly ["rect", {
-        readonly x: "3";
-        readonly y: "3";
-        readonly width: "7";
-        readonly height: "7";
-    }], readonly ["rect", {
-        readonly x: "14";
-        readonly y: "3";
-        readonly width: "7";
-        readonly height: "7";
-    }], readonly ["rect", {
-        readonly x: "3";
-        readonly y: "14";
-        readonly width: "7";
-        readonly height: "7";
-    }], readonly ["rect", {
-        readonly x: "14";
-        readonly y: "14";
-        readonly width: "7";
-        readonly height: "7";
-    }]];
     readonly left: readonly [readonly ["path", {
         readonly d: "m15 18-6-6 6-6";
     }]];
@@ -479,9 +614,6 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M8 19h13";
     }]];
-    readonly "list-checks": readonly [readonly ["path", {
-        readonly d: "m3 5 2 2 4-4M3 12l2 2 4-4M3 19l2 2 4-4M13 6h8M13 13h8M13 20h8";
-    }]];
     readonly "loader-circle": readonly [readonly ["path", {
         readonly d: "M21 12a9 9 0 1 1-6.219-8.56";
     }]];
@@ -505,9 +637,6 @@ export declare const iconDefinitions: {
         readonly d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4";
     }], readonly ["path", {
         readonly d: "m16 17 5-5-5-5M21 12H9";
-    }]];
-    readonly megaphone: readonly [readonly ["path", {
-        readonly d: "m3 11 15-5v12L3 13zM11.6 15.5 13 21H8l-1.5-6";
     }]];
     readonly menu: readonly [readonly ["path", {
         readonly d: "M4 6h16M4 12h16M4 18h16";
@@ -674,26 +803,12 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M21 3v5h-5";
     }]];
-    readonly route: readonly [readonly ["circle", {
-        readonly cx: "6";
-        readonly cy: "19";
-        readonly r: "3";
-    }], readonly ["circle", {
-        readonly cx: "18";
-        readonly cy: "5";
-        readonly r: "3";
-    }], readonly ["path", {
-        readonly d: "M9 19h2a4 4 0 0 0 4-4V9";
-    }]];
     readonly save: readonly [readonly ["path", {
         readonly d: "M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z";
     }], readonly ["path", {
         readonly d: "M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7";
     }], readonly ["path", {
         readonly d: "M7 3v4a1 1 0 0 0 1 1h7";
-    }]];
-    readonly scale: readonly [readonly ["path", {
-        readonly d: "m16 16 3-8 3 8a3 3 0 0 1-6 0ZM2 16l3-8 3 8a3 3 0 0 1-6 0ZM12 3v18M3 7h18";
     }]];
     readonly "scroll-text": readonly [readonly ["path", {
         readonly d: "M15 12h-5";
@@ -746,33 +861,10 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M7 7h.01M7 17h.01";
     }]];
-    readonly settings: readonly [readonly ["path", {
-        readonly d: "M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.09a2 2 0 0 1-1-1.74v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z";
-    }], readonly ["circle", {
-        readonly cx: "12";
-        readonly cy: "12";
-        readonly r: "3";
-    }]];
-    readonly "settings-2": readonly [readonly ["path", {
-        readonly d: "M20 7h-9M14 17H5";
-    }], readonly ["circle", {
-        readonly cx: "17";
-        readonly cy: "17";
-        readonly r: "3";
-    }], readonly ["circle", {
-        readonly cx: "7";
-        readonly cy: "7";
-        readonly r: "3";
-    }]];
     readonly "shield-alert": readonly [readonly ["path", {
         readonly d: "M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z";
     }], readonly ["path", {
         readonly d: "M12 8v4M12 16h.01";
-    }]];
-    readonly "shield-check": readonly [readonly ["path", {
-        readonly d: "M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3z";
-    }], readonly ["path", {
-        readonly d: "m9 12 2 2 4-4";
     }]];
     readonly siren: readonly [readonly ["path", {
         readonly d: "M7 18v-6a5 5 0 1 1 10 0v6";
@@ -918,15 +1010,6 @@ export declare const iconDefinitions: {
     }], readonly ["path", {
         readonly d: "M20 21a8 8 0 0 0-16 0";
     }]];
-    readonly users: readonly [readonly ["path", {
-        readonly d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2";
-    }], readonly ["circle", {
-        readonly cx: "9";
-        readonly cy: "7";
-        readonly r: "4";
-    }], readonly ["path", {
-        readonly d: "M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75";
-    }]];
     readonly "users-round": readonly [readonly ["path", {
         readonly d: "M18 21a8 8 0 0 0-16 0";
     }], readonly ["circle", {
@@ -935,15 +1018,6 @@ export declare const iconDefinitions: {
         readonly r: "5";
     }], readonly ["path", {
         readonly d: "M22 20c0-3.37-2-6.5-4-8a5 5 0 0 0-.45-8.3";
-    }]];
-    readonly "wallet-cards": readonly [readonly ["rect", {
-        readonly x: "2";
-        readonly y: "5";
-        readonly width: "20";
-        readonly height: "14";
-        readonly rx: "2";
-    }], readonly ["path", {
-        readonly d: "M16 13h4M2 10h20";
     }]];
     readonly webhook: readonly [readonly ["path", {
         readonly d: "M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2";
@@ -956,6 +1030,169 @@ export declare const iconDefinitions: {
         readonly d: "M18 6 6 18";
     }], readonly ["path", {
         readonly d: "m6 6 12 12";
+    }]];
+    readonly radio: readonly [readonly ["path", {
+        readonly d: "M16.247 7.761a6 6 0 0 1 0 8.478";
+    }], readonly ["path", {
+        readonly d: "M19.075 4.933a10 10 0 0 1 0 14.134";
+    }], readonly ["path", {
+        readonly d: "M4.925 19.067a10 10 0 0 1 0-14.134";
+    }], readonly ["path", {
+        readonly d: "M7.753 16.239a6 6 0 0 1 0-8.478";
+    }], readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "2";
+    }]];
+    readonly target: readonly [readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "10";
+    }], readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "6";
+    }], readonly ["circle", {
+        readonly cx: "12";
+        readonly cy: "12";
+        readonly r: "2";
+    }]];
+    readonly "chart-pie": readonly [readonly ["path", {
+        readonly d: "M21 12c.552 0 1.005-.449.95-.998a10 10 0 0 0-8.953-8.951c-.55-.055-.998.398-.998.95v8a1 1 0 0 0 1 1z";
+    }], readonly ["path", {
+        readonly d: "M21.21 15.89A10 10 0 1 1 8 2.83";
+    }]];
+    readonly wallet: readonly [readonly ["path", {
+        readonly d: "M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1";
+    }], readonly ["path", {
+        readonly d: "M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4";
+    }]];
+    readonly "book-open-text": readonly [readonly ["path", {
+        readonly d: "M12 5v16";
+    }], readonly ["path", {
+        readonly d: "M16 13h2";
+    }], readonly ["path", {
+        readonly d: "M16 9h2";
+    }], readonly ["path", {
+        readonly d: "M20.001 19A2 2 0 0022 17V5a2 2 0 00-1.999-2L16 3.002A5 5 0 0012 5a5 5 0 00-4-2H4a2 2 0 00-2 2v12a2 2 0 001.999 2H8a5 5 0 014 2 5 5 0 014-2z";
+    }], readonly ["path", {
+        readonly d: "M6 13h2";
+    }], readonly ["path", {
+        readonly d: "M6 9h2";
+    }]];
+    readonly tags: readonly [readonly ["path", {
+        readonly d: "M13.172 2a2 2 0 0 1 1.414.586l6.71 6.71a2.4 2.4 0 0 1 0 3.408l-4.592 4.592a2.4 2.4 0 0 1-3.408 0l-6.71-6.71A2 2 0 0 1 6 9.172V3a1 1 0 0 1 1-1z";
+    }], readonly ["path", {
+        readonly d: "M2 7v6.172a2 2 0 0 0 .586 1.414l6.71 6.71a2.4 2.4 0 0 0 3.191.193";
+    }], readonly ["circle", {
+        readonly cx: "10.5";
+        readonly cy: "6.5";
+        readonly fill: "currentColor";
+        readonly r: ".5";
+    }]];
+    readonly "chart-spline": readonly [readonly ["path", {
+        readonly d: "M3 3v16a2 2 0 0 0 2 2h16";
+    }], readonly ["path", {
+        readonly d: "M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7";
+    }]];
+    readonly percent: readonly [readonly ["line", {
+        readonly x1: "19";
+        readonly x2: "5";
+        readonly y1: "5";
+        readonly y2: "19";
+    }], readonly ["circle", {
+        readonly cx: "6.5";
+        readonly cy: "6.5";
+        readonly r: "2.5";
+    }], readonly ["circle", {
+        readonly cx: "17.5";
+        readonly cy: "17.5";
+        readonly r: "2.5";
+    }]];
+    readonly "layers-3": readonly [readonly ["path", {
+        readonly d: "M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z";
+    }], readonly ["path", {
+        readonly d: "M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12";
+    }], readonly ["path", {
+        readonly d: "M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17";
+    }]];
+    readonly "gamepad-2": readonly [readonly ["line", {
+        readonly x1: "6";
+        readonly x2: "10";
+        readonly y1: "11";
+        readonly y2: "11";
+    }], readonly ["line", {
+        readonly x1: "8";
+        readonly x2: "8";
+        readonly y1: "9";
+        readonly y2: "13";
+    }], readonly ["line", {
+        readonly x1: "15";
+        readonly x2: "15.01";
+        readonly y1: "12";
+        readonly y2: "12";
+    }], readonly ["line", {
+        readonly x1: "18";
+        readonly x2: "18.01";
+        readonly y1: "10";
+        readonly y2: "10";
+    }], readonly ["path", {
+        readonly d: "M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z";
+    }]];
+    readonly "user-round-check": readonly [readonly ["path", {
+        readonly d: "M2 21a8 8 0 0 1 13.292-6";
+    }], readonly ["circle", {
+        readonly cx: "10";
+        readonly cy: "8";
+        readonly r: "5";
+    }], readonly ["path", {
+        readonly d: "m16 19 2 2 4-4";
+    }]];
+    readonly palette: readonly [readonly ["path", {
+        readonly d: "M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z";
+    }], readonly ["circle", {
+        readonly cx: "13.5";
+        readonly cy: "6.5";
+        readonly fill: "currentColor";
+        readonly r: ".5";
+    }], readonly ["circle", {
+        readonly cx: "17.5";
+        readonly cy: "10.5";
+        readonly fill: "currentColor";
+        readonly r: ".5";
+    }], readonly ["circle", {
+        readonly cx: "6.5";
+        readonly cy: "12.5";
+        readonly fill: "currentColor";
+        readonly r: ".5";
+    }], readonly ["circle", {
+        readonly cx: "8.5";
+        readonly cy: "7.5";
+        readonly fill: "currentColor";
+        readonly r: ".5";
+    }]];
+    readonly "messages-square": readonly [readonly ["path", {
+        readonly d: "M16 10a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 14.286V4a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z";
+    }], readonly ["path", {
+        readonly d: "M20 9a2 2 0 0 1 2 2v10.286a.71.71 0 0 1-1.212.502l-2.202-2.202A2 2 0 0 0 17.172 19H10a2 2 0 0 1-2-2v-1";
+    }]];
+    readonly "toggle-right": readonly [readonly ["circle", {
+        readonly cx: "15";
+        readonly cy: "12";
+        readonly r: "3";
+    }], readonly ["rect", {
+        readonly height: "14";
+        readonly rx: "7";
+        readonly width: "20";
+        readonly x: "2";
+        readonly y: "5";
+    }]];
+    readonly "log-in": readonly [readonly ["path", {
+        readonly d: "m10 17 5-5-5-5";
+    }], readonly ["path", {
+        readonly d: "M15 12H3";
+    }], readonly ["path", {
+        readonly d: "M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4";
     }]];
     readonly "folder-tree": readonly [readonly ["path", {
         readonly d: "M20 10a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1h-2.5a1 1 0 0 1-.8-.4l-.9-1.2A1 1 0 0 0 15 3h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1Z";
@@ -1101,15 +1338,6 @@ export declare const iconDefinitions: {
         readonly cy: "13";
         readonly r: "3";
     }]];
-    readonly "circle-help": readonly [readonly ["circle", {
-        readonly cx: "12";
-        readonly cy: "12";
-        readonly r: "10";
-    }], readonly ["path", {
-        readonly d: "M9.09 9a3 3 0 1 1 5.83 1c0 2-3 3-3 3";
-    }], readonly ["path", {
-        readonly d: "M12 17h.01";
-    }]];
     readonly clock: readonly [readonly ["circle", {
         readonly cx: "12";
         readonly cy: "12";
@@ -1190,17 +1418,6 @@ export declare const iconDefinitions: {
         readonly d: "M5 16h3v3";
     }], readonly ["path", {
         readonly d: "M19 16h-3v3";
-    }]];
-    readonly handshake: readonly [readonly ["path", {
-        readonly d: "m11 17 2 2a1 1 0 1 0 3-3";
-    }], readonly ["path", {
-        readonly d: "m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4";
-    }], readonly ["path", {
-        readonly d: "m21 3 1 11h-2";
-    }], readonly ["path", {
-        readonly d: "M3 3 2 14l6.5 6.5a1 1 0 0 0 3-3";
-    }], readonly ["path", {
-        readonly d: "M3 4h8";
     }]];
     readonly image: readonly [readonly ["rect", {
         readonly x: "3";

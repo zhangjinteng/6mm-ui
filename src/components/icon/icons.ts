@@ -1,5 +1,7 @@
 import { extendedIconDefinitions } from "./extended-icons";
 import { contentIconDefinitions } from "./content-icons";
+import { navigationIconDefinitions } from "./navigation-icons";
+import { referenceNavigationIconDefinitions } from "./reference-navigation-icons";
 
 export type IconNodeTag =
   "circle" | "ellipse" | "line" | "path" | "polygon" | "polyline" | "rect";
@@ -7,9 +9,10 @@ export type IconNodeTag =
 export type IconNodeAttributes = Readonly<Record<string, number | string>>;
 export type IconNode = readonly [IconNodeTag, IconNodeAttributes];
 
-export const iconDefinitions = {
+const baseIconDefinitions = {
   ...extendedIconDefinitions,
   ...contentIconDefinitions,
+  ...navigationIconDefinitions,
   activity: [
     [
       "path",
@@ -2372,6 +2375,12 @@ export const iconDefinitions = {
       },
     ],
   ],
+} as const satisfies Record<string, readonly IconNode[]>;
+
+// Preserve public icon names while matching the approved navigation SVGs.
+export const iconDefinitions = {
+  ...baseIconDefinitions,
+  ...referenceNavigationIconDefinitions,
 } as const satisfies Record<string, readonly IconNode[]>;
 
 export type IconName = keyof typeof iconDefinitions;

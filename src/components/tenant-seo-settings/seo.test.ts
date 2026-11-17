@@ -5,6 +5,7 @@ import { MmSelect } from '../select'
 import Seo from './TenantSeoSettings.vue'
 import SeoTranslations from './TenantSeoTranslations.vue'
 import type { TenantSeoDetail, TenantSeoSettingsProps } from './model'
+import Icon from '../icon/Icon.vue'
 const detail = (site_id = '10'): TenantSeoDetail => ({ tenant_id: '1', tenant_name: 'Alpha', site_id, site_name: 'Main', primary_domain: 'site.example',
   indexing_enabled: false, effective_indexing_enabled: false, blocking_reason: null, configured_locales: 1, total_locales: 20, updated_at: null,
   default_locale: 'zh-CN', translations: { 'zh-CN': { title: 'Title', description: 'Description' } }, version: 0,
@@ -64,7 +65,7 @@ describe('shared SEO page behavior', () => {
     }, global: { stubs: { teleport: true } } })
     await flushPromises()
     expect(w.find('.mm-dialog__header-actions').text()).toContain('翻译设置')
-    expect(w.get('.mm-dialog__header-actions .mm-translation-settings-button svg path').attributes('d')).toBe('M20 7h-9M14 17H5')
+    expect(w.get('.mm-dialog__header-actions .mm-translation-settings-button').getComponent(Icon).props('name')).toBe('settings-2')
     expect(w.find('.mm-dialog__header-actions .mm-translation-settings-button__provider-dot').exists()).toBe(true)
     await w.get('input[aria-label="zh-CN 首页标题"]').setValue('Unsaved SEO draft')
     await button(w, '翻译设置').trigger('click'); await flushPromises()

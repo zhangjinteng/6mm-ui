@@ -2,6 +2,7 @@ import { mount, flushPromises } from '@vue/test-utils'
 import { describe, it, expect, vi } from 'vitest'
 import TagDialog from '../symbol-tag-manager/TagTranslationDialog.vue'
 import Fields from './MultilingualFields.vue'
+import Icon from '../icon/Icon.vue'
 
 const detail = { tag_id: 1, tag_name: '热门', total: 3, configured_count: 2, languages: [
   { locale: 'zh-CN', label: '中文', label_en: 'Chinese', value: '热门' },
@@ -16,7 +17,7 @@ describe('tag adapter for the shared editor', () => {
     await flushPromises()
     const settings = wrapper.get('button.mm-tag-translation__settings')
     expect(settings.text()).toBe('翻译设置')
-    expect(settings.get('svg path').attributes('d')).toBe('M20 7h-9M14 17H5')
+    expect(settings.getComponent(Icon).props('name')).toBe('settings-2')
     expect(settings.findAll('svg circle').map(node => node.attributes('r'))).toEqual(['3', '3'])
     expect(settings.get('svg').element.style.height).toBe('15px')
     const labelStyle = getComputedStyle(settings.get('.mm-button__label').element)

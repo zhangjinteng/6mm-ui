@@ -795,6 +795,8 @@ const request: UserDetailRequest = (id, { signal }) =>
 
 `MmSidebarNav` 组合 `MmMenu`、`MmPopover`、`MmTooltip`、`MmScrollbar` 与 `MmDrawer`，统一桌面展开、图标收起、悬浮子菜单和移动抽屉。组件只维护导航展示状态并发出选中项；路由、权限和底部在线人数仍由应用适配层负责。
 
+`MmIcon` 已补齐白标导航使用的 `radio`、`target`、`chart-pie`、`wallet`、`book-open-text`、`tags`、`chart-spline`、`percent`、`layers-3`、`gamepad-2`、`user-round-check`、`palette`、`messages-square`、`toggle-right` 和 `log-in`；另校正 17 个已有图标的简化形状，与设计 SVG 保持一致，现有名称和组件接口兼容。宿主应读取菜单配置中的图标名，不必使用页面级 SVG 遮罩代替。
+
 ```vue
 <script setup lang="ts">
 import { ref } from "vue";

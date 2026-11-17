@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { describe, expect, it } from 'vitest'
 import Button from './TranslationSettingsButton.vue'
+import Icon from '../icon/Icon.vue'
 
 describe('shared translation settings button', () => {
   it('uses the dot, label and settings-2 icon in a centered small default button', async () => {
@@ -8,7 +9,9 @@ describe('shared translation settings button', () => {
     expect(w.classes()).toEqual(expect.arrayContaining(['mm-button--default', 'mm-button--sm']))
     expect(w.text()).toBe('翻译设置')
     expect(w.get('.mm-button__icon .mm-translation-settings-button__provider-dot').attributes('aria-hidden')).toBe('true')
-    expect(w.get('svg path').attributes('d')).toBe('M20 7h-9M14 17H5')
+    expect(w.getComponent(Icon).props('name')).toBe('settings-2')
+    expect(w.findAll('svg path').map(node => node.attributes('d'))).toEqual(['M14 17H5', 'M19 7h-9'])
+    expect(w.findAll('svg circle').map(node => node.attributes('r'))).toEqual(['3', '3'])
     expect(w.get('svg').element.style.height).toBe('15px')
     expect(getComputedStyle(w.get('.mm-button__label').element).alignItems).toBe('center')
     expect(getComputedStyle(w.get('.mm-button__label').element).display).toBe('inline-flex')

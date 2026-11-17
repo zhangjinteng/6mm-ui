@@ -2,6 +2,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { cmsRuntimeKey } from '../../../../runtime'
 import Page from './index.vue'
+import Icon from '../../../../../components/icon/Icon.vue'
 
 const api = vi.hoisted(() => ({
   getTranslationMetadata: vi.fn(async () => ({ spaces: [{ id: '7', label: 'Test', is_enabled: true }],
@@ -27,7 +28,7 @@ describe('CMS translation settings entry (Agent and Platform)', () => {
     await flushPromises()
     const button = w.get('.translation-toolbar__actions .mm-translation-settings-button')
     expect(button.text()).toBe('翻译设置')
-    expect(button.get('svg path').attributes('d')).toBe('M20 7h-9M14 17H5')
+    expect(button.getComponent(Icon).props('name')).toBe('settings-2')
     expect(button.find('.mm-translation-settings-button__provider-dot').exists()).toBe(true)
     expect(button.attributes('disabled')).toBeUndefined()
     await button.trigger('click'); await flushPromises()

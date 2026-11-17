@@ -26,6 +26,44 @@ describe('brand domain model', () => {
 })
 
 describe('shared tenant brand settings', () => {
+  it.each([true, false])('defaults missing templates to template 1 without modifying saved template 2 (fullPage=%s)', async fullPage => {
+    for (const storedTemplate of [undefined, null, 'template-2'] as const) {
+      const detail = fixture()
+      Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), template_id: storedTemplate })
+      const save = vi.fn()
+      const wrapper = mount(TenantBrandSettings, { ...options, props: { fullPage, load: async () => detail, save } })
+      await flushPromises()
+      await button(wrapper, '模板').trigger('click')
+      const expectedTemplate = storedTemplate ?? 'template-1'
+      expect((wrapper.get(`input[value="${expectedTemplate}"]`).element as HTMLInputElement).checked).toBe(true)
+      expect(wrapper.get('.mm-tenant-brand-settings__theme.is-selected strong').text()).toBe(expectedTemplate === 'template-1' ? '模板1' : '模板2')
+      expect(wrapper.text()).not.toContain('尚未选择新模板')
+      expect(wrapper.text()).not.toContain('保留站点原有模板')
+      expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
+      expect(save).not.toHaveBeenCalled()
+      if (fullPage) {
+        await wrapper.get(`input[value="${expectedTemplate === 'template-1' ? 'template-2' : 'template-1'}"]`).setValue(true)
+        await button(wrapper, '放弃修改').trigger('click')
+        expect((wrapper.get(`input[value="${expectedTemplate}"]`).element as HTMLInputElement).checked).toBe(true)
+        expect(button(wrapper, '保存配置').attributes('disabled')).toBeDefined()
+      }
+      wrapper.unmount()
+    }
+  })
+
+  it('includes default template 1 when saving changes to a site with no stored template', async () => {
+    const detail = fixture()
+    Object.assign(detail.sites[0], { brand_revision: 'd'.repeat(64), template_id: null })
+    const save = vi.fn(async () => ({ changed: true, brand_revision: 'e'.repeat(64) }))
+    const wrapper = mount(TenantBrandSettings, { ...options, props: { load: async () => detail, save } })
+    await flushPromises()
+    await wrapper.get('input[aria-label="访问域名 1"]').setValue('updated.example')
+    await button(wrapper, '保存配置').trigger('click')
+    await button(wrapper, '确认保存').trigger('click'); await flushPromises()
+    expect(save).toHaveBeenCalledWith(expect.objectContaining({ template_id: 'template-1', site_id: '10' }))
+    wrapper.unmount()
+  })
+
   it('separates domains, templates and brand appearance without losing edits in page and dialog layouts', async () => {
     for (const fullPage of [true, false]) {
       const detail = fixture()

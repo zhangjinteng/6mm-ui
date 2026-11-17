@@ -14,3 +14,33 @@ it('keeps authorization with the host transport and returns the uploaded ID and 
   expect(options.data.get('file').name).toBe(file.name)
   expect(config.isOpenRetry).toBe(false)
 })
+
+it('shows the backend upload message instead of the Axios HTTP status text', async () => {
+  const failure = Object.assign(new Error('Request failed with status code 502'), {
+    response: { status: 502, data: { code: 0, show: 1,
+      msg: '图片存储服务拒绝上传，请联系管理员检查服务端凭据或访问策略',
+      data: { error_code: 'MEDIA_STORAGE_REJECTED' } } }
+  })
+  const post = vi.fn().mockRejectedValue(failure)
+  const upload = createMediaUploader({ post }, '/cms/news/upload')
+  await expect(upload(new File(['image'], 'cover.png'))).rejects.toMatchObject({
+    message: failure.response.data.msg, response: failure.response
+  })
+  expect(post).toHaveBeenCalledTimes(1)
+})
+
+it.each([
+  ['ERR_NETWORK', '图片上传失败，无法连接后台服务，请检查网络后重试'],
+  ['ECONNABORTED', '图片上传超时，上传结果暂未确认，请稍后重试'],
+])('provides a safe %s fallback without retrying', async (code, message) => {
+  const post = vi.fn().mockRejectedValue(Object.assign(new Error('Network Error'), { code }))
+  const upload = createMediaUploader({ post }, '/cms/news/upload')
+  await expect(upload(new File(['image'], 'cover.png'))).rejects.toMatchObject({ message })
+  expect(post).toHaveBeenCalledTimes(1)
+})
+
+it('keeps cancellation unchanged', async () => {
+  const failure = Object.assign(new Error('canceled'), { code: 'ERR_CANCELED' })
+  const upload = createMediaUploader({ post: vi.fn().mockRejectedValue(failure) }, '/cms/news/upload')
+  await expect(upload(new File(['image'], 'cover.png'))).rejects.toBe(failure)
+})

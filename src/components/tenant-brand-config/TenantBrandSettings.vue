@@ -48,7 +48,7 @@ const confirmVisible = ref(false), switchVisible = ref(false)
 const draft = ref<BrandDomainDraft[]>([])
 const tabs = ['domains', 'templates', 'appearance'] as const
 const activeTab = ref<typeof tabs[number]>('domains')
-const templateId = ref<'template-1' | 'template-2' | null>(null), logoUrl = ref(''), faviconUrl = ref('')
+const templateId = ref<'template-1' | 'template-2'>('template-1'), logoUrl = ref(''), faviconUrl = ref('')
 const logoUploading = ref(false), faviconUploading = ref(false)
 const uploading = computed(() => logoUploading.value || faviconUploading.value)
 const themes = [
@@ -59,7 +59,7 @@ let nextKey = 0, controller: AbortController | undefined, disposed = false
 const selectedSite = computed(() => detail.value?.sites.find(site => site.site_id === selectedSiteId.value))
 const editable = computed(() => props.canEdit && detail.value?.can_edit !== false)
 const busy = computed(() => loading.value || saving.value || uploading.value)
-const brandDirty = computed(() => !!selectedSite.value && (templateId.value !== (selectedSite.value.template_id ?? null)
+const brandDirty = computed(() => !!selectedSite.value && (templateId.value !== (selectedSite.value.template_id ?? 'template-1')
   || logoUrl.value !== (selectedSite.value.logo_url ?? '') || faviconUrl.value !== (selectedSite.value.favicon_url ?? '')))
 const dirty = computed(() => !!selectedSite.value && (!brandDomainsEqual(draft.value, selectedSite.value.domains) || brandDirty.value))
 const validationError = computed(() => brandDomainError(draft.value, english.value))
@@ -78,7 +78,7 @@ const updatedAt = computed(() => {
 function useSite(site: BrandDomainSite): void {
   selectedSiteId.value = site.site_id
   draft.value = site.domains.map(row => ({ ...row, key: ++nextKey, existing: true }))
-  templateId.value = site.template_id ?? null; logoUrl.value = site.logo_url ?? ''; faviconUrl.value = site.favicon_url ?? ''
+  templateId.value = site.template_id ?? 'template-1'; logoUrl.value = site.logo_url ?? ''; faviconUrl.value = site.favicon_url ?? ''
   saveError.value = ''
 }
 async function load(): Promise<void> {
@@ -220,7 +220,6 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
           <div v-show="activeTab === 'templates'">
             <fieldset class="mm-tenant-brand-settings__themes" :disabled="busy || !editable || !selectedSite?.brand_revision">
               <legend>{{ english ? 'Website template' : '网站模板' }}</legend>
-              <p v-if="!templateId" class="mm-tenant-brand-settings__hint">{{ english ? 'No override selected. Your current template is preserved.' : '尚未选择新模板，保留站点原有模板。' }}</p>
               <div class="mm-tenant-brand-settings__theme-grid">
                 <label v-for="theme in themes" :key="theme.id" class="mm-tenant-brand-settings__theme" :class="{ 'is-selected': templateId === theme.id }">
                   <img :src="theme.preview" :alt="english ? theme.english : theme.name" width="640" height="400" />

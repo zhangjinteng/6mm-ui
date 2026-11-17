@@ -1,8 +1,27 @@
 import { flushPromises, mount } from '@vue/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import Cover from './views/content/components/ContentCoverUpload.vue'
+import { createMediaUploader } from '../services/media-upload'
+import { articleFieldErrors } from './views/content/articleValidation'
 
 describe('shared image upload formats', () => {
+  it('propagates the backend storage message to the article error banner without changing its cover', async () => {
+    const message = '图片存储服务拒绝上传，请联系管理员检查服务端凭据或访问策略'
+    const post = vi.fn().mockRejectedValue(Object.assign(new Error('Request failed with status code 502'), {
+      response: { status: 502, data: { msg: message, data: { error_code: 'MEDIA_STORAGE_REJECTED' } } }
+    }))
+    const wrapper = mount(Cover, { props: { modelValue: 'https://cdn.test/original.png',
+      upload: createMediaUploader({ post }, '/cms/news/upload') } })
+    const input = wrapper.get('input[type=file]')
+    Object.defineProperty(input.element, 'files', { value: [new File(['image'], 'cover.png', { type: 'image/png' })] })
+    await input.trigger('change'); await flushPromises()
+    const error = wrapper.emitted('error')?.[0]?.[0]
+    expect(articleFieldErrors(error, 'news').general).toBe(message)
+    expect(wrapper.emitted('update:modelValue')).toBeUndefined()
+    expect(wrapper.emitted('busy-change')).toEqual([[true], [false]])
+    expect(post).toHaveBeenCalledTimes(1)
+    wrapper.unmount()
+  })
   it.each([
     ['jpg', 'image/jpeg'], ['png', 'image/png'], ['webp', 'image/webp'], ['svg', 'image/svg+xml'],
     ['ico', 'image/vnd.microsoft.icon'], ['ico', 'image/x-icon'], ['ico', ''], ['svg', ''],

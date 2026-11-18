@@ -44,8 +44,9 @@
 .mm-tenant-brand-settings__hint { color: var(--mm-color-text-muted); font-size: 12px; line-height: 1.7; margin: 0 0 12px; }
 .mm-tenant-brand-settings__theme-grid, .mm-tenant-brand-settings__image-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .mm-tenant-brand-settings__theme { overflow: hidden; border: 1px solid var(--mm-color-line); border-radius: 10px; cursor: pointer; transition: border-color .15s; }
-.mm-tenant-brand-settings__theme.is-selected { border-color: var(--mm-color-primary); box-shadow: 0 0 0 1px var(--mm-color-primary); }
-.mm-tenant-brand-settings__theme:focus-within { outline: 2px solid var(--mm-color-primary); outline-offset: 3px; }
+.mm-tenant-brand-settings__theme.is-selected { border-color: var(--mm-color-primary); }
+.mm-tenant-brand-settings__theme:has(input:focus-visible) { outline: 2px solid var(--mm-color-primary); outline-offset: -2px; }
+.mm-tenant-brand-settings__theme:has(input:focus-visible) input:focus-visible { outline: none; }
 .mm-tenant-brand-settings__themes:disabled .mm-tenant-brand-settings__theme { cursor: default; opacity: .7; }
 .mm-tenant-brand-settings__theme > img { display: block; width: 100%; height: auto; aspect-ratio: 8 / 5; object-fit: contain; background: #fff; }
 .mm-tenant-brand-settings__theme > span { display: flex; align-items: center; gap: 8px; padding: 12px; border-top: 1px solid var(--mm-color-line); }

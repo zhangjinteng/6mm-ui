@@ -29,6 +29,7 @@ import { MmBorder } from "./border";
 import { MmButton } from "./button";
 import { MmCalendar } from "./calendar";
 import { MmCard } from "./card";
+export * from './business-dashboard';
 import { MmCheckbox, MmCheckboxGroup } from "./checkbox";
 import { MmCollapse, MmCollapseItem } from "./collapse";
 import { MmColor } from "./color";

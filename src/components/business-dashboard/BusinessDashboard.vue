@@ -54,7 +54,7 @@ watch(period, load, { immediate: true })
 <template>
   <div class="mm-business-dashboard" :aria-busy="loading">
     <header class="mm-business-dashboard__toolbar">
-      <MmSegmented v-model="view" :options="tabs" size="sm" aria-label="看板分类" />
+      <!-- <MmSegmented v-model="view" :options="tabs" size="sm" aria-label="看板分类" /> -->
       <div class="mm-business-dashboard__filters">
         <MmSegmented v-model="period" :options="dashboardPeriods" size="sm" aria-label="统计周期" />
         <MmButton variant="default" size="sm" icon-only :disabled="loading" aria-label="刷新看板" title="刷新看板" @click="load"><MmIcon name="refresh-cw" :size="15" :spin="loading" /></MmButton>

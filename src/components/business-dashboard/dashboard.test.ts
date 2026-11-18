@@ -73,11 +73,9 @@ describe('shared workbench interactions', () => {
     expect(request).toHaveBeenCalledTimes(1)
     w.unmount()
   })
-  it('emits manual tab changes and falls back for views unavailable to the current scope', async () => {
+  it('falls back for views unavailable to the current scope', async () => {
     const w = mount(Dashboard, { props: { request: async () => payload(), view: 'assets' } })
     await flushPromises()
-    await w.findAll('button').find(b => b.text() === '合约数据')!.trigger('click')
-    expect(w.emitted('update:view')).toEqual([['contracts']])
     await w.setProps({ view: 'unknown' })
     expect(w.get('.mm-business-dashboard__title').text()).toBe('经营总览')
     w.unmount()
@@ -86,21 +84,30 @@ describe('shared workbench interactions', () => {
     expect(merchant.get('.mm-business-dashboard__title').text()).toBe('用户数据')
     merchant.unmount()
   })
-  it('loads once and offers platform categories with a genuine error state', async () => {
+  it('loads once and preserves the genuine error state without the category switcher', async () => {
     const request = vi.fn(async () => payload())
     const w = mount(Dashboard, { props: { request } }); await flushPromises()
-    expect(request).toHaveBeenCalledWith('7'); expect(w.text()).toContain('合作概览')
+    expect(request).toHaveBeenCalledWith('7')
+    expect(w.find('[aria-label="看板分类"]').exists()).toBe(false)
     expect(w.text()).toContain('资产数据暂不可用'); expect(w.text()).toContain('总用户数')
     expect(w.text()).not.toContain('C2C'); w.unmount()
   })
-  it('keeps merchant tab selection when refreshing', async () => {
+  it('keeps the merchant menu-selected view when refreshing', async () => {
     const request = vi.fn(async () => payload('merchant'))
-    const w = mount(Dashboard, { props: { request } }); await flushPromises()
-    const funds = w.findAll('button').find(b => b.text() === '资金数据')!
-    await funds.trigger('click'); await flushPromises()
+    const w = mount(Dashboard, { props: { request, view: 'funds' } }); await flushPromises()
     expect(w.text()).toContain('总保证金')
     await w.get('button[aria-label="刷新看板"]').trigger('click'); await flushPromises()
     expect(w.text()).toContain('总保证金'); expect(w.text()).not.toContain('合作概览'); w.unmount()
+  })
+  it.each(['platform', 'tenant', 'merchant'] as const)('hides category controls for %s while keeping period and refresh controls', async scope => {
+    const request = vi.fn(async () => payload(scope))
+    const w = mount(Dashboard, { props: { request } }); await flushPromises()
+    expect(w.find('[aria-label="看板分类"]').exists()).toBe(false)
+    expect(w.find('[aria-label="统计周期"]').exists()).toBe(true)
+    await w.findAll('button').find(b => b.text() === '今日')!.trigger('click'); await flushPromises()
+    expect(request).toHaveBeenLastCalledWith('today')
+    expect(w.find('button[aria-label="刷新看板"]').exists()).toBe(true)
+    w.unmount()
   })
   it('retries rejected reads without leaving stale metrics', async () => {
     const request = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValue(payload())

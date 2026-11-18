@@ -11369,15 +11369,9 @@ var lf = ["aria-busy"], uf = { class: "mm-business-dashboard__toolbar" }, df = {
 			class: "mm-business-dashboard",
 			"aria-busy": o.value
 		}, [
-			T("header", uf, [O(Y(wn), {
-				modelValue: m.value,
-				"onUpdate:modelValue": t[0] ||= (e) => m.value = e,
-				options: p.value,
-				size: "sm",
-				"aria-label": "看板分类"
-			}, null, 8, ["modelValue", "options"]), T("div", df, [O(Y(wn), {
+			T("header", uf, [T("div", df, [O(Y(wn), {
 				modelValue: i.value,
-				"onUpdate:modelValue": t[1] ||= (e) => i.value = e,
+				"onUpdate:modelValue": t[0] ||= (e) => i.value = e,
 				options: Y(Qd),
 				size: "sm",
 				"aria-label": "统计周期"
@@ -11409,7 +11403,7 @@ var lf = ["aria-busy"], uf = { class: "mm-business-dashboard__toolbar" }, df = {
 				T("span", null, [O(Y(c), {
 					name: "circle-dollar-sign",
 					size: 13
-				}), t[2] ||= D("USDT", -1)]),
+				}), t[1] ||= D("USDT", -1)]),
 				T("span", null, q(f.value ? "本商户用户" : l.value.scope === "tenant" ? "本站直属用户，不含商户" : "全部来源用户"), 1)
 			])) : C("", !0),
 			g.value.length ? (U(), w("div", pf, [D(q(g.value.join("、")) + "数据暂不可用 ", 1), O(Y($), {
@@ -11417,7 +11411,7 @@ var lf = ["aria-busy"], uf = { class: "mm-business-dashboard__toolbar" }, df = {
 				variant: "text",
 				onClick: d
 			}, {
-				default: Z(() => [...t[3] ||= [D("重试", -1)]]),
+				default: Z(() => [...t[2] ||= [D("重试", -1)]]),
 				_: 1
 			})])) : C("", !0),
 			s.value ? (U(), w("div", mf, [O(Y(Fc), { description: "加载失败，请稍后重试" }, {
@@ -11426,7 +11420,7 @@ var lf = ["aria-busy"], uf = { class: "mm-business-dashboard__toolbar" }, df = {
 					variant: "primary",
 					onClick: d
 				}, {
-					default: Z(() => [...t[4] ||= [D("重新加载", -1)]]),
+					default: Z(() => [...t[3] ||= [D("重新加载", -1)]]),
 					_: 1
 				})]),
 				_: 1
@@ -34401,4 +34395,4 @@ var rT = { class: "history-page" }, iT = { class: "history-page__close" }, aT = 
 //#endregion
 export { Oy as $, bt as $i, tp as $n, qs as $r, rg as $t, qx as A, Ar as Ai, vm as An, ru as Ar, e_ as At, ub as B, Hn as Bi, Vp as Bn, kc as Br, Zg as Bt, uS as C, di as Ci, jm as Cn, od as Cr, T_ as Ct, $x as D, Zr as Di, ym as Dn, ou as Dr, S_ as Dt, Xx as E, ti as Ei, wm as En, pu as Er, E_ as Et, ex as F, Xn as Fi, am as Fn, Ul as Fr, s_ as Ft, Gy as G, sn as Gi, _p as Gn, ac as Gr, zg as Gt, Jy as H, wn as Hi, Np as Hn, wc as Hr, Yg as Ht, Ub as I, Zn as Ii, Yp as In, El as Ir, o_ as It, Ny as J, $t as Ji, fp as Jn, tc as Jr, Ag as Jt, Vy as K, an as Ki, gp as Kn, ic as Kr, Ig as Kt, Vb as L, $n as Li, Xp as Ln, Cl as Lr, c_ as Lt, gx as M, Yn as Mi, pm as Mn, eu as Mr, t_ as Mt, ux as N, Qn as Ni, fm as Nn, Ql as Nr, Qg as Nt, Qx as O, Gr as Oi, bm as On, su as Or, x_ as Ot, rx as P, Jn as Pi, om as Pn, Yl as Pr, a_ as Pt, Ay as Q, Bt as Qi, np as Qn, Ws as Qr, ug as Qt, wb as R, er as Ri, Zp as Rn, pl as Rr, l_ as Rt, mS as S, Di as Si, Mm as Sn, ud as Sr, V_ as St, Zx as T, $r as Ti, Tm as Tn, $u as Tr, b_ as Tt, Uy as U, xn as Ui, Dp as Un, yc as Ur, Lg as Ut, Yy as V, zn as Vi, Ip as Vn, Oc as Vr, Xg as Vt, Wy as W, un as Wi, vp as Wn, mc as Wr, Rg as Wt, jy as X, Ut as Xi, Qf as Xn, ec as Xr, Cg as Xt, My as Y, Yt as Yi, dp as Yn, $s as Yr, Tg as Yt, ky as Z, Vt as Zi, $f as Zn, Qs as Zr, xg as Zt, DS as _, Ma as _i, Lm as _n, Hd as _r, pv as _t, Zw as a, _t as aa, Cs as ai, Qm as an, Lf as ar, ly as at, yS as b, qi as bi, Pm as bn, xd as br, rv as bt, eT as c, Et as ca, vs as ci, Bm as cn, af as cr, Tv as ct, Iw as d, $ as da, Po as di, Um as dn, $d as dr, Sv as dt, xt as ea, Js as ei, Jh as en, rp as er, wy as et, ZC as f, et as fa, No as fi, Km as fn, Qd as fr, xv as ft, NS as g, Na as gi, Rm as gn, Wd as gr, dv as gt, OS as h, fo as hi, Wm as hn, Zd as hr, uv as ht, tT as i, wt as ia, Ss as ii, $m as in, zf as ir, _y as it, Bx as j, qn as ji, hm as jn, nu as jr, $g as jt, Jx as k, Pr as ki, xm as kn, cu as kr, v_ as kt, Yw as l, Ct as la, _s as li, Vm as ln, cf as lr, Dv as lt, PS as m, _o as mi, zm as mn, of as mr, yv as mt, $w as n, St as na, As as ni, Ch as nn, Jf as nr, gy as nt, Xw as o, ht as oa, ys as oi, Zm as on, Ff as or, jv as ot, RS as p, Q as pa, yo as pi, Gm as pn, rf as pr, Cv as pt, Fy as q, tn as qi, hp as qn, nc as qr, jg as qt, nT as r, gt as ra, xs as ri, sh as rn, Wf as rr, my as rt, Qw as s, vt as sa, bs as si, Xm as sn, Af as sr, bv as st, aT as t, Dt as ta, Hs as ti, Lh as tn, Yf as tr, hy as tt, Bw as u, pt as ua, Fo as ui, Hm as un, ef as ur, Ev as ut, ES as v, ja as vi, Im as vn, Vd as vr, fv as vt, Yx as w, ei as wi, Om as wn, id as wr, C_ as wt, hS as x, ji as xi, Nm as xn, hd as xr, W_ as xt, bS as y, Ji as yi, Fm as yn, Cd as yr, sv as yt, vb as z, Kn as zi, Jp as zn, Fc as zr, u_ as zt };
 
-//# sourceMappingURL=src-CmNG1JyW.js.map
+//# sourceMappingURL=src-DFFFKemA.js.map

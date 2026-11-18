@@ -3,11 +3,11 @@ type __VLS_Props = {
     request: (period: DashboardPeriod) => Promise<DashboardPayload>;
     view?: string;
 };
-declare var __VLS_66: {
+declare var __VLS_61: {
     panel: DashboardPanel;
 };
 type __VLS_Slots = {} & {
-    chart?: (props: typeof __VLS_66) => any;
+    chart?: (props: typeof __VLS_61) => any;
 };
 declare const __VLS_base: import('vue').DefineComponent<__VLS_Props, {}, {}, {}, {}, import('vue').ComponentOptionsMixin, import('vue').ComponentOptionsMixin, {
     "update:view": (view: string) => any;

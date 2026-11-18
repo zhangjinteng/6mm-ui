@@ -56,6 +56,8 @@
 .mm-tenant-brand-settings__asset .content-cover { max-width: 320px; }
 .mm-tenant-brand-settings__asset img { object-fit: contain; }
 @media (max-width: 600px) {
+  .mm-tenant-brand-settings__tabs { gap: 12px; padding: 0 12px; flex-wrap: wrap; }
+  .mm-tenant-brand-settings__tabs > button { gap: 5px; font-size: 12px; white-space: nowrap; }
   .mm-tenant-brand-settings__theme-grid, .mm-tenant-brand-settings__image-grid { grid-template-columns: minmax(0, 1fr); }
   .mm-tenant-brand-settings__header { flex-wrap: wrap; }
   .mm-tenant-brand-settings__updated { margin-left: 58px; align-items: flex-start; }

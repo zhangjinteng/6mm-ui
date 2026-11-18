@@ -9,6 +9,8 @@ import { MmLoading } from '../loading'
 import { MmRadio } from '../radio'
 import { MmSelect } from '../select'
 import ContentCoverUpload from '../../cms/views/content/components/ContentCoverUpload.vue'
+import TenantEmailSettings from './TenantEmailSettings.vue'
+import type { TenantEmailConfig } from './model'
 import themeOnePreview from './previews/template-1-light.svg'
 import themeTwoPreview from './previews/template-2-light.svg'
 import { brandDomainError, brandDomainsEqual, normalizeBrandDomains, type BrandDomainDraft, type BrandDomainSite,
@@ -46,8 +48,10 @@ const loading = ref(false), saving = ref(false), loadFailed = ref(false), saveEr
 const selectedSiteId = ref(''), pendingSiteId = ref('')
 const confirmVisible = ref(false), switchVisible = ref(false)
 const draft = ref<BrandDomainDraft[]>([])
-const tabs = ['domains', 'templates', 'appearance'] as const
-const activeTab = ref<typeof tabs[number]>('domains')
+type BrandTab = 'domains' | 'templates' | 'appearance' | 'email'
+const tabs = computed<BrandTab[]>(() => props.email ? ['domains', 'templates', 'appearance', 'email'] : ['domains', 'templates', 'appearance'])
+const activeTab = ref<BrandTab>('domains')
+const emailVisited = ref(false), emailDirty = ref(false), emailBusy = ref(false)
 const templateId = ref<'template-1' | 'template-2'>('template-1'), logoUrl = ref(''), faviconUrl = ref('')
 const logoUploading = ref(false), faviconUploading = ref(false)
 const uploading = computed(() => logoUploading.value || faviconUploading.value)
@@ -58,10 +62,11 @@ const themes = [
 let nextKey = 0, controller: AbortController | undefined, disposed = false
 const selectedSite = computed(() => detail.value?.sites.find(site => site.site_id === selectedSiteId.value))
 const editable = computed(() => props.canEdit && detail.value?.can_edit !== false)
-const busy = computed(() => loading.value || saving.value || uploading.value)
+const busy = computed(() => loading.value || saving.value || uploading.value || emailBusy.value)
 const brandDirty = computed(() => !!selectedSite.value && (templateId.value !== (selectedSite.value.template_id ?? 'template-1')
   || logoUrl.value !== (selectedSite.value.logo_url ?? '') || faviconUrl.value !== (selectedSite.value.favicon_url ?? '')))
-const dirty = computed(() => !!selectedSite.value && (!brandDomainsEqual(draft.value, selectedSite.value.domains) || brandDirty.value))
+const brandDraftDirty = computed(() => !!selectedSite.value && (!brandDomainsEqual(draft.value, selectedSite.value.domains) || brandDirty.value))
+const dirty = computed(() => brandDraftDirty.value || emailDirty.value)
 const validationError = computed(() => brandDomainError(draft.value, english.value))
 const primaryKey = computed(() => draft.value.find(row => row.is_primary)?.key)
 const siteOptions = computed(() => detail.value?.sites.map(site => ({ label: `${site.site_name} · ${site.site_id}`, value: site.site_id })) ?? [])
@@ -120,11 +125,11 @@ function removeDomain(key: number): void {
 }
 function discard(): void { if (!busy.value && selectedSite.value) useSite(selectedSite.value) }
 function confirmSave(): void {
-  if (busy.value || !editable.value || !dirty.value || validationError.value || loadFailed.value) return
+  if (busy.value || !editable.value || !brandDraftDirty.value || validationError.value || loadFailed.value) return
   confirmVisible.value = true
 }
 async function submit(): Promise<void> {
-  if (busy.value || !editable.value || !dirty.value || validationError.value || !selectedSite.value || loadFailed.value) return
+  if (busy.value || !editable.value || !brandDraftDirty.value || validationError.value || !selectedSite.value || loadFailed.value) return
   saving.value = true; saveError.value = ''
   const site = selectedSite.value
   const domains = normalizeBrandDomains(draft.value)
@@ -158,9 +163,17 @@ async function moveTab(event: KeyboardEvent): Promise<void> {
   if (busy.value) return
   const group = (event.currentTarget as HTMLElement).parentElement
   const direction = event.key === 'ArrowLeft' ? -1 : 1
-  activeTab.value = tabs[(tabs.indexOf(activeTab.value) + direction + tabs.length) % tabs.length]
+  selectTab(tabs.value[(tabs.value.indexOf(activeTab.value) + direction + tabs.value.length) % tabs.value.length])
   await nextTick()
   group?.querySelector<HTMLElement>('[aria-selected="true"]')?.focus()
+}
+function selectTab(tab: BrandTab): void {
+  if (busy.value) return
+  activeTab.value = tab
+  if (tab === 'email') emailVisited.value = true
+}
+function emailSaved(detail: TenantEmailConfig): void {
+  if (selectedSite.value && selectedSite.value.site_id === detail.site_id) selectedSite.value.config_version = detail.publication_version
 }
 function uploadError(error: unknown): void {
   const failure = error as { message?: string; response?: { data?: { msg?: string } } }
@@ -182,8 +195,8 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
     <div class="mm-tenant-brand-settings__tabs" role="tablist" :aria-label="copy.title">
       <button v-for="tab in tabs" :id="`${id}-tab-${tab}`" :key="tab" type="button" role="tab"
         :aria-selected="activeTab === tab" :aria-controls="`${id}-panel`" :tabindex="activeTab === tab ? 0 : -1" :disabled="busy"
-        @click="activeTab = tab" @keydown.right.prevent="moveTab" @keydown.left.prevent="moveTab">
-        <MmIcon :name="tab === 'domains' ? 'globe' : tab === 'templates' ? 'layout-dashboard' : 'image'" :size="16" />{{ tab === 'domains' ? copy.tab : copy[tab] }}
+        @click="selectTab(tab)" @keydown.right.prevent="moveTab" @keydown.left.prevent="moveTab">
+        <MmIcon :name="tab === 'domains' ? 'globe' : tab === 'templates' ? 'layout-dashboard' : tab === 'email' ? 'mail' : 'image'" :size="16" />{{ tab === 'domains' ? copy.tab : tab === 'email' ? (english ? 'Email brand' : '邮件品牌') : copy[tab] }}
         <b v-if="tab === 'domains'" role="status" :aria-label="english ? `Access domain count: ${draft.length}` : `访问域名数量：${draft.length}`">{{ loading || loadFailed ? '—' : draft.length }}</b>
       </button>
     </div>
@@ -245,20 +258,24 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
             </div>
             <p class="mm-tenant-brand-settings__hint">JPG / PNG / WebP / SVG / ICO，最大 5 MB · {{ english ? 'Changes take effect after saving and apply to all domains of this site.' : '保存配置后生效，同一站点的所有域名共用。' }}</p>
           </div>
+          <TenantEmailSettings v-if="props.email && emailVisited && selectedSite" v-show="activeTab === 'email'"
+            :site-id="selectedSite.site_id" :adapter="props.email" :can-edit="editable"
+            @state="emailDirty = $event.dirty; emailBusy = $event.busy" @saved="emailSaved" />
         </template>
       </div>
     </div>
-    <footer class="mm-tenant-brand-settings__footer">
+    <footer v-if="activeTab !== 'email'" class="mm-tenant-brand-settings__footer">
       <span v-if="saveError" class="mm-tenant-brand-settings__feedback is-error" role="alert">{{ saveError }}</span>
       <span v-else class="mm-tenant-brand-settings__feedback" role="status"><MmIcon :name="dirty ? 'alert' : 'circle-check'" :size="14" />{{ !editable ? copy.readonly : dirty ? copy.dirty : copy.saved }}</span>
       <MmButton v-if="saveError" :disabled="busy" @click="load">{{ copy.discardReload }}</MmButton>
-      <MmButton v-if="fullPage" :disabled="busy || !dirty || !editable" @click="discard">{{ copy.discard }}</MmButton>
+      <MmButton v-if="fullPage" :disabled="busy || !brandDraftDirty || !editable" @click="discard">{{ copy.discard }}</MmButton>
       <MmButton v-else :disabled="busy" @click="emit('close')">{{ editable ? copy.cancel : copy.close }}</MmButton>
-      <MmButton v-if="editable" variant="primary" :loading="saving" :disabled="busy || !selectedSite || !dirty || !!validationError || loadFailed" @click="confirmSave">
+      <MmButton v-if="editable" variant="primary" :loading="saving" :disabled="busy || !selectedSite || !brandDraftDirty || !!validationError || loadFailed" @click="confirmSave">
         <template #icon><MmIcon name="save" :size="14" /></template>
         {{ copy.save }}
       </MmButton>
     </footer>
+    <footer v-else-if="!fullPage" class="mm-tenant-brand-settings__footer"><MmButton :disabled="busy" @click="emit('close')">{{ copy.close }}</MmButton></footer>
     <MmDialog v-model="switchVisible" :title="copy.switchTitle" width="400px" :close-on-click-modal="false">
       <template #footer><MmButton @click="switchVisible = false">{{ copy.cancel }}</MmButton><MmButton variant="primary" @click="confirmSwitch">{{ copy.switchSite }}</MmButton></template>
     </MmDialog>

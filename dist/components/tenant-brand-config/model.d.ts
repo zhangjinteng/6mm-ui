@@ -48,6 +48,33 @@ export interface TenantBrandSettingsProps {
     canEdit?: boolean;
     fullPage?: boolean;
     formatUpdatedAt?: (value: string) => string;
+    email?: TenantEmailAdapter;
+}
+export interface TenantEmailConfig {
+    site_id: string;
+    version: string;
+    publication_version: string;
+    site_name: string;
+    logo_url: string;
+    default_locale: string;
+    source: 'rows' | 'legacy' | 'default';
+    resource_hosts: string[];
+    can_publish: boolean;
+}
+export interface TenantEmailSaveInput {
+    site_id: string;
+    expected_version: string;
+    site_name?: string;
+    logo_url?: string;
+    default_locale?: string;
+}
+export interface TenantEmailSaveResult {
+    changed: boolean;
+    detail: TenantEmailConfig;
+}
+export interface TenantEmailAdapter {
+    load: (siteId: string, signal: AbortSignal) => Promise<TenantEmailConfig>;
+    save: (input: TenantEmailSaveInput) => Promise<TenantEmailSaveResult>;
 }
 export declare function normalizeBrandDomains(rows: BrandDomain[]): BrandDomain[];
 export declare function brandDomainsEqual(a: BrandDomain[], b: BrandDomain[]): boolean;

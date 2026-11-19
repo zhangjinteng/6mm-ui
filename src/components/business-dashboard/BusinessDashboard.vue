@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { MmButton } from '../button'
 import { MmEmpty } from '../empty'
 import { MmIcon } from '../icon'
+import { MmLoading } from '../loading'
 import { MmSegmented } from '../segmented'
 import { dashboardNumber, dashboardPalette, dashboardPeriods, dashboardView, type DashboardPayload, type DashboardPeriod, type DashboardPanel } from './model'
 
@@ -68,7 +69,9 @@ watch(period, load, { immediate: true })
     </div>
     <div v-if="errors.length" class="mm-business-dashboard__warning" role="status">{{ errors.join('、') }}数据暂不可用 <MmButton size="sm" variant="text" @click="load">重试</MmButton></div>
     <div v-if="failed" class="mm-business-dashboard__empty"><MmEmpty description="加载失败，请稍后重试"><MmButton size="sm" variant="primary" @click="load">重新加载</MmButton></MmEmpty></div>
-    <div v-else-if="loading" class="mm-business-dashboard__skeleton" aria-label="加载中"><div v-for="i in 12" :key="i" /></div>
+    <div v-else-if="loading" class="mm-business-dashboard__loading">
+      <MmLoading :backdrop="false" />
+    </div>
     <template v-else-if="data">
       <h1 class="mm-business-dashboard__title">{{ currentTitle }}</h1>
       <section class="mm-business-dashboard__kpis" :class="{ 'is-merchant': merchant }" aria-label="经营指标">
@@ -136,8 +139,7 @@ watch(period, load, { immediate: true })
 .mm-business-dashboard__no-data { display:flex; min-height:220px; align-items:center; justify-content:center; color:var(--mm-color-text-muted,#657187); font-size:12px; }
 .mm-business-dashboard__warning { display:flex; align-items:center; gap:8px; padding:8px 12px; margin:10px 0; background:#fff8ed; border:1px solid #f4d39f; border-radius:4px; color:#945500; font-size:12px; }
 .mm-business-dashboard__empty { min-height:350px; display:grid; place-items:center; }
-.mm-business-dashboard__skeleton { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:10px; margin-top:18px; }
-.mm-business-dashboard__skeleton > div { height:110px; background:var(--mm-color-panel,#fff); border:1px solid var(--mm-color-line,#dfe4ec); border-radius:6px; }
+.mm-business-dashboard__loading { position:relative; min-height:350px; }
 @media(max-width:1200px) { .mm-business-dashboard__kpis { grid-template-columns:repeat(3,minmax(0,1fr)); } }
-@media(max-width:800px) { .mm-business-dashboard__kpis,.mm-business-dashboard__kpis.is-merchant,.mm-business-dashboard__skeleton { grid-template-columns:repeat(2,minmax(0,1fr)); } .mm-business-dashboard__panels { grid-template-columns:minmax(0,1fr); } .mm-business-dashboard__toolbar .mm-segmented { max-width:100%; flex-wrap:wrap; } .mm-business-dashboard__toolbar { align-items:flex-start; } .mm-business-dashboard__context { gap:8px; } }
+@media(max-width:800px) { .mm-business-dashboard__kpis,.mm-business-dashboard__kpis.is-merchant { grid-template-columns:repeat(2,minmax(0,1fr)); } .mm-business-dashboard__panels { grid-template-columns:minmax(0,1fr); } .mm-business-dashboard__toolbar .mm-segmented { max-width:100%; flex-wrap:wrap; } .mm-business-dashboard__toolbar { align-items:flex-start; } .mm-business-dashboard__context { gap:8px; } }
 </style>

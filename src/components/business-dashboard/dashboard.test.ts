@@ -53,6 +53,31 @@ describe('supported dashboard data', () => {
   })
 })
 describe('shared workbench interactions', () => {
+  it.each(['platform', 'tenant', 'merchant'] as const)('uses the shared loading indicator on initial load and refresh for %s', async scope => {
+    const request = vi.fn<() => Promise<DashboardPayload>>().mockResolvedValue(payload(scope))
+    const w = mount(Dashboard, { props: { request } })
+    const loading = '[data-mm-component="loading"]'
+    const refresh = 'button[aria-label="刷新看板"]'
+
+    expect(w.get(loading).attributes('role')).toBe('status')
+    expect(w.get(refresh).attributes('disabled')).toBeDefined()
+    expect(w.find('.mm-business-dashboard__skeleton').exists()).toBe(false)
+    await flushPromises()
+    expect(w.find(loading).exists()).toBe(false)
+    expect(w.find('.mm-business-dashboard__title').exists()).toBe(true)
+
+    let finishRefresh!: (value: DashboardPayload) => void
+    request.mockImplementationOnce(() => new Promise(resolve => { finishRefresh = resolve }))
+    await w.get(refresh).trigger('click')
+    expect(w.find(loading).exists()).toBe(true)
+    expect(w.find('.mm-business-dashboard__title').exists()).toBe(false)
+    finishRefresh(payload(scope))
+    await flushPromises()
+    expect(w.find(loading).exists()).toBe(false)
+    expect(w.find('.mm-business-dashboard__title').exists()).toBe(true)
+    expect(request).toHaveBeenCalledTimes(2)
+    w.unmount()
+  })
   it.each([
     ['assets', '资产概览'], ['contracts', '合约数据'],
     ['prediction', '预测概览'], ['partners', '合作概览'],
@@ -113,6 +138,7 @@ describe('shared workbench interactions', () => {
     const request = vi.fn().mockRejectedValueOnce(new Error('offline')).mockResolvedValue(payload())
     const w = mount(Dashboard, { props: { request } }); await flushPromises()
     expect(w.text()).toContain('加载失败')
+    expect(w.find('[data-mm-component="loading"]').exists()).toBe(false)
     await w.findAll('button').find(b => b.text() === '重新加载')!.trigger('click'); await flushPromises()
     expect(w.text()).toContain('42'); expect(request).toHaveBeenCalledTimes(2); w.unmount()
   })

@@ -89,6 +89,9 @@
                             </p>
                         </div>
                     </MmFormItem>
+                    <MmFormItem v-if="!form.parent_id" label="展示在 VIP 页">
+                        <EnabledToggle v-model="form.show_on_vip_page" :disabled="readonly || busy" aria-label="展示在 VIP 页" />
+                    </MmFormItem>
                     <MmFormItem label="分类图片">
                         <MmMediaUpload
                             class="taxonomy-editor__image"
@@ -292,6 +295,7 @@ const initial = () => ({
     name: '',
     code: '',
     parent_id: '',
+    show_on_vip_page: false,
     image_url: '',
     image_media_id: null as string | null,
     sort_order: 10 as number | null,
@@ -333,6 +337,7 @@ async function open(id?: string) {
             name: data.name,
             code: data.code,
             parent_id: data.parent_id || '',
+            show_on_vip_page: data.show_on_vip_page ?? false,
             image_url: data.image_url || '',
             image_media_id: data.image_media_id || null,
             sort_order: data.sort_order,
@@ -367,6 +372,7 @@ async function save() {
         await saveHelp('categories', {
             name: form.name,
             parent_id: form.parent_id || null,
+            show_on_vip_page: !form.parent_id && form.show_on_vip_page,
             image_media_id: form.image_media_id,
             sort_order: form.sort_order,
             is_enabled: form.is_enabled,

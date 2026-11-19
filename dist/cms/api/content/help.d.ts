@@ -6,6 +6,7 @@ export interface HelpRow {
     code: string;
     name: string;
     parent_id: string | null;
+    show_on_vip_page?: boolean;
     sort_order: number;
     is_enabled: boolean;
     help_count: number;

@@ -15,3 +15,4 @@ export { default as MmMarketCurrentPage } from './market/MarketCurrentPage.vue';
 export { default as MmMarketHistoryPage } from './market/MarketHistoryPage.vue';
 export * from './market/types';
 export * from './market/history';
+export { default as MmPositionSummaryTable } from './components/position-summary/PositionSummaryTable.vue';

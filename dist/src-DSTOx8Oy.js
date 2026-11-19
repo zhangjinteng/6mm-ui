@@ -34390,8 +34390,248 @@ var rT = { class: "history-page" }, iT = { class: "history-page__close" }, aT = 
 			_: 3
 		}, 16, ["columns", "query-fields"])]));
 	}
-}), [["__scopeId", "data-v-a6c1f7e8"]]);
+}), [["__scopeId", "data-v-a6c1f7e8"]]), oT = { class: "current-contract-page" }, sT = { class: "current-contract-page__number current-contract-page__number--strong" }, cT = { class: "current-contract-page__number is-long" }, lT = { class: "current-contract-page__number is-short" }, uT = { class: "current-contract-page__side-count" }, dT = { class: "is-long" }, fT = { class: "is-short" }, pT = /*#__PURE__*/ a(/* @__PURE__ */ k({
+	__name: "PositionSummaryTable",
+	props: {
+		request: { type: Function },
+		markPrice: { type: Function },
+		loadSymbols: { type: Function },
+		showSources: { type: Boolean }
+	},
+	setup(e) {
+		let t = e, n = ne([{
+			label: "全部交易对",
+			value: ""
+		}]), r = [
+			{
+				align: "left",
+				dataIndex: "symbol",
+				hideable: !1,
+				key: "symbol",
+				title: "合约",
+				width: 150
+			},
+			{
+				align: "left",
+				key: "total_value",
+				title: "持仓名义价值（USDT）",
+				width: 200
+			},
+			{
+				align: "left",
+				dataIndex: "account_count",
+				formatter: (e) => m(e),
+				key: "account_count",
+				title: "持仓账户数",
+				width: 120
+			},
+			{
+				align: "left",
+				key: "long_value",
+				title: "多头名义价值（USDT）",
+				width: 200
+			},
+			{
+				align: "left",
+				key: "short_value",
+				title: "空头名义价值（USDT）",
+				width: 200
+			},
+			{
+				align: "left",
+				key: "side_count",
+				title: "多 / 空仓位",
+				width: 130
+			},
+			{
+				align: "left",
+				key: "position_diff",
+				title: "净敞口（USDT）",
+				width: 180
+			},
+			{
+				align: "left",
+				hideable: !1,
+				key: "pnl",
+				title: "未实现盈亏（USDT）",
+				width: 190
+			}
+		], i = [
+			{
+				label: "全部",
+				value: ""
+			},
+			{
+				label: "商户",
+				value: "merchant"
+			},
+			{
+				label: "白标",
+				value: "white_label"
+			},
+			{
+				label: "平台",
+				value: "platform"
+			}
+		], a = [
+			{
+				defaultValue: "",
+				key: "sym",
+				label: "交易对",
+				options: n,
+				placeholder: "输入或选择交易对",
+				type: t.loadSymbols ? "coin" : "keyword",
+				width: 180
+			},
+			{
+				block: !0,
+				defaultValue: "",
+				key: "source_type",
+				label: "来源类型",
+				options: i,
+				type: "segmented",
+				width: 208
+			},
+			{
+				defaultValue: "All",
+				key: "position_side",
+				label: "持仓方向",
+				options: [
+					{
+						label: "全部敞口",
+						value: "All"
+					},
+					{
+						label: "净多头",
+						value: "long"
+					},
+					{
+						label: "净空头",
+						value: "short"
+					}
+				],
+				type: "select",
+				width: 180
+			}
+		].filter((e) => t.showSources || e.key !== "source_type"), o = () => ({
+			position_side: "All",
+			source_type: "",
+			sym: ""
+		}), s = (e, t) => {
+			let n = e[t];
+			return n == null ? "" : String(n);
+		}, c = (e) => e ? Number(t.markPrice(e) ?? NaN) : 0, l = (e, t) => c(e) * Number(t || 0), u = (e) => l(e.symbol, e.long_quantity) - l(e.symbol, e.short_quantity), d = (e) => {
+			let t = c(e.symbol);
+			return t * Number(e.long_quantity || 0) - Number(e.long_entry_value || 0) + (Number(e.short_entry_value || 0) - t * Number(e.short_quantity || 0));
+		}, f = (e) => e == null || e === "", p = (e) => {
+			if (f(e)) return "-";
+			let t = Number(e);
+			return Number.isFinite(t) ? (Math.trunc(t * 100) / 100).toLocaleString("en-US", {
+				maximumFractionDigits: 2,
+				minimumFractionDigits: 2
+			}) : "-";
+		}, m = (e) => {
+			if (f(e)) return "-";
+			let t = Number(e);
+			return Number.isFinite(t) ? t.toLocaleString("en-US") : "-";
+		}, h = (e) => {
+			let t = Number(e || 0);
+			return t > 0 ? "is-long" : t < 0 ? "is-short" : "";
+		}, { filters: g, loading: _, proTableBindings: v, query: y } = Qs({
+			initialAutoRefreshSeconds: 0,
+			initialFilters: o(),
+			initialPageSize: 20,
+			queryFields: a,
+			request: async ({ filters: e, page: n, pageSize: r, sort: i }) => {
+				let a = await t.request({
+					page_no: n,
+					page_size: r,
+					position_side: s(e, "position_side") || "All",
+					...t.showSources ? { source_type: s(e, "source_type") } : {},
+					sort_field: i.order ? i.key : "",
+					sort_order: i.order || "",
+					sym: s(e, "sym") || "All"
+				});
+				return {
+					rows: Array.isArray(a?.lists) ? a.lists : [],
+					total: Number(a?.count) || 0,
+					updatedAt: /* @__PURE__ */ new Date()
+				};
+			}
+		}), b = (e, t) => {
+			let n = String(e ?? "");
+			!i.some((e) => e.value === n) || n === s(g.value, "source_type") || (t(n), y({
+				...g.value,
+				source_type: n
+			}));
+		};
+		return (async () => {
+			try {
+				if (!t.loadSymbols) return;
+				let e = await t.loadSymbols();
+				n.splice(1, n.length - 1, ...(Array.isArray(e) ? e : []).map((e) => ({
+					label: String(e.symbol || "-"),
+					value: String(e.symbol || "")
+				})));
+			} catch (e) {
+				console.error("Failed to load symbol filters", e);
+			}
+		})(), (t, n) => (U(), w("div", oT, [O(Y(Ul), P(Y(v), {
+			"aria-label": "持仓汇总",
+			columns: r,
+			"columns-configurable": "",
+			"empty-text": "暂无持仓汇总数据",
+			"filter-drawer": "",
+			"filter-drawer-subtitle": e.showSources ? "可按交易对、来源类型和持仓方向组合筛选" : "可按交易对和持仓方向筛选",
+			"filter-drawer-title": "筛选持仓汇总",
+			"fill-height": "",
+			"inline-query-field-keys": Y(a).map((e) => e.key),
+			"page-sizes": [
+				20,
+				30,
+				40
+			],
+			"row-key": "symbol",
+			"show-cell-title": ""
+		}), {
+			"field-source_type": Z(({ field: e, value: t, update: n }) => [O(Y(wn), {
+				"aria-label": e.label,
+				"model-value": String(t ?? ""),
+				options: i,
+				disabled: Y(_) || e.disabled,
+				size: "sm",
+				block: "",
+				"onUpdate:modelValue": (e) => b(e, n)
+			}, null, 8, [
+				"aria-label",
+				"model-value",
+				"disabled",
+				"onUpdate:modelValue"
+			])]),
+			"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)], !0)]),
+			"cell-total_value": Z(({ row: e }) => [T("span", sT, q(p(l(e.symbol, e.total_quantity))), 1)]),
+			"cell-long_value": Z(({ row: e }) => [T("span", cT, q(p(l(e.symbol, e.long_quantity))), 1)]),
+			"cell-short_value": Z(({ row: e }) => [T("span", lT, q(p(l(e.symbol, e.short_quantity))), 1)]),
+			"cell-side_count": Z(({ row: e }) => [T("div", uT, [
+				T("span", dT, q(m(e.long_count)), 1),
+				n[0] ||= T("span", { class: "current-contract-page__separator" }, "/", -1),
+				T("span", fT, q(m(e.short_count)), 1)
+			])]),
+			"cell-position_diff": Z(({ row: e }) => [T("span", { class: I([
+				"current-contract-page__number",
+				"current-contract-page__number--strong",
+				h(u(e))
+			]) }, q(p(u(e))), 3)]),
+			"cell-pnl": Z(({ row: e }) => [T("span", { class: I([
+				"current-contract-page__number",
+				"current-contract-page__number--strong",
+				h(d(e))
+			]) }, q(p(d(e))), 3)]),
+			_: 3
+		}, 16, ["filter-drawer-subtitle", "inline-query-field-keys"])]));
+	}
+}), [["__scopeId", "data-v-5e94cfd1"]]);
 //#endregion
-export { Oy as $, bt as $i, tp as $n, qs as $r, rg as $t, qx as A, Ar as Ai, vm as An, ru as Ar, e_ as At, ub as B, Hn as Bi, Vp as Bn, kc as Br, Zg as Bt, uS as C, di as Ci, jm as Cn, od as Cr, T_ as Ct, $x as D, Zr as Di, ym as Dn, ou as Dr, S_ as Dt, Xx as E, ti as Ei, wm as En, pu as Er, E_ as Et, ex as F, Xn as Fi, am as Fn, Ul as Fr, s_ as Ft, Gy as G, sn as Gi, _p as Gn, ac as Gr, zg as Gt, Jy as H, wn as Hi, Np as Hn, wc as Hr, Yg as Ht, Ub as I, Zn as Ii, Yp as In, El as Ir, o_ as It, Ny as J, $t as Ji, fp as Jn, tc as Jr, Ag as Jt, Vy as K, an as Ki, gp as Kn, ic as Kr, Ig as Kt, Vb as L, $n as Li, Xp as Ln, Cl as Lr, c_ as Lt, gx as M, Yn as Mi, pm as Mn, eu as Mr, t_ as Mt, ux as N, Qn as Ni, fm as Nn, Ql as Nr, Qg as Nt, Qx as O, Gr as Oi, bm as On, su as Or, x_ as Ot, rx as P, Jn as Pi, om as Pn, Yl as Pr, a_ as Pt, Ay as Q, Bt as Qi, np as Qn, Ws as Qr, ug as Qt, wb as R, er as Ri, Zp as Rn, pl as Rr, l_ as Rt, mS as S, Di as Si, Mm as Sn, ud as Sr, V_ as St, Zx as T, $r as Ti, Tm as Tn, $u as Tr, b_ as Tt, Uy as U, xn as Ui, Dp as Un, yc as Ur, Lg as Ut, Yy as V, zn as Vi, Ip as Vn, Oc as Vr, Xg as Vt, Wy as W, un as Wi, vp as Wn, mc as Wr, Rg as Wt, jy as X, Ut as Xi, Qf as Xn, ec as Xr, Cg as Xt, My as Y, Yt as Yi, dp as Yn, $s as Yr, Tg as Yt, ky as Z, Vt as Zi, $f as Zn, Qs as Zr, xg as Zt, DS as _, Ma as _i, Lm as _n, Hd as _r, pv as _t, Zw as a, _t as aa, Cs as ai, Qm as an, Lf as ar, ly as at, yS as b, qi as bi, Pm as bn, xd as br, rv as bt, eT as c, Et as ca, vs as ci, Bm as cn, af as cr, Tv as ct, Iw as d, $ as da, Po as di, Um as dn, $d as dr, Sv as dt, xt as ea, Js as ei, Jh as en, rp as er, wy as et, ZC as f, et as fa, No as fi, Km as fn, Qd as fr, xv as ft, NS as g, Na as gi, Rm as gn, Wd as gr, dv as gt, OS as h, fo as hi, Wm as hn, Zd as hr, uv as ht, tT as i, wt as ia, Ss as ii, $m as in, zf as ir, _y as it, Bx as j, qn as ji, hm as jn, nu as jr, $g as jt, Jx as k, Pr as ki, xm as kn, cu as kr, v_ as kt, Yw as l, Ct as la, _s as li, Vm as ln, cf as lr, Dv as lt, PS as m, _o as mi, zm as mn, of as mr, yv as mt, $w as n, St as na, As as ni, Ch as nn, Jf as nr, gy as nt, Xw as o, ht as oa, ys as oi, Zm as on, Ff as or, jv as ot, RS as p, Q as pa, yo as pi, Gm as pn, rf as pr, Cv as pt, Fy as q, tn as qi, hp as qn, nc as qr, jg as qt, nT as r, gt as ra, xs as ri, sh as rn, Wf as rr, my as rt, Qw as s, vt as sa, bs as si, Xm as sn, Af as sr, bv as st, aT as t, Dt as ta, Hs as ti, Lh as tn, Yf as tr, hy as tt, Bw as u, pt as ua, Fo as ui, Hm as un, ef as ur, Ev as ut, ES as v, ja as vi, Im as vn, Vd as vr, fv as vt, Yx as w, ei as wi, Om as wn, id as wr, C_ as wt, hS as x, ji as xi, Nm as xn, hd as xr, W_ as xt, bS as y, Ji as yi, Fm as yn, Cd as yr, sv as yt, vb as z, Kn as zi, Jp as zn, Fc as zr, u_ as zt };
+export { Ay as $, Bt as $i, np as $n, Ws as $r, ug as $t, Jx as A, Pr as Ai, xm as An, cu as Ar, v_ as At, vb as B, Kn as Bi, Jp as Bn, Fc as Br, u_ as Bt, mS as C, Di as Ci, Mm as Cn, ud as Cr, V_ as Ct, Xx as D, ti as Di, wm as Dn, pu as Dr, E_ as Dt, Zx as E, $r as Ei, Tm as En, $u as Er, b_ as Et, rx as F, Jn as Fi, om as Fn, Yl as Fr, a_ as Ft, Wy as G, un as Gi, vp as Gn, mc as Gr, Rg as Gt, Yy as H, zn as Hi, Ip as Hn, Oc as Hr, Xg as Ht, ex as I, Xn as Ii, am as In, Ul as Ir, s_ as It, Fy as J, tn as Ji, hp as Jn, nc as Jr, jg as Jt, Gy as K, sn as Ki, _p as Kn, ac as Kr, zg as Kt, Ub as L, Zn as Li, Yp as Ln, El as Lr, o_ as Lt, Bx as M, qn as Mi, hm as Mn, nu as Mr, $g as Mt, gx as N, Yn as Ni, pm as Nn, eu as Nr, t_ as Nt, $x as O, Zr as Oi, ym as On, ou as Or, S_ as Ot, ux as P, Qn as Pi, fm as Pn, Ql as Pr, Qg as Pt, ky as Q, Vt as Qi, $f as Qn, Qs as Qr, xg as Qt, Vb as R, $n as Ri, Xp as Rn, Cl as Rr, c_ as Rt, hS as S, ji as Si, Nm as Sn, hd as Sr, W_ as St, Yx as T, ei as Ti, Om as Tn, id as Tr, C_ as Tt, Jy as U, wn as Ui, Np as Un, wc as Ur, Yg as Ut, ub as V, Hn as Vi, Vp as Vn, kc as Vr, Zg as Vt, Uy as W, xn as Wi, Dp as Wn, yc as Wr, Lg as Wt, My as X, Yt as Xi, dp as Xn, $s as Xr, Tg as Xt, Ny as Y, $t as Yi, fp as Yn, tc as Yr, Ag as Yt, jy as Z, Ut as Zi, Qf as Zn, ec as Zr, Cg as Zt, NS as _, Na as _i, Rm as _n, Wd as _r, dv as _t, tT as a, wt as aa, Ss as ai, $m as an, zf as ar, _y as at, bS as b, Ji as bi, Fm as bn, Cd as br, sv as bt, Qw as c, vt as ca, bs as ci, Xm as cn, Af as cr, bv as ct, Bw as d, pt as da, Fo as di, Hm as dn, ef as dr, Ev as dt, bt as ea, qs as ei, rg as en, tp as er, Oy as et, Iw as f, $ as fa, Po as fi, Um as fn, $d as fr, Sv as ft, OS as g, fo as gi, Wm as gn, Zd as gr, uv as gt, PS as h, _o as hi, zm as hn, of as hr, yv as ht, nT as i, gt as ia, xs as ii, sh as in, Wf as ir, my as it, qx as j, Ar as ji, vm as jn, ru as jr, e_ as jt, Qx as k, Gr as ki, bm as kn, su as kr, x_ as kt, eT as l, Et as la, vs as li, Bm as ln, af as lr, Tv as lt, RS as m, Q as ma, yo as mi, Gm as mn, rf as mr, Cv as mt, aT as n, Dt as na, Hs as ni, Lh as nn, Yf as nr, hy as nt, Zw as o, _t as oa, Cs as oi, Qm as on, Lf as or, ly as ot, ZC as p, et as pa, No as pi, Km as pn, Qd as pr, xv as pt, Vy as q, an as qi, gp as qn, ic as qr, Ig as qt, $w as r, St as ra, As as ri, Ch as rn, Jf as rr, gy as rt, Xw as s, ht as sa, ys as si, Zm as sn, Ff as sr, jv as st, pT as t, xt as ta, Js as ti, Jh as tn, rp as tr, wy as tt, Yw as u, Ct as ua, _s as ui, Vm as un, cf as ur, Dv as ut, DS as v, Ma as vi, Lm as vn, Hd as vr, pv as vt, uS as w, di as wi, jm as wn, od as wr, T_ as wt, yS as x, qi as xi, Pm as xn, xd as xr, rv as xt, ES as y, ja as yi, Im as yn, Vd as yr, fv as yt, wb as z, er as zi, Zp as zn, pl as zr, l_ as zt };
 
-//# sourceMappingURL=src-8QJpZtXC.js.map
+//# sourceMappingURL=src-DSTOx8Oy.js.map

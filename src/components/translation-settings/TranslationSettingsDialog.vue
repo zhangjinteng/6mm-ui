@@ -12,7 +12,11 @@
         :disabled="busy || readonly" aria-label="翻译目标语言" /></label>
       <TranslationEnabledToggle v-model="settings.is_enabled" :disabled="busy || readonly"
         :credential-ready="settings.credential_configured || !!apiKey.trim()" />
-      <div class="mm-translation-settings__credential">
+      <div v-if="settings.credential_locked" class="mm-translation-settings__credential">
+        <strong>Google API Key</strong>
+        <small>当前使用平台公共密钥，由平台统一管理。</small>
+      </div>
+      <div v-else class="mm-translation-settings__credential">
         <label>Google API Key<MmInput v-model="apiKey" type="password" autocomplete="new-password"
           :disabled="busy || readonly" aria-label="Google API Key"
           :placeholder="settings.credential_configured ? '已配置，留空保留原密钥；输入新密钥替换' : '请输入 Google Cloud Translation API Key'" /></label>

@@ -40,6 +40,17 @@ describe('shared translation settings (CMS, SEO, tags)', () => {
     expect(actions.testConnection).toHaveBeenCalledWith(expect.objectContaining({ space_id: '41', space_revision: '7' }), 'FAKE-CANDIDATE')
     expect(actions.save).not.toHaveBeenCalled(); expect(value).not.toHaveProperty('api_key'); w.unmount()
   })
+  it('locks only the key in public mode and still allows testing and saving', async () => {
+    const { w, actions } = fixture({ credential_locked: true, credential_source: 'env', api_key_mask: null })
+    await flushPromises()
+    expect(w.find('input[type="password"]').exists()).toBe(false)
+    expect(w.text()).toContain('当前使用平台公共密钥')
+    await button(w, '测试连接').trigger('click'); await flushPromises()
+    expect(actions.testConnection).toHaveBeenCalledWith(expect.anything(), '')
+    await button(w, '保存翻译配置').trigger('click'); await flushPromises()
+    expect(actions.save).toHaveBeenCalledWith(expect.anything(), '')
+    w.unmount()
+  })
   it('preserves saved credentials with an empty key and closes only after successful save', async () => {
     const { w, actions } = fixture(); await flushPromises()
     await button(w, '保存翻译配置').trigger('click'); await flushPromises()

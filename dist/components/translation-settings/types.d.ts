@@ -9,6 +9,7 @@ export interface TranslationSettings {
     api_version: string;
     credential_ref: string;
     credential_configured: boolean;
+    credential_locked?: boolean;
     credential_source?: 'database' | 'env';
     api_key_mask?: string | null;
     credential_error?: string | null;

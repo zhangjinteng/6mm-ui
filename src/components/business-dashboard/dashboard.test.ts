@@ -53,6 +53,21 @@ describe('supported dashboard data', () => {
   })
 })
 describe('shared workbench interactions', () => {
+  it.each([
+    ['tenant', null],
+    ['merchant', '本商户用户'],
+    ['platform', '全部来源用户'],
+  ] as const)('keeps the dashboard context for %s without the white-label scope note', async (scope, scopeNote) => {
+    const w = mount(Dashboard, { props: { request: async () => payload(scope) } })
+    await flushPromises()
+    expect(w.findAll('.mm-business-dashboard__context > span').map(item => item.text())).toEqual([
+      '2026-11-17 至 2026-11-18 · UTC',
+      '统计发布：暂无发布',
+      'USDT',
+      ...(scopeNote ? [scopeNote] : []),
+    ])
+    w.unmount()
+  })
   it.each(['platform', 'tenant', 'merchant'] as const)('uses the shared loading indicator on initial load and refresh for %s', async scope => {
     const request = vi.fn<() => Promise<DashboardPayload>>().mockResolvedValue(payload(scope))
     const w = mount(Dashboard, { props: { request } })

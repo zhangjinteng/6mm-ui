@@ -65,7 +65,7 @@ watch(period, load, { immediate: true })
       <span><MmIcon name="calendar" :size="13" />{{ data.range.start }} 至 {{ data.range.end }} · UTC</span>
       <span><MmIcon name="clock" :size="13" />统计发布：{{ timestamps.at(-1) || '暂无发布' }}</span>
       <span><MmIcon name="circle-dollar-sign" :size="13" />USDT</span>
-      <span>{{ merchant ? '本商户用户' : data.scope === 'tenant' ? '本站直属用户，不含商户' : '全部来源用户' }}</span>
+      <span v-if="data.scope !== 'tenant'">{{ merchant ? '本商户用户' : '全部来源用户' }}</span>
     </div>
     <div v-if="errors.length" class="mm-business-dashboard__warning" role="status">{{ errors.join('、') }}数据暂不可用 <MmButton size="sm" variant="text" @click="load">重试</MmButton></div>
     <div v-if="failed" class="mm-business-dashboard__empty"><MmEmpty description="加载失败，请稍后重试"><MmButton size="sm" variant="primary" @click="load">重新加载</MmButton></MmEmpty></div>

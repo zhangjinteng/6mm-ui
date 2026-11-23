@@ -3428,6 +3428,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 			name: "",
 			code: "",
 			parent_id: "",
+			show_on_vip_page: !1,
 			image_url: "",
 			image_media_id: null,
 			sort_order: 10,
@@ -3447,6 +3448,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 					name: t.name,
 					code: t.code,
 					parent_id: t.parent_id || "",
+					show_on_vip_page: t.show_on_vip_page ?? !1,
 					image_url: t.image_url || "",
 					image_media_id: t.image_media_id || null,
 					sort_order: t.sort_order,
@@ -3475,6 +3477,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 					await re("categories", {
 						name: V.name,
 						parent_id: V.parent_id || null,
+						show_on_vip_page: !V.parent_id && V.show_on_vip_page,
 						image_media_id: V.image_media_id,
 						sort_order: V.sort_order,
 						is_enabled: V.is_enabled,
@@ -3591,7 +3594,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 			}, 16, ["aria-label", "data"]),
 			C(N(d), {
 				modelValue: U.value,
-				"onUpdate:modelValue": n[10] ||= (e) => U.value = e,
+				"onUpdate:modelValue": n[11] ||= (e) => U.value = e,
 				title: `${V.id ? "编辑" : "新增"}帮助${Mt}`,
 				width: "680px",
 				subtitle: "帮助分类用于前端导航与内容归档，最多支持两级",
@@ -3609,14 +3612,14 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 							name: "trash-2",
 							size: 14
 						})]),
-						default: L(() => [n[14] ||= S("删除分类", -1)]),
+						default: L(() => [n[15] ||= S("删除分类", -1)]),
 						_: 1
 					}, 8, ["disabled"])) : y("", !0),
 					C(N(f), {
 						disabled: xe.value,
 						onClick: we
 					}, {
-						default: L(() => [...n[15] ||= [S("取消", -1)]]),
+						default: L(() => [...n[16] ||= [S("取消", -1)]]),
 						_: 1
 					}, 8, ["disabled"]),
 					Q.value ? y("", !0) : (k(), v(N(f), {
@@ -3690,21 +3693,33 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 									"modelValue",
 									"options",
 									"disabled"
-								]), n[13] ||= x("p", { class: "help-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类文章。 ", -1)])]),
+								]), n[14] ||= x("p", { class: "help-hint" }, " 选择“无”创建一级分类；一级分类数量包含其子分类文章。 ", -1)])]),
 								_: 1
 							}),
+							V.parent_id ? y("", !0) : (k(), v(N(c), {
+								key: 1,
+								label: "展示在 VIP 页"
+							}, {
+								default: L(() => [C(Et, {
+									modelValue: V.show_on_vip_page,
+									"onUpdate:modelValue": n[3] ||= (e) => V.show_on_vip_page = e,
+									disabled: Q.value || xe.value,
+									"aria-label": "展示在 VIP 页"
+								}, null, 8, ["modelValue", "disabled"])]),
+								_: 1
+							})),
 							C(N(c), { label: "分类图片" }, {
 								default: L(() => [C(r, {
 									class: "taxonomy-editor__image",
 									modelValue: V.image_url,
-									"onUpdate:modelValue": n[3] ||= (e) => V.image_url = e,
+									"onUpdate:modelValue": n[4] ||= (e) => V.image_url = e,
 									label: "分类图片",
 									upload: N(oe),
 									disabled: Q.value || xe.value,
-									"onUpdate:mediaId": n[4] ||= (e) => V.image_media_id = e,
-									onBusyChange: n[5] ||= (e) => H.value = e,
-									onStart: n[6] ||= (e) => be.value = "",
-									onError: n[7] ||= (e) => be.value = N(t)(e)
+									"onUpdate:mediaId": n[5] ||= (e) => V.image_media_id = e,
+									onBusyChange: n[6] ||= (e) => H.value = e,
+									onStart: n[7] ||= (e) => be.value = "",
+									onError: n[8] ||= (e) => be.value = N(t)(e)
 								}, null, 8, [
 									"modelValue",
 									"upload",
@@ -3718,7 +3733,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 							}, {
 								default: L(() => [C(N(u), {
 									modelValue: V.sort_order,
-									"onUpdate:modelValue": n[8] ||= (e) => V.sort_order = e,
+									"onUpdate:modelValue": n[9] ||= (e) => V.sort_order = e,
 									min: 0,
 									max: 2147483647,
 									precision: 0,
@@ -3729,7 +3744,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 							}), C(N(c), { label: "启用状态" }, {
 								default: L(() => [C(Et, {
 									modelValue: V.is_enabled,
-									"onUpdate:modelValue": n[9] ||= (e) => V.is_enabled = e,
+									"onUpdate:modelValue": n[10] ||= (e) => V.is_enabled = e,
 									disabled: Q.value || xe.value,
 									label: "已启用",
 									"aria-label": "启用状态"
@@ -3744,7 +3759,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 			}, 8, ["modelValue", "title"]),
 			C(N(d), {
 				modelValue: Z.value,
-				"onUpdate:modelValue": n[12] ||= (e) => Z.value = e,
+				"onUpdate:modelValue": n[13] ||= (e) => Z.value = e,
 				title: "删除帮助分类",
 				width: "420px",
 				"close-on-click-modal": !1,
@@ -3752,16 +3767,16 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 			}, {
 				footer: L(() => [C(N(f), {
 					disabled: X.value,
-					onClick: n[11] ||= (e) => Z.value = !1
+					onClick: n[12] ||= (e) => Z.value = !1
 				}, {
-					default: L(() => [...n[16] ||= [S("取消", -1)]]),
+					default: L(() => [...n[17] ||= [S("取消", -1)]]),
 					_: 1
 				}, 8, ["disabled"]), C(N(f), {
 					variant: "danger",
 					loading: X.value,
 					onClick: De
 				}, {
-					default: L(() => [...n[17] ||= [S("确认删除", -1)]]),
+					default: L(() => [...n[18] ||= [S("确认删除", -1)]]),
 					_: 1
 				}, 8, ["loading"])]),
 				default: L(() => [x("p", null, "确认删除分类“" + M(V.name) + "”？有关联文章或子分类的分类无法删除。", 1), ve.value ? (k(), v(N(s), {
@@ -3774,7 +3789,7 @@ var Tt = ["aria-checked", "disabled"], Et = /*#__PURE__*/ m(/* @__PURE__ */ w({
 			}, 8, ["modelValue", "before-close"])
 		]));
 	}
-}), [["__scopeId", "data-v-52a5768d"]]), Pt = ["aria-busy"], Ft = { class: "article-editor__header" }, It = { class: "article-editor__heading" }, Lt = { class: "article-editor__commands" }, Rt = {
+}), [["__scopeId", "data-v-53a625b3"]]), Pt = ["aria-busy"], Ft = { class: "article-editor__header" }, It = { class: "article-editor__heading" }, Lt = { class: "article-editor__commands" }, Rt = {
 	key: 2,
 	class: "article-editor__save-error",
 	role: "alert"

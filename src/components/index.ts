@@ -93,6 +93,7 @@ import { MmMarginChangeLogTable } from "./margin-change-log-table";
 import { MmOnlineUserTable } from "./online-user-table";
 import { MmPositionTable } from "./position-table";
 import { MmUserDetailDialog } from "./user-detail-dialog";
+import { MmUserPortraitDialog } from "./user-portrait";
 import { MmUserAssetTable } from "./user-asset-table";
 import { MmUserTable } from "./user-table";
 import { MmUserPredictionTable } from "./user-prediction-table";
@@ -201,6 +202,7 @@ export * from "./margin-change-log-table";
 export * from "./online-user-table";
 export * from "./position-table";
 export * from "./user-detail-dialog";
+export * from "./user-portrait";
 export * from "./user-asset-table";
 export * from "./user-table";
 export * from "./user-prediction-table";
@@ -312,6 +314,7 @@ export const components: InstallableComponent[] = [
   MmOnlineUserTable,
   MmPositionTable,
   MmUserDetailDialog,
+  MmUserPortraitDialog,
   MmUserAssetTable,
   MmUserTable,
   MmUserPredictionTable,

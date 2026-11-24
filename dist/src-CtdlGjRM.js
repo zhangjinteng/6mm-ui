@@ -24667,18 +24667,1033 @@ var Iv = { key: 1 }, Lv = { class: "mm-online-user-table__emphasis" }, Rv = { cl
 	e.component("MmUserDetailDialog", gy);
 } });
 //#endregion
-//#region src/components/user-asset-table/formatters.ts
+//#region src/components/trade-fill-table/formatters.ts
 function vy(e) {
+	return e == null || e === "" ? "-" : String(e);
+}
+function yy(e) {
+	let t = Number(e);
+	return Number.isFinite(t) ? String(t) : "-";
+}
+function by(e, t = 8) {
+	let n = Number(e);
+	return Number.isFinite(n) ? n.toFixed(t) : "-";
+}
+function xy(e) {
+	return vy(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
+}
+function Sy(e) {
+	return vy(e.agent_user_id ?? e.user?.agent_user_id);
+}
+//#endregion
+//#region src/components/trade-fill-table/TradeFillTable.vue?vue&type=script&setup=true&lang.ts
+var Cy = { class: "mm-trade-fill-table__id" }, wy = { key: 1 }, Ty = { class: "mm-trade-fill-table__id" }, Ey = { key: 1 }, Dy = { key: 1 }, Oy = { class: "mm-trade-fill-table__number" }, ky = { class: "mm-trade-fill-table__number" }, Ay = { class: "mm-trade-fill-table__number" }, jy = { key: 1 }, My = { class: "mm-trade-fill-table__actions" }, Ny = /* @__PURE__ */ k({
+	inheritAttrs: !1,
+	name: "MmTradeFillTable",
+	__name: "TradeFillTable",
+	props: {
+		actions: { default: () => ({}) },
+		ariaLabel: { default: void 0 },
+		columns: {},
+		columnsConfigurable: {
+			type: Boolean,
+			default: !0
+		},
+		fillHeight: {
+			type: Boolean,
+			default: !0
+		},
+		filterDrawerSubtitle: { default: void 0 },
+		filterDrawerTitle: { default: void 0 },
+		includeRobotUserType: {
+			type: Boolean,
+			default: !1
+		},
+		initialKeyword: { default: "" },
+		initialPageSize: { default: 20 },
+		initialTimeRange: { default: null },
+		pageSizes: { default: () => [
+			20,
+			30,
+			40
+		] },
+		request: {},
+		showUserType: {
+			type: Boolean,
+			default: !0
+		}
+	},
+	setup(e, { expose: t }) {
+		let n = e, { messages: r } = p(), i = b(() => r.value.tradeFills), a = se(), o = {
+			key: "trade_time",
+			order: "desc"
+		}, s = /* @__PURE__ */ new Set([
+			"trade_time",
+			"order_id",
+			"position_id",
+			"symbol",
+			"side",
+			"quantity",
+			"price",
+			"trade_value",
+			"handling_fee",
+			"role_type",
+			"realized_pnl"
+		]), l = /* @__PURE__ */ new Set([
+			"cell-order_id",
+			"cell-user_uid",
+			"cell-agent_user_id",
+			"cell-user_type",
+			"cell-position_id",
+			"cell-symbol",
+			"cell-product_category",
+			"cell-margin_mode",
+			"cell-side",
+			"cell-quantity",
+			"cell-price",
+			"cell-trade_value",
+			"cell-handling_fee",
+			"cell-role_type",
+			"cell-realized_pnl",
+			"cell-trade_time",
+			"cell-operation",
+			"query-actions",
+			"toolbar-actions"
+		]), u = b(() => [
+			{
+				key: "keyword",
+				label: i.value.keyword,
+				type: "keyword",
+				defaultValue: n.initialKeyword,
+				placeholder: i.value.keywordPlaceholder,
+				clearable: !0,
+				width: 250
+			},
+			{
+				key: "symbol",
+				label: i.value.contract,
+				type: "keyword",
+				defaultValue: "",
+				placeholder: i.value.symbolPlaceholder,
+				clearable: !0,
+				width: 140
+			},
+			{
+				key: "time_range",
+				label: i.value.tradeTime,
+				type: "date-range",
+				defaultValue: n.initialTimeRange,
+				placeholder: i.value.timeRange,
+				width: 250
+			},
+			...n.showUserType ? [{
+				key: "user_type",
+				label: i.value.userType,
+				type: "segmented",
+				defaultValue: "",
+				options: [
+					{
+						label: i.value.all,
+						value: ""
+					},
+					{
+						label: i.value.live,
+						value: 1
+					},
+					{
+						label: i.value.internal,
+						value: 2
+					},
+					...n.includeRobotUserType ? [{
+						label: i.value.robot,
+						value: 3
+					}] : []
+				],
+				block: !0,
+				width: n.includeRobotUserType ? 208 : 154
+			}] : [],
+			{
+				key: "margin_mode",
+				label: i.value.marginMode,
+				type: "select",
+				defaultValue: "",
+				options: [
+					{
+						label: i.value.allMarginModes,
+						value: ""
+					},
+					{
+						label: i.value.cross,
+						value: 1
+					},
+					{
+						label: i.value.isolated,
+						value: 2
+					}
+				],
+				width: 140
+			},
+			{
+				key: "side",
+				label: i.value.side,
+				type: "select",
+				defaultValue: "",
+				options: [
+					{
+						label: i.value.allSides,
+						value: ""
+					},
+					{
+						label: i.value.buy,
+						value: "buy"
+					},
+					{
+						label: i.value.sell,
+						value: "sell"
+					}
+				],
+				width: 130
+			},
+			{
+				key: "role_type",
+				label: i.value.tradeRole,
+				type: "select",
+				defaultValue: "",
+				options: [
+					{
+						label: i.value.allRoles,
+						value: ""
+					},
+					{
+						label: i.value.maker,
+						value: "maker"
+					},
+					{
+						label: i.value.taker,
+						value: "taker"
+					}
+				],
+				width: 130
+			}
+		]), d = b(() => {
+			let e = [
+				{
+					key: "order_id",
+					dataIndex: "order_id",
+					title: i.value.orderId,
+					width: 120,
+					hideable: !1,
+					sortable: !0
+				},
+				{
+					key: "user_uid",
+					title: i.value.userUid,
+					width: 120
+				},
+				{
+					key: "agent_user_id",
+					dataIndex: "agent_user_id",
+					title: i.value.externalUserId,
+					width: 100
+				},
+				...n.showUserType ? [{
+					key: "user_type",
+					dataIndex: "user_type",
+					title: i.value.userType,
+					width: 80
+				}] : [],
+				{
+					key: "position_id",
+					dataIndex: "position_id",
+					title: i.value.positionId,
+					width: 120,
+					sortable: !0
+				},
+				{
+					key: "symbol",
+					dataIndex: "symbol",
+					title: i.value.contract,
+					width: 120,
+					sortable: !0
+				},
+				{
+					key: "product_category",
+					dataIndex: "product_category",
+					title: i.value.productCategory,
+					width: 80
+				},
+				{
+					key: "margin_mode",
+					title: i.value.marginMode,
+					width: 80
+				},
+				{
+					key: "side",
+					dataIndex: "side",
+					title: i.value.side,
+					width: 80,
+					sortable: !0
+				},
+				{
+					key: "quantity",
+					dataIndex: "quantity",
+					title: i.value.quantity,
+					width: 100,
+					sortable: !0
+				},
+				{
+					key: "price",
+					dataIndex: "price",
+					title: i.value.price,
+					width: 100,
+					sortable: !0
+				},
+				{
+					key: "trade_value",
+					dataIndex: "trade_value",
+					title: i.value.tradeValue,
+					width: 100,
+					sortable: !0
+				},
+				{
+					key: "handling_fee",
+					dataIndex: "handling_fee",
+					title: i.value.handlingFee,
+					width: 100,
+					sortable: !0
+				},
+				{
+					key: "role_type",
+					dataIndex: "role_type",
+					title: i.value.tradeRole,
+					width: 80,
+					sortable: !0
+				},
+				{
+					key: "realized_pnl",
+					dataIndex: "realized_pnl",
+					title: i.value.realizedPnl,
+					width: 120,
+					sortable: !0
+				},
+				{
+					key: "trade_time",
+					dataIndex: "trade_time",
+					title: i.value.tradeTime,
+					width: 150,
+					sortable: !0
+				}
+			];
+			return (n.actions.detail || a["cell-operation"]) && e.push({
+				key: "operation",
+				title: i.value.operation,
+				width: 56,
+				fixed: "right",
+				hideable: !1
+			}), e;
+		}), f = b(() => {
+			let e = d.value.map((e) => ({ ...e })), t = n.columns ? typeof n.columns == "function" ? n.columns(e) : n.columns : e;
+			return Array.isArray(t) ? t.map((e) => ({ ...e })) : e;
+		}), m = b(() => Object.keys(a).filter((e) => !l.has(e))), h = W(/* @__PURE__ */ new Set());
+		function g(e, t) {
+			let n = e[t];
+			return n === null || Array.isArray(n) ? "" : n;
+		}
+		function _(e, t) {
+			return e ? e.includes(" ") ? e : `${e} ${t === "start" ? "00:00:00" : "23:59:59"}` : "";
+		}
+		function v(e) {
+			return e.user_type ?? e.user?.user_type;
+		}
+		function y(e) {
+			let t = Number(v(e));
+			return t === 1 ? {
+				label: i.value.live,
+				type: "success"
+			} : t === 2 ? {
+				label: i.value.internal,
+				type: "info"
+			} : t === 3 ? {
+				label: i.value.robot,
+				type: "warning"
+			} : null;
+		}
+		function x(e) {
+			return Number(e.position?.margin_mode) === 1 ? i.value.cross : Number(e.position?.margin_mode) === 2 ? i.value.isolated : "-";
+		}
+		function k(e) {
+			let t = String(e.side ?? "").toLowerCase();
+			return t === "buy" ? {
+				label: i.value.buy,
+				type: "success"
+			} : t === "sell" ? {
+				label: i.value.sell,
+				type: "danger"
+			} : null;
+		}
+		function j(e) {
+			let t = String(e.role_type ?? "").toLowerCase();
+			return t === "maker" ? {
+				label: i.value.maker,
+				type: "success"
+			} : t === "taker" ? {
+				label: i.value.taker,
+				type: "warning"
+			} : null;
+		}
+		function M(e) {
+			let t = Number(e);
+			return t > 0 ? "is-profit" : t < 0 ? "is-loss" : "is-neutral";
+		}
+		function N(e) {
+			let t = String(e.side ?? "").toLowerCase();
+			return t === "buy" ? "is-buy" : t === "sell" ? "is-sell" : "";
+		}
+		async function F(e, t) {
+			if (!e) return;
+			let n = String(t.fill_id);
+			if (!h.value.has(n)) {
+				h.value.add(n);
+				try {
+					await e(t, { reload: B });
+				} finally {
+					h.value.delete(n);
+				}
+			}
+		}
+		async function R({ filters: e, page: t, pageSize: r, signal: a, sort: c }) {
+			let l = Array.isArray(e.time_range) ? e.time_range : null, u = c.order && s.has(c.key) ? c : o, d = {
+				end_time: _(l?.[1], "end"),
+				keyword: String(g(e, "keyword")),
+				margin_mode: g(e, "margin_mode"),
+				order_by: u.key,
+				order_dir: u.order === "asc" ? "asc" : "desc",
+				page_no: t,
+				page_size: r,
+				role_type: g(e, "role_type"),
+				side: g(e, "side"),
+				start_time: _(l?.[0], "start"),
+				symbol: String(g(e, "symbol")),
+				...n.showUserType ? { user_type: g(e, "user_type") } : {}
+			};
+			try {
+				return await n.request(d, { signal: a });
+			} catch (e) {
+				let t = e;
+				throw Error(t?.msg || t?.message || i.value.loadFailed);
+			}
+		}
+		let { proTableBindings: z, reload: B } = ac({
+			initialAutoRefreshSeconds: 0,
+			initialFilters: { keyword: n.initialKeyword },
+			initialPageSize: n.initialPageSize,
+			initialSort: o,
+			queryFields: u,
+			request: R
+		});
+		return t({ reload: B }), (t, n) => (U(), S(Y(Xl), P({
+			...t.$attrs,
+			...Y(z)
+		}, {
+			class: ["mm-trade-fill-table", { "is-fill-height": e.fillHeight }],
+			"aria-label": e.ariaLabel ?? Y(r).tradeFills.tableAria,
+			columns: f.value,
+			"columns-configurable": e.columnsConfigurable,
+			"fill-height": e.fillHeight,
+			"filter-drawer-title": e.filterDrawerTitle ?? Y(r).tradeFills.filterTitle,
+			"filter-drawer-subtitle": e.filterDrawerSubtitle ?? Y(r).tradeFills.filterSubtitle,
+			"page-sizes": e.pageSizes,
+			"row-key": "fill_id"
+		}), E({
+			"cell-order_id": Z((e) => [K(t.$slots, "cell-order_id", L(A(e)), () => [T("span", Cy, q(Y(vy)(e.row.order_id)), 1)])]),
+			"cell-user_uid": Z((e) => [K(t.$slots, "cell-user_uid", L(A(e)), () => [D(q(Y(xy)(e.row)), 1)])]),
+			"cell-agent_user_id": Z((e) => [K(t.$slots, "cell-agent_user_id", L(A(e)), () => [D(q(Y(Sy)(e.row)), 1)])]),
+			"cell-user_type": Z((e) => [K(t.$slots, "cell-user_type", L(A(e)), () => [y(e.row) ? (U(), S(Y(Q), {
+				key: 0,
+				effect: "outline",
+				round: "",
+				size: "sm",
+				type: y(e.row)?.type
+			}, {
+				default: Z(() => [D(q(y(e.row)?.label), 1)]),
+				_: 2
+			}, 1032, ["type"])) : (U(), w("span", wy, "-"))])]),
+			"cell-position_id": Z((e) => [K(t.$slots, "cell-position_id", L(A(e)), () => [T("span", Ty, q(Y(vy)(e.row.position_id)), 1)])]),
+			"cell-symbol": Z((e) => [K(t.$slots, "cell-symbol", L(A(e)), () => [D(q(Y(vy)(e.row.symbol)), 1)])]),
+			"cell-product_category": Z((e) => [K(t.$slots, "cell-product_category", L(A(e)), () => [O(Y(Q), {
+				effect: "soft",
+				round: "",
+				size: "sm",
+				type: "primary"
+			}, {
+				default: Z(() => [D(q(Y(vy)(e.row.product_category_name || e.row.product_category)), 1)]),
+				_: 2
+			}, 1024)])]),
+			"cell-margin_mode": Z((e) => [K(t.$slots, "cell-margin_mode", L(A(e)), () => [x(e.row) === "-" ? (U(), w("span", Ey, "-")) : (U(), S(Y(Q), {
+				key: 0,
+				effect: "soft",
+				round: "",
+				size: "sm",
+				type: Number(e.row.position?.margin_mode) === 2 ? "primary" : "default"
+			}, {
+				default: Z(() => [D(q(x(e.row)), 1)]),
+				_: 2
+			}, 1032, ["type"]))])]),
+			"cell-side": Z((e) => [K(t.$slots, "cell-side", L(A(e)), () => [k(e.row) ? (U(), S(Y(Q), {
+				key: 0,
+				effect: "soft",
+				round: "",
+				size: "sm",
+				type: k(e.row)?.type
+			}, {
+				default: Z(() => [D(q(k(e.row)?.label), 1)]),
+				_: 2
+			}, 1032, ["type"])) : (U(), w("span", Dy, "-"))])]),
+			"cell-quantity": Z((e) => [K(t.$slots, "cell-quantity", L(A(e)), () => [T("span", { class: I(["mm-trade-fill-table__number", N(e.row)]) }, q(Y(yy)(e.row.quantity)), 3)])]),
+			"cell-price": Z((e) => [K(t.$slots, "cell-price", L(A(e)), () => [T("span", Oy, q(Y(yy)(e.row.price)), 1)])]),
+			"cell-trade_value": Z((e) => [K(t.$slots, "cell-trade_value", L(A(e)), () => [T("span", ky, q(Y(yy)(e.row.trade_value)), 1)])]),
+			"cell-handling_fee": Z((e) => [K(t.$slots, "cell-handling_fee", L(A(e)), () => [T("span", Ay, q(Y(yy)(e.row.handling_fee)), 1)])]),
+			"cell-role_type": Z((e) => [K(t.$slots, "cell-role_type", L(A(e)), () => [j(e.row) ? (U(), S(Y(Q), {
+				key: 0,
+				effect: "soft",
+				round: "",
+				size: "sm",
+				type: j(e.row)?.type
+			}, {
+				default: Z(() => [D(q(j(e.row)?.label), 1)]),
+				_: 2
+			}, 1032, ["type"])) : (U(), w("span", jy, "-"))])]),
+			"cell-realized_pnl": Z((e) => [K(t.$slots, "cell-realized_pnl", L(A(e)), () => [T("span", { class: I(["mm-trade-fill-table__number", M(e.row.realized_pnl)]) }, q(Y(by)(e.row.realized_pnl)), 3)])]),
+			"cell-trade_time": Z((e) => [K(t.$slots, "cell-trade_time", L(A(e)), () => [D(q(Y(vy)(e.row.trade_time)), 1)])]),
+			"cell-operation": Z((n) => [K(t.$slots, "cell-operation", P(n, { detail: () => F(e.actions.detail, n.row) }), () => [T("div", My, [e.actions.detail ? (U(), S(Y($), {
+				key: 0,
+				"aria-label": Y(r).tradeFills.viewDetailFor(Y(vy)(n.row.fill_id)),
+				"icon-only": "",
+				size: "sm",
+				loading: h.value.has(String(n.row.fill_id)),
+				title: Y(r).tradeFills.viewDetail,
+				onClick: me((t) => F(e.actions.detail, n.row), ["stop"])
+			}, {
+				icon: Z(() => [O(Y(c), {
+					name: "panel-left-close",
+					size: 15
+				})]),
+				_: 1
+			}, 8, [
+				"aria-label",
+				"loading",
+				"title",
+				"onClick"
+			])) : C("", !0)])])]),
+			"query-actions": Z((e) => [K(t.$slots, "query-actions", L(A(e)))]),
+			"toolbar-actions": Z(() => [K(t.$slots, "toolbar-actions")]),
+			_: 2
+		}, [G(m.value, (e) => ({
+			name: e,
+			fn: Z((n) => [K(t.$slots, e, L(A(n)))])
+		}))]), 1040, [
+			"class",
+			"aria-label",
+			"columns",
+			"columns-configurable",
+			"fill-height",
+			"filter-drawer-title",
+			"filter-drawer-subtitle",
+			"page-sizes"
+		]));
+	}
+}), Py = {
+	用户画像: "User profile",
+	用户: "User",
+	"加载中…": "Loading…",
+	无法加载用户画像: "Unable to load the user profile",
+	风险标签: "Risk label",
+	风控状态: "Risk status",
+	正常: "Normal",
+	冻结: "Frozen",
+	封禁: "Banned",
+	限制提现: "Withdrawals restricted",
+	限制交易: "Trading restricted",
+	高风险账户: "High risk",
+	套利账户: "Arbitrage",
+	可疑IP: "Suspicious IP",
+	状态未知: "Unknown",
+	推荐关系: "Referral",
+	平台用户: "Platform user",
+	白标直属用户: "Direct site user",
+	注册: "Registered",
+	最近登录: "Last login",
+	概览: "Overview",
+	当前仓位: "Positions",
+	当前委托: "Open orders",
+	条件委托: "Conditional orders",
+	历史成交: "Trade fills",
+	历史仓位: "Closed positions",
+	资金流水: "Account changes",
+	"U本位钱包余额(U)": "U-margined wallet balance (U)",
+	"可用余额(U)": "Available balance (U)",
+	"当前持仓面值(U)": "Position value (U)",
+	"保证金占用(U)": "Margin used (U)",
+	"30日成交量(U)": "30-day volume (U)",
+	"累计已实现盈亏(U)": "Cumulative realized P&L (U)",
+	个仓位: "positions",
+	账户概览: "Account overview",
+	"U 本位账户实时数据": "Live U-margined account data",
+	"钱包余额(U)": "Wallet balance (U)",
+	"未实现盈亏(U)": "Unrealized P&L (U)",
+	"当前委托量(U)": "Open order value (U)",
+	用户信息: "User information",
+	"当前系统可用的身份、登录与风控资料": "Identity, login and risk information",
+	用户名: "Username",
+	"VIP 等级": "VIP level",
+	在线状态: "Online status",
+	在线: "Online",
+	离线: "Offline",
+	"登录 IP": "Login IP",
+	注册时间: "Registration time",
+	调整逐仓保证金: "Isolated margin adjustment",
+	筛选当前仓位: "Filter positions",
+	"支持交易对、仓位模式、方向、杠杆和开仓时间组合筛选": "Filter by symbol, margin mode, side, leverage or open time"
+}, Fy = {
+	key: 0,
+	class: "profile-status",
+	role: "status"
+}, Iy = {
+	key: 1,
+	class: "user-profile"
+}, Ly = {
+	class: "profile-identity-card",
+	"aria-label": "用户基础资料"
+}, Ry = { class: "profile-identity-main" }, zy = { class: "profile-name-row" }, By = { class: "profile-meta-row" }, Vy = {
+	class: "profile-metric-grid",
+	"aria-label": "用户资产与交易指标"
+}, Hy = { key: 0 }, Uy = {
+	key: 0,
+	class: "profile-menu-panel",
+	"aria-label": "概览"
+}, Wy = { class: "profile-overview" }, Gy = { class: "overview-section-head" }, Ky = { class: "overview-section-head is-profile" }, qy = {
+	key: 1,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "当前仓位"
+}, Jy = { class: "profile-table-pane is-position" }, Yy = {
+	key: 2,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "当前委托"
+}, Xy = { class: "profile-table-pane" }, Zy = {
+	key: 3,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "条件委托"
+}, Qy = { class: "profile-table-pane" }, $y = {
+	key: 4,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "历史成交"
+}, eb = { class: "profile-table-pane" }, tb = {
+	key: 5,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "历史仓位"
+}, nb = { class: "profile-table-pane" }, rb = {
+	key: 6,
+	class: "profile-menu-panel profile-pane-fill",
+	"aria-label": "资金流水"
+}, ib = { class: "profile-table-pane" }, ab = /*#__PURE__*/ a(/* @__PURE__ */ k({
+	__name: "UserPortraitDialog",
+	props: {
+		modelValue: { type: Boolean },
+		subject: {},
+		requestKey: {},
+		initialTab: { default: "basic" },
+		request: {},
+		tables: {},
+		marketPrices: {},
+		directUserLabel: { default: "平台用户" }
+	},
+	emits: ["update:modelValue", "loaded"],
+	setup(e, { emit: t }) {
+		let n = e, r = t, { locale: i } = p(), a = (e) => i.value === "en-US" ? Py[e] ?? e : e, o = ie(null), s = W(""), c = W("basic");
+		X(() => [
+			n.modelValue,
+			n.subject,
+			n.requestKey
+		], async ([e, t], i, l) => {
+			let u = new AbortController();
+			if (l(() => u.abort()), o.value = null, s.value = "", c.value = n.initialTab, !(!e || !t)) try {
+				let e = await n.request(t, u.signal);
+				if (u.signal.aborted) return;
+				o.value = e, r("loaded", e);
+			} catch {
+				u.signal.aborted || (s.value = a("无法加载用户画像"));
+			}
+		}, { immediate: !0 });
+		let l = b(() => o.value.detail), u = b(() => l.value.nick_name || l.value.username || ""), d = b(() => Array.from(u.value.trim())[0]?.toUpperCase() || (i.value === "en-US" ? "U" : "用")), f = b(() => a([
+			"正常",
+			"冻结",
+			"封禁",
+			"限制提现",
+			"限制交易"
+		][l.value.risk_status ?? -1] ?? "状态未知")), m = b(() => a([
+			"正常",
+			"高风险账户",
+			"套利账户",
+			"可疑IP"
+		][l.value.risk_label ?? -1] ?? "-")), h = b(() => Number(l.value.risk_status) === 0 ? "success" : "danger"), g = b(() => Number(l.value.risk_label) === 0 ? "success" : "warning"), v = b(() => a(Number(l.value.online_status) === 1 ? "在线" : "离线")), y = b(() => "uid:" + l.value.public_user_id), x = (e) => e + ":" + y.value, E = [
+			{
+				label: "概览",
+				value: "basic"
+			},
+			{
+				label: "当前仓位",
+				value: "position"
+			},
+			{
+				label: "当前委托",
+				value: "order"
+			},
+			{
+				label: "条件委托",
+				value: "conditionOrder"
+			},
+			{
+				label: "历史成交",
+				value: "historyDeal"
+			},
+			{
+				label: "历史仓位",
+				value: "historyPosition"
+			},
+			{
+				label: "资金流水",
+				value: "fundFlow"
+			}
+		], k = (e) => e.filter((e) => ![
+			"platform_user_id",
+			"user_id",
+			"username",
+			"recommendation",
+			"user_type",
+			"operation"
+		].includes(String(e.key))), A = (e) => e.filter((e) => !["keyword", "user_type"].includes(String(e.key))), j = (e, t) => hu(e.change_type, e.amount, "all") === "adjust_isolated_margin" ? a("调整逐仓保证金") : String(t || e.change_type || "-"), M = {
+			position: (e, t) => n.tables.position({
+				...e,
+				keyword: y.value
+			}, t),
+			order: (e, t) => n.tables.order({
+				...e,
+				keyword: y.value
+			}, t),
+			conditionOrder: (e, t) => n.tables.conditionOrder({
+				...e,
+				keyword: y.value,
+				kind: "condition",
+				lifecycle: "current"
+			}, t),
+			historyDeal: (e, t) => n.tables.historyDeal({
+				...e,
+				keyword: y.value
+			}, t),
+			historyPosition: (e, t) => n.tables.historyPosition({
+				...e,
+				keyword: y.value
+			}, t),
+			fundFlow: (e, t) => n.tables.fundFlow({
+				...e,
+				keyword: y.value
+			}, t)
+		}, N = b(() => o.value?.positions), P = b(() => o.value?.orders), F = (e, t) => e?.reduce((e, n) => e + t(n), 0) ?? null, L = (e) => F(e, (e) => Number(e.quantity) * Number(n.marketPrices[e.symbol] ?? NaN)), R = (e) => F(e, (e) => Number(e.margin ?? e.margin_price ?? 0)), z = (e) => F(e, (e) => Number(e.unrealized_pnl ?? 0)), B = (e) => F(e, (e) => Math.max(Number(e.original_qty) - Number(e.filled_qty), 0) * (Number(e.order_price) || Number(n.marketPrices[e.symbol] ?? NaN))), V = b(() => L(N.value)), H = b(() => R(N.value)), ee = b(() => z(N.value)), te = b(() => B(P.value)), ne = b(() => [
+			{
+				label: "U本位钱包余额(U)",
+				value: o.value?.account?.wallet_balance
+			},
+			{
+				label: "可用余额(U)",
+				value: o.value?.account?.available_balance
+			},
+			{
+				label: "当前持仓面值(U)",
+				value: V.value,
+				hint: N.value && N.value.length + " " + a("个仓位")
+			},
+			{
+				label: "保证金占用(U)",
+				value: H.value
+			},
+			{
+				label: "30日成交量(U)",
+				value: o.value?.volume_30d
+			},
+			{
+				label: "累计已实现盈亏(U)",
+				value: o.value?.realized_pnl
+			}
+		]);
+		function re(e) {
+			if (e == null || typeof e == "number" && !Number.isFinite(e)) return "-";
+			let t = Number(e);
+			return Number.isFinite(t) ? Number(t.toFixed(2)).toLocaleString(void 0, {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2
+			}) : String(e);
+		}
+		function J(e) {
+			if (e == null || typeof e == "number" && !Number.isFinite(e)) return "-";
+			let t = Number(e);
+			if (!Number.isFinite(t)) return "-";
+			let n = re(Math.abs(t));
+			return t > 0 ? `+${n}` : t < 0 ? `-${n}` : n;
+		}
+		function ae(e) {
+			if (e == null || typeof e == "number" && !Number.isFinite(e)) return "-";
+			let t = Number(e);
+			return t > 0 ? "is-positive" : t < 0 ? "is-negative" : "";
+		}
+		return (t, n) => (U(), S(Y(xn), {
+			"model-value": e.modelValue,
+			"onUpdate:modelValue": n[1] ||= (e) => r("update:modelValue", e),
+			title: a("用户画像"),
+			width: "80vw",
+			"panel-class": "user-profile-dialog",
+			"close-on-click-modal": !1
+		}, {
+			default: Z(() => [o.value ? (U(), w("div", Iy, [
+				T("section", Ly, [
+					O(Y(dd), {
+						class: "profile-avatar",
+						alt: u.value || a("用户"),
+						fallback: d.value,
+						shape: "circle",
+						size: 56
+					}, null, 8, ["alt", "fallback"]),
+					T("div", Ry, [T("div", zy, [
+						T("strong", null, q(u.value || "-"), 1),
+						m.value && m.value !== "-" ? (U(), S(Y(Q), {
+							key: 0,
+							type: g.value,
+							effect: "soft",
+							round: "",
+							size: "sm"
+						}, {
+							default: Z(() => [D(q(a("风险标签")) + "：" + q(m.value), 1)]),
+							_: 1
+						}, 8, ["type"])) : C("", !0),
+						O(Y(Q), {
+							type: h.value,
+							effect: "soft",
+							round: "",
+							size: "sm"
+						}, {
+							default: Z(() => [D(q(a("风控状态")) + "：" + q(f.value), 1)]),
+							_: 1
+						}, 8, ["type"])
+					]), T("div", By, [
+						T("span", null, "UID\xA0 " + q(l.value.public_user_id || "-"), 1),
+						T("span", null, "ID\xA0 " + q(l.value.user_id || "-"), 1),
+						T("span", null, q(a("推荐关系")) + "\xA0 " + q(l.value.agent_name_parse || a(e.directUserLabel)), 1),
+						T("span", null, "VIP\xA0 V" + q(l.value.vip_level ?? 0), 1),
+						T("span", null, q(a("注册")) + "\xA0 " + q(l.value.created_at || "-"), 1),
+						T("span", null, q(a("最近登录")) + "\xA0 " + q(l.value.last_login_at || "-"), 1)
+					])]),
+					K(t.$slots, "actions", { portrait: o.value })
+				]),
+				T("section", Vy, [(U(!0), w(_, null, G(ne.value, (e) => (U(), w("article", {
+					key: e.label,
+					class: "profile-metric-card"
+				}, [
+					T("span", null, q(a(e.label)), 1),
+					T("strong", null, q(re(e.value)), 1),
+					e.hint ? (U(), w("small", Hy, q(e.hint), 1)) : C("", !0)
+				]))), 128))]),
+				O(Y(_d), {
+					modelValue: c.value,
+					"onUpdate:modelValue": n[0] ||= (e) => c.value = e,
+					class: "profile-menu",
+					mode: "horizontal",
+					"aria-label": "用户画像功能"
+				}, {
+					default: Z(() => [(U(!0), w(_, null, G(E.filter((t) => t.value === "basic" || e.tables[t.value]), (e) => (U(), S(Y(Sd), {
+						key: e.value,
+						value: e.value
+					}, {
+						default: Z(() => [D(q(a(e.label)), 1)]),
+						_: 2
+					}, 1032, ["value"]))), 128))]),
+					_: 1
+				}, 8, ["modelValue"]),
+				c.value === "basic" ? (U(), w("section", Uy, [T("section", Wy, [
+					T("div", Gy, [T("div", null, [T("strong", null, q(a("账户概览")), 1), T("span", null, q(a("U 本位账户实时数据")), 1)])]),
+					O(Y(jg), {
+						columns: 5,
+						size: "sm"
+					}, {
+						default: Z(() => [
+							T("div", null, [T("dt", null, q(a("钱包余额(U)")), 1), T("dd", null, q(re(o.value.account?.wallet_balance)), 1)]),
+							T("div", null, [T("dt", null, q(a("可用余额(U)")), 1), T("dd", null, q(re(o.value.account?.available_balance)), 1)]),
+							T("div", null, [T("dt", null, q(a("未实现盈亏(U)")), 1), T("dd", { class: I(ae(ee.value)) }, q(J(ee.value)), 3)]),
+							T("div", null, [T("dt", null, q(a("保证金占用(U)")), 1), T("dd", null, q(re(H.value)), 1)]),
+							T("div", null, [T("dt", null, q(a("当前委托量(U)")), 1), T("dd", null, q(re(te.value)), 1)])
+						]),
+						_: 1
+					}),
+					T("div", Ky, [T("div", null, [T("strong", null, q(a("用户信息")), 1), T("span", null, q(a("当前系统可用的身份、登录与风控资料")), 1)])]),
+					O(Y(jg), {
+						columns: 4,
+						size: "sm"
+					}, {
+						default: Z(() => [
+							T("div", null, [n[2] ||= T("dt", null, "ID", -1), T("dd", null, q(l.value.user_id || "-"), 1)]),
+							T("div", null, [n[3] ||= T("dt", null, "UID", -1), T("dd", null, q(l.value.public_user_id || "-"), 1)]),
+							T("div", null, [T("dt", null, q(a("用户名")), 1), T("dd", null, q(u.value || "-"), 1)]),
+							T("div", null, [T("dt", null, q(a("推荐关系")), 1), T("dd", null, q(l.value.agent_name_parse || a(e.directUserLabel)), 1)]),
+							T("div", null, [T("dt", null, q(a("VIP 等级")), 1), T("dd", null, "V" + q(l.value.vip_level ?? 0), 1)]),
+							T("div", null, [T("dt", null, q(a("风控状态")), 1), T("dd", null, q(f.value), 1)]),
+							T("div", null, [T("dt", null, q(a("风险标签")), 1), T("dd", null, q(m.value || "-"), 1)]),
+							T("div", null, [T("dt", null, q(a("在线状态")), 1), T("dd", null, q(v.value), 1)]),
+							T("div", null, [T("dt", null, q(a("登录 IP")), 1), T("dd", null, q(l.value.last_login_ip || "-"), 1)]),
+							T("div", null, [T("dt", null, q(a("注册时间")), 1), T("dd", null, q(l.value.created_at || "-"), 1)]),
+							T("div", null, [T("dt", null, q(a("最近登录")), 1), T("dd", null, q(l.value.last_login_at || "-"), 1)]),
+							K(t.$slots, "password")
+						]),
+						_: 3
+					})
+				])])) : c.value === "position" ? (U(), w("section", qy, [T("div", Jy, [c.value === "position" ? (U(), S(Y(E_), {
+					key: x("position"),
+					class: "profile-position-table",
+					"aria-label": "用户当前仓位",
+					columns: k,
+					"fill-height": "",
+					"filter-drawer-subtitle": a("支持交易对、仓位模式、方向、杠杆和开仓时间组合筛选"),
+					"filter-drawer-title": a("筛选当前仓位"),
+					"initial-keyword": y.value,
+					"show-user-type": !1,
+					"initial-page-size": 20,
+					"market-prices": e.marketPrices,
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					request: M.position
+				}, null, 8, [
+					"filter-drawer-subtitle",
+					"filter-drawer-title",
+					"initial-keyword",
+					"market-prices",
+					"request"
+				])) : C("", !0)])])) : c.value === "order" ? (U(), w("section", Yy, [T("div", Xy, [(U(), S(Y(Fp), {
+					key: x("order"),
+					class: "profile-shared-table",
+					"aria-label": "用户当前委托",
+					columns: k,
+					"fill-height": "",
+					"initial-page-size": 20,
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					"query-fields": A,
+					request: M.order
+				}, {
+					"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)])]),
+					_: 3
+				}, 8, ["request"]))])])) : c.value === "conditionOrder" ? (U(), w("section", Zy, [T("div", Qy, [(U(), S(Y(yp), {
+					key: x("conditionOrder"),
+					class: "profile-shared-table",
+					"aria-label": "用户条件委托",
+					columns: k,
+					"fill-height": "",
+					"initial-page-size": 20,
+					lifecycle: "current",
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					"query-fields": A,
+					request: M.conditionOrder
+				}, {
+					"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)])]),
+					_: 3
+				}, 8, ["request"]))])])) : c.value === "historyDeal" ? (U(), w("section", $y, [T("div", eb, [(U(), S(Y(Ny), {
+					key: x("historyDeal"),
+					class: "profile-shared-table",
+					"aria-label": "用户历史成交",
+					columns: k,
+					"fill-height": "",
+					"initial-keyword": y.value,
+					"show-user-type": !1,
+					"initial-page-size": 20,
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					request: M.historyDeal
+				}, {
+					"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)])]),
+					_: 3
+				}, 8, ["initial-keyword", "request"]))])])) : c.value === "historyPosition" ? (U(), w("section", tb, [T("div", nb, [(U(), S(Y(ih), {
+					key: x("historyPosition"),
+					class: "profile-shared-table",
+					"aria-label": "用户历史仓位",
+					columns: k,
+					"fill-height": "",
+					"initial-keyword": y.value,
+					"show-user-type": !1,
+					"initial-page-size": 20,
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					request: M.historyPosition
+				}, {
+					"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)])]),
+					_: 3
+				}, 8, ["initial-keyword", "request"]))])])) : c.value === "fundFlow" ? (U(), w("section", rb, [T("div", ib, [(U(), S(Y(bu), {
+					key: x("fundFlow"),
+					class: "profile-shared-table",
+					"aria-label": "用户资金流水",
+					columns: k,
+					"fill-height": "",
+					"initial-page-size": 20,
+					mode: "all",
+					"page-sizes": [
+						20,
+						30,
+						40
+					],
+					"query-fields": A,
+					request: M.fundFlow
+				}, {
+					"cell-change_type": Z(({ row: e, label: t }) => [O(Y(Q), {
+						effect: "soft",
+						round: "",
+						size: "sm",
+						type: "default"
+					}, {
+						default: Z(() => [D(q(j(e, t)), 1)]),
+						_: 2
+					}, 1024)]),
+					"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol || "-"), 1)])]),
+					_: 3
+				}, 8, ["request"]))])])) : C("", !0)
+			])) : (U(), w("p", Fy, q(s.value || a("加载中…")), 1))]),
+			_: 3
+		}, 8, ["model-value", "title"]));
+	}
+}), [["__scopeId", "data-v-52fa7560"]]);
+//#endregion
+//#region src/components/user-asset-table/formatters.ts
+function ob(e) {
 	let t = Number(e ?? 0);
 	return Number.isFinite(t) ? t : 0;
 }
-function yy(e) {
+function sb(e) {
 	return e != null && e !== "";
 }
-function by(e, t) {
-	return e ? vy(t[e] ?? t[e.toUpperCase()]) : 0;
+function cb(e, t) {
+	return e ? ob(t[e] ?? t[e.toUpperCase()]) : 0;
 }
-function xy(e) {
+function lb(e) {
 	let t = e.side ?? e.position_side, n = String(t ?? "").toLowerCase();
 	if ([
 		"1",
@@ -24690,34 +25705,34 @@ function xy(e) {
 		"sell",
 		"short"
 	].includes(n)) return "short";
-	let r = vy(e.quantity);
+	let r = ob(e.quantity);
 	return r > 0 ? "long" : r < 0 ? "short" : null;
 }
-function Sy(e) {
-	return vy(e).toFixed(2);
+function ub(e) {
+	return ob(e).toFixed(2);
 }
-function Cy(e, t = {}) {
-	if (yy(e.position_amount)) return vy(e.position_amount);
+function db(e, t = {}) {
+	if (sb(e.position_amount)) return ob(e.position_amount);
 	let n = e.total_quantity;
 	if (n && typeof n == "object") {
 		let e = Object.entries(n);
-		if (e.length > 0) return e.reduce((e, [n, r]) => e + Math.abs(vy(r)) * by(n, t), 0);
+		if (e.length > 0) return e.reduce((e, [n, r]) => e + Math.abs(ob(r)) * cb(n, t), 0);
 	}
-	return (e.positions ?? []).reduce((e, n) => e + Math.abs(vy(n.quantity)) * by(n.symbol, t), 0);
+	return (e.positions ?? []).reduce((e, n) => e + Math.abs(ob(n.quantity)) * cb(n.symbol, t), 0);
 }
-function wy(e, t = {}) {
-	return yy(e.position_pnl) ? vy(e.position_pnl) : yy(e.unrealized_pnl) ? vy(e.unrealized_pnl) : (e.positions ?? []).reduce((e, n) => {
-		if (yy(n.unrealized_pnl)) return e + vy(n.unrealized_pnl);
-		let r = by(n.symbol, t), i = vy(n.entry_price), a = Math.abs(vy(n.quantity)), o = xy(n);
+function fb(e, t = {}) {
+	return sb(e.position_pnl) ? ob(e.position_pnl) : sb(e.unrealized_pnl) ? ob(e.unrealized_pnl) : (e.positions ?? []).reduce((e, n) => {
+		if (sb(n.unrealized_pnl)) return e + ob(n.unrealized_pnl);
+		let r = cb(n.symbol, t), i = ob(n.entry_price), a = Math.abs(ob(n.quantity)), o = lb(n);
 		return !r || !i || !a || !o ? e : e + (o === "long" ? r - i : i - r) * a;
 	}, 0);
 }
-function Ty(e) {
-	return `${e >= 0 ? "+" : ""}${Sy(e)}`;
+function pb(e) {
+	return `${e >= 0 ? "+" : ""}${ub(e)}`;
 }
 //#endregion
 //#region src/components/user-asset-table/UserAssetTable.vue?vue&type=script&setup=true&lang.ts
-var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class: "mm-user-asset-table__amount" }, ky = { class: "mm-user-asset-table__amount" }, Ay = { class: "mm-user-asset-table__amount" }, jy = { class: "mm-user-asset-table__actions" }, My = /* @__PURE__ */ k({
+var mb = { key: 1 }, hb = { class: "mm-user-asset-table__amount" }, gb = { class: "mm-user-asset-table__amount" }, _b = { class: "mm-user-asset-table__amount" }, vb = { class: "mm-user-asset-table__amount" }, yb = { class: "mm-user-asset-table__actions" }, bb = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmUserAssetTable",
 	__name: "UserAssetTable",
@@ -24959,10 +25974,10 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 			} : null;
 		}
 		function z(e) {
-			return Sy(Cy(e, n.marketPrices));
+			return ub(db(e, n.marketPrices));
 		}
 		function B(e) {
-			return wy(e, n.marketPrices);
+			return fb(e, n.marketPrices);
 		}
 		async function V({ filters: e, page: t, pageSize: i, signal: a, sort: c }) {
 			let l = c.order && s.has(c.key) ? c : o, u = {
@@ -25015,16 +26030,16 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 			}, {
 				default: Z(() => [D(q(R(e.row)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (U(), w("span", Ey, "-"))])]),
-			"cell-wallet_balance": Z((e) => [K(t.$slots, "cell-wallet_balance", L(A(e)), () => [T("span", Dy, q(Y(Sy)(e.row.wallet_balance)), 1)])]),
-			"cell-available_balance": Z((e) => [K(t.$slots, "cell-available_balance", L(A(e)), () => [T("span", Oy, q(Y(Sy)(e.row.available_balance)), 1)])]),
-			"cell-position_amount": Z((e) => [K(t.$slots, "cell-position_amount", P(e, { value: z(e.row) }), () => [T("span", ky, q(z(e.row)), 1)])]),
-			"cell-total_margin": Z((e) => [K(t.$slots, "cell-total_margin", L(A(e)), () => [T("span", Ay, q(Y(Sy)(e.row.total_margin)), 1)])]),
-			"cell-position_pnl": Z((e) => [K(t.$slots, "cell-position_pnl", P(e, { value: B(e.row) }), () => [T("span", { class: I(["mm-user-asset-table__pnl", B(e.row) >= 0 ? "is-profit" : "is-loss"]) }, q(Y(Ty)(B(e.row))), 3)])]),
+			}, 1032, ["type"])) : (U(), w("span", mb, "-"))])]),
+			"cell-wallet_balance": Z((e) => [K(t.$slots, "cell-wallet_balance", L(A(e)), () => [T("span", hb, q(Y(ub)(e.row.wallet_balance)), 1)])]),
+			"cell-available_balance": Z((e) => [K(t.$slots, "cell-available_balance", L(A(e)), () => [T("span", gb, q(Y(ub)(e.row.available_balance)), 1)])]),
+			"cell-position_amount": Z((e) => [K(t.$slots, "cell-position_amount", P(e, { value: z(e.row) }), () => [T("span", _b, q(z(e.row)), 1)])]),
+			"cell-total_margin": Z((e) => [K(t.$slots, "cell-total_margin", L(A(e)), () => [T("span", vb, q(Y(ub)(e.row.total_margin)), 1)])]),
+			"cell-position_pnl": Z((e) => [K(t.$slots, "cell-position_pnl", P(e, { value: B(e.row) }), () => [T("span", { class: I(["mm-user-asset-table__pnl", B(e.row) >= 0 ? "is-profit" : "is-loss"]) }, q(Y(pb)(B(e.row))), 3)])]),
 			"cell-actions": Z((n) => [K(t.$slots, "cell-actions", P(n, {
 				deposit: () => _("deposit", e.actions.deposit, n.row),
 				deduct: () => _("deduct", e.actions.deduct, n.row)
-			}), () => [T("div", jy, [e.actions.deposit ? (U(), S(Y(su), {
+			}), () => [T("div", yb, [e.actions.deposit ? (U(), S(Y(su), {
 				key: 0,
 				content: Y(r).userAssets.deposit
 			}, {
@@ -25088,7 +26103,7 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 			"row-key"
 		]));
 	}
-}), Ny = { key: 1 }, Py = { class: "mm-user-table__emphasis" }, Fy = { class: "mm-user-table__actions" }, Iy = /* @__PURE__ */ k({
+}), xb = { key: 1 }, Sb = { class: "mm-user-table__emphasis" }, Cb = { class: "mm-user-table__actions" }, wb = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmUserTable",
 	__name: "UserTable",
@@ -25395,8 +26410,8 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 			}, {
 				default: Z(() => [D(q(k(e.row.user_type)?.label), 1)]),
 				_: 2
-			}, 1032, ["type"])) : (U(), w("span", Ny, "-"))])]),
-			"cell-vip_level": Z((e) => [K(t.$slots, "cell-vip_level", L(A(e)), () => [T("span", Py, q(Y(Pv)(e.row.vip_level)), 1)])]),
+			}, 1032, ["type"])) : (U(), w("span", xb, "-"))])]),
+			"cell-vip_level": Z((e) => [K(t.$slots, "cell-vip_level", L(A(e)), () => [T("span", Sb, q(Y(Pv)(e.row.vip_level)), 1)])]),
 			"cell-login_ip": Z((e) => [K(t.$slots, "cell-login_ip", L(A(e)), () => [O(Y(Rg), {
 				"country-first": "",
 				info: e.row.last_login_ip_info,
@@ -25410,7 +26425,7 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 			"cell-actions": Z((n) => [K(t.$slots, "cell-actions", P(n, {
 				cancelAllOrders: () => _("cancelAllOrders", e.actions.cancelAllOrders, n.row),
 				closeAllPositions: () => _("closeAllPositions", e.actions.closeAllPositions, n.row)
-			}), () => [T("div", Fy, [e.actions.cancelAllOrders ? (U(), S(Y(su), {
+			}), () => [T("div", Cb, [e.actions.cancelAllOrders ? (U(), S(Y(su), {
 				key: 0,
 				content: Y(r).users.cancelAllOrders
 			}, {
@@ -25478,11 +26493,11 @@ var Ey = { key: 1 }, Dy = { class: "mm-user-asset-table__amount" }, Oy = { class
 });
 //#endregion
 //#region src/components/user-prediction-table/formatters.ts
-function Ly(e) {
+function Tb(e) {
 	let t = Number(e);
 	return Number.isFinite(t) ? Math.max(0, Math.trunc(t)).toString() : "0";
 }
-function Ry(e) {
+function Eb(e) {
 	let t = String(e ?? "0").trim().match(/^([+-]?)(\d+)(?:\.(\d*))?$/);
 	if (!t) return "-";
 	let [, n, r, i = ""] = t, a = i.padEnd(3, "0"), o = BigInt(`${r}${a.slice(0, 2)}`);
@@ -25490,13 +26505,13 @@ function Ry(e) {
 	let s = o.toString().padStart(3, "0"), c = s.slice(0, -2).replace(/\B(?=(\d{3})+(?!\d))/g, ","), l = s.slice(-2);
 	return `${n === "-" && o !== 0n ? "-" : ""}${c}.${l}`;
 }
-function zy(e) {
-	let t = Ry(e);
+function Db(e) {
+	let t = Eb(e);
 	return t === "-" || t === "0.00" || t.startsWith("-") ? t : `+${t}`;
 }
 //#endregion
 //#region src/components/user-prediction-table/UserPredictionTable.vue
-var By = /* @__PURE__ */ k({
+var Ob = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmUserPredictionTable",
 	__name: "UserPredictionTable",
@@ -25620,14 +26635,14 @@ var By = /* @__PURE__ */ k({
 			title: t,
 			width: n,
 			sortable: !0,
-			formatter: Ly
+			formatter: Tb
 		}), d = (e, t, n = 132) => ({
 			key: String(e),
 			dataIndex: String(e),
 			title: t,
 			width: n,
 			sortable: !0,
-			formatter: Ry
+			formatter: Eb
 		}), f = (e) => e == null || String(e).trim() === "" ? "-" : String(e), m = b(() => {
 			let e = [
 				{
@@ -25735,7 +26750,7 @@ var By = /* @__PURE__ */ k({
 			"cell-user_id": Z((e) => [K(t.$slots, "cell-user_id", L(A(e)), () => [D(q(f(e.row.user_id)), 1)])]),
 			"cell-username": Z((e) => [K(t.$slots, "cell-username", L(A(e)), () => [D(q(f(e.row.nice_name || e.row.username)), 1)])]),
 			"cell-agent_user_id": Z((e) => [K(t.$slots, "cell-agent_user_id", L(A(e)), () => [D(q(f(e.row.agent_user_id)), 1)])]),
-			"cell-net_profit_30d": Z((e) => [K(t.$slots, "cell-net_profit_30d", L(A(e)), () => [T("span", { class: I(x(e.row.net_profit_30d)) }, q(Y(zy)(e.row.net_profit_30d)), 3)])]),
+			"cell-net_profit_30d": Z((e) => [K(t.$slots, "cell-net_profit_30d", L(A(e)), () => [T("span", { class: I(x(e.row.net_profit_30d)) }, q(Y(Db)(e.row.net_profit_30d)), 3)])]),
 			_: 2
 		}, [G(g.value, (e) => ({
 			name: e,
@@ -25749,7 +26764,7 @@ var By = /* @__PURE__ */ k({
 			"page-sizes"
 		]));
 	}
-}), Vy = /* @__PURE__ */ k({
+}), kb = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmUserContractTable",
 	__name: "UserContractTable",
@@ -25764,7 +26779,7 @@ var By = /* @__PURE__ */ k({
 			"cell-user_id",
 			"cell-username",
 			"cell-agent_user_id"
-		]), s = b(() => Object.keys(a).filter((e) => !o.has(e))), c = (e) => e == null || e === "" ? null : Number(e), l = (e) => Ry(e ?? "0"), u = (e) => c(e) === null ? "-" : l(e), d = (e) => c(e) === null ? "-" : zy(e), f = (e) => e == null || String(e).trim() === "" ? "-" : String(e), m = (e) => {
+		]), s = b(() => Object.keys(a).filter((e) => !o.has(e))), c = (e) => e == null || e === "" ? null : Number(e), l = (e) => Eb(e ?? "0"), u = (e) => c(e) === null ? "-" : l(e), d = (e) => c(e) === null ? "-" : Db(e), f = (e) => e == null || String(e).trim() === "" ? "-" : String(e), m = (e) => {
 			let t = f(e);
 			if (t === "-") return t;
 			let n = t.replace("T", " ").match(/^(\d{4}-\d{2}-\d{2})\s+(\d{2}):(\d{2})/);
@@ -25936,24 +26951,24 @@ var By = /* @__PURE__ */ k({
 			"inline-query-field-keys"
 		]));
 	}
-}), Hy = (e) => {
+}), Ab = (e) => {
 	if (e == null || e === "") return null;
 	let t = Number(e);
 	return Number.isFinite(t) ? t : null;
 };
-function Uy(e, t, n = (e) => e.user_id) {
-	let r = (e) => new Map((e ?? []).map((e) => [String(e.user_id), e])), i = r(t.accounts), a = r(t.positions), o = r(t.orders), s = r(t.metrics), c = (e, n) => Hy(t.marketPrice?.(e)) ?? Hy(n) ?? 0;
+function jb(e, t, n = (e) => e.user_id) {
+	let r = (e) => new Map((e ?? []).map((e) => [String(e.user_id), e])), i = r(t.accounts), a = r(t.positions), o = r(t.orders), s = r(t.metrics), c = (e, n) => Ab(t.marketPrice?.(e)) ?? Ab(n) ?? 0;
 	return e.map((e) => {
-		let t = String(n(e)), r = i.get(t), l = (a.get(t)?.positions ?? []).filter((e) => Math.abs(Hy(e.quantity) ?? 0) > 0), u = o.get(t), d = s.get(t), f = l.reduce((e, t) => e + Math.abs(Hy(t.quantity) ?? 0) * c(t.symbol ?? "", t.entry_price), 0), p = l.reduce((e, t) => {
-			let n = Hy(t.unrealized_pnl);
+		let t = String(n(e)), r = i.get(t), l = (a.get(t)?.positions ?? []).filter((e) => Math.abs(Ab(e.quantity) ?? 0) > 0), u = o.get(t), d = s.get(t), f = l.reduce((e, t) => e + Math.abs(Ab(t.quantity) ?? 0) * c(t.symbol ?? "", t.entry_price), 0), p = l.reduce((e, t) => {
+			let n = Ab(t.unrealized_pnl);
 			if (n !== null) return e + n;
-			let r = Math.abs(Hy(t.quantity) ?? 0), i = Hy(t.entry_price) ?? 0, a = c(t.symbol ?? "");
+			let r = Math.abs(Ab(t.quantity) ?? 0), i = Ab(t.entry_price) ?? 0, a = c(t.symbol ?? "");
 			return !r || !i || !a ? e : e + ([
 				"1",
 				"buy",
 				"long"
 			].includes(String(t.side ?? "").toLowerCase()) ? a - i : i - a) * r;
-		}, 0), m = (u?.orders ?? []).reduce((e, t) => e + (Math.max(0, Math.abs(Hy(t.original_qty) ?? 0) - Math.abs(Hy(t.filled_qty) ?? 0)) * ((t.order_source === "condition" ? Hy(t.trigger_price) : Hy(t.order_price)) ?? c(t.symbol ?? "")) || Math.abs(Hy(t.frozen_amount) ?? 0)), 0);
+		}, 0), m = (u?.orders ?? []).reduce((e, t) => e + (Math.max(0, Math.abs(Ab(t.original_qty) ?? 0) - Math.abs(Ab(t.filled_qty) ?? 0)) * ((t.order_source === "condition" ? Ab(t.trigger_price) : Ab(t.order_price)) ?? c(t.symbol ?? "")) || Math.abs(Ab(t.frozen_amount) ?? 0)), 0);
 		return {
 			...e,
 			wallet_balance: r?.wallet_balance ?? e.wallet_balance ?? 0,
@@ -25971,13 +26986,13 @@ function Uy(e, t, n = (e) => e.user_id) {
 }
 //#endregion
 //#region src/components/contract-vip-table/ContractVipTable.vue?vue&type=script&setup=true&lang.ts
-var Wy = {
+var Mb = {
 	class: "mm-contract-vip-page",
 	"data-mm-component": "contract-vip-table"
-}, Gy = { class: "mm-contract-vip-page__level" }, Ky = { key: 0 }, qy = {
+}, Nb = { class: "mm-contract-vip-page__level" }, Pb = { key: 0 }, Fb = {
 	key: 1,
 	class: "mm-contract-vip-page__progress"
-}, Jy = { key: 2 }, Yy = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, Ib = { key: 2 }, Lb = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	name: "MmContractVipTable",
 	__name: "ContractVipTable",
 	props: {
@@ -26083,7 +27098,7 @@ var Wy = {
 			minimumFractionDigits: 2,
 			maximumFractionDigits: 2
 		}) : "—", p = (e) => Number(e.toFixed(2)).toString();
-		return (t, n) => (U(), w("div", Wy, [O(Y(Xl), P(Y(u), {
+		return (t, n) => (U(), w("div", Mb, [O(Y(Xl), P(Y(u), {
 			"aria-label": "合约VIP用户列表",
 			"auto-refresh-seconds": 0,
 			"auto-refresh-options": [0],
@@ -26111,11 +27126,11 @@ var Wy = {
 				_: 2
 			}, 1032, ["onClick"])], !0)]),
 			"cell-username": Z(({ row: e }) => [K(t.$slots, "cell-username", { row: e }, () => [D(q(e.nice_name || e.username || "-"), 1)], !0)]),
-			"cell-vip_level": Z(({ row: e }) => [T("span", Gy, "VIP" + q(e.vip_level), 1)]),
+			"cell-vip_level": Z(({ row: e }) => [T("span", Nb, "VIP" + q(e.vip_level), 1)]),
 			"cell-volume_30d": Z(({ row: e }) => [D(q(f(e.volume_30d)), 1)]),
 			"cell-current_threshold": Z(({ row: e }) => [D(q(f(e.current_threshold)), 1)]),
 			"cell-next_threshold": Z(({ row: e }) => [D(q(e.next_threshold == null ? "—" : f(e.next_threshold)), 1)]),
-			"cell-progress_percent": Z(({ row: e }) => [e.next_threshold == null && e.progress_percent !== null ? (U(), w("span", Ky, "最高等级")) : e.progress_percent === null ? (U(), w("span", Jy, "—")) : (U(), w("span", qy, q(p(e.progress_percent)) + "%", 1))]),
+			"cell-progress_percent": Z(({ row: e }) => [e.next_threshold == null && e.progress_percent !== null ? (U(), w("span", Pb, "最高等级")) : e.progress_percent === null ? (U(), w("span", Ib, "—")) : (U(), w("span", Fb, q(p(e.progress_percent)) + "%", 1))]),
 			"cell-last_calculated_at": Z(({ row: e }) => [D(q(e.last_calculated_at || "—"), 1)]),
 			_: 2
 		}, [G(o.value, (e) => ({
@@ -26123,10 +27138,10 @@ var Wy = {
 			fn: Z((n) => [K(t.$slots, e, P(n, { loading: Y(u).loading }), void 0, !0)])
 		}))]), 1040, ["columns", "filter-drawer-subtitle"])]));
 	}
-}), [["__scopeId", "data-v-86d6d86a"]]), Xy = (e) => e == null || e === "", Zy = (e) => Xy(e) ? "-" : cc(e, 2), Qy = (e) => Xy(e) ? "-" : cc(e, 0), $y = (e) => Xy(e) ? "-" : `${cc(e, 2)}%`, eb = {
+}), [["__scopeId", "data-v-86d6d86a"]]), Rb = (e) => e == null || e === "", zb = (e) => Rb(e) ? "-" : cc(e, 2), Bb = (e) => Rb(e) ? "-" : cc(e, 0), Vb = (e) => Rb(e) ? "-" : `${cc(e, 2)}%`, Hb = {
 	class: "asset-distribution-page",
 	"data-mm-component": "asset-distribution-table"
-}, tb = { class: "asset-distribution-page__updated-at" }, nb = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, Ub = { class: "asset-distribution-page__updated-at" }, Wb = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	name: "MmAssetDistributionTable",
 	__name: "AssetDistributionTable",
 	props: {
@@ -26222,28 +27237,28 @@ var Wy = {
 				title: "持有用户数",
 				width: 110,
 				sortable: !0,
-				formatter: Qy
+				formatter: Bb
 			},
 			{
 				key: "total_balance",
 				title: "总余额（原币）",
 				width: 150,
 				sortable: !0,
-				formatter: Zy
+				formatter: zb
 			},
 			{
 				key: "available_balance",
 				title: "可用余额（原币）",
 				width: 150,
 				sortable: !0,
-				formatter: Zy
+				formatter: zb
 			},
 			{
 				key: "restricted_balance",
 				title: "受限余额（原币）",
 				width: 150,
 				sortable: !0,
-				formatter: Zy
+				formatter: zb
 			},
 			{
 				key: "current_price",
@@ -26255,14 +27270,14 @@ var Wy = {
 				title: "总估值（USDT）",
 				width: 150,
 				sortable: !0,
-				formatter: Zy
+				formatter: zb
 			},
 			{
 				key: "asset_share",
 				title: "资产占比",
 				width: 100,
 				sortable: !0,
-				formatter: $y
+				formatter: Vb
 			},
 			{
 				key: "updated_at",
@@ -26298,7 +27313,7 @@ var Wy = {
 				}
 			}
 		});
-		return X([() => a.value.source_type, () => a.value.account_type], () => s()), (e, t) => (U(), w("section", eb, [O(Y(Xl), P(Y(o), {
+		return X([() => a.value.source_type, () => a.value.account_type], () => s()), (e, t) => (U(), w("section", Hb, [O(Y(Xl), P(Y(o), {
 			"aria-label": "资产分布",
 			columns: i.value,
 			"auto-refreshable": !1,
@@ -26332,7 +27347,7 @@ var Wy = {
 				_: 2
 			}, 1032, ["type"])]),
 			"cell-currency": Z(({ row: t }) => [K(e.$slots, "currency", { row: t }, () => [D(q(t.currency), 1)], !0)]),
-			"cell-updated_at": Z(({ row: e }) => [T("div", tb, [T("span", null, q(n(e.updated_at)), 1), e.snapshot_status === "incomplete" ? (U(), S(Y(Q), {
+			"cell-updated_at": Z(({ row: e }) => [T("div", Ub, [T("span", null, q(n(e.updated_at)), 1), e.snapshot_status === "incomplete" ? (U(), S(Y(Q), {
 				key: 0,
 				type: "warning",
 				size: "sm",
@@ -26344,7 +27359,7 @@ var Wy = {
 			_: 3
 		}, 16, ["columns"])]));
 	}
-}), [["__scopeId", "data-v-f2620fa0"]]), rb = /* @__PURE__ */ k({
+}), [["__scopeId", "data-v-f2620fa0"]]), Gb = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmUserMappingTable",
 	__name: "UserMappingTable",
@@ -26628,19 +27643,19 @@ var Wy = {
 			"page-sizes"
 		]));
 	}
-}), ib = ["aria-label"], ab = {
+}), Kb = ["aria-label"], qb = {
 	key: 0,
 	class: "mm-page-header__breadcrumb-row"
-}, ob = ["aria-label"], sb = { class: "mm-page-header__breadcrumbs" }, cb = ["aria-current"], lb = ["href"], ub = { key: 1 }, db = { class: "mm-page-header__main" }, fb = ["aria-label"], pb = { class: "mm-page-header__heading" }, mb = { class: "mm-page-header__title" }, hb = {
+}, Jb = ["aria-label"], Yb = { class: "mm-page-header__breadcrumbs" }, Xb = ["aria-current"], Zb = ["href"], Qb = { key: 1 }, $b = { class: "mm-page-header__main" }, ex = ["aria-label"], tx = { class: "mm-page-header__heading" }, nx = { class: "mm-page-header__title" }, rx = {
 	key: 0,
 	class: "mm-page-header__subtitle"
-}, gb = {
+}, ix = {
 	key: 1,
 	class: "mm-page-header__extra"
-}, _b = {
+}, ax = {
 	key: 1,
 	class: "mm-page-header__content"
-}, vb = /* @__PURE__ */ k({
+}, ox = /* @__PURE__ */ k({
 	name: "MmPageHeader",
 	__name: "PageHeader",
 	props: {
@@ -26661,20 +27676,20 @@ var Wy = {
 			"data-mm-component": "page-header",
 			"aria-label": e.title
 		}, [
-			t.$slots.breadcrumb || e.breadcrumbs.length ? (U(), w("div", ab, [K(t.$slots, "breadcrumb", {}, () => [T("nav", { "aria-label": Y(n).pageHeader.breadcrumb }, [T("ol", sb, [(U(!0), w(_, null, G(e.breadcrumbs, (t, n) => (U(), w("li", {
+			t.$slots.breadcrumb || e.breadcrumbs.length ? (U(), w("div", qb, [K(t.$slots, "breadcrumb", {}, () => [T("nav", { "aria-label": Y(n).pageHeader.breadcrumb }, [T("ol", Yb, [(U(!0), w(_, null, G(e.breadcrumbs, (t, n) => (U(), w("li", {
 				key: `${n}-${t.label}`,
 				class: "mm-page-header__breadcrumb-item",
 				"aria-current": n === e.breadcrumbs.length - 1 ? "page" : void 0
 			}, [t.href && n < e.breadcrumbs.length - 1 ? (U(), w("a", {
 				key: 0,
 				href: t.href
-			}, q(t.label), 9, lb)) : (U(), w("span", ub, q(t.label), 1)), n < e.breadcrumbs.length - 1 ? (U(), S(Y(c), {
+			}, q(t.label), 9, Zb)) : (U(), w("span", Qb, q(t.label), 1)), n < e.breadcrumbs.length - 1 ? (U(), S(Y(c), {
 				key: 2,
 				name: "chevron-right",
 				size: 12,
 				"aria-hidden": "true"
-			})) : C("", !0)], 8, cb))), 128))])], 8, ob)])])) : C("", !0),
-			T("div", db, [
+			})) : C("", !0)], 8, Xb))), 128))])], 8, Jb)])])) : C("", !0),
+			T("div", $b, [
 				e.showBack ? (U(), w("button", {
 					key: 0,
 					class: "mm-page-header__back",
@@ -26684,28 +27699,28 @@ var Wy = {
 				}, [O(Y(c), {
 					name: "arrow-left",
 					size: 17
-				}), T("span", null, q(r.value), 1)], 8, fb)) : C("", !0),
-				T("div", pb, [T("h1", mb, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])]), e.subtitle || t.$slots.subtitle ? (U(), w("p", hb, [K(t.$slots, "subtitle", {}, () => [D(q(e.subtitle), 1)])])) : C("", !0)]),
-				t.$slots.extra ? (U(), w("div", gb, [K(t.$slots, "extra")])) : C("", !0)
+				}), T("span", null, q(r.value), 1)], 8, ex)) : C("", !0),
+				T("div", tx, [T("h1", nx, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])]), e.subtitle || t.$slots.subtitle ? (U(), w("p", rx, [K(t.$slots, "subtitle", {}, () => [D(q(e.subtitle), 1)])])) : C("", !0)]),
+				t.$slots.extra ? (U(), w("div", ix, [K(t.$slots, "extra")])) : C("", !0)
 			]),
-			t.$slots.default ? (U(), w("div", _b, [K(t.$slots, "default")])) : C("", !0)
-		], 8, ib));
+			t.$slots.default ? (U(), w("div", ax, [K(t.$slots, "default")])) : C("", !0)
+		], 8, Kb));
 	}
-}), yb = [
+}), sx = [
 	"aria-label",
 	"aria-valuenow",
 	"aria-valuetext"
-], bb = { class: "mm-progress__track" }, xb = {
+], cx = { class: "mm-progress__track" }, lx = {
 	key: 0,
 	class: "mm-progress__text"
-}, Sb = {
+}, ux = {
 	class: "mm-progress__circle",
 	viewBox: "0 0 100 100",
 	"aria-hidden": "true"
-}, Cb = ["r"], wb = ["r"], Tb = {
+}, dx = ["r"], fx = ["r"], px = {
 	key: 0,
 	class: "mm-progress__circle-text"
-}, Eb = /* @__PURE__ */ k({
+}, mx = /* @__PURE__ */ k({
 	name: "MmProgress",
 	__name: "Progress",
 	props: {
@@ -26741,15 +27756,15 @@ var Wy = {
 			"aria-valuemax": "100",
 			"aria-valuenow": i.value,
 			"aria-valuetext": a.value
-		}, [e.type === "line" ? (U(), w(_, { key: 0 }, [T("div", bb, [T("span", {
+		}, [e.type === "line" ? (U(), w(_, { key: 0 }, [T("div", cx, [T("span", {
 			class: "mm-progress__bar",
 			style: R({ "--mm-progress-value": `${i.value}%` })
-		}, null, 4)]), e.showText ? (U(), w("span", xb, [K(t.$slots, "default", { percentage: i.value }, () => [D(q(a.value), 1)])])) : C("", !0)], 64)) : (U(), w(_, { key: 1 }, [(U(), w("svg", Sb, [T("circle", {
+		}, null, 4)]), e.showText ? (U(), w("span", lx, [K(t.$slots, "default", { percentage: i.value }, () => [D(q(a.value), 1)])])) : C("", !0)], 64)) : (U(), w(_, { key: 1 }, [(U(), w("svg", ux, [T("circle", {
 			class: "mm-progress__circle-track",
 			cx: "50",
 			cy: "50",
 			r: o.value
-		}, null, 8, Cb), T("circle", {
+		}, null, 8, dx), T("circle", {
 			class: "mm-progress__circle-value",
 			cx: "50",
 			cy: "50",
@@ -26758,24 +27773,24 @@ var Wy = {
 				strokeDasharray: s.value,
 				strokeDashoffset: c.value
 			})
-		}, null, 12, wb)])), e.showText ? (U(), w("span", Tb, [K(t.$slots, "default", { percentage: i.value }, () => [D(q(a.value), 1)])])) : C("", !0)], 64))], 14, yb));
+		}, null, 12, fx)])), e.showText ? (U(), w("span", px, [K(t.$slots, "default", { percentage: i.value }, () => [D(q(a.value), 1)])])) : C("", !0)], 64))], 14, sx));
 	}
-}), Db = {
+}), hx = {
 	class: "mm-result__icon",
 	"aria-hidden": "true"
-}, Ob = {
+}, gx = {
 	key: 0,
 	class: "mm-result__title"
-}, kb = {
+}, _x = {
 	key: 1,
 	class: "mm-result__subtitle"
-}, Ab = {
+}, vx = {
 	key: 2,
 	class: "mm-result__content"
-}, jb = {
+}, yx = {
 	key: 3,
 	class: "mm-result__extra"
-}, Mb = /* @__PURE__ */ k({
+}, bx = /* @__PURE__ */ k({
 	name: "MmResult",
 	__name: "Result",
 	props: {
@@ -26795,36 +27810,36 @@ var Wy = {
 			"data-mm-component": "result",
 			role: "status"
 		}, [
-			T("div", Db, [K(t.$slots, "icon", {}, () => [D(q(n.value), 1)])]),
-			e.title || t.$slots.title ? (U(), w("h2", Ob, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])])) : C("", !0),
-			e.subtitle || t.$slots.subtitle ? (U(), w("p", kb, [K(t.$slots, "subtitle", {}, () => [D(q(e.subtitle), 1)])])) : C("", !0),
-			t.$slots.default ? (U(), w("div", Ab, [K(t.$slots, "default")])) : C("", !0),
-			t.$slots.extra ? (U(), w("div", jb, [K(t.$slots, "extra")])) : C("", !0)
+			T("div", hx, [K(t.$slots, "icon", {}, () => [D(q(n.value), 1)])]),
+			e.title || t.$slots.title ? (U(), w("h2", gx, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])])) : C("", !0),
+			e.subtitle || t.$slots.subtitle ? (U(), w("p", _x, [K(t.$slots, "subtitle", {}, () => [D(q(e.subtitle), 1)])])) : C("", !0),
+			t.$slots.default ? (U(), w("div", vx, [K(t.$slots, "default")])) : C("", !0),
+			t.$slots.extra ? (U(), w("div", yx, [K(t.$slots, "extra")])) : C("", !0)
 		], 2));
 	}
-}), Nb = ["aria-label"], Pb = [
+}), xx = ["aria-label"], Sx = [
 	"aria-label",
 	"value",
 	"disabled"
-], Fb = { value: "paragraph" }, Ib = ["value"], Lb = [
+], Cx = { value: "paragraph" }, wx = ["value"], Tx = [
 	"aria-label",
 	"aria-pressed",
 	"disabled",
 	"onClick"
-], Rb = ["title"], zb = { class: "mm-sr-only" }, Bb = ["value", "disabled"], Vb = ["aria-label"], Hb = ["disabled", "onClick"], Ub = {
+], Ex = ["title"], Dx = { class: "mm-sr-only" }, Ox = ["value", "disabled"], kx = ["aria-label"], Ax = ["disabled", "onClick"], jx = {
 	key: 2,
 	class: "mm-rich-text-editor__footer"
-}, Wb = ["id"], Gb = {
+}, Mx = ["id"], Nx = {
 	key: 0,
 	class: "mm-rich-text-editor__label"
-}, Kb = { class: "mm-rich-text-editor__label" }, qb = {
+}, Px = { class: "mm-rich-text-editor__label" }, Fx = {
 	key: 1,
 	class: "mm-rich-text-editor__label"
-}, Jb = {
+}, Ix = {
 	key: 2,
 	class: "mm-rich-text-editor__error",
 	role: "alert"
-}, Yb = /* @__PURE__ */ k({
+}, Lx = /* @__PURE__ */ k({
 	inheritAttrs: !1,
 	name: "MmRichTextEditor",
 	__name: "RichTextEditor",
@@ -27233,14 +28248,14 @@ var Wy = {
 					value: z.value,
 					disabled: f.value,
 					onChange: ne
-				}, [T("option", Fb, q(l.value.paragraph), 1), (U(), w(_, null, G([
+				}, [T("option", Cx, q(l.value.paragraph), 1), (U(), w(_, null, G([
 					1,
 					2,
 					3
 				], (e) => T("option", {
 					key: e,
 					value: String(e)
-				}, q(l.value.heading(e)), 9, Ib)), 64))], 40, Pb),
+				}, q(l.value.heading(e)), 9, wx)), 64))], 40, Sx),
 				(U(!0), w(_, null, G(I.value, (e, t) => (U(), w("div", {
 					key: t,
 					class: "mm-rich-text-editor__group"
@@ -27260,23 +28275,23 @@ var Wy = {
 						size: 16,
 						"stroke-width": 1.75,
 						"aria-hidden": "true"
-					}))], 16, Lb)]),
+					}))], 16, Tx)]),
 					_: 2
 				}, 1032, ["content"]))), 128))]))), 128)),
 				T("label", {
 					class: "mm-rich-text-editor__color",
 					title: l.value.color
-				}, [T("span", zb, q(l.value.color), 1), T("input", {
+				}, [T("span", Dx, q(l.value.color), 1), T("input", {
 					type: "color",
 					value: B.value,
 					disabled: f.value,
 					onInput: ie
-				}, null, 40, Bb)], 8, Rb),
+				}, null, 40, Ox)], 8, Ex),
 				K(n.$slots, "toolbar-end", {
 					editor: Y(F),
 					disabled: f.value
 				})
-			], 8, Nb)) : C("", !0),
+			], 8, xx)) : C("", !0),
 			e.toolbar && R.value ? (U(), w("div", {
 				key: 1,
 				class: "mm-rich-text-editor__table-tools",
@@ -27292,12 +28307,12 @@ var Wy = {
 			}, [(U(), S(re(e.icon), {
 				size: 14,
 				"aria-hidden": "true"
-			})), D(q(e.label), 1)], 40, Hb))), 128))], 8, Vb)) : C("", !0),
+			})), D(q(e.label), 1)], 40, Ax))), 128))], 8, kx)) : C("", !0),
 			O(Y(We), {
 				class: "mm-rich-text-editor__content",
 				editor: Y(F)
 			}, null, 8, ["editor"]),
-			e.showCount || n.$slots.footer ? (U(), w("footer", Ub, [K(n.$slots, "footer", {
+			e.showCount || n.$slots.footer ? (U(), w("footer", jx, [K(n.$slots, "footer", {
 				editor: Y(F),
 				characters: V.value
 			}, () => [T("span", null, q(l.value.characters(V.value)), 1)])])) : C("", !0),
@@ -27342,7 +28357,7 @@ var Wy = {
 					id: Y(k),
 					class: "mm-rich-text-editor__dialog-form",
 					onSubmit: me(oe, ["prevent"])
-				}, [h.value === "html" ? (U(), w("label", Gb, [T("span", null, q(l.value.html), 1), fe(T("textarea", {
+				}, [h.value === "html" ? (U(), w("label", Nx, [T("span", null, q(l.value.html), 1), fe(T("textarea", {
 					"onUpdate:modelValue": r[2] ||= (e) => g.value = e,
 					class: "mm-rich-text-editor__source",
 					spellcheck: "false"
@@ -27352,18 +28367,18 @@ var Wy = {
 						setUrl: E,
 						setBusy: (e) => x.value = e
 					}, void 0, void 0, 0) : C("", !0),
-					T("label", Kb, [T("span", null, q(l.value.url), 1), O(Y(t), {
+					T("label", Px, [T("span", null, q(l.value.url), 1), O(Y(t), {
 						modelValue: g.value,
 						"onUpdate:modelValue": r[3] ||= (e) => g.value = e,
 						placeholder: "https://",
 						status: y.value ? "error" : void 0,
 						onInput: r[4] ||= (e) => y.value = ""
 					}, null, 8, ["modelValue", "status"])]),
-					h.value === "image" ? (U(), w("label", qb, [T("span", null, q(l.value.imageAlt), 1), O(Y(t), {
+					h.value === "image" ? (U(), w("label", Fx, [T("span", null, q(l.value.imageAlt), 1), O(Y(t), {
 						modelValue: v.value,
 						"onUpdate:modelValue": r[5] ||= (e) => v.value = e
 					}, null, 8, ["modelValue"])])) : C("", !0)
-				], 64)), y.value ? (U(), w("p", Jb, q(y.value), 1)) : C("", !0)], 40, Wb)]),
+				], 64)), y.value ? (U(), w("p", Ix, q(y.value), 1)) : C("", !0)], 40, Mx)]),
 				_: 3
 			}, 8, [
 				"model-value",
@@ -27372,7 +28387,7 @@ var Wy = {
 			])
 		], 16));
 	}
-}), Xb = ["tabindex"], Zb = /* @__PURE__ */ k({
+}), Rx = ["tabindex"], zx = /* @__PURE__ */ k({
 	name: "MmScrollbar",
 	__name: "Scrollbar",
 	props: {
@@ -27425,30 +28440,30 @@ var Wy = {
 			style: R(s.value),
 			tabindex: e.tabindex,
 			onScrollPassive: c
-		}, [T("div", { class: I(["mm-scrollbar__view", e.viewClass]) }, [K(t.$slots, "default")], 2)], 44, Xb)], 2));
+		}, [T("div", { class: I(["mm-scrollbar__view", e.viewClass]) }, [K(t.$slots, "default")], 2)], 44, Rx)], 2));
 	}
-}), Qb = {
+}), Bx = {
 	key: 0,
 	class: "mm-sidebar-nav__brand"
-}, $b = { class: "mm-sidebar-nav__main" }, ex = ["aria-label"], tx = [
+}, Vx = { class: "mm-sidebar-nav__main" }, Hx = ["aria-label"], Ux = [
 	"disabled",
 	"aria-label",
 	"data-sidebar-collapsed-group"
-], nx = {
+], Wx = {
 	key: 1,
 	"aria-hidden": "true"
-}, rx = { class: "mm-sidebar-nav__flyout-header" }, ix = [
+}, Gx = { class: "mm-sidebar-nav__flyout-header" }, Kx = [
 	"disabled",
 	"aria-label",
 	"data-sidebar-collapsed-item",
 	"onClick"
-], ax = {
+], qx = {
 	key: 1,
 	"aria-hidden": "true"
-}, ox = {
+}, Jx = {
 	key: 1,
 	class: "mm-sidebar-nav__footer"
-}, sx = /* @__PURE__ */ k({
+}, Yx = /* @__PURE__ */ k({
 	__name: "SidebarNavPanel",
 	props: {
 		activeKey: { default: void 0 },
@@ -27505,11 +28520,11 @@ var Wy = {
 			style: R(e.style)
 		}, {
 			default: Z(() => [
-				e.showBrand && t.$slots.brand ? (U(), w("header", Qb, [K(t.$slots, "brand", {
+				e.showBrand && t.$slots.brand ? (U(), w("header", Bx, [K(t.$slots, "brand", {
 					collapsed: e.collapsed,
 					mobile: e.mobile
 				})])) : C("", !0),
-				T("div", $b, [O(Y(Zb), {
+				T("div", Vx, [O(Y(zx), {
 					height: "100%",
 					tabindex: e.collapsed ? -1 : 0
 				}, {
@@ -27539,8 +28554,8 @@ var Wy = {
 							key: 0,
 							name: t.icon,
 							size: 16
-						}, null, 8, ["name"])) : (U(), w("span", nx, "•"))], 16, tx)]),
-						content: Z(({ close: n }) => [T("header", rx, q(t.label), 1), O(Y(_d), {
+						}, null, 8, ["name"])) : (U(), w("span", Wx, "•"))], 16, Ux)]),
+						content: Z(({ close: n }) => [T("header", Gx, q(t.label), 1), O(Y(_d), {
 							"model-value": e.activeKey,
 							"aria-label": Y(i).sidebar.submenu(t.label),
 							onSelect: (e) => f(e, n)
@@ -27589,9 +28604,9 @@ var Wy = {
 							key: 0,
 							name: t.icon,
 							size: 16
-						}, null, 8, ["name"])) : (U(), w("span", ax, "•"))], 16, ix)]),
+						}, null, 8, ["name"])) : (U(), w("span", qx, "•"))], 16, Kx)]),
 						_: 2
-					}, 1032, ["content"]))], 64))), 128))], 8, ex)) : (U(), S(Y(_d), {
+					}, 1032, ["content"]))], 64))), 128))], 8, Hx)) : (U(), S(Y(_d), {
 						key: 0,
 						class: "mm-sidebar-nav__expanded-menu",
 						"model-value": e.activeKey,
@@ -27674,7 +28689,7 @@ var Wy = {
 					]))]),
 					_: 1
 				}, 8, ["tabindex"])]),
-				t.$slots.footer ? (U(), w("footer", ox, [K(t.$slots, "footer", {
+				t.$slots.footer ? (U(), w("footer", Jx, [K(t.$slots, "footer", {
 					collapsed: e.collapsed,
 					mobile: e.mobile
 				})])) : C("", !0)
@@ -27687,7 +28702,7 @@ var Wy = {
 			"style"
 		]));
 	}
-}), cx = /* @__PURE__ */ k({
+}), Xx = /* @__PURE__ */ k({
 	name: "MmSidebarNav",
 	__name: "SidebarNav",
 	props: {
@@ -27787,7 +28802,7 @@ var Wy = {
 			title: t.$slots.brand ? void 0 : s.value,
 			"onUpdate:modelValue": n[0] ||= (e) => f.value = e
 		}, E({
-			default: Z(() => [O(sx, {
+			default: Z(() => [O(Yx, {
 				as: "div",
 				"active-key": Y(l),
 				"aria-label": o.value,
@@ -27824,7 +28839,7 @@ var Wy = {
 			"placement",
 			"size",
 			"title"
-		])) : (U(), S(sx, {
+		])) : (U(), S(Yx, {
 			key: 0,
 			"active-key": Y(l),
 			"aria-label": o.value,
@@ -27853,11 +28868,11 @@ var Wy = {
 			"style"
 		]));
 	}
-}), lx = { class: "mm-space__item" }, ux = {
+}), Zx = { class: "mm-space__item" }, Qx = {
 	key: 0,
 	class: "mm-space__separator",
 	"aria-hidden": "true"
-}, dx = /* @__PURE__ */ k({
+}, $x = /* @__PURE__ */ k({
 	name: "MmSpace",
 	__name: "Space",
 	props: {
@@ -27886,24 +28901,24 @@ var Wy = {
 			"data-mm-component": "space",
 			style: R(o.value)
 		}, {
-			default: Z(() => [(U(!0), w(_, null, G(i.value, (n, r) => (U(), w(_, { key: n.key ?? r }, [T("span", lx, [(U(), S(re(n)))]), r < i.value.length - 1 && (t.$slots.separator || e.separator) ? (U(), w("span", ux, [K(t.$slots, "separator", {}, () => [D(q(e.separator), 1)])])) : C("", !0)], 64))), 128))]),
+			default: Z(() => [(U(!0), w(_, null, G(i.value, (n, r) => (U(), w(_, { key: n.key ?? r }, [T("span", Zx, [(U(), S(re(n)))]), r < i.value.length - 1 && (t.$slots.separator || e.separator) ? (U(), w("span", Qx, [K(t.$slots, "separator", {}, () => [D(q(e.separator), 1)])])) : C("", !0)], 64))), 128))]),
 			_: 3
 		}, 8, ["class", "style"]));
 	}
-}), fx = {
+}), eS = {
 	key: 0,
 	class: "mm-statistic__title"
-}, px = { class: "mm-statistic__value" }, mx = {
+}, tS = { class: "mm-statistic__value" }, nS = {
 	key: 0,
 	class: "mm-statistic__trend",
 	"aria-hidden": "true"
-}, hx = {
+}, rS = {
 	key: 1,
 	class: "mm-statistic__prefix"
-}, gx = ["title"], _x = {
+}, iS = ["title"], aS = {
 	key: 2,
 	class: "mm-statistic__suffix"
-}, vx = /* @__PURE__ */ k({
+}, oS = /* @__PURE__ */ k({
 	name: "MmStatistic",
 	__name: "Statistic",
 	props: {
@@ -27931,17 +28946,17 @@ var Wy = {
 		return (t, r) => (U(), w("div", {
 			class: I(["mm-statistic", `is-trend-${e.trend}`]),
 			"data-mm-component": "statistic"
-		}, [e.title || t.$slots.title ? (U(), w("div", fx, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])])) : C("", !0), T("div", px, [
-			e.trend === "neutral" ? C("", !0) : (U(), w("span", mx, q(e.trend === "up" ? "↗" : "↘"), 1)),
-			e.prefix || t.$slots.prefix ? (U(), w("span", hx, [K(t.$slots, "prefix", {}, () => [D(q(e.prefix), 1)])])) : C("", !0),
+		}, [e.title || t.$slots.title ? (U(), w("div", eS, [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])])) : C("", !0), T("div", tS, [
+			e.trend === "neutral" ? C("", !0) : (U(), w("span", nS, q(e.trend === "up" ? "↗" : "↘"), 1)),
+			e.prefix || t.$slots.prefix ? (U(), w("span", rS, [K(t.$slots, "prefix", {}, () => [D(q(e.prefix), 1)])])) : C("", !0),
 			T("span", {
 				class: "mm-statistic__number",
 				title: n.value
-			}, q(n.value), 9, gx),
-			e.suffix || t.$slots.suffix ? (U(), w("span", _x, [K(t.$slots, "suffix", {}, () => [D(q(e.suffix), 1)])])) : C("", !0)
+			}, q(n.value), 9, iS),
+			e.suffix || t.$slots.suffix ? (U(), w("span", aS, [K(t.$slots, "suffix", {}, () => [D(q(e.suffix), 1)])])) : C("", !0)
 		])], 2));
 	}
-}), yx = { class: "mm-translation-config" }, bx = { class: "mm-translation-config__field" }, xx = { class: "mm-translation-config__field" }, Sx = { class: "mm-translation-config__field" }, Cx = { class: "mm-translation-config__footer" }, wx = /* @__PURE__ */ k({
+}), sS = { class: "mm-translation-config" }, cS = { class: "mm-translation-config__field" }, lS = { class: "mm-translation-config__field" }, uS = { class: "mm-translation-config__field" }, dS = { class: "mm-translation-config__footer" }, fS = /* @__PURE__ */ k({
 	__name: "TranslationConfigDialog",
 	props: {
 		actions: {},
@@ -28069,7 +29084,7 @@ var Wy = {
 			width: "520px",
 			"onUpdate:modelValue": r[4] ||= (e) => i("update:modelValue", e)
 		}, {
-			footer: Z(() => [T("div", Cx, [O($, {
+			footer: Z(() => [T("div", dS, [O($, {
 				disabled: g.value,
 				onClick: r[3] ||= (e) => i("update:modelValue", !1)
 			}, {
@@ -28091,8 +29106,8 @@ var Wy = {
 				default: Z(() => [D(q(s.value.save), 1)]),
 				_: 1
 			}, 8, ["disabled", "loading"])])])]),
-			default: Z(() => [T("div", yx, [
-				T("div", bx, [T("label", null, q(s.value.apiVersion), 1), O(zn, {
+			default: Z(() => [T("div", sS, [
+				T("div", cS, [T("label", null, q(s.value.apiVersion), 1), O(zn, {
 					modelValue: u.api_version,
 					"onUpdate:modelValue": r[0] ||= (e) => u.api_version = e,
 					disabled: g.value,
@@ -28102,7 +29117,7 @@ var Wy = {
 					"disabled",
 					"options"
 				])]),
-				T("div", xx, [
+				T("div", lS, [
 					T("label", null, q(s.value.apiKey), 1),
 					O(t, {
 						modelValue: u.api_key,
@@ -28119,7 +29134,7 @@ var Wy = {
 					]),
 					T("small", null, q(s.value.apiKeyHint), 1)
 				]),
-				T("div", Sx, [T("label", null, q(s.value.concurrency), 1), O(zn, {
+				T("div", uS, [T("label", null, q(s.value.concurrency), 1), O(zn, {
 					modelValue: u.concurrency,
 					"onUpdate:modelValue": r[2] ||= (e) => u.concurrency = e,
 					disabled: g.value,
@@ -28148,11 +29163,11 @@ var Wy = {
 			"title"
 		]));
 	}
-}), Tx = { class: "mm-tag-translation__title" }, Ex = { class: "mm-tag-translation" }, Dx = { class: "mm-tag-translation__toolbar" }, Ox = { class: "mm-tag-translation__source" }, kx = {
+}), pS = { class: "mm-tag-translation__title" }, mS = { class: "mm-tag-translation" }, hS = { class: "mm-tag-translation__toolbar" }, gS = { class: "mm-tag-translation__source" }, _S = {
 	key: 1,
 	class: "mm-tag-translation__loading",
 	role: "status"
-}, Ax = { class: "mm-tag-translation__footer" }, jx = /* @__PURE__ */ k({
+}, vS = { class: "mm-tag-translation__footer" }, yS = /* @__PURE__ */ k({
 	__name: "TagTranslationDialog",
 	props: {
 		actions: {},
@@ -28351,14 +29366,14 @@ var Wy = {
 			width: "920px",
 			"onUpdate:modelValue": n[6] ||= (e) => r("update:modelValue", e)
 		}, {
-			header: Z(() => [T("div", Tx, [T("strong", null, q(o.value.title), 1), T("span", null, q(o.value.configured) + " " + q(v.value) + "/" + q(s.value.length || 20), 1)])]),
+			header: Z(() => [T("div", pS, [T("strong", null, q(o.value.title), 1), T("span", null, q(o.value.configured) + " " + q(v.value) + "/" + q(s.value.length || 20), 1)])]),
 			"header-actions": Z(() => [e.showGoogleSettings ? (U(), S(Yi, {
 				key: 0,
 				class: "mm-tag-translation__settings",
 				locale: e.locale,
 				onClick: n[0] ||= (e) => r("open-settings")
 			}, null, 8, ["locale"])) : C("", !0)]),
-			footer: Z(() => [T("div", Ax, [T("span", null, [O(c, {
+			footer: Z(() => [T("div", vS, [T("span", null, [O(c, {
 				name: "circle-help",
 				size: 13
 			}), D(q(o.value.translateHint), 1)]), T("div", null, [
@@ -28391,7 +29406,7 @@ var Wy = {
 					_: 1
 				}, 8, ["disabled", "loading"])
 			])])]),
-			default: Z(() => [T("div", Ex, [
+			default: Z(() => [T("div", mS, [
 				g.text ? (U(), S(Zr, {
 					key: 0,
 					closable: "",
@@ -28404,7 +29419,7 @@ var Wy = {
 					"title",
 					"type"
 				])) : C("", !0),
-				T("div", Dx, [T("div", Ox, [
+				T("div", hS, [T("div", gS, [
 					T("label", null, q(o.value.source), 1),
 					O(zn, {
 						modelValue: d.value,
@@ -28430,7 +29445,7 @@ var Wy = {
 					"disabled",
 					"options"
 				])]),
-				p.value ? (U(), w("div", kx, [O(c, {
+				p.value ? (U(), w("div", _S, [O(c, {
 					name: "loader-circle",
 					size: 18
 				}), D(q(o.value.loading), 1)])) : (U(), S(Y(et), {
@@ -28463,20 +29478,20 @@ var Wy = {
 			_: 1
 		}, 8, ["model-value", "show-close"]));
 	}
-}), Mx = { class: "mm-symbol-tag-manager" }, Nx = ["aria-label", "onClick"], Px = {
+}), bS = { class: "mm-symbol-tag-manager" }, xS = ["aria-label", "onClick"], SS = {
 	key: 1,
 	class: "mm-symbol-tag-manager__branch"
-}, Fx = {
+}, CS = {
 	key: 2,
 	class: "mm-symbol-tag-manager__spacer"
-}, Ix = { key: 1 }, Lx = { class: "mm-symbol-tag-manager__actions" }, Rx = { class: "mm-symbol-tag-manager__drawer-title" }, zx = {
+}, wS = { key: 1 }, TS = { class: "mm-symbol-tag-manager__actions" }, ES = { class: "mm-symbol-tag-manager__drawer-title" }, DS = {
 	key: 0,
 	class: "mm-symbol-tag-manager__drawer-content"
-}, Bx = ["aria-label"], Vx = { class: "mm-symbol-tag-manager__create-heading" }, Hx = ["aria-label"], Ux = { class: "mm-symbol-tag-manager__display is-full" }, Wx = { class: "mm-symbol-tag-manager__display-control" }, Gx = [
+}, OS = ["aria-label"], kS = { class: "mm-symbol-tag-manager__create-heading" }, AS = ["aria-label"], jS = { class: "mm-symbol-tag-manager__display is-full" }, MS = { class: "mm-symbol-tag-manager__display-control" }, NS = [
 	"aria-checked",
 	"aria-label",
 	"disabled"
-], Kx = { class: "mm-symbol-tag-manager__notice is-full" }, qx = { class: "mm-symbol-tag-manager__dialog-footer" }, Jx = /* @__PURE__ */ k({
+], PS = { class: "mm-symbol-tag-manager__notice is-full" }, FS = { class: "mm-symbol-tag-manager__dialog-footer" }, IS = /* @__PURE__ */ k({
 	name: "MmSymbolTagManager",
 	__name: "SymbolTagManager",
 	props: {
@@ -29075,7 +30090,7 @@ var Wy = {
 		async function Ue() {
 			a("action-success", "translations", A.value || void 0), await ke();
 		}
-		return B(ke), n({ reload: ke }), (n, r) => (U(), w("section", Mx, [
+		return B(ke), n({ reload: ke }), (n, r) => (U(), w("section", bS, [
 			O(Xl, {
 				"aria-label": l.value.tableAria,
 				columns: ee.value,
@@ -29140,11 +30155,11 @@ var Wy = {
 				}, [O(c, {
 					name: e._expanded ? "chevron-down" : "chevron-right",
 					size: 14
-				}, null, 8, ["name"])], 8, Nx)) : e._level > 0 ? (U(), w("span", Px, [O(c, {
+				}, null, 8, ["name"])], 8, xS)) : e._level > 0 ? (U(), w("span", SS, [O(c, {
 					name: "tree-branch",
 					size: 18,
 					"stroke-width": 1
-				})])) : (U(), w("span", Fx)), T("span", null, q(e.tag_name || "-"), 1)], 4)]),
+				})])) : (U(), w("span", CS)), T("span", null, q(e.tag_name || "-"), 1)], 4)]),
 				"cell-tag_code": Z(({ row: e }) => [e.tag_code ? (U(), S(Q, {
 					key: 0,
 					effect: "soft",
@@ -29153,7 +30168,7 @@ var Wy = {
 				}, {
 					default: Z(() => [D(q(e.tag_code), 1)]),
 					_: 2
-				}, 1024)) : (U(), w("span", Ix, "-"))]),
+				}, 1024)) : (U(), w("span", wS, "-"))]),
 				"cell-is_enable": Z(({ row: e }) => [O(Q, {
 					type: Number(e.is_enable) === 1 ? "success" : "danger",
 					effect: "soft",
@@ -29163,7 +30178,7 @@ var Wy = {
 					default: Z(() => [D(q(Number(e.is_enable) === 1 ? l.value.enabled : l.value.disabled), 1)]),
 					_: 2
 				}, 1032, ["type"])]),
-				"cell-actions": Z(({ row: t }) => [T("div", Lx, [O($, {
+				"cell-actions": Z(({ row: t }) => [T("div", TS, [O($, {
 					"icon-only": "",
 					"aria-label": e.canUpdate || e.canDelete ? l.value.edit : l.value.detail,
 					size: "sm",
@@ -29202,12 +30217,12 @@ var Wy = {
 				size: 500,
 				onClosed: r[9] ||= (e) => j.value = null
 			}, {
-				header: Z(() => [T("div", Rx, [T("strong", null, q(l.value.detail), 1), T("span", null, q(ue.value) + " · " + q(j.value?.id ?? "-"), 1)])]),
+				header: Z(() => [T("div", ES, [T("strong", null, q(l.value.detail), 1), T("span", null, q(ue.value) + " · " + q(j.value?.id ?? "-"), 1)])]),
 				footer: Z(() => [O($, { onClick: r[7] ||= (e) => h.value = !1 }, {
 					default: Z(() => [D(q(l.value.close), 1)]),
 					_: 1
 				})]),
-				default: Z(() => [j.value ? (U(), w("div", zx, [O(Vp, {
+				default: Z(() => [j.value ? (U(), w("div", DS, [O(Vp, {
 					class: "mm-symbol-tag-manager__descriptions",
 					title: l.value.tagInfo,
 					column: 1,
@@ -29326,7 +30341,7 @@ var Wy = {
 						locale: e.locale,
 						onClick: r[6] ||= (e) => ze("translation-config")
 					}, null, 8, ["locale"])) : C("", !0)
-				])], 8, Bx)])) : C("", !0)]),
+				])], 8, OS)])) : C("", !0)]),
 				_: 1
 			}, 8, ["modelValue", "aria-label"]),
 			O(xn, {
@@ -29340,8 +30355,8 @@ var Wy = {
 				width: "min(700px, calc(100vw - 32px))",
 				onClose: je
 			}, {
-				header: Z(() => [T("div", Vx, [T("strong", null, q(L.editingId ? l.value.dialogEdit : l.value.dialogCreate), 1), T("span", null, q(L.editingId ? l.value.dialogSubtitleEdit : l.value.dialogSubtitleCreate), 1)])]),
-				footer: Z(() => [T("div", qx, [
+				header: Z(() => [T("div", kS, [T("strong", null, q(L.editingId ? l.value.dialogEdit : l.value.dialogCreate), 1), T("span", null, q(L.editingId ? l.value.dialogSubtitleEdit : l.value.dialogSubtitleCreate), 1)])]),
+				footer: Z(() => [T("div", FS, [
 					O($, {
 						size: "sm",
 						disabled: V.value,
@@ -29507,8 +30522,8 @@ var Wy = {
 							})]),
 							default: Z(() => [D(q(l.value.editTranslation), 1)]),
 							_: 1
-						}, 8, ["disabled"])], 8, Hx),
-						T("section", Ux, [T("div", null, [T("strong", null, q(l.value.frontendDisplay), 1), T("small", null, q(l.value.displayHint), 1)]), T("div", Wx, [T("button", {
+						}, 8, ["disabled"])], 8, AS),
+						T("section", jS, [T("div", null, [T("strong", null, q(l.value.frontendDisplay), 1), T("small", null, q(l.value.displayHint), 1)]), T("div", MS, [T("button", {
 							type: "button",
 							class: I(["mm-symbol-tag-manager__switch", { "is-checked": Number(H.is_enable) === 1 }]),
 							role: "switch",
@@ -29516,8 +30531,8 @@ var Wy = {
 							"aria-label": l.value.frontendDisplay,
 							disabled: V.value || !!L.editingId && !e.canUpdate,
 							onClick: r[17] ||= (e) => H.is_enable = Number(H.is_enable) === 1 ? 0 : 1
-						}, [...r[24] ||= [T("i", { "aria-hidden": "true" }, null, -1)]], 10, Gx), T("span", null, q(Number(H.is_enable) === 1 ? l.value.enabled : l.value.disabled), 1)])]),
-						T("div", Kx, [O(c, {
+						}, [...r[24] ||= [T("i", { "aria-hidden": "true" }, null, -1)]], 10, NS), T("span", null, q(Number(H.is_enable) === 1 ? l.value.enabled : l.value.disabled), 1)])]),
+						T("div", PS, [O(c, {
 							name: "circle-help",
 							size: 15
 						}), T("span", null, q(l.value.notice), 1)])
@@ -29546,7 +30561,7 @@ var Wy = {
 				"actions",
 				"locales"
 			])) : C("", !0),
-			!e.translationSettingsActions && e.translationConfigActions ? (U(), S(wx, {
+			!e.translationSettingsActions && e.translationConfigActions ? (U(), S(fS, {
 				key: 1,
 				modelValue: g.value,
 				"onUpdate:modelValue": r[21] ||= (e) => g.value = e,
@@ -29557,7 +30572,7 @@ var Wy = {
 				"actions",
 				"locale"
 			])) : C("", !0),
-			e.translationActions ? (U(), S(jx, {
+			e.translationActions ? (U(), S(yS, {
 				key: 2,
 				modelValue: v.value,
 				"onUpdate:modelValue": r[22] ||= (e) => v.value = e,
@@ -29599,13 +30614,13 @@ var Wy = {
 			])
 		]));
 	}
-}), Yx = ["data-status", "aria-current"], Xx = {
+}), LS = ["data-status", "aria-current"], RS = {
 	class: "mm-step__rail",
 	"aria-hidden": "true"
-}, Zx = { class: "mm-step__icon" }, Qx = { key: 3 }, $x = { class: "mm-step__title" }, eS = {
+}, zS = { class: "mm-step__icon" }, BS = { key: 3 }, VS = { class: "mm-step__title" }, HS = {
 	key: 0,
 	class: "mm-step__description"
-}, tS = /* @__PURE__ */ k({
+}, US = /* @__PURE__ */ k({
 	name: "MmSteps",
 	__name: "Steps",
 	props: {
@@ -29639,7 +30654,7 @@ var Wy = {
 			}]]),
 			"data-status": i(r, o),
 			"aria-current": o === e.current ? "step" : void 0
-		}, [T("div", Xx, [n[0] ||= T("span", { class: "mm-step__line" }, null, -1), T("span", Zx, [K(t.$slots, "icon", {
+		}, [T("div", RS, [n[0] ||= T("span", { class: "mm-step__line" }, null, -1), T("span", zS, [K(t.$slots, "icon", {
 			index: o,
 			item: r,
 			status: i(r, o)
@@ -29651,17 +30666,17 @@ var Wy = {
 			key: 2,
 			name: "close",
 			size: 14
-		})) : (U(), w("span", Qx, q(o + 1), 1))])])]), (U(), S(re(e.clickable ? "button" : "div"), {
+		})) : (U(), w("span", BS, q(o + 1), 1))])])]), (U(), S(re(e.clickable ? "button" : "div"), {
 			class: "mm-step__body",
 			type: e.clickable ? "button" : void 0,
 			disabled: e.clickable && r.disabled ? !0 : void 0,
 			onClick: (e) => a(o, r)
 		}, {
-			default: Z(() => [T("span", $x, [K(t.$slots, "title", {
+			default: Z(() => [T("span", VS, [K(t.$slots, "title", {
 				index: o,
 				item: r,
 				status: i(r, o)
-			}, () => [D(q(r.title), 1)])]), r.description || t.$slots.description ? (U(), w("span", eS, [K(t.$slots, "description", {
+			}, () => [D(q(r.title), 1)])]), r.description || t.$slots.description ? (U(), w("span", HS, [K(t.$slots, "description", {
 				index: o,
 				item: r,
 				status: i(r, o)
@@ -29671,9 +30686,9 @@ var Wy = {
 			"type",
 			"disabled",
 			"onClick"
-		]))], 10, Yx))), 128))], 2));
+		]))], 10, LS))), 128))], 2));
 	}
-}), nS = /* @__PURE__ */ k({
+}), WS = /* @__PURE__ */ k({
 	name: "MmText",
 	__name: "Text",
 	props: {
@@ -29707,550 +30722,13 @@ var Wy = {
 			_: 3
 		}, 8, ["class", "style"]));
 	}
-});
-//#endregion
-//#region src/components/trade-fill-table/formatters.ts
-function rS(e) {
-	return e == null || e === "" ? "-" : String(e);
-}
-function iS(e) {
-	let t = Number(e);
-	return Number.isFinite(t) ? String(t) : "-";
-}
-function aS(e, t = 8) {
-	let n = Number(e);
-	return Number.isFinite(n) ? n.toFixed(t) : "-";
-}
-function oS(e) {
-	return rS(e.user?.public_user_id ?? e.public_user_id ?? e.user_id);
-}
-function sS(e) {
-	return rS(e.agent_user_id ?? e.user?.agent_user_id);
-}
-//#endregion
-//#region src/components/trade-fill-table/TradeFillTable.vue?vue&type=script&setup=true&lang.ts
-var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "mm-trade-fill-table__id" }, dS = { key: 1 }, fS = { key: 1 }, pS = { class: "mm-trade-fill-table__number" }, mS = { class: "mm-trade-fill-table__number" }, hS = { class: "mm-trade-fill-table__number" }, gS = { key: 1 }, _S = { class: "mm-trade-fill-table__actions" }, vS = /* @__PURE__ */ k({
-	inheritAttrs: !1,
-	name: "MmTradeFillTable",
-	__name: "TradeFillTable",
-	props: {
-		actions: { default: () => ({}) },
-		ariaLabel: { default: void 0 },
-		columns: {},
-		columnsConfigurable: {
-			type: Boolean,
-			default: !0
-		},
-		fillHeight: {
-			type: Boolean,
-			default: !0
-		},
-		filterDrawerSubtitle: { default: void 0 },
-		filterDrawerTitle: { default: void 0 },
-		includeRobotUserType: {
-			type: Boolean,
-			default: !1
-		},
-		initialKeyword: { default: "" },
-		initialPageSize: { default: 20 },
-		initialTimeRange: { default: null },
-		pageSizes: { default: () => [
-			20,
-			30,
-			40
-		] },
-		request: {},
-		showUserType: {
-			type: Boolean,
-			default: !0
-		}
-	},
-	setup(e, { expose: t }) {
-		let n = e, { messages: r } = p(), i = b(() => r.value.tradeFills), a = se(), o = {
-			key: "trade_time",
-			order: "desc"
-		}, s = /* @__PURE__ */ new Set([
-			"trade_time",
-			"order_id",
-			"position_id",
-			"symbol",
-			"side",
-			"quantity",
-			"price",
-			"trade_value",
-			"handling_fee",
-			"role_type",
-			"realized_pnl"
-		]), l = /* @__PURE__ */ new Set([
-			"cell-order_id",
-			"cell-user_uid",
-			"cell-agent_user_id",
-			"cell-user_type",
-			"cell-position_id",
-			"cell-symbol",
-			"cell-product_category",
-			"cell-margin_mode",
-			"cell-side",
-			"cell-quantity",
-			"cell-price",
-			"cell-trade_value",
-			"cell-handling_fee",
-			"cell-role_type",
-			"cell-realized_pnl",
-			"cell-trade_time",
-			"cell-operation",
-			"query-actions",
-			"toolbar-actions"
-		]), u = b(() => [
-			{
-				key: "keyword",
-				label: i.value.keyword,
-				type: "keyword",
-				defaultValue: n.initialKeyword,
-				placeholder: i.value.keywordPlaceholder,
-				clearable: !0,
-				width: 250
-			},
-			{
-				key: "symbol",
-				label: i.value.contract,
-				type: "keyword",
-				defaultValue: "",
-				placeholder: i.value.symbolPlaceholder,
-				clearable: !0,
-				width: 140
-			},
-			{
-				key: "time_range",
-				label: i.value.tradeTime,
-				type: "date-range",
-				defaultValue: n.initialTimeRange,
-				placeholder: i.value.timeRange,
-				width: 250
-			},
-			...n.showUserType ? [{
-				key: "user_type",
-				label: i.value.userType,
-				type: "segmented",
-				defaultValue: "",
-				options: [
-					{
-						label: i.value.all,
-						value: ""
-					},
-					{
-						label: i.value.live,
-						value: 1
-					},
-					{
-						label: i.value.internal,
-						value: 2
-					},
-					...n.includeRobotUserType ? [{
-						label: i.value.robot,
-						value: 3
-					}] : []
-				],
-				block: !0,
-				width: n.includeRobotUserType ? 208 : 154
-			}] : [],
-			{
-				key: "margin_mode",
-				label: i.value.marginMode,
-				type: "select",
-				defaultValue: "",
-				options: [
-					{
-						label: i.value.allMarginModes,
-						value: ""
-					},
-					{
-						label: i.value.cross,
-						value: 1
-					},
-					{
-						label: i.value.isolated,
-						value: 2
-					}
-				],
-				width: 140
-			},
-			{
-				key: "side",
-				label: i.value.side,
-				type: "select",
-				defaultValue: "",
-				options: [
-					{
-						label: i.value.allSides,
-						value: ""
-					},
-					{
-						label: i.value.buy,
-						value: "buy"
-					},
-					{
-						label: i.value.sell,
-						value: "sell"
-					}
-				],
-				width: 130
-			},
-			{
-				key: "role_type",
-				label: i.value.tradeRole,
-				type: "select",
-				defaultValue: "",
-				options: [
-					{
-						label: i.value.allRoles,
-						value: ""
-					},
-					{
-						label: i.value.maker,
-						value: "maker"
-					},
-					{
-						label: i.value.taker,
-						value: "taker"
-					}
-				],
-				width: 130
-			}
-		]), d = b(() => {
-			let e = [
-				{
-					key: "order_id",
-					dataIndex: "order_id",
-					title: i.value.orderId,
-					width: 120,
-					hideable: !1,
-					sortable: !0
-				},
-				{
-					key: "user_uid",
-					title: i.value.userUid,
-					width: 120
-				},
-				{
-					key: "agent_user_id",
-					dataIndex: "agent_user_id",
-					title: i.value.externalUserId,
-					width: 100
-				},
-				...n.showUserType ? [{
-					key: "user_type",
-					dataIndex: "user_type",
-					title: i.value.userType,
-					width: 80
-				}] : [],
-				{
-					key: "position_id",
-					dataIndex: "position_id",
-					title: i.value.positionId,
-					width: 120,
-					sortable: !0
-				},
-				{
-					key: "symbol",
-					dataIndex: "symbol",
-					title: i.value.contract,
-					width: 120,
-					sortable: !0
-				},
-				{
-					key: "product_category",
-					dataIndex: "product_category",
-					title: i.value.productCategory,
-					width: 80
-				},
-				{
-					key: "margin_mode",
-					title: i.value.marginMode,
-					width: 80
-				},
-				{
-					key: "side",
-					dataIndex: "side",
-					title: i.value.side,
-					width: 80,
-					sortable: !0
-				},
-				{
-					key: "quantity",
-					dataIndex: "quantity",
-					title: i.value.quantity,
-					width: 100,
-					sortable: !0
-				},
-				{
-					key: "price",
-					dataIndex: "price",
-					title: i.value.price,
-					width: 100,
-					sortable: !0
-				},
-				{
-					key: "trade_value",
-					dataIndex: "trade_value",
-					title: i.value.tradeValue,
-					width: 100,
-					sortable: !0
-				},
-				{
-					key: "handling_fee",
-					dataIndex: "handling_fee",
-					title: i.value.handlingFee,
-					width: 100,
-					sortable: !0
-				},
-				{
-					key: "role_type",
-					dataIndex: "role_type",
-					title: i.value.tradeRole,
-					width: 80,
-					sortable: !0
-				},
-				{
-					key: "realized_pnl",
-					dataIndex: "realized_pnl",
-					title: i.value.realizedPnl,
-					width: 120,
-					sortable: !0
-				},
-				{
-					key: "trade_time",
-					dataIndex: "trade_time",
-					title: i.value.tradeTime,
-					width: 150,
-					sortable: !0
-				}
-			];
-			return (n.actions.detail || a["cell-operation"]) && e.push({
-				key: "operation",
-				title: i.value.operation,
-				width: 56,
-				fixed: "right",
-				hideable: !1
-			}), e;
-		}), f = b(() => {
-			let e = d.value.map((e) => ({ ...e })), t = n.columns ? typeof n.columns == "function" ? n.columns(e) : n.columns : e;
-			return Array.isArray(t) ? t.map((e) => ({ ...e })) : e;
-		}), m = b(() => Object.keys(a).filter((e) => !l.has(e))), h = W(/* @__PURE__ */ new Set());
-		function g(e, t) {
-			let n = e[t];
-			return n === null || Array.isArray(n) ? "" : n;
-		}
-		function _(e, t) {
-			return e ? e.includes(" ") ? e : `${e} ${t === "start" ? "00:00:00" : "23:59:59"}` : "";
-		}
-		function v(e) {
-			return e.user_type ?? e.user?.user_type;
-		}
-		function y(e) {
-			let t = Number(v(e));
-			return t === 1 ? {
-				label: i.value.live,
-				type: "success"
-			} : t === 2 ? {
-				label: i.value.internal,
-				type: "info"
-			} : t === 3 ? {
-				label: i.value.robot,
-				type: "warning"
-			} : null;
-		}
-		function x(e) {
-			return Number(e.position?.margin_mode) === 1 ? i.value.cross : Number(e.position?.margin_mode) === 2 ? i.value.isolated : "-";
-		}
-		function k(e) {
-			let t = String(e.side ?? "").toLowerCase();
-			return t === "buy" ? {
-				label: i.value.buy,
-				type: "success"
-			} : t === "sell" ? {
-				label: i.value.sell,
-				type: "danger"
-			} : null;
-		}
-		function j(e) {
-			let t = String(e.role_type ?? "").toLowerCase();
-			return t === "maker" ? {
-				label: i.value.maker,
-				type: "success"
-			} : t === "taker" ? {
-				label: i.value.taker,
-				type: "warning"
-			} : null;
-		}
-		function M(e) {
-			let t = Number(e);
-			return t > 0 ? "is-profit" : t < 0 ? "is-loss" : "is-neutral";
-		}
-		function N(e) {
-			let t = String(e.side ?? "").toLowerCase();
-			return t === "buy" ? "is-buy" : t === "sell" ? "is-sell" : "";
-		}
-		async function F(e, t) {
-			if (!e) return;
-			let n = String(t.fill_id);
-			if (!h.value.has(n)) {
-				h.value.add(n);
-				try {
-					await e(t, { reload: B });
-				} finally {
-					h.value.delete(n);
-				}
-			}
-		}
-		async function R({ filters: e, page: t, pageSize: r, signal: a, sort: c }) {
-			let l = Array.isArray(e.time_range) ? e.time_range : null, u = c.order && s.has(c.key) ? c : o, d = {
-				end_time: _(l?.[1], "end"),
-				keyword: String(g(e, "keyword")),
-				margin_mode: g(e, "margin_mode"),
-				order_by: u.key,
-				order_dir: u.order === "asc" ? "asc" : "desc",
-				page_no: t,
-				page_size: r,
-				role_type: g(e, "role_type"),
-				side: g(e, "side"),
-				start_time: _(l?.[0], "start"),
-				symbol: String(g(e, "symbol")),
-				...n.showUserType ? { user_type: g(e, "user_type") } : {}
-			};
-			try {
-				return await n.request(d, { signal: a });
-			} catch (e) {
-				let t = e;
-				throw Error(t?.msg || t?.message || i.value.loadFailed);
-			}
-		}
-		let { proTableBindings: z, reload: B } = ac({
-			initialAutoRefreshSeconds: 0,
-			initialFilters: { keyword: n.initialKeyword },
-			initialPageSize: n.initialPageSize,
-			initialSort: o,
-			queryFields: u,
-			request: R
-		});
-		return t({ reload: B }), (t, n) => (U(), S(Y(Xl), P({
-			...t.$attrs,
-			...Y(z)
-		}, {
-			class: ["mm-trade-fill-table", { "is-fill-height": e.fillHeight }],
-			"aria-label": e.ariaLabel ?? Y(r).tradeFills.tableAria,
-			columns: f.value,
-			"columns-configurable": e.columnsConfigurable,
-			"fill-height": e.fillHeight,
-			"filter-drawer-title": e.filterDrawerTitle ?? Y(r).tradeFills.filterTitle,
-			"filter-drawer-subtitle": e.filterDrawerSubtitle ?? Y(r).tradeFills.filterSubtitle,
-			"page-sizes": e.pageSizes,
-			"row-key": "fill_id"
-		}), E({
-			"cell-order_id": Z((e) => [K(t.$slots, "cell-order_id", L(A(e)), () => [T("span", cS, q(Y(rS)(e.row.order_id)), 1)])]),
-			"cell-user_uid": Z((e) => [K(t.$slots, "cell-user_uid", L(A(e)), () => [D(q(Y(oS)(e.row)), 1)])]),
-			"cell-agent_user_id": Z((e) => [K(t.$slots, "cell-agent_user_id", L(A(e)), () => [D(q(Y(sS)(e.row)), 1)])]),
-			"cell-user_type": Z((e) => [K(t.$slots, "cell-user_type", L(A(e)), () => [y(e.row) ? (U(), S(Y(Q), {
-				key: 0,
-				effect: "outline",
-				round: "",
-				size: "sm",
-				type: y(e.row)?.type
-			}, {
-				default: Z(() => [D(q(y(e.row)?.label), 1)]),
-				_: 2
-			}, 1032, ["type"])) : (U(), w("span", lS, "-"))])]),
-			"cell-position_id": Z((e) => [K(t.$slots, "cell-position_id", L(A(e)), () => [T("span", uS, q(Y(rS)(e.row.position_id)), 1)])]),
-			"cell-symbol": Z((e) => [K(t.$slots, "cell-symbol", L(A(e)), () => [D(q(Y(rS)(e.row.symbol)), 1)])]),
-			"cell-product_category": Z((e) => [K(t.$slots, "cell-product_category", L(A(e)), () => [O(Y(Q), {
-				effect: "soft",
-				round: "",
-				size: "sm",
-				type: "primary"
-			}, {
-				default: Z(() => [D(q(Y(rS)(e.row.product_category_name || e.row.product_category)), 1)]),
-				_: 2
-			}, 1024)])]),
-			"cell-margin_mode": Z((e) => [K(t.$slots, "cell-margin_mode", L(A(e)), () => [x(e.row) === "-" ? (U(), w("span", dS, "-")) : (U(), S(Y(Q), {
-				key: 0,
-				effect: "soft",
-				round: "",
-				size: "sm",
-				type: Number(e.row.position?.margin_mode) === 2 ? "primary" : "default"
-			}, {
-				default: Z(() => [D(q(x(e.row)), 1)]),
-				_: 2
-			}, 1032, ["type"]))])]),
-			"cell-side": Z((e) => [K(t.$slots, "cell-side", L(A(e)), () => [k(e.row) ? (U(), S(Y(Q), {
-				key: 0,
-				effect: "soft",
-				round: "",
-				size: "sm",
-				type: k(e.row)?.type
-			}, {
-				default: Z(() => [D(q(k(e.row)?.label), 1)]),
-				_: 2
-			}, 1032, ["type"])) : (U(), w("span", fS, "-"))])]),
-			"cell-quantity": Z((e) => [K(t.$slots, "cell-quantity", L(A(e)), () => [T("span", { class: I(["mm-trade-fill-table__number", N(e.row)]) }, q(Y(iS)(e.row.quantity)), 3)])]),
-			"cell-price": Z((e) => [K(t.$slots, "cell-price", L(A(e)), () => [T("span", pS, q(Y(iS)(e.row.price)), 1)])]),
-			"cell-trade_value": Z((e) => [K(t.$slots, "cell-trade_value", L(A(e)), () => [T("span", mS, q(Y(iS)(e.row.trade_value)), 1)])]),
-			"cell-handling_fee": Z((e) => [K(t.$slots, "cell-handling_fee", L(A(e)), () => [T("span", hS, q(Y(iS)(e.row.handling_fee)), 1)])]),
-			"cell-role_type": Z((e) => [K(t.$slots, "cell-role_type", L(A(e)), () => [j(e.row) ? (U(), S(Y(Q), {
-				key: 0,
-				effect: "soft",
-				round: "",
-				size: "sm",
-				type: j(e.row)?.type
-			}, {
-				default: Z(() => [D(q(j(e.row)?.label), 1)]),
-				_: 2
-			}, 1032, ["type"])) : (U(), w("span", gS, "-"))])]),
-			"cell-realized_pnl": Z((e) => [K(t.$slots, "cell-realized_pnl", L(A(e)), () => [T("span", { class: I(["mm-trade-fill-table__number", M(e.row.realized_pnl)]) }, q(Y(aS)(e.row.realized_pnl)), 3)])]),
-			"cell-trade_time": Z((e) => [K(t.$slots, "cell-trade_time", L(A(e)), () => [D(q(Y(rS)(e.row.trade_time)), 1)])]),
-			"cell-operation": Z((n) => [K(t.$slots, "cell-operation", P(n, { detail: () => F(e.actions.detail, n.row) }), () => [T("div", _S, [e.actions.detail ? (U(), S(Y($), {
-				key: 0,
-				"aria-label": Y(r).tradeFills.viewDetailFor(Y(rS)(n.row.fill_id)),
-				"icon-only": "",
-				size: "sm",
-				loading: h.value.has(String(n.row.fill_id)),
-				title: Y(r).tradeFills.viewDetail,
-				onClick: me((t) => F(e.actions.detail, n.row), ["stop"])
-			}, {
-				icon: Z(() => [O(Y(c), {
-					name: "panel-left-close",
-					size: 15
-				})]),
-				_: 1
-			}, 8, [
-				"aria-label",
-				"loading",
-				"title",
-				"onClick"
-			])) : C("", !0)])])]),
-			"query-actions": Z((e) => [K(t.$slots, "query-actions", L(A(e)))]),
-			"toolbar-actions": Z(() => [K(t.$slots, "toolbar-actions")]),
-			_: 2
-		}, [G(m.value, (e) => ({
-			name: e,
-			fn: Z((n) => [K(t.$slots, e, L(A(n)))])
-		}))]), 1040, [
-			"class",
-			"aria-label",
-			"columns",
-			"columns-configurable",
-			"fill-height",
-			"filter-drawer-title",
-			"filter-drawer-subtitle",
-			"page-sizes"
-		]));
-	}
-}), yS = {
+}), GS = {
 	key: 0,
 	class: "mm-typography__header"
-}, bS = {
+}, KS = {
 	key: 1,
 	class: "mm-typography__actions"
-}, xS = ["aria-expanded"], SS = /* @__PURE__ */ k({
+}, qS = ["aria-expanded"], JS = /* @__PURE__ */ k({
 	name: "MmTypography",
 	__name: "Typography",
 	props: {
@@ -30294,7 +30772,7 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 			class: I(["mm-typography", [`mm-typography--${e.density}`, `is-align-${e.align}`]]),
 			"data-mm-component": "typography"
 		}, {
-			default: Z(() => [e.title || t.$slots.title || e.copyable || e.collapsible ? (U(), w("header", yS, [e.title || t.$slots.title ? (U(), S(Y(nS), {
+			default: Z(() => [e.title || t.$slots.title || e.copyable || e.collapsible ? (U(), w("header", GS, [e.title || t.$slots.title ? (U(), S(Y(WS), {
 				key: 0,
 				as: l.value,
 				class: "mm-typography__title",
@@ -30303,7 +30781,7 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 			}, {
 				default: Z(() => [K(t.$slots, "title", {}, () => [D(q(e.title), 1)])]),
 				_: 3
-			}, 8, ["as", "size"])) : C("", !0), e.copyable || e.collapsible || t.$slots.actions ? (U(), w("div", bS, [
+			}, 8, ["as", "size"])) : C("", !0), e.copyable || e.collapsible || t.$slots.actions ? (U(), w("div", KS, [
 				K(t.$slots, "actions"),
 				e.copyable ? (U(), w("button", {
 					key: 0,
@@ -30317,7 +30795,7 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 					"data-action": "toggle",
 					"aria-expanded": Y(c).value.value,
 					onClick: f
-				}, q(Y(c).value.value ? Y(i).typography.collapse : Y(i).typography.expand), 9, xS)) : C("", !0)
+				}, q(Y(c).value.value ? Y(i).typography.collapse : Y(i).typography.expand), 9, qS)) : C("", !0)
 			])) : C("", !0)])) : C("", !0), T("div", {
 				ref_key: "bodyRef",
 				ref: a,
@@ -30327,7 +30805,7 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 			_: 3
 		}, 8, ["class"]));
 	}
-}), CS = [
+}), YS = [
 	Zr,
 	bu,
 	od,
@@ -30405,17 +30883,18 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 	zv,
 	E_,
 	_y,
-	My,
-	Iy,
-	By,
-	Vy,
-	Yy,
-	nb,
-	rb,
-	vb,
+	ab,
+	bb,
+	wb,
+	Ob,
+	kb,
+	Lb,
+	Wb,
+	Gb,
+	ox,
 	$t,
 	Al,
-	Eb,
+	mx,
 	Xl,
 	Nm,
 	uu,
@@ -30434,29 +30913,29 @@ var cS = { class: "mm-trade-fill-table__id" }, lS = { key: 1 }, uS = { class: "m
 	jc,
 	vo,
 	bo,
-	Mb,
-	Yb,
-	Zb,
+	bx,
+	Lx,
+	zx,
 	wn,
 	zn,
-	cx,
-	dx,
-	vx,
-	Jx,
-	tS,
+	Xx,
+	$x,
+	oS,
+	IS,
+	US,
 	bl,
 	Hn,
 	Kn,
 	Q,
-	nS,
+	WS,
 	su,
-	vS,
-	SS,
+	Ny,
+	JS,
 	di
 ];
 //#endregion
 //#region src/directives/loading.ts
-function wS(e) {
+function XS(e) {
 	let t = typeof e == "boolean" ? { visible: e } : e ?? {};
 	return {
 		backdrop: t.backdrop ?? !0,
@@ -30466,17 +30945,17 @@ function wS(e) {
 		visible: t.visible ?? !0
 	};
 }
-function TS(e, t) {
-	Object.assign(e.state, wS(t));
+function ZS(e, t) {
+	Object.assign(e.state, XS(t));
 }
-function ES(e) {
+function QS(e) {
 	let t = e.__mmLoading;
 	!t || t.destroyed || (t.destroyed = !0, t.app.unmount(), t.container.remove(), e.style.position = t.originalPosition, delete e.__mmLoading);
 }
-var DS = {
+var $S = {
 	mounted(e, t) {
 		if (typeof document > "u") return;
-		let r = ne(wS(t.value)), i = k({
+		let r = ne(XS(t.value)), i = k({
 			name: "MmLoadingDirectiveHost",
 			setup: () => () => j(f, r)
 		}), a = document.createElement("div");
@@ -30493,11 +30972,11 @@ var DS = {
 		}, s.mount(a);
 	},
 	updated(e, t) {
-		e.__mmLoading && TS(e.__mmLoading, t.value);
+		e.__mmLoading && ZS(e.__mmLoading, t.value);
 	},
-	beforeUnmount: ES,
-	unmounted: ES
-}, OS = DS, kS = {
+	beforeUnmount: QS,
+	unmounted: QS
+}, eC = $S, tC = {
 	danger: "--mm-color-danger",
 	dangerSoft: "--mm-color-danger-soft",
 	info: "--mm-color-info",
@@ -30511,17 +30990,17 @@ var DS = {
 	warning: "--mm-color-warning",
 	warningSoft: "--mm-color-warning-soft"
 };
-function AS(e) {
+function nC(e) {
 	return e?.trim() || void 0;
 }
-function jS(e, t) {
+function rC(e, t) {
 	if (!t) return;
-	for (let [n, r] of Object.entries(kS)) {
-		let i = AS(t[n]);
+	for (let [n, r] of Object.entries(tC)) {
+		let i = nC(t[n]);
 		i && e.setProperty(r, i);
 	}
-	let n = AS(t.primary);
-	n && !AS(t.primaryHover) && e.setProperty("--mm-color-primary-hover", "color-mix(in srgb, var(--mm-color-primary) 86%, var(--mm-color-text))"), n && !AS(t.primarySoft) && e.setProperty("--mm-color-primary-soft", "color-mix(in srgb, var(--mm-color-primary) 12%, var(--mm-color-panel))"), n && e.setProperty("--mm-focus-ring", "0 0 0 1px color-mix(in srgb, var(--mm-color-primary) 38%, transparent)");
+	let n = nC(t.primary);
+	n && !nC(t.primaryHover) && e.setProperty("--mm-color-primary-hover", "color-mix(in srgb, var(--mm-color-primary) 86%, var(--mm-color-text))"), n && !nC(t.primarySoft) && e.setProperty("--mm-color-primary-soft", "color-mix(in srgb, var(--mm-color-primary) 12%, var(--mm-color-panel))"), n && e.setProperty("--mm-focus-ring", "0 0 0 1px color-mix(in srgb, var(--mm-color-primary) 38%, transparent)");
 	for (let n of [
 		"danger",
 		"info",
@@ -30529,10 +31008,10 @@ function jS(e, t) {
 		"warning"
 	]) {
 		let r = `${n}Soft`;
-		AS(t[n]) && !AS(t[r]) && e.setProperty(kS[r], `color-mix(in srgb, var(${kS[n]}) 12%, var(--mm-color-panel))`);
+		nC(t[n]) && !nC(t[r]) && e.setProperty(tC[r], `color-mix(in srgb, var(${tC[n]}) 12%, var(--mm-color-panel))`);
 	}
 }
-function MS() {
+function iC() {
 	let e = document.head.querySelector("style[data-mm-ui-theme]"), t = e ?? document.createElement("style");
 	return t.setAttribute("data-mm-ui-theme", ""), t.textContent = [
 		":root {}",
@@ -30540,33 +31019,33 @@ function MS() {
 		"[data-mm-theme='dark'] {}"
 	].join("\n"), e || document.head.append(t), Array.from(t.sheet?.cssRules ?? []).filter((e) => e instanceof CSSStyleRule);
 }
-function NS(e) {
+function aC(e) {
 	if (!e || typeof document > "u") return;
-	let [t, n, r] = MS();
-	!t || !n || !r || (jS(t.style, e), jS(n.style, e.light), jS(r.style, e.dark));
+	let [t, n, r] = iC();
+	!t || !n || !r || (rC(t.style, e), rC(n.style, e.light), rC(r.style, e.dark));
 }
-function PS(e, t = {}) {
-	NS(t.theme);
+function oC(e, t = {}) {
+	aC(t.theme);
 	let r = l(t.locale);
 	e.provide(n, r), e.config.globalProperties.$mmLocale = r, o(r);
-	for (let t of CS) t.name && e.component(t.name, t);
-	e.directive("mm-loading", DS);
+	for (let t of YS) t.name && e.component(t.name, t);
+	e.directive("mm-loading", $S);
 }
-var FS = { install: PS }, IS = class extends Error {
+var sC = { install: oC }, cC = class extends Error {
 	action;
 	constructor(e) {
 		super(e === "cancel" ? "Message box cancelled" : "Message box closed"), this.name = "MessageBoxCancelError", this.action = e;
 	}
 };
-function LS(e, t) {
+function lC(e, t) {
 	let n = typeof e == "string" ? { message: e } : e;
 	return {
 		...n,
 		type: t ?? n.type ?? "alert"
 	};
 }
-function RS(e, t) {
-	let r = LS(e, t), i, a, o = !1, s = () => void 0, c = new Promise((e, t) => {
+function uC(e, t) {
+	let r = lC(e, t), i, a, o = !1, s = () => void 0, c = new Promise((e, t) => {
 		let c = () => {
 			i?.unmount(), a?.remove(), i = void 0, a = void 0;
 		};
@@ -30574,7 +31053,7 @@ function RS(e, t) {
 			o || (o = !0, n === "confirm" ? e({
 				action: n,
 				value: r
-			}) : t(new IS(n)), queueMicrotask(c));
+			}) : t(new cC(n)), queueMicrotask(c));
 		}, typeof document > "u" || !document.body) {
 			s("close");
 			return;
@@ -30590,20 +31069,20 @@ function RS(e, t) {
 	});
 	return c.close = () => s("close"), c;
 }
-function zS(e) {
-	return (t, n, r = {}) => RS({
+function dC(e) {
+	return (t, n, r = {}) => uC({
 		...r,
 		message: t,
 		title: n ?? r.title,
 		type: e
 	}, e);
 }
-var BS = ((e) => RS(e));
-BS.alert = zS("alert"), BS.confirm = zS("confirm"), BS.prompt = zS("prompt");
-var VS = BS;
+var fC = ((e) => uC(e));
+fC.alert = dC("alert"), fC.confirm = dC("confirm"), fC.prompt = dC("prompt");
+var pC = fC;
 //#endregion
 //#region src/services/media-upload.ts
-function HS(e, t) {
+function mC(e, t) {
 	return async (n, r) => {
 		let i = new FormData();
 		i.append("file", n);
@@ -30625,12 +31104,12 @@ function HS(e, t) {
 }
 //#endregion
 //#region src/shared/namespace.ts
-var US = "mm", WS = "is-";
-function GS(e, t) {
-	return `${US}-${e}${t ? `-${t}` : ""}`;
+var hC = "mm", gC = "is-";
+function _C(e, t) {
+	return `${hC}-${e}${t ? `-${t}` : ""}`;
 }
-function KS(e) {
-	let t = (t) => GS(e, t), n = (e) => e ? `${t()}__${e}` : "", r = (e) => e ? `${t()}--${e}` : "", i = (e, n) => e && n ? `${t(e)}__${n}` : "", a = (e, n) => e && n ? `${t(e)}--${n}` : "", o = (e, t) => e && t ? `${n(e)}--${t}` : "", s = (e, t, n) => e && t && n ? `${i(e, t)}--${n}` : "", c = (e, t = !0) => e && t ? `${WS}${e}` : "", l = (...e) => `--${US}-${e.join("-")}`;
+function vC(e) {
+	let t = (t) => _C(e, t), n = (e) => e ? `${t()}__${e}` : "", r = (e) => e ? `${t()}--${e}` : "", i = (e, n) => e && n ? `${t(e)}__${n}` : "", a = (e, n) => e && n ? `${t(e)}--${n}` : "", o = (e, t) => e && t ? `${n(e)}--${t}` : "", s = (e, t, n) => e && t && n ? `${i(e, t)}--${n}` : "", c = (e, t = !0) => e && t ? `${gC}${e}` : "", l = (...e) => `--${hC}-${e.join("-")}`;
 	return {
 		b: t,
 		be: i,
@@ -30646,7 +31125,7 @@ function KS(e) {
 }
 //#endregion
 //#region src/components/prediction-operations/use-symbol-options.ts
-function qS(e, t, n) {
+function yC(e, t, n) {
 	let r = W([]), i;
 	return X([e, () => n?.()], async ([e]) => {
 		if (i?.abort(), r.value = [], !e || !t) return;
@@ -30659,37 +31138,37 @@ function qS(e, t, n) {
 }
 //#endregion
 //#region src/components/prediction-operations/calendar-range.ts
-function JS(e = /* @__PURE__ */ new Date()) {
+function bC(e = /* @__PURE__ */ new Date()) {
 	return [new Date(e.getFullYear(), e.getMonth(), e.getDate()), new Date(e.getFullYear(), e.getMonth(), e.getDate() + 1)];
 }
-function YS(e = /* @__PURE__ */ new Date()) {
-	let [t, n] = JS(e);
+function xC(e = /* @__PURE__ */ new Date()) {
+	let [t, n] = bC(e);
 	return t.setDate(t.getDate() - 6), [t, n];
 }
-function XS(e) {
+function SC(e) {
 	return [
 		e.getFullYear(),
 		String(e.getMonth() + 1).padStart(2, "0"),
 		String(e.getDate()).padStart(2, "0")
 	].join("-");
 }
-function ZS(e) {
-	return !e || e.length !== 2 || e.some((e) => !Number.isFinite(e.getTime())) || e[0] >= e[1] ? null : [XS(e[0]), XS(/* @__PURE__ */ new Date(e[1].getTime() - 1))];
+function CC(e) {
+	return !e || e.length !== 2 || e.some((e) => !Number.isFinite(e.getTime())) || e[0] >= e[1] ? null : [SC(e[0]), SC(/* @__PURE__ */ new Date(e[1].getTime() - 1))];
 }
-function QS(e) {
+function wC(e) {
 	if (!Array.isArray(e) || e.length !== 2) return;
 	let t = [];
 	for (let n of e) {
 		if (typeof n != "string" || !/^\d{4}-\d{2}-\d{2}$/.test(n)) return;
 		let [e, r, i] = n.split("-").map(Number), a = /* @__PURE__ */ new Date(0);
-		if (a.setFullYear(e, r - 1, i), a.setHours(0, 0, 0, 0), XS(a) !== n) return;
+		if (a.setFullYear(e, r - 1, i), a.setHours(0, 0, 0, 0), SC(a) !== n) return;
 		t.push(a);
 	}
 	if (!(t[0] > t[1])) return t[1].setDate(t[1].getDate() + 1), [t[0], t[1]];
 }
 //#endregion
 //#region src/components/prediction-operations/column-width.ts
-function $S(e, t) {
+function TC(e, t) {
 	if (t === "grid-history") return e === "order_no" ? 176 : e === "user_name" ? 102 : e === "source_type" ? 76 : [
 		"source_name",
 		"symbol",
@@ -30813,12 +31292,12 @@ function $S(e, t) {
 }
 //#endregion
 //#region src/components/prediction-operations/status-tone.ts
-var eC = {
+var EC = {
 	direction: "DIRECTION_",
 	business: "BUSINESS_STATUS_",
 	fund: "FUND_STATUS_",
 	round: "ROUND_STATE_"
-}, tC = {
+}, DC = {
 	direction: {
 		UP: "success",
 		DOWN: "danger"
@@ -30851,22 +31330,22 @@ var eC = {
 		FINISHED: "success"
 	}
 };
-function nC(e, t) {
+function OC(e, t) {
 	if (typeof t != "string") return "neutral";
-	let n = eC[e], r = t.startsWith(n) ? t.slice(n.length) : t;
-	return Object.prototype.hasOwnProperty.call(tC[e], r) ? tC[e][r] : "neutral";
+	let n = EC[e], r = t.startsWith(n) ? t.slice(n.length) : t;
+	return Object.prototype.hasOwnProperty.call(DC[e], r) ? DC[e][r] : "neutral";
 }
-function rC(e) {
+function kC(e) {
 	return ["business_status", "fund_status"].flatMap((t) => {
 		let n = e[t];
 		return typeof n == "string" && n ? [{
 			key: t,
 			value: n,
-			tone: nC(t === "business_status" ? "business" : "fund", n)
+			tone: OC(t === "business_status" ? "business" : "fund", n)
 		}] : [];
 	});
 }
-function iC(e) {
+function AC(e) {
 	switch (e) {
 		case 1:
 		case 3:
@@ -30878,8 +31357,8 @@ function iC(e) {
 		default: return "neutral";
 	}
 }
-function aC(e) {
-	let t = rC(e);
+function jC(e) {
+	let t = kC(e);
 	if (!t.length) return null;
 	let n = t.find((e) => e.key === "business_status"), r = t.find((e) => e.key === "fund_status"), i = n?.value.replace(/^BUSINESS_STATUS_/, ""), a = r?.value.replace(/^FUND_STATUS_/, "");
 	return r ? a !== "SETTLED" && a !== "DEBITED" ? r : n ? a === "DEBITED" && i === "SETTLED" ? {
@@ -30895,18 +31374,18 @@ function aC(e) {
 		tone: "warning"
 	};
 }
-function oC(e) {
-	return rC(e).map((e) => `${e.key}: ${e.value}`).join(" / ");
+function MC(e) {
+	return kC(e).map((e) => `${e.key}: ${e.value}`).join(" / ");
 }
-function sC(e) {
+function NC(e) {
 	return typeof e != "string" || !/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e) || !/[1-9]/.test(e) ? "neutral" : e.startsWith("-") ? "danger" : "success";
 }
 //#endregion
 //#region src/components/prediction-operations/context.ts
-var cC = Symbol("prediction-presentation"), lC = (e) => {
+var PC = Symbol("prediction-presentation"), FC = (e) => {
 	let t = p();
-	te(cC, e), te(n, l(b(() => e().locale === "en-US" ? "en-US" : e().locale === "zh-CN" ? "zh-CN" : t.locale.value)));
-}, uC = () => M(cC, () => ({ showSources: !0 })), dC = {
+	te(PC, e), te(n, l(b(() => e().locale === "en-US" ? "en-US" : e().locale === "zh-CN" ? "zh-CN" : t.locale.value)));
+}, IC = () => M(PC, () => ({ showSources: !0 })), LC = {
 	内部用户ID: "Internal user ID",
 	订单号: "Order number",
 	扣款流水号: "Debit ledger ID",
@@ -31256,13 +31735,13 @@ var cC = Symbol("prediction-presentation"), lC = (e) => {
 	分页响应格式异常: "Invalid page response",
 	"查询失败，请稍后重试": "Query failed. Retry later."
 };
-function fC(e) {
-	let t = uC(), n = p();
-	return (r) => (e?.() ?? t().locale ?? n.locale.value) === "en-US" ? dC[r] ? dC[r] : /^\d+秒$/.test(r) ? r.replace("秒", "s") : r.includes(" · ") ? r.split(" · ").map((e) => dC[e] || e).join(" · ") : r.endsWith("：全部") ? (dC[r.slice(0, -3)] || r.slice(0, -3)) + ": All" : r.endsWith("（最多31天）") ? (dC[r.slice(0, -7)] || r.slice(0, -7)) + " (up to 31 days)" : r.startsWith("筛选") ? "Filter " + (dC[r.slice(2)] || r.slice(2)) : r : r;
+function RC(e) {
+	let t = IC(), n = p();
+	return (r) => (e?.() ?? t().locale ?? n.locale.value) === "en-US" ? LC[r] ? LC[r] : /^\d+秒$/.test(r) ? r.replace("秒", "s") : r.includes(" · ") ? r.split(" · ").map((e) => LC[e] || e).join(" · ") : r.endsWith("：全部") ? (LC[r.slice(0, -3)] || r.slice(0, -3)) + ": All" : r.endsWith("（最多31天）") ? (LC[r.slice(0, -7)] || r.slice(0, -7)) + " (up to 31 days)" : r.startsWith("筛选") ? "Filter " + (LC[r.slice(2)] || r.slice(2)) : r : r;
 }
 //#endregion
 //#region src/components/prediction-operations/order-location.ts
-function pC(e = {}) {
+function zC(e = {}) {
 	let t = (t) => typeof e[t] == "string" ? e[t].trim() : "";
 	if (t("order_id")) return { order_id: t("order_id") };
 	if (t("scope") && t("business_id")) return {
@@ -31272,7 +31751,7 @@ function pC(e = {}) {
 	if (e.order_id !== void 0 || e.scope !== void 0 || e.business_id !== void 0) throw Error("订单定位参数不完整");
 	return null;
 }
-function mC(e, t, n, r) {
+function BC(e, t, n, r) {
 	if (!e || ![
 		"up-down",
 		"high-low",
@@ -31298,7 +31777,7 @@ function mC(e, t, n, r) {
 		redirect: e.segment === t && a === n ? null : `/prediction/${e.segment}/${a === "current" ? "current-orders" : "order-history"}`
 	};
 }
-var hC = class {
+var VC = class {
 	version = 0;
 	controller;
 	attempts;
@@ -31328,29 +31807,29 @@ var hC = class {
 	get retryCount() {
 		return this.attempts;
 	}
-}, gC = [
+}, HC = [
 	"35",
 	"40",
 	"45",
 	"60",
 	"90"
-], _C = [
+], UC = [
 	"5",
 	"10",
 	"15",
 	"30",
 	"60"
-], vC = 9223372036854775807n;
-function yC(e, t = vC, n = !0) {
+], WC = 9223372036854775807n;
+function GC(e, t = WC, n = !0) {
 	return typeof e == "string" && /^(0|[1-9]\d*)$/.test(e) && BigInt(e) <= t && (n || e !== "0");
 }
-function bC(e) {
+function KC(e) {
 	return e == null ? "未提供" : typeof e == "string" && /^-?(0|[1-9]\d*)(\.\d+)?$/.test(e) ? e : "数据格式异常";
 }
-function xC(e) {
-	return e == null ? "未提供" : yC(e, 8640000000000000n) ? new Date(Number(e)).toLocaleString("zh-CN", { hour12: !1 }) : `${String(e)}（无法显示时间）`;
+function qC(e) {
+	return e == null ? "未提供" : GC(e, 8640000000000000n) ? new Date(Number(e)).toLocaleString("zh-CN", { hour12: !1 }) : `${String(e)}（无法显示时间）`;
 }
-function SC(e, t = "UP_DOWN") {
+function JC(e, t = "UP_DOWN") {
 	let n = {
 		35: "5",
 		40: "10",
@@ -31360,7 +31839,7 @@ function SC(e, t = "UP_DOWN") {
 	};
 	return t === "UP_DOWN" ? n[e] ? `${n[e]}秒` : `历史周期${e}秒` : `${e}秒`;
 }
-var CC = {
+var YC = {
 	PLAYER: "玩家",
 	MARKET_MAKER: "做市机器人",
 	UP: "上涨",
@@ -31408,12 +31887,12 @@ var CC = {
 	FROZEN: "冻结",
 	DISABLED: "禁用"
 };
-function wC(e) {
+function XC(e) {
 	if (e == null || e === "") return "未提供";
 	let t = String(e);
-	return CC[t.replace(/^(MARKET_MAKER_READINESS_BLOCKER_|MARKET_MAKER_READINESS_STATE_|MARKET_MAKER_SITE_BINDING_STATE_|MARKET_MAKER_WORKER_HEALTH_|MARKET_MAKER_RUNTIME_BATCH_STATE_|MARKET_MAKER_RUNTIME_BATCH_KIND_|SITE_BINDING_STATE_|BUSINESS_STATUS_|FUND_STATUS_|ORDER_SOURCE_|ORDER_RESULT_|ROUND_STATE_|DIRECTION_)/, "")] ?? `未识别（${t}）`;
+	return YC[t.replace(/^(MARKET_MAKER_READINESS_BLOCKER_|MARKET_MAKER_READINESS_STATE_|MARKET_MAKER_SITE_BINDING_STATE_|MARKET_MAKER_WORKER_HEALTH_|MARKET_MAKER_RUNTIME_BATCH_STATE_|MARKET_MAKER_RUNTIME_BATCH_KIND_|SITE_BINDING_STATE_|BUSINESS_STATUS_|FUND_STATUS_|ORDER_SOURCE_|ORDER_RESULT_|ROUND_STATE_|DIRECTION_)/, "")] ?? `未识别（${t}）`;
 }
-var TC = /* @__PURE__ */ new Set([
+var ZC = /* @__PURE__ */ new Set([
 	"请选择有效的开始和结束时间",
 	"分页范围无效",
 	"查询只接受UID和账号条件",
@@ -31436,8 +31915,8 @@ var TC = /* @__PURE__ */ new Set([
 	"订单状态已变化或未找到，请重新定位",
 	"订单定位跳转次数已达上限，请重新定位"
 ]);
-function EC(e) {
-	if (e instanceof Error && TC.has(e.message)) return e.message;
+function QC(e) {
+	if (e instanceof Error && ZC.has(e.message)) return e.message;
 	let t = e;
 	if (t?.response?.status === 401) return "登录状态已失效，请重新登录";
 	let n = t?.response?.data?.data?.error_code ?? t?.data?.error_code ?? t?.error_code;
@@ -31459,8 +31938,8 @@ function EC(e) {
 }
 //#endregion
 //#region src/components/prediction-operations/query.ts
-var DC = (e, t) => e.includes("*") || e.includes(t);
-function OC(e, t) {
+var $C = (e, t) => e.includes("*") || e.includes(t);
+function ew(e, t) {
 	if (!Array.isArray(e) || e.length !== 2 || e.some((e) => !(e instanceof Date) || !Number.isSafeInteger(e.getTime()) || e.getTime() <= 0)) throw Error("请选择有效的开始和结束时间");
 	return t ? {
 		time_field: t,
@@ -31471,10 +31950,10 @@ function OC(e, t) {
 		created_to_ms: String(e[1].getTime())
 	};
 }
-function kC(e, t = /* @__PURE__ */ new Date()) {
-	return e === "current" ? JS(t) : YS(t);
+function tw(e, t = /* @__PURE__ */ new Date()) {
+	return e === "current" ? bC(t) : xC(t);
 }
-var AC = {
+var nw = {
 	direction: ["UP", "DOWN"],
 	order_source: ["PLAYER", "MARKET_MAKER"],
 	business_status: [
@@ -31509,7 +31988,7 @@ var AC = {
 		"FINAL_RETURN"
 	],
 	sort_direction: ["ASC", "DESC"]
-}, jC = {
+}, rw = {
 	status: [
 		"PREPARING",
 		"BETTING",
@@ -31519,16 +31998,16 @@ var AC = {
 		"SETTLING",
 		"FINISHED"
 	],
-	result: AC.result,
+	result: nw.result,
 	sort_field: [
 		"BET_OPEN_AT",
 		"BET_CLOSE_AT",
 		"TOTAL_STAKE",
 		"AGENT_REVENUE"
 	],
-	sort_direction: AC.sort_direction
+	sort_direction: nw.sort_direction
 };
-function MC(e, t, n, r, i) {
+function iw(e, t, n, r, i) {
 	if (!Number.isInteger(r) || r < 1 || r > 2147483647 || !Number.isInteger(i) || i < 1 || i > 200) throw Error("分页范围无效");
 	if ("user_filter" in n || "user_ids" in n) throw Error("查询只接受UID和账号条件");
 	let a = [
@@ -31538,7 +32017,7 @@ function MC(e, t, n, r, i) {
 	].some((e) => e in n);
 	if (a && (["created_from_ms", "created_to_ms"].some((e) => e in n) || !(t ? ["CREATED_AT", "DRAW_AT"] : ["CREATED_AT", "FUNDS_COMPLETED_AT"]).includes(String(n.time_field)))) throw Error("查询时间用途无效");
 	let o = n[a ? "time_from_ms" : "created_from_ms"], s = n[a ? "time_to_ms" : "created_to_ms"];
-	if (!yC(o) || !yC(s) || BigInt(o) <= 0n || BigInt(o) >= BigInt(s) || BigInt(s) - BigInt(o) > 2678400000n) throw Error("请选择不超过31天的有效时间范围");
+	if (!GC(o) || !GC(s) || BigInt(o) <= 0n || BigInt(o) >= BigInt(s) || BigInt(s) - BigInt(o) > 2678400000n) throw Error("请选择不超过31天的有效时间范围");
 	let c = {
 		game_type: e,
 		page_number: r,
@@ -31560,15 +32039,15 @@ function MC(e, t, n, r, i) {
 			"time_to_ms"
 		] : ["created_from_ms", "created_to_ms"],
 		...l
-	], d = t ? jC : AC;
+	], d = t ? rw : nw;
 	for (let e of [...u, ...Object.keys(d)]) {
 		let t = n[e];
 		if (t == null || t === "") continue;
 		if (typeof t != "string") throw Error("查询字段必须为文本");
 		let r = t.trim();
 		if (r) {
-			if (l.includes(e) && !yC(r, void 0, !1)) throw Error("用户、代理或站点ID无效");
-			if (e === "duration_seconds" && !yC(r)) throw Error("房间周期无效");
+			if (l.includes(e) && !GC(r, void 0, !1)) throw Error("用户、代理或站点ID无效");
+			if (e === "duration_seconds" && !GC(r)) throw Error("房间周期无效");
 			if (e === "symbol" && !/^[A-Z0-9]{2,32}$/.test(r.toUpperCase())) throw Error("交易对格式无效");
 			if (d[e] && !d[e].includes(r)) throw Error("筛选选项无效");
 			if ([
@@ -31584,7 +32063,7 @@ function MC(e, t, n, r, i) {
 }
 //#endregion
 //#region src/components/prediction-operations/order-identity.ts
-function NC(e, t) {
+function aw(e, t) {
 	if (e === "source_name") return typeof t.source_name == "string" && t.source_name ? t.source_name : "-";
 	if (e === "source_type") switch (t.source_type) {
 		case "merchant": return "商户";
@@ -31681,19 +32160,19 @@ function NC(e, t) {
 		kind: "time"
 	}))
 ];
-function PC(e, t, n) {
+function ow(e, t, n) {
 	if (t.key === "order_no") {
 		let t = e.order_no, r = n === "UP_DOWN" ? "UD" : n === "HIGH_LOW" ? "HL" : "";
 		return r && typeof t == "string" && RegExp(`^${r}[0-9]{12}[A-Z0-9]{6}$`).test(t) ? t : typeof e.order_id == "string" && e.order_id ? e.order_id : "未提供";
 	}
 	if (t.key === "settlement_ledger_id") {
-		let t = FC(e);
+		let t = sw(e);
 		if (t) return t;
 	}
 	let r = e[t.key];
-	return t.kind === "amount" ? bC(r) : t.kind === "enum" ? wC(r) : t.kind === "time" ? xC(r) : r == null ? "未提供" : t.kind === "room" ? typeof r == "string" ? SC(r, n) : "数据格式异常" : typeof r == "string" ? r : typeof r == "boolean" ? r ? "是" : "否" : "数据格式异常";
+	return t.kind === "amount" ? KC(r) : t.kind === "enum" ? XC(r) : t.kind === "time" ? qC(r) : r == null ? "未提供" : t.kind === "room" ? typeof r == "string" ? JC(r, n) : "数据格式异常" : typeof r == "string" ? r : typeof r == "boolean" ? r ? "是" : "否" : "数据格式异常";
 }
-function FC(e) {
+function sw(e) {
 	if (!(e.settlement_ledger_id !== void 0 && e.settlement_ledger_id !== null && e.settlement_ledger_id !== "") && !(typeof e.debit_ledger_id != "string" || !/^[1-9][0-9]*$/.test(e.debit_ledger_id)) && ["SETTLED", "BUSINESS_STATUS_SETTLED"].includes(String(e.business_status))) {
 		if (["LOSE", "ORDER_RESULT_LOSE"].includes(String(e.result))) return "无（下单时已扣款）";
 		if ([
@@ -31704,7 +32183,7 @@ function FC(e) {
 		].includes(String(e.result))) return "关联异常";
 	}
 }
-var IC = {
+var cw = {
 	order_id: {
 		key: "order_id",
 		label: "订单号"
@@ -31897,7 +32376,7 @@ var IC = {
 		label: "结算完成时间",
 		kind: "time"
 	}
-}, LC = {
+}, lw = {
 	UP_DOWN_CURRENT: [
 		"order_id",
 		"round_id",
@@ -31996,26 +32475,26 @@ var IC = {
 		"settled_at_ms"
 	]
 };
-function RC(e) {
-	return LC[`${e}_HISTORY`].map((e) => ({
-		...IC[e],
+function uw(e) {
+	return lw[`${e}_HISTORY`].map((e) => ({
+		...cw[e],
 		...e === "user_name" ? { label: "用户名" } : {}
 	}));
 }
-function zC(e, t) {
-	let n = LC[t === "rounds" ? "UP_DOWN_ROUNDS" : `${e}_${t.toUpperCase()}`] ?? [];
+function dw(e, t) {
+	let n = lw[t === "rounds" ? "UP_DOWN_ROUNDS" : `${e}_${t.toUpperCase()}`] ?? [];
 	return t === "history" && (n = n.filter((t) => !["debit_ledger_id", "settlement_ledger_id"].includes(t) && (e !== "UP_DOWN" || t !== "round_id")), e === "HIGH_LOW" && (n = [
 		...n.filter((e) => !["expire_at_ms", "funds_completed_at_ms"].includes(e)),
 		"expire_at_ms",
 		"funds_completed_at_ms"
-	])), n.map((e) => IC[e]);
+	])), n.map((e) => cw[e]);
 }
-function BC(e) {
+function fw(e) {
 	if (!/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
 	let [t, n = ""] = e.split(".");
 	return t + "." + n.replace(/0+$/, "").padEnd(2, "0");
 }
-function VC(e) {
+function pw(e) {
 	if (!e || typeof e != "object" || Array.isArray(e)) return "—";
 	let { numerator: t, denominator: n } = e, r = (e) => typeof e == "string" && e.length <= 128 && /^(0|[1-9]\d*)(\.\d+)?$/.test(e);
 	if (!r(t) || !r(n)) return "—";
@@ -32025,25 +32504,25 @@ function VC(e) {
 	for (let e = 0; s !== 0n && e < 4; e++) s *= 10n, c += String(s / o), s %= o;
 	return c = c.replace(/0+$/, ""), `${s === 0n ? "" : "≈"}${a / o}${c ? "." + c : ""}x`;
 }
-function HC(e, t, n) {
+function mw(e, t, n) {
 	let r = t.key;
 	if (r === "round_id" && typeof e.round_no == "string" && /^[0-9]{14}[0-9A-Z]{9}$/.test(e.round_no)) return e.round_no;
-	if (r === "order_no") return PC(e, t, n);
+	if (r === "order_no") return ow(e, t, n);
 	if (r === "order_id" && typeof e.order_no == "string" && RegExp(`^${n === "UP_DOWN" ? "UD" : "HL"}[0-9]{12}[A-Z0-9]{6}$`).test(e.order_no)) return e.order_no;
 	if (r === "settlement_ledger_id") {
-		let t = FC(e);
+		let t = sw(e);
 		if (t) return t;
 	}
-	let i = NC(r, e);
+	let i = aw(r, e);
 	if (i !== void 0) return i;
 	if (["draw_outcome", "round_pnl"].includes(r)) return "—";
 	if (r === "order_status") {
-		let t = aC(e);
-		return t ? wC(t.value) : "—";
+		let t = jC(e);
+		return t ? XC(t.value) : "—";
 	}
-	if (r === "final_odds") return VC(e.final_odds);
+	if (r === "final_odds") return pw(e.final_odds);
 	let a = e[r];
-	return a == null || a === "" || r === "open_price" && n === "HIGH_LOW" && ["PENDING", "BUSINESS_STATUS_PENDING"].includes(String(e.business_status)) && typeof a == "string" && /^0(\.0+)?$/.test(a) ? "—" : r === "fixed_odds" ? VC({
+	return a == null || a === "" || r === "open_price" && n === "HIGH_LOW" && ["PENDING", "BUSINESS_STATUS_PENDING"].includes(String(e.business_status)) && typeof a == "string" && /^0(\.0+)?$/.test(a) ? "—" : r === "fixed_odds" ? pw({
 		numerator: a,
 		denominator: "1"
 	}) : [
@@ -32055,25 +32534,25 @@ function HC(e, t, n) {
 		"down_pool",
 		"total_stake",
 		"total_return"
-	].includes(r) ? typeof a == "string" ? BC(a) : "—" : PC(e, t, n);
+	].includes(r) ? typeof a == "string" ? fw(a) : "—" : ow(e, t, n);
 }
 //#endregion
 //#region src/components/prediction-operations/format-user-name.ts
-var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PURE__ */ k({
+var hw = (e, t) => e?.trim() || t?.trim() || "-", gw = { key: 1 }, _w = /* @__PURE__ */ k({
 	__name: "SymbolDisplay",
 	props: { symbol: {} },
 	setup(e) {
-		let t = uC();
+		let t = IC();
 		return (n, r) => Y(t)().symbolComponent ? (U(), S(re(Y(t)().symbolComponent), {
 			key: 0,
 			symbol: e.symbol
-		}, null, 8, ["symbol"])) : (U(), w("span", WC, q(e.symbol || "-"), 1));
+		}, null, 8, ["symbol"])) : (U(), w("span", gw, q(e.symbol || "-"), 1));
 	}
-}), KC = /* @__PURE__ */ k({
+}), vw = /* @__PURE__ */ k({
 	__name: "SourceTypeTag",
 	props: { sourceType: { default: "merchant" } },
 	setup(e) {
-		let t = fC(), n = e, r = {
+		let t = RC(), n = e, r = {
 			merchant: "商户",
 			white_label: "白标",
 			platform: "平台"
@@ -32092,10 +32571,10 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			_: 1
 		}, 8, ["type"]));
 	}
-}), qC = { class: "order-detail-title" }, JC = {
+}), yw = { class: "order-detail-title" }, bw = {
 	key: 0,
 	class: "order-detail-content"
-}, YC = { class: "order-detail-summary" }, XC = ["aria-label"], ZC = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, xw = { class: "order-detail-summary" }, Sw = ["aria-label"], Cw = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "HistoryOrderDetailDrawer",
 	props: {
 		modelValue: { type: Boolean },
@@ -32104,7 +32583,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 	},
 	emits: ["update:modelValue", "closed"],
 	setup(e, { emit: t }) {
-		let n = fC(), r = uC(), i = e, a = t, o = b({
+		let n = RC(), r = IC(), i = e, a = t, o = b({
 			get: () => i.modelValue,
 			set: (e) => a("update:modelValue", e)
 		}), s = b(() => `${i.game === "UP_DOWN" ? "涨跌预测" : "自选预测"}订单详情`), c = b(() => (i.game === "UP_DOWN" ? [
@@ -32191,11 +32670,11 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			}
 		]).map((e) => ({
 			title: e.title,
-			fields: e.keys.filter((e) => r().showSources || !["source_name", "source_type"].includes(e)).map((e) => RC(i.game).find((t) => t.key === e))
+			fields: e.keys.filter((e) => r().showSources || !["source_name", "source_type"].includes(e)).map((e) => uw(i.game).find((t) => t.key === e))
 		}))), l = (e) => {
 			if (!i.row) return "-";
-			if (e.key === "user_name") return UC(i.row.nick_name, i.row.user_name);
-			let t = HC(i.row, e, i.game);
+			if (e.key === "user_name") return hw(i.row.nick_name, i.row.user_name);
+			let t = mw(i.row, e, i.game);
 			return [
 				"source_name",
 				"order_id",
@@ -32204,7 +32683,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 				"public_user_id"
 			].includes(e.key) ? t : n(t);
 		}, u = b(() => {
-			let e = i.row && aC(i.row)?.tone;
+			let e = i.row && jC(i.row)?.tone;
 			return !e || e === "neutral" ? "default" : e;
 		});
 		return (t, r) => (U(), S(Y(fc), {
@@ -32215,7 +32694,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			size: 500,
 			onClosed: r[2] ||= (e) => a("closed")
 		}, {
-			header: Z(() => [T("div", qC, [T("strong", null, q(Y(n)(s.value)), 1), T("span", null, q(e.row ? l({
+			header: Z(() => [T("div", yw, [T("strong", null, q(Y(n)(s.value)), 1), T("span", null, q(e.row ? l({
 				key: "order_id",
 				label: "订单号"
 			}) : "-"), 1)])]),
@@ -32223,12 +32702,12 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 				default: Z(() => [D(q(Y(n)("关闭")), 1)]),
 				_: 1
 			})]),
-			default: Z(() => [e.row ? (U(), w("div", JC, [T("div", YC, [O(GC, { symbol: e.row.symbol }, null, 8, ["symbol"]), O(Y(Q), {
+			default: Z(() => [e.row ? (U(), w("div", bw, [T("div", xw, [O(_w, { symbol: e.row.symbol }, null, 8, ["symbol"]), O(Y(Q), {
 				type: u.value,
 				effect: "soft",
 				round: "",
 				size: "sm",
-				title: Y(oC)(e.row)
+				title: Y(MC)(e.row)
 			}, {
 				default: Z(() => [D(q(l({
 					key: "order_status",
@@ -32245,10 +32724,10 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 					label: Y(n)(t.label),
 					"data-detail-field": t.key
 				}, {
-					default: Z(() => [t.key === "source_type" ? (U(), S(KC, {
+					default: Z(() => [t.key === "source_type" ? (U(), S(vw, {
 						key: 0,
 						"source-type": e.row.source_type ?? null
-					}, null, 8, ["source-type"])) : t.key === "symbol" ? (U(), S(GC, {
+					}, null, 8, ["source-type"])) : t.key === "symbol" ? (U(), S(_w, {
 						key: 1,
 						symbol: e.row.symbol
 					}, null, 8, ["symbol"])) : t.key === "order_status" ? (U(), S(Y(Q), {
@@ -32257,25 +32736,25 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 						effect: "soft",
 						round: "",
 						size: "sm",
-						title: Y(oC)(e.row)
+						title: Y(MC)(e.row)
 					}, {
 						default: Z(() => [D(q(l(t)), 1)]),
 						_: 2
 					}, 1032, ["type", "title"])) : (U(), w("span", {
 						key: 3,
-						class: I(t.key === "realized_pnl" ? `is-${Y(sC)(e.row.realized_pnl)}` : void 0)
+						class: I(t.key === "realized_pnl" ? `is-${Y(NC)(e.row.realized_pnl)}` : void 0)
 					}, q(l(t)), 3))]),
 					_: 2
 				}, 1032, ["label", "data-detail-field"]))), 128))]),
 				_: 2
-			}, 1024)], 8, XC))), 128))])) : C("", !0)]),
+			}, 1024)], 8, Sw))), 128))])) : C("", !0)]),
 			_: 1
 		}, 8, ["modelValue", "aria-label"]));
 	}
-}), [["__scopeId", "data-v-d419f413"]]), QC = {
+}), [["__scopeId", "data-v-d419f413"]]), ww = {
 	key: 0,
 	role: "alert"
-}, $C = { class: "prediction-table-time" }, ew = { key: 1 }, tw = ["title", "data-status-field"], nw = { key: 1 }, rw = ["title"], iw = ["title"], aw = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, Tw = { class: "prediction-table-time" }, Ew = { key: 1 }, Dw = ["title", "data-status-field"], Ow = { key: 1 }, kw = ["title"], Aw = ["title"], jw = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "OperationPage",
 	props: {
 		adapter: {},
@@ -32287,8 +32766,8 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 		view: {}
 	},
 	setup(e) {
-		let t = fC(() => n.locale), n = e;
-		lC(() => ({
+		let t = RC(() => n.locale), n = e;
+		FC(() => ({
 			symbolComponent: n.adapter.symbolComponent,
 			showSources: n.showSources !== !1,
 			locale: n.locale
@@ -32308,7 +32787,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			u.value || (d.value = null);
 		}
 		let m = (e) => {
-			let t = nC("round", e);
+			let t = OC("round", e);
 			return t === "neutral" ? "default" : t;
 		}, h = b(() => n.game === "UP_DOWN" && i.value ? [
 			"bet_open_at_ms",
@@ -32325,14 +32804,14 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			hourCycle: "h23"
 		}), v = (e, t) => {
 			let r = e[t];
-			if (!yC(r, 8640000000000000n)) return HC(e, {
+			if (!GC(r, 8640000000000000n)) return mw(e, {
 				key: t,
 				label: "",
 				kind: "time"
 			}, n.game);
 			let i = Object.fromEntries(g.formatToParts(new Date(Number(r))).map(({ type: e, value: t }) => [e, t]));
 			return `${i.year}/${i.month}/${i.day}\n${i.hour}:${i.minute}:${i.second}`;
-		}, y = b(() => `${n.game === "UP_DOWN" ? "涨跌预测" : "自选预测"} · ${i.value ? "场次列表" : n.view === "current" ? "当前订单" : "历史订单"}`), x = b(() => `prediction_operation:${i.value ? "rounds" : n.view === "current" ? "current_orders" : "history_orders"}`), k = b(() => !!n.context.actorId && DC(r.perms, x.value)), A = () => kC(n.view), j = () => i.value ? "DRAW_AT" : n.view === "history" ? "FUNDS_COMPLETED_AT" : "CREATED_AT", M = W(n.view === "current" ? void 0 : A()), N = ne({
+		}, y = b(() => `${n.game === "UP_DOWN" ? "涨跌预测" : "自选预测"} · ${i.value ? "场次列表" : n.view === "current" ? "当前订单" : "历史订单"}`), x = b(() => `prediction_operation:${i.value ? "rounds" : n.view === "current" ? "current_orders" : "history_orders"}`), k = b(() => !!n.context.actorId && $C(r.perms, x.value)), A = () => tw(n.view), j = () => i.value ? "DRAW_AT" : n.view === "history" ? "FUNDS_COMPLETED_AT" : "CREATED_AT", M = W(n.view === "current" ? void 0 : A()), N = ne({
 			agent_id: "",
 			...i.value ? {} : { order_source: "PLAYER" },
 			time_field: j(),
@@ -32361,36 +32840,36 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 		]), B = b(() => i.value ? [{
 			key: "status",
 			label: "状态",
-			values: jC.status
+			values: rw.status
 		}, {
 			key: "result",
 			label: "结果",
-			values: jC.result
+			values: rw.result
 		}] : [
 			{
 				key: "direction",
 				label: "方向",
-				values: AC.direction
+				values: nw.direction
 			},
 			{
 				key: "order_source",
 				label: "订单来源",
-				values: AC.order_source
+				values: nw.order_source
 			},
 			{
 				key: "business_status",
 				label: "业务状态",
-				values: AC.business_status
+				values: nw.business_status
 			},
 			{
 				key: "fund_status",
 				label: "资金状态",
-				values: AC.fund_status
+				values: nw.fund_status
 			},
 			{
 				key: "result",
 				label: "结果",
-				values: AC.result
+				values: nw.result
 			}
 		]), V = b(() => i.value ? [
 			{
@@ -32430,13 +32909,13 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			if (!re.value) return 0;
 			let e = BigInt(ae.value), t = 2147483647n * BigInt(J.value);
 			return Number(e > t ? t : e);
-		}), ce = b(() => [...zC(n.game, n.view).filter((e) => n.showSources !== !1 || !["source_name", "source_type"].includes(e.key)).map((e) => ({
+		}), ce = b(() => [...dw(n.game, n.view).filter((e) => n.showSources !== !1 || !["source_name", "source_type"].includes(e.key)).map((e) => ({
 			key: e.key,
 			dataIndex: e.key,
 			title: e.key === "user_name" ? "用户名" : e.label,
-			width: $S(e.key, s.value ? "high-low-history" : o.value ? "up-down-history" : a.value ? "up-down-current" : n.game === "UP_DOWN" && i.value ? "rounds" : void 0),
+			width: TC(e.key, s.value ? "high-low-history" : o.value ? "up-down-history" : a.value ? "up-down-current" : n.game === "UP_DOWN" && i.value ? "rounds" : void 0),
 			align: "left",
-			formatter: (t, r) => e.key === "user_name" ? UC(typeof r.nick_name == "string" ? r.nick_name : void 0, typeof r.user_name == "string" ? r.user_name : void 0) : HC(r, e, n.game)
+			formatter: (t, r) => e.key === "user_name" ? hw(typeof r.nick_name == "string" ? r.nick_name : void 0, typeof r.user_name == "string" ? r.user_name : void 0) : mw(r, e, n.game)
 		})), ...l.value ? [{
 			key: "operation",
 			title: "操作",
@@ -32468,7 +32947,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			"created_range",
 			"order_id",
 			...n.game === "UP_DOWN" ? ["round_id"] : []
-		]), de = qS(k, n.adapter.symbols, () => n.context.identityKey), fe = b(() => {
+		]), de = yC(k, n.adapter.symbols, () => n.context.identityKey), fe = b(() => {
 			let e = [
 				...i.value ? [] : [{
 					key: "user_keyword",
@@ -32502,7 +32981,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 					width: 120,
 					options: e.values.map((e) => ({
 						value: e,
-						label: wC(e)
+						label: XC(e)
 					}))
 				})),
 				n.game === "UP_DOWN" ? {
@@ -32512,9 +32991,9 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 					clearable: !0,
 					placeholder: "周期：全部",
 					width: 110,
-					options: gC.map((e) => ({
+					options: HC.map((e) => ({
 						value: e,
-						label: SC(e)
+						label: JC(e)
 					}))
 				} : {
 					key: "duration_seconds",
@@ -32523,9 +33002,9 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 					clearable: !0,
 					placeholder: "周期：全部",
 					width: 110,
-					options: _C.map((e) => ({
+					options: UC.map((e) => ({
 						value: e,
-						label: SC(e, "HIGH_LOW")
+						label: JC(e, "HIGH_LOW")
 					}))
 				},
 				...!i.value && n.showSources !== !1 ? [{
@@ -32633,21 +33112,21 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 					...xe,
 					page_number: ie.value,
 					page_size: J.value
-				} : MC(n.game, i.value, {
+				} : iw(n.game, i.value, {
 					...N,
-					...OC(M.value ?? A(), P.value)
+					...ew(M.value ?? A(), P.value)
 				}, ie.value, J.value);
 				ee.value = !0;
 				let r = i.value ? await n.adapter.rounds(t, be.signal) : await n.adapter.orders(n.view === "current" ? "current" : "history", t, be.signal);
 				if (e !== ye) return;
-				if (r.page_number !== ie.value || r.page_size !== J.value || !Array.isArray(r.items) || r.items.length > J.value || r.items.some((e) => !e || typeof e != "object" || typeof e[i.value ? "round_id" : "order_id"] != "string" || !i.value && e.game_type !== "GAME_TYPE_" + n.game) || !yC(r.total_count) || !yC(r.total_pages)) throw Error("分页响应格式异常");
+				if (r.page_number !== ie.value || r.page_size !== J.value || !Array.isArray(r.items) || r.items.length > J.value || r.items.some((e) => !e || typeof e != "object" || typeof e[i.value ? "round_id" : "order_id"] != "string" || !i.value && e.game_type !== "GAME_TYPE_" + n.game) || !GC(r.total_count) || !GC(r.total_pages)) throw Error("分页响应格式异常");
 				if (ke && !r.items.some((e) => e.order_id === ke)) {
 					Oe.retry(), await Ne({ order_id: ke });
 					return;
 				}
 				H.value = r.items, ae.value = r.total_count, oe.value = r.total_pages, re.value = !0, xe = t;
 			} catch (n) {
-				e === ye && (te.value = t(EC(n)), H.value = [], ae.value = "0", oe.value = "0", re.value = !1);
+				e === ye && (te.value = t(QC(n)), H.value = [], ae.value = "0", oe.value = "0", re.value = !1);
 			} finally {
 				e === ye && (ee.value = !1);
 			}
@@ -32686,7 +33165,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			get fullPath() {
 				return n.context.route.fullPath;
 			}
-		}, De = { replace: (e) => n.adapter.navigate(e) }, Oe = new hC(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ke = "", Ae = !1, je = !1;
+		}, De = { replace: (e) => n.adapter.navigate(e) }, Oe = new VC(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ke = "", Ae = !1, je = !1;
 		function Me() {
 			u.value = !1, d.value = null, Oe.cancel(), ke = "", Ae = !1, je = !1, ye++, be?.abort(), ee.value = !1, xe = void 0, H.value = [], te.value = "", ae.value = "0", oe.value = "0", re.value = !1;
 		}
@@ -32698,7 +33177,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 				let t = await n.adapter.locate(e, n.view === "current" ? "current" : "history", i.signal);
 				if (!i.current()) return;
 				if ("order_id" in e && t.order_id !== e.order_id) throw Error("订单定位响应无效");
-				let a = mC(t, n.game === "HIGH_LOW" ? "high-low" : "up-down", n.view === "current" ? "current" : "history", (e) => DC(r.perms, e));
+				let a = BC(t, n.game === "HIGH_LOW" ? "high-low" : "up-down", n.view === "current" ? "current" : "history", (e) => $C(r.perms, e));
 				if (a.redirect) {
 					await De.replace({
 						path: a.redirect,
@@ -32714,15 +33193,15 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 				N.order_id = t.order_id, N.time_field = "CREATED_AT", ke = t.order_id, M.value = a.range, ie.value = 1, Ae = !1, await Se();
 			} catch (e) {
 				if (!i.current()) return;
-				Ae = !1, je = !0, ee.value = !1, te.value = t(EC(e));
+				Ae = !1, je = !0, ee.value = !1, te.value = t(QC(e));
 			}
 		}
 		function Pe() {
-			if (Me(), Oe = new hC(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ie.value = 1, k.value) try {
-				let e = i.value ? null : pC(Ee.query);
+			if (Me(), Oe = new VC(Ee.query?._order_link_retry, Ee.query?._order_link_hops), ie.value = 1, k.value) try {
+				let e = i.value ? null : zC(Ee.query);
 				e ? Ne(e) : Se();
 			} catch (e) {
-				je = !0, te.value = t(EC(e));
+				je = !0, te.value = t(QC(e));
 			}
 		}
 		function Fe() {
@@ -32787,30 +33266,30 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			}, void 0, !0)]),
 			"field-created_range": Z(({ value: e, update: n }) => [O(Y(Ec), {
 				size: "sm",
-				"model-value": Y(ZS)(he(e)),
+				"model-value": Y(CC)(he(e)),
 				placeholder: Y(t)(L.value),
-				"onUpdate:modelValue": (e) => n(me(Y(QS)(e)))
+				"onUpdate:modelValue": (e) => n(me(Y(wC)(e)))
 			}, null, 8, [
 				"model-value",
 				"placeholder",
 				"onUpdate:modelValue"
 			])]),
-			"cell-symbol": Z(({ row: e }) => [O(GC, { symbol: e.symbol }, null, 8, ["symbol"])]),
-			"cell-source_type": Z(({ row: t }) => [K(e.$slots, "cell-source_type", { row: t }, () => [O(KC, { "source-type": t.source_type ?? null }, null, 8, ["source-type"])], !0)]),
+			"cell-symbol": Z(({ row: e }) => [O(_w, { symbol: e.symbol }, null, 8, ["symbol"])]),
+			"cell-source_type": Z(({ row: t }) => [K(e.$slots, "cell-source_type", { row: t }, () => [O(vw, { "source-type": t.source_type ?? null }, null, 8, ["source-type"])], !0)]),
 			"cell-status": Z(({ row: e }) => [O(Y(Q), {
 				type: m(e.status),
 				effect: "soft",
 				size: "sm",
 				round: ""
 			}, {
-				default: Z(() => [D(q(Y(t)(Y(HC)(e, {
+				default: Z(() => [D(q(Y(t)(Y(mw)(e, {
 					key: "status",
 					label: "status",
 					kind: "enum"
 				}, n.game))), 1)]),
 				_: 2
 			}, 1032, ["type"])]),
-			"cell-direction": Z(({ row: e }) => [T("span", { class: I(["prediction-status prediction-direction", `prediction-status--${Y(nC)("direction", e.direction)}`]) }, q(Y(t)(Y(HC)(e, {
+			"cell-direction": Z(({ row: e }) => [T("span", { class: I(["prediction-status prediction-direction", `prediction-status--${Y(OC)("direction", e.direction)}`]) }, q(Y(t)(Y(mw)(e, {
 				key: "direction",
 				label: "direction",
 				kind: "enum"
@@ -32819,42 +33298,42 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 				"白标",
 				"商户",
 				"机器人"
-			].includes(Y(HC)(e, {
+			].includes(Y(mw)(e, {
 				key: "ownership_type",
 				label: ""
 			}, n.game)) ? (U(), w("span", {
 				key: 0,
 				class: I(["prediction-status prediction-ownership", e.user_type === "3" ? "prediction-status--warning" : e.agent_id === "0" ? "prediction-status--primary" : "prediction-ownership--merchant"])
-			}, q(Y(HC)(e, {
+			}, q(Y(mw)(e, {
 				key: "ownership_type",
 				label: ""
-			}, n.game)), 3)) : (U(), w("span", ew, "—"))]),
-			"cell-order_status": Z(({ row: e }) => [Y(aC)(e) ? (U(), w("span", {
+			}, n.game)), 3)) : (U(), w("span", Ew, "—"))]),
+			"cell-order_status": Z(({ row: e }) => [Y(jC)(e) ? (U(), w("span", {
 				key: 0,
-				class: I(["prediction-status prediction-order-status", [`prediction-status--${Y(aC)(e).tone}`, { "prediction-fund-alert": Y(aC)(e).key === "fund_status" }]]),
-				title: Y(oC)(e),
-				"data-status-field": Y(aC)(e).key
-			}, q(Y(t)(Y(wC)(Y(aC)(e).value))), 11, tw)) : (U(), w("span", nw, "—"))]),
-			"cell-realized_pnl": Z(({ row: e }) => [T("span", { class: I(["prediction-pnl", `prediction-pnl--${Y(sC)(e.realized_pnl)}`]) }, q(Y(HC)(e, {
+				class: I(["prediction-status prediction-order-status", [`prediction-status--${Y(jC)(e).tone}`, { "prediction-fund-alert": Y(jC)(e).key === "fund_status" }]]),
+				title: Y(MC)(e),
+				"data-status-field": Y(jC)(e).key
+			}, q(Y(t)(Y(XC)(Y(jC)(e).value))), 11, Dw)) : (U(), w("span", Ow, "—"))]),
+			"cell-realized_pnl": Z(({ row: e }) => [T("span", { class: I(["prediction-pnl", `prediction-pnl--${Y(NC)(e.realized_pnl)}`]) }, q(Y(mw)(e, {
 				key: "realized_pnl",
 				label: "",
 				kind: "amount"
 			}, n.game)), 3)]),
-			"cell-order_id": Z(({ row: e }) => [T("span", { title: Y(HC)(e, {
+			"cell-order_id": Z(({ row: e }) => [T("span", { title: Y(mw)(e, {
 				key: "order_id",
 				label: "订单号"
-			}, n.game) }, q(Y(HC)(e, {
+			}, n.game) }, q(Y(mw)(e, {
 				key: "order_id",
 				label: "订单号"
-			}, n.game)), 9, rw)]),
+			}, n.game)), 9, kw)]),
 			"cell-round_id": Z(({ row: e }) => [T("span", {
 				class: I(["prediction-round-number", { "prediction-round-number--legacy": !e.round_no }]),
 				title: e.round_no || e.round_id
-			}, q(e.round_no || e.round_id), 11, iw)]),
+			}, q(e.round_no || e.round_id), 11, Aw)]),
 			_: 2
 		}, [G(h.value, (e) => ({
 			name: `cell-${e}`,
-			fn: Z(({ row: t }) => [T("span", $C, q(v(t, e)), 1)])
+			fn: Z(({ row: t }) => [T("span", Tw, q(v(t, e)), 1)])
 		})), l.value ? {
 			name: "cell-operation",
 			fn: Z(({ row: e }) => [O(Y($), {
@@ -32891,7 +33370,7 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			"filter-drawer-subtitle",
 			"row-key",
 			"empty-text"
-		]), l.value ? (U(), S(ZC, {
+		]), l.value ? (U(), S(Cw, {
 			key: 0,
 			modelValue: u.value,
 			"onUpdate:modelValue": r[2] ||= (e) => u.value = e,
@@ -32902,17 +33381,17 @@ var UC = (e, t) => e?.trim() || t?.trim() || "-", WC = { key: 1 }, GC = /* @__PU
 			"modelValue",
 			"game",
 			"row"
-		])) : C("", !0)], 64)) : (U(), w("p", QC, q(Y(t)("没有此页面的查询权限")), 1))], 2));
+		])) : C("", !0)], 64)) : (U(), w("p", ww, q(Y(t)("没有此页面的查询权限")), 1))], 2));
 	}
-}), [["__scopeId", "data-v-f9ada17f"]]), ow = (e) => e == null ? "—" : e === "" ? "（空）" : typeof e == "string" || typeof e == "number" ? String(e) : "—";
-function sw(e) {
+}), [["__scopeId", "data-v-f9ada17f"]]), Mw = (e) => e == null ? "—" : e === "" ? "（空）" : typeof e == "string" || typeof e == "number" ? String(e) : "—";
+function Nw(e) {
 	let t = new Date(e), n = (e) => String(e).padStart(2, "0");
 	return `${t.getFullYear()}-${n(t.getMonth() + 1)}-${n(t.getDate())} ${n(t.getHours())}:${n(t.getMinutes())}:${n(t.getSeconds())}`;
 }
-function cw(e) {
-	return typeof e != "string" || !/^\d+$/.test(e) || BigInt(e) > 253402300799999n ? ow(e) : sw(Number(e));
+function Pw(e) {
+	return typeof e != "string" || !/^\d+$/.test(e) || BigInt(e) > 253402300799999n ? Mw(e) : Nw(Number(e));
 }
-var lw = {
+var Fw = {
 	order_no: "订单编号",
 	order_id: "内部订单ID",
 	user_id: "用户ID",
@@ -32953,7 +33432,7 @@ var lw = {
 	hit_mark_price: "命中价格",
 	payout_discarded_remainder: "返还舍弃余数",
 	result_message: "结果说明"
-}, uw = [
+}, Iw = [
 	"",
 	"待扣款",
 	"进行中",
@@ -32963,8 +33442,8 @@ var lw = {
 	"已结算·输",
 	"作废",
 	"拒绝"
-], dw = (e, t) => e.endsWith("_ms") ? cw(t) : e === "status" && typeof t == "number" && uw[t] || ow(t);
-function fw(e) {
+], Lw = (e, t) => e.endsWith("_ms") ? Pw(t) : e === "status" && typeof t == "number" && Iw[t] || Mw(t);
+function Rw(e) {
 	let t = e, n = t?.response?.data?.data, r = n?.error_code || t?.error_code || t?.message || "";
 	return {
 		code: [
@@ -32980,7 +33459,7 @@ function fw(e) {
 		trace: typeof n?.trace_id == "string" && /^[a-zA-Z0-9-]{1,64}$/.test(n.trace_id) ? n.trace_id : ""
 	};
 }
-var pw = {
+var zw = {
 	current: "网格当前订单",
 	history: "网格历史订单",
 	readOnly: "只读查询",
@@ -33007,7 +33486,7 @@ var pw = {
 	USER_FILTER_TOO_BROAD: "匹配用户超过500个，请缩小筛选条件",
 	INVALID_RESPONSE: "订单数据不完整，请重试",
 	LOAD_FAILED: "订单加载失败，请重试"
-}, mw = {
+}, Bw = {
 	order_no: "订单编号",
 	order_id: "内部订单ID",
 	debit_ledger_id: "扣款流水号",
@@ -33030,7 +33509,7 @@ var pw = {
 	settled_at_ms: "结算时间",
 	settlement_ledger_id: "派彩／退款流水号",
 	internal_user_id: "内部用户ID"
-}, hw = {
+}, Vw = {
 	current: [
 		"order_no",
 		"public_user_id",
@@ -33062,25 +33541,25 @@ var pw = {
 		"settlement_ledger_id"
 	]
 };
-function gw(e, t) {
-	let n = [...hw[e] ?? []];
+function Hw(e, t) {
+	let n = [...Vw[e] ?? []];
 	return t && n.splice(n.indexOf("user_name") + 1, 0, "source_name", "source_type"), n;
 }
-function _w(e, t = !1) {
-	return gw(e, t).filter((t) => e !== "history" || !["debit_ledger_id", "settlement_ledger_id"].includes(t));
+function Uw(e, t = !1) {
+	return Hw(e, t).filter((t) => e !== "history" || !["debit_ledger_id", "settlement_ledger_id"].includes(t));
 }
-function vw(e) {
+function Ww(e) {
 	if (typeof e != "string" || !/^-?(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
 	let [t, n = ""] = e.split(".");
 	return t + "." + n.replace(/0+$/, "").padEnd(2, "0");
 }
-function yw(e) {
+function Gw(e) {
 	if (typeof e != "string" || !/^(0|[1-9]\d*)(\.\d+)?$/.test(e)) return "—";
 	let [t, n = ""] = e.split("."), r = /[1-9]/.test(n.slice(4)), i = n.slice(0, 4).replace(/0+$/, "");
 	return `${r ? "≈" : ""}${t}${i ? "." + i : ""}x`;
 }
-function bw(e, t, n = dw) {
-	let r = NC(e, t);
+function Kw(e, t, n = Lw) {
+	let r = aw(e, t);
 	if (r !== void 0) return r;
 	if (e === "result_price") return typeof t.settlement_mark_price == "string" && t.settlement_mark_price !== "" ? t.settlement_mark_price : "—";
 	if ([
@@ -33096,24 +33575,24 @@ function bw(e, t, n = dw) {
 	].includes(Number(t.status)) ? n("ledger_pending", "结算中") : "—";
 	if (e === "result_cell") return "—";
 	if (e === "order_status") return n("status", t.status);
-	if (e === "price_range") return typeof t.price_low == "string" && typeof t.price_high == "string" ? `${vw(t.price_low)} – ${vw(t.price_high)}` : "—";
-	if (e === "actual_return") return vw(t.status === 5 ? t.locked_gross_payout : t.status === 6 ? "0" : t.status === 7 ? t.stake_amount : void 0);
+	if (e === "price_range") return typeof t.price_low == "string" && typeof t.price_high == "string" ? `${Ww(t.price_low)} – ${Ww(t.price_high)}` : "—";
+	if (e === "actual_return") return Ww(t.status === 5 ? t.locked_gross_payout : t.status === 6 ? "0" : t.status === 7 ? t.stake_amount : void 0);
 	if (e === "realized_pnl") return typeof t.status == "number" && [
 		5,
 		6,
 		7
-	].includes(t.status) ? vw(t.realized_net_profit) : "—";
-	if (e === "locked_multiplier") return yw(t[e]);
-	if (["stake_amount", "locked_gross_payout"].includes(e)) return vw(t[e]);
+	].includes(t.status) ? Ww(t.realized_net_profit) : "—";
+	if (e === "locked_multiplier") return Gw(t[e]);
+	if (["stake_amount", "locked_gross_payout"].includes(e)) return Ww(t[e]);
 	let i = t[e];
 	return typeof i == "string" && i !== "" ? n(e, i) : "—";
 }
 //#endregion
 //#region src/components/prediction-operations/grid/components/GridHistoryDetailDrawer.vue?vue&type=script&setup=true&lang.ts
-var xw = { class: "order-detail-title" }, Sw = {
+var qw = { class: "order-detail-title" }, Jw = {
 	key: 0,
 	class: "order-detail-content"
-}, Cw = { class: "order-detail-summary" }, ww = ["aria-label"], Tw = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, Yw = { class: "order-detail-summary" }, Xw = ["aria-label"], Zw = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "GridHistoryDetailDrawer",
 	props: {
 		modelValue: { type: Boolean },
@@ -33121,7 +33600,7 @@ var xw = { class: "order-detail-title" }, Sw = {
 	},
 	emits: ["update:modelValue", "closed"],
 	setup(e, { emit: t }) {
-		let n = fC(), r = uC(), i = e, a = t, o = b({
+		let n = RC(), r = IC(), i = e, a = t, o = b({
 			get: () => i.modelValue,
 			set: (e) => a("update:modelValue", e)
 		}), s = b(() => [
@@ -33164,8 +33643,8 @@ var xw = { class: "order-detail-title" }, Sw = {
 			keys: e.keys.filter((e) => r().showSources || !["source_name", "source_type"].includes(e))
 		}))), c = (e) => {
 			if (!i.row) return "-";
-			if (e === "user_name") return UC(typeof i.row.nick_name == "string" ? i.row.nick_name : void 0, typeof i.row.user_name == "string" ? i.row.user_name : void 0);
-			let t = bw(e, i.row);
+			if (e === "user_name") return hw(typeof i.row.nick_name == "string" ? i.row.nick_name : void 0, typeof i.row.user_name == "string" ? i.row.user_name : void 0);
+			let t = Kw(e, i.row);
 			return [
 				"source_name",
 				"order_no",
@@ -33173,7 +33652,7 @@ var xw = { class: "order-detail-title" }, Sw = {
 				"public_user_id"
 			].includes(e) ? t : n(t);
 		}, l = b(() => {
-			let e = i.row ? iC(i.row.status) : "neutral";
+			let e = i.row ? AC(i.row.status) : "neutral";
 			return e === "neutral" ? "default" : e;
 		});
 		return (t, r) => (U(), S(Y(fc), {
@@ -33184,12 +33663,12 @@ var xw = { class: "order-detail-title" }, Sw = {
 			size: 500,
 			onClosed: r[2] ||= (e) => a("closed")
 		}, {
-			header: Z(() => [T("div", xw, [T("strong", null, q(Y(n)("预测网格订单详情")), 1), T("span", null, q(e.row ? c("order_no") : "-"), 1)])]),
+			header: Z(() => [T("div", qw, [T("strong", null, q(Y(n)("预测网格订单详情")), 1), T("span", null, q(e.row ? c("order_no") : "-"), 1)])]),
 			footer: Z(() => [O(Y($), { onClick: r[0] ||= (e) => o.value = !1 }, {
 				default: Z(() => [D(q(Y(n)("关闭")), 1)]),
 				_: 1
 			})]),
-			default: Z(() => [e.row ? (U(), w("div", Sw, [T("div", Cw, [O(GC, { symbol: e.row.symbol }, null, 8, ["symbol"]), O(Y(Q), {
+			default: Z(() => [e.row ? (U(), w("div", Jw, [T("div", Yw, [O(_w, { symbol: e.row.symbol }, null, 8, ["symbol"]), O(Y(Q), {
 				type: l.value,
 				effect: "soft",
 				round: "",
@@ -33204,14 +33683,14 @@ var xw = { class: "order-detail-title" }, Sw = {
 			}, [T("h3", null, q(Y(n)(t.title)), 1), O(Y(jg), { size: "md" }, {
 				default: Z(() => [(U(!0), w(_, null, G(t.keys, (t) => (U(), S(Y(Ng), {
 					key: t,
-					label: Y(n)(t === "user_name" ? "用户名" : Y(mw)[t]),
+					label: Y(n)(t === "user_name" ? "用户名" : Y(Bw)[t]),
 					span: t === "price_range" ? 2 : 1,
 					"data-detail-field": t
 				}, {
-					default: Z(() => [t === "source_type" ? (U(), S(KC, {
+					default: Z(() => [t === "source_type" ? (U(), S(vw, {
 						key: 0,
 						"source-type": e.row.source_type ?? null
-					}, null, 8, ["source-type"])) : t === "symbol" ? (U(), S(GC, {
+					}, null, 8, ["source-type"])) : t === "symbol" ? (U(), S(_w, {
 						key: 1,
 						symbol: e.row.symbol
 					}, null, 8, ["symbol"])) : t === "order_status" ? (U(), S(Y(Q), {
@@ -33225,7 +33704,7 @@ var xw = { class: "order-detail-title" }, Sw = {
 						_: 2
 					}, 1032, ["type"])) : (U(), w("span", {
 						key: 3,
-						class: I(t === "realized_pnl" ? `is-${Y(sC)(c(t))}` : void 0)
+						class: I(t === "realized_pnl" ? `is-${Y(NC)(c(t))}` : void 0)
 					}, q(c(t)), 3))]),
 					_: 2
 				}, 1032, [
@@ -33234,11 +33713,11 @@ var xw = { class: "order-detail-title" }, Sw = {
 					"data-detail-field"
 				]))), 128))]),
 				_: 2
-			}, 1024)], 8, ww))), 128))])) : C("", !0)]),
+			}, 1024)], 8, Xw))), 128))])) : C("", !0)]),
 			_: 1
 		}, 8, ["modelValue", "aria-label"]));
 	}
-}), [["__scopeId", "data-v-acaa154b"]]), Ew = 9223372036854775807n, Dw = 253402300799999n, Ow = (e) => e === "current" ? [
+}), [["__scopeId", "data-v-acaa154b"]]), Qw = 9223372036854775807n, $w = 253402300799999n, eT = (e) => e === "current" ? [
 	1,
 	2,
 	3,
@@ -33249,19 +33728,19 @@ var xw = { class: "order-detail-title" }, Sw = {
 	7,
 	8
 ];
-function kw() {
+function tT() {
 	throw Error("INVALID_REQUEST");
 }
-function Aw(e, t = Ew, n = !1) {
+function nT(e, t = Qw, n = !1) {
 	return typeof e == "string" && (n ? /^(0|[1-9]\d*)$/ : /^[1-9]\d*$/).test(e) && e.length <= 19 && BigInt(e) <= t;
 }
-function jw(e) {
+function rT(e) {
 	let t = /^(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})$/.exec(e);
-	if (!t) return kw();
+	if (!t) return tT();
 	let [n, r, i, a, o, s] = t.slice(1).map(Number), c = /* @__PURE__ */ new Date(0);
-	return c.setFullYear(n, r - 1, i), c.setHours(a, o, s, 0), c.getFullYear() !== n || c.getMonth() !== r - 1 || c.getDate() !== i || c.getHours() !== a || c.getMinutes() !== o || c.getSeconds() !== s || c.getTime() < 0 ? kw() : String(c.getTime());
+	return c.setFullYear(n, r - 1, i), c.setHours(a, o, s, 0), c.getFullYear() !== n || c.getMonth() !== r - 1 || c.getDate() !== i || c.getHours() !== a || c.getMinutes() !== o || c.getSeconds() !== s || c.getTime() < 0 ? tT() : String(c.getTime());
 }
-function Mw(e, t, n, r) {
+function iT(e, t, n, r) {
 	let i = [
 		"created_from_ms",
 		"created_to_ms",
@@ -33275,9 +33754,9 @@ function Mw(e, t, n, r) {
 		"symbol",
 		"status"
 	];
-	if (Object.keys(t).some((e) => !i.includes(e)) || !Number.isInteger(n) || n < 1 || n > 1e3 || !Number.isInteger(r) || r < 1 || r > 100) return kw();
+	if (Object.keys(t).some((e) => !i.includes(e)) || !Number.isInteger(n) || n < 1 || n > 1e3 || !Number.isInteger(r) || r < 1 || r > 100) return tT();
 	let a = t.created_from_ms, o = t.created_to_ms;
-	if (!Aw(a, Dw, !0) || !Aw(o, Dw, !0) || BigInt(o) <= BigInt(a) || BigInt(o) - BigInt(a) > 2678400000n) return kw();
+	if (!nT(a, $w, !0) || !nT(o, $w, !0) || BigInt(o) <= BigInt(a) || BigInt(o) - BigInt(a) > 2678400000n) return tT();
 	let s = new URLSearchParams({
 		created_from_ms: a,
 		created_to_ms: o
@@ -33285,27 +33764,27 @@ function Mw(e, t, n, r) {
 	for (let e of i.slice(2, -1)) {
 		let n = t[e];
 		if (n === void 0 || n === "") continue;
-		if (typeof n != "string") return kw();
+		if (typeof n != "string") return tT();
 		let r = n;
 		if (e === "user_keyword") {
-			if (/[\x00-\x1f\x7f]/.test(r)) return kw();
+			if (/[\x00-\x1f\x7f]/.test(r)) return tT();
 			if (r = r.trim(), !r) continue;
-			if ([...r].length > 128) return kw();
+			if ([...r].length > 128) return tT();
 		}
-		if (["order_id", "user_id"].includes(e) && !Aw(r) || e === "public_user_id" && (r.trim() !== r || [...r].length > 64 || /[\x00-\x1f\x7f]/.test(r)) || e === "order_no" && (r.length !== 20 || !/^GC[0-9]{12}[A-Z0-9]{6}$/.test(r)) || e === "client_order_id" && !/^[A-Za-z0-9_-]{8,64}$/.test(r) || e === "symbol" && !/^[A-Z0-9]{2,32}$/.test(r) || e === "home_site_id" && (r.trim() !== r || r.includes("\0") || new TextEncoder().encode(r).length > 64)) return kw();
+		if (["order_id", "user_id"].includes(e) && !nT(r) || e === "public_user_id" && (r.trim() !== r || [...r].length > 64 || /[\x00-\x1f\x7f]/.test(r)) || e === "order_no" && (r.length !== 20 || !/^GC[0-9]{12}[A-Z0-9]{6}$/.test(r)) || e === "client_order_id" && !/^[A-Za-z0-9_-]{8,64}$/.test(r) || e === "symbol" && !/^[A-Z0-9]{2,32}$/.test(r) || e === "home_site_id" && (r.trim() !== r || r.includes("\0") || new TextEncoder().encode(r).length > 64)) return tT();
 		s.set(e, r);
 	}
 	let c = t.status;
-	if (c !== void 0 && c !== "" && (typeof c != "string" || !Ow(e).map(String).includes(c))) return kw();
-	for (let t of c ? [Number(c)] : Ow(e)) s.append("statuses[]", String(t));
+	if (c !== void 0 && c !== "" && (typeof c != "string" || !eT(e).map(String).includes(c))) return tT();
+	for (let t of c ? [Number(c)] : eT(e)) s.append("statuses[]", String(t));
 	return s.set("page_no", String(n)), s.set("page_size", String(r)), s.toString();
 }
-function Nw(e) {
+function aT(e) {
 	return typeof e == "object" && !!e && !Array.isArray(e);
 }
-var Pw = (e, t = !1) => typeof e == "string" && (t ? /^-?(0|[1-9]\d*)(\.\d+)?$/ : /^(0|[1-9]\d*)(\.\d+)?$/).test(e);
-function Fw(e, t, n, r = !1) {
-	if (!Nw(e) || !Number.isInteger(e.status) || ![
+var oT = (e, t = !1) => typeof e == "string" && (t ? /^-?(0|[1-9]\d*)(\.\d+)?$/ : /^(0|[1-9]\d*)(\.\d+)?$/).test(e);
+function sT(e, t, n, r = !1) {
+	if (!aT(e) || !Number.isInteger(e.status) || ![
 		1,
 		2,
 		3,
@@ -33314,14 +33793,14 @@ function Fw(e, t, n, r = !1) {
 		6,
 		7,
 		8
-	].includes(e.status) || t && !Ow(t).includes(e.status) || n && e.order_id !== n) throw Error("INVALID_RESPONSE");
+	].includes(e.status) || t && !eT(t).includes(e.status) || n && e.order_id !== n) throw Error("INVALID_RESPONSE");
 	for (let t of [
 		"order_id",
 		"user_id",
 		"order_version",
 		"time_start_ms",
 		"time_end_ms"
-	]) if (!Aw(e[t])) throw Error("INVALID_RESPONSE");
+	]) if (!nT(e[t])) throw Error("INVALID_RESPONSE");
 	for (let t of [
 		"home_site_id",
 		"entry_site_id",
@@ -33337,15 +33816,15 @@ function Fw(e, t, n, r = !1) {
 		"locked_gross_payout",
 		"locked_net_profit",
 		"locked_multiplier"
-	]) if (!Pw(e[t])) throw Error("INVALID_RESPONSE");
-	for (let t of ["created_at_ms", "updated_at_ms"]) if (!Aw(e[t], Dw, !0)) throw Error("INVALID_RESPONSE");
-	if (e.settled_at_ms !== null && !Aw(e.settled_at_ms) || e.order_no != null && (typeof e.order_no != "string" || !/^GC\d{12}[A-Z0-9]{6}$/.test(e.order_no)) || e.settlement_mark_price != null && !Pw(e.settlement_mark_price) || e.settlement_price_time_ms != null && !Aw(e.settlement_price_time_ms, Dw) || Object.hasOwn(e, "funding_read_available") && typeof e.funding_read_available != "boolean") throw Error("INVALID_RESPONSE");
-	for (let t of ["debit_ledger_id", "settlement_ledger_id"]) if (e[t] != null && !Aw(e[t])) throw Error("INVALID_RESPONSE");
+	]) if (!oT(e[t])) throw Error("INVALID_RESPONSE");
+	for (let t of ["created_at_ms", "updated_at_ms"]) if (!nT(e[t], $w, !0)) throw Error("INVALID_RESPONSE");
+	if (e.settled_at_ms !== null && !nT(e.settled_at_ms) || e.order_no != null && (typeof e.order_no != "string" || !/^GC\d{12}[A-Z0-9]{6}$/.test(e.order_no)) || e.settlement_mark_price != null && !oT(e.settlement_mark_price) || e.settlement_price_time_ms != null && !nT(e.settlement_price_time_ms, $w) || Object.hasOwn(e, "funding_read_available") && typeof e.funding_read_available != "boolean") throw Error("INVALID_RESPONSE");
+	for (let t of ["debit_ledger_id", "settlement_ledger_id"]) if (e[t] != null && !nT(e[t])) throw Error("INVALID_RESPONSE");
 	if (e.settlement_funding_type != null && !["PAYOUT", "REFUND"].includes(e.settlement_funding_type) || !Number.isInteger(e.result_code) || e.result_code < 1 || ([
 		5,
 		6,
 		7
-	].includes(e.status) ? !Pw(e.realized_net_profit, !0) : Object.hasOwn(e, "realized_net_profit"))) throw Error("INVALID_RESPONSE");
+	].includes(e.status) ? !oT(e.realized_net_profit, !0) : Object.hasOwn(e, "realized_net_profit"))) throw Error("INVALID_RESPONSE");
 	if (r) {
 		for (let t of [
 			"client_order_id",
@@ -33358,16 +33837,16 @@ function Fw(e, t, n, r = !1) {
 			"locked_layout_version",
 			"locked_config_version",
 			"bet_close_time_ms"
-		]) if (!Aw(e[t])) throw Error("INVALID_RESPONSE");
-		if (!Pw(e.locked_hit_probability) || !Number.isInteger(e.payout_discarded_remainder) || e.payout_discarded_remainder < 0 || e.payout_discarded_remainder > 99 || (e.hit_time_ms === null ? e.hit_mark_price !== null : !Aw(e.hit_time_ms) || typeof e.hit_mark_price != "string")) throw Error("INVALID_RESPONSE");
+		]) if (!nT(e[t])) throw Error("INVALID_RESPONSE");
+		if (!oT(e.locked_hit_probability) || !Number.isInteger(e.payout_discarded_remainder) || e.payout_discarded_remainder < 0 || e.payout_discarded_remainder > 99 || (e.hit_time_ms === null ? e.hit_mark_price !== null : !nT(e.hit_time_ms) || typeof e.hit_mark_price != "string")) throw Error("INVALID_RESPONSE");
 	}
 	return e;
 }
-function Iw(e, t, n, r) {
-	if (!Nw(e) || !Array.isArray(e.lists) || e.lists.length > r || e.page_no !== n || e.page_size !== r || !Number.isSafeInteger(e.count) || e.count < 0 || !Nw(e.extend) || !Aw(e.extend.query_snapshot_at_ms, Dw, !0)) throw Error("INVALID_RESPONSE");
-	return e.lists.forEach((e) => Fw(e, t)), e;
+function cT(e, t, n, r) {
+	if (!aT(e) || !Array.isArray(e.lists) || e.lists.length > r || e.page_no !== n || e.page_size !== r || !Number.isSafeInteger(e.count) || e.count < 0 || !aT(e.extend) || !nT(e.extend.query_snapshot_at_ms, $w, !0)) throw Error("INVALID_RESPONSE");
+	return e.lists.forEach((e) => sT(e, t)), e;
 }
-var Lw = class {
+var lT = class {
 	generation = 0;
 	controller;
 	close() {
@@ -33381,20 +33860,20 @@ var Lw = class {
 			current: () => e === this.generation && !t.signal.aborted
 		};
 	}
-}, Rw = { class: "mm-sr-only" }, zw = {
+}, uT = { class: "mm-sr-only" }, dT = {
 	key: 0,
 	role: "alert"
-}, Bw = {
+}, fT = {
 	key: 1,
 	role: "alert"
-}, Vw = {
+}, pT = {
 	key: 0,
 	role: "alert",
 	class: "validation"
-}, Hw = { class: "grid-history-time" }, Uw = {
+}, mT = { class: "grid-history-time" }, hT = {
 	key: 2,
 	role: "status"
-}, Ww = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}, gT = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "GridOrders",
 	props: {
 		view: {},
@@ -33405,7 +33884,7 @@ var Lw = class {
 		columns: { type: Function }
 	},
 	setup(e) {
-		let t = e, n = fC(() => t.locale), r = b(() => t.view === "history"), i = W(!1), a = W(null);
+		let t = e, n = RC(() => t.locale), r = b(() => t.view === "history"), i = W(!1), a = W(null);
 		function o(e) {
 			!r.value || !P.value || (a.value = e, i.value = !0);
 		}
@@ -33423,11 +33902,11 @@ var Lw = class {
 		});
 		function d(e, t) {
 			let n = e[t];
-			if (typeof n != "string" || !/^\d+$/.test(n) || BigInt(n) > 253402300799999n) return bw(t, e, dw);
+			if (typeof n != "string" || !/^\d+$/.test(n) || BigInt(n) > 253402300799999n) return Kw(t, e, Lw);
 			let r = Object.fromEntries(u.formatToParts(new Date(Number(n))).map(({ type: e, value: t }) => [e, t]));
 			return `${r.year}/${r.month}/${r.day}\n${r.hour}:${r.minute}:${r.second}`;
 		}
-		lC(() => ({
+		FC(() => ({
 			symbolComponent: t.adapter.symbolComponent,
 			showSources: t.showSources !== !1,
 			locale: t.locale
@@ -33446,15 +33925,15 @@ var Lw = class {
 			get fullPath() {
 				return t.context.route.fullPath;
 			}
-		}, m = { replace: (e) => t.adapter.navigate(e) }, h = new Lw(), g = (e) => n(pw[e] || lw[e] || e), v = (e) => n(mw[e] || e), y = (e, t) => ["status", "duration_seconds"].includes(e) || e.startsWith("ledger_") ? n(dw(e, t)) : dw(e, t), x = (e) => n(uw[e]), D = Intl.DateTimeFormat().resolvedOptions().timeZone, A = b(() => String(f.userInfo.id || "")), M = (e) => !!A.value && (f.perms.includes("*") || f.perms.includes(e)), N = W(!1), P = b(() => M("grid_order:lists") && !N.value), L = b(() => JSON.stringify([
+		}, m = { replace: (e) => t.adapter.navigate(e) }, h = new lT(), g = (e) => n(zw[e] || Fw[e] || e), v = (e) => n(Bw[e] || e), y = (e, t) => ["status", "duration_seconds"].includes(e) || e.startsWith("ledger_") ? n(Lw(e, t)) : Lw(e, t), x = (e) => n(Iw[e]), D = Intl.DateTimeFormat().resolvedOptions().timeZone, A = b(() => String(f.userInfo.id || "")), M = (e) => !!A.value && (f.perms.includes("*") || f.perms.includes(e)), N = W(!1), P = b(() => M("grid_order:lists") && !N.value), L = b(() => JSON.stringify([
 			A.value,
 			f.perms,
 			t.view,
 			p.fullPath,
 			t.context.identityKey
 		])), R = () => {
-			let [e, n] = kC(t.view);
-			return [sw(e.getTime()), sw(n.getTime())];
+			let [e, n] = tw(t.view);
+			return [Nw(e.getTime()), Nw(n.getTime())];
 		}, B = () => ({ date_range: t.view === "history" ? R() : null }), V = W(B()), H = W(""), ee = W(""), te = W(!1), ne = W(null), re = W(1), ie = W(20), J = b(() => ne.value ? Math.ceil(ne.value.count / ie.value) : 0), ae = b(() => Math.min(ne.value?.count ?? 0, 1e3 * ie.value)), oe = [
 			"order_no",
 			"public_user_id",
@@ -33466,7 +33945,7 @@ var Lw = class {
 			"user_keyword",
 			"order_id",
 			...oe
-		], ce = qS(P, t.adapter.symbols, () => t.context.identityKey), le = b(() => [
+		], ce = yC(P, t.adapter.symbols, () => t.context.identityKey), le = b(() => [
 			{
 				key: "user_keyword",
 				label: n("用户搜索"),
@@ -33502,22 +33981,22 @@ var Lw = class {
 				label: g("status"),
 				clearable: !0,
 				width: 120,
-				options: Ow(t.view).map((e) => ({
+				options: eT(t.view).map((e) => ({
 					value: String(e),
 					label: x(e)
 				}))
 			}
-		]), ue = b(() => [..._w(t.view, t.showSources !== !1).map((e) => ({
+		]), ue = b(() => [...Uw(t.view, t.showSources !== !1).map((e) => ({
 			key: e,
 			dataIndex: e,
 			title: e === "user_name" ? n("用户名") : v(e),
-			width: $S(e, r.value ? "grid-history" : void 0),
+			width: TC(e, r.value ? "grid-history" : void 0),
 			align: "left",
-			formatter: (t, n) => e === "user_name" ? UC(typeof n.nick_name == "string" ? n.nick_name : void 0, typeof n.user_name == "string" ? n.user_name : void 0) : bw(e, n, y)
+			formatter: (t, n) => e === "user_name" ? hw(typeof n.nick_name == "string" ? n.nick_name : void 0, typeof n.user_name == "string" ? n.user_name : void 0) : Kw(e, n, y)
 		})), ...r.value ? [{
 			key: "operation",
 			title: n("操作"),
-			width: $S("operation", "grid-history"),
+			width: TC("operation", "grid-history"),
 			align: "center",
 			fixed: "right"
 		}] : []]), de = b(() => t.columns ? t.columns(ue.value.map((e) => ({ ...e }))) : ue.value), fe = (e, t) => Array.isArray(e) && typeof e[t] == "string" ? e[t] : "", pe = k({
@@ -33526,9 +34005,9 @@ var Lw = class {
 			setup(e, { emit: t }) {
 				return () => j(Ec, {
 					size: "sm",
-					modelValue: ZS([0, 1].map((t) => new Date(fe(e.value, t).replace(" ", "T")))),
+					modelValue: CC([0, 1].map((t) => new Date(fe(e.value, t).replace(" ", "T")))),
 					placeholder: v("created_at_ms"),
-					"onUpdate:modelValue": (e) => t("update", QS(e)?.map((e) => sw(e.getTime())) ?? ["", ""])
+					"onUpdate:modelValue": (e) => t("update", wC(e)?.map((e) => Nw(e.getTime())) ?? ["", ""])
 				});
 			}
 		});
@@ -33552,10 +34031,10 @@ var Lw = class {
 				if (e && _e) {
 					let e = new URLSearchParams(_e);
 					e.set("page_no", String(a)), e.set("page_size", String(o)), s = e.toString();
-				} else s = Mw(i, {
+				} else s = iT(i, {
 					...Object.fromEntries([...se, "status"].map((e) => [e, V.value[e]])),
-					created_from_ms: jw(l),
-					created_to_ms: jw(u)
+					created_from_ms: rT(l),
+					created_to_ms: rT(u)
 				}, a, o);
 			} catch {
 				H.value = g("invalidQuery");
@@ -33565,14 +34044,14 @@ var Lw = class {
 			try {
 				let e = await t.adapter.orders(s, r.signal);
 				if (!r.current()) return;
-				let n = Iw(e, i, a, o);
+				let n = cT(e, i, a, o);
 				if (we && !n.lists.some((e) => e.order_id === we)) {
 					Ce.retry(), await Oe(we);
 					return;
 				}
 				ne.value = n, _e = s;
 			} catch (e) {
-				r.current() && (ne.value = null, fw(e).unauthorized ? he() : ee.value = n(EC(e)));
+				r.current() && (ne.value = null, Rw(e).unauthorized ? he() : ee.value = n(QC(e)));
 			} finally {
 				r.current() && (te.value = !1);
 			}
@@ -33595,7 +34074,7 @@ var Lw = class {
 				n === ve && ye(!!_e);
 			});
 		}
-		let Ce = new hC(p.query?._order_link_retry, p.query?._order_link_hops), we = "", Te = !1, Ee = !1;
+		let Ce = new VC(p.query?._order_link_retry, p.query?._order_link_hops), we = "", Te = !1, Ee = !1;
 		function De() {
 			Ce.cancel(), we = "", Te = !1, Ee = !1, me();
 		}
@@ -33606,7 +34085,7 @@ var Lw = class {
 			try {
 				let n = await t.adapter.locate(e, r.signal);
 				if (!r.current()) return;
-				let i = mC(n, "grid", t.view, M);
+				let i = BC(n, "grid", t.view, M);
 				if (n.order_id !== e || n.segment !== "grid") throw Error("订单定位响应无效");
 				if (i.redirect) {
 					await m.replace({
@@ -33620,17 +34099,17 @@ var Lw = class {
 					return;
 				}
 				V.value = {
-					date_range: [sw(+i.range[0]), sw(+i.range[1])],
+					date_range: [Nw(+i.range[0]), Nw(+i.range[1])],
 					order_id: e
 				}, re.value = 1, Te = !1, await ye();
 			} catch (e) {
 				if (!r.current()) return;
-				Te = !1, Ee = !0, te.value = !1, ee.value = n(EC(e));
+				Te = !1, Ee = !0, te.value = !1, ee.value = n(QC(e));
 			}
 		}
 		function ke() {
-			if (De(), Ce = new hC(p.query?._order_link_retry, p.query?._order_link_hops), P.value) try {
-				let e = pC(p.query);
+			if (De(), Ce = new VC(p.query?._order_link_retry, p.query?._order_link_hops), P.value) try {
+				let e = zC(p.query);
 				if (!e) {
 					ye();
 					return;
@@ -33639,7 +34118,7 @@ var Lw = class {
 				if (!t) throw Error("网格订单定位参数无效");
 				Oe(t);
 			} catch (e) {
-				Ee = !0, ee.value = n(EC(e));
+				Ee = !0, ee.value = n(QC(e));
 			}
 		}
 		X(L, (e, t) => {
@@ -33653,8 +34132,8 @@ var Lw = class {
 		}
 		return z(() => {
 			Ce.cancel(), me();
-		}), (t, u) => (U(), w("section", { class: I(["grid-orders prediction-table-page prediction-compact-table mm-ui", { "grid-history-orders": r.value }]) }, [T("header", Rw, [T("h2", null, q(g(e.view)), 1), T("p", null, q(g("readOnly")) + " · " + q(Y(D)), 1)]), N.value ? (U(), w("p", zw, q(g("authExpired")), 1)) : P.value ? (U(), w(_, { key: 2 }, [
-			H.value ? (U(), w("p", Vw, q(H.value), 1)) : C("", !0),
+		}), (t, u) => (U(), w("section", { class: I(["grid-orders prediction-table-page prediction-compact-table mm-ui", { "grid-history-orders": r.value }]) }, [T("header", uT, [T("h2", null, q(g(e.view)), 1), T("p", null, q(g("readOnly")) + " · " + q(Y(D)), 1)]), N.value ? (U(), w("p", dT, q(g("authExpired")), 1)) : P.value ? (U(), w(_, { key: 2 }, [
+			H.value ? (U(), w("p", pT, q(H.value), 1)) : C("", !0),
 			O(Y(Xl), {
 				"fill-height": "",
 				"aria-label": g(e.view),
@@ -33702,14 +34181,14 @@ var Lw = class {
 					value: e,
 					onUpdate: t
 				}, null, 8, ["value", "onUpdate"])]),
-				"cell-symbol": Z(({ row: e }) => [O(GC, { symbol: e.symbol }, null, 8, ["symbol"])]),
-				"cell-source_type": Z(({ row: e }) => [K(t.$slots, "cell-source_type", { row: e }, () => [O(KC, { "source-type": e.source_type ?? null }, null, 8, ["source-type"])], !0)]),
-				"cell-order_status": Z(({ row: e }) => [T("span", { class: I(["prediction-status prediction-grid-status", [`prediction-status--${Y(iC)(e.status)}`, { "prediction-grid-loss": e.status === 6 }]]) }, q(Y(bw)("order_status", e, y) || String(e.status ?? "—")), 3)]),
-				"cell-realized_pnl": Z(({ row: e }) => [T("span", { class: I(["prediction-pnl", `prediction-pnl--${Y(sC)(Y(bw)("realized_pnl", e, y))}`]) }, q(Y(bw)("realized_pnl", e, y)), 3)]),
+				"cell-symbol": Z(({ row: e }) => [O(_w, { symbol: e.symbol }, null, 8, ["symbol"])]),
+				"cell-source_type": Z(({ row: e }) => [K(t.$slots, "cell-source_type", { row: e }, () => [O(vw, { "source-type": e.source_type ?? null }, null, 8, ["source-type"])], !0)]),
+				"cell-order_status": Z(({ row: e }) => [T("span", { class: I(["prediction-status prediction-grid-status", [`prediction-status--${Y(AC)(e.status)}`, { "prediction-grid-loss": e.status === 6 }]]) }, q(Y(Kw)("order_status", e, y) || String(e.status ?? "—")), 3)]),
+				"cell-realized_pnl": Z(({ row: e }) => [T("span", { class: I(["prediction-pnl", `prediction-pnl--${Y(NC)(Y(Kw)("realized_pnl", e, y))}`]) }, q(Y(Kw)("realized_pnl", e, y)), 3)]),
 				_: 2
 			}, [G(l.value, (e) => ({
 				name: `cell-${e}`,
-				fn: Z(({ row: t }) => [T("span", Hw, q(d(t, e)), 1)])
+				fn: Z(({ row: t }) => [T("span", mT, q(d(t, e)), 1)])
 			})), r.value ? {
 				name: "cell-operation",
 				fn: Z(({ row: e }) => [O(Y($), {
@@ -33746,17 +34225,17 @@ var Lw = class {
 				"total",
 				"show-cell-title"
 			]),
-			r.value ? (U(), S(Tw, {
+			r.value ? (U(), S(Zw, {
 				key: 1,
 				modelValue: i.value,
 				"onUpdate:modelValue": u[2] ||= (e) => i.value = e,
 				row: a.value,
 				onClosed: s
 			}, null, 8, ["modelValue", "row"])) : C("", !0),
-			J.value > 1e3 ? (U(), w("p", Uw, q(g("limit")), 1)) : C("", !0)
-		], 64)) : (U(), w("p", Bw, q(g("noPermission")), 1))], 2));
+			J.value > 1e3 ? (U(), w("p", hT, q(g("limit")), 1)) : C("", !0)
+		], 64)) : (U(), w("p", fT, q(g("noPermission")), 1))], 2));
 	}
-}), [["__scopeId", "data-v-809c4e4e"]]), Gw = { class: "asset-phase-one-report__bucket" }, Kw = { key: 0 }, qw = { key: 0 }, Jw = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}), [["__scopeId", "data-v-809c4e4e"]]), _T = { class: "asset-phase-one-report__bucket" }, vT = { key: 0 }, yT = { key: 0 }, bT = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "AssetPhaseReport",
 	props: {
 		kind: {},
@@ -34028,14 +34507,14 @@ var Lw = class {
 			_: 2
 		}, [G(r, (e, t) => ({
 			name: `cell-bucket_${t}_amount`,
-			fn: Z(({ row: e }) => [T("div", Gw, [T("span", null, [D(q(a(e.buckets[t]?.count)) + " ", 1), e.buckets[t]?.user_share == null ? C("", !0) : (U(), w("small", Kw, "（" + q(o(e.buckets[t]?.user_share)) + "）", 1))]), T("span", null, [D(q(i(e.buckets[t]?.amount)) + " ", 1), e.buckets[t]?.asset_share == null ? C("", !0) : (U(), w("small", qw, "（" + q(o(e.buckets[t]?.asset_share)) + "）", 1))])])])
+			fn: Z(({ row: e }) => [T("div", _T, [T("span", null, [D(q(a(e.buckets[t]?.count)) + " ", 1), e.buckets[t]?.user_share == null ? C("", !0) : (U(), w("small", vT, "（" + q(o(e.buckets[t]?.user_share)) + "）", 1))]), T("span", null, [D(q(i(e.buckets[t]?.amount)) + " ", 1), e.buckets[t]?.asset_share == null ? C("", !0) : (U(), w("small", yT, "（" + q(o(e.buckets[t]?.asset_share)) + "）", 1))])])])
 		}))]), 1040, [
 			"columns",
 			"aria-label",
 			"filter-drawer-title"
 		])], 2));
 	}
-}), [["__scopeId", "data-v-6b7b4cad"]]), Yw = { class: "config-pro-page" }, Xw = { class: "config-pro-page__number" }, Zw = { class: "config-pro-page__number" }, Qw = { class: "config-pro-page__number" }, $w = { class: "config-pro-page__number" }, eT = { class: "config-pro-page__number" }, tT = { class: "config-pro-page__number" }, nT = { class: "config-pro-page__number" }, rT = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}), [["__scopeId", "data-v-6b7b4cad"]]), xT = { class: "config-pro-page" }, ST = { class: "config-pro-page__number" }, CT = { class: "config-pro-page__number" }, wT = { class: "config-pro-page__number" }, TT = { class: "config-pro-page__number" }, ET = { class: "config-pro-page__number" }, DT = { class: "config-pro-page__number" }, OT = { class: "config-pro-page__number" }, kT = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "MarketCurrentPage",
 	props: {
 		api: {},
@@ -34176,7 +34655,7 @@ var Lw = class {
 			} catch {}
 		}), H(() => {
 			h.abort(), i?.abort();
-		}), (e, t) => (U(), w("div", Yw, [O(Y(Xl), P(Y(m), {
+		}), (e, t) => (U(), w("div", xT, [O(Y(Xl), P(Y(m), {
 			"aria-label": "交易对预览",
 			columns: u,
 			"columns-configurable": "",
@@ -34193,23 +34672,23 @@ var Lw = class {
 			"show-cell-title": ""
 		}), {
 			"cell-symbol": Z(({ row: t }) => [K(e.$slots, "symbol", { symbol: t.symbol }, () => [D(q(t.symbol), 1)], !0)]),
-			"cell-last": Z(({ row: e }) => [T("span", Xw, q(o(a(e.symbol, "lastPrice"))), 1)]),
-			"cell-mark": Z(({ row: e }) => [T("span", Zw, q(o(a(e.symbol, "markPrice"))), 1)]),
-			"cell-index": Z(({ row: e }) => [T("span", Qw, q(o(a(e.symbol, "indexPrice"))), 1)]),
-			"cell-funding": Z(({ row: e }) => [T("span", $w, q(l(e.symbol)), 1)]),
-			"cell-volume": Z(({ row: e }) => [T("span", eT, q(s(e.symbol)), 1)]),
-			"cell-quantity": Z(({ row: e }) => [T("span", tT, q(c(e.symbol)), 1)]),
-			"cell-interest": Z(({ row: e }) => [T("span", nT, q(o(a(e.symbol, "openInterest"))), 1)]),
+			"cell-last": Z(({ row: e }) => [T("span", ST, q(o(a(e.symbol, "lastPrice"))), 1)]),
+			"cell-mark": Z(({ row: e }) => [T("span", CT, q(o(a(e.symbol, "markPrice"))), 1)]),
+			"cell-index": Z(({ row: e }) => [T("span", wT, q(o(a(e.symbol, "indexPrice"))), 1)]),
+			"cell-funding": Z(({ row: e }) => [T("span", TT, q(l(e.symbol)), 1)]),
+			"cell-volume": Z(({ row: e }) => [T("span", ET, q(s(e.symbol)), 1)]),
+			"cell-quantity": Z(({ row: e }) => [T("span", DT, q(c(e.symbol)), 1)]),
+			"cell-interest": Z(({ row: e }) => [T("span", OT, q(o(a(e.symbol, "openInterest"))), 1)]),
 			_: 3
 		}, 16)]));
 	}
-}), [["__scopeId", "data-v-5153ab01"]]), iT = [{
+}), [["__scopeId", "data-v-5153ab01"]]), AT = [{
 	label: "标记价格",
 	value: "mark_price"
 }, {
 	label: "指数价格",
 	value: "index_price"
-}], aT = [
+}], jT = [
 	{
 		label: "1分钟",
 		value: "1m"
@@ -34262,7 +34741,7 @@ var Lw = class {
 		label: "1月",
 		value: "1mon"
 	}
-], oT = [
+], MT = [
 	{
 		label: "近24小时",
 		value: "24h"
@@ -34275,8 +34754,8 @@ var Lw = class {
 		label: "近30天",
 		value: "30d"
 	}
-], sT = "index_price";
-function cT() {
+], NT = "index_price";
+function PT() {
 	return [
 		"开盘价",
 		"最高价",
@@ -34284,14 +34763,14 @@ function cT() {
 		"收盘价"
 	];
 }
-function lT(e) {
+function FT(e) {
 	if (e == null || e === "") return "-";
 	let t = String(e), n = /^(-?)(\d+)(?:\.(\d+))?$/.exec(t);
 	if (!n) return t;
 	let r = n[2].replace(/\B(?=(\d{3})+(?!\d))/g, ","), i = (n[3] || "").replace(/0+$/, "");
 	return `${n[1]}${r}${i ? `.${i}` : ""}`;
 }
-function uT(e, t) {
+function IT(e, t) {
 	let n = Number(e);
 	if (!Number.isFinite(n) || e == null) return "-";
 	let r = new Date(n);
@@ -34309,11 +34788,11 @@ function uT(e, t) {
 }
 //#endregion
 //#region src/market/MarketHistoryPage.vue?vue&type=script&setup=true&lang.ts
-var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = /*#__PURE__*/ a(/* @__PURE__ */ k({
+var LT = { class: "history-page" }, RT = { class: "history-page__close" }, zT = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "MarketHistoryPage",
 	props: { api: {} },
 	setup(e) {
-		let t = e, n = oT.map((e) => ({ ...e })), r = ne({ symbolList: [] }), i = new AbortController();
+		let t = e, n = MT.map((e) => ({ ...e })), r = ne({ symbolList: [] }), i = new AbortController();
 		B(async () => {
 			try {
 				let e = await t.api.symbols(i.signal);
@@ -34341,10 +34820,10 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 				key: "metric",
 				label: "行情指标",
 				type: "select",
-				defaultValue: sT,
+				defaultValue: NT,
 				clearable: !1,
 				width: 190,
-				options: iT.map((e) => ({ ...e }))
+				options: AT.map((e) => ({ ...e }))
 			},
 			{
 				key: "interval",
@@ -34353,12 +34832,12 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 				defaultValue: "1m",
 				clearable: !1,
 				width: 160,
-				options: aT.map((e) => ({ ...e }))
+				options: jT.map((e) => ({ ...e }))
 			}
 		]), o, { proTableBindings: s, filters: c, query: l } = ac({
 			initialFilters: {
 				symbol: "",
-				metric: sT,
+				metric: NT,
 				interval: "1m",
 				range: "24h"
 			},
@@ -34386,7 +34865,7 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 				};
 			}
 		}), u = b(() => {
-			let e = cT();
+			let e = PT();
 			return [
 				{
 					key: "timestamp_ms",
@@ -34394,7 +34873,7 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 					title: "记录时间",
 					width: 180,
 					align: "left",
-					formatter: (e) => uT(e)
+					formatter: (e) => IT(e)
 				},
 				{
 					key: "symbol",
@@ -34414,7 +34893,7 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 					title: e[n],
 					width: 170,
 					align: "left",
-					formatter: lT
+					formatter: FT
 				}))
 			];
 		});
@@ -34426,7 +34905,7 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 		}
 		return X(() => [c.value.metric, c.value.interval], (e, t) => {
 			e.some((e, n) => e !== t?.[n]) && l(c.value);
-		}), (e, t) => (U(), w("div", dT, [O(Y(Xl), P(Y(s), {
+		}), (e, t) => (U(), w("div", LT, [O(Y(Xl), P(Y(s), {
 			"aria-label": "历史行情",
 			columns: u.value,
 			"columns-configurable": !1,
@@ -34449,11 +34928,11 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 				"onUpdate:modelValue": d
 			}, null, 8, ["model-value", "options"])]),
 			"cell-symbol": Z(({ row: t }) => [K(e.$slots, "symbol", { symbol: t.symbol }, () => [D(q(t.symbol), 1)], !0)]),
-			"cell-close": Z(({ value: e }) => [T("strong", fT, q(Y(lT)(e)), 1)]),
+			"cell-close": Z(({ value: e }) => [T("strong", RT, q(Y(FT)(e)), 1)]),
 			_: 3
 		}, 16, ["columns", "query-fields"])]));
 	}
-}), [["__scopeId", "data-v-a6c1f7e8"]]), mT = { class: "current-contract-page" }, hT = { class: "current-contract-page__number current-contract-page__number--strong" }, gT = { class: "current-contract-page__number is-long" }, _T = { class: "current-contract-page__number is-short" }, vT = { class: "current-contract-page__side-count" }, yT = { class: "is-long" }, bT = { class: "is-short" }, xT = /*#__PURE__*/ a(/* @__PURE__ */ k({
+}), [["__scopeId", "data-v-a6c1f7e8"]]), BT = { class: "current-contract-page" }, VT = { class: "current-contract-page__number current-contract-page__number--strong" }, HT = { class: "current-contract-page__number is-long" }, UT = { class: "current-contract-page__number is-short" }, WT = { class: "current-contract-page__side-count" }, GT = { class: "is-long" }, KT = { class: "is-short" }, qT = /*#__PURE__*/ a(/* @__PURE__ */ k({
 	__name: "PositionSummaryTable",
 	props: {
 		request: { type: Function },
@@ -34639,7 +35118,7 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 			} catch (e) {
 				console.error("Failed to load symbol filters", e);
 			}
-		})(), (t, n) => (U(), w("div", mT, [O(Y(Xl), P(Y(v), {
+		})(), (t, n) => (U(), w("div", BT, [O(Y(Xl), P(Y(v), {
 			"aria-label": "持仓汇总",
 			columns: r,
 			"columns-configurable": "",
@@ -34672,13 +35151,13 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 				"onUpdate:modelValue"
 			])]),
 			"cell-symbol": Z(({ row: e }) => [K(t.$slots, "symbol", { symbol: e.symbol }, () => [D(q(e.symbol), 1)], !0)]),
-			"cell-total_value": Z(({ row: e }) => [T("span", hT, q(p(l(e.symbol, e.total_quantity))), 1)]),
-			"cell-long_value": Z(({ row: e }) => [T("span", gT, q(p(l(e.symbol, e.long_quantity))), 1)]),
-			"cell-short_value": Z(({ row: e }) => [T("span", _T, q(p(l(e.symbol, e.short_quantity))), 1)]),
-			"cell-side_count": Z(({ row: e }) => [T("div", vT, [
-				T("span", yT, q(m(e.long_count)), 1),
+			"cell-total_value": Z(({ row: e }) => [T("span", VT, q(p(l(e.symbol, e.total_quantity))), 1)]),
+			"cell-long_value": Z(({ row: e }) => [T("span", HT, q(p(l(e.symbol, e.long_quantity))), 1)]),
+			"cell-short_value": Z(({ row: e }) => [T("span", UT, q(p(l(e.symbol, e.short_quantity))), 1)]),
+			"cell-side_count": Z(({ row: e }) => [T("div", WT, [
+				T("span", GT, q(m(e.long_count)), 1),
 				n[0] ||= T("span", { class: "current-contract-page__separator" }, "/", -1),
-				T("span", bT, q(m(e.short_count)), 1)
+				T("span", KT, q(m(e.short_count)), 1)
 			])]),
 			"cell-position_diff": Z(({ row: e }) => [T("span", { class: I([
 				"current-contract-page__number",
@@ -34695,6 +35174,6 @@ var dT = { class: "history-page" }, fT = { class: "history-page__close" }, pT = 
 	}
 }), [["__scopeId", "data-v-5e94cfd1"]]);
 //#endregion
-export { Ry as $, Bt as $i, up as $n, Zs as $r, vg as $t, nS as A, Pr as Ai, km as An, hu as Ar, E_ as At, Eb as B, Kn as Bi, nm as Bn, Hc as Br, v_ as Bt, SS as C, Di as Ci, Bm as Cn, _d as Cr, Y_ as Ct, iS as D, ti as Di, Mm as Dn, bu as Dr, P_ as Dt, aS as E, $r as Ei, Nm as En, od as Er, O_ as Et, dx as F, Jn as Fi, mm as Fn, nu as Fr, p_ as Ft, Qy as G, un as Gi, Ep as Gn, xc as Gr, Kg as Gt, rb as H, zn as Hi, Wp as Hn, Fc as Hr, i_ as Ht, cx as I, Xn as Ii, pm as In, Xl as Ir, h_ as It, Uy as J, tn as Ji, Cp as Jn, lc as Jr, zg as Jt, $y as K, sn as Ki, Tp as Kn, fc as Kr, qg as Kt, Zb as L, Zn as Li, rm as Ln, Nl as Lr, m_ as Lt, Jx as M, qn as Mi, Cm as Mn, lu as Mr, s_ as Mt, wx as N, Yn as Ni, xm as Nn, su as Nr, l_ as Nt, sS as O, Zr as Oi, Dm as On, pu as Or, A_ as Ot, vx as P, Qn as Pi, bm as Pn, au as Pr, o_ as Pt, Ly as Q, Vt as Qi, sp as Qn, ac as Qr, kg as Qt, Yb as R, $n as Ri, im as Rn, Al as Rr, g_ as Rt, CS as S, ji as Si, Vm as Sn, Sd as Sr, Q_ as St, rS as T, ei as Ti, Im as Tn, dd as Tr, j_ as Tt, nb as U, wn as Ui, Vp as Un, jc as Ur, r_ as Ut, vb as V, Hn as Vi, Yp as Vn, Ic as Vr, a_ as Vt, Zy as W, xn as Wi, Fp as Wn, Ec as Wr, Gg as Wt, By as X, Yt as Xi, yp as Xn, oc as Xr, Ng as Xt, Vy as Y, $t as Yi, bp as Yn, cc as Yr, Rg as Yt, zy as Z, Ut as Zi, op as Zn, sc as Zr, jg as Zt, VS as _, Pa as _i, Km as _n, Zd as _r, yv as _t, lT as a, wt as aa, ks as ai, sh as an, qf as ar, Ty as at, OS as b, Yi as bi, Um as bn, Ad as br, hv as bt, oT as c, vt as ca, Ds as ci, ih as cn, Rf as cr, Ov as ct, Jw as d, pt as da, Io as di, Xm as dn, cf as dr, Pv as dt, bt as ea, ec as ei, dg as en, lp as er, Iy as et, Ww as f, $ as fa, Fo as fi, Zm as fn, sf as fr, Av as ft, IS as g, po as gi, Qm as gn, af as gr, vv as gt, HS as h, vo as hi, qm as hn, pf as hr, Dv as ht, uT as i, gt as ia, Os as ii, hh as in, Qf as ir, Sy as it, tS as j, Ar as ji, Em as jn, uu as jr, c_ as jt, oS as k, Gr as ki, Om as kn, mu as kr, k_ as kt, cT as l, Et as la, Ts as li, Jm as ln, ff as lr, Nv as lt, KS as m, Q as ma, bo as mi, $m as mn, df as mr, jv as mt, pT as n, Dt as na, Ys as ni, Gh as nn, rp as nr, Cy as nt, aT as o, _t as oa, As as oi, oh as on, Gf as or, _y as ot, aw as p, et as pa, Po as pi, eh as pn, of as pr, kv as pt, Yy as q, an as qi, wp as qn, dc as qr, Wg as qt, sT as r, St as ra, Ls as ri, jh as rn, np as rr, wy as rt, iT as s, ht as sa, Es as si, ah as sn, Uf as sr, zv as st, xT as t, xt as ta, tc as ti, ng as tn, dp as tr, My as tt, rT as u, Ct as ua, ws as ui, Ym as un, hf as ur, Fv as ut, FS as v, Na as vi, Gm as vn, Yd as vr, xv as vt, vS as w, di as wi, zm as wn, pd as wr, N_ as wt, DS as x, Ji as xi, Hm as xn, Od as xr, dv as xt, PS as y, Ma as yi, Wm as yn, Jd as yr, bv as yt, Mb as z, er as zi, am as zn, bl as zr, __ as zt };
+export { pb as $, Vt as $i, sp as $n, ac as $r, kg as $t, Xx as A, Gr as Ai, Om as An, mu as Ar, k_ as At, Vb as B, er as Bi, am as Bn, bl as Br, __ as Bt, JS as C, ji as Ci, Vm as Cn, Sd as Cr, Q_ as Ct, fS as D, $r as Di, Nm as Dn, od as Dr, O_ as Dt, IS as E, ei as Ei, Im as En, dd as Er, j_ as Et, ox as F, Qn as Fi, bm as Fn, au as Fr, o_ as Ft, Db as G, xn as Gi, Fp as Gn, Ec as Gr, Gg as Gt, jb as H, Hn as Hi, Yp as Hn, Ic as Hr, a_ as Ht, Gb as I, Jn as Ii, mm as In, nu as Ir, p_ as It, wb as J, an as Ji, wp as Jn, dc as Jr, Wg as Jt, Tb as K, un as Ki, Ep as Kn, xc as Kr, Kg as Kt, Wb as L, Xn as Li, pm as Ln, Xl as Lr, h_ as Lt, Lx as M, Ar as Mi, Em as Mn, uu as Mr, c_ as Mt, bx as N, qn as Ni, Cm as Nn, lu as Nr, s_ as Nt, oS as O, ti as Oi, Mm as On, bu as Or, P_ as Ot, mx as P, Yn as Pi, xm as Pn, su as Pr, l_ as Pt, ub as Q, Ut as Qi, op as Qn, sc as Qr, jg as Qt, zb as R, Zn as Ri, rm as Rn, Nl as Rr, m_ as Rt, YS as S, Ji as Si, Hm as Sn, Od as Sr, dv as St, US as T, di as Ti, zm as Tn, pd as Tr, N_ as Tt, kb as U, zn as Ui, Wp as Un, Fc as Ur, i_ as Ut, Lb as V, Kn as Vi, nm as Vn, Hc as Vr, v_ as Vt, Ob as W, wn as Wi, Vp as Wn, jc as Wr, r_ as Wt, db as X, $t as Xi, bp as Xn, cc as Xr, Rg as Xt, bb as Y, tn as Yi, Cp as Yn, lc as Yr, zg as Yt, fb as Z, Yt as Zi, yp as Zn, oc as Zr, Ng as Zt, pC as _, po as _i, Qm as _n, af as _r, vv as _t, FT as a, gt as aa, Os as ai, hh as an, Qf as ar, Sy as at, eC as b, Ma as bi, Wm as bn, Jd as br, bv as bt, MT as c, ht as ca, Es as ci, ah as cn, Uf as cr, zv as ct, bT as d, Ct as da, ws as di, Ym as dn, hf as dr, Fv as dt, Bt as ea, Zs as ei, vg as en, up as er, ab as et, gT as f, pt as fa, Io as fi, Xm as fn, cf as fr, Pv as ft, cC as g, vo as gi, qm as gn, pf as gr, Dv as gt, mC as h, Q as ha, bo as hi, $m as hn, df as hr, jv as ht, IT as i, St as ia, Ls as ii, jh as in, np as ir, yy as it, zx as j, Pr as ji, km as jn, hu as jr, E_ as jt, $x as k, Zr as ki, Dm as kn, pu as kr, A_ as kt, PT as l, vt as la, Ds as li, ih as ln, Rf as lr, Ov as lt, vC as m, et as ma, Po as mi, eh as mn, of as mr, kv as mt, zT as n, xt as na, tc as ni, ng as nn, dp as nr, vy as nt, jT as o, wt as oa, ks as oi, sh as on, qf as or, xy as ot, jw as p, $ as pa, Fo as pi, Zm as pn, sf as pr, Av as pt, Eb as q, sn as qi, Tp as qn, fc as qr, qg as qt, NT as r, Dt as ra, Ys as ri, Gh as rn, rp as rr, by as rt, AT as s, _t as sa, As as si, oh as sn, Gf as sr, _y as st, qT as t, bt as ta, ec as ti, dg as tn, lp as tr, Ny as tt, kT as u, Et as ua, Ts as ui, Jm as un, ff as ur, Nv as ut, sC as v, Pa as vi, Km as vn, Zd as vr, yv as vt, WS as w, Di as wi, Bm as wn, _d as wr, Y_ as wt, $S as x, Yi as xi, Um as xn, Ad as xr, hv as xt, oC as y, Na as yi, Gm as yn, Yd as yr, xv as yt, Bb as z, $n as zi, im as zn, Al as zr, g_ as zt };
 
-//# sourceMappingURL=src-DsOMXlwi.js.map
+//# sourceMappingURL=src-CtdlGjRM.js.map

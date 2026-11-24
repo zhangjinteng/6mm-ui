@@ -81,6 +81,7 @@ export * from './margin-change-log-table';
 export * from './online-user-table';
 export * from './position-table';
 export * from './user-detail-dialog';
+export * from './user-portrait';
 export * from './user-asset-table';
 export * from './user-table';
 export * from './user-prediction-table';

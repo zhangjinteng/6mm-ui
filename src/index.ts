@@ -20,3 +20,4 @@ export * from './market/types'
 export * from './market/history'
 
 export { default as MmPositionSummaryTable } from './components/position-summary/PositionSummaryTable.vue'
+export * from './components/user-actions'

@@ -459,14 +459,23 @@ function numberTone(val: unknown) {
     overflow: hidden;
 }
 
-.profile-status { padding: 24px; color: var(--mm-color-text-muted); }
+.profile-status,
+.user-profile {
+    box-sizing: border-box;
+    height: min(760px, calc(100vh - 138px));
+    min-height: 560px;
+}
+
+.profile-status {
+    margin: 0;
+    padding: 24px;
+    color: var(--mm-color-text-muted);
+}
 
 .user-profile {
     display: grid;
     grid-template-rows: auto auto auto minmax(0, 1fr);
     gap: 12px;
-    height: min(760px, calc(100vh - 138px));
-    min-height: 560px;
     color: var(--mm-color-text);
     overflow: hidden;
 }
@@ -660,6 +669,7 @@ function numberTone(val: unknown) {
 }
 
 @media (max-width: 900px) {
+    .profile-status,
     .user-profile {
         height: calc(100vh - 120px);
     }

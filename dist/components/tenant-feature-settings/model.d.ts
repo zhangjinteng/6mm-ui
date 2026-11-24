@@ -1,5 +1,5 @@
 import { TenantCustomerServiceTransport } from '../tenant-customer-service/model';
-export type TenantContentFeatureCode = 'news' | 'academy' | 'help_center' | 'feedback' | 'announcement';
+export type TenantContentFeatureCode = 'news' | 'academy' | 'help_center' | 'feedback' | 'announcement' | 'vip_info';
 export type TenantFeatureCode = 'trade_ranking' | TenantContentFeatureCode;
 export type TenantFeatureValues = {
     trade_ranking: boolean;
@@ -87,4 +87,13 @@ export declare const tenantContentFeatureCatalogue: readonly [{
     readonly descriptionEn: "Show the announcement center and published site announcements";
     readonly path: "更多 / 公告";
     readonly pathEn: "More / Announcements";
+}, {
+    readonly code: "vip_info";
+    readonly icon: "crown";
+    readonly zh: "VIP 资讯";
+    readonly en: "VIP Info";
+    readonly description: "查看会员等级、交易费率和专属权益";
+    readonly descriptionEn: "View membership tiers, trading fees and VIP benefits";
+    readonly path: "更多 / VIP 资讯";
+    readonly pathEn: "More / VIP Info";
 }];

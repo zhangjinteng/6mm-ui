@@ -1,6 +1,6 @@
 import type { TenantCustomerServiceTransport } from '../tenant-customer-service/model'
 
-export type TenantContentFeatureCode = 'news' | 'academy' | 'help_center' | 'feedback' | 'announcement'
+export type TenantContentFeatureCode = 'news' | 'academy' | 'help_center' | 'feedback' | 'announcement' | 'vip_info'
 export type TenantFeatureCode = 'trade_ranking' | TenantContentFeatureCode
 export type TenantFeatureValues = { trade_ranking: boolean } & Partial<Record<TenantContentFeatureCode, boolean>>
 export interface TenantFeatureSite { site_id: string; site_name: string }
@@ -34,4 +34,5 @@ export const tenantContentFeatureCatalogue = [
   { code: 'help_center', icon: 'circle-help', zh: '帮助中心', en: 'Help center', description: '展示帮助分类、使用指南和常见问题', descriptionEn: 'Show help categories, guides and frequently asked questions', path: '帮助 / 帮助中心', pathEn: 'Help / Help center' },
   { code: 'feedback', icon: 'message-square-more', zh: '意见反馈', en: 'Feedback', description: '展示用户意见、问题反馈入口', descriptionEn: 'Show the entry point for user feedback and issues', path: '更多 / 意见反馈', pathEn: 'More / Feedback' },
   { code: 'announcement', icon: 'megaphone', zh: '公告', en: 'Announcements', description: '展示公告中心及已发布的站点公告', descriptionEn: 'Show the announcement center and published site announcements', path: '更多 / 公告', pathEn: 'More / Announcements' },
+  { code: 'vip_info', icon: 'crown', zh: 'VIP 资讯', en: 'VIP Info', description: '查看会员等级、交易费率和专属权益', descriptionEn: 'View membership tiers, trading fees and VIP benefits', path: '更多 / VIP 资讯', pathEn: 'More / VIP Info' },
 ] as const

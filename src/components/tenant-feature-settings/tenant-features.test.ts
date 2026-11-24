@@ -11,29 +11,29 @@ const fixture = (site_id = '10'): TenantFeatureSettingsDetail => ({ tenant_id: '
 })
 const options = { global: { stubs: { teleport: true } } }
 const contentFixture = (): TenantFeatureSettingsDetail => ({ ...fixture(), expected_revision: 'a'.repeat(64),
-  features: { trade_ranking: true, news: true, academy: true, help_center: true, feedback: true, announcement: true },
+  features: { trade_ranking: true, news: true, academy: true, help_center: true, feedback: true, announcement: true, vip_info: true },
 })
 const button = (wrapper: ReturnType<typeof mount>, text: string) => wrapper.findAll('button').find(item => item.text().trim() === text)!
 
 describe('tenant frontend-entry switches', () => {
-  it('opts into five site content cards, tracks drafts and saves the full revision without identity', async () => {
+  it('opts into six site content cards, tracks drafts and saves the full revision without identity', async () => {
     const save = vi.fn(async (input: TenantFeatureSaveInput) => ({ changed: true, detail: { ...contentFixture(), ...input, expected_revision: 'b'.repeat(64) } }))
     const wrapper = mount(TenantFeatureSettings, { ...options, props: { contentFeatures: true, load: async () => contentFixture(), save } })
     await flushPromises()
-    expect(wrapper.findAll('[role="switch"]')).toHaveLength(6)
-    expect(wrapper.findAll('[role="switch"]').map(item => item.attributes('aria-label'))).toEqual(['交易排行', '新闻', '学院', '帮助中心', '意见反馈', '公告'])
-    expect(wrapper.text()).toContain('6 / 6 已启用')
+    expect(wrapper.findAll('[role="switch"]')).toHaveLength(7)
+    expect(wrapper.findAll('[role="switch"]').map(item => item.attributes('aria-label'))).toEqual(['交易排行', '新闻', '学院', '帮助中心', '意见反馈', '公告', 'VIP 资讯'])
+    expect(wrapper.text()).toContain('7 / 7 已启用')
     await wrapper.get('[data-feature-code="news"] button').trigger('click')
-    await wrapper.get('[data-feature-code="feedback"] button').trigger('click')
+    await wrapper.get('[data-feature-code="vip_info"] button').trigger('click')
     expect(save).not.toHaveBeenCalled()
     expect(wrapper.text()).toContain('已修改 2 项配置，待保存')
-    expect(wrapper.text()).toContain('4 / 6 已启用')
+    expect(wrapper.text()).toContain('5 / 7 已启用')
     await button(wrapper, '放弃修改').trigger('click')
-    expect(wrapper.text()).toContain('6 / 6 已启用')
+    expect(wrapper.text()).toContain('7 / 7 已启用')
     expect(save).not.toHaveBeenCalled()
-    await wrapper.get('[data-feature-code="news"] button').trigger('click')
+    await wrapper.get('[data-feature-code="vip_info"] button').trigger('click')
     await button(wrapper, '保存配置').trigger('click'); await flushPromises()
-    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_updated_at: null, expected_revision: 'a'.repeat(64), features: { ...contentFixture().features, news: false } })
+    expect(save).toHaveBeenCalledExactlyOnceWith({ site_id: '10', expected_updated_at: null, expected_revision: 'a'.repeat(64), features: { ...contentFixture().features, vip_info: false } })
     expect(wrapper.text()).toContain('当前配置已保存')
     await wrapper.get('[data-feature-code="academy"] button').trigger('click')
     await button(wrapper, '保存配置').trigger('click'); await flushPromises()
@@ -76,7 +76,7 @@ describe('tenant frontend-entry switches', () => {
     expect(load).toHaveBeenCalledTimes(1)
     await button(wrapper, '切换站点').trigger('click'); await flushPromises()
     expect(load.mock.calls[1][1]).toBe('11')
-    expect(wrapper.text()).toContain('6 / 6 已启用')
+    expect(wrapper.text()).toContain('7 / 7 已启用')
     wrapper.unmount()
   })
 

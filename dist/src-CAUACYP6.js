@@ -4370,6 +4370,16 @@ var ni = [
 		descriptionEn: "Show the announcement center and published site announcements",
 		path: "更多 / 公告",
 		pathEn: "More / Announcements"
+	},
+	{
+		code: "vip_info",
+		icon: "crown",
+		zh: "VIP 资讯",
+		en: "VIP Info",
+		description: "查看会员等级、交易费率和专属权益",
+		descriptionEn: "View membership tiers, trading fees and VIP benefits",
+		path: "更多 / VIP 资讯",
+		pathEn: "More / VIP Info"
 	}
 ], Fa = ["aria-label", "aria-busy"], Ia = {
 	key: 0,
@@ -34640,4 +34650,4 @@ var aT = { class: "history-page" }, oT = { class: "history-page__close" }, sT = 
 //#endregion
 export { My as $, Bt as $i, ip as $n, Gs as $r, fg as $t, Xx as A, Pr as Ai, Cm as An, lu as Ar, b_ as At, bb as B, Kn as Bi, Xp as Bn, Ic as Br, f_ as Bt, gS as C, Di as Ci, Pm as Cn, dd as Cr, U_ as Ct, Qx as D, ti as Di, Em as Dn, mu as Dr, O_ as Dt, $x as E, $r as Ei, Dm as En, ed as Er, S_ as Et, ax as F, Jn as Fi, cm as Fn, Xl as Fr, s_ as Ft, Ky as G, un as Gi, bp as Gn, hc as Gr, Bg as Gt, Zy as H, zn as Hi, Rp as Hn, kc as Hr, Qg as Ht, nx as I, Xn as Ii, sm as In, Wl as Ir, l_ as It, Ly as J, tn as Ji, _p as Jn, rc as Jr, Ng as Jt, qy as K, sn as Ki, yp as Kn, oc as Kr, Vg as Kt, Gb as L, Zn as Li, Zp as Ln, Dl as Lr, c_ as Lt, Hx as M, qn as Mi, _m as Mn, ru as Mr, t_ as Mt, vx as N, Yn as Ni, hm as Nn, tu as Nr, r_ as Nt, tS as O, Zr as Oi, xm as On, su as Or, w_ as Ot, fx as P, Qn as Pi, mm as Pn, $l as Pr, e_ as Pt, jy as Q, Vt as Qi, tp as Qn, $s as Qr, Cg as Qt, Ub as R, $n as Ri, Qp as Rn, wl as Rr, u_ as Rt, _S as S, ji as Si, Fm as Sn, gd as Sr, K_ as St, Zx as T, ei as Ti, Am as Tn, ad as Tr, T_ as Tt, Xy as U, wn as Ui, Fp as Un, Tc as Ur, Zg as Ut, fb as V, Hn as Vi, Up as Vn, Ac as Vr, $g as Vt, Gy as W, xn as Wi, kp as Wn, bc as Wr, zg as Wt, Py as X, Yt as Xi, pp as Xn, ec as Xr, Dg as Xt, Fy as Y, $t as Yi, mp as Yn, nc as Yr, Mg as Yt, Ny as Z, Ut as Zi, ep as Zn, tc as Zr, Tg as Zt, FS as _, Pa as _i, Bm as _n, Gd as _r, pv as _t, rT as a, wt as aa, Cs as ai, th as an, Vf as ar, yy as at, SS as b, Yi as bi, Lm as bn, wd as br, lv as bt, eT as c, vt as ca, xs as ci, Qm as cn, Mf as cr, Sv as ct, Hw as d, pt as da, Io as di, Wm as dn, tf as dr, Ov as dt, bt as ea, Js as ei, ag as en, rp as er, Ay as et, Rw as f, $ as fa, Fo as fi, Gm as fn, ef as fr, wv as ft, AS as g, po as gi, Km as gn, Qd as gr, fv as gt, IS as h, vo as hi, Vm as hn, sf as hr, xv as ht, iT as i, gt as ia, Ss as ii, lh as in, Kf as ir, gy as it, Yx as j, Ar as ji, bm as jn, iu as jr, n_ as jt, eS as k, Gr as ki, Sm as kn, cu as kr, C_ as kt, nT as l, Et as la, ys as li, Hm as ln, of as lr, Dv as lt, BS as m, Q as ma, bo as mi, qm as mn, af as mr, Tv as mt, sT as n, Dt as na, Us as ni, zh as nn, Zf as nr, _y as nt, $w as o, _t as oa, ws as oi, eh as on, zf as or, dy as ot, $C as p, et as pa, Po as pi, Jm as pn, $d as pr, Cv as pt, Uy as q, an as qi, vp as qn, ac as qr, Rg as qt, tT as r, St as ra, js as ri, Th as rn, Xf as rr, vy as rt, Qw as s, ht as sa, bs as si, $m as sn, Lf as sr, Nv as st, hT as t, xt as ta, Ys as ti, Xh as tn, ap as tr, Ey as tt, Zw as u, Ct as ua, vs as ui, Um as un, lf as ur, kv as ut, kS as v, Na as vi, zm as vn, Ud as vr, hv as vt, fS as w, di as wi, Nm as wn, sd as wr, D_ as wt, xS as x, Ji as xi, Im as xn, Sd as xr, av as xt, OS as y, Ma as yi, Rm as yn, Hd as yr, mv as yt, Eb as z, er as zi, $p as zn, ml as zr, d_ as zt };
 
-//# sourceMappingURL=src-DVzoHIBi.js.map
+//# sourceMappingURL=src-CAUACYP6.js.map

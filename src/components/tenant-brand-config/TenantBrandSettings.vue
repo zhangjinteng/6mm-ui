@@ -54,6 +54,11 @@ const activeTab = ref<BrandTab>('domains')
 const emailVisited = ref(false), emailDirty = ref(false), emailBusy = ref(false)
 const templateId = ref<'template-1' | 'template-2'>('template-1'), logoUrl = ref(''), faviconUrl = ref('')
 const logoUploading = ref(false), faviconUploading = ref(false)
+const colorOverride = ref<string | null>(null)
+const templateColor = computed(() => templateId.value === 'template-2' ? '#B7F214' : '#FFB13F')
+const color = computed(() => colorOverride.value ?? templateColor.value)
+const validColor = computed(() => /^#[0-9A-F]{6}$/.test(color.value))
+function setColor(event: Event) { colorOverride.value = (event.target as HTMLInputElement).value.toUpperCase() }
 const uploading = computed(() => logoUploading.value || faviconUploading.value)
 const themes = [
   { id: 'template-1' as const, name: '模板1', english: 'Template 1', preview: themeOnePreview },
@@ -64,10 +69,11 @@ const selectedSite = computed(() => detail.value?.sites.find(site => site.site_i
 const editable = computed(() => props.canEdit && detail.value?.can_edit !== false)
 const busy = computed(() => loading.value || saving.value || uploading.value || emailBusy.value)
 const brandDirty = computed(() => !!selectedSite.value && (templateId.value !== (selectedSite.value.template_id ?? 'template-1')
+  || colorOverride.value !== (selectedSite.value.color_primary ?? null)
   || logoUrl.value !== (selectedSite.value.logo_url ?? '') || faviconUrl.value !== (selectedSite.value.favicon_url ?? '')))
 const brandDraftDirty = computed(() => !!selectedSite.value && (!brandDomainsEqual(draft.value, selectedSite.value.domains) || brandDirty.value))
 const dirty = computed(() => brandDraftDirty.value || emailDirty.value)
-const validationError = computed(() => brandDomainError(draft.value, english.value))
+const validationError = computed(() => brandDomainError(draft.value, english.value) || (validColor.value ? '' : english.value ? 'Enter a color in #RRGGBB format.' : '请输入 #RRGGBB 格式的主题色。'))
 const primaryKey = computed(() => draft.value.find(row => row.is_primary)?.key)
 const siteOptions = computed(() => detail.value?.sites.map(site => ({ label: `${site.site_name} · ${site.site_id}`, value: site.site_id })) ?? [])
 const removedDomains = computed(() => selectedSite.value?.domains.filter(row => !normalizeBrandDomains(draft.value).some(next => next.domain === row.domain)).map(row => row.domain) ?? [])
@@ -82,6 +88,7 @@ const updatedAt = computed(() => {
 })
 function useSite(site: BrandDomainSite): void {
   selectedSiteId.value = site.site_id
+  colorOverride.value = site.color_primary ?? null
   draft.value = site.domains.map(row => ({ ...row, key: ++nextKey, existing: true }))
   templateId.value = site.template_id ?? 'template-1'; logoUrl.value = site.logo_url ?? ''; faviconUrl.value = site.favicon_url ?? ''
   saveError.value = ''
@@ -134,7 +141,7 @@ async function submit(): Promise<void> {
   const site = selectedSite.value
   const domains = normalizeBrandDomains(draft.value)
   const brand = site.brand_revision ? { expected_brand_revision: site.brand_revision, template_id: templateId.value,
-    logo_url: logoUrl.value || null, favicon_url: faviconUrl.value || null } : {}
+    logo_url: logoUrl.value || null, favicon_url: faviconUrl.value || null, color_primary: colorOverride.value } : {}
   try {
     const result = await props.save({ site_id: site.site_id, expected_revision: site.revision, expected_config_version: site.config_version, domains, ...brand })
     if (disposed) return
@@ -143,6 +150,7 @@ async function submit(): Promise<void> {
     site.domains = domains
     if (result.revision) site.revision = result.revision
     if (result.brand_revision) site.brand_revision = result.brand_revision
+    site.color_primary = colorOverride.value
     Object.assign(site, { template_id: templateId.value, logo_url: logoUrl.value || null, favicon_url: faviconUrl.value || null })
     if (result.changed) site.updated_at = result.updated_at ?? new Date().toISOString()
     useSite(site); confirmVisible.value = false; emit('saved')
@@ -242,6 +250,16 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
             </fieldset>
           </div>
           <div v-show="activeTab === 'appearance'" class="mm-tenant-brand-settings__identity">
+            <section class="mm-tenant-brand-settings__asset">
+              <h3>{{ english ? 'Primary color' : '主题色' }}</h3>
+              <p class="mm-tenant-brand-settings__hint">{{ english ? 'Template default' : '当前模板默认色' }}：{{ templateColor }}</p>
+              <fieldset class="mm-brand-color" :disabled="busy || !editable || !selectedSite?.brand_revision">
+                <input type="color" :aria-label="english ? 'Pick a color' : '选择主题色'" :value="validColor ? color : templateColor" @input="setColor" />
+                <input type="text" :aria-label="english ? 'Hex color' : '主题色色值'" :value="color" maxlength="7" :aria-invalid="!validColor" @input="setColor" />
+                <MmButton :disabled="colorOverride === null || busy || !editable" @click="colorOverride = null">{{ english ? 'Use template default' : '恢复模板默认色' }}</MmButton>
+              </fieldset>
+              <p v-if="!validColor" class="mm-tenant-brand-settings__validation" role="alert">{{ english ? 'Use #RRGGBB, for example #2457D6.' : '请输入六位十六进制色值，例如 #2457D6。' }}</p>
+            </section>
             <div class="mm-tenant-brand-settings__image-grid">
               <section class="mm-tenant-brand-settings__asset"><h3>{{ english ? 'Website logo' : '网站 Logo' }}</h3>
                 <p class="mm-tenant-brand-settings__hint">{{ english ? 'Used in the site header and brand identity.' : '用于网站页头等品牌展示位置。' }}</p>

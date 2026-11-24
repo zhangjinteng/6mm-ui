@@ -1,6 +1,7 @@
 export interface BrandDomain { domain: string; is_primary: boolean }
 export interface BrandDomainDraft extends BrandDomain { key: number; existing: boolean }
 export interface SiteBrandAssets {
+  color_primary?: string | null
   template_id?: 'template-1' | 'template-2' | null
   logo_url?: string | null
   favicon_url?: string | null

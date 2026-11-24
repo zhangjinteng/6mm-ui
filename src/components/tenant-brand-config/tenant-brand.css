@@ -67,3 +67,6 @@
   .mm-tenant-brand-settings__footer { flex-wrap: wrap; }
   .mm-tenant-brand-settings__feedback { flex-basis: 100%; }
 }
+.mm-brand-color { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem; border: 0; padding: 0; margin: 0; }
+.mm-brand-color input[type="text"] { width: 8em; padding: .4em .6em; font: inherit; color: inherit; background: transparent; border: 1px solid currentColor; border-radius: .3em; }
+.mm-brand-color input[type="color"] { width: 3em; height: 2.25em; cursor: pointer; }

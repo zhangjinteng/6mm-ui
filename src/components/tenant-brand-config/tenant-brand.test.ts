@@ -26,6 +26,26 @@ describe('brand domain model', () => {
 })
 
 describe('shared tenant brand settings', () => {
+  it('follows the template until overridden and restores its default', async () => {
+    const detail = fixture()
+    detail.sites[0].brand_revision = 'a'.repeat(64)
+    const save = vi.fn(async () => ({ changed: true }))
+    const w = mount(TenantBrandSettings, { ...options, props: { load: async () => detail, save } })
+    await flushPromises()
+    const picker = w.get('input[type=color]')
+    expect((picker.element as HTMLInputElement).value).toBe('#ffb13f')
+    await w.get('input[value="template-2"]').setValue(true)
+    expect((picker.element as HTMLInputElement).value).toBe('#b7f214')
+    await w.get('input[aria-label="主题色色值"]').setValue('#XYZ')
+    expect(button(w, '保存配置').attributes('disabled')).toBeDefined()
+    await picker.setValue('#2457d6')
+    await button(w, '保存配置').trigger('click')
+    await button(w, '确认保存').trigger('click'); await flushPromises()
+    expect(save).toHaveBeenCalledWith(expect.objectContaining({ color_primary: '#2457D6' }))
+    await button(w, '恢复模板默认色').trigger('click')
+    expect((picker.element as HTMLInputElement).value).toBe('#b7f214')
+    w.unmount()
+  })
   it.each([true, false])('defaults missing templates to template 1 without modifying saved template 2 (fullPage=%s)', async fullPage => {
     for (const storedTemplate of [undefined, null, 'template-2'] as const) {
       const detail = fixture()
@@ -83,7 +103,7 @@ describe('shared tenant brand settings', () => {
       await button(wrapper, '品牌外观').trigger('click')
       expect(wrapper.get('.mm-tenant-brand-settings__themes').isVisible()).toBe(false)
       expect(wrapper.get('.mm-tenant-brand-settings__image-grid').isVisible()).toBe(true)
-      expect(wrapper.findAll('.mm-tenant-brand-settings__asset h3').map(label => label.text())).toEqual(['网站 Logo', '浏览器标签页图标'])
+      expect(wrapper.findAll('.mm-tenant-brand-settings__asset h3').map(label => label.text())).toEqual(['主题色', '网站 Logo', '浏览器标签页图标'])
       expect(wrapper.text()).toContain('JPG / PNG / WebP / SVG / ICO，最大 5 MB')
       const pick = async (index: number, file: File) => {
         const input = wrapper.findAll('input[type=file]')[index]

@@ -24,6 +24,7 @@ export * from './prediction-user-pnl-report';
 export * from './futures-funding-fee-report';
 export * from './futures-pnl-report';
 export * from './account-change-log-table';
+export * from './manual-adjustment-table';
 export * from './admin-login-shell';
 export * from './app-header';
 export * from './autocomplete';

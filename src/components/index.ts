@@ -20,6 +20,7 @@ export * from "./platform-trade-summary-report";
 
 import { MmAlert } from "./alert";
 import { MmAccountChangeLogTable } from "./account-change-log-table";
+import { MmManualAdjustmentTable } from "./manual-adjustment-table";
 import { MmAdminLoginShell } from "./admin-login-shell";
 import { MmAppHeader } from "./app-header";
 import { MmAutocomplete } from "./autocomplete";
@@ -145,6 +146,7 @@ export * from "./prediction-user-pnl-report";
 export * from "./futures-funding-fee-report";
 export * from "./futures-pnl-report";
 export * from "./account-change-log-table";
+export * from "./manual-adjustment-table";
 export * from "./admin-login-shell";
 export * from "./app-header";
 export * from "./autocomplete";
@@ -239,6 +241,7 @@ export type InstallableComponent = Component & { name?: string };
 export const components: InstallableComponent[] = [
   MmAlert,
   MmAccountChangeLogTable,
+  MmManualAdjustmentTable,
   MmAdminLoginShell,
   MmAppHeader,
   MmAutocomplete,

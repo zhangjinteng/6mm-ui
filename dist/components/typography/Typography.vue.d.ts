@@ -16,9 +16,9 @@ declare const __VLS_base: import('vue').DefineComponent<TypographyProps, {}, {},
 }>, {
     title: string;
     expanded: boolean;
+    align: import('./types').TypographyAlign;
     level: import('./types').TypographyLevel;
     as: string;
-    align: import('./types').TypographyAlign;
     collapsedLines: number;
     collapsible: boolean;
     copyText: string;

@@ -9,8 +9,8 @@ declare const __VLS_base: import('vue').DefineComponent<LayoutProps, {}, {}, {},
     justify: import('./types').LayoutJustify;
     direction: import('./types').LayoutDirection;
     gap: number | string;
-    as: string;
     align: import('./types').LayoutAlign;
+    as: string;
 }, {}, {}, {}, string, import('vue').ComponentProvideOptions, false, {}, any>;
 declare const __VLS_export: __VLS_WithSlots<typeof __VLS_base, __VLS_Slots>;
 declare const _default: typeof __VLS_export;

@@ -13,8 +13,10 @@
                 <MmInput v-model="keyword" clearable placeholder="搜索交易对" aria-label="搜索交易对" />
                 <div class="symbol-list">
                     <div v-for="item in filtered" :key="item.symbol" class="symbol-row" :class="{active:item.symbol===symbol}">
-                        <button type="button" class="symbol-button" :disabled="busy || !!pending" @click="switchSymbol(item.symbol)"><SymbolDisplay :symbol="item.symbol" /></button>
-                        <span class="symbol-unconfigured">{{ item.configured ? '已配置' : '待配置' }}</span>
+                        <button type="button" class="symbol-button" :disabled="busy || !!pending" @click="switchSymbol(item.symbol)">
+                            <SymbolDisplay :symbol="item.symbol" />
+                            <span class="symbol-unconfigured">{{ item.configured ? '已配置' : '待配置' }}</span>
+                        </button>
                         <el-switch :model-value="item.enabled" :disabled="locked || item.availability_version===undefined || (!item.enabled && !item.configured)"
                             :data-config-enabled="item.symbol" :aria-label="item.symbol+' 网格币种开关'" :title="!item.configured && !item.enabled ? '请先保存模板参数' : '立即设置币种开放状态'"
                             @change="setAvailability(item,$event)" />

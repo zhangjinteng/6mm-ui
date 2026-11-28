@@ -3349,30 +3349,26 @@ var Br = at("grid.config.global.pending.v1", Lr, zr), Vr = {
 				c("div", Kr, [(_(!0), s(r, null, ae(oe.value, (e) => (_(), s("div", {
 					key: e.symbol,
 					class: te(["symbol-row", { active: e.symbol === b.value }])
-				}, [
-					c("button", {
-						type: "button",
-						class: "symbol-button",
-						disabled: I.value || !!fe.value,
-						onClick: (t) => Se(e.symbol)
-					}, [d(w(p), { symbol: e.symbol }, null, 8, ["symbol"])], 8, qr),
-					c("span", Jr, S(e.configured ? "已配置" : "待配置"), 1),
-					d(w(de), {
-						"model-value": e.enabled,
-						disabled: pe.value || e.availability_version === void 0 || !e.enabled && !e.configured,
-						"data-config-enabled": e.symbol,
-						"aria-label": e.symbol + " 网格币种开关",
-						title: !e.configured && !e.enabled ? "请先保存模板参数" : "立即设置币种开放状态",
-						onChange: (t) => q(e, t)
-					}, null, 8, [
-						"model-value",
-						"disabled",
-						"data-config-enabled",
-						"aria-label",
-						"title",
-						"onChange"
-					])
-				], 2))), 128))])
+				}, [c("button", {
+					type: "button",
+					class: "symbol-button",
+					disabled: I.value || !!fe.value,
+					onClick: (t) => Se(e.symbol)
+				}, [d(w(p), { symbol: e.symbol }, null, 8, ["symbol"]), c("span", Jr, S(e.configured ? "已配置" : "待配置"), 1)], 8, qr), d(w(de), {
+					"model-value": e.enabled,
+					disabled: pe.value || e.availability_version === void 0 || !e.enabled && !e.configured,
+					"data-config-enabled": e.symbol,
+					"aria-label": e.symbol + " 网格币种开关",
+					title: !e.configured && !e.enabled ? "请先保存模板参数" : "立即设置币种开放状态",
+					onChange: (t) => q(e, t)
+				}, null, 8, [
+					"model-value",
+					"disabled",
+					"data-config-enabled",
+					"aria-label",
+					"title",
+					"onChange"
+				])], 2))), 128))])
 			]), c("main", Yr, [b.value ? (_(), s("header", Xr, [c("div", null, [c("h2", null, S(b.value) + " · 预测网格", 1), n[14] ||= c("p", null, "平台模板", -1)]), c("div", Zr, [d(w(k), { onClick: n[3] ||= (e) => N.value = !0 }, {
 				default: T(() => [...n[15] ||= [u("玩法说明", -1)]]),
 				_: 1
@@ -3503,7 +3499,7 @@ var Br = at("grid.config.global.pending.v1", Lr, zr), Vr = {
 			}, null, 8, ["modelValue"])
 		]));
 	}
-}), [["__scopeId", "data-v-e4933b0f"]]), ri = { class: "prediction-page prediction-table-page mm-ui" }, ii = { class: "prediction-page__header" }, ai = {
+}), [["__scopeId", "data-v-af22efac"]]), ri = { class: "prediction-page prediction-table-page mm-ui" }, ii = { class: "prediction-page__header" }, ai = {
 	class: "game-tabs",
 	role: "group",
 	"aria-label": "选择预测玩法"

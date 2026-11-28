@@ -43,6 +43,7 @@ export interface TenantBrandSaveResult {
     updated_at?: string;
 }
 export interface TenantBrandSettingsProps {
+    bindingRequest?: DomainBindingRequest;
     load: (signal: AbortSignal) => Promise<TenantBrandDetail>;
     save: (input: TenantBrandSaveInput) => Promise<TenantBrandSaveResult>;
     uploadImage?: (siteId: string, file: File, signal: AbortSignal) => Promise<import('../../services/media-upload').MediaUploadResult>;
@@ -51,6 +52,20 @@ export interface TenantBrandSettingsProps {
     formatUpdatedAt?: (value: string) => string;
     email?: TenantEmailAdapter;
 }
+export interface DomainBindingRow {
+    domain: string;
+    status: string;
+    error?: string | null;
+    retryable?: boolean;
+    dnsRecords: {
+        type: string;
+        name: string;
+        values: string[];
+    }[];
+}
+export type DomainBindingRequest = (siteId: string, action: 'list' | 'prepare' | 'verify' | 'remove' | 'retry', domain?: string) => Promise<{
+    bindings: DomainBindingRow[];
+}>;
 export interface TenantEmailConfig {
     site_id: string;
     version: string;

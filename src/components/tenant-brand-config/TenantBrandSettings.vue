@@ -10,6 +10,8 @@ import { MmRadio } from '../radio'
 import { MmSelect } from '../select'
 import ContentCoverUpload from '../../cms/views/content/components/ContentCoverUpload.vue'
 import TenantEmailSettings from './TenantEmailSettings.vue'
+import DomainBindingPanel from './DomainBindingPanel.vue'
+const managedDomains = ref<string[]>([])
 import type { TenantEmailConfig } from './model'
 import themeOnePreview from './previews/template-1-light.svg'
 import themeTwoPreview from './previews/template-2-light.svg'
@@ -87,6 +89,7 @@ const updatedAt = computed(() => {
   }).format(date)
 })
 function useSite(site: BrandDomainSite): void {
+  if (selectedSiteId.value !== site.site_id) managedDomains.value = []
   selectedSiteId.value = site.site_id
   colorOverride.value = site.color_primary ?? null
   draft.value = site.domains.map(row => ({ ...row, key: ++nextKey, existing: true }))
@@ -213,20 +216,23 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
       <div v-else-if="loadFailed" role="alert" class="mm-tenant-brand-settings__empty"><p>{{ copy.loadFailed }}</p><MmButton @click="load">{{ copy.reload }}</MmButton></div>
       <div v-else-if="detail" class="mm-tenant-brand-settings__content">
         <div v-show="activeTab === 'domains'" class="mm-tenant-brand-settings__toolbar"><h3>{{ copy.titleDomains }}</h3>
-          <MmButton v-if="editable && selectedSite" variant="primary" size="sm" :disabled="busy || draft.length >= 20" @click="addDomain"><template #icon><MmIcon name="plus" :size="14" /></template>{{ copy.add }}</MmButton>
+          <MmButton v-if="editable && selectedSite && !bindingRequest" variant="primary" size="sm" :disabled="busy || draft.length >= 20" @click="addDomain"><template #icon><MmIcon name="plus" :size="14" /></template>{{ copy.add }}</MmButton>
         </div>
         <label v-if="detail.sites.length > 1" class="mm-tenant-brand-settings__site"><span>{{ copy.site }}</span>
           <MmSelect :model-value="selectedSiteId" :options="siteOptions" :aria-label="copy.site" :disabled="busy" @update:model-value="selectSite(String($event))" />
         </label>
         <p v-if="!detail.sites.length" class="mm-tenant-brand-settings__empty">{{ copy.emptySites }}</p>
         <template v-else>
+          <DomainBindingPanel v-if="bindingRequest && selectedSite && activeTab==='domains'" :key="selectedSiteId"
+            :site-id="selectedSiteId" :request="bindingRequest" :editable="editable" :disabled="busy||dirty" :english="english"
+            @updated="managedDomains=$event" @publication="load" />
           <p v-if="validationError && activeTab === 'domains'" class="mm-tenant-brand-settings__validation" role="alert">{{ validationError }}</p>
           <p v-if="!draft.length && activeTab === 'domains'" class="mm-tenant-brand-settings__empty">{{ copy.empty }}</p>
           <fieldset v-show="activeTab === 'domains' && draft.length" class="mm-tenant-brand-settings__domains" :disabled="busy || !editable">
             <legend class="mm-tenant-brand-settings__sr-only">{{ copy.titleDomains }}</legend>
             <div v-for="(row, index) in draft" :key="row.key" class="mm-tenant-brand-settings__row">
               <label class="mm-tenant-brand-settings__address"><span>{{ copy.address }}</span>
-                <MmInput v-model="row.domain" :aria-label="`${copy.address} ${index + 1}`" placeholder="trade.example.com" :maxlength="254" :readonly="!editable" :disabled="busy || !editable">
+                <MmInput v-model="row.domain" :aria-label="`${copy.address} ${index + 1}`" placeholder="trade.example.com" :maxlength="254" :readonly="!editable || !!bindingRequest" :disabled="busy || !editable">
                   <template #prefix><MmIcon name="globe" :size="15" /></template>
                 </MmInput>
               </label>
@@ -235,7 +241,7 @@ defineExpose({ hasUnsavedChanges: dirty, isSaving: busy })
                   {{ row.is_primary ? copy.primary : copy.backup }}
                 </MmRadio>
               </div>
-              <MmButton v-if="editable" class="mm-tenant-brand-settings__delete" icon-only :aria-label="`${copy.remove} ${row.domain || index + 1}`" :title="copy.remove" :disabled="busy" @click="removeDomain(row.key)"><MmIcon name="trash-2" :size="15" /></MmButton>
+              <MmButton v-if="editable && !(bindingRequest && managedDomains.includes(row.domain))" class="mm-tenant-brand-settings__delete" icon-only :aria-label="`${copy.remove} ${row.domain || index + 1}`" :title="copy.remove" :disabled="busy" @click="removeDomain(row.key)"><MmIcon name="trash-2" :size="15" /></MmButton>
             </div>
           </fieldset>
           <div v-show="activeTab === 'templates'">
